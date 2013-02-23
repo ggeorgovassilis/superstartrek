@@ -1,0 +1,105 @@
+body,html,div,table,tr,td{
+	margin:0;
+	padding:0;
+}
+
+table{
+	border-collapse:collapse;
+	width:100%;
+}
+
+html{
+	background-color:black;
+	font-family:arial,helvetica,sans-serif;
+	color:white;
+}
+
+a, a:visited{
+	text-decoration:none;
+	color:white;
+}
+
+a:hover{
+	background-color:purple;
+}
+
+/*
+ * Long range scan
+ */
+.sector-names{
+	background-color:BlueViolet;
+	color:black;
+	text-align: center;
+}
+
+.sector-names td{
+	padding:5px;
+}
+
+.sectors{
+	background-color:purple;
+}
+
+
+.sectors a, .sectors a:visited{
+	width:100%;
+	display:block;
+	overflow:hidden;
+}
+.sectors td:hover{
+	background-color:gray;
+}
+
+.has-starship{
+	background-color:darkgreen;
+}
+
+.sectors td{
+	padding:4px 10px 4px 10px;
+}
+
+/*
+ * Short range scan
+ */
+ 
+#shortrangescan td{
+	border:solid gray 1px;
+	width:10%;
+	height:1em;
+	text-align:center;
+}
+
+#shortrangescan a{
+	display:block;
+	padding:5px;
+}
+
+/*
+ * Computer
+ */
+ 
+ .command{
+	display:none;
+	padding:10px;
+	float:left;
+}
+
+.square-selection .field-command{
+	display:block;
+}
+
+.phaser-selection .phaser-command{
+	display:block;
+}
+
+.screen{
+	display:none;
+}
+
+.long-range-scan #longrangescanscreen{
+	display:block;
+}
+
+.computer #computerscreen{
+	display:block;
+}
