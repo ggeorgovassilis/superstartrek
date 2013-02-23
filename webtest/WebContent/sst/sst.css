@@ -19,43 +19,37 @@ a, a:visited{
 	color:white;
 }
 
-a:hover{
+a:hover, a:active{
 	background-color:purple;
 }
 
 /*
  * Long range scan
  */
-.sector-names{
+.region-names{
 	background-color:BlueViolet;
 	color:black;
 	text-align: center;
 }
 
-.sector-names td{
+.region-names td{
 	padding:5px;
 }
 
-.sectors{
+.quadrants{
 	background-color:purple;
 }
 
 
-.sectors a, .sectors a:visited{
+.quadrants a, .quadrants a:visited{
 	width:100%;
+	padding:4px 10px 4px 10px;
 	display:block;
 	overflow:hidden;
-}
-.sectors td:hover{
-	background-color:gray;
 }
 
 .has-starship{
 	background-color:darkgreen;
-}
-
-.sectors td{
-	padding:4px 10px 4px 10px;
 }
 
 /*
@@ -84,11 +78,7 @@ a:hover{
 	float:left;
 }
 
-.square-selection .field-command{
-	display:block;
-}
-
-.phaser-selection .phaser-command{
+.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command{
 	display:block;
 }
 

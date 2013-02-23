@@ -44,8 +44,8 @@ var Tools={
 			var a = new Array();
 			for (var i=Tools.random(10);i>0;i--)
 				push(a,{
-					x:Math.round(Math.random()*10),
-					y:Math.round(Math.random()*10)
+					x:Math.round(Math.random()*7),
+					y:Math.round(Math.random()*7)
 				});
 			return a;
 		},
@@ -53,8 +53,8 @@ var Tools={
 			var a = new Array();
 			for (var i=Tools.random(3);i>0;i--)
 				push(a,{
-					x:Math.round(Math.random()*10),
-					y:Math.round(Math.random()*10),
+					x:Math.round(Math.random()*7),
+					y:Math.round(Math.random()*7),
 					shields:Math.round(Math.random()*500)
 				});
 			return a;
@@ -63,14 +63,14 @@ var Tools={
 			var a = new Array();
 			for (var i=Tools.random(2);i>0;i--)
 				push(a,{
-					x:Math.round(Math.random()*10),
-					y:Math.round(Math.random()*10)
+					x:Math.round(Math.random()*7),
+					y:Math.round(Math.random()*7)
 				});
 			return a;
 		},
-		makeSector:function(name,x,y){
-			var sector= {
-				name:name,
+		makeQuadrant:function(regionName,x,y){
+			var quadrant= {
+				regionName:regionName,
 				x:x,
 				y:y,
 				element:$("#"+x+"_"+y),
@@ -78,7 +78,7 @@ var Tools={
 				klingons:Tools.makeKlingons(),
 				starbases:Tools.makeStarbases()
 			};
-			return sector;
+			return quadrant;
 		}
 		
 };
@@ -91,77 +91,77 @@ var x=0;
 var y=0;
 
 var StarMap={
-		sectors:[
-		   Tools.makeSector("Antares I"  ,x=0,y=0),
-		   Tools.makeSector("Antares II" ,++x,y),
-		   Tools.makeSector("Antares III",++x,y),
-		   Tools.makeSector("Antares IV" ,++x,y),
-		   Tools.makeSector("Sirius I"   ,++x,y),
-		   Tools.makeSector("Sirius II"  ,++x,y),
-		   Tools.makeSector("Sirius III" ,++x,y),
-		   Tools.makeSector("Sirius IV"  ,++x,y),
-		   Tools.makeSector("Rigel I"    ,x=0,++y),
-		   Tools.makeSector("Rigel II"   ,++x,y),
-		   Tools.makeSector("Rigel III"  ,++x,y),
-		   Tools.makeSector("Rigel IV"   ,++x,y),
-		   Tools.makeSector("Deneb I"    ,++x,y),
-		   Tools.makeSector("Deneb II"   ,++x,y),
-		   Tools.makeSector("Deneb  III" ,++x,y),
-		   Tools.makeSector("Deneb  IV"  ,++x,y),
-		   Tools.makeSector("Procyon I"    ,x=0,++y),
-		   Tools.makeSector("Procyon II"   ,++x,y),
-		   Tools.makeSector("Procyon III"  ,++x,y),
-		   Tools.makeSector("Procyon IV"   ,++x,y),
-		   Tools.makeSector("Capella I"    ,++x,y),
-		   Tools.makeSector("Capella II"   ,++x,y),
-		   Tools.makeSector("Capella III" ,++x,y),
-		   Tools.makeSector("Capella IV"  ,++x,y),
-		   Tools.makeSector("Vega I"    ,x=0,++y),
-		   Tools.makeSector("Vega II"   ,++x,y),
-		   Tools.makeSector("Vega III"  ,++x,y),
-		   Tools.makeSector("Vega IV"   ,++x,y),
-		   Tools.makeSector("Betelgeuse I"    ,++x,y),
-		   Tools.makeSector("Betelgeuse II"   ,++x,y),
-		   Tools.makeSector("Betelgeuse III" ,++x,y),
-		   Tools.makeSector("Betelgeuse IV"  ,++x,y),
-		   Tools.makeSector("Canopus I"    ,x=0,++y),
-		   Tools.makeSector("Canopus II"   ,++x,y),
-		   Tools.makeSector("Canopus III"  ,++x,y),
-		   Tools.makeSector("Canopus IV"   ,++x,y),
-		   Tools.makeSector("Aldebaran I"    ,++x,y),
-		   Tools.makeSector("Aldebaran II"   ,++x,y),
-		   Tools.makeSector("Aldebaran III" ,++x,y),
-		   Tools.makeSector("Aldebaran IV"  ,++x,y),
-		   Tools.makeSector("Altair I"    ,x=0,++y),
-		   Tools.makeSector("Altair II"   ,++x,y),
-		   Tools.makeSector("Altair III"  ,++x,y),
-		   Tools.makeSector("Altair IV"   ,++x,y),
-		   Tools.makeSector("Regulus I"    ,++x,y),
-		   Tools.makeSector("Regulus II"   ,++x,y),
-		   Tools.makeSector("Regulus III" ,++x,y),
-		   Tools.makeSector("Regulus IV"  ,++x,y),
-		   Tools.makeSector("Sagittarius I"    ,x=0,++y),
-		   Tools.makeSector("Sagittarius II"   ,++x,y),
-		   Tools.makeSector("Sagittarius III"  ,++x,y),
-		   Tools.makeSector("Sagittarius IV"   ,++x,y),
-		   Tools.makeSector("Arcturus I"    ,++x,y),
-		   Tools.makeSector("Arcturus II"   ,++x,y),
-		   Tools.makeSector("Arcturus III" ,++x,y),
-		   Tools.makeSector("Arcturus IV"  ,++x,y),
-		   Tools.makeSector("Pollux I"    ,x=0,++y),
-		   Tools.makeSector("Pollux II"   ,++x,y),
-		   Tools.makeSector("Pollux III"  ,++x,y),
-		   Tools.makeSector("Pollux IV"   ,++x,y),
-		   Tools.makeSector("Spica I"    ,++x,y),
-		   Tools.makeSector("Spica II"   ,++x,y),
-		   Tools.makeSector("Spica III" ,++x,y),
-		   Tools.makeSector("Spica IV"  ,++x,y)
+		quadrants:[
+		   Tools.makeQuadrant("Antares I"  ,x=0,y=0),
+		   Tools.makeQuadrant("Antares II" ,++x,y),
+		   Tools.makeQuadrant("Antares III",++x,y),
+		   Tools.makeQuadrant("Antares IV" ,++x,y),
+		   Tools.makeQuadrant("Sirius I"   ,++x,y),
+		   Tools.makeQuadrant("Sirius II"  ,++x,y),
+		   Tools.makeQuadrant("Sirius III" ,++x,y),
+		   Tools.makeQuadrant("Sirius IV"  ,++x,y),
+		   Tools.makeQuadrant("Rigel I"    ,x=0,++y),
+		   Tools.makeQuadrant("Rigel II"   ,++x,y),
+		   Tools.makeQuadrant("Rigel III"  ,++x,y),
+		   Tools.makeQuadrant("Rigel IV"   ,++x,y),
+		   Tools.makeQuadrant("Deneb I"    ,++x,y),
+		   Tools.makeQuadrant("Deneb II"   ,++x,y),
+		   Tools.makeQuadrant("Deneb  III" ,++x,y),
+		   Tools.makeQuadrant("Deneb  IV"  ,++x,y),
+		   Tools.makeQuadrant("Procyon I"    ,x=0,++y),
+		   Tools.makeQuadrant("Procyon II"   ,++x,y),
+		   Tools.makeQuadrant("Procyon III"  ,++x,y),
+		   Tools.makeQuadrant("Procyon IV"   ,++x,y),
+		   Tools.makeQuadrant("Capella I"    ,++x,y),
+		   Tools.makeQuadrant("Capella II"   ,++x,y),
+		   Tools.makeQuadrant("Capella III" ,++x,y),
+		   Tools.makeQuadrant("Capella IV"  ,++x,y),
+		   Tools.makeQuadrant("Vega I"    ,x=0,++y),
+		   Tools.makeQuadrant("Vega II"   ,++x,y),
+		   Tools.makeQuadrant("Vega III"  ,++x,y),
+		   Tools.makeQuadrant("Vega IV"   ,++x,y),
+		   Tools.makeQuadrant("Betelgeuse I"    ,++x,y),
+		   Tools.makeQuadrant("Betelgeuse II"   ,++x,y),
+		   Tools.makeQuadrant("Betelgeuse III" ,++x,y),
+		   Tools.makeQuadrant("Betelgeuse IV"  ,++x,y),
+		   Tools.makeQuadrant("Canopus I"    ,x=0,++y),
+		   Tools.makeQuadrant("Canopus II"   ,++x,y),
+		   Tools.makeQuadrant("Canopus III"  ,++x,y),
+		   Tools.makeQuadrant("Canopus IV"   ,++x,y),
+		   Tools.makeQuadrant("Aldebaran I"    ,++x,y),
+		   Tools.makeQuadrant("Aldebaran II"   ,++x,y),
+		   Tools.makeQuadrant("Aldebaran III" ,++x,y),
+		   Tools.makeQuadrant("Aldebaran IV"  ,++x,y),
+		   Tools.makeQuadrant("Altair I"    ,x=0,++y),
+		   Tools.makeQuadrant("Altair II"   ,++x,y),
+		   Tools.makeQuadrant("Altair III"  ,++x,y),
+		   Tools.makeQuadrant("Altair IV"   ,++x,y),
+		   Tools.makeQuadrant("Regulus I"    ,++x,y),
+		   Tools.makeQuadrant("Regulus II"   ,++x,y),
+		   Tools.makeQuadrant("Regulus III" ,++x,y),
+		   Tools.makeQuadrant("Regulus IV"  ,++x,y),
+		   Tools.makeQuadrant("Sagittarius I"    ,x=0,++y),
+		   Tools.makeQuadrant("Sagittarius II"   ,++x,y),
+		   Tools.makeQuadrant("Sagittarius III"  ,++x,y),
+		   Tools.makeQuadrant("Sagittarius IV"   ,++x,y),
+		   Tools.makeQuadrant("Arcturus I"    ,++x,y),
+		   Tools.makeQuadrant("Arcturus II"   ,++x,y),
+		   Tools.makeQuadrant("Arcturus III" ,++x,y),
+		   Tools.makeQuadrant("Arcturus IV"  ,++x,y),
+		   Tools.makeQuadrant("Pollux I"    ,x=0,++y),
+		   Tools.makeQuadrant("Pollux II"   ,++x,y),
+		   Tools.makeQuadrant("Pollux III"  ,++x,y),
+		   Tools.makeQuadrant("Pollux IV"   ,++x,y),
+		   Tools.makeQuadrant("Spica I"    ,++x,y),
+		   Tools.makeQuadrant("Spica II"   ,++x,y),
+		   Tools.makeQuadrant("Spica III" ,++x,y),
+		   Tools.makeQuadrant("Spica IV"  ,++x,y)
 		   ],
-		   getSectorAt:function(x,y){
-			   for (var i=0;i<StarMap.sectors.length;i++){
-				   var sector = StarMap.sectors[i];
-				   if (sector.x == x && sector.y == y)
-					   return sector;
+		   getQuadrantAt:function(x,y){
+			   for (var i=0;i<StarMap.quadrants.length;i++){
+				   var quadrant = StarMap.quadrants[i];
+				   if (quadrant.x == x && quadrant.y == y)
+					   return quadrant;
 			   }
 		   }
 };
@@ -171,7 +171,7 @@ var StarMap={
  */
 
 var StarShip={
-	   sector:StarMap.sectors[0],
+	   quadrant:StarMap.quadrants[0],
 	   x:0,
 	   y:0,
 	   energy:3000,
@@ -184,35 +184,35 @@ var StarShip={
  */
 var ShortRangeScanScreen={
 		element:$("#shortrangescan"),
-		update:function(sector){
+		update:function(quadrant){
 			var element = ShortRangeScanScreen.element;
 			element.empty();
-			for (var y=0;y<10;y++){
+			for (var y=0;y<8;y++){
 				var tr = $("<tr></tr>");
 				element.append(tr);
-				for (var x=0;x<10;x++){
+				for (var x=0;x<8;x++){
 					content = "";
-					for (var i=0;i<sector.stars.length;i++){
-						var star = sector.stars[i];
+					for (var i=0;i<quadrant.stars.length;i++){
+						var star = quadrant.stars[i];
 						if (star.x == x && star.y == y)
-							content+="*";
+							content+="&nbsp;*&nbsp;";
 					}
-					for (var i=0;i<sector.klingons.length;i++){
-						var klingon = sector.klingons[i];
+					for (var i=0;i<quadrant.klingons.length;i++){
+						var klingon = quadrant.klingons[i];
 						if (klingon.x == x && klingon.y == y)
-							content+="K";
+							content+="o-}";
 					}
-					for (var i=0;i<sector.starbases.length;i++){
-						var starbase = sector.starbases[i];
+					for (var i=0;i<quadrant.starbases.length;i++){
+						var starbase = quadrant.starbases[i];
 						if (starbase.x == x && starbase.y == y)
-							content+="!";
+							content+="<!>";
 					}
-					if (StarShip.sector === sector && StarShip.x == x && StarShip.y == y){
-						content+="E";
+					if (StarShip.quadrant === quadrant && StarShip.x == x && StarShip.y == y){
+						content+="O=Ξ";
 					}
 					if (content=="")
 						content="&nbsp;";
-					var td = $("<td id='q_"+x+"_"+y+"'><a href='#square_"+x+","+y+"'>"+content+"</td>");
+					var td = $("<td id='q_"+x+"_"+y+"'><a href='#sector_"+x+","+y+"'>"+content+"</td>");
 					tr.append(td);
 				}
 			}
@@ -226,14 +226,14 @@ var LongRangeScanScreen={
 		element:$("#longrangescan"),
 		show:function(){
 			Tools.setPageCss("long-range-scan");
-			for (var i=0;i<StarMap.sectors.length;i++)
-				LongRangeScanScreen.updateSector(StarMap.sectors[i]);
+			for (var i=0;i<StarMap.quadrants.length;i++)
+				LongRangeScanScreen.updateQuadrant(StarMap.quadrants[i]);
 		},
-		updateSector:function(sector){
-			var e = sector.element;
-			e.html("<a href='#sector_"+sector.x+","+sector.y+"'>"+sector.klingons.length+" "+sector.starbases.length+" "+sector.stars.length+"</a>");
+		updateQuadrant:function(quadrant){
+			var e = quadrant.element;
+			e.html("<a href='#quadrant_"+quadrant.x+","+quadrant.y+"'>"+quadrant.klingons.length+" "+quadrant.starbases.length+" "+quadrant.stars.length+"</a>");
 			e.removeClass("has-starship");
-			if (StarShip.sector == sector)
+			if (StarShip.quadrant == quadrant)
 				e.addClass("has-starship");
 		}
 };
@@ -246,17 +246,20 @@ var Computer={
 		element:$("#computerscreen"),
 		show:function(){
 			Tools.setPageCss("computer");
-			ShortRangeScanScreen.update(StarShip.sector);
+			Controller.resetCommands();
+			Tools.addPageCss("top-selection");
+			ShortRangeScanScreen.update(StarShip.quadrant);
 		}
 };
 /**
  * Controller
  */
 var Controller={
-		square:{x:0,y:0},
+		sector:{x:0,y:0},
 		resetCommands:function(){
-			Tools.removePageCss("square-selection");
+			Tools.removePageCss("sector-selection");
 			Tools.removePageCss("phaser-selection");
+			Tools.removePageCss("top-selection");
 		},
 		onHistoryChanged:function(token){
 			if (""==token){
@@ -274,9 +277,14 @@ var Controller={
 			if (/navigate/.test(token)){
 				Controller.navigate();
 			} else
-			if (/square_\d,\d/.test(token)){
+			if (/sector_\d,\d/.test(token)){
 				var position = Tools.extractPositionFrom(token);
-				Controller.onSquareSelected(position.x,position.y);
+				Controller.onSectorSelected(position.x,position.y);
+			} else
+			if (/quadrant_\d,\d/.test(token)){
+				var position = Tools.extractPositionFrom(token);
+				var quadrant = StarMap.getQuadrantAt(position.x, position.y)
+				Controller.warpTo(quadrant);
 			} else
 			if (/phasers_\d\d\d/.test(token)){
 				Controller.firePhasers(parseInt(/phasers_(\d\d\d)/.exec(token)[1]));
@@ -290,30 +298,37 @@ var Controller={
 			if (/warp/.test(token)){
 				Controller.selectWarpDestination();
 			} else
-			if (false){
-				var pos = Tools.extractPositionFrom(token);
-				var sector = StarMap.getSectorAt(pos.x, pos.y);
-				Controller.onSectorSelected(sector);
+			if (/shields_\d\d\d/.test(token)){
+				Controller.setShieldStrength(parseInt(/shields_(\d\d\d)/.exec(token)[1]));
+			} else
+			if (/shields/.test(token)){
+				Controller.selectShieldStrength();
 			}
 		},
-		onSquareSelected:function(x,y){
+		onSectorSelected:function(x,y){
 			Controller.resetCommands();
-			Tools.addPageCss("square-selection");
-			Controller.square.x = x;
-			Controller.square.y = y;
+			Tools.addPageCss("sector-selection");
+			Controller.sector.x = x;
+			Controller.sector.y = y;
 		},
-		onSectorSelected:function(sector){
+		selectShieldStrength:function(){
+			Controller.resetCommands();
+			Tools.addPageCss("shields-selection");
+		},
+		setShieldStrength:function(strength){
+			StarShip.shields=strength;
+			Controller.showStartScreen();
 		},
 		shortRangeScan:function(){
 			Tools.changeHash("short-range-scan");
-			ShortRangeScanScreen.show(StarShip.sector);
+			ShortRangeScanScreen.show(StarShip.quadrant);
 		},
 		longRangeScan:function(){
 			Tools.changeHash("long-range-scan");
 			LongRangeScanScreen.show();
 		},
-		onSectorSelected:function(sector){
-			console.log(sector);
+		onQuadrantSelected:function(quadrant){
+			console.log(quadrant);
 		},
 		showComputerScreen:function(){
 			Tools.changeHash("computer");
@@ -321,6 +336,7 @@ var Controller={
 		},
 		showStartScreen:function(){
 			Controller.resetCommands();
+			Tools.addPageCss("top-selection");
 			Controller.showComputerScreen();
 		},
 		startGame:function(){
@@ -334,12 +350,12 @@ var Controller={
 			Tools.addPageCss("phaser-selection");
 		},
 		navigate:function(){
-			StarShip.x = Controller.square.x;
-			StarShip.y = Controller.square.y;
+			StarShip.x = Controller.sector.x;
+			StarShip.y = Controller.sector.y;
 			Controller.endRound();
 		},
 		firePhasers:function(strength){
-			console.log("fired phasers with "+strength+" at "+Controller.square.x+","+Controller.square.y);
+			console.log("fired phasers with "+strength+" at "+Controller.sector.x+","+Controller.sector.y);
 			Controller.endRound();
 		},
 		fireTorpedos:function(){
@@ -349,6 +365,10 @@ var Controller={
 		selectWarpDestination:function(){
 			Controller.resetCommands();
 			Controller.longRangeScan();
+		},
+		warpTo:function(quadrant){
+			StarShip.quadrant = quadrant;
+			Controller.endRound();
 		}
 };
 
