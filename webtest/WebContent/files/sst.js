@@ -27,6 +27,14 @@ function push(arr,element){
 var Tools={
 		page:$("#page"),
 		supressNextHistoryEvent:false,
+		scrollIntoView:function(element){
+			var offset = element.offset();
+			var destination = offset.top-2;
+			$(document).scrollTop(destination);
+		},
+		centerScreen:function(){
+			Tools.scrollIntoView($("#page"));
+		},
 		distance:function(x1,y1,x2,y2){
 			return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 		},
@@ -99,7 +107,6 @@ var Tools={
 			return quadrant;
 		},
 		walkLine:function(x0,y0,x1,y1, callback){
-			console.log("walkline "+x0+" "+y0+" "+x1+" "+y1);
 			var sx=0;
 			var sy=0;
 			var err = 0;
@@ -338,11 +345,6 @@ var CommandBar={
 			Tools.removePageCss("phaser-selection");
 			Tools.removePageCss("top-selection");
 		},
-		scrollIntoView:function(){
-			var offset = CommandBar.element.offset();
-			var destination = offset.top;
-			$(document).scrollTop(destination);
-		}
 };
 
 var Computer={
@@ -377,10 +379,16 @@ var Computer={
 
 var IO={
 	message:function(text){
-		alert(text);
-	}	
+		$("#content").text(text);
+		$("body").removeClass("messages-visible");
+		$("body").addClass("messages-visible");
+	},
+	dismiss:function(){
+		$("body").removeClass("messages-visible");
+	}
 };
 
+$(".messages button").click(IO.dismiss);
 /**
  * Controller
  */
@@ -442,7 +450,7 @@ var Controller={
 		},
 		onSectorSelected:function(x,y){
 			Controller.resetCommands();
-			$("#torpedos").text("Photon torpedos ("+StarShip.torpedos+")");
+			$("#cmd_torpedos").text("Photon torpedos ("+StarShip.torpedos+")");
 			Tools.addPageCss("sector-selection");
 			Controller.sector.x = x;
 			Controller.sector.y = y;
@@ -466,7 +474,6 @@ var Controller={
 			LongRangeScanScreen.show();
 		},
 		onQuadrantSelected:function(quadrant){
-			console.log(quadrant);
 		},
 		gotoComputerScreen:function(){
 			Tools.changeHash("computer");
@@ -527,7 +534,6 @@ var Controller={
 			}
 			Tools.walkLine(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y, function(x,y){
 				var thing = StarMap.getAnythingInQuadrantAt(StarShip.quadrant, x, y);
-				console.log(x+" "+y+" "+thing);
 				if (thing){
 					if (thing.star){
 						IO.message("Photon torpedo hit star at "+thing.x+","+thing.y);
@@ -566,5 +572,19 @@ $.History.bind(function(state){
 	Controller.onHistoryChanged(state);
 });
 
+function repositionWindowScroll(){
+	var doc = window.document;
+	var delement = doc.documentElement;
+	var scrollOffset = (delement && delement.scrollTop  || doc.body && doc.body.scrollTop  || 0);
+	var top = $("#page").offset().top;
+	console.log(scrollOffset+" "+top);
+	if (scrollOffset < top){
+		Tools.centerScreen();
+	}
+}
+
+$(window).scroll(repositionWindowScroll);
+
 Controller.startGame();
 
+window.setTimeout("repositionWindowScroll()",500);

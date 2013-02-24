@@ -103,6 +103,7 @@ a:hover, a:active{
 
 .screen{
 	display:none;
+	overflow:hidden;
 }
 
 .status-report #statusreport{
@@ -135,4 +136,47 @@ a:hover, a:active{
 
 #statusreport dd{
 	float:left;
+}
+
+.messages{
+	position:absolute;
+	background-color:darkblue;
+	color:white;
+	font-family:courier, courier new, typewriter;
+	clear:both;
+	padding:10px;
+	display:none;
+	z-index:2;
+	display:none;
+}
+
+.glasspanel{
+	position:absolute;
+	z-index:1;
+	width:100%;
+	height:200%;
+	top:0;
+	left:0;
+	background-color:black;
+	opacity:0.5;
+	display:none;
+}
+
+.messages-visible .messages,.messages-visible .glasspanel{
+	display:block !important;
+}
+
+.messages-visible .content{
+	margin-bottom:1em;
+}
+
+.messages-visible button{
+	width:100%;
+}
+
+#downmarker{
+	margin-top:100%;
+}
+
+#topmarker{
 }

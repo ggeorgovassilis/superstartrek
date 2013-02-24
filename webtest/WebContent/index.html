@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html manifest="cache.manifest">
+<html>
 <head>
 <meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1" name="viewport">
+<meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 <title>SST</title>
 <link rel="stylesheet" type="text/css" href="files/sst.css"></link>
 <script type="text/javascript" src="files/jquery.1.9.2.js"></script>
 <script type="text/javascript" src="files/history.js"></script>
 </head>
 <body>
+<div class="glasspanel"></div>
+<div id="topmarker">&nbsp;</div>
 <div id="page">
-<div id="longrangescanscreen" class="screen">
+<div class="messages">
+<div id="content"></div>
+<button>OK</button>
+</div>
+<div id="longrangescanscreen" class="screen top-selection">
+<a href="#computer" class="command top-command">Cancel</a>
 <table id="longrangescan">
 <tr class="region-names"><td colspan="4">Antares</td><td colspan="4">Sirius</td></tr>
 <tr class="quadrants"><td id="0_0"/><td id="1_0"/><td id="2_0"/><td id="3_0"/><td id="4_0"/><td id="5_0"/><td id="6_0"/><td id="7_0"/></tr>
@@ -48,12 +55,11 @@
 </table>
 <div id="commandbar" class="command-bar">
 <a href="#navigate" class="command field-command">Navigate</a>
-<a href="#warp" class="command top-command">Warp</a>
 <a id="shields" href="#shields" class="command top-command">Shields</a>
 <a href="#status" class="command top-command">Status report</a>
 <a href="#long-range-scan" class="command top-command">Long range scan</a>
 <a href="#phasers" class="command field-command">Phasers</a>
-<a href="#torpedos" id="torpedos" class="command field-command">Photon torpedos</a>
+<a href="#torpedos" id="cmd_torpedos" class="command field-command">Photon torpedos</a>
 <a href="#phasers_100" class="command phaser-command">Low</a>
 <a href="#phasers_200" class="command phaser-command">Medium</a>
 <a href="#phasers_300" class="command phaser-command">Max</a>
@@ -61,6 +67,7 @@
 </div>
 </div>
 </div>
+<div id="downmarker"></div>
 <script type="text/javascript" src="files/sst.js"></script>
 </body>
 </html>
