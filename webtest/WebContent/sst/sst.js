@@ -14,7 +14,9 @@ function push(arr,element){
 
 var Tools={
 		page:$("#page"),
-
+		distance:function(x1,y1,x2,y2){
+			return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+		},
 		changeHash:function(hash){
 			document.location.hash=hash;
 		},
@@ -184,35 +186,32 @@ var StarShip={
  */
 var ShortRangeScanScreen={
 		element:$("#shortrangescan"),
+		updateList:function(symbol, list){
+			for (var i=0;i<list.length;i++){
+				var thing = list[i];
+				var tile = $("#q_"+thing.x+"_"+thing.y);
+				tile.html(symbol);
+			}
+		},
 		update:function(quadrant){
+			if (ShortRangeScanScreen.constructUi!=null){
+				ShortRangeScanScreen.constructUi();
+				ShortRangeScanScreen.constructUi=null;
+			}
+			$("#shortrangescan a").html("&nbsp;");
+			ShortRangeScanScreen.updateList("&nbsp;*&nbsp;",quadrant.stars);
+			ShortRangeScanScreen.updateList("o-}",quadrant.klingons);
+			ShortRangeScanScreen.updateList("<!>",quadrant.starbases);
+			if (StarShip.quadrant === quadrant)
+				ShortRangeScanScreen.updateList("O=Ξ",[StarShip]);
+		},
+		constructUi:function(){
 			var element = ShortRangeScanScreen.element;
-			element.empty();
 			for (var y=0;y<8;y++){
 				var tr = $("<tr></tr>");
 				element.append(tr);
 				for (var x=0;x<8;x++){
-					content = "";
-					for (var i=0;i<quadrant.stars.length;i++){
-						var star = quadrant.stars[i];
-						if (star.x == x && star.y == y)
-							content+="&nbsp;*&nbsp;";
-					}
-					for (var i=0;i<quadrant.klingons.length;i++){
-						var klingon = quadrant.klingons[i];
-						if (klingon.x == x && klingon.y == y)
-							content+="o-}";
-					}
-					for (var i=0;i<quadrant.starbases.length;i++){
-						var starbase = quadrant.starbases[i];
-						if (starbase.x == x && starbase.y == y)
-							content+="<!>";
-					}
-					if (StarShip.quadrant === quadrant && StarShip.x == x && StarShip.y == y){
-						content+="O=Ξ";
-					}
-					if (content=="")
-						content="&nbsp;";
-					var td = $("<td id='q_"+x+"_"+y+"'><a href='#sector_"+x+","+y+"'>"+content+"</td>");
+					var td = $("<td><a id='q_"+x+"_"+y+"' href='#sector_"+x+","+y+"'></a></td>");
 					tr.append(td);
 				}
 			}
@@ -241,6 +240,32 @@ var LongRangeScanScreen={
 /**
  * Computer console
  */
+var StatusReport={
+		energy:$("#report_energy"),
+		torpedos:$("#report_torpedos"),
+		location:$("#report_location"),
+		shields:$("#report_shields"),
+		update:function(){
+			StatusReport.energy.text(StarShip.energy);
+			StatusReport.torpedos.text(StarShip.torpedos);
+			StatusReport.location.text(StarShip.quadrant.regionName+" "+StarShip.quadrant.x+","+StarShip.quadrant.y);
+			StatusReport.shields.text(StarShip.shields);
+		}
+	};
+
+var CommandBar={
+		element:$("#commandbar"),
+		resetCommands:function(){
+			Tools.removePageCss("sector-selection");
+			Tools.removePageCss("phaser-selection");
+			Tools.removePageCss("top-selection");
+		},
+		scrollIntoView:function(){
+			var offset = CommandBar.element.offset();
+			var destination = offset.top;
+			$(document).scrollTop(destination);
+		}
+};
 
 var Computer={
 		element:$("#computerscreen"),
@@ -249,7 +274,33 @@ var Computer={
 			Controller.resetCommands();
 			Tools.addPageCss("top-selection");
 			ShortRangeScanScreen.update(StarShip.quadrant);
+		},
+		calculateBaseEnergyConsumption:function(){
+			return StarShip.shields;
+		},
+		calculateEnergyConsumptionForMovement:function(xFrom,yFrom,xTo,yTo){
+			var distance = Tools.distance(xFrom,yFrom,xTo,yTo);
+			return distance*10;
+		},
+		calculateEnergyConsumptionForWarpDrive:function(quadrantFrom, quadrantTo){
+			var distance = Tools.distance(quadrantFrom.x,quadrantFrom.y,quadrantTo.x,quadrantTo.y);
+			return distance*100;
+		},
+		calculateEnergyConsumptionForPhasers:function(strength){
+			return strength;
+		},
+		consume:function(energy){
+			StarShip.energy-=energy;
+			StarShip.energy=Math.floor(StarShip.energy);
+			if (StarShip.energy<=0)
+				IO.message("Game over, out of energy");
 		}
+};
+
+var IO={
+	message:function(text){
+		alert(text);
+	}	
 };
 /**
  * Controller
@@ -257,9 +308,7 @@ var Computer={
 var Controller={
 		sector:{x:0,y:0},
 		resetCommands:function(){
-			Tools.removePageCss("sector-selection");
-			Tools.removePageCss("phaser-selection");
-			Tools.removePageCss("top-selection");
+			CommandBar.resetCommands();
 		},
 		onHistoryChanged:function(token){
 			if (""==token){
@@ -283,7 +332,7 @@ var Controller={
 			} else
 			if (/quadrant_\d,\d/.test(token)){
 				var position = Tools.extractPositionFrom(token);
-				var quadrant = StarMap.getQuadrantAt(position.x, position.y)
+				var quadrant = StarMap.getQuadrantAt(position.x, position.y);
 				Controller.warpTo(quadrant);
 			} else
 			if (/phasers_\d\d\d/.test(token)){
@@ -298,25 +347,30 @@ var Controller={
 			if (/warp/.test(token)){
 				Controller.selectWarpDestination();
 			} else
-			if (/shields_\d\d\d/.test(token)){
-				Controller.setShieldStrength(parseInt(/shields_(\d\d\d)/.exec(token)[1]));
-			} else
 			if (/shields/.test(token)){
-				Controller.selectShieldStrength();
+				Controller.toggleShieldStrength();
+			} else
+			if (/status/.test(token)){
+				Controller.showStatusReport();
+			} else
+			if (/cancel/.test(token)){
+				Controller.cancel();
 			}
 		},
 		onSectorSelected:function(x,y){
 			Controller.resetCommands();
+			$("#torpedos").text("Photon torpedos ("+StarShip.torpedos+")");
 			Tools.addPageCss("sector-selection");
 			Controller.sector.x = x;
 			Controller.sector.y = y;
 		},
-		selectShieldStrength:function(){
-			Controller.resetCommands();
-			Tools.addPageCss("shields-selection");
-		},
-		setShieldStrength:function(strength){
-			StarShip.shields=strength;
+		toggleShieldStrength:function(){
+			var shields = StarShip.shields;
+			shields+=25;
+			shields=shields%101;
+			shields-=shields%25;
+			$("#shields").text("Shields "+(shields?shields+"%":"off"));
+			StarShip.shields = shields;
 			Controller.showStartScreen();
 		},
 		shortRangeScan:function(){
@@ -334,15 +388,24 @@ var Controller={
 			Tools.changeHash("computer");
 			Computer.show();
 		},
+		showStatusReport:function(){
+			Tools.changeHash("status");
+			Tools.setPageCss("status-report");
+			StatusReport.update();
+		},
 		showStartScreen:function(){
 			Controller.resetCommands();
 			Tools.addPageCss("top-selection");
 			Controller.showComputerScreen();
+			CommandBar.scrollIntoView();
 		},
 		startGame:function(){
 			Controller.showStartScreen();
 		},
+		
 		endRound:function(){
+			var consumption = Computer.calculateBaseEnergyConsumption();
+			Computer.consume(consumption);
 			Controller.showStartScreen();
 		},
 		selectPhaserStrength:function(){
@@ -350,16 +413,23 @@ var Controller={
 			Tools.addPageCss("phaser-selection");
 		},
 		navigate:function(){
+			var consumption = Computer.calculateEnergyConsumptionForMovement(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y);
+			Computer.consume(consumption);
 			StarShip.x = Controller.sector.x;
 			StarShip.y = Controller.sector.y;
 			Controller.endRound();
 		},
 		firePhasers:function(strength){
-			console.log("fired phasers with "+strength+" at "+Controller.sector.x+","+Controller.sector.y);
+			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
+			Computer.consume(consumption);
 			Controller.endRound();
 		},
 		fireTorpedos:function(){
-			console.log("fired torpedo");
+			if (StarShip.torpedos<1){
+				IO.message("Out of torpedos");
+				return;
+			}
+			StarShip.torpedos--;
 			Controller.endRound();
 		},
 		selectWarpDestination:function(){
@@ -367,7 +437,10 @@ var Controller={
 			Controller.longRangeScan();
 		},
 		warpTo:function(quadrant){
+			var consumption = Computer.calculateEnergyConsumptionForWarpDrive(StarShip.quadrant, quadrant);
+			Computer.consume(consumption);
 			StarShip.quadrant = quadrant;
+			
 			Controller.endRound();
 		}
 };

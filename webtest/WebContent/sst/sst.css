@@ -72,18 +72,25 @@ a:hover, a:active{
  * Computer
  */
  
- .command{
+ .command-bar{
+ }
+ 
+.command{
 	display:none;
 	padding:10px;
 	float:left;
 }
 
-.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command{
+.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command, .display-status #statusbar{
 	display:block;
 }
 
 .screen{
 	display:none;
+}
+
+.status-report #statusreport{
+	display:block;
 }
 
 .long-range-scan #longrangescanscreen{
@@ -92,4 +99,24 @@ a:hover, a:active{
 
 .computer #computerscreen{
 	display:block;
+}
+
+/*
+ * Status report
+ */
+ 
+#statusreport dl{
+	overflow:hidden;
+}
+
+#statusreport dt{
+	clear:left;
+	float:left;
+	width:20%;
+	padding:5px;
+	font-weight:bold;
+}
+
+#statusreport dd{
+	float:left;
 }

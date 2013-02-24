@@ -30,21 +30,30 @@
 <tr class="quadrants"><td id="0_7"/><td id="1_7"/><td id="2_7"/><td id="3_7"/><td id="4_7"/><td id="5_7"/><td id="6_7"/><td id="7_7"/></tr>
 </table>
 </div>
+<div id="statusreport" class="screen">
+<dl>
+<dt>Energy</dt>
+<dd id="report_energy"></dd>
+<dt>Location</dt>
+<dd id="report_location"></dd>
+<dt>Torpedos</dt>
+<dd id="report_torpedos"></dd>
+<dt>Shields</dt>
+<dd id="report_shields"></dd>
+</dl>
+<a href="#computer">OK</a>
+</div>
 <div id="computerscreen" class="screen">
 <table id="shortrangescan">
 </table>
-<div class="command-bar">
+<div id="commandbar" class="command-bar">
 <a href="#navigate" class="command field-command">Navigate</a>
 <a href="#warp" class="command top-command">Warp</a>
-<a href="#shields" class="command top-command">Shields</a>
-<a href="#shields_000" class="command shields-command">Off</a>
-<a href="#shields_025" class="command shields-command">25%</a>
-<a href="#shields_050" class="command shields-command">50%</a>
-<a href="#shields_075" class="command shields-command">75%</a>
-<a href="#shields_100" class="command shields-command">100%</a>
+<a id="shields" href="#shields" class="command top-command">Shields</a>
+<a href="#status" class="command top-command">Status report</a>
 <a href="#long-range-scan" class="command top-command">Long range scan</a>
 <a href="#phasers" class="command field-command">Phasers</a>
-<a href="#torpedos" class="command field-command">Photon torpedos</a>
+<a href="#torpedos" id="torpedos" class="command field-command">Photon torpedos</a>
 <a href="#phasers_100" class="command phaser-command">Low</a>
 <a href="#phasers_200" class="command phaser-command">Medium</a>
 <a href="#phasers_300" class="command phaser-command">Max</a>
