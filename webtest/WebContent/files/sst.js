@@ -60,7 +60,8 @@ var Tools={
 			for (var i=Tools.random(10);i>0;i--)
 				push(a,{
 					x:Math.round(Math.random()*7),
-					y:Math.round(Math.random()*7)
+					y:Math.round(Math.random()*7),
+					star:true
 				});
 			return a;
 		},
@@ -70,7 +71,8 @@ var Tools={
 				push(a,{
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
-					shields:100
+					shields:100,
+					klingon:true
 				});
 			return a;
 		},
@@ -79,7 +81,8 @@ var Tools={
 			for (var i=Tools.random(2);i>0;i--)
 				push(a,{
 					x:Math.round(Math.random()*7),
-					y:Math.round(Math.random()*7)
+					y:Math.round(Math.random()*7),
+					starbase:true
 				});
 			return a;
 		},
@@ -94,6 +97,33 @@ var Tools={
 				starbases:Tools.makeStarbases()
 			};
 			return quadrant;
+		},
+		walkLine:function(x0,y0,x1,y1, callback){
+			console.log("walkline "+x0+" "+y0+" "+x1+" "+y1);
+			var sx=0;
+			var sy=0;
+			var err = 0;
+			var e2 = 0;
+			var dx = Math.abs(x1-x0);
+			var dy = Math.abs(y1-y0); 
+			if (x0 < x1) sx = 1; else sx = -1;
+			if (y0 < y1) sy = 1; else sy = -1;
+			err = dx-dy;
+
+			while(true){
+				if (!callback(x0,y0))
+					break;
+				if (x0 == x1 && y0 == y1) break;
+			     e2 = 2*err;
+			     if (e2 > -dy){ 
+			       err = err - dy;
+			       x0 = x0 + sx;
+			     }
+			     if (e2 <  dx){ 
+			       err = err + dx;
+			       y0 = y0 + sy;
+			     };
+				};
 		}
 		
 };
@@ -184,6 +214,21 @@ var StarMap={
 				   var klingon = quadrant.klingons[i];
 				   if (klingon.x == x && klingon.y == y)
 					   return klingon;
+			   }
+		   },
+		   getAnythingInQuadrantAt:function(quadrant, x, y){
+			   var thing = StarMap.getKlingonInQuadrantAt(quadrant, x, y);
+			   if (thing)
+				   return thing;
+			   for (var i=0;i<quadrant.starbases.length;i++){
+				   thing = quadrant.starbases[i];
+				   if (thing.x == x && thing.y == y)
+					   return thing;
+			   }
+			   for (var i=0;i<quadrant.stars.length;i++){
+				   thing = quadrant.stars[i];
+				   if (thing.x == x && thing.y == y)
+					   return thing;
 			   }
 		   }
 };
@@ -468,7 +513,6 @@ var Controller={
 			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
 			Computer.consume(consumption);
 			var damage = strength/Tools.distance(StarShip.x, StarShip.y, klingon.x, klingon.y);
-			console.log(damage);
 			klingon.shields-=damage;
 			if (klingon.shields<=0){
 				IO.message("Klingon ship destroyed");
@@ -481,6 +525,27 @@ var Controller={
 				IO.message("Out of torpedos");
 				return;
 			}
+			Tools.walkLine(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y, function(x,y){
+				var thing = StarMap.getAnythingInQuadrantAt(StarShip.quadrant, x, y);
+				console.log(x+" "+y+" "+thing);
+				if (thing){
+					if (thing.star){
+						IO.message("Photon torpedo hit star at "+thing.x+","+thing.y);
+						return false;
+					}
+					if (thing.starbase){
+						IO.message("Photon torpedo hit starbase at "+thing.x+","+thing.y);
+						StarShip.quadrant.starbases.remove(thing);
+						return false;
+					}
+					if (thing.klingon){
+						IO.message("Photon torpedo hit klingon at "+thing.x+","+thing.y);
+						StarShip.quadrant.klingons.remove(thing);
+						return false;
+					}
+				}
+				return true;
+			});
 			StarShip.torpedos--;
 			Controller.endRound();
 		},
