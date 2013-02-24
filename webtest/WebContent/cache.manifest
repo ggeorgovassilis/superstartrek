@@ -1,0 +1,13 @@
+CACHE MANIFEST
+# Rev 2
+
+CACHE:
+/
+/superstartrek/
+files/history.js
+files/jquery.1.9.2.js
+files/sst.css
+files/sst.js
+
+NETWORK:
+*

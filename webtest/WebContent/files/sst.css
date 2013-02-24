@@ -68,6 +68,22 @@ a:hover, a:active{
 	padding:5px;
 }
 
+.selected{
+	background-color:maroon;
+}
+
+.damage-light{
+	color:yellow !important;
+}
+
+.damage-medium{
+	color:orange !important;
+}
+
+.damage-bad{
+	color:red !important;
+}
+
 /*
  * Computer
  */
