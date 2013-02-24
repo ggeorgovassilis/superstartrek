@@ -166,11 +166,11 @@ a:hover, a:active{
 	display:block !important;
 }
 
-.messages-visible .content{
+.messages #content{
 	margin-bottom:1em;
 }
 
-.messages-visible button{
+.messages button{
 	width:100%;
 }
 

@@ -424,7 +424,7 @@ var Controller={
 			if (/quadrant_\d,\d/.test(token)){
 				var position = Tools.extractPositionFrom(token);
 				var quadrant = StarMap.getQuadrantAt(position.x, position.y);
-				Controller.warpTo(quadrant);
+				Controller.onQuadrantSelected(quadrant);
 			} else
 			if (/phasers_\d\d\d/.test(token)){
 				Controller.firePhasers(parseInt(/phasers_(\d\d\d)/.exec(token)[1]));
@@ -461,7 +461,7 @@ var Controller={
 			shields+=25;
 			shields=shields%101;
 			shields-=shields%25;
-			$("#shields").text("Shields "+(shields?shields+"%":"off"));
+			$("#cmd_shields").text("Shields "+(shields?shields+"%":"off"));
 			StarShip.shields = shields;
 			Controller.gotoStartScreen();
 		},
@@ -474,12 +474,14 @@ var Controller={
 			LongRangeScanScreen.show();
 		},
 		onQuadrantSelected:function(quadrant){
+			Controller.warpTo(quadrant);
 		},
 		gotoComputerScreen:function(){
 			Tools.changeHash("computer");
 		},
 		showComputerScreen:function(){
 			Computer.show();
+			Tools.centerScreen();
 		},
 		showStatusReport:function(){
 			Tools.changeHash("status");
@@ -563,7 +565,6 @@ var Controller={
 			var consumption = Computer.calculateEnergyConsumptionForWarpDrive(StarShip.quadrant, quadrant);
 			Computer.consume(consumption);
 			StarShip.quadrant = quadrant;
-			
 			Controller.endRound();
 		}
 };

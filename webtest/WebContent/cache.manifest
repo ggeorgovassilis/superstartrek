@@ -1,6 +1,10 @@
 CACHE MANIFEST
 # Rev 4
-FALLBACK:
-/ /superstartrek/
+
+files/sst.css
+files/jquery.1.9.2.js
+files/history.js
+files/sst.js
+
 NETWORK:
 *
