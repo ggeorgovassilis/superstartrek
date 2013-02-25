@@ -69,7 +69,8 @@ var Tools={
 				push(a,{
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
-					star:true
+					star:true,
+					name:"a star"
 				});
 			return a;
 		},
@@ -80,7 +81,8 @@ var Tools={
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
 					shields:100,
-					klingon:true
+					klingon:true,
+					name:"a klingon raider"
 				});
 			return a;
 		},
@@ -90,7 +92,8 @@ var Tools={
 				push(a,{
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
-					starbase:true
+					starbase:true,
+					name:"a federation starbase"
 				});
 			return a;
 		},
@@ -507,10 +510,20 @@ var Controller={
 			Tools.addPageCss("phaser-selection");
 		},
 		navigate:function(){
-			var consumption = Computer.calculateEnergyConsumptionForMovement(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y);
+			var finalX=StarShip.x;
+			var finalY=StarShip.y;
+			Tools.walkLine(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y, function(x,y){
+				var thing = StarMap.getAnythingInQuadrantAt(StarShip.quadrant, x, y);
+				if (!thing){
+					finalX = x;
+					finalY = y;
+				}
+				return (!thing);
+			});
+			var consumption = Computer.calculateEnergyConsumptionForMovement(StarShip.x, StarShip.y, finalX, finalY);
 			Computer.consume(consumption);
-			StarShip.x = Controller.sector.x;
-			StarShip.y = Controller.sector.y;
+			StarShip.x = finalX;
+			StarShip.y = finalY;
 			Controller.endRound();
 		},
 		firePhasers:function(strength){
@@ -578,7 +591,6 @@ function repositionWindowScroll(){
 	var delement = doc.documentElement;
 	var scrollOffset = (delement && delement.scrollTop  || doc.body && doc.body.scrollTop  || 0);
 	var top = $("#page").offset().top;
-	console.log(scrollOffset+" "+top);
 	if (scrollOffset < top){
 		Tools.centerScreen();
 	}
