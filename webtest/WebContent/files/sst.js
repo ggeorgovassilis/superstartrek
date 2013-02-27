@@ -1,4 +1,19 @@
+/**
+ * Constants.
+ * Refer to wikipedia articles on stardate and warpspeed for why constants were assigned their current values.
+ */
 
+var Constants = {
+		DURATION_OF_MOVEMENT_PER_SECTOR: 0.05,
+		DURATION_OF_MOVEMENT_PER_QUADRANT: 1,
+		DURATION_OF_ROUND:1,
+		ENERGY_OF_MOVEMENT_PER_SECTOR: 10,
+		ENERGY_OF_MOVEMENT_PER_QUADRANT_PER_WARP: function(speed){
+			return speed*speed*speed;
+		},
+		MAX_WARP_SPEED:4,
+		PHASER_EFFICIENCY:1
+};
 /*
  * Tools
  */
@@ -27,6 +42,9 @@ function push(arr,element){
 var Tools={
 		page:$("#page"),
 		supressNextHistoryEvent:false,
+		formatStardate:function(stardate){
+			return (Math.round(Computer.stardate*10)/10).toFixed(1);
+		},
 		scrollIntoView:function(element){
 			var offset = element.offset();
 			var destination = offset.top-2;
@@ -69,7 +87,8 @@ var Tools={
 				push(a,{
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
-					star:true
+					star:true,
+					name:"a star"
 				});
 			return a;
 		},
@@ -80,7 +99,8 @@ var Tools={
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
 					shields:100,
-					klingon:true
+					klingon:true,
+					name:"a klingon raider"
 				});
 			return a;
 		},
@@ -90,7 +110,8 @@ var Tools={
 				push(a,{
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
-					starbase:true
+					starbase:true,
+					name:"a federation starbase"
 				});
 			return a;
 		},
@@ -330,11 +351,13 @@ var StatusReport={
 		torpedos:$("#report_torpedos"),
 		location:$("#report_location"),
 		shields:$("#report_shields"),
+		stardate:$("#report_stardate"),
 		update:function(){
 			StatusReport.energy.text(StarShip.energy);
 			StatusReport.torpedos.text(StarShip.torpedos);
 			StatusReport.location.text(StarShip.quadrant.regionName+" "+StarShip.quadrant.x+","+StarShip.quadrant.y);
 			StatusReport.shields.text(StarShip.shields);
+			StatusReport.stardate.text(Tools.formatStardate(Computer.stardate));
 		}
 	};
 
@@ -349,6 +372,12 @@ var CommandBar={
 
 var Computer={
 		element:$("#computerscreen"),
+		stardate:2550,
+		advanceClock:function(duration){
+			Computer.stardate+=duration;
+			var stardateFormatted = Tools.formatStardate(Computer.stardate);
+			$("#stardate").text(stardateFormatted);
+		},
 		show:function(){
 			Tools.setPageCss("computer");
 			Controller.resetCommands();
@@ -360,14 +389,17 @@ var Computer={
 		},
 		calculateEnergyConsumptionForMovement:function(xFrom,yFrom,xTo,yTo){
 			var distance = Tools.distance(xFrom,yFrom,xTo,yTo);
-			return distance*10;
+			return distance*Constants.ENERGY_OF_MOVEMENT_PER_SECTOR;
 		},
 		calculateEnergyConsumptionForWarpDrive:function(quadrantFrom, quadrantTo){
 			var distance = Tools.distance(quadrantFrom.x,quadrantFrom.y,quadrantTo.x,quadrantTo.y);
-			return distance*100;
+			//Reason for this strange formula: according to the wikipedia article on WS, WS is a cubic scale
+			//We assume that the warp drive runs always at maximum speed
+			var speed = Math.max(Constants.MAX_WARP_SPEED, distance);
+			return Constants.ENERGY_OF_MOVEMENT_PER_QUADRANT_PER_WARP(speed)*distance/speed;
 		},
 		calculateEnergyConsumptionForPhasers:function(strength){
-			return strength;
+			return strength*Constants.PHASER_EFFICIENCY;
 		},
 		consume:function(energy){
 			StarShip.energy-=energy;
@@ -480,6 +512,7 @@ var Controller={
 			Tools.changeHash("computer");
 		},
 		showComputerScreen:function(){
+			Computer.advanceClock(0);
 			Computer.show();
 			Tools.centerScreen();
 		},
@@ -500,6 +533,7 @@ var Controller={
 		endRound:function(){
 			var consumption = Computer.calculateBaseEnergyConsumption();
 			Computer.consume(consumption);
+			Computer.advanceClock(Constants.DURATION_OF_ROUND);
 			Controller.gotoStartScreen();
 		},
 		selectPhaserStrength:function(){
@@ -507,10 +541,25 @@ var Controller={
 			Tools.addPageCss("phaser-selection");
 		},
 		navigate:function(){
-			var consumption = Computer.calculateEnergyConsumptionForMovement(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y);
+			var finalX=StarShip.x;
+			var finalY=StarShip.y;
+			Tools.walkLine(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y, function(x,y){
+				var thing = StarMap.getAnythingInQuadrantAt(StarShip.quadrant, x, y);
+				if (!thing){
+					finalX = x;
+					finalY = y;
+				}
+				return (!thing);
+			});
+			var distance = Tools.distance(StarShip.x, StarShip.y, finalX, finalY);
+			// movement obstructed?
+			if (distance == 0)
+				return;
+			var consumption = Computer.calculateEnergyConsumptionForMovement(StarShip.x, StarShip.y, finalX, finalY);
 			Computer.consume(consumption);
-			StarShip.x = Controller.sector.x;
-			StarShip.y = Controller.sector.y;
+			StarShip.x = finalX;
+			StarShip.y = finalY;
+			Computer.advanceClock(Constants.DURATION_OF_MOVEMENT_PER_SECTOR*distance);
 			Controller.endRound();
 		},
 		firePhasers:function(strength){
@@ -564,6 +613,9 @@ var Controller={
 		warpTo:function(quadrant){
 			var consumption = Computer.calculateEnergyConsumptionForWarpDrive(StarShip.quadrant, quadrant);
 			Computer.consume(consumption);
+			var distance = Tools.distance(StarShip.quadrant.x, StarShip.quadrant.y, quadrant.x, quadrant.y);
+			var speed = Math.min(distance, Constants.MAX_WARP_SPEED);
+			Computer.advanceClock(Constants.DURATION_OF_MOVEMENT_PER_QUADRANT*distance/speed);
 			StarShip.quadrant = quadrant;
 			Controller.endRound();
 		}
@@ -578,7 +630,6 @@ function repositionWindowScroll(){
 	var delement = doc.documentElement;
 	var scrollOffset = (delement && delement.scrollTop  || doc.body && doc.body.scrollTop  || 0);
 	var top = $("#page").offset().top;
-	console.log(scrollOffset+" "+top);
 	if (scrollOffset < top){
 		Tools.centerScreen();
 	}
