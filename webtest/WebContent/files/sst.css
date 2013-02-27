@@ -23,6 +23,14 @@ a:hover, a:active{
 	background-color:purple;
 }
 
+#stardate{
+	position:absolute;
+	top:2em;
+	right:0;
+	color:deepskyblue;
+	font-size:80%;
+}
+
 /*
  * Long range scan
  */
