@@ -12,13 +12,11 @@
 <div class="glasspanel"></div>
 <div id="topmarker">&nbsp;</div>
 <div id="page">
-<div id="stardate"></div>
 <div class="messages">
 <div id="content"></div>
 <button>OK</button>
 </div>
 <div id="longrangescanscreen" class="screen top-selection">
-<a href="#computer" class="command top-command">Cancel</a>
 <table id="longrangescan">
 <tr class="region-names"><td colspan="4">Antares</td><td colspan="4">Sirius</td></tr>
 <tr class="quadrants"><td id="0_0"/><td id="1_0"/><td id="2_0"/><td id="3_0"/><td id="4_0"/><td id="5_0"/><td id="6_0"/><td id="7_0"/></tr>
@@ -44,6 +42,8 @@
 <dd id="report_stardate"></dd>
 <dt>Energy</dt>
 <dd id="report_energy"></dd>
+<dt>Baseline energy consumption</dt>
+<dd id="report_energy_consumption"></dd>
 <dt>Location</dt>
 <dd id="report_location"></dd>
 <dt>Torpedos</dt>
@@ -51,14 +51,20 @@
 <dt>Shields</dt>
 <dd id="report_shields"></dd>
 </dl>
-<a href="#computer">OK</a>
 </div>
 <div id="computerscreen" class="screen">
+<div id="stardate"></div>
+<table id="quadrantscan"></table>
 <table id="shortrangescan">
+<tr><td id="q0"></td><td id="q1"></td><td id="q2"></td></tr>
+<tr><td id="q3"></td><td id="q4"></td><td id="q5"></td></tr>
+<tr><td id="q6"></td><td id="q7"></td><td id="q8"></td></tr>
 </table>
+</div>
+</div>
 <div id="commandbar" class="command-bar">
 <a href="#navigate" class="command field-command">Navigate</a>
-<a id="cmd_shields" href="#shields" class="command top-command">Shields</a>
+<div class="progress-bar"><div id="shield_indicator" class="progress-indicator"></div><a id="cmd_shields" href="#shields" class="command top-command">Shields</a></div>
 <a href="#status" class="command top-command">Status report</a>
 <a href="#long-range-scan" class="command top-command">Long range scan</a>
 <a href="#phasers" class="command field-command">Phasers</a>
@@ -66,9 +72,10 @@
 <a href="#phasers_100" class="command phaser-command">Low</a>
 <a href="#phasers_200" class="command phaser-command">Medium</a>
 <a href="#phasers_300" class="command phaser-command">Max</a>
-<a href="#computer" class="command phaser-command field-command">Cancel</a>
-</div>
-</div>
+<a href="#starbase" id="dock_at_starbase_command" class="command top-command">Dock at starbase</a>
+<a href="#starbase_refuel" class="command starbase-command">Refuel</a>
+<a href="#starbase_complete" class="command starbase-command">Refuel &amp; repair</a>
+<a href="#computer" class="command phaser-command field-command long-range-scan-command status-command starbase-command">Cancel</a>
 </div>
 <div id="downmarker"></div>
 <script type="text/javascript" src="files/sst.js"></script>
