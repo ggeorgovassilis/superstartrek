@@ -40,7 +40,7 @@ function push(arr,element){
 }
 
 var Tools={
-		page:$("#page"),
+		page:$("body"),
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
@@ -65,6 +65,9 @@ var Tools={
 		addPageCss:function(css){
 			Tools.page.removeClass(css);
 			Tools.page.addClass(css);
+		},
+		hasPageCss:function(css){
+			return Tools.page.attr("class").indexOf(css)!=-1;
 		},
 		removePageCss:function(css){
 			Tools.page.removeClass(css);
@@ -274,10 +277,10 @@ var StarShip={
 };
 
 /**
- * Short range scan
+ * Quadrant scan
  */
-var ShortRangeScanScreen={
-		element:$("#shortrangescan"),
+var QuadrantScanScreen={
+		element:$("#quadrantscan"),
 		updateList:function(symbol, list, formatter){
 			for (var i=0;i<list.length;i++){
 				var thing = list[i];
@@ -288,13 +291,13 @@ var ShortRangeScanScreen={
 			}
 		},
 		update:function(quadrant){
-			if (ShortRangeScanScreen.constructUi!=null){
-				ShortRangeScanScreen.constructUi();
-				ShortRangeScanScreen.constructUi=null;
+			if (QuadrantScanScreen.constructUi!=null){
+				QuadrantScanScreen.constructUi();
+				QuadrantScanScreen.constructUi=null;
 			}
-			$("#shortrangescan a").html("&nbsp;");
-			ShortRangeScanScreen.updateList("&nbsp;*&nbsp;",quadrant.stars, function(star){return "";});
-			ShortRangeScanScreen.updateList("o-}",quadrant.klingons, function(klingon){
+			$("#quadrantscan a").html("&nbsp;");
+			QuadrantScanScreen.updateList("&nbsp;*&nbsp;",quadrant.stars, function(star){return "";});
+			QuadrantScanScreen.updateList("o-}",quadrant.klingons, function(klingon){
 				if (klingon.shields<25)
 					return "damage-bad";
 				if (klingon.shields<50)
@@ -303,12 +306,12 @@ var ShortRangeScanScreen={
 					return "damage-light";
 				return "";
 				});
-			ShortRangeScanScreen.updateList("&lt;!&gt;",quadrant.starbases, function(starbase){return "";});
+			QuadrantScanScreen.updateList("&lt;!&gt;",quadrant.starbases, function(starbase){return "";});
 			if (StarShip.quadrant === quadrant)
-				ShortRangeScanScreen.updateList("O=Ξ",[StarShip],function(starhip){return "";});
+				QuadrantScanScreen.updateList("O=Ξ",[StarShip],function(starhip){return "";});
 		},
 		constructUi:function(){
-			var element = ShortRangeScanScreen.element;
+			var element = QuadrantScanScreen.element;
 			for (var y=0;y<8;y++){
 				var tr = $("<tr></tr>");
 				element.append(tr);
@@ -319,7 +322,7 @@ var ShortRangeScanScreen={
 			}
 		},
 		selectSectorAt: function(x,y){
-			$("#shortrangescan .selected").removeClass("selected");
+			$("#quadrantscan .selected").removeClass("selected");
 			$("#q_"+x+"_"+y).addClass("selected");
 		}
 };
@@ -335,7 +338,9 @@ var LongRangeScanScreen={
 				LongRangeScanScreen.updateQuadrant(StarMap.quadrants[i]);
 		},
 		updateQuadrant:function(quadrant){
-			var e = quadrant.element;
+			LongRangeScanScreen.updateElementWithQuadrant(quadrant, quadrant.element);
+		},
+		updateElementWithQuadrant:function(quadrant, e){
 			e.html("<a href='#quadrant_"+quadrant.x+","+quadrant.y+"'>"+quadrant.klingons.length+" "+quadrant.starbases.length+" "+quadrant.stars.length+"</a>");
 			e.removeClass("has-starship");
 			if (StarShip.quadrant == quadrant)
@@ -344,20 +349,48 @@ var LongRangeScanScreen={
 };
 
 /**
+ * Short range scan
+ */
+
+var ShortRangeScanScreen={
+	elem:$("#shortrangescan"),
+	show:function(){
+		Tools.setPageCss("short-range-scan");
+		Tools.addPageCss("short-range-scan-selection");
+		var index = 0;
+		var qx = StarShip.quadrant.x;
+		var qy = StarShip.quadrant.y;
+		for (var y=qy-1;y<=qy+1;y++)
+		for (var x=qx-1;x<=qx+1;x++){
+			var cell = $("#q"+index);
+			if (x>=0&&x<=7&&y>=0&&y<=7){
+				var quadrant = StarMap.getQuadrantAt(x, y);
+				LongRangeScanScreen.updateElementWithQuadrant(quadrant, cell);
+			} else
+				cell.text("0 0 0");
+			index++;
+		}
+	}
+};
+
+/**
  * Computer console
  */
 var StatusReport={
 		energy:$("#report_energy"),
+		energyConsumption:$("#report_energy_consumption"),
 		torpedos:$("#report_torpedos"),
 		location:$("#report_location"),
 		shields:$("#report_shields"),
 		stardate:$("#report_stardate"),
 		update:function(){
 			StatusReport.energy.text(StarShip.energy);
+			StatusReport.energyConsumption.text(Computer.calculateBaseEnergyConsumption);
 			StatusReport.torpedos.text(StarShip.torpedos);
 			StatusReport.location.text(StarShip.quadrant.regionName+" "+StarShip.quadrant.x+","+StarShip.quadrant.y);
 			StatusReport.shields.text(StarShip.shields);
 			StatusReport.stardate.text(Tools.formatStardate(Computer.stardate));
+			
 		}
 	};
 
@@ -367,6 +400,7 @@ var CommandBar={
 			Tools.removePageCss("sector-selection");
 			Tools.removePageCss("phaser-selection");
 			Tools.removePageCss("top-selection");
+			Tools.removePageCss("short-range-scan-selection");
 		},
 };
 
@@ -382,7 +416,7 @@ var Computer={
 			Tools.setPageCss("computer");
 			Controller.resetCommands();
 			Tools.addPageCss("top-selection");
-			ShortRangeScanScreen.update(StarShip.quadrant);
+			QuadrantScanScreen.update(StarShip.quadrant);
 		},
 		calculateBaseEnergyConsumption:function(){
 			return StarShip.shields;
@@ -412,11 +446,15 @@ var Computer={
 var IO={
 	message:function(text){
 		$("#content").text(text);
-		$("body").removeClass("messages-visible");
-		$("body").addClass("messages-visible");
+		Tools.removePageCss("messages-visible");
+		Tools.addPageCss("messages-visible");
 	},
 	dismiss:function(){
-		$("body").removeClass("messages-visible");
+		Tools.removePageCss("messages-visible");
+		Controller.resume();
+	},
+	isMessageShown:function(){
+		return Tools.hasPageCss("messages-visible");
 	}
 };
 
@@ -437,11 +475,14 @@ var Controller={
 			if (""==token){
 				Controller.showStartScreen();
 			} else
-			if (/short-range-scan/.test(token)){
-				Controller.shortRangeScan();
+			if (/quadrant-scan/.test(token)){
+				Controller.quadrantScan();
 			} else
 			if (/long-range-scan/.test(token)){
 				Controller.longRangeScan();
+			} else
+			if (/short-range-scan/.test(token)){
+				Controller.shortRangeScan();
 			} else
 			if (/computer/.test(token)){
 				Controller.showComputerScreen();
@@ -486,7 +527,7 @@ var Controller={
 			Tools.addPageCss("sector-selection");
 			Controller.sector.x = x;
 			Controller.sector.y = y;
-			ShortRangeScanScreen.selectSectorAt(x,y);
+			QuadrantScanScreen.selectSectorAt(x,y);
 		},
 		toggleShieldStrength:function(){
 			var shields = StarShip.shields;
@@ -497,13 +538,17 @@ var Controller={
 			StarShip.shields = shields;
 			Controller.gotoStartScreen();
 		},
-		shortRangeScan:function(){
-			Tools.changeHash("short-range-scan");
-			ShortRangeScanScreen.show(StarShip.quadrant);
+		quadrantScan:function(){
+			Tools.changeHash("quadrant-scan");
+			QuadrantScanScreen.show(StarShip.quadrant);
 		},
 		longRangeScan:function(){
 			Tools.changeHash("long-range-scan");
 			LongRangeScanScreen.show();
+		},
+		shortRangeScan:function(){
+			Tools.changeHash("short-range-scan");
+			ShortRangeScanScreen.show();
 		},
 		onQuadrantSelected:function(quadrant){
 			Controller.warpTo(quadrant);
@@ -530,7 +575,12 @@ var Controller={
 		startGame:function(){
 			Controller.gotoStartScreen();
 		},
+		resume:function(){
+			Controller.endRound();
+		},
 		endRound:function(){
+			if (IO.isMessageShown())
+				return;
 			var consumption = Computer.calculateBaseEnergyConsumption();
 			Computer.consume(consumption);
 			Computer.advanceClock(Constants.DURATION_OF_ROUND);
@@ -625,11 +675,13 @@ $.History.bind(function(state){
 	Controller.onHistoryChanged(state);
 });
 
+var _page = $("#page");
+
 function repositionWindowScroll(){
 	var doc = window.document;
 	var delement = doc.documentElement;
 	var scrollOffset = (delement && delement.scrollTop  || doc.body && doc.body.scrollTop  || 0);
-	var top = $("#page").offset().top;
+	var top = _page.offset().top;
 	if (scrollOffset < top){
 		Tools.centerScreen();
 	}

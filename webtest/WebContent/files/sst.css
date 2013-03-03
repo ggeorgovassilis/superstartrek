@@ -4,8 +4,8 @@ body,html,div,table,tr,td{
 }
 
 table{
+	width: 100%;
 	border-collapse:collapse;
-	width:100%;
 }
 
 html{
@@ -60,18 +60,14 @@ a:hover, a:active{
 	background-color:darkgreen;
 }
 
-/*
- * Short range scan
- */
- 
-#shortrangescan td{
+#quadrantscan td{
 	border:solid gray 1px;
 	width:10%;
 	height:1em;
 	text-align:center;
 }
 
-#shortrangescan a{
+#quadrantscan a{
 	display:block;
 	padding:5px;
 }
@@ -92,6 +88,19 @@ a:hover, a:active{
 	color:red !important;
 }
 
+/**
+ * Short range scan
+ */
+ 
+#shortrangescan td{
+	width:33.3%;
+	text-align:center;
+}
+
+#shortrangescan a{
+	display:block;
+}
+
 /*
  * Computer
  */
@@ -105,7 +114,7 @@ a:hover, a:active{
 	float:left;
 }
 
-.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command, .display-status #statusbar{
+.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command, .display-status #statusbar, .short-range-scan .short-range-scan-command, .long-range-scan .long-range-scan-command{
 	display:block;
 }
 
@@ -119,6 +128,10 @@ a:hover, a:active{
 }
 
 .long-range-scan #longrangescanscreen{
+	display:block;
+}
+
+.short-range-scan #shortrangescanscreen{
 	display:block;
 }
 
