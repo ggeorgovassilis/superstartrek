@@ -8,6 +8,8 @@ var Constants = {
 		DURATION_OF_MOVEMENT_PER_QUADRANT: 1,
 		DURATION_OF_ROUND:1,
 		ENERGY_OF_MOVEMENT_PER_SECTOR: 10,
+		ENERGY_PER_SHIELD:1,
+		BASE_CONSUMPTION:1,
 		ENERGY_OF_MOVEMENT_PER_QUADRANT_PER_WARP: function(speed){
 			return speed*speed*speed;
 		},
@@ -61,6 +63,7 @@ var Tools={
 		},
 		setPageCss:function(css){
 			Tools.page.attr("class",css);
+			Tools.handleWindowResize();
 		},
 		addPageCss:function(css){
 			Tools.page.removeClass(css);
@@ -130,6 +133,16 @@ var Tools={
 			};
 			return quadrant;
 		},
+		handleWindowResize:function(){
+			var width = $(window).width();
+			var height = $(window).height();
+			Tools.removePageCss("orientation-horizonal");
+			Tools.removePageCss("orientation-vertical");
+			if (width>height)
+				Tools.addPageCss("orientation-horizontal");
+			else
+				Tools.addPageCss("orientation-vertical");
+		},
 		walkLine:function(x0,y0,x1,y1, callback){
 			var sx=0;
 			var sy=0;
@@ -159,6 +172,8 @@ var Tools={
 		
 };
 
+$(window).resize(Tools.handleWindowResize);
+Tools.handleWindowResize();
 /*
  * Starmap
  */
@@ -273,7 +288,17 @@ var StarShip={
 	   y:0,
 	   energy:3000,
 	   shields:0,
-	   torpedos:10
+	   torpedos:10,
+	   repositionIfSectorOccupied:function(){
+		   var newX = StarShip.x;
+		   var newY = StarShip.y;
+		   while (StarMap.getAnythingInQuadrantAt(StarShip.quadrant, newX, newY)){
+			   newX = Math.min(7,Math.max(0,Math.round(newX + 1-2*Math.random())));
+			   newY = Math.min(7,Math.max(0,Math.round(newY + 1-2*Math.random())));
+		   }
+		   StarShip.x = newX;
+		   StarShip.y = newY;
+	   }
 };
 
 /**
@@ -354,12 +379,10 @@ var LongRangeScanScreen={
 
 var ShortRangeScanScreen={
 	elem:$("#shortrangescan"),
-	show:function(){
-		Tools.setPageCss("short-range-scan");
-		Tools.addPageCss("short-range-scan-selection");
+	update:function(quadrant){
 		var index = 0;
-		var qx = StarShip.quadrant.x;
-		var qy = StarShip.quadrant.y;
+		var qx = quadrant.x;
+		var qy = quadrant.y;
 		for (var y=qy-1;y<=qy+1;y++)
 		for (var x=qx-1;x<=qx+1;x++){
 			var cell = $("#q"+index);
@@ -417,9 +440,10 @@ var Computer={
 			Controller.resetCommands();
 			Tools.addPageCss("top-selection");
 			QuadrantScanScreen.update(StarShip.quadrant);
+			ShortRangeScanScreen.update(StarShip.quadrant);
 		},
 		calculateBaseEnergyConsumption:function(){
-			return StarShip.shields;
+			return StarShip.shields*Constants.ENERGY_PER_SHIELD + Constants.BASE_CONSUMPTION;
 		},
 		calculateEnergyConsumptionForMovement:function(xFrom,yFrom,xTo,yTo){
 			var distance = Tools.distance(xFrom,yFrom,xTo,yTo);
@@ -481,9 +505,6 @@ var Controller={
 			if (/long-range-scan/.test(token)){
 				Controller.longRangeScan();
 			} else
-			if (/short-range-scan/.test(token)){
-				Controller.shortRangeScan();
-			} else
 			if (/computer/.test(token)){
 				Controller.showComputerScreen();
 			} else
@@ -534,7 +555,7 @@ var Controller={
 			shields+=25;
 			shields=shields%101;
 			shields-=shields%25;
-			$("#cmd_shields").text("Shields "+(shields?shields+"%":"off"));
+			$("#shield_indicator").css("width",shields+"%");
 			StarShip.shields = shields;
 			Controller.gotoStartScreen();
 		},
@@ -545,10 +566,6 @@ var Controller={
 		longRangeScan:function(){
 			Tools.changeHash("long-range-scan");
 			LongRangeScanScreen.show();
-		},
-		shortRangeScan:function(){
-			Tools.changeHash("short-range-scan");
-			ShortRangeScanScreen.show();
 		},
 		onQuadrantSelected:function(quadrant){
 			Controller.warpTo(quadrant);
@@ -573,6 +590,7 @@ var Controller={
 			Controller.showComputerScreen();
 		},
 		startGame:function(){
+			StarShip.repositionIfSectorOccupied();
 			Controller.gotoStartScreen();
 		},
 		resume:function(){
@@ -667,6 +685,7 @@ var Controller={
 			var speed = Math.min(distance, Constants.MAX_WARP_SPEED);
 			Computer.advanceClock(Constants.DURATION_OF_MOVEMENT_PER_QUADRANT*distance/speed);
 			StarShip.quadrant = quadrant;
+			StarShip.repositionIfSectorOccupied();
 			Controller.endRound();
 		}
 };

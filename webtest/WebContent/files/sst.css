@@ -4,7 +4,6 @@ body,html,div,table,tr,td{
 }
 
 table{
-	width: 100%;
 	border-collapse:collapse;
 }
 
@@ -19,8 +18,8 @@ a, a:visited{
 	color:white;
 }
 
-a:hover, a:active{
-	background-color:purple;
+.command:hover{
+	text-decoration:underline;
 }
 
 #stardate{
@@ -62,14 +61,18 @@ a:hover, a:active{
 
 #quadrantscan td{
 	border:solid gray 1px;
-	width:10%;
 	height:1em;
 	text-align:center;
+	width:12.5%;
 }
 
 #quadrantscan a{
 	display:block;
 	padding:5px;
+}
+
+#quadrantscan{
+	float:left;
 }
 
 .selected{
@@ -101,6 +104,15 @@ a:hover, a:active{
 	display:block;
 }
 
+#shortrangescan{
+	min-width:150px;
+}
+
+.orientation-vertical #shortrangescan{
+	width:100%;
+	clear:left;
+}
+
 /*
  * Computer
  */
@@ -114,7 +126,7 @@ a:hover, a:active{
 	float:left;
 }
 
-.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command, .display-status #statusbar, .short-range-scan .short-range-scan-command, .long-range-scan .long-range-scan-command{
+.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command, .display-status #statusbar, .long-range-scan .long-range-scan-command, .status-report .status-command{
 	display:block;
 }
 
@@ -200,4 +212,20 @@ a:hover, a:active{
 }
 
 #topmarker{
+}
+
+.progress-bar{
+	float:left;
+	overflow:hidden;
+	position:relative;
+}
+
+.progress-bar a{
+	position:relative;
+}
+
+.progress-indicator{
+	background-color:midnightblue;
+	height:100%;
+	position:absolute;
 }
