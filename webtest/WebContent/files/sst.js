@@ -7,6 +7,8 @@ var Constants = {
 		DURATION_OF_MOVEMENT_PER_SECTOR: 0.05,
 		DURATION_OF_MOVEMENT_PER_QUADRANT: 1,
 		DURATION_OF_ROUND:1,
+		DURATION_OF_REFUELING:2,
+		DURATION_OF_REPAIRS:4,
 		ENERGY_OF_MOVEMENT_PER_SECTOR: 10,
 		ENERGY_PER_SHIELD:1,
 		BASE_CONSUMPTION:1,
@@ -14,6 +16,8 @@ var Constants = {
 			return speed*speed*speed;
 		},
 		MAX_WARP_SPEED:4,
+		MAX_ENERGY:3000,
+		MAX_TORPEDOS:10,
 		PHASER_EFFICIENCY:1
 };
 /*
@@ -276,6 +280,16 @@ var StarMap={
 				   if (thing.x == x && thing.y == y)
 					   return thing;
 			   }
+		   },
+		   isStarbaseAdjacent:function(quadrant, x, y){
+			 for (var i=0;i<quadrant.starbases.length;i++){
+				 var starbase = quadrant.starbases[i];
+				 for (var _x=x-1;_x<=x+1;_x++)  
+			     for (var _y=y-1;_y<=y+1;_y++)
+			     if (starbase.x==_x && starbase.y==_y)
+			    	 return starbase;
+			 }
+			 return false;
 		   }
 };
 
@@ -286,7 +300,7 @@ var StarShip={
 	   quadrant:StarMap.quadrants[0],
 	   x:0,
 	   y:0,
-	   energy:3000,
+	   energy:Constants.MAX_ENERGY,
 	   shields:0,
 	   torpedos:10,
 	   repositionIfSectorOccupied:function(){
@@ -424,6 +438,7 @@ var CommandBar={
 			Tools.removePageCss("phaser-selection");
 			Tools.removePageCss("top-selection");
 			Tools.removePageCss("short-range-scan-selection");
+			$("#dock_at_starbase_command").css("display","none");
 		},
 };
 
@@ -439,6 +454,9 @@ var Computer={
 			Tools.setPageCss("computer");
 			Controller.resetCommands();
 			Tools.addPageCss("top-selection");
+			
+			var starbaseNearby = StarMap.isStarbaseAdjacent(StarShip.quadrant, StarShip.x, StarShip.y);
+			$("#dock_at_starbase_command").css("display",(!!starbaseNearby)?"inline":"none");
 			QuadrantScanScreen.update(StarShip.quadrant);
 			ShortRangeScanScreen.update(StarShip.quadrant);
 		},
@@ -538,9 +556,34 @@ var Controller={
 			if (/status/.test(token)){
 				Controller.showStatusReport();
 			} else
+			if (/starbase_refuel/.test(token)){
+				alert(132);
+				Controller.refuelAtStarbase();
+			} else
+			if (/starbase_complete/.test(token)){
+				Controller.repairAtStarbase();
+			} else
+			if (/starbase/.test(token)){
+				Controller.showStarbaseOptions();
+			} else
 			if (/cancel/.test(token)){
 				Controller.cancel();
 			}
+		},
+		refuelAtStarbase:function(){
+			StarShip.energy = Constants.MAX_ENERGY;
+			StarShip.torpedos = Constants.MAX_TORPEDOS;
+			StarShip.shields = 0;
+			Computer.advanceClock(Constants.DURATION_OF_REFUELING);
+			Controller.endRound();
+		},
+		repairAtStarbase:function(){
+			Computer.advanceClock(Constants.DURATION_OF_REPAIRS);
+			Controller.refuelAtStarbase();
+		},
+		showStarbaseOptions:function(){
+			Controller.resetCommands();
+			Tools.addPageCss("starbase");
 		},
 		onSectorSelected:function(x,y){
 			Controller.resetCommands();
@@ -579,6 +622,7 @@ var Controller={
 			Tools.centerScreen();
 		},
 		showStatusReport:function(){
+			Controller.resetCommands();
 			Tools.changeHash("status");
 			Tools.setPageCss("status-report");
 			StatusReport.update();

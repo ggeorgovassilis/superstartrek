@@ -126,7 +126,7 @@ a, a:visited{
 	float:left;
 }
 
-.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command, .display-status #statusbar, .long-range-scan .long-range-scan-command, .status-report .status-command{
+.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command, .display-status #statusbar, .long-range-scan .long-range-scan-command, .status-report .status-command, .starbase .starbase-command{
 	display:block;
 }
 
