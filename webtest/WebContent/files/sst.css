@@ -18,7 +18,7 @@ a, a:visited{
 	color:white;
 }
 
-.command:hover{
+#commandbar a:hover{
 	text-decoration:underline;
 }
 
@@ -117,18 +117,12 @@ a, a:visited{
  * Computer
  */
  
- .command-bar{
- }
- 
-.command{
+#commandbar a{
 	display:none;
 	padding:10px;
 	float:left;
 }
 
-.top-selection .top-command, .sector-selection .field-command, .phaser-selection .phaser-command, .shields-selection .shields-command, .display-status #statusbar, .long-range-scan .long-range-scan-command, .status-report .status-command, .starbase .starbase-command{
-	display:block;
-}
 
 .screen{
 	display:none;
@@ -229,3 +223,47 @@ a, a:visited{
 	height:100%;
 	position:absolute;
 }
+
+/**
+ * New stuff
+ */
+ 
+.page-computer #computerscreen, .page-sector #computerscreen, .page-status #statusreport, .page-phasers #computerscreen{
+	display:block;
+}
+
+.page-computer #cmd_status, .page-computer #cmd_status, .page-computer #cmd_longrangescan, .page-computer #cmd_starbase_dock, .page-computer #cmd_shields{
+	display:block;
+}
+
+.page-sector #cmd_phasers, .page-sector #cmd_torpedos, .page-sector #cmd_cancel,.page-sector #cmd_navigate{
+	display:block;
+}
+
+.page-phasers #cmd_phasers_100, .page-phasers #cmd_phasers_200, .page-phasers #cmd_phasers_300, .page-phasers #cmd_cancel{
+	display:block;
+}
+
+.page-long-range-scan #longrangescanscreen, .page-long-range-scan #cmd_cancel{
+	display:block;
+}
+
+
+.page-status #cmd_cancel{
+	display:block;
+}
+/*
+cmd_navigate
+cmd_shields
+cmd_status
+cmd_longrangescan
+cmd_phasers
+cmd_torpedos
+cmd_phasers_100
+cmd_phasers_200
+cmd_phasers_300
+cmd_starbase_dock
+cmd_starbase_refuel
+cmd_starbase_complete
+cmd_cancel
+*/

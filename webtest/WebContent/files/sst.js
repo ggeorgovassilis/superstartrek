@@ -47,6 +47,7 @@ function push(arr,element){
 
 var Tools={
 		page:$("body"),
+		hashesWithCss:/(computer|status|long-range-scan|sector)_*/,
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
@@ -64,20 +65,6 @@ var Tools={
 		},
 		changeHash:function(hash){
 			document.location.hash=hash;
-		},
-		setPageCss:function(css){
-			Tools.page.attr("class",css);
-			Tools.handleWindowResize();
-		},
-		addPageCss:function(css){
-			Tools.page.removeClass(css);
-			Tools.page.addClass(css);
-		},
-		hasPageCss:function(css){
-			return Tools.page.attr("class").indexOf(css)!=-1;
-		},
-		removePageCss:function(css){
-			Tools.page.removeClass(css);
 		},
 		extractPositionFrom:function(text){
 			var parts = /.*?(\d)[,_](\d)/.exec(text);
@@ -172,8 +159,23 @@ var Tools={
 			       y0 = y0 + sy;
 			     };
 				};
+		},
+		removePageCss:function(css){
+			Tools.page.removeClass(css);
+		},
+		addPageCss:function(css){
+			Tools.page.addClass(css);
+		},
+		updatePageCssWithToken:function(hash){
+			if (!Tools.hashesWithCss.test(hash))
+				return;
+			var css = Tools.hashesWithCss.exec(hash)[1];
+			Tools.page.attr("class","page-"+css);
+			Tools.handleWindowResize();
+		},
+		hasPageCss:function(css){
+			return Tools.page.attr("class").indexOf(css)!=-1;
 		}
-		
 };
 
 $(window).resize(Tools.handleWindowResize);
@@ -372,7 +374,6 @@ var QuadrantScanScreen={
 var LongRangeScanScreen={
 		element:$("#longrangescan"),
 		show:function(){
-			Tools.setPageCss("long-range-scan");
 			for (var i=0;i<StarMap.quadrants.length;i++)
 				LongRangeScanScreen.updateQuadrant(StarMap.quadrants[i]);
 		},
@@ -432,14 +433,7 @@ var StatusReport={
 	};
 
 var CommandBar={
-		element:$("#commandbar"),
-		resetCommands:function(){
-			Tools.removePageCss("sector-selection");
-			Tools.removePageCss("phaser-selection");
-			Tools.removePageCss("top-selection");
-			Tools.removePageCss("short-range-scan-selection");
-			$("#dock_at_starbase_command").css("display","none");
-		},
+		element:$("#commandbar")
 };
 
 var Computer={
@@ -451,12 +445,8 @@ var Computer={
 			$("#stardate").text(stardateFormatted);
 		},
 		show:function(){
-			Tools.setPageCss("computer");
-			Controller.resetCommands();
-			Tools.addPageCss("top-selection");
-			
 			var starbaseNearby = StarMap.isStarbaseAdjacent(StarShip.quadrant, StarShip.x, StarShip.y);
-			$("#dock_at_starbase_command").css("display",(!!starbaseNearby)?"inline":"none");
+			$("#cmd_starbase_dock").css("display",(!!starbaseNearby)?"inline":"none");
 			QuadrantScanScreen.update(StarShip.quadrant);
 			ShortRangeScanScreen.update(StarShip.quadrant);
 		},
@@ -480,9 +470,11 @@ var Computer={
 		consume:function(energy){
 			StarShip.energy-=energy;
 			StarShip.energy=Math.floor(StarShip.energy);
-			if (StarShip.energy<=0)
+			if (StarShip.energy<=0){
 				IO.message("Game over, out of energy");
-		}
+				Controller.gotoComputerScreen();
+				}		
+			}
 };
 
 var IO={
@@ -507,10 +499,8 @@ $(".messages button").click(IO.dismiss);
 var Controller={
 		sector:{x:0,y:0},
 		currentHistoryToken:null,
-		resetCommands:function(){
-			CommandBar.resetCommands();
-		},
 		onHistoryChanged:function(token){
+			Tools.updatePageCssWithToken(token);
 			if (token == Controller.currentHistoryToken)
 				return;
 			Controller.currentHistoryToken = token;
@@ -582,13 +572,9 @@ var Controller={
 			Controller.refuelAtStarbase();
 		},
 		showStarbaseOptions:function(){
-			Controller.resetCommands();
-			Tools.addPageCss("starbase");
 		},
 		onSectorSelected:function(x,y){
-			Controller.resetCommands();
 			$("#cmd_torpedos").text("Photon torpedos ("+StarShip.torpedos+")");
-			Tools.addPageCss("sector-selection");
 			Controller.sector.x = x;
 			Controller.sector.y = y;
 			QuadrantScanScreen.selectSectorAt(x,y);
@@ -622,9 +608,6 @@ var Controller={
 			Tools.centerScreen();
 		},
 		showStatusReport:function(){
-			Controller.resetCommands();
-			Tools.changeHash("status");
-			Tools.setPageCss("status-report");
 			StatusReport.update();
 		},
 		gotoStartScreen:function(){
@@ -646,11 +629,9 @@ var Controller={
 			var consumption = Computer.calculateBaseEnergyConsumption();
 			Computer.consume(consumption);
 			Computer.advanceClock(Constants.DURATION_OF_ROUND);
-			Controller.gotoStartScreen();
+			Controller.gotoComputerScreen();
 		},
 		selectPhaserStrength:function(){
-			Controller.resetCommands();
-			Tools.addPageCss("phaser-selection");
 		},
 		navigate:function(){
 			var finalX=StarShip.x;
@@ -666,7 +647,7 @@ var Controller={
 			var distance = Tools.distance(StarShip.x, StarShip.y, finalX, finalY);
 			// movement obstructed?
 			if (distance == 0)
-				return;
+				return Controller.showComputerScreen();
 			var consumption = Computer.calculateEnergyConsumptionForMovement(StarShip.x, StarShip.y, finalX, finalY);
 			Computer.consume(consumption);
 			StarShip.x = finalX;
@@ -677,8 +658,7 @@ var Controller={
 		firePhasers:function(strength){
 			var klingon = StarMap.getKlingonInQuadrantAt(StarShip.quadrant, Controller.sector.x, Controller.sector.y);
 			if (!klingon){
-				IO.message("No Klingon at that sector");
-				return;
+				return IO.message("No Klingon at that sector");
 			}
 			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
 			Computer.consume(consumption);
@@ -693,7 +673,7 @@ var Controller={
 		fireTorpedos:function(){
 			if (StarShip.torpedos<1){
 				IO.message("Out of torpedos");
-				return;
+				return Controller.gotoComputerScreen();
 			}
 			Tools.walkLine(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y, function(x,y){
 				var thing = StarMap.getAnythingInQuadrantAt(StarShip.quadrant, x, y);
@@ -719,13 +699,14 @@ var Controller={
 			Controller.endRound();
 		},
 		selectWarpDestination:function(){
-			Controller.resetCommands();
 			Controller.longRangeScan();
 		},
 		warpTo:function(quadrant){
+			var distance = Tools.distance(StarShip.quadrant.x, StarShip.quadrant.y, quadrant.x, quadrant.y);
+			if (distance==0)
+				return Controller.gotoComputerScreen();
 			var consumption = Computer.calculateEnergyConsumptionForWarpDrive(StarShip.quadrant, quadrant);
 			Computer.consume(consumption);
-			var distance = Tools.distance(StarShip.quadrant.x, StarShip.quadrant.y, quadrant.x, quadrant.y);
 			var speed = Math.min(distance, Constants.MAX_WARP_SPEED);
 			Computer.advanceClock(Constants.DURATION_OF_MOVEMENT_PER_QUADRANT*distance/speed);
 			StarShip.quadrant = quadrant;
