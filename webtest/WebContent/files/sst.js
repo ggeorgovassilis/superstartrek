@@ -47,7 +47,7 @@ function push(arr,element){
 
 var Tools={
 		page:$("body"),
-		hashesWithCss:/(computer|status|long-range-scan|sector)_*/,
+		hashesWithCss:/(computer|status|long-range-scan|sector|phasers)_*/,
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
