@@ -16,10 +16,20 @@ html{
 a, a:visited{
 	text-decoration:none;
 	color:white;
+	border:solid purple 1px;
+	padding:0.5em;
+	text-align:center;
+	margin-top:0.5em;
 }
 
-#commandbar a:hover{
-	text-decoration:underline;
+a:hover{
+	text-decoration:none;
+}
+
+table a, table a:visited{
+	padding:0;
+	margin:0;
+	border:none transparent 0px;
 }
 
 #stardate{
@@ -47,11 +57,13 @@ a, a:visited{
 	background-color:purple;
 }
 
+.quadrants td{
+	border-right:solid silver 1px;	
+	padding:4px 10px 4px 10px;
+}
 
 .quadrants a, .quadrants a:visited{
 	width:100%;
-	padding:4px 10px 4px 10px;
-	display:block;
 	overflow:hidden;
 }
 
@@ -165,16 +177,22 @@ a, a:visited{
 	float:left;
 }
 
-.messages{
+#messages{
 	position:absolute;
-	background-color:darkblue;
+	left:0;
+	right:0;
+	background-color:black;
+	border:solid purple 2px;
 	color:white;
 	font-family:courier, courier new, typewriter;
-	clear:both;
 	padding:10px;
 	display:none;
 	z-index:2;
 	display:none;
+}
+
+a.single{
+	display:block;
 }
 
 .glasspanel{
@@ -189,16 +207,12 @@ a, a:visited{
 	display:none;
 }
 
-.messages-visible .messages,.messages-visible .glasspanel{
+.messages-visible #messages, .messages-visible .glasspanel{
 	display:block !important;
 }
 
-.messages #content{
+.messages .content{
 	margin-bottom:1em;
-}
-
-.messages button{
-	width:100%;
 }
 
 #downmarker{
@@ -219,20 +233,28 @@ a, a:visited{
 }
 
 .progress-indicator{
-	background-color:midnightblue;
 	height:100%;
 	position:absolute;
+	margin-top:0.5em
+}
+
+#max_shield_indicator{
+	background-color:midnightblue;
+}
+
+#shield_indicator{
+	background-color:mediumvioletred;
 }
 
 /**
  * New stuff
  */
  
-.page-computer #computerscreen, .page-sector #computerscreen, .page-status #statusreport, .page-phasers #computerscreen{
+.page-computer #computerscreen, .page-sector #computerscreen, .page-status #statusreport, .page-phasers #computerscreen, .page-starbase #computerscreen{
 	display:block;
 }
 
-.page-computer #cmd_status, .page-computer #cmd_status, .page-computer #cmd_longrangescan, .page-computer #cmd_starbase_dock, .page-computer #cmd_shields{
+.page-computer #cmd_status, .page-computer #cmd_status, .page-computer #cmd_longrangescan, .page-computer #cmd_shields{
 	display:block;
 }
 
@@ -248,9 +270,16 @@ a, a:visited{
 	display:block;
 }
 
-
 .page-status #cmd_cancel{
 	display:block;
+}
+
+.page-starbase #cmd_starbase_refuel, .page-starbase #cmd_starbase_complete, .page-starbase #cmd_cancel{
+	display:block;
+}
+
+.page-computer .starbase-nearby{
+	display:block !important;
 }
 /*
 cmd_navigate
