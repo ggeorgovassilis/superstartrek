@@ -250,7 +250,7 @@ a.single{
  * New stuff
  */
  
-.page-computer #computerscreen, .page-sector #computerscreen, .page-status #statusreport, .page-phasers #computerscreen, .page-starbase #computerscreen{
+.page-computer #computerscreen, .page-sector #computerscreen, .page-sectorselection #computerscreen, .page-status #statusreport, .page-phasers #computerscreen, .page-starbase #computerscreen{
 	display:block;
 }
 
