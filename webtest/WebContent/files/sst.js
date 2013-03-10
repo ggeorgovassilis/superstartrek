@@ -167,17 +167,23 @@ var Tools={
 		},
 		findObstruction:function(quadrant, xFrom,yFrom,xTo,yTo){
 			var thing = false;
+			var firstStep = true;
 			var lastGoodX = xFrom;
 			var lastGoodY = yFrom;
 			Tools.walkLine(xFrom, yFrom, xTo, yTo, function(x,y){
-				thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
-				if (thing)
-					return false;
+				if (firstStep)
+					firstStep = false;
+				else{
+					thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
+					if (thing)
+						return false;
+					}
 				lastGoodX = x;
 				lastGoodY = y;
 				return true;
 			});
-			return {obstacle:thing, x:lastGoodX, y:lastGoodY};
+			if (thing)
+				return {obstacle:thing, x:lastGoodX, y:lastGoodY};
 		},
 		removePageCss:function(css){
 			Tools.page.removeClass(css);
@@ -323,8 +329,9 @@ var StarShip={
 	   y:0,
 	   energy:Constants.MAX_ENERGY,
 	   budget:Constants.MAX_REACTOR_OUTPUT,
-	   shields:0,
-	   maxShields:100,
+	   shields:0, // current shield level. Enemy fire reduces them; they replenish at the beginning of a new round
+	   maxShields:100, // maximum level of shields
+	   userDefinedShields:0, // that's how much the player set shields. actual shields (see shields property above) might be lower.
 	   reactorOutput:Constants.MAX_REACTOR_OUTPUT,
 	   torpedos:Constants.MAX_TORPEDOS,
 	   repositionIfSectorOccupied:function(){
@@ -525,23 +532,25 @@ var Computer={
 
 var IO={
 	currentCallback:null,
+	messages:$("#messages"),
+	content:$("#messages .content"),
 	messageAndEndRound:function(text){
 		IO.message(Controller.endRound,text);
 		return false;
 	},
 	message:function(callback,text){
-		console.log("message: "+text);
 		if (IO.isMessageShown()){
-			$("#messages .content").append("<br>");
+			IO.content.append("<br>");
 		}
-		$("#messages .content").append(text);
+		IO.content.append(text);
 		Tools.removePageCss("messages-visible");
 		Tools.addPageCss("messages-visible");
 		IO.currentCallback = callback;
+		Tools.scrollIntoView(IO.messages);
 		return false;
 	},
 	hide:function(){
-		$("#messages .content").empty();
+		IO.content.empty();
 		Tools.removePageCss("messages-visible");
 	},
 	isMessageShown:function(){
@@ -562,7 +571,31 @@ var KlingonAI={
 		play:function(klingon, quadrant){
 			if (StarShip.quadrant != quadrant)
 				return;
-			KlingonAI.fireOnStarship(klingon);
+			// can raider fire on us?
+			var obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y, StarShip.x, StarShip.y);
+			if (obstacle)
+				KlingonAI.manueverIntoFiringPosition(klingon, StarShip.quadrant);
+			else
+				KlingonAI.fireOnStarship(klingon);
+		},
+		manueverIntoFiringPosition:function(klingon, quadrant){
+			//find a spot which 1. is empty, 2. raider has a clear shot at us, 3. raider can move to unobstructed 
+			for (var x=0;x<8;x++)
+			for (var y=0;y<8;y++){
+				var thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
+				if (thing)
+					continue;
+				var obstacle = Tools.findObstruction(quadrant, x, y, StarShip.x, StarShip.y);
+				if (obstacle)
+					continue;
+				obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y, x, y);
+				if (obstacle)
+					continue;
+				console.log("found a nice spot at "+x+","+y);
+				klingon.x = x;
+				klingon.y = y;
+				return;
+			}
 		},
 		fireOnStarship:function(klingon){
 			StarShip.shields = StarShip.shields - klingon.weaponPower;
@@ -681,7 +714,7 @@ var Controller={
 			Tools.changeHash("sectorselection");
 		},
 		toggleShieldStrength:function(){
-			var shields = StarShip.shields;
+			var shields = StarShip.userDefinedShields;
 			var delta = -shields;
 			if (shields == StarShip.maxShields)
 				shields = 0;
@@ -689,6 +722,7 @@ var Controller={
 				shields=Math.min(StarShip.budget,Math.min(shields+25, StarShip.maxShields));
 			delta+=shields;
 			Computer.consume(delta);
+			StarShip.userDefinedShields = shields;
 			StarShip.shields = shields;
 			Computer.updateShieldsIndicator();
 			Controller.gotoStartScreen();
@@ -727,7 +761,7 @@ var Controller={
 		},
 		startRound:function(){
 			StarShip.budget=StarShip.reactorOutput;
-			
+			StarShip.shields = StarShip.userDefinedShields;
 			var consumption = Computer.calculateBaseEnergyConsumption();
 			Computer.consume(consumption);
 			StarShip.shields = Math.min(StarShip.shields,StarShip.maxShields);
@@ -737,6 +771,7 @@ var Controller={
 			Controller.gotoStartScreen();
 		},
 		endRound:function(){
+			Controller.showComputerScreen();
 			Computer.advanceClock(Constants.DURATION_OF_ROUND);
 			for (var qi=0;qi<StarMap.quadrants.length;qi++){
 				var quadrant = StarMap.quadrants[qi];
