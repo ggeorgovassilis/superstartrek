@@ -19,6 +19,7 @@ var Constants = {
 		MAX_WARP_SPEED:4,
 		MAX_ENERGY:3000,
 		MAX_TORPEDOS:10,
+		MAX_REACTOR_OUTPUT:300,
 		PHASER_EFFICIENCY:1,
 		KLINGON_DISRUPTOR_POWER:50
 };
@@ -166,17 +167,23 @@ var Tools={
 		},
 		findObstruction:function(quadrant, xFrom,yFrom,xTo,yTo){
 			var thing = false;
+			var firstStep = true;
 			var lastGoodX = xFrom;
 			var lastGoodY = yFrom;
 			Tools.walkLine(xFrom, yFrom, xTo, yTo, function(x,y){
-				thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
-				if (thing)
-					return false;
+				if (firstStep)
+					firstStep = false;
+				else{
+					thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
+					if (thing)
+						return false;
+					}
 				lastGoodX = x;
 				lastGoodY = y;
 				return true;
 			});
-			return {obstacle:thing, x:lastGoodX, y:lastGoodY};
+			if (thing)
+				return {obstacle:thing, x:lastGoodX, y:lastGoodY};
 		},
 		removePageCss:function(css){
 			Tools.page.removeClass(css);
@@ -321,8 +328,11 @@ var StarShip={
 	   x:0,
 	   y:0,
 	   energy:Constants.MAX_ENERGY,
-	   shields:0,
-	   maxShields:100,
+	   budget:Constants.MAX_REACTOR_OUTPUT,
+	   shields:0, // current shield level. Enemy fire reduces them; they replenish at the beginning of a new round
+	   maxShields:100, // maximum level of shields
+	   userDefinedShields:0, // that's how much the player set shields. actual shields (see shields property above) might be lower.
+	   reactorOutput:Constants.MAX_REACTOR_OUTPUT,
 	   torpedos:Constants.MAX_TORPEDOS,
 	   repositionIfSectorOccupied:function(){
 		   var newX = StarShip.x;
@@ -441,6 +451,7 @@ var StatusReport={
 		location:$("#report_location"),
 		shields:$("#report_shields"),
 		stardate:$("#report_stardate"),
+		reactor:$("#report_reactor"),
 		update:function(){
 			StatusReport.energy.text(StarShip.energy);
 			StatusReport.energyConsumption.text(Computer.calculateBaseEnergyConsumption);
@@ -448,7 +459,7 @@ var StatusReport={
 			StatusReport.location.text(StarShip.quadrant.regionName+" "+StarShip.quadrant.x+","+StarShip.quadrant.y);
 			StatusReport.shields.text(StarShip.shields+ " / "+StarShip.maxShields);
 			StatusReport.stardate.text(Tools.formatStardate(Computer.stardate));
-			
+			StatusReport.reactor.text("%"+100*(StarShip.reactorOutput/Constants.MAX_REACTOR_OUTPUT));
 		}
 	};
 
@@ -474,8 +485,10 @@ var Computer={
 		},
 		advanceClock:function(duration){
 			Computer.stardate+=duration;
+		},
+		updateStardate:function(){
 			var stardateFormatted = Tools.formatStardate(Computer.stardate);
-			$("#stardate").text(stardateFormatted);
+			$("#stardate").text(stardateFormatted + " "+StarShip.budget);
 		},
 		show:function(){
 			Computer.updateStarbaseDockCommand();
@@ -486,8 +499,7 @@ var Computer={
 		calculateBaseEnergyConsumption:function(){
 			return StarShip.shields*Constants.ENERGY_PER_SHIELD + Constants.BASE_CONSUMPTION;
 		},
-		calculateEnergyConsumptionForMovement:function(xFrom,yFrom,xTo,yTo){
-			var distance = Tools.distance(xFrom,yFrom,xTo,yTo);
+		calculateEnergyConsumptionForMovement:function(distance){
 			return distance*Constants.ENERGY_OF_MOVEMENT_PER_SECTOR;
 		},
 		calculateEnergyConsumptionForWarpDrive:function(quadrantFrom, quadrantTo){
@@ -500,38 +512,56 @@ var Computer={
 		calculateEnergyConsumptionForPhasers:function(strength){
 			return strength*Constants.PHASER_EFFICIENCY;
 		},
+		hasEnergyBudgetFor: function(amount){
+			console.log("Has enegery budget for "+amount+" / "+StarShip.budget);
+			if (StarShip.budget < amount){
+				IO.message(function(){}, "Cannot execute command, reactor capacity reached");
+				return false;
+			};
+			return true;
+		},
 		consume:function(energy){
+			StarShip.budget-=energy;
 			StarShip.energy-=energy;
 			StarShip.energy=Math.floor(StarShip.energy);
 			if (StarShip.energy<=0){
 				return IO.messageAndEndRound("Game over, out of energy");
-				}		
 			}
+		}
 };
 
 var IO={
+	currentCallback:null,
+	messages:$("#messages"),
+	content:$("#messages .content"),
 	messageAndEndRound:function(text){
-		IO.message("#endround",text);
+		IO.message(Controller.endRound,text);
 		return false;
 	},
-	message:function(token,text){
+	message:function(callback,text){
 		if (IO.isMessageShown()){
-			$("#messages .content").append("<br>");
+			IO.content.append("<br>");
 		}
-		$("#messages .content").append(text);
+		IO.content.append(text);
 		Tools.removePageCss("messages-visible");
 		Tools.addPageCss("messages-visible");
-		$("#messages a").attr("href",token);
+		IO.currentCallback = callback;
+		Tools.scrollIntoView(IO.messages);
 		return false;
 	},
 	hide:function(){
-		$("#messages .content").empty();
+		IO.content.empty();
 		Tools.removePageCss("messages-visible");
 	},
 	isMessageShown:function(){
 		return Tools.hasPageCss("messages-visible");
+	},
+	onOkClicked:function(){
+		IO.hide();
+		IO.currentCallback();
 	}
 };
+$("#messages .single").click(IO.onOkClicked);
 
 /**
  * Klingon AI
@@ -541,16 +571,40 @@ var KlingonAI={
 		play:function(klingon, quadrant){
 			if (StarShip.quadrant != quadrant)
 				return;
-			KlingonAI.fireOnStarship(klingon);
+			// can raider fire on us?
+			var obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y, StarShip.x, StarShip.y);
+			if (obstacle)
+				KlingonAI.manueverIntoFiringPosition(klingon, StarShip.quadrant);
+			else
+				KlingonAI.fireOnStarship(klingon);
+		},
+		manueverIntoFiringPosition:function(klingon, quadrant){
+			//find a spot which 1. is empty, 2. raider has a clear shot at us, 3. raider can move to unobstructed 
+			for (var x=0;x<8;x++)
+			for (var y=0;y<8;y++){
+				var thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
+				if (thing)
+					continue;
+				var obstacle = Tools.findObstruction(quadrant, x, y, StarShip.x, StarShip.y);
+				if (obstacle)
+					continue;
+				obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y, x, y);
+				if (obstacle)
+					continue;
+				console.log("found a nice spot at "+x+","+y);
+				klingon.x = x;
+				klingon.y = y;
+				return;
+			}
 		},
 		fireOnStarship:function(klingon){
 			StarShip.shields = StarShip.shields - klingon.weaponPower;
 			StarShip.maxShields = StarShip.maxShields*4/5;
 			StarShip.shields = Math.min(StarShip.shields,StarShip.maxShields);
 			if (StarShip.shields < 0){
-				return IO.messageAndEndRound("Klingon ship destroyed us, game over.");
+				return IO.message(function(){}, "Klingon ship destroyed us, game over.");
 			}
-			return IO.messageAndEndRound("Klingon ship fired at us, shields dropped to "+StarShip.shields);
+			return IO.message(function(){}, "Klingon ship fired at us, shields dropped to "+StarShip.shields);
 		}
 };
 
@@ -561,9 +615,11 @@ var Controller={
 		sector:{x:0,y:0},
 		currentHistoryToken:null,
 		onHistoryChanged:function(token){
-			Tools.updatePageCssWithToken(token);
 			if (token == Controller.currentHistoryToken)
 				return;
+			console.log(token);
+			Computer.updateStardate();
+			Tools.updatePageCssWithToken(token);
 			Controller.currentHistoryToken = token;
 			if (""==token){
 				Controller.showStartScreen();
@@ -626,6 +682,9 @@ var Controller={
 			if (/startround/.test(token)){
 				IO.hide();
 				Controller.gotoComputerScreen();
+			} else
+			if (/sectorselection/.test(token)){
+				Controller.showSectorSelectionMenu();
 			}
 		},
 		refuelAtStarbase:function(){
@@ -643,17 +702,27 @@ var Controller={
 		showStarbaseOptions:function(){
 		},
 		onSectorSelected:function(x,y){
-			$("#cmd_torpedos").text("Photon torpedos ("+StarShip.torpedos+")");
 			Controller.sector.x = x;
 			Controller.sector.y = y;
 			QuadrantScanScreen.selectSectorAt(x,y);
+			Controller.gotoSectorSelectionMenu();
+		},
+		showSectorSelectionMenu:function(){
+			$("#cmd_torpedos").text("Photon torpedos ("+StarShip.torpedos+")");
+		},
+		gotoSectorSelectionMenu:function(){
+			Tools.changeHash("sectorselection");
 		},
 		toggleShieldStrength:function(){
-			var shields = StarShip.shields;
+			var shields = StarShip.userDefinedShields;
+			var delta = -shields;
 			if (shields == StarShip.maxShields)
 				shields = 0;
 			else
-				shields=Math.min(shields+25, StarShip.maxShields);
+				shields=Math.min(StarShip.budget,Math.min(shields+25, StarShip.maxShields));
+			delta+=shields;
+			Computer.consume(delta);
+			StarShip.userDefinedShields = shields;
 			StarShip.shields = shields;
 			Computer.updateShieldsIndicator();
 			Controller.gotoStartScreen();
@@ -688,12 +757,21 @@ var Controller={
 		},
 		startGame:function(){
 			StarShip.repositionIfSectorOccupied();
+			Controller.startRound();
+		},
+		startRound:function(){
+			StarShip.budget=StarShip.reactorOutput;
+			StarShip.shields = StarShip.userDefinedShields;
+			var consumption = Computer.calculateBaseEnergyConsumption();
+			Computer.consume(consumption);
+			StarShip.shields = Math.min(StarShip.shields,StarShip.maxShields);
+			if (!IO.isMessageShown())
+				Controller.gotoComputerScreen();
+			else IO.message(Controller.gotoComputerScreen,"");
 			Controller.gotoStartScreen();
 		},
 		endRound:function(){
-			IO.hide();
-			var consumption = Computer.calculateBaseEnergyConsumption();
-			Computer.consume(consumption);
+			Controller.showComputerScreen();
 			Computer.advanceClock(Constants.DURATION_OF_ROUND);
 			for (var qi=0;qi<StarMap.quadrants.length;qi++){
 				var quadrant = StarMap.quadrants[qi];
@@ -702,10 +780,10 @@ var Controller={
 					KlingonAI.play(klingon, quadrant);
 				}
 			}
-			if (!IO.isMessageShown())
-				Controller.gotoComputerScreen();
-			else IO.message("#startround", "");
-			StarShip.shields = StarShip.maxShields;
+			if (IO.isMessageShown())
+				IO.message(Controller.startRound, "");
+			else
+				Controller.startRound();
 		},
 		selectPhaserStrength:function(){
 		},
@@ -719,10 +797,11 @@ var Controller={
 			}
 			// movement obstructed?
 			distance = Tools.distance(StarShip.x, StarShip.y, finalX, finalY);
-			if (distance == 0){
+			if (distance == 0)
 				return Controller.gotoComputerScreen();
-			}
-			var consumption = Computer.calculateEnergyConsumptionForMovement(StarShip.x, StarShip.y, finalX, finalY);
+			var consumption = Computer.calculateEnergyConsumptionForMovement(distance);
+			if (!Computer.hasEnergyBudgetFor(consumption))
+				return;
 			Computer.consume(consumption);
 			StarShip.x = finalX;
 			StarShip.y = finalY;
@@ -732,27 +811,29 @@ var Controller={
 		firePhasers:function(strength){
 			var klingon = StarMap.getKlingonInQuadrantAt(StarShip.quadrant, Controller.sector.x, Controller.sector.y);
 			if (!klingon){
-				return IO.message("#computer","No Klingon at that sector");
+				return IO.message(Controller.firePhasers,"No Klingon at that sector");
 			}
 			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
+			if (!Computer.hasEnergyBudgetFor(consumption))
+				return;
 			Computer.consume(consumption);
 			var damage = strength/Tools.distance(StarShip.x, StarShip.y, klingon.x, klingon.y);
 			klingon.shields-=damage;
 			if (klingon.shields<=0){
 				StarShip.quadrant.klingons.remove(klingon);
 				return IO.messageAndEndRound("Klingon ship destroyed");
-			} else
+			}
 			Controller.endRound();
 		},
 		fireTorpedos:function(){
 			if (StarShip.torpedos<1){
-				return IO.message("#computer", "Out of torpedos");
+				return IO.message(Controller.showComputerScreen, "Out of torpedos");
 			}
 			if (StarShip.x == Controller.sector.x && StarShip.y == Controller.sector.y){
-				return IO.message("#computer", "Cannot fire at self");
+				return IO.message(Controller.fireTorpedos, "Cannot fire at self");
 			}
 			var obstacle = Tools.findObstruction(StarShip.quadrant, StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y);
-			
+			StarShip.torpedos--;
 			if (obstacle){
 				var thing = obstacle.obstacle;
 				if (thing.star){
@@ -766,9 +847,7 @@ var Controller={
 					StarShip.quadrant.klingons.remove(thing);
 					return IO.messageAndEndRound("Photon torpedo hit klingon at "+thing.x+","+thing.y);
 				}
-				return true;
 			};
-			StarShip.torpedos--;
 		},
 		selectWarpDestination:function(){
 			Controller.longRangeScan();
@@ -778,9 +857,10 @@ var Controller={
 			if (distance==0)
 				return Controller.gotoComputerScreen();
 			var consumption = Computer.calculateEnergyConsumptionForWarpDrive(StarShip.quadrant, quadrant);
-			Computer.consume(consumption);
 			var speed = Math.min(distance, Constants.MAX_WARP_SPEED);
-			Computer.advanceClock(Constants.DURATION_OF_MOVEMENT_PER_QUADRANT*distance/speed);
+			var turns = Constants.DURATION_OF_MOVEMENT_PER_QUADRANT*distance/speed;
+			Computer.consume(consumption);
+			Computer.advanceClock(turns);
 			StarShip.quadrant = quadrant;
 			StarShip.repositionIfSectorOccupied();
 			Controller.endRound();
@@ -806,5 +886,3 @@ function repositionWindowScroll(){
 $(window).scroll(repositionWindowScroll);
 
 Controller.startGame();
-
-window.setTimeout("repositionWindowScroll()",500);
