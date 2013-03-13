@@ -5,11 +5,8 @@
 <!-- <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
  -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<title>SST</title>
+<title>Super Star Trek</title>
 <link rel="stylesheet" type="text/css" href="files/sst.css"></link>
-<script type="text/javascript" src="files/jquery.1.9.2.js"></script>
 </head>
 <body>
 <div class="glasspanel"></div>
@@ -69,7 +66,11 @@
 </div>
 <div id="commandbar" class="command-bar">
 <a id="cmd_navigate">Navigate</a>
-<div class="progress-bar"><div id="max_shield_indicator" class="progress-indicator"></div><div id="shield_indicator" class="progress-indicator"></div><a id="cmd_shields" class="command top-command">Shields</a></div>
+<a id="cmd_shields" class="command top-command progress-bar">
+	<span class="max-indicator"></span>
+	<span class="progress-indicator"></span>
+	<span class="progress-text">Shields</span>
+</a>
 <a id="cmd_status">Status report</a>
 <a id="cmd_longrangescan">Long range scan</a>
 <a id="cmd_phasers">Phasers</a>
@@ -83,6 +84,7 @@
 <a id="cmd_cancel">Cancel</a>
 </div>
 <div id="downmarker"></div>
+<script type="text/javascript" src="files/jquery.1.9.2.js"></script>
 <script type="text/javascript" src="files/sst.js"></script>
 </body>
 </html>

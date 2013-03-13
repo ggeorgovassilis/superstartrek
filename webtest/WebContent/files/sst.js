@@ -29,6 +29,8 @@ var Constants = {
 
 var console = console||{log:function(){}};
 
+var $body = $("body");
+
 String.prototype.startsWith=function(prefix){
 	return this.indexOf(prefix)==0;
 };
@@ -56,7 +58,7 @@ Array.prototype.pushUnique = function(element){
 var Tools={
 		screenWidth:-1,
 		screenHeight:-1,
-		page:$("body"),
+		page:$body,
 		hashesWithCss:/(computer|status|longrangescan|sector|phasers|starbase)_*/,
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
@@ -216,13 +218,17 @@ var Tools={
 		},
 		handleGlobalClick:function(e){
 			var target = $(e.target);
-			var id = target.attr("id");
-			if (!/cmd_/.test(id))
-				return;
-			Controller.onHistoryChanged(id);
+			while(target[0]!=$body[0]){
+				var id = target.attr("id");
+				if (/cmd_/.test(id)){
+					Controller.onHistoryChanged(id);
+					return;
+				}
+				target = target.parent();
+			}
 		}
 };
-$("body").click(Tools.handleGlobalClick);
+$body.click(Tools.handleGlobalClick);
 $(window).resize(Tools.handleWindowResize);
 Tools.handleWindowResize();
 /*
@@ -496,8 +502,8 @@ var Computer={
 		element:$("#computerscreen"),
 		stardate:2550,
 		updateShieldsIndicator:function(){
-			$("#shield_indicator").css("width",StarShip.shields+"%");
-			$("#max_shield_indicator").css("width",StarShip.maxShields+"%");
+			$("#cmd_shields .progress-indicator").css("width",StarShip.shields+"%");
+			$("#cmd_shields .max-indicator").css("width",StarShip.maxShields+"%");
 		},
 		updateStarbaseDockCommand:function(){
 			var starbaseNearby = StarMap.isStarbaseAdjacent(StarShip.quadrant, StarShip.x, StarShip.y);
@@ -807,6 +813,10 @@ var Controller={
 				Controller.startRound();
 		},
 		selectPhaserStrength:function(){
+			var klingon = StarMap.getKlingonInQuadrantAt(StarShip.quadrant, Controller.sector.x, Controller.sector.y);
+			if (!klingon){
+				return IO.message(Controller.showSectorSelectionMenu,"No Klingon at that sector");
+			}
 		},
 		navigate:function(){
 			var finalX = Controller.sector.x;
@@ -832,7 +842,7 @@ var Controller={
 		firePhasers:function(strength){
 			var klingon = StarMap.getKlingonInQuadrantAt(StarShip.quadrant, Controller.sector.x, Controller.sector.y);
 			if (!klingon){
-				return IO.message(Controller.firePhasers,"No Klingon at that sector");
+				return IO.message(Controller.showSectorSelectionMenu,"No Klingon at that sector");
 			}
 			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
 			if (!Computer.hasEnergyBudgetFor(consumption))
