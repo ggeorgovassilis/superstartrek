@@ -1,6 +1,8 @@
 body,html,div,table,tr,td{
 	margin:0;
 	padding:0;
+	/* see http://stackoverflow.com/questions/5210481/disable-orange-outline-highlight-on-focus */
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
 }
 
 table{
@@ -20,9 +22,10 @@ a, a:visited{
 	padding:0.5em;
 	text-align:center;
 	margin-top:0.5em;
+	cursor:pointer;
 }
 
-a:hover{
+a:hover, .quadrants td:hover, #shortrangescan td:hover, #quadrantscan td:hover, .progress-indicator:hover{
 	text-decoration:none;
 }
 
@@ -30,6 +33,12 @@ table a, table a:visited{
 	padding:0;
 	margin:0;
 	border:none transparent 0px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #stardate{
@@ -44,8 +53,8 @@ table a, table a:visited{
  * Long range scan
  */
 .region-names{
-	background-color:BlueViolet;
-	color:black;
+	background-color:#220022;
+	color:white;
 	text-align: center;
 }
 
@@ -54,21 +63,16 @@ table a, table a:visited{
 }
 
 .quadrants{
-	background-color:purple;
 }
 
 .quadrants td{
-	border-right:solid silver 1px;	
+	border-right:solid DarkViolet 1px;	
 	padding:4px 10px 4px 10px;
-}
-
-.quadrants a, .quadrants a:visited{
-	width:100%;
-	overflow:hidden;
+	cursor:pointer;	
 }
 
 .has-starship{
-	background-color:darkgreen;
+	background-color:midnightblue;
 }
 
 #quadrantscan td{
@@ -76,12 +80,10 @@ table a, table a:visited{
 	height:1em;
 	text-align:center;
 	width:12.5%;
+	padding:5px;
+	cursor:pointer;
 }
 
-#quadrantscan a{
-	display:block;
-	padding:5px;
-}
 
 #quadrantscan{
 	float:left;
@@ -110,14 +112,13 @@ table a, table a:visited{
 #shortrangescan td{
 	width:33.3%;
 	text-align:center;
-}
-
-#shortrangescan a{
-	display:block;
+	cursor:pointer;
+	padding:5px 0 5px 0;
 }
 
 #shortrangescan{
 	min-width:150px;
+	display:none;
 }
 
 .orientation-vertical #shortrangescan{
@@ -131,7 +132,7 @@ table a, table a:visited{
  
 #commandbar a{
 	display:none;
-	padding:10px;
+	padding:0.5em;
 	float:left;
 }
 
@@ -146,10 +147,6 @@ table a, table a:visited{
 }
 
 .long-range-scan #longrangescanscreen{
-	display:block;
-}
-
-.short-range-scan #shortrangescanscreen{
 	display:block;
 }
 
@@ -228,26 +225,36 @@ a.single{
 	position:relative;
 }
 
-.progress-bar a{
-	position:relative;
+a.progress-bar {
+	padding:0 !important;
 }
 
 .progress-indicator{
 	height:100%;
 	position:absolute;
-	margin-top:0.5em
-}
-
-#max_shield_indicator{
-	background-color:midnightblue;
-}
-
-#shield_indicator{
 	background-color:mediumvioletred;
+	display:block;
+}
+
+.progress-text{
+	position:relative;
+	padding:0.5em;
+	display:block;
+}
+
+.max-indicator{
+	background-color:midnightblue;
+	position:absolute;
+	height:100%;
+	display:block;
+}
+
+.page-computer .starbase-nearby{
+	display:block !important;
 }
 
 /**
- * New stuff
+ * Commands visibility
  */
  
 .page-computer #computerscreen, .page-sector #computerscreen, .page-sectorselection #computerscreen, .page-status #statusreport, .page-phasers #computerscreen, .page-starbase #computerscreen{
@@ -266,7 +273,7 @@ a.single{
 	display:block;
 }
 
-.page-long-range-scan #longrangescanscreen, .page-long-range-scan #cmd_cancel{
+.page-longrangescan #longrangescanscreen, .page-longrangescan #cmd_cancel{
 	display:block;
 }
 
@@ -278,9 +285,11 @@ a.single{
 	display:block;
 }
 
-.page-computer .starbase-nearby{
-	display:block !important;
+.page-computer #shortrangescan{
+	display:table;
 }
+
+
 /*
 cmd_navigate
 cmd_shields
