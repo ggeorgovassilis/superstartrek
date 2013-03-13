@@ -2,11 +2,14 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+<!-- <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+ -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>SST</title>
 <link rel="stylesheet" type="text/css" href="files/sst.css"></link>
 <script type="text/javascript" src="files/jquery.1.9.2.js"></script>
-<script type="text/javascript" src="files/history.js"></script>
 </head>
 <body>
 <div class="glasspanel"></div>
@@ -14,26 +17,26 @@
 <div id="page">
 <div id="messages">
 <div class="content"></div>
-<a href="javascript:void(0)" class="single">OK</a>
+<a class="single">OK</a>
 </div>
 <div id="longrangescanscreen" class="screen top-selection">
 <table id="longrangescan">
 <tr class="region-names"><td colspan="4">Antares</td><td colspan="4">Sirius</td></tr>
-<tr class="quadrants"><td id="0_0"/><td id="1_0"/><td id="2_0"/><td id="3_0"/><td id="4_0"/><td id="5_0"/><td id="6_0"/><td id="7_0"/></tr>
+<tr class="quadrants"><td id="cmd_quadrant_0_0"/><td id="cmd_quadrant_1_0"/><td id="cmd_quadrant_2_0"/><td id="cmd_quadrant_3_0"/><td id="cmd_quadrant_4_0"/><td id="cmd_quadrant_5_0"/><td id="cmd_quadrant_6_0"/><td id="cmd_quadrant_7_0"/></tr>
 <tr class="region-names"><td colspan="4">Rigel</td><td colspan="4">Deneb</td></tr>
-<tr class="quadrants"><td id="0_1"/><td id="1_1"/><td id="2_1"/><td id="3_1"/><td id="4_1"/><td id="5_1"/><td id="6_1"/><td id="7_1"/></tr>
+<tr class="quadrants"><td id="cmd_quadrant_0_1"/><td id="cmd_quadrant_1_1"/><td id="cmd_quadrant_2_1"/><td id="cmd_quadrant_3_1"/><td id="cmd_quadrant_4_1"/><td id="cmd_quadrant_5_1"/><td id="cmd_quadrant_6_1"/><td id="cmd_quadrant_7_1"/></tr>
 <tr class="region-names"><td colspan="4">Procyon</td><td colspan="4">Capella</td></tr>
-<tr class="quadrants"><td id="0_2"/><td id="1_2"/><td id="2_2"/><td id="3_2"/><td id="4_2"/><td id="5_2"/><td id="6_2"/><td id="7_2"/></tr>
+<tr class="quadrants"><td id="cmd_quadrant_0_2"/><td id="cmd_quadrant_1_2"/><td id="cmd_quadrant_2_2"/><td id="cmd_quadrant_3_2"/><td id="cmd_quadrant_4_2"/><td id="cmd_quadrant_5_2"/><td id="cmd_quadrant_6_2"/><td id="cmd_quadrant_7_2"/></tr>
 <tr class="region-names"><td colspan="4">Vega</td><td colspan="4">Betelgeuse</td></tr>
-<tr class="quadrants"><td id="0_3"/><td id="1_3"/><td id="2_3"/><td id="3_3"/><td id="4_3"/><td id="5_3"/><td id="6_3"/><td id="7_3"/></tr>
+<tr class="quadrants"><td id="cmd_quadrant_0_3"/><td id="cmd_quadrant_1_3"/><td id="cmd_quadrant_2_3"/><td id="cmd_quadrant_3_3"/><td id="cmd_quadrant_4_3"/><td id="cmd_quadrant_5_3"/><td id="cmd_quadrant_6_3"/><td id="cmd_quadrant_7_3"/></tr>
 <tr class="region-names"><td colspan="4">Canopus</td><td colspan="4">Aldebaran</td></tr>
-<tr class="quadrants"><td id="0_4"/><td id="1_4"/><td id="2_4"/><td id="3_4"/><td id="4_4"/><td id="5_4"/><td id="6_4"/><td id="7_4"/></tr>
+<tr class="quadrants"><td id="cmd_quadrant_0_4"/><td id="cmd_quadrant_1_4"/><td id="cmd_quadrant_2_4"/><td id="cmd_quadrant_3_4"/><td id="cmd_quadrant_4_4"/><td id="cmd_quadrant_5_4"/><td id="cmd_quadrant_6_4"/><td id="cmd_quadrant_7_4"/></tr>
 <tr class="region-names"><td colspan="4">Altair</td><td colspan="4">Regolus</td></tr>
-<tr class="quadrants"><td id="0_5"/><td id="1_5"/><td id="2_5"/><td id="3_5"/><td id="4_5"/><td id="5_5"/><td id="6_5"/><td id="7_5"/></tr>
+<tr class="quadrants"><td id="cmd_quadrant_0_5"/><td id="cmd_quadrant_1_5"/><td id="cmd_quadrant_2_5"/><td id="cmd_quadrant_3_5"/><td id="cmd_quadrant_4_5"/><td id="cmd_quadrant_5_5"/><td id="cmd_quadrant_6_5"/><td id="cmd_quadrant_7_5"/></tr>
 <tr class="region-names"><td colspan="4">Saggitarius</td><td colspan="4">Arcturus</td></tr>
-<tr class="quadrants"><td id="0_6"/><td id="1_6"/><td id="2_6"/><td id="3_6"/><td id="4_6"/><td id="5_6"/><td id="6_6"/><td id="7_6"/></tr>
+<tr class="quadrants"><td id="cmd_quadrant_0_6"/><td id="cmd_quadrant_1_6"/><td id="cmd_quadrant_2_6"/><td id="cmd_quadrant_3_6"/><td id="cmd_quadrant_4_6"/><td id="cmd_quadrant_5_6"/><td id="cmd_quadrant_6_6"/><td id="cmd_quadrant_7_6"/></tr>
 <tr class="region-names"><td colspan="4">Pollux</td><td colspan="4">Spica</td></tr>
-<tr class="quadrants"><td id="0_7"/><td id="1_7"/><td id="2_7"/><td id="3_7"/><td id="4_7"/><td id="5_7"/><td id="6_7"/><td id="7_7"/></tr>
+<tr class="quadrants"><td id="cmd_quadrant_0_7"/><td id="cmd_quadrant_1_7"/><td id="cmd_quadrant_2_7"/><td id="cmd_quadrant_3_7"/><td id="cmd_quadrant_4_7"/><td id="cmd_quadrant_5_7"/><td id="cmd_quadrant_6_7"/><td id="cmd_quadrant_7_7"/></tr>
 </table>
 </div>
 <div id="statusreport" class="screen">
@@ -58,26 +61,26 @@
 <div id="stardate"></div>
 <table id="quadrantscan"></table>
 <table id="shortrangescan">
-<tr><td id="q0"></td><td id="q1"></td><td id="q2"></td></tr>
-<tr><td id="q3"></td><td id="q4"></td><td id="q5"></td></tr>
-<tr><td id="q6"></td><td id="q7"></td><td id="q8"></td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
 </table>
 </div>
 </div>
 <div id="commandbar" class="command-bar">
-<a href="#navigate" id="cmd_navigate">Navigate</a>
-<div class="progress-bar"><div id="max_shield_indicator" class="progress-indicator"></div><div id="shield_indicator" class="progress-indicator"></div><a id="cmd_shields" href="#shields" class="command top-command">Shields</a></div>
-<a href="#status" id="cmd_status">Status report</a>
-<a href="#long-range-scan" id="cmd_longrangescan">Long range scan</a>
-<a href="#phasers" id="cmd_phasers">Phasers</a>
-<a href="#torpedos" id="cmd_torpedos" class="command">Photon torpedos</a>
-<a href="#phasers_100" id="cmd_phasers_100">Low</a>
-<a href="#phasers_200" id="cmd_phasers_200">Medium</a>
-<a href="#phasers_300" id="cmd_phasers_300">Max</a>
-<a href="#starbase" id="cmd_starbase_dock">Dock at starbase</a>
-<a href="#starbase_refuel" id="cmd_starbase_refuel">Refuel</a>
-<a href="#starbase_complete" id="cmd_starbase_complete">Refuel &amp; repair</a>
-<a href="#computer" id="cmd_cancel">Cancel</a>
+<a id="cmd_navigate">Navigate</a>
+<div class="progress-bar"><div id="max_shield_indicator" class="progress-indicator"></div><div id="shield_indicator" class="progress-indicator"></div><a id="cmd_shields" class="command top-command">Shields</a></div>
+<a id="cmd_status">Status report</a>
+<a id="cmd_longrangescan">Long range scan</a>
+<a id="cmd_phasers">Phasers</a>
+<a id="cmd_torpedos" class="command">Photon torpedos</a>
+<a id="cmd_phasers_100">Low</a>
+<a id="cmd_phasers_200">Medium</a>
+<a id="cmd_phasers_300">Max</a>
+<a id="cmd_starbase_dock">Dock at starbase</a>
+<a id="cmd_starbase_refuel">Refuel</a>
+<a id="cmd_starbase_complete">Refuel &amp; repair</a>
+<a id="cmd_cancel">Cancel</a>
 </div>
 <div id="downmarker"></div>
 <script type="text/javascript" src="files/sst.js"></script>

@@ -29,6 +29,10 @@ var Constants = {
 
 var console = console||{log:function(){}};
 
+String.prototype.startsWith=function(prefix){
+	return this.indexOf(prefix)==0;
+};
+
 Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
@@ -50,8 +54,10 @@ Array.prototype.pushUnique = function(element){
 };
 
 var Tools={
+		screenWidth:-1,
+		screenHeight:-1,
 		page:$("body"),
-		hashesWithCss:/(computer|status|long-range-scan|sector|phasers|starbase)_*/,
+		hashesWithCss:/(computer|status|longrangescan|sector|phasers|starbase)_*/,
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
@@ -68,7 +74,7 @@ var Tools={
 			return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 		},
 		changeHash:function(hash){
-			document.location.hash=hash;
+			Controller.onHistoryChanged(hash);
 		},
 		extractPositionFrom:function(text){
 			var parts = /.*?(\d)[,_](\d)/.exec(text);
@@ -122,7 +128,7 @@ var Tools={
 				regionName:regionName,
 				x:x,
 				y:y,
-				element:$("#"+x+"_"+y),
+				element:$("#cmd_quadrant_"+x+"_"+y),
 				stars:Tools.makeStars(),
 				klingons:Tools.makeKlingons(),
 				starbases:Tools.makeStarbases()
@@ -132,6 +138,10 @@ var Tools={
 		handleWindowResize:function(){
 			var width = $(window).width();
 			var height = $(window).height();
+			if (Tools.screenHeight == height && Tools.screenWidth == width)
+				return;
+			Tools.screenHeight = height;
+			Tools.screenWidth = width;
 			Tools.removePageCss("orientation-horizonal");
 			Tools.removePageCss("orientation-vertical");
 			if (width>height)
@@ -195,14 +205,24 @@ var Tools={
 			if (!Tools.hashesWithCss.test(hash))
 				return;
 			var css = Tools.hashesWithCss.exec(hash)[1];
-			Tools.page.attr("class","page-"+css);
-			Tools.handleWindowResize();
+			var allClasses = Tools.page.attr("class").split(" ");
+			for (var i=0;i<allClasses.length;i++)
+				if (allClasses[i].startsWith("page-"))
+					Tools.page.removeClass(allClasses[i]);
+			Tools.page.addClass("page-"+css);
 		},
 		hasPageCss:function(css){
 			return Tools.page.attr("class").indexOf(css)!=-1;
+		},
+		handleGlobalClick:function(e){
+			var target = $(e.target);
+			var id = target.attr("id");
+			if (!/cmd_/.test(id))
+				return;
+			Controller.onHistoryChanged(id);
 		}
 };
-
+$("body").click(Tools.handleGlobalClick);
 $(window).resize(Tools.handleWindowResize);
 Tools.handleWindowResize();
 /*
@@ -354,7 +374,7 @@ var QuadrantScanScreen={
 		updateList:function(symbol, list, formatter){
 			for (var i=0;i<list.length;i++){
 				var thing = list[i];
-				var tile = $("#q_"+thing.x+"_"+thing.y);
+				var tile = $("#cmd_sector_"+thing.x+"_"+thing.y);
 				var css = formatter(thing);
 				tile.attr("class",css);
 				tile.html(symbol);
@@ -365,7 +385,7 @@ var QuadrantScanScreen={
 				QuadrantScanScreen.constructUi();
 				QuadrantScanScreen.constructUi=null;
 			}
-			$("#quadrantscan a").html("&nbsp;");
+			$("#quadrantscan td").html("&nbsp;");
 			QuadrantScanScreen.updateList("&nbsp;*&nbsp;",quadrant.stars, function(star){return "";});
 			QuadrantScanScreen.updateList("o-}",quadrant.klingons, function(klingon){
 				if (klingon.shields<25)
@@ -386,14 +406,14 @@ var QuadrantScanScreen={
 				var tr = $("<tr></tr>");
 				element.append(tr);
 				for (var x=0;x<8;x++){
-					var td = $("<td><a id='q_"+x+"_"+y+"' href='#sector_"+x+","+y+"'></a></td>");
+					var td = $("<td id='cmd_sector_"+x+"_"+y+"'>&nbsp;</td>");
 					tr.append(td);
 				}
 			}
 		},
 		selectSectorAt: function(x,y){
 			$("#quadrantscan .selected").removeClass("selected");
-			$("#q_"+x+"_"+y).addClass("selected");
+			$("#cmd_sector_"+x+"_"+y).addClass("selected");
 		}
 };
 
@@ -403,6 +423,7 @@ var QuadrantScanScreen={
 var LongRangeScanScreen={
 		element:$("#longrangescan"),
 		show:function(){
+			Tools.updatePageCssWithToken("longrangescan");
 			for (var i=0;i<StarMap.quadrants.length;i++)
 				LongRangeScanScreen.updateQuadrant(StarMap.quadrants[i]);
 			$("#longrangescan .has-starship")[0].scrollIntoView();
@@ -411,10 +432,11 @@ var LongRangeScanScreen={
 			LongRangeScanScreen.updateElementWithQuadrant(quadrant, quadrant.element);
 		},
 		updateElementWithQuadrant:function(quadrant, e){
-			e.html("<a href='#quadrant_"+quadrant.x+","+quadrant.y+"'>"+quadrant.klingons.length+" "+quadrant.starbases.length+" "+quadrant.stars.length+"</a>");
+			e.html(quadrant.klingons.length+" "+quadrant.starbases.length+" "+quadrant.stars.length);
 			e.removeClass("has-starship");
 			if (StarShip.quadrant == quadrant)
 				e.addClass("has-starship");
+			e.attr("id","cmd_quadrant_"+quadrant.x+"_"+quadrant.y);
 		}
 };
 
@@ -428,14 +450,17 @@ var ShortRangeScanScreen={
 		var index = 0;
 		var qx = quadrant.x;
 		var qy = quadrant.y;
+		var cells = $("#shortrangescan td");
 		for (var y=qy-1;y<=qy+1;y++)
 		for (var x=qx-1;x<=qx+1;x++){
-			var cell = $("#q"+index);
+			var cell = $(cells[index]);
 			if (x>=0&&x<=7&&y>=0&&y<=7){
 				var quadrant = StarMap.getQuadrantAt(x, y);
 				LongRangeScanScreen.updateElementWithQuadrant(quadrant, cell);
-			} else
+			} else{
 				cell.text("0 0 0");
+				cell.attr("id",null);
+			}
 			index++;
 		}
 	}
@@ -491,6 +516,7 @@ var Computer={
 			$("#stardate").text(stardateFormatted + " "+StarShip.budget);
 		},
 		show:function(){
+			Tools.updatePageCssWithToken("computer");
 			Computer.updateStarbaseDockCommand();
 			Computer.updateShieldsIndicator();
 			QuadrantScanScreen.update(StarShip.quadrant);
@@ -617,17 +643,18 @@ var Controller={
 		onHistoryChanged:function(token){
 			if (token == Controller.currentHistoryToken)
 				return;
-			console.log(token);
 			Computer.updateStardate();
+			if (token.startsWith("cmd_"))
+				token = token.substring(4);
 			Tools.updatePageCssWithToken(token);
 			Controller.currentHistoryToken = token;
 			if (""==token){
 				Controller.showStartScreen();
 			} else
-			if (/quadrant-scan/.test(token)){
+			if (/quadrantscan/.test(token)){
 				Controller.quadrantScan();
 			} else
-			if (/long-range-scan/.test(token)){
+			if (/longrangescan/.test(token)){
 				Controller.longRangeScan();
 			} else
 			if (/computer/.test(token)){
@@ -636,11 +663,11 @@ var Controller={
 			if (/navigate/.test(token)){
 				Controller.navigate();
 			} else
-			if (/sector_\d,\d/.test(token)){
+			if (/sector_\d_\d/.test(token)){
 				var position = Tools.extractPositionFrom(token);
 				Controller.onSectorSelected(position.x,position.y);
 			} else
-			if (/quadrant_\d,\d/.test(token)){
+			if (/quadrant_\d_\d/.test(token)){
 				var position = Tools.extractPositionFrom(token);
 				var quadrant = StarMap.getQuadrantAt(position.x, position.y);
 				Controller.onQuadrantSelected(quadrant);
@@ -681,7 +708,7 @@ var Controller={
 			} else
 			if (/startround/.test(token)){
 				IO.hide();
-				Controller.gotoComputerScreen();
+				Controller.showComputerScreen();
 			} else
 			if (/sectorselection/.test(token)){
 				Controller.showSectorSelectionMenu();
@@ -705,13 +732,10 @@ var Controller={
 			Controller.sector.x = x;
 			Controller.sector.y = y;
 			QuadrantScanScreen.selectSectorAt(x,y);
-			Controller.gotoSectorSelectionMenu();
+			Controller.showSectorSelectionMenu();
 		},
 		showSectorSelectionMenu:function(){
 			$("#cmd_torpedos").text("Photon torpedos ("+StarShip.torpedos+")");
-		},
-		gotoSectorSelectionMenu:function(){
-			Tools.changeHash("sectorselection");
 		},
 		toggleShieldStrength:function(){
 			var shields = StarShip.userDefinedShields;
@@ -725,7 +749,7 @@ var Controller={
 			StarShip.userDefinedShields = shields;
 			StarShip.shields = shields;
 			Computer.updateShieldsIndicator();
-			Controller.gotoStartScreen();
+			Controller.showStartScreen();
 		},
 		quadrantScan:function(){
 			Tools.changeHash("quadrant-scan");
@@ -738,9 +762,6 @@ var Controller={
 		onQuadrantSelected:function(quadrant){
 			Controller.warpTo(quadrant);
 		},
-		gotoComputerScreen:function(){
-			Tools.changeHash("computer");
-		},
 		showComputerScreen:function(){
 			Computer.advanceClock(0);
 			Computer.show();
@@ -749,15 +770,15 @@ var Controller={
 		showStatusReport:function(){
 			StatusReport.update();
 		},
-		gotoStartScreen:function(){
-			Controller.gotoComputerScreen();
-		},
 		showStartScreen:function(){
 			Controller.showComputerScreen();
 		},
 		startGame:function(){
 			StarShip.repositionIfSectorOccupied();
 			Controller.startRound();
+		},
+		cancel:function(){
+			Controller.showComputerScreen();
 		},
 		startRound:function(){
 			StarShip.budget=StarShip.reactorOutput;
@@ -766,9 +787,9 @@ var Controller={
 			Computer.consume(consumption);
 			StarShip.shields = Math.min(StarShip.shields,StarShip.maxShields);
 			if (!IO.isMessageShown())
-				Controller.gotoComputerScreen();
-			else IO.message(Controller.gotoComputerScreen,"");
-			Controller.gotoStartScreen();
+				Controller.showComputerScreen();
+			else IO.message(Controller.showComputerScreen,"");
+			Controller.showStartScreen();
 		},
 		endRound:function(){
 			Controller.showComputerScreen();
@@ -798,7 +819,7 @@ var Controller={
 			// movement obstructed?
 			distance = Tools.distance(StarShip.x, StarShip.y, finalX, finalY);
 			if (distance == 0)
-				return Controller.gotoComputerScreen();
+				return Controller.showComputerScreen();
 			var consumption = Computer.calculateEnergyConsumptionForMovement(distance);
 			if (!Computer.hasEnergyBudgetFor(consumption))
 				return;
@@ -855,7 +876,7 @@ var Controller={
 		warpTo:function(quadrant){
 			var distance = Tools.distance(StarShip.quadrant.x, StarShip.quadrant.y, quadrant.x, quadrant.y);
 			if (distance==0)
-				return Controller.gotoComputerScreen();
+				return Controller.showComputerScreen();
 			var consumption = Computer.calculateEnergyConsumptionForWarpDrive(StarShip.quadrant, quadrant);
 			var speed = Math.min(distance, Constants.MAX_WARP_SPEED);
 			var turns = Constants.DURATION_OF_MOVEMENT_PER_QUADRANT*distance/speed;
@@ -866,10 +887,6 @@ var Controller={
 			Controller.endRound();
 		}
 };
-
-$.History.bind(function(state){
-	Controller.onHistoryChanged(state);
-});
 
 var _page = $("#page");
 

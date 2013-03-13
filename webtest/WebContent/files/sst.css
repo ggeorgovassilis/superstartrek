@@ -1,6 +1,8 @@
 body,html,div,table,tr,td{
 	margin:0;
 	padding:0;
+	/* see http://stackoverflow.com/questions/5210481/disable-orange-outline-highlight-on-focus */
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
 }
 
 table{
@@ -20,6 +22,7 @@ a, a:visited{
 	padding:0.5em;
 	text-align:center;
 	margin-top:0.5em;
+	cursor:pointer;
 }
 
 a:hover{
@@ -60,11 +63,7 @@ table a, table a:visited{
 .quadrants td{
 	border-right:solid silver 1px;	
 	padding:4px 10px 4px 10px;
-}
-
-.quadrants a, .quadrants a:visited{
-	width:100%;
-	overflow:hidden;
+	cursor:pointer;	
 }
 
 .has-starship{
@@ -76,12 +75,10 @@ table a, table a:visited{
 	height:1em;
 	text-align:center;
 	width:12.5%;
+	padding:5px;
+	cursor:pointer;
 }
 
-#quadrantscan a{
-	display:block;
-	padding:5px;
-}
 
 #quadrantscan{
 	float:left;
@@ -110,10 +107,8 @@ table a, table a:visited{
 #shortrangescan td{
 	width:33.3%;
 	text-align:center;
-}
-
-#shortrangescan a{
-	display:block;
+	cursor:pointer;
+	padding:5px 0 5px 0;
 }
 
 #shortrangescan{
@@ -131,7 +126,7 @@ table a, table a:visited{
  
 #commandbar a{
 	display:none;
-	padding:10px;
+	padding:0.5em;
 	float:left;
 }
 
@@ -266,7 +261,7 @@ a.single{
 	display:block;
 }
 
-.page-long-range-scan #longrangescanscreen, .page-long-range-scan #cmd_cancel{
+.page-longrangescan #longrangescanscreen, .page-longrangescan #cmd_cancel{
 	display:block;
 }
 
