@@ -30,6 +30,8 @@ var Constants = {
 var console = console||{log:function(){}};
 
 var $body = $("body");
+var $window = $(window);
+var $document = $(document);
 
 String.prototype.startsWith=function(prefix){
 	return this.indexOf(prefix)==0;
@@ -67,7 +69,7 @@ var Tools={
 		scrollIntoView:function(element){
 			var offset = element.offset();
 			var destination = offset.top-2;
-			$(document).scrollTop(destination);
+			$document.scrollTop(destination);
 		},
 		centerScreen:function(){
 			Tools.scrollIntoView($("#page"));
@@ -103,7 +105,7 @@ var Tools={
 		},
 		makeKlingons:function(){
 			var a = new Array();
-			for (var i=Tools.random(3);i>0;i--)
+			for (var i=Tools.random(1);i>0;i--)
 				a.pushUnique({
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
@@ -138,8 +140,8 @@ var Tools={
 			return quadrant;
 		},
 		handleWindowResize:function(){
-			var width = $(window).width();
-			var height = $(window).height();
+			var width = $window.width();
+			var height = $window.height();
 			if (Tools.screenHeight == height && Tools.screenWidth == width)
 				return;
 			Tools.screenHeight = height;
@@ -228,8 +230,9 @@ var Tools={
 			}
 		}
 };
-$body.click(Tools.handleGlobalClick);
-$(window).resize(Tools.handleWindowResize);
+$body.fastClick(Tools.handleGlobalClick);
+
+$window.resize(Tools.handleWindowResize);
 Tools.handleWindowResize();
 /*
  * Starmap
@@ -239,72 +242,75 @@ var x=0;
 var y=0;
 
 var StarMap={
-		quadrants:[
-		   Tools.makeQuadrant("Antares I"  ,x=0,y=0),
-		   Tools.makeQuadrant("Antares II" ,++x,y),
-		   Tools.makeQuadrant("Antares III",++x,y),
-		   Tools.makeQuadrant("Antares IV" ,++x,y),
-		   Tools.makeQuadrant("Sirius I"   ,++x,y),
-		   Tools.makeQuadrant("Sirius II"  ,++x,y),
-		   Tools.makeQuadrant("Sirius III" ,++x,y),
-		   Tools.makeQuadrant("Sirius IV"  ,++x,y),
-		   Tools.makeQuadrant("Rigel I"    ,x=0,++y),
-		   Tools.makeQuadrant("Rigel II"   ,++x,y),
-		   Tools.makeQuadrant("Rigel III"  ,++x,y),
-		   Tools.makeQuadrant("Rigel IV"   ,++x,y),
-		   Tools.makeQuadrant("Deneb I"    ,++x,y),
-		   Tools.makeQuadrant("Deneb II"   ,++x,y),
-		   Tools.makeQuadrant("Deneb  III" ,++x,y),
-		   Tools.makeQuadrant("Deneb  IV"  ,++x,y),
-		   Tools.makeQuadrant("Procyon I"    ,x=0,++y),
-		   Tools.makeQuadrant("Procyon II"   ,++x,y),
-		   Tools.makeQuadrant("Procyon III"  ,++x,y),
-		   Tools.makeQuadrant("Procyon IV"   ,++x,y),
-		   Tools.makeQuadrant("Capella I"    ,++x,y),
-		   Tools.makeQuadrant("Capella II"   ,++x,y),
-		   Tools.makeQuadrant("Capella III" ,++x,y),
-		   Tools.makeQuadrant("Capella IV"  ,++x,y),
-		   Tools.makeQuadrant("Vega I"    ,x=0,++y),
-		   Tools.makeQuadrant("Vega II"   ,++x,y),
-		   Tools.makeQuadrant("Vega III"  ,++x,y),
-		   Tools.makeQuadrant("Vega IV"   ,++x,y),
-		   Tools.makeQuadrant("Betelgeuse I"    ,++x,y),
-		   Tools.makeQuadrant("Betelgeuse II"   ,++x,y),
-		   Tools.makeQuadrant("Betelgeuse III" ,++x,y),
-		   Tools.makeQuadrant("Betelgeuse IV"  ,++x,y),
-		   Tools.makeQuadrant("Canopus I"    ,x=0,++y),
-		   Tools.makeQuadrant("Canopus II"   ,++x,y),
-		   Tools.makeQuadrant("Canopus III"  ,++x,y),
-		   Tools.makeQuadrant("Canopus IV"   ,++x,y),
-		   Tools.makeQuadrant("Aldebaran I"    ,++x,y),
-		   Tools.makeQuadrant("Aldebaran II"   ,++x,y),
-		   Tools.makeQuadrant("Aldebaran III" ,++x,y),
-		   Tools.makeQuadrant("Aldebaran IV"  ,++x,y),
-		   Tools.makeQuadrant("Altair I"    ,x=0,++y),
-		   Tools.makeQuadrant("Altair II"   ,++x,y),
-		   Tools.makeQuadrant("Altair III"  ,++x,y),
-		   Tools.makeQuadrant("Altair IV"   ,++x,y),
-		   Tools.makeQuadrant("Regulus I"    ,++x,y),
-		   Tools.makeQuadrant("Regulus II"   ,++x,y),
-		   Tools.makeQuadrant("Regulus III" ,++x,y),
-		   Tools.makeQuadrant("Regulus IV"  ,++x,y),
-		   Tools.makeQuadrant("Sagittarius I"    ,x=0,++y),
-		   Tools.makeQuadrant("Sagittarius II"   ,++x,y),
-		   Tools.makeQuadrant("Sagittarius III"  ,++x,y),
-		   Tools.makeQuadrant("Sagittarius IV"   ,++x,y),
-		   Tools.makeQuadrant("Arcturus I"    ,++x,y),
-		   Tools.makeQuadrant("Arcturus II"   ,++x,y),
-		   Tools.makeQuadrant("Arcturus III" ,++x,y),
-		   Tools.makeQuadrant("Arcturus IV"  ,++x,y),
-		   Tools.makeQuadrant("Pollux I"    ,x=0,++y),
-		   Tools.makeQuadrant("Pollux II"   ,++x,y),
-		   Tools.makeQuadrant("Pollux III"  ,++x,y),
-		   Tools.makeQuadrant("Pollux IV"   ,++x,y),
-		   Tools.makeQuadrant("Spica I"    ,++x,y),
-		   Tools.makeQuadrant("Spica II"   ,++x,y),
-		   Tools.makeQuadrant("Spica III" ,++x,y),
-		   Tools.makeQuadrant("Spica IV"  ,++x,y)
-		   ],
+		constructQuadrants:function(){
+		StarMap.quadrants =
+		[
+		Tools.makeQuadrant("Antares I"  ,x=0,y=0),
+		Tools.makeQuadrant("Antares II" ,++x,y),
+		Tools.makeQuadrant("Antares III",++x,y),
+		Tools.makeQuadrant("Antares IV" ,++x,y),
+		Tools.makeQuadrant("Sirius I"   ,++x,y),
+		Tools.makeQuadrant("Sirius II"  ,++x,y),
+		Tools.makeQuadrant("Sirius III" ,++x,y),
+		Tools.makeQuadrant("Sirius IV"  ,++x,y),
+		Tools.makeQuadrant("Rigel I"    ,x=0,++y),
+		Tools.makeQuadrant("Rigel II"   ,++x,y),
+		Tools.makeQuadrant("Rigel III"  ,++x,y),
+		Tools.makeQuadrant("Rigel IV"   ,++x,y),
+		Tools.makeQuadrant("Deneb I"    ,++x,y),
+		Tools.makeQuadrant("Deneb II"   ,++x,y),
+		Tools.makeQuadrant("Deneb  III" ,++x,y),
+		Tools.makeQuadrant("Deneb  IV"  ,++x,y),
+		Tools.makeQuadrant("Procyon I"    ,x=0,++y),
+		Tools.makeQuadrant("Procyon II"   ,++x,y),
+		Tools.makeQuadrant("Procyon III"  ,++x,y),
+		Tools.makeQuadrant("Procyon IV"   ,++x,y),
+		Tools.makeQuadrant("Capella I"    ,++x,y),
+		Tools.makeQuadrant("Capella II"   ,++x,y),
+		Tools.makeQuadrant("Capella III" ,++x,y),
+		Tools.makeQuadrant("Capella IV"  ,++x,y),
+		Tools.makeQuadrant("Vega I"    ,x=0,++y),
+		Tools.makeQuadrant("Vega II"   ,++x,y),
+		Tools.makeQuadrant("Vega III"  ,++x,y),
+		Tools.makeQuadrant("Vega IV"   ,++x,y),
+		Tools.makeQuadrant("Betelgeuse I"    ,++x,y),
+		Tools.makeQuadrant("Betelgeuse II"   ,++x,y),
+		Tools.makeQuadrant("Betelgeuse III" ,++x,y),
+		Tools.makeQuadrant("Betelgeuse IV"  ,++x,y),
+		Tools.makeQuadrant("Canopus I"    ,x=0,++y),
+		Tools.makeQuadrant("Canopus II"   ,++x,y),
+		Tools.makeQuadrant("Canopus III"  ,++x,y),
+		Tools.makeQuadrant("Canopus IV"   ,++x,y),
+		Tools.makeQuadrant("Aldebaran I"    ,++x,y),
+		Tools.makeQuadrant("Aldebaran II"   ,++x,y),
+		Tools.makeQuadrant("Aldebaran III" ,++x,y),
+		Tools.makeQuadrant("Aldebaran IV"  ,++x,y),
+		Tools.makeQuadrant("Altair I"    ,x=0,++y),
+		Tools.makeQuadrant("Altair II"   ,++x,y),
+		Tools.makeQuadrant("Altair III"  ,++x,y),
+		Tools.makeQuadrant("Altair IV"   ,++x,y),
+		Tools.makeQuadrant("Regulus I"    ,++x,y),
+		Tools.makeQuadrant("Regulus II"   ,++x,y),
+		Tools.makeQuadrant("Regulus III" ,++x,y),
+		Tools.makeQuadrant("Regulus IV"  ,++x,y),
+		Tools.makeQuadrant("Sagittarius I"    ,x=0,++y),
+		Tools.makeQuadrant("Sagittarius II"   ,++x,y),
+		Tools.makeQuadrant("Sagittarius III"  ,++x,y),
+		Tools.makeQuadrant("Sagittarius IV"   ,++x,y),
+		Tools.makeQuadrant("Arcturus I"    ,++x,y),
+		Tools.makeQuadrant("Arcturus II"   ,++x,y),
+		Tools.makeQuadrant("Arcturus III" ,++x,y),
+		Tools.makeQuadrant("Arcturus IV"  ,++x,y),
+		Tools.makeQuadrant("Pollux I"    ,x=0,++y),
+		Tools.makeQuadrant("Pollux II"   ,++x,y),
+		Tools.makeQuadrant("Pollux III"  ,++x,y),
+		Tools.makeQuadrant("Pollux IV"   ,++x,y),
+		Tools.makeQuadrant("Spica I"    ,++x,y),
+		Tools.makeQuadrant("Spica II"   ,++x,y),
+		Tools.makeQuadrant("Spica III" ,++x,y),
+		Tools.makeQuadrant("Spica IV"  ,++x,y)
+		];
+			},
 		   getQuadrantAt:function(x,y){
 			   for (var i=0;i<StarMap.quadrants.length;i++){
 				   var quadrant = StarMap.quadrants[i];
@@ -343,6 +349,12 @@ var StarMap={
 			    	 return starbase;
 			 }
 			 return false;
+		   },
+		   countKlingons:function(){
+			   var count = 0;
+			   for (var i=0;i<StarMap.quadrants.length;i++)
+				   count+=StarMap.quadrants[i].klingons.length;
+			   return count;
 		   }
 };
 
@@ -350,16 +362,18 @@ var StarMap={
  * StarShip
  */
 var StarShip={
-	   quadrant:StarMap.quadrants[0],
-	   x:0,
-	   y:0,
-	   energy:Constants.MAX_ENERGY,
-	   budget:Constants.MAX_REACTOR_OUTPUT,
-	   shields:0, // current shield level. Enemy fire reduces them; they replenish at the beginning of a new round
-	   maxShields:100, // maximum level of shields
-	   userDefinedShields:0, // that's how much the player set shields. actual shields (see shields property above) might be lower.
-	   reactorOutput:Constants.MAX_REACTOR_OUTPUT,
-	   torpedos:Constants.MAX_TORPEDOS,
+		setup:function(){
+		StarShip.quadrant=StarMap.quadrants[0];
+		StarShip.x=0;
+		StarShip.y=0;
+		StarShip.energy=Constants.MAX_ENERGY;
+		StarShip.budget=Constants.MAX_REACTOR_OUTPUT;
+		StarShip.shields=0; // current shield level. Enemy fire reduces them; they replenish at the beginning of a new round
+		StarShip.maxShields=100; // maximum level of shields
+		StarShip.userDefinedShields=0; // that's how much the player set shields. actual shields (see shields property above) might be lower.
+		StarShip.reactorOutput=Constants.MAX_REACTOR_OUTPUT;
+		StarShip.torpedos=Constants.MAX_TORPEDOS;
+		},
 	   repositionIfSectorOccupied:function(){
 		   var newX = StarShip.x;
 		   var newY = StarShip.y;
@@ -391,7 +405,7 @@ var QuadrantScanScreen={
 				QuadrantScanScreen.constructUi();
 				QuadrantScanScreen.constructUi=null;
 			}
-			$("#quadrantscan td").html("&nbsp;");
+			QuadrantScanScreen.element.find("td").html("&nbsp;");
 			QuadrantScanScreen.updateList("&nbsp;*&nbsp;",quadrant.stars, function(star){return "";});
 			QuadrantScanScreen.updateList("o-}",quadrant.klingons, function(klingon){
 				if (klingon.shields<25)
@@ -483,6 +497,7 @@ var StatusReport={
 		shields:$("#report_shields"),
 		stardate:$("#report_stardate"),
 		reactor:$("#report_reactor"),
+		klingonsCount:$("#report_klingons_count"),
 		update:function(){
 			StatusReport.energy.text(StarShip.energy);
 			StatusReport.energyConsumption.text(Computer.calculateBaseEnergyConsumption);
@@ -491,6 +506,7 @@ var StatusReport={
 			StatusReport.shields.text(StarShip.shields+ " / "+StarShip.maxShields);
 			StatusReport.stardate.text(Tools.formatStardate(Computer.stardate));
 			StatusReport.reactor.text("%"+100*(StarShip.reactorOutput/Constants.MAX_REACTOR_OUTPUT));
+			StatusReport.klingonsCount.text(StarMap.countKlingons());
 		}
 	};
 
@@ -557,13 +573,14 @@ var Computer={
 			StarShip.energy-=energy;
 			StarShip.energy=Math.floor(StarShip.energy);
 			if (StarShip.energy<=0){
-				return IO.messageAndEndRound("Game over, out of energy");
+				return IO.gameOverMessage("Game over, out of energy");
 			}
 		}
 };
 
 var IO={
 	currentCallback:null,
+	mute:false,
 	messages:$("#messages"),
 	content:$("#messages .content"),
 	messageAndEndRound:function(text){
@@ -571,6 +588,8 @@ var IO={
 		return false;
 	},
 	message:function(callback,text){
+		if (IO.mute)
+			return;
 		if (IO.isMessageShown()){
 			IO.content.append("<br>");
 		}
@@ -579,6 +598,13 @@ var IO={
 		Tools.addPageCss("messages-visible");
 		IO.currentCallback = callback;
 		Tools.scrollIntoView(IO.messages);
+		IO.messages.find(".single").focus();
+		return false;
+	},
+	gameOverMessage:function(text){
+		IO.message(null, text);
+		IO.message(Controller.startGame, "Click OK to start a new game");
+		IO.mute=true;
 		return false;
 	},
 	hide:function(){
@@ -593,7 +619,7 @@ var IO={
 		IO.currentCallback();
 	}
 };
-$("#messages .single").click(IO.onOkClicked);
+$("#messages .single").fastClick(IO.onOkClicked);
 
 /**
  * Klingon AI
@@ -634,7 +660,7 @@ var KlingonAI={
 			StarShip.maxShields = StarShip.maxShields*4/5;
 			StarShip.shields = Math.min(StarShip.shields,StarShip.maxShields);
 			if (StarShip.shields < 0){
-				return IO.message(function(){}, "Klingon ship destroyed us, game over.");
+				return IO.gameOverMessage("Klingon ship destroyed us, game over.");
 			}
 			return IO.message(function(){}, "Klingon ship fired at us, shields dropped to "+StarShip.shields);
 		}
@@ -780,6 +806,10 @@ var Controller={
 			Controller.showComputerScreen();
 		},
 		startGame:function(){
+			IO.mute = false;
+			Computer.stardate=2550;
+			StarMap.constructQuadrants();
+			StarShip.setup();
 			StarShip.repositionIfSectorOccupied();
 			Controller.startRound();
 		},
@@ -798,6 +828,9 @@ var Controller={
 			Controller.showStartScreen();
 		},
 		endRound:function(){
+			if (StarMap.countKlingons()==0){
+				return IO.gameOverMessage("All Klingons destroyed!");
+			}
 			Controller.showComputerScreen();
 			Computer.advanceClock(Constants.DURATION_OF_ROUND);
 			for (var qi=0;qi<StarMap.quadrants.length;qi++){
@@ -909,6 +942,10 @@ function repositionWindowScroll(){
 		Tools.centerScreen();
 	}
 }
+
+window.onbeforeunload = function(e){
+		return "Exit game?"; 
+};
 
 $(window).scroll(repositionWindowScroll);
 
