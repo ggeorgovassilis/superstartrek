@@ -90,7 +90,7 @@ table a, table a:visited{
 }
 
 .selected{
-	background-color:maroon;
+	background-color:midnightblue;
 }
 
 .damage-light{
@@ -142,11 +142,11 @@ table a, table a:visited{
 	overflow:hidden;
 }
 
-.status-report #statusreport{
+.showStatusReport #statusreport{
 	display:block;
 }
 
-.long-range-scan #longrangescanscreen{
+.showLongRangeScan #longrangescanscreen{
 	display:block;
 }
 
@@ -257,51 +257,34 @@ a.progress-bar {
  * Commands visibility
  */
  
-.page-computer #computerscreen, .page-sector #computerscreen, .page-sectorselection #computerscreen, .page-status #statusreport, .page-phasers #computerscreen, .page-starbase #computerscreen{
+.page-computer #computerscreen, .page-selectSector #computerscreen, .page-showStatusReport #statusreport, .page-selectPhaserStrength #computerscreen, .page-dockWithStarbase #computerscreen{
 	display:block;
 }
 
-.page-computer #cmd_status, .page-computer #cmd_status, .page-computer #cmd_longrangescan, .page-computer #cmd_shields{
+.page-computer #cmd_showStatusReport, .page-computer #cmd_showStatusReport, .page-computer #cmd_showLongRangeScan, .page-computer #cmd_toggleShields{
 	display:block;
 }
 
-.page-sector #cmd_phasers, .page-sector #cmd_torpedos, .page-sector #cmd_cancel,.page-sector #cmd_navigate{
+.page-selectSector #cmd_selectPhaserStrength, .page-selectSector #cmd_fireTorpedos, .page-selectSector #cmd_cancel,.page-selectSector #cmd_navigate{
 	display:block;
 }
 
-.page-phasers #cmd_phasers_100, .page-phasers #cmd_phasers_200, .page-phasers #cmd_phasers_300, .page-phasers #cmd_cancel{
+.page-selectPhaserStrength #cmd_firePhasers_100, .page-selectPhaserStrength #cmd_firePhasers_200, .page-selectPhaserStrength #cmd_firePhasers_300, .page-selectPhaserStrength #cmd_cancel{
 	display:block;
 }
 
-.page-longrangescan #longrangescanscreen, .page-longrangescan #cmd_cancel{
+.page-showLongRangeScan #longrangescanscreen, .page-showLongRangeScan #cmd_cancel{
 	display:block;
 }
 
-.page-status #cmd_cancel{
+.page-showStatusReport #cmd_cancel{
 	display:block;
 }
 
-.page-starbase #cmd_starbase_refuel, .page-starbase #cmd_starbase_complete, .page-starbase #cmd_cancel{
+.page-dockWithStarbase #cmd_refuelAtStarbase, .page-dockWithStarbase #cmd_repairAtStarbase, .page-dockWithStarbase #cmd_cancel{
 	display:block;
 }
 
 .page-computer #shortrangescan{
 	display:table;
 }
-
-
-/*
-cmd_navigate
-cmd_shields
-cmd_status
-cmd_longrangescan
-cmd_phasers
-cmd_torpedos
-cmd_phasers_100
-cmd_phasers_200
-cmd_phasers_300
-cmd_starbase_dock
-cmd_starbase_refuel
-cmd_starbase_complete
-cmd_cancel
-*/

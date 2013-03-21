@@ -34,7 +34,7 @@ var $window = $(window);
 var $document = $(document);
 
 String.prototype.startsWith=function(prefix){
-	return this.indexOf(prefix)==0;
+	return this.indexOf(prefix)===0;
 };
 
 Array.prototype.remove = function() {
@@ -51,7 +51,7 @@ Array.prototype.remove = function() {
 Array.prototype.pushUnique = function(element){
 	if (element.x && element.y){
 		for (var i=0;i<this.length;i++)
-			if (this[i].x==element.x && this[i].y==element.y)
+			if (this[i].x===element.x && this[i].y===element.y)
 				return;
 	}
 	this.push(element);
@@ -61,7 +61,7 @@ var Tools={
 		screenWidth:-1,
 		screenHeight:-1,
 		page:$body,
-		hashesWithCss:/(computer|status|longrangescan|sector|phasers|starbase)_*/,
+		methodsWithCss:/(computer|showStatusReport|showLongRangeScan|selectSector|selectPhaserStrength|dockWithStarbase)_*/,
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
@@ -76,9 +76,6 @@ var Tools={
 		},
 		distance:function(x1,y1,x2,y2){
 			return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
-		},
-		changeHash:function(hash){
-			Controller.onHistoryChanged(hash);
 		},
 		extractPositionFrom:function(text){
 			var parts = /.*?(\d)[,_](\d)/.exec(text);
@@ -132,7 +129,7 @@ var Tools={
 				regionName:regionName,
 				x:x,
 				y:y,
-				element:$("#cmd_quadrant_"+x+"_"+y),
+				element:$("#cmd_selectQuadrant_"+x+"_"+y),
 				stars:Tools.makeStars(),
 				klingons:Tools.makeKlingons(),
 				starbases:Tools.makeStarbases()
@@ -142,7 +139,7 @@ var Tools={
 		handleWindowResize:function(){
 			var width = $window.width();
 			var height = $window.height();
-			if (Tools.screenHeight == height && Tools.screenWidth == width)
+			if (Tools.screenHeight === height && Tools.screenWidth === width)
 				return;
 			Tools.screenHeight = height;
 			Tools.screenWidth = width;
@@ -167,7 +164,7 @@ var Tools={
 			while(true){
 				if (!callback(x0,y0))
 					break;
-				if (x0 == x1 && y0 == y1) break;
+				if (x0 === x1 && y0 === y1) break;
 			     e2 = 2*err;
 			     if (e2 > -dy){ 
 			       err = err - dy;
@@ -205,10 +202,10 @@ var Tools={
 		addPageCss:function(css){
 			Tools.page.addClass(css);
 		},
-		updatePageCssWithToken:function(hash){
-			if (!Tools.hashesWithCss.test(hash))
+		updatePageCssWithToken:function(method){
+			if (!Tools.methodsWithCss.test(method))
 				return;
-			var css = Tools.hashesWithCss.exec(hash)[1];
+			var css = Tools.methodsWithCss.exec(method)[1];
 			var allClasses = Tools.page.attr("class").split(" ");
 			for (var i=0;i<allClasses.length;i++)
 				if (allClasses[i].startsWith("page-"))
@@ -223,7 +220,7 @@ var Tools={
 			while(target[0]!=$body[0]){
 				var id = target.attr("id");
 				if (/cmd_/.test(id)){
-					Controller.onHistoryChanged(id);
+					Controller.onClickedActivityToken(id);
 					return;
 				}
 				target = target.parent();
@@ -314,14 +311,14 @@ var StarMap={
 		   getQuadrantAt:function(x,y){
 			   for (var i=0;i<StarMap.quadrants.length;i++){
 				   var quadrant = StarMap.quadrants[i];
-				   if (quadrant.x == x && quadrant.y == y)
+				   if (quadrant.x === x && quadrant.y === y)
 					   return quadrant;
 			   }
 		   },
 		   getKlingonInQuadrantAt:function(quadrant, x, y){
 			   for (var i=0;i<quadrant.klingons.length;i++){
 				   var klingon = quadrant.klingons[i];
-				   if (klingon.x == x && klingon.y == y)
+				   if (klingon.x === x && klingon.y === y)
 					   return klingon;
 			   }
 		   },
@@ -331,12 +328,12 @@ var StarMap={
 				   return thing;
 			   for (var i=0;i<quadrant.starbases.length;i++){
 				   thing = quadrant.starbases[i];
-				   if (thing.x == x && thing.y == y)
+				   if (thing.x === x && thing.y === y)
 					   return thing;
 			   }
 			   for (var i=0;i<quadrant.stars.length;i++){
 				   thing = quadrant.stars[i];
-				   if (thing.x == x && thing.y == y)
+				   if (thing.x === x && thing.y === y)
 					   return thing;
 			   }
 		   },
@@ -345,7 +342,7 @@ var StarMap={
 				 var starbase = quadrant.starbases[i];
 				 for (var _x=x-1;_x<=x+1;_x++)  
 			     for (var _y=y-1;_y<=y+1;_y++)
-			     if (starbase.x==_x && starbase.y==_y)
+			     if (starbase.x===_x && starbase.y===_y)
 			    	 return starbase;
 			 }
 			 return false;
@@ -394,7 +391,7 @@ var QuadrantScanScreen={
 		updateList:function(symbol, list, formatter){
 			for (var i=0;i<list.length;i++){
 				var thing = list[i];
-				var tile = $("#cmd_sector_"+thing.x+"_"+thing.y);
+				var tile = $("#cmd_selectSector_"+thing.x+"_"+thing.y);
 				var css = formatter(thing);
 				tile.attr("class",css);
 				tile.html(symbol);
@@ -426,14 +423,14 @@ var QuadrantScanScreen={
 				var tr = $("<tr></tr>");
 				element.append(tr);
 				for (var x=0;x<8;x++){
-					var td = $("<td id='cmd_sector_"+x+"_"+y+"'>&nbsp;</td>");
+					var td = $("<td id='cmd_selectSector_"+x+"_"+y+"'>&nbsp;</td>");
 					tr.append(td);
 				}
 			}
 		},
 		selectSectorAt: function(x,y){
 			$("#quadrantscan .selected").removeClass("selected");
-			$("#cmd_sector_"+x+"_"+y).addClass("selected");
+			$("#cmd_selectSector_"+x+"_"+y).addClass("selected");
 		}
 };
 
@@ -443,7 +440,7 @@ var QuadrantScanScreen={
 var LongRangeScanScreen={
 		element:$("#longrangescan"),
 		show:function(){
-			Tools.updatePageCssWithToken("longrangescan");
+			Tools.updatePageCssWithToken("showLongRangeScan");
 			for (var i=0;i<StarMap.quadrants.length;i++)
 				LongRangeScanScreen.updateQuadrant(StarMap.quadrants[i]);
 			$("#longrangescan .has-starship")[0].scrollIntoView();
@@ -454,9 +451,10 @@ var LongRangeScanScreen={
 		updateElementWithQuadrant:function(quadrant, e){
 			e.html(quadrant.klingons.length+" "+quadrant.starbases.length+" "+quadrant.stars.length);
 			e.removeClass("has-starship");
-			if (StarShip.quadrant == quadrant)
+			if (StarShip.quadrant === quadrant){
 				e.addClass("has-starship");
-			e.attr("id","cmd_quadrant_"+quadrant.x+"_"+quadrant.y);
+			}
+			e.attr("id","cmd_selectQuadrant_"+quadrant.x+"_"+quadrant.y);
 		}
 };
 
@@ -518,13 +516,13 @@ var Computer={
 		element:$("#computerscreen"),
 		stardate:2550,
 		updateShieldsIndicator:function(){
-			$("#cmd_shields .progress-indicator").css("width",StarShip.shields+"%");
-			$("#cmd_shields .max-indicator").css("width",StarShip.maxShields+"%");
+			$("#cmd_toggleShields .progress-indicator").css("width",StarShip.shields+"%");
+			$("#cmd_toggleShields .max-indicator").css("width",StarShip.maxShields+"%");
 		},
 		updateStarbaseDockCommand:function(){
 			var starbaseNearby = StarMap.isStarbaseAdjacent(StarShip.quadrant, StarShip.x, StarShip.y);
 			var isStarbaseNearby = !!starbaseNearby;
-			var cmd = $("#cmd_starbase_dock");
+			var cmd = $("#cmd_dockWithStarbase");
 			if (isStarbaseNearby)
 				cmd.addClass("starbase-nearby");
 			else
@@ -662,7 +660,7 @@ var KlingonAI={
 			if (StarShip.shields < 0){
 				return IO.gameOverMessage("Klingon ship destroyed us, game over.");
 			}
-			return IO.message(function(){}, "Klingon ship fired at us, shields dropped to "+StarShip.shields);
+			return IO.message(function(){}, "Klingon ship fired at us, shields dropped to "+Math.round(StarShip.shields));
 		}
 };
 
@@ -671,80 +669,32 @@ var KlingonAI={
  */
 var Controller={
 		sector:{x:0,y:0},
-		currentHistoryToken:null,
-		onHistoryChanged:function(token){
-			if (token == Controller.currentHistoryToken)
+		currentToken:null,
+		onClickedActivityToken:function(token){
+			if (token == Controller.currentToken)
 				return;
-			Computer.updateStardate();
 			if (token.startsWith("cmd_"))
 				token = token.substring(4);
-			Tools.updatePageCssWithToken(token);
-			Controller.currentHistoryToken = token;
-			if (""==token){
-				Controller.showStartScreen();
+			var method = "";
+			var arg1=undefined;
+			var arg2=undefined;
+			if (/\w+_\d_\d/.test(token)){
+				var parts = /(\w+)_(\d)_(\d)/.exec(token);
+				method = parts[1];
+				arg1 = parseInt(parts[2]);
+				arg2 = parseInt(parts[3]);
 			} else
-			if (/quadrantscan/.test(token)){
-				Controller.quadrantScan();
+			if (/(\w+)_(\d+)/.test(token)){
+				var parts = /(\w+)_(\d+)/.exec(token);
+				method = parts[1];
+				arg1 = parseInt(parts[2]);
 			} else
-			if (/longrangescan/.test(token)){
-				Controller.longRangeScan();
-			} else
-			if (/computer/.test(token)){
-				Controller.showComputerScreen();
-			} else
-			if (/navigate/.test(token)){
-				Controller.navigate();
-			} else
-			if (/sector_\d_\d/.test(token)){
-				var position = Tools.extractPositionFrom(token);
-				Controller.onSectorSelected(position.x,position.y);
-			} else
-			if (/quadrant_\d_\d/.test(token)){
-				var position = Tools.extractPositionFrom(token);
-				var quadrant = StarMap.getQuadrantAt(position.x, position.y);
-				Controller.onQuadrantSelected(quadrant);
-			} else
-			if (/phasers_\d\d\d/.test(token)){
-				Controller.firePhasers(parseInt(/phasers_(\d\d\d)/.exec(token)[1]));
-			} else
-			if (/phasers/.test(token)){
-				Controller.selectPhaserStrength();
-			} else
-			if (/torpedos/.test(token)){
-				Controller.fireTorpedos();
-			} else
-			if (/warp/.test(token)){
-				Controller.selectWarpDestination();
-			} else
-			if (/shields/.test(token)){
-				Controller.toggleShieldStrength();
-			} else
-			if (/status/.test(token)){
-				Controller.showStatusReport();
-			} else
-			if (/starbase_refuel/.test(token)){
-				Controller.refuelAtStarbase();
-			} else
-			if (/starbase_complete/.test(token)){
-				Controller.repairAtStarbase();
-			} else
-			if (/starbase/.test(token)){
-				Controller.showStarbaseOptions();
-			} else
-			if (/cancel/.test(token)){
-				Controller.cancel();
-			} else
-			if (/endround/.test(token)){
-				IO.hide();
-				Controller.endRound();
-			} else
-			if (/startround/.test(token)){
-				IO.hide();
-				Controller.showComputerScreen();
-			} else
-			if (/sectorselection/.test(token)){
-				Controller.showSectorSelectionMenu();
-			}
+			method = token;
+			console.log(method+" "+arg1+" "+arg2);
+			Computer.updateStardate();
+			Tools.updatePageCssWithToken(method);
+			Controller.currentHistoryToken = method;
+			(Controller[method])(arg1, arg2);
 		},
 		refuelAtStarbase:function(){
 			StarShip.energy = Constants.MAX_ENERGY;
@@ -758,18 +708,16 @@ var Controller={
 			Computer.advanceClock(Constants.DURATION_OF_REPAIRS);
 			Controller.refuelAtStarbase();
 		},
-		showStarbaseOptions:function(){
-		},
-		onSectorSelected:function(x,y){
+		selectSector:function(x,y){
 			Controller.sector.x = x;
 			Controller.sector.y = y;
 			QuadrantScanScreen.selectSectorAt(x,y);
 			Controller.showSectorSelectionMenu();
 		},
 		showSectorSelectionMenu:function(){
-			$("#cmd_torpedos").text("Photon torpedos ("+StarShip.torpedos+")");
+			$("#cmd_fireTorpedos").text("Photon torpedos ("+StarShip.torpedos+")");
 		},
-		toggleShieldStrength:function(){
+		toggleShields:function(){
 			var shields = StarShip.userDefinedShields;
 			var delta = -shields;
 			if (shields == StarShip.maxShields)
@@ -783,15 +731,11 @@ var Controller={
 			Computer.updateShieldsIndicator();
 			Controller.showStartScreen();
 		},
-		quadrantScan:function(){
-			Tools.changeHash("quadrant-scan");
-			QuadrantScanScreen.show(StarShip.quadrant);
-		},
-		longRangeScan:function(){
-			Tools.changeHash("long-range-scan");
+		showLongRangeScan:function(){
 			LongRangeScanScreen.show();
 		},
-		onQuadrantSelected:function(quadrant){
+		selectQuadrant:function(x,y){
+			var quadrant = StarMap.getQuadrantAt(x, y);
 			Controller.warpTo(quadrant);
 		},
 		showComputerScreen:function(){
@@ -828,7 +772,7 @@ var Controller={
 			Controller.showStartScreen();
 		},
 		endRound:function(){
-			if (StarMap.countKlingons()==0){
+			if (StarMap.countKlingons()===0){
 				return IO.gameOverMessage("All Klingons destroyed!");
 			}
 			Controller.showComputerScreen();
@@ -861,7 +805,7 @@ var Controller={
 			}
 			// movement obstructed?
 			distance = Tools.distance(StarShip.x, StarShip.y, finalX, finalY);
-			if (distance == 0)
+			if (distance === 0)
 				return Controller.showComputerScreen();
 			var consumption = Computer.calculateEnergyConsumptionForMovement(distance);
 			if (!Computer.hasEnergyBudgetFor(consumption))
@@ -893,7 +837,7 @@ var Controller={
 			if (StarShip.torpedos<1){
 				return IO.message(Controller.showComputerScreen, "Out of torpedos");
 			}
-			if (StarShip.x == Controller.sector.x && StarShip.y == Controller.sector.y){
+			if (StarShip.x === Controller.sector.x && StarShip.y === Controller.sector.y){
 				return IO.message(Controller.fireTorpedos, "Cannot fire at self");
 			}
 			var obstacle = Tools.findObstruction(StarShip.quadrant, StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y);
@@ -911,14 +855,16 @@ var Controller={
 					StarShip.quadrant.klingons.remove(thing);
 					return IO.messageAndEndRound("Photon torpedo hit klingon at "+thing.x+","+thing.y);
 				}
-			};
+			}
+			else
+				return IO.messageAndEndRound("Photon torpedo exploded in the void.");
 		},
 		selectWarpDestination:function(){
 			Controller.longRangeScan();
 		},
 		warpTo:function(quadrant){
 			var distance = Tools.distance(StarShip.quadrant.x, StarShip.quadrant.y, quadrant.x, quadrant.y);
-			if (distance==0)
+			if (distance===0)
 				return Controller.showComputerScreen();
 			var consumption = Computer.calculateEnergyConsumptionForWarpDrive(StarShip.quadrant, quadrant);
 			var speed = Math.min(distance, Constants.MAX_WARP_SPEED);
@@ -944,7 +890,7 @@ function repositionWindowScroll(){
 }
 
 window.onbeforeunload = function(e){
-		return "Exit game?"; 
+		return ""; 
 };
 
 $(window).scroll(repositionWindowScroll);
