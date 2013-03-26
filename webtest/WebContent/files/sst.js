@@ -68,11 +68,13 @@ var Tools={
 		},
 		scrollIntoView:function(element){
 			var offset = element.offset();
-			var destination = offset.top-2;
+			var destination = offset.top;
 			$document.scrollTop(destination);
 		},
 		centerScreen:function(){
-			Tools.scrollIntoView($("#page"));
+//			Tools.scrollIntoView($("#page"));
+			window.scrollTo(0, 1);
+			window.setTimeout( function(){  }, 50 );
 		},
 		distance:function(x1,y1,x2,y2){
 			return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
@@ -595,7 +597,7 @@ var IO={
 		Tools.removePageCss("messages-visible");
 		Tools.addPageCss("messages-visible");
 		IO.currentCallback = callback;
-		Tools.scrollIntoView(IO.messages);
+		repositionWindowScroll();
 		IO.messages.find(".single").focus();
 		return false;
 	},
@@ -884,7 +886,7 @@ function repositionWindowScroll(){
 	var delement = doc.documentElement;
 	var scrollOffset = (delement && delement.scrollTop  || doc.body && doc.body.scrollTop  || 0);
 	var top = _page.offset().top;
-	if (scrollOffset < top){
+	if (scrollOffset <= top){
 		Tools.centerScreen();
 	}
 }
@@ -894,5 +896,4 @@ window.onbeforeunload = function(e){
 };
 
 $(window).scroll(repositionWindowScroll);
-
 Controller.startGame();

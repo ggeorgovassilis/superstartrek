@@ -87,6 +87,7 @@ table a, table a:visited{
 
 #quadrantscan{
 	float:left;
+	margin-top:0.5em;
 }
 
 .selected{
@@ -178,6 +179,7 @@ table a, table a:visited{
 	position:absolute;
 	left:0;
 	right:0;
+	margin-top:1em;
 	background-color:black;
 	border:solid purple 2px;
 	color:white;
@@ -200,7 +202,7 @@ a.single{
 	top:0;
 	left:0;
 	background-color:black;
-	opacity:0.5;
+	opacity:0.75;
 	display:none;
 }
 
