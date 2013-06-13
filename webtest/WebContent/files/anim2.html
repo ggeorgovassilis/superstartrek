@@ -1,0 +1,14 @@
+<html>
+<body>
+<div id="canvas" style="border:solid black 1px;padding:50px;width:26px"></div>
+<script type="text/javascript">
+var frames=["/(`.´)\\","\\(`.´)/"];
+var i = 0;
+window.setInterval(function(){
+var e = document.getElementById("canvas");
+e.innerHTML = frames[i].replace(" ","&nbsp;");
+i=(i+1)% frames.length;
+}, 300);
+</script>
+</body>
+</html>
