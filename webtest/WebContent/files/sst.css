@@ -62,18 +62,40 @@ table a, table a:visited{
 	padding:5px;
 }
 
-.quadrants{
-}
-
 .quadrants td{
 	border-right:solid DarkViolet 1px;	
 	padding:4px 10px 4px 10px;
 	cursor:pointer;	
+	color:silver;
+}
+
+.region-names td:nth-child(1){
+}
+
+.region-names td:nth-child(2){
+}
+
+.small-height .region-names{
+	display:none;
+}
+
+.quadrants td.explored{
+	color:white;	
 }
 
 .has-starship{
-	background-color:midnightblue;
+	background-color:midnightblue !important;
 }
+
+.has-starbase{
+	color:darkturquoise !important;
+}
+
+.has-klingons{
+	color:crimson !important;
+}
+
+
 
 #quadrantscan td{
 	border:solid gray 1px;

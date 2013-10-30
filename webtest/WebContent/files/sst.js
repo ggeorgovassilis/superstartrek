@@ -19,9 +19,11 @@ var Constants = {
 		MAX_WARP_SPEED:4,
 		MAX_ENERGY:3000,
 		MAX_TORPEDOS:10,
-		MAX_REACTOR_OUTPUT:300,
+		MAX_REACTOR_OUTPUT:350,
 		PHASER_EFFICIENCY:1,
-		KLINGON_DISRUPTOR_POWER:50
+		KLINGON_DISRUPTOR_POWER:50,
+		
+		SMALL_HEIGHT:450
 };
 /*
  * Tools
@@ -134,8 +136,10 @@ var Tools={
 				element:$("#cmd_selectQuadrant_"+x+"_"+y),
 				stars:Tools.makeStars(),
 				klingons:Tools.makeKlingons(),
-				starbases:Tools.makeStarbases()
+				starbases:Tools.makeStarbases(),
+				explored:false
 			};
+			quadrant.explored = quadrant.starbases.length > 0;
 			return quadrant;
 		},
 		handleWindowResize:function(){
@@ -147,10 +151,13 @@ var Tools={
 			Tools.screenWidth = width;
 			Tools.removePageCss("orientation-horizonal");
 			Tools.removePageCss("orientation-vertical");
+			Tools.removePageCss("small-height");
 			if (width>height)
 				Tools.addPageCss("orientation-horizontal");
 			else
 				Tools.addPageCss("orientation-vertical");
+			if (height<Constants.SMALL_HEIGHT)
+				Tools.addPageCss("small-height");
 		},
 		walkLine:function(x0,y0,x1,y1, callback){
 			var sx=0;
@@ -451,11 +458,22 @@ var LongRangeScanScreen={
 			LongRangeScanScreen.updateElementWithQuadrant(quadrant, quadrant.element);
 		},
 		updateElementWithQuadrant:function(quadrant, e){
-			e.html(quadrant.klingons.length+" "+quadrant.starbases.length+" "+quadrant.stars.length);
+			var klingonCount = quadrant.explored?quadrant.klingons.length:0;
+			var hasKlingons = klingonCount > 0;
+			var hasStarbase = quadrant.starbases.length > 0; 
+			e.html((hasKlingons?"K":"")+" "+(hasStarbase?"!":"")+" "+quadrant.stars.length);
 			e.removeClass("has-starship");
-			if (StarShip.quadrant === quadrant){
+			e.removeClass("has-klingons");
+			e.removeClass("has-starbase");
+			e.removeClass("explored");
+			if (StarShip.quadrant === quadrant)
 				e.addClass("has-starship");
-			}
+			if (klingonCount>0)
+				e.addClass("has-klingons");
+			if (quadrant.starbases.length>0)
+				e.addClass("has-starbase");
+			if (quadrant.explored)
+				e.addClass("explored");
 			e.attr("id","cmd_selectQuadrant_"+quadrant.x+"_"+quadrant.y);
 		}
 };
@@ -476,9 +494,10 @@ var ShortRangeScanScreen={
 			var cell = $(cells[index]);
 			if (x>=0&&x<=7&&y>=0&&y<=7){
 				var quadrant = StarMap.getQuadrantAt(x, y);
+				quadrant.explored = true;
 				LongRangeScanScreen.updateElementWithQuadrant(quadrant, cell);
 			} else{
-				cell.text("0 0 0");
+				cell.text("0");
 				cell.attr("id",null);
 			}
 			index++;
