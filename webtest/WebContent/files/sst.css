@@ -66,25 +66,21 @@ table a, table a:visited{
 	padding:5px;
 }
 
+.small-height .region-names{
+	display:none;
+}
+
 .quadrants td{
 	border-right:solid DarkViolet 1px;	
 	padding:4px 10px 4px 10px;
 	cursor:pointer;	
 	color:silver;
-}
-
-.region-names td:nth-child(1){
-}
-
-.region-names td:nth-child(2){
-}
-
-.small-height .region-names{
-	display:none;
+	background-color:darkslategray;
 }
 
 .quadrants td.explored{
-	color:white;	
+	color:white;
+	background-color:transparent;
 }
 
 .has-starship{
@@ -92,11 +88,11 @@ table a, table a:visited{
 }
 
 .has-starbase{
-	color:darkturquoise !important;
+	background-color:darkturquoise !important;
 }
 
 .has-klingons{
-	color:crimson !important;
+	background-color:maroon !important;
 }
 
 
@@ -324,3 +320,4 @@ a.progress-bar {
 .page-computer #shortrangescan{
 	display:table;
 }
+

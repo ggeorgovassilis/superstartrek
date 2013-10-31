@@ -23,7 +23,9 @@ var Constants = {
 		PHASER_EFFICIENCY:1,
 		KLINGON_DISRUPTOR_POWER:50,
 		
-		SMALL_HEIGHT:450
+		SMALL_HEIGHT:450,
+		CHANCE_OF_STARBASE_IN_QUADRANT:0.08,
+		CHANCE_OF_KLINGON_IN_QUADRANT:0.1
 };
 /*
  * Tools
@@ -74,7 +76,6 @@ var Tools={
 			$document.scrollTop(destination);
 		},
 		centerScreen:function(){
-//			Tools.scrollIntoView($("#page"));
 			window.scrollTo(0, 1);
 			window.setTimeout( function(){  }, 50 );
 		},
@@ -106,7 +107,8 @@ var Tools={
 		},
 		makeKlingons:function(){
 			var a = new Array();
-			for (var i=Tools.random(1);i>0;i--)
+			var hasKlingon = Constants.CHANCE_OF_KLINGON_IN_QUADRANT > Math.random();
+			if (hasKlingon)
 				a.pushUnique({
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
@@ -119,7 +121,8 @@ var Tools={
 		},
 		makeStarbases:function(){
 			var a = new Array();
-			for (var i=Tools.random(1);i>0;i--)
+			var hasStarbase = Constants.CHANCE_OF_STARBASE_IN_QUADRANT > Math.random();
+			if (hasStarbase)
 				a.pushUnique({
 					x:Math.round(Math.random()*7),
 					y:Math.round(Math.random()*7),
@@ -452,7 +455,7 @@ var LongRangeScanScreen={
 			Tools.updatePageCssWithToken("showLongRangeScan");
 			for (var i=0;i<StarMap.quadrants.length;i++)
 				LongRangeScanScreen.updateQuadrant(StarMap.quadrants[i]);
-			$("#longrangescan .has-starship")[0].scrollIntoView();
+//			$("#longrangescan .has-starship")[0].scrollIntoView();
 		},
 		updateQuadrant:function(quadrant){
 			LongRangeScanScreen.updateElementWithQuadrant(quadrant, quadrant.element);
@@ -519,6 +522,7 @@ var StatusReport={
 		shields:$("#report_shields"),
 		stardate:$("#report_stardate"),
 		reactor:$("#report_reactor"),
+		reactorRemaining:$("#report_reactor_remaining"),
 		klingonsCount:$("#report_klingons_count"),
 		update:function(){
 			StatusReport.energy.text(StarShip.energy);
@@ -528,6 +532,7 @@ var StatusReport={
 			StatusReport.shields.text(StarShip.shields+ " / "+StarShip.maxShields);
 			StatusReport.stardate.text(Tools.formatStardate(Computer.stardate));
 			StatusReport.reactor.text("%"+100*(StarShip.reactorOutput/Constants.MAX_REACTOR_OUTPUT));
+			StatusReport.reactorRemaining.text(StarShip.budget);
 			StatusReport.klingonsCount.text(StarMap.countKlingons());
 		}
 	};
@@ -859,7 +864,8 @@ var Controller={
 				StarShip.quadrant.klingons.remove(klingon);
 				return IO.messageAndEndRound("Klingon ship destroyed");
 			}
-			Controller.endRound();
+			Computer.show();
+			//Controller.endRound();
 		},
 		fireTorpedos:function(){
 			if (StarShip.torpedos<1){
