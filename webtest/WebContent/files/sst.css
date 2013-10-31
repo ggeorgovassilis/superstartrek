@@ -29,6 +29,10 @@ a:hover, .quadrants td:hover, #shortrangescan td:hover, #quadrantscan td:hover, 
 	text-decoration:none;
 }
 
+a:hover, #shortrangescan td:hover, .quadrants td:hover{
+	background-color:purple;	
+}
+
 table a, table a:visited{
 	padding:0;
 	margin:0;
@@ -131,7 +135,15 @@ table a, table a:visited{
 /**
  * Short range scan
  */
- 
+.short-range-scan-container{
+	overflow:hidden;
+	float:left;
+}
+
+.short-range-scan-label{
+	margin-left:1em;
+}
+
 #shortrangescan td{
 	width:33.3%;
 	text-align:center;

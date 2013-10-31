@@ -461,7 +461,7 @@ var LongRangeScanScreen={
 			var klingonCount = quadrant.explored?quadrant.klingons.length:0;
 			var hasKlingons = klingonCount > 0;
 			var hasStarbase = quadrant.starbases.length > 0; 
-			e.html((hasKlingons?"K":"")+" "+(hasStarbase?"!":"")+" "+quadrant.stars.length);
+			e.html((hasKlingons?"K":" ")+" "+(hasStarbase?"!":" ")+" "+quadrant.stars.length);
 			e.removeClass("has-starship");
 			e.removeClass("has-klingons");
 			e.removeClass("has-starbase");
@@ -492,6 +492,9 @@ var ShortRangeScanScreen={
 		for (var y=qy-1;y<=qy+1;y++)
 		for (var x=qx-1;x<=qx+1;x++){
 			var cell = $(cells[index]);
+			cell.removeClass("has-starbase");
+			cell.removeClass("has-klingons");
+			cell.removeClass("explored");
 			if (x>=0&&x<=7&&y>=0&&y<=7){
 				var quadrant = StarMap.getQuadrantAt(x, y);
 				quadrant.explored = true;
@@ -580,7 +583,6 @@ var Computer={
 			return strength*Constants.PHASER_EFFICIENCY;
 		},
 		hasEnergyBudgetFor: function(amount){
-			console.log("Has enegery budget for "+amount+" / "+StarShip.budget);
 			if (StarShip.budget < amount){
 				IO.message(function(){}, "Cannot execute command, reactor capacity reached");
 				return false;
@@ -668,7 +670,6 @@ var KlingonAI={
 				obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y, x, y);
 				if (obstacle)
 					continue;
-				console.log("found a nice spot at "+x+","+y);
 				klingon.x = x;
 				klingon.y = y;
 				return;
@@ -711,11 +712,17 @@ var Controller={
 				arg1 = parseInt(parts[2]);
 			} else
 			method = token;
-			console.log(method+" "+arg1+" "+arg2);
 			Computer.updateStardate();
 			Tools.updatePageCssWithToken(method);
 			Controller.currentHistoryToken = method;
-			(Controller[method])(arg1, arg2);
+			try{
+				(Controller[method])(arg1, arg2);
+			}
+			catch(ex){
+				console.log("error for method "+method);
+				console.log(ex);
+				throw ex;
+			}
 		},
 		refuelAtStarbase:function(){
 			StarShip.energy = Constants.MAX_ENERGY;
@@ -895,6 +902,9 @@ var Controller={
 			StarShip.quadrant = quadrant;
 			StarShip.repositionIfSectorOccupied();
 			Controller.endRound();
+		},
+		dockWithStarbase:function(){
+			//NOP, but necessary because of cmd_ convention.
 		}
 };
 
