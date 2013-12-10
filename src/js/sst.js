@@ -65,7 +65,7 @@ var Tools={
 		screenWidth:-1,
 		screenHeight:-1,
 		page:$body,
-		methodsWithCss:/(computer|showStatusReport|showLongRangeScan|selectSector|selectPhaserStrength|dockWithStarbase)_*/,
+		methodsWithCss:/(computer|showStatusReport|showLongRangeScan|selectSector|selectPhaserStrength|dockWithStarbase|intro)_*/,
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
@@ -541,6 +541,23 @@ var CommandBar={
 		element:$("#commandbar")
 };
 
+var Intro={
+	visible:false,
+	show:function(){
+		Intro.visible = true;
+		Tools.updatePageCssWithToken("intro");
+		var button = $("#cmd_leaveIntro");
+		function blink(){
+			if(Intro.visible)
+				button.fadeOut("slow").fadeIn("slow",blink);
+		};
+		blink();
+	},
+	hide:function(){
+		Intro.visible = false;
+	}
+};
+
 var Computer={
 		element:$("#computerscreen"),
 		stardate:2550,
@@ -716,7 +733,7 @@ var Controller={
 				method = parts[1];
 				arg1 = parseInt(parts[2]);
 			} else
-			method = token;
+				method = token;
 			Computer.updateStardate();
 			Tools.updatePageCssWithToken(method);
 			Controller.currentHistoryToken = method;
@@ -788,10 +805,18 @@ var Controller={
 			StarMap.constructQuadrants();
 			StarShip.setup();
 			StarShip.repositionIfSectorOccupied();
-			Controller.startRound();
+			Controller.showIntroScreen();
+		},
+		leaveIntro:function(){
+			Intro.hide();
+			Controller.showStartScreen();
 		},
 		cancel:function(){
 			Controller.showComputerScreen();
+		},
+		showIntroScreen:function(){
+			Intro.show();
+			Tools.centerScreen();
 		},
 		startRound:function(){
 			StarShip.budget=StarShip.reactorOutput;

@@ -10,7 +10,7 @@ table{
 }
 
 html{
-	background-color:black;
+	background:black url('../images/stars-background.gif');
 	font-family:arial,helvetica,sans-serif;
 	color:white;
 }
@@ -60,6 +60,7 @@ table a, table a:visited{
 	background-color:#220022;
 	color:white;
 	text-align: center;
+	font-size:0.8em;
 }
 
 .region-names td{
@@ -74,8 +75,8 @@ table a, table a:visited{
 	border-right:solid DarkViolet 1px;	
 	padding:4px 10px 4px 10px;
 	cursor:pointer;	
-	color:silver;
-	background-color:darkslategray;
+	color:#636363;
+	text-align:center;
 }
 
 .quadrants td.explored{
@@ -181,8 +182,53 @@ table a, table a:visited{
 	display:block;
 }
 
+#longrangescan{
+	width:100%;
+}
+
 .computer #computerscreen{
 	display:block;
+}
+
+/*
+ * Intro screen
+ */
+
+.page-intro #introscreen{
+	display:block;
+}
+
+#introscreen .logo{
+	font-size:0.5em;
+}
+
+.intro-container{
+	float:left;
+	margin-bottom:1em;
+}
+
+#cmd_leaveIntro{
+	display:block;
+	background-color:purple;
+}
+
+.credits{
+	clear:both;
+	overflow:hidden;
+}
+
+.credits a{
+	border:none transparent 0px;
+	color:slateblue;
+}
+
+.credits a:hover{
+	background-color:transparent;
+	text-decoration:underline;
+}
+
+h3{
+	padding-left:0.5em;
 }
 
 /*
