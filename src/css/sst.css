@@ -196,6 +196,7 @@ table a, table a:visited{
 
 .page-intro #introscreen{
 	display:block;
+	font-family:monospace;
 }
 
 #introscreen .logo{
