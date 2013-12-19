@@ -24,6 +24,7 @@ var Constants = {
 		KLINGON_DISRUPTOR_POWER:50,
 		
 		SMALL_HEIGHT:450,
+		SMALL_WIDTH:321,
 		CHANCE_OF_STARBASE_IN_QUADRANT:0.08,
 		CHANCE_OF_KLINGON_IN_QUADRANT:0.1
 };
@@ -155,12 +156,15 @@ var Tools={
 			Tools.removePageCss("orientation-horizonal");
 			Tools.removePageCss("orientation-vertical");
 			Tools.removePageCss("small-height");
+			Tools.removePageCss("small-width");
 			if (width>height)
 				Tools.addPageCss("orientation-horizontal");
 			else
 				Tools.addPageCss("orientation-vertical");
 			if (height<Constants.SMALL_HEIGHT)
 				Tools.addPageCss("small-height");
+			if (height<Constants.SMALL_WIDTH)
+				Tools.addPageCss("small-width");
 		},
 		walkLine:function(x0,y0,x1,y1, callback){
 			var sx=0;

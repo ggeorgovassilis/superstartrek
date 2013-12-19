@@ -200,7 +200,11 @@ table a, table a:visited{
 }
 
 #introscreen .logo{
-	font-size:0.4em;
+	font-size:1em;
+}
+
+.small-width #introscreen .logo{
+	font-size:6px;
 }
 
 .intro-container{
