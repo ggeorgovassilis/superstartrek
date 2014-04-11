@@ -11,9 +11,9 @@ table{
 
 html{
 	background:black url('../images/stars-background.gif');
-	font-family:arial,helvetica,sans-serif;
+	font-family:sans-serif;
 	color:white;
-	font-size:11px;
+	font-size:12px;
 }
 
 a, a:visited{
