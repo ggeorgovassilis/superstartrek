@@ -43,6 +43,7 @@ Controller.warpTo = function(quadrant) {
 	StarShip.quadrant = quadrant;
 	StarShip.repositionIfSectorOccupied();
 	$(window).trigger("ship_moved");
+	$(window).trigger("enterprise_warped");
 	Controller.endRound();
 };
 Controller.dockWithStarbase = function() {

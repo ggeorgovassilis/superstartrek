@@ -82,22 +82,29 @@ table a, table a:visited{
 
 .quadrants td.explored{
 	color:white;
-	background-color:transparent;
 }
 
 .has-starship{
-	background-color:midnightblue !important;
+	background-color:midnightblue;
 }
 
 .has-starbase{
-	background-color:darkturquoise !important;
+	background-color:darkturquoise;
 }
 
 .has-klingons{
-	background-color:maroon !important;
+	background-color:maroon;
 }
 
-
+.has-starship.has-klingons{
+  background: repeating-linear-gradient(
+  to right,
+  maroon,
+  maroon 5px,
+  midnightblue 5px,
+  midnightblue 10px
+);
+}
 
 #quadrantscan td{
 	border:solid gray 1px;

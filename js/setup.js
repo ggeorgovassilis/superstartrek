@@ -14,41 +14,45 @@ var Setup = {
 		quadrant.explored = quadrant.starbases.length > 0;
 		return quadrant;
 	},
-	makeStars:function(){
+	makeStars : function() {
 		var a = new Array();
-		for (var i=Tools.random(10);i>0;i--)
+		for (var i = Tools.random(20); i > 0; i--)
 			a.pushUnique({
-				x:Math.round(Math.random()*7),
-				y:Math.round(Math.random()*7),
-				star:true,
-				name:"a star"
+				x : Math.round(Math.random() * 7),
+				y : Math.round(Math.random() * 7),
+				star : true,
+				name : "a star"
 			});
 		return a;
 	},
-	makeKlingons:function(quadrant){
+	makeKlingons : function(quadrant) {
 		var a = new Array();
-		var hasKlingon = Constants.CHANCE_OF_KLINGON_IN_QUADRANT > Math.random();
-		if (hasKlingon)
-			a.pushUnique({
-				x:Math.round(Math.random()*7),
-				y:Math.round(Math.random()*7),
-				shields:100,
-				weaponPower:Constants.KLINGON_DISRUPTOR_POWER,
-				klingon:true,
-				quadrant:quadrant,
-				name:"a klingon raider"
-			});
+		var hasKlingon = true;
+		while ((hasKlingon = (Constants.CHANCE_OF_KLINGON_IN_QUADRANT > Math
+				.random()))) {
+				a.pushUnique({
+					x : Math.round(Math.random() * 7),
+					y : Math.round(Math.random() * 7),
+					shields : Constants.MAX_KLINGON_SHIELD,
+					maxShields : Constants.MAX_KLINGON_SHIELD,
+					weaponPower : Constants.KLINGON_DISRUPTOR_POWER,
+					klingon : true,
+					quadrant : quadrant,
+					name : "a klingon raider"
+				});
+		}
 		return a;
 	},
-	makeStarbases:function(){
+	makeStarbases : function() {
 		var a = new Array();
-		var hasStarbase = Constants.CHANCE_OF_STARBASE_IN_QUADRANT > Math.random();
+		var hasStarbase = Constants.CHANCE_OF_STARBASE_IN_QUADRANT > Math
+				.random();
 		if (hasStarbase)
 			a.pushUnique({
-				x:Math.round(Math.random()*7),
-				y:Math.round(Math.random()*7),
-				starbase:true,
-				name:"a federation starbase"
+				x : Math.round(Math.random() * 7),
+				y : Math.round(Math.random() * 7),
+				starbase : true,
+				name : "a federation starbase"
 			});
 		return a;
 	}

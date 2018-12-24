@@ -10,11 +10,11 @@ var Constants = {
 		DURATION_OF_ROUND:1,
 		DURATION_OF_REFUELING:2,
 		DURATION_OF_REPAIRS:4,
-		ENERGY_OF_MOVEMENT_PER_SECTOR: 10,
-		ENERGY_PER_SHIELD:1,
+		ENERGY_OF_MOVEMENT_PER_SECTOR: 20,
+		ENERGY_PER_SHIELD:2,
 		BASE_CONSUMPTION:1,
 		ENERGY_OF_MOVEMENT_PER_QUADRANT_PER_WARP: function(speed){
-			return speed*speed*speed;
+			return 10+speed*speed*speed;
 		},
 		MAX_WARP_SPEED:4,
 		MAX_ENERGY:3000,
@@ -29,7 +29,8 @@ var Constants = {
 		SMALL_HEIGHT:450,
 		SMALL_WIDTH:621,
 		CHANCE_OF_STARBASE_IN_QUADRANT:0.08,
-		CHANCE_OF_KLINGON_IN_QUADRANT:0.1
+		CHANCE_OF_KLINGON_IN_QUADRANT:0.3,
+		MAX_KLINGON_SHIELD:80,
 };
 $body.fastClick(Tools.handleGlobalClick);
 
@@ -209,6 +210,10 @@ var Intro={
 var Computer={
 		element:$("#computerscreen"),
 		stardate:2550,
+		updateEnergyIndicator:function(){
+			var progress = 100*StarShip.energy/Constants.MAX_ENERGY;
+			$("#cmd_showStatusReport .progress-indicator").css("width",progress+"%");
+		},
 		updateShieldsIndicator:function(){
 			$("#cmd_toggleShields .progress-indicator").css("width",StarShip.shields+"%");
 			$("#cmd_toggleShields .max-indicator").css("width",StarShip.maxShields+"%");
@@ -233,6 +238,7 @@ var Computer={
 			Tools.updatePageCssWithToken("computer");
 			Computer.updateStarbaseDockCommand();
 			Computer.updateShieldsIndicator();
+			Computer.updateEnergyIndicator();
 			ShortRangeScanScreen.update(StarShip.quadrant);
 		},
 		calculateBaseEnergyConsumption:function(){

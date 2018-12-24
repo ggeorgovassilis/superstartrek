@@ -29,7 +29,7 @@ var ShortRangeScan = {
 				star) {
 			return "star";
 		});
-		ShortRangeScan.updateList("o-}", quadrant.klingons, function(klingon) {
+		ShortRangeScan.updateList("c-}", quadrant.klingons, function(klingon) {
 			if (klingon.shields < 25)
 				return "damage-bad";
 			if (klingon.shields < 50)
@@ -94,6 +94,7 @@ var ShortRangeScanScreen = {
 };
 
 $(window).on("ship_moved", ShortRangeScan.something_changed);
+$(window).on("klingon_moved", ShortRangeScan.something_changed);
 $(window).on("init", ShortRangeScan.init);
 $(window).on("fired", ShortRangeScan.something_changed);
 $(window).on("klingon_destroyed", ShortRangeScan.something_changed);
