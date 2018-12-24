@@ -112,6 +112,7 @@ table a, table a:visited{
 #quadrantscan{
 	float:left;
 	margin-top:0.5em;
+	width:100%;
 }
 
 .selected{
@@ -205,7 +206,8 @@ table a, table a:visited{
 }
 
 .small-width #introscreen .logo{
-	font-size:4px;
+	font-size:7px;
+	font-weight:bold;
 }
 
 .intro-container{
@@ -215,11 +217,28 @@ table a, table a:visited{
 #cmd_leaveIntro{
 	display:block;
 	background-color:purple;
+	animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: transparent;
+    border:solid transparent 1px;
+  }
+  50% {
+    background-color: purple;
+    border:solid purple 1px;
+  }
+  100% {
+    background-color: transparent;
+    border:solid transparent 1px;
+  }
 }
 
 .credits{
 	clear:both;
 	overflow:hidden;
+	background-color: rgba(0,0,0,0.7);
 }
 
 .credits a{
@@ -232,8 +251,8 @@ table a, table a:visited{
 	text-decoration:underline;
 }
 
-h3{
-	padding-left:0.5em;
+h1,h3{
+	padding-left:5px;
 }
 
 /*
@@ -254,6 +273,8 @@ h3{
 
 #statusreport dd{
 	float:left;
+	padding:5px;
+	color:turquoise;
 }
 
 #messages{
@@ -352,7 +373,7 @@ a.progress-bar {
 	display:block;
 }
 
-.page-selectPhaserStrength #cmd_firePhasers_100, .page-selectPhaserStrength #cmd_firePhasers_200, .page-selectPhaserStrength #cmd_firePhasers_300, .page-selectPhaserStrength #cmd_cancel{
+.page-selectPhaserStrength #cmd_firePhasers_1, .page-selectPhaserStrength #cmd_firePhasers_2, .page-selectPhaserStrength #cmd_firePhasers_3, .page-selectPhaserStrength #cmd_cancel{
 	display:block;
 }
 

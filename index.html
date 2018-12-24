@@ -1,65 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Superstartrek by ggeorgovassilis</title>
+<head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>Super Star Trek</title>
+<link rel="stylesheet" type="text/css" href="css/sst.css"></link>
+</head>
+<body onload="Controller.startGame()">
+<div class="glasspanel"></div>
+<div id="topmarker"></div>
+<div id="page">
+<div id="messages" onkeypress="IO.onKeyPressed(event)" tabindex="1">
+<div class="content"></div>
+<a class="single" onkeypress="IO.onKeyPressed(event)" href="#">OK</a>
+</div>
+<div id="statusreport" class="screen">
+<h1>NCC-1701</h1>
+<dl>
+<dt>Star date</dt>
+<dd id="report_stardate"></dd>
+<dt>Energy</dt>
+<dd id="report_energy"></dd>
+<dt>Baseline energy consumption</dt>
+<dd id="report_energy_consumption"></dd>
+<dt>Location</dt>
+<dd id="report_location"></dd>
+<dt>Photon torpedos</dt>
+<dd id="report_torpedos"></dd>
+<dt>Max impulse</dt>
+<dd id="report_max_impulse"></dd>
+<dt>Shields</dt>
+<dd id="report_shields"></dd>
+<dt>Reactor output</dt>
+<dd id="report_reactor"></dd>
+<dt>Energy available for this round</dt>
+<dd id="report_reactor_remaining"></dd>
+<dt>Klingons left</dt>
+<dd id="report_klingons_count"></dd>
+</dl>
+</div>
+<div id="computerscreen" class="screen">
+<div id="stardate"></div>
+<table id="quadrantscan"></table>
+<div class="short-range-scan-container">
+<h3 class="short-range-scan-label">Short range scan <span id="quadrant_name"></span></h3>
+<table id="shortrangescan">
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+</table>
+</div>
+</div>
+<div id="longrangescanscreen" class="screen top-selection">
+<table id="longrangescan">
+<tr class="region-names"><td colspan="4">Antares</td><td colspan="4">Sirius</td></tr>
+<tr class="quadrants"><td id="cmd_selectQuadrant_0_0"/><td id="cmd_selectQuadrant_1_0"/><td id="cmd_selectQuadrant_2_0"/><td id="cmd_selectQuadrant_3_0"/><td id="cmd_selectQuadrant_4_0"/><td id="cmd_selectQuadrant_5_0"/><td id="cmd_selectQuadrant_6_0"/><td id="cmd_selectQuadrant_7_0"/></tr>
+<tr class="region-names"><td colspan="4">Rigel</td><td colspan="4">Deneb</td></tr>
+<tr class="quadrants"><td id="cmd_selectQuadrant_0_1"/><td id="cmd_selectQuadrant_1_1"/><td id="cmd_selectQuadrant_2_1"/><td id="cmd_selectQuadrant_3_1"/><td id="cmd_selectQuadrant_4_1"/><td id="cmd_selectQuadrant_5_1"/><td id="cmd_selectQuadrant_6_1"/><td id="cmd_selectQuadrant_7_1"/></tr>
+<tr class="region-names"><td colspan="4">Procyon</td><td colspan="4">Capella</td></tr>
+<tr class="quadrants"><td id="cmd_selectQuadrant_0_2"/><td id="cmd_selectQuadrant_1_2"/><td id="cmd_selectQuadrant_2_2"/><td id="cmd_selectQuadrant_3_2"/><td id="cmd_selectQuadrant_4_2"/><td id="cmd_selectQuadrant_5_2"/><td id="cmd_selectQuadrant_6_2"/><td id="cmd_selectQuadrant_7_2"/></tr>
+<tr class="region-names"><td colspan="4">Vega</td><td colspan="4">Betelgeuse</td></tr>
+<tr class="quadrants"><td id="cmd_selectQuadrant_0_3"/><td id="cmd_selectQuadrant_1_3"/><td id="cmd_selectQuadrant_2_3"/><td id="cmd_selectQuadrant_3_3"/><td id="cmd_selectQuadrant_4_3"/><td id="cmd_selectQuadrant_5_3"/><td id="cmd_selectQuadrant_6_3"/><td id="cmd_selectQuadrant_7_3"/></tr>
+<tr class="region-names"><td colspan="4">Canopus</td><td colspan="4">Aldebaran</td></tr>
+<tr class="quadrants"><td id="cmd_selectQuadrant_0_4"/><td id="cmd_selectQuadrant_1_4"/><td id="cmd_selectQuadrant_2_4"/><td id="cmd_selectQuadrant_3_4"/><td id="cmd_selectQuadrant_4_4"/><td id="cmd_selectQuadrant_5_4"/><td id="cmd_selectQuadrant_6_4"/><td id="cmd_selectQuadrant_7_4"/></tr>
+<tr class="region-names"><td colspan="4">Altair</td><td colspan="4">Regolus</td></tr>
+<tr class="quadrants"><td id="cmd_selectQuadrant_0_5"/><td id="cmd_selectQuadrant_1_5"/><td id="cmd_selectQuadrant_2_5"/><td id="cmd_selectQuadrant_3_5"/><td id="cmd_selectQuadrant_4_5"/><td id="cmd_selectQuadrant_5_5"/><td id="cmd_selectQuadrant_6_5"/><td id="cmd_selectQuadrant_7_5"/></tr>
+<tr class="region-names"><td colspan="4">Saggitarius</td><td colspan="4">Arcturus</td></tr>
+<tr class="quadrants"><td id="cmd_selectQuadrant_0_6"/><td id="cmd_selectQuadrant_1_6"/><td id="cmd_selectQuadrant_2_6"/><td id="cmd_selectQuadrant_3_6"/><td id="cmd_selectQuadrant_4_6"/><td id="cmd_selectQuadrant_5_6"/><td id="cmd_selectQuadrant_6_6"/><td id="cmd_selectQuadrant_7_6"/></tr>
+<tr class="region-names"><td colspan="4">Pollux</td><td colspan="4">Spica</td></tr>
+<tr class="quadrants"><td id="cmd_selectQuadrant_0_7"/><td id="cmd_selectQuadrant_1_7"/><td id="cmd_selectQuadrant_2_7"/><td id="cmd_selectQuadrant_3_7"/><td id="cmd_selectQuadrant_4_7"/><td id="cmd_selectQuadrant_5_7"/><td id="cmd_selectQuadrant_6_7"/><td id="cmd_selectQuadrant_7_7"/></tr>
+</table>
+</div>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Superstartrek</h1>
-        <p>Super startrek revived as an HTML 5 app</p>
-
-        <p class="view"><a href="https://github.com/ggeorgovassilis/superstartrek">View the Project on GitHub <small>ggeorgovassilis/superstartrek</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/ggeorgovassilis/superstartrek/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ggeorgovassilis/superstartrek/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ggeorgovassilis/superstartrek">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>About superstartrek</h3>
-
-<p>This is a port of <a href="http://en.wikipedia.org/wiki/Super_star_trek#Super_Star_Trek">Super Star Trek</a> to mobile phone browsers. This port takes several liberties:</p>
-
-<ul>
-<li>The UI is directed at touch/click operation and is not command based as in the original game</li>
-<li>Much of the original game's brilliance lies in estimating consumption, damages and distances. In a GUI this doesn't make much sense, hence this port is exploring different ways of diversifying game play</li>
-<li>This is work in progress</li>
-</ul>
+<div id="introscreen" class="screen top-selection">
+<div class="intro-container">
+<pre class="logo">
+                         __________________          _-_
+                         \________________|)____.---'---`---.____
+      ____ _____      _______         ||    \----._________.----/
+     / __//_  _/ ,/| /____   )        ||     / ,'   `---'
+    ( (    / / ,/  |   __ ) /      ___||_,--'  -._
+     \ \  / /,/ _  |  / // /      /___          ||(-
+  ____) )/ //,-' `.| / / \ \          `---._____-'
+ /_____//_///     ||/_/   \ \_ ______ ______     ______  __   __
+                           \_//_  __//___   )   / ____/ / /  / /
+                               / /    __ ) /   / /_    / / /'/'
+                              / /    / // /   / ___|  / //'/'
+                             / /    / / \ \  / /____ / / \ \
+                            /_/    /_/   \ \/______//_/   \_\
+</pre>
+<a id="cmd_leaveIntro">Start Game</a>
+</div>
+<div class="credits">
+<h3>Credits</h3>
+<p><a href="http://www.ascii-art.de/ascii/s/startrek.txt">ascii-art.de for NCC-1701 ascii art</a></p>
+<p><a href="http://jquery.org">The jquery foundation for code</a></p>
+<p><a href="https://github.com/dave1010/jquery-fast-click">Dave Hulbert for fastclick</a></p>
+<p><a href="http://a1star.com/">a1star.com for star background image</a></p>
+</div>
+</div>
 
 
-<h3>Playing</h3>
-<p>
-<a href="http://ggeorgovassilis.github.com/superstartrek/src/">Play it here</a>
-</p>
-<h3>Roadmap</h3>
-
-<ul>
-<li>Winning and losing conditions</li>
-<li>Refueling at starbases</li>
-<li>AI for enemy ships</li>
-<li>Damage model</li>
-<li>Navigation obstruction by obstacles</li>
-<li>...</li>
-</ul>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/ggeorgovassilis">ggeorgovassilis</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+</div>
+<div id="commandbar" class="command-bar">
+<a id="cmd_navigate">Navigate</a>
+<a id="cmd_toggleShields" class="command top-command progress-bar">
+	<span class="max-indicator"></span>
+	<span class="progress-indicator"></span>
+	<span class="progress-text">Shields</span>
+</a>
+<a id="cmd_showStatusReport">Status report</a>
+<a id="cmd_showLongRangeScan">Long range scan</a>
+<a id="cmd_selectPhaserStrength">Phasers</a>
+<a id="cmd_fireTorpedos" class="command">Photon torpedos</a>
+<a id="cmd_firePhasers_1">Low</a>
+<a id="cmd_firePhasers_2">Medium</a>
+<a id="cmd_firePhasers_3">Full</a>
+<a id="cmd_dockWithStarbase">Dock at starbase</a>
+<a id="cmd_refuelAtStarbase">Refuel</a>
+<a id="cmd_repairAtStarbase">Refuel &amp; repair</a>
+<a id="cmd_cancel">Cancel</a>
+</div>
+<div id="downmarker"></div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.fastClick.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/sst.js"></script>
+<script type="text/javascript" src="js/klingon.js"></script>
+<script type="text/javascript" src="js/navigation.js"></script>
+<script type="text/javascript" src="js/status-report.js"></script>
+<script type="text/javascript" src="js/short-range-scan.js"></script>
+<script type="text/javascript" src="js/long-range-scan.js"></script>
+<script type="text/javascript" src="js/battle.js"></script>
+</body>
 </html>
