@@ -108,6 +108,13 @@ table a, table a:visited{
 	cursor:pointer;
 }
 
+#quadrantscan td.star{
+	font-size:250%;
+	line-height:0;
+	color:yellow;
+	height:0;
+}
+
 
 #quadrantscan{
 	float:left;

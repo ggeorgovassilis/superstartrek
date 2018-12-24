@@ -7,8 +7,10 @@ var Klingons={
 			if (StarShip.quadrant != quadrant)
 				return;
 			// can raider fire on us?
+			var distance = Tools.distance(klingon.x, klingon.y, StarShip.x, StarShip.y);
 			var obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y, StarShip.x, StarShip.y);
-			if (obstacle)
+			console.log("Klingon distance to us is",distance);
+			if (distance > Constants.DISRUPTOR_RANGE || obstacle)
 				Klingons.manueverIntoFiringPosition(klingon, StarShip.quadrant);
 			else
 				Klingons.fireOnStarship(klingon);
@@ -19,9 +21,19 @@ var Klingons={
 			//2. raider has a clear shot at us 
 			//3. raider can move to unobstructed 
 			//4. isn't more than 2 squares from original
+			console.log("Moving Klingon into firing position");
+			var initialDistanceToEnterprise = Tools.distance(klingon.x, klingon.y, StarShip.x, StarShip.y);
+			var bestX = klingon.x;
+			var bestY = klingon.y;
+			var bestDistance = 10;
+			
 			for (var x=0;x<8;x++)
 			for (var y=0;y<8;y++){
-				if (Tools.distance(x,y,klingon.x,klingon.y)>2)
+				if (x == klingon.x && y == klingon.y)
+					continue;
+				if (Tools.distance(x,y,klingon.x,klingon.y)>Constants.KLINGON_IMPULSE_SPEED)
+					continue;
+				if (Tools.distance(StarShip.x,StarShip.y,x,y)>=initialDistanceToEnterprise)
 					continue;
 				var thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
 				if (thing)
@@ -32,10 +44,17 @@ var Klingons={
 				obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y, x, y);
 				if (obstacle)
 					continue;
-				klingon.x = x;
-				klingon.y = y;
-				return;
+				var distanceToEnterprise = Tools.distance(x,y,StarShip.x,StarShip.y);
+				if (distanceToEnterprise<bestDistance){
+					bestDistance = distanceToEnterprise;
+					bestX = x;
+					bestY = y;
+				}
 			}
+			klingon.x = bestX;
+			klingon.y = bestY;
+			$window.trigger("ship_moved");
+			return;
 		},
 		fireOnStarship:function(klingon){
 			StarShip.shields = StarShip.shields - klingon.weaponPower;
