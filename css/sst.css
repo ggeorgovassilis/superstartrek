@@ -113,11 +113,11 @@ table a, table a:visited{
 	width:12.5%;
 	padding:5px;
 	cursor:pointer;
+	line-height:0.5em;
 }
 
 #quadrantscan td.star{
 	font-size:250%;
-	line-height:0;
 	color:yellow;
 	height:0;
 }
@@ -379,7 +379,7 @@ a.progress-bar {
 	display:block;
 }
 
-.page-computer #cmd_showStatusReport, .page-computer #cmd_showStatusReport, .page-computer #cmd_showLongRangeScan, .page-computer #cmd_toggleShields{
+.page-computer #cmd_showStatusReport, .page-computer #cmd_nop, .page-computer #cmd_showStatusReport, .page-computer #cmd_showLongRangeScan, .page-computer #cmd_toggleShields{
 	display:block;
 }
 

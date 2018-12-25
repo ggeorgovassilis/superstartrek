@@ -1,4 +1,8 @@
 Controller.firePhasers = function(setting) {
+	var distance = Tools.distance(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y);
+	if (Math.floor(distance)>Constants.PHASER_RANGE)
+		return IO.message(Controller.showSectorSelectionMenu,
+				"Target is out of range");
 	var strength = setting*15; //1->15, 2->30, 3->45
 	var klingon = StarMap.getKlingonInQuadrantAt(StarShip.quadrant,
 			Controller.sector.x, Controller.sector.y);
@@ -6,6 +10,9 @@ Controller.firePhasers = function(setting) {
 		return IO.message(Controller.showSectorSelectionMenu,
 				"No Klingon at that sector");
 	}
+	if (Math.floor(distance)>Constants.PHASER_RANGE)
+		return IO.message(Controller.showSectorSelectionMenu,
+				"Target is out of range");
 	var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
 	if (!Computer.hasEnergyBudgetFor(consumption))
 		return IO.message("Insufficient energy");

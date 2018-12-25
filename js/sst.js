@@ -21,11 +21,12 @@ var Constants = {
 		MAX_TORPEDOS:10,
 		MAX_TORPEDO_DAMAGE:50,
 		MAX_IMPULSE_SPEED:3,
-		MAX_REACTOR_OUTPUT:350,
+		MAX_REACTOR_OUTPUT:250,
 		PHASER_EFFICIENCY:1,
 		KLINGON_DISRUPTOR_POWER:30,
 		KLINGON_IMPULSE_SPEED:2,
 		DISRUPTOR_RANGE:3,
+		PHASER_RANGE:3,
 		SMALL_HEIGHT:450,
 		SMALL_WIDTH:621,
 		CHANCE_OF_STARBASE_IN_QUADRANT:0.08,
@@ -440,6 +441,9 @@ var Controller={
 		showIntroScreen:function(){
 			Intro.show();
 			Tools.centerScreen();
+		},
+		nop:function(){
+			Controller.endRound();
 		},
 		startRound:function(){
 			StarShip.budget=StarShip.reactorOutput;
