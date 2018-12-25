@@ -12,6 +12,10 @@ String.prototype.startsWith=function(prefix){
 	return this.indexOf(prefix)===0;
 };
 
+Math.sqr = function(x){
+	return x*x;
+}
+
 Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
@@ -31,6 +35,10 @@ Array.prototype.pushUnique = function(element){
 	}
 	this.push(element);
 };
+
+Array.prototype.isEmpty = function(){
+	return this.length==0;
+}
 
 var Tools={
 		screenWidth:-1,

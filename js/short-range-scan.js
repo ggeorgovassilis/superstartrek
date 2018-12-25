@@ -47,6 +47,10 @@ var ShortRangeScan = {
 				return "";
 			});
 		$("#quadrant_name").text(StarShip.quadrant.regionName);
+		$("#srs_heading").removeClass("red-alert");
+		if (!StarShip.quadrant.klingons.isEmpty()){
+			$("#srs_heading").addClass("red-alert");
+		}
 	},
 	constructUi : function() {
 		var element = ShortRangeScan.element;

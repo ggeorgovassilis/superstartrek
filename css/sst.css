@@ -153,10 +153,6 @@ table a, table a:visited{
 	float:left;
 }
 
-.short-range-scan-label{
-	margin-left:1em;
-}
-
 #shortrangescan td{
 	width:33.3%;
 	text-align:center;
@@ -405,5 +401,10 @@ a.progress-bar {
 
 .page-computer #shortrangescan{
 	display:table;
+}
+
+.red-alert{
+	color:red;
+	font-weight:bold;
 }
 

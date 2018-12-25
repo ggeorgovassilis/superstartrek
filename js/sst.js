@@ -393,7 +393,7 @@ var Controller={
 		toggleShields:function(){
 			var shields = StarShip.userDefinedShields;
 			var delta = -shields;
-			if (shields == StarShip.maxShields)
+			if (shields >= StarShip.maxShields)
 				shields = 0;
 			else
 				shields=Math.min(StarShip.budget,Math.min(shields+25, StarShip.maxShields));

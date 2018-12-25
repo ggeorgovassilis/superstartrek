@@ -54,7 +54,7 @@ Controller.fireTorpedos = function() {
 			console.log("chance", chance, klingon);
 			if (Math.random() <= chance) {
 				//photon torpedos are inefficient against shields; damage malus for full shields
-				var damage = Constants.MAX_TORPEDO_DAMAGE*(1.1-(klingon.shields/klingon.maxShields));
+				var damage = Constants.MAX_TORPEDO_DAMAGE*(1-0.9*(Math.sqr(klingon.shields/klingon.maxShields)));
 				Klingons.damage(klingon, damage);
 				return IO.endRound();
 			} else{
