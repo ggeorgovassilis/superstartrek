@@ -379,8 +379,12 @@ a.progress-bar {
 	display:block;
 }
 
-.page-selectSector #cmd_firePhasers, .page-selectSector #cmd_fireTorpedos, .page-selectSector #cmd_cancel,.page-selectSector #cmd_navigate{
+.page-selectSector #cmd_firePhasers, .page-selectSector #cmd_toggleFireAtWill, .page-selectSector #cmd_fireTorpedos, .page-selectSector #cmd_cancel,.page-selectSector #cmd_navigate{
 	display:block;
+}
+
+.fireAtWill #cmd_toggleFireAtWill{
+	background-color:darkturquoise;
 }
 
 .page-showLongRangeScan #longrangescanscreen, .page-showLongRangeScan #cmd_cancel{

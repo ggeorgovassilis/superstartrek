@@ -98,6 +98,7 @@ var ShortRangeScanScreen = {
 };
 
 $(window).on("ship_moved", ShortRangeScan.something_changed);
+$(window).on("setting_changed", ShortRangeScan.something_changed);
 $(window).on("klingon_moved", ShortRangeScan.something_changed);
 $(window).on("init", ShortRangeScan.init);
 $(window).on("fired", ShortRangeScan.something_changed);

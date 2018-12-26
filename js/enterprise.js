@@ -14,6 +14,26 @@ var Enterprise={
 			Enterprise.phaserPower=Constants.ENTERPRISE_MAX_PHASER_POWER;
 			Enterprise.lrsOnline=true;
 			Enterprise.torpedosOnline=true;
+			Enterprise.fireAtWill=false;
+			Enterprise.tacticalComputerOnline=true;
+			$(window).trigger("setting_changed");
+		},
+		runComputer:function(){
+			console.log("** running computer actions **");
+			if (Enterprise.fireAtWill && Enterprise.tacticalComputerOnline)
+				Enterprise.autoFire();
+		},
+		autoFire:function(){
+			var klingons = Enterprise.quadrant.klingons;
+			for (var i = 0; i<klingons.length;i++){
+				var klingon = klingons[i];
+				var distance = Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
+				if (distance<=Constants.PHASER_RANGE){
+					console.log("Autofiring at",klingon);
+					Enterprise.firePhasersAt(klingon.x, klingon.y);
+					return;
+				}
+			}
 		},
 		setup:function(){
 			Enterprise.quadrant=StarMap.quadrants[0];
@@ -52,8 +72,39 @@ var Enterprise={
 			   Enterprise.torpedosOnline=false;
 			   message+="<br>Torpedo bay was damaged.";
 		   }
+		   if (Math.random()<impact && Enterprise.tacticalComputerOnline){
+			   Enterprise.tacticalComputerOnline=false;
+			   Enterprise.fireAtWill=false;
+			   message+="<br>Tactical computer was damaged.";
+			   $(window).trigger("settings_changed");
+		   }
 		   console.log(message);
 		   $(window).trigger("enterprise_damaged");
+		   $(window).trigger("settings_changed");
 		   return IO.message(function() {}, message);
-	   }
+	   },
+	   firePhasersAt:function(targetX, targetY){
+			var distance = Tools.distance(Enterprise.x, Enterprise.y, targetX, targetY);
+			if (Math.floor(distance)>Constants.PHASER_RANGE)
+				return IO.message(Controller.showSectorSelectionMenu,
+						"Target is out of range");
+			var strength = Enterprise.phaserPower;
+			var klingon = StarMap.getKlingonInQuadrantAt(Enterprise.quadrant,
+					targetX, targetY);
+			if (!klingon) {
+				return IO.message(Controller.showSectorSelectionMenu,
+						"No Klingon at that sector");
+			}
+			if (Math.floor(distance)>Constants.PHASER_RANGE)
+				return IO.message(Controller.showSectorSelectionMenu,
+						"Target is out of range");
+			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
+			if (!Computer.hasEnergyBudgetFor(consumption))
+				return IO.message("Insufficient energy");
+			Computer.consume(consumption);
+			var damage = strength
+					/ Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
+			$window.trigger("fired");
+			Klingons.damage(klingon, damage);
+		}
 };

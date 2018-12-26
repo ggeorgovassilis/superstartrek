@@ -1,26 +1,8 @@
+
 Controller.firePhasers = function() {
-	var distance = Tools.distance(Enterprise.x, Enterprise.y, Controller.sector.x, Controller.sector.y);
-	if (Math.floor(distance)>Constants.PHASER_RANGE)
-		return IO.message(Controller.showSectorSelectionMenu,
-				"Target is out of range");
-	var strength = Enterprise.phaserPower;
-	var klingon = StarMap.getKlingonInQuadrantAt(Enterprise.quadrant,
-			Controller.sector.x, Controller.sector.y);
-	if (!klingon) {
-		return IO.message(Controller.showSectorSelectionMenu,
-				"No Klingon at that sector");
-	}
-	if (Math.floor(distance)>Constants.PHASER_RANGE)
-		return IO.message(Controller.showSectorSelectionMenu,
-				"Target is out of range");
-	var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
-	if (!Computer.hasEnergyBudgetFor(consumption))
-		return IO.message("Insufficient energy");
-	Computer.consume(consumption);
-	var damage = strength
-			/ Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
-	$window.trigger("fired");
-	Klingons.damage(klingon, damage);
+	if (Enterprise.phaserPower<(Constants.ENTERPRISE_MAX_PHASER_POWER/4))
+		return IO.message(Controller.nop,"Phasers array is offline");
+	Enterprise.firePhasersAt(Controller.sector.x, Controller.sector.y);
 	return IO.endRound();
 };
 

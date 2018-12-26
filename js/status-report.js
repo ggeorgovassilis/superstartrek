@@ -10,6 +10,7 @@ var StatusReport = {
 	maxImpulse : $("#report_max_impulse"),
 	klingonsCount : $("#report_klingons_count"),
 	phaserPower:$("#report_phaser_power"),
+	tacticalComputer:$("#report_tactical_computer"),
 	lrs:$("#report_LRS"),
 	perc:function(part,total){
 		return "%"+Math.floor(100*part/total);
@@ -29,6 +30,7 @@ var StatusReport = {
 				* (Enterprise.reactorOutput / Constants.MAX_REACTOR_OUTPUT));
 		StatusReport.reactorRemaining.text(Enterprise.budget);
 		StatusReport.klingonsCount.text(StarMap.countKlingons());
+		StatusReport.tacticalComputer.text(Enterprise.tacticalComputerOnline?"ONLINE":"OFFLINE");
 		StatusReport.maxImpulse.text("%"
 				+ Math.round(100 * Enterprise.maxImpulse
 						/ Constants.MAX_IMPULSE_SPEED));

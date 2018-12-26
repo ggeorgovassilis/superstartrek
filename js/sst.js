@@ -24,7 +24,7 @@ var Constants = {
 		MAX_TORPEDOS:10,
 		MAX_TORPEDO_DAMAGE:50,
 		MAX_IMPULSE_SPEED:3,
-		MAX_REACTOR_OUTPUT:250,
+		MAX_REACTOR_OUTPUT:280,
 		PHASER_EFFICIENCY:1,
 		ENTERPRISE_MAX_PHASER_POWER:45,
 		KLINGON_DISRUPTOR_POWER:10,
@@ -429,7 +429,17 @@ var Controller={
 			if (!IO.isMessageShown())
 				Controller.showComputerScreen();
 			else IO.message(Controller.showComputerScreen,"");
+			Enterprise.runComputer();
 			Controller.showStartScreen();
+		},
+		toggleFireAtWill:function(){
+			Enterprise.fireAtWill = !Enterprise.fireAtWill;
+			$(window).trigger("setting_changed");
+		},
+		updateFireAtWillButton:function(){
+			Tools.removePageCss("fireAtWill");
+			if (Enterprise.fireAtWill)
+				Tools.addPageCss("fireAtWill");
 		},
 		endRound:function(){
 			if (StarMap.countKlingons()===0){
@@ -463,6 +473,7 @@ function repositionWindowScroll(){
 	}
 }
 
+$(window).on("setting_changed", Controller.updateFireAtWillButton);
 $(window).on("enterprise_damaged", Controller.updateShieldsIndicator);
 //window.onbeforeunload = function(e){
 //		return ""; 
