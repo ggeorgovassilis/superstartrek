@@ -4,6 +4,8 @@
  * Phasers lose power over distance in the original game. No information about disruptors.
  */
 
+var nop = function(){};
+
 var Constants = {
 		DURATION_OF_MOVEMENT_PER_SECTOR: 0.05,
 		DURATION_OF_MOVEMENT_PER_QUADRANT: 1,
@@ -16,6 +18,7 @@ var Constants = {
 		ENERGY_OF_MOVEMENT_PER_QUADRANT_PER_WARP: function(speed){
 			return 10+speed*speed*speed;
 		},
+		ENTERPRISE_MAX_SHIELDS:100,
 		MAX_WARP_SPEED:4,
 		MAX_ENERGY:3000,
 		MAX_TORPEDOS:10,
@@ -23,7 +26,8 @@ var Constants = {
 		MAX_IMPULSE_SPEED:3,
 		MAX_REACTOR_OUTPUT:250,
 		PHASER_EFFICIENCY:1,
-		KLINGON_DISRUPTOR_POWER:30,
+		ENTERPRISE_MAX_PHASER_POWER:45,
+		KLINGON_DISRUPTOR_POWER:10,
 		KLINGON_IMPULSE_SPEED:2,
 		DISRUPTOR_RANGE:3,
 		PHASER_RANGE:3,
@@ -161,34 +165,6 @@ var StarMap={
 		   }
 };
 
-/*
- * StarShip
- */
-var StarShip={
-		setup:function(){
-		StarShip.quadrant=StarMap.quadrants[0];
-		StarShip.x=0;
-		StarShip.y=0;
-		StarShip.energy=Constants.MAX_ENERGY;
-		StarShip.budget=Constants.MAX_REACTOR_OUTPUT;
-		StarShip.shields=0; // current shield level. Enemy fire reduces them; they replenish at the beginning of a new round
-		StarShip.maxShields=100; // maximum level of shields
-		StarShip.userDefinedShields=0; // that's how much the player set shields. actual shields (see shields property above) might be lower.
-		StarShip.reactorOutput=Constants.MAX_REACTOR_OUTPUT;
-		StarShip.torpedos=Constants.MAX_TORPEDOS;
-		StarShip.maxImpulse=Constants.MAX_IMPULSE_SPEED;
-		},
-	   repositionIfSectorOccupied:function(){
-		   var newX = StarShip.x;
-		   var newY = StarShip.y;
-		   while (StarMap.getAnythingInQuadrantAt(StarShip.quadrant, newX, newY)){
-			   newX = Math.min(7,Math.max(0,Math.round(newX + 1-2*Math.random())));
-			   newY = Math.min(7,Math.max(0,Math.round(newY + 1-2*Math.random())));
-		   }
-		   StarShip.x = newX;
-		   StarShip.y = newY;
-	   }
-};
 
 
 
@@ -212,15 +188,15 @@ var Computer={
 		element:$("#computerscreen"),
 		stardate:2550,
 		updateEnergyIndicator:function(){
-			var progress = 100*StarShip.energy/Constants.MAX_ENERGY;
+			var progress = 100*Enterprise.energy/Constants.MAX_ENERGY;
 			$("#cmd_showStatusReport .progress-indicator").css("width",progress+"%");
 		},
 		updateShieldsIndicator:function(){
-			$("#cmd_toggleShields .progress-indicator").css("width",StarShip.shields+"%");
-			$("#cmd_toggleShields .max-indicator").css("width",StarShip.maxShields+"%");
+			$("#cmd_toggleShields .progress-indicator").css("width",Enterprise.shields+"%");
+			$("#cmd_toggleShields .max-indicator").css("width",Enterprise.maxShields+"%");
 		},
 		updateStarbaseDockCommand:function(){
-			var starbaseNearby = StarMap.isStarbaseAdjacent(StarShip.quadrant, StarShip.x, StarShip.y);
+			var starbaseNearby = StarMap.isStarbaseAdjacent(Enterprise.quadrant, Enterprise.x, Enterprise.y);
 			var isStarbaseNearby = !!starbaseNearby;
 			var cmd = $("#cmd_dockWithStarbase");
 			if (isStarbaseNearby)
@@ -233,17 +209,17 @@ var Computer={
 		},
 		updateStardate:function(){
 			var stardateFormatted = Tools.formatStardate(Computer.stardate);
-			$("#stardate").text(stardateFormatted + " "+StarShip.budget);
+			$("#stardate").text(stardateFormatted + " "+Enterprise.budget);
 		},
 		show:function(){
 			Tools.updatePageCssWithToken("computer");
 			Computer.updateStarbaseDockCommand();
 			Computer.updateShieldsIndicator();
 			Computer.updateEnergyIndicator();
-			ShortRangeScanScreen.update(StarShip.quadrant);
+			ShortRangeScanScreen.update(Enterprise.quadrant);
 		},
 		calculateBaseEnergyConsumption:function(){
-			return StarShip.shields*Constants.ENERGY_PER_SHIELD + Constants.BASE_CONSUMPTION;
+			return Enterprise.shields*Constants.ENERGY_PER_SHIELD + Constants.BASE_CONSUMPTION;
 		},
 		calculateEnergyConsumptionForMovement:function(distance){
 			return distance*Constants.ENERGY_OF_MOVEMENT_PER_SECTOR;
@@ -259,17 +235,17 @@ var Computer={
 			return strength*Constants.PHASER_EFFICIENCY;
 		},
 		hasEnergyBudgetFor: function(amount){
-			if (StarShip.budget < amount){
+			if (Enterprise.budget < amount){
 				IO.message(function(){}, "Cannot execute command, reactor capacity reached");
 				return false;
 			};
 			return true;
 		},
 		consume:function(energy){
-			StarShip.budget-=energy;
-			StarShip.energy-=energy;
-			StarShip.energy=Math.floor(StarShip.energy);
-			if (StarShip.energy<=0){
+			Enterprise.budget-=energy;
+			Enterprise.energy-=energy;
+			Enterprise.energy=Math.floor(Enterprise.energy);
+			if (Enterprise.energy<=0){
 				return IO.gameOverMessage("Game over, out of energy");
 			}
 		}
@@ -369,16 +345,15 @@ var Controller={
 			}
 		},
 		refuelAtStarbase:function(){
-			StarShip.energy = Constants.MAX_ENERGY;
-			StarShip.torpedos = Constants.MAX_TORPEDOS;
-			StarShip.shields = 0;
+			Enterprise.energy = Constants.MAX_ENERGY;
+			Enterprise.torpedos = Constants.MAX_TORPEDOS;
+			Enterprise.shields = 0;
 			Computer.advanceClock(Constants.DURATION_OF_REFUELING);
 			Controller.endRound();
 		},
 		repairAtStarbase:function(){
 			Computer.advanceClock(Constants.DURATION_OF_REPAIRS);
-			StarShip.maxShields = 100;
-			StarShip.maxImpulse = Constants.MAX_IMPULSE_SPEED;
+			Enterprise.repair();
 			Controller.refuelAtStarbase();
 		},
 		selectSector:function(x,y){
@@ -388,19 +363,19 @@ var Controller={
 			Controller.showSectorSelectionMenu();
 		},
 		showSectorSelectionMenu:function(){
-			$("#cmd_fireTorpedos").text("Photon torpedos ("+StarShip.torpedos+")");
+			$("#cmd_fireTorpedos").text("Photon torpedos ("+Enterprise.torpedos+")");
 		},
 		toggleShields:function(){
-			var shields = StarShip.userDefinedShields;
+			var shields = Enterprise.userDefinedShields;
 			var delta = -shields;
-			if (shields >= StarShip.maxShields)
+			if (shields >= Enterprise.maxShields)
 				shields = 0;
 			else
-				shields=Math.min(StarShip.budget,Math.min(shields+25, StarShip.maxShields));
+				shields=Math.min(Enterprise.budget,Math.min(shields+25, Enterprise.maxShields));
 			delta+=shields;
 			Computer.consume(delta);
-			StarShip.userDefinedShields = shields;
-			StarShip.shields = shields;
+			Enterprise.userDefinedShields = shields;
+			Enterprise.shields = shields;
 			Computer.updateShieldsIndicator();
 			Controller.showStartScreen();
 		},
@@ -426,8 +401,8 @@ var Controller={
 			IO.mute = false;
 			Computer.stardate=2550;
 			StarMap.constructQuadrants();
-			StarShip.setup();
-			StarShip.repositionIfSectorOccupied();
+			Enterprise.setup();
+			Enterprise.repositionIfSectorOccupied();
 			$window.trigger("init");
 			Controller.showIntroScreen();
 		},
@@ -446,11 +421,11 @@ var Controller={
 			Controller.endRound();
 		},
 		startRound:function(){
-			StarShip.budget=StarShip.reactorOutput;
-			StarShip.shields = StarShip.userDefinedShields;
+			Enterprise.budget=Enterprise.reactorOutput;
+			Enterprise.shields = Enterprise.userDefinedShields;
 			var consumption = Computer.calculateBaseEnergyConsumption();
 			Computer.consume(consumption);
-			StarShip.shields = Math.min(StarShip.shields,StarShip.maxShields);
+			Enterprise.shields = Math.min(Enterprise.shields,Enterprise.maxShields);
 			if (!IO.isMessageShown())
 				Controller.showComputerScreen();
 			else IO.message(Controller.showComputerScreen,"");
@@ -473,12 +448,6 @@ var Controller={
 				IO.message(Controller.startRound, "");
 			else
 				Controller.startRound();
-		},
-		selectPhaserStrength:function(){
-			var klingon = StarMap.getKlingonInQuadrantAt(StarShip.quadrant, Controller.sector.x, Controller.sector.y);
-			if (!klingon){
-				return IO.message(Controller.showSectorSelectionMenu,"No Klingon at that sector");
-			}
 		}
 };
 
@@ -494,6 +463,7 @@ function repositionWindowScroll(){
 	}
 }
 
+$(window).on("enterprise_damaged", Controller.updateShieldsIndicator);
 //window.onbeforeunload = function(e){
 //		return ""; 
 //};

@@ -14,10 +14,10 @@ var ShortRangeScan = {
 	},
 	init : function() {
 		console.log("ShortRangeScan.init");
-		ShortRangeScan.update(StarShip.quadrant);
+		ShortRangeScan.update(Enterprise.quadrant);
 	},
 	something_changed : function() {
-		ShortRangeScan.update(StarShip.quadrant);
+		ShortRangeScan.update(Enterprise.quadrant);
 	},
 	update : function(quadrant) {
 		if (ShortRangeScan.constructUi != null) {
@@ -42,13 +42,13 @@ var ShortRangeScan = {
 				starbase) {
 			return "";
 		});
-		if (StarShip.quadrant === quadrant)
-			ShortRangeScan.updateList("O=Ξ", [ StarShip ], function(starhip) {
+		if (Enterprise.quadrant === quadrant)
+			ShortRangeScan.updateList("O=Ξ", [ Enterprise ], function(starhip) {
 				return "";
 			});
-		$("#quadrant_name").text(StarShip.quadrant.regionName);
+		$("#quadrant_name").text(Enterprise.quadrant.regionName);
 		$("#srs_heading").removeClass("red-alert");
-		if (!StarShip.quadrant.klingons.isEmpty()){
+		if (!Enterprise.quadrant.klingons.isEmpty()){
 			$("#srs_heading").addClass("red-alert");
 		}
 	},
@@ -101,5 +101,6 @@ $(window).on("ship_moved", ShortRangeScan.something_changed);
 $(window).on("klingon_moved", ShortRangeScan.something_changed);
 $(window).on("init", ShortRangeScan.init);
 $(window).on("fired", ShortRangeScan.something_changed);
+$(window).on("enterprise_damaged", ShortRangeScan.something_changed);
 $(window).on("klingon_destroyed", ShortRangeScan.something_changed);
 $(window).on("klingon_damaged", ShortRangeScan.something_changed);

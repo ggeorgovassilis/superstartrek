@@ -371,7 +371,7 @@ a.progress-bar {
  * Commands visibility
  */
  
-.page-computer #computerscreen, .page-selectSector #computerscreen, .page-showStatusReport #statusreport, .page-selectPhaserStrength #computerscreen, .page-dockWithStarbase #computerscreen{
+.page-computer #computerscreen, .page-selectSector #computerscreen, .page-showStatusReport #statusreport, .page-firePhasers #computerscreen, .page-dockWithStarbase #computerscreen{
 	display:block;
 }
 
@@ -379,11 +379,7 @@ a.progress-bar {
 	display:block;
 }
 
-.page-selectSector #cmd_selectPhaserStrength, .page-selectSector #cmd_fireTorpedos, .page-selectSector #cmd_cancel,.page-selectSector #cmd_navigate{
-	display:block;
-}
-
-.page-selectPhaserStrength #cmd_firePhasers_1, .page-selectPhaserStrength #cmd_firePhasers_2, .page-selectPhaserStrength #cmd_firePhasers_3, .page-selectPhaserStrength #cmd_cancel{
+.page-selectSector #cmd_firePhasers, .page-selectSector #cmd_fireTorpedos, .page-selectSector #cmd_cancel,.page-selectSector #cmd_navigate{
 	display:block;
 }
 

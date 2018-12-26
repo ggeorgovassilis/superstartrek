@@ -4,6 +4,9 @@
 var LongRangeScanScreen={
 		element:$("#longrangescan"),
 		show:function(){
+			if (!Enterprise.lrsOnline){
+				return IO.message(Controller.showComputerScreen, "LRS is offline");
+			}
 			Tools.updatePageCssWithToken("showLongRangeScan");
 			for (var i=0;i<StarMap.quadrants.length;i++)
 				LongRangeScanScreen.updateQuadrant(StarMap.quadrants[i]);
@@ -21,7 +24,7 @@ var LongRangeScanScreen={
 			e.removeClass("has-klingons");
 			e.removeClass("has-starbase");
 			e.removeClass("explored");
-			if (StarShip.quadrant === quadrant)
+			if (Enterprise.quadrant === quadrant)
 				e.addClass("has-starship");
 			if (klingonCount>0)
 				e.addClass("has-klingons");

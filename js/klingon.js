@@ -4,25 +4,27 @@
 
 var Klingons = {
 	play : function(klingon, quadrant) {
-		if (StarShip.quadrant != quadrant)
+		if (Enterprise.quadrant != quadrant)
 			return;
 		// can raider fire on us?
-		var distance = Tools.distance(klingon.x, klingon.y, StarShip.x,
-				StarShip.y);
+		var distance = Tools.distance(klingon.x, klingon.y, Enterprise.x,
+				Enterprise.y);
 		var obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y,
-				StarShip.x, StarShip.y);
+				Enterprise.x, Enterprise.y);
 		console.log("Klingon distance to us is", distance);
 		if (distance > Constants.DISRUPTOR_RANGE || obstacle)
-			Klingons.manueverIntoFiringPosition(klingon, StarShip.quadrant);
+			Klingons.manueverIntoFiringPosition(klingon, Enterprise.quadrant);
 		else
-			Klingons.fireOnStarship(klingon);
+			Klingons.fireOnEnterprise(klingon);
 	},
 	on_enterprise_warped : function() {
-		var klingons = StarShip.quadrant.klingons;
+		console.log("Enterprise dropping out of warp")
+		var klingons = Enterprise.quadrant.klingons;
 		for (var i = 0; i < klingons.length; i++)
 			Klingons.moveRandomly(klingons[i]);
 	},
 	moveRandomly : function(klingon) {
+		console.log("moving randomly ",klingon)
 		var x = Math.floor(Math.random() * 8);
 		var y = Math.floor(Math.random() * 8);
 		var obstacle = StarMap.getAnythingInQuadrantAt(klingon.quadrant, x, y);
@@ -40,7 +42,7 @@ var Klingons = {
 		// 4. isn't more than 2 squares from original
 		console.log("Moving Klingon into firing position");
 		var initialDistanceToEnterprise = Tools.distance(klingon.x, klingon.y,
-				StarShip.x, StarShip.y);
+				Enterprise.x, Enterprise.y);
 		var bestX = klingon.x;
 		var bestY = klingon.y;
 		var bestDistance = 10;
@@ -51,21 +53,21 @@ var Klingons = {
 					continue;
 				if (Tools.distance(x, y, klingon.x, klingon.y) > Constants.KLINGON_IMPULSE_SPEED)
 					continue;
-				if (Tools.distance(StarShip.x, StarShip.y, x, y) >= initialDistanceToEnterprise)
+				if (Tools.distance(Enterprise.x, Enterprise.y, x, y) >= initialDistanceToEnterprise)
 					continue;
 				var thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
 				if (thing)
 					continue;
 				var obstacle = Tools.findObstruction(quadrant, x, y,
-						StarShip.x, StarShip.y);
+						Enterprise.x, Enterprise.y);
 				if (obstacle)
 					continue;
 				obstacle = Tools.findObstruction(quadrant, klingon.x,
 						klingon.y, x, y);
 				if (obstacle)
 					continue;
-				var distanceToEnterprise = Tools.distance(x, y, StarShip.x,
-						StarShip.y);
+				var distanceToEnterprise = Tools.distance(x, y, Enterprise.x,
+						Enterprise.y);
 				if (distanceToEnterprise < bestDistance) {
 					bestDistance = distanceToEnterprise;
 					bestX = x;
@@ -77,16 +79,8 @@ var Klingons = {
 		$window.trigger("ship_moved");
 		return;
 	},
-	fireOnStarship : function(klingon) {
-		StarShip.shields = StarShip.shields - klingon.weaponPower;
-		StarShip.maxShields = StarShip.maxShields * 4 / 5;
-		StarShip.shields = Math.min(StarShip.shields, StarShip.maxShields);
-		if (StarShip.shields < 0) {
-			return IO.gameOverMessage("Klingon ship destroyed us, game over.");
-		}
-		return IO.message(function() {
-		}, "Klingon ship fired at us, shields dropped to "
-				+ Math.round(StarShip.shields));
+	fireOnEnterprise : function(klingon) {
+		return Enterprise.assignDamage(klingon.weaponPower);
 	},
 	damage : function(klingon, damage) {
 		console.log("Assign damage to klingon", damage);
@@ -108,6 +102,6 @@ var Klingons = {
 		IO.message(null, "Target destroyed");
 	}
 };
-$(window).on("enerprise_warped", Klingons.on_enterprise_warped);
+$(window).on("enterprise_warped", Klingons.on_enterprise_warped);
 $(window).on("klingon_damaged", Klingons.on_klingon_damaged);
 $(window).on("klingon_destroyed", Klingons.on_klingon_destroyed);

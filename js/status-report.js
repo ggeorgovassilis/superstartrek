@@ -9,22 +9,29 @@ var StatusReport = {
 	reactorRemaining : $("#report_reactor_remaining"),
 	maxImpulse : $("#report_max_impulse"),
 	klingonsCount : $("#report_klingons_count"),
+	phaserPower:$("#report_phaser_power"),
+	lrs:$("#report_LRS"),
+	perc:function(part,total){
+		return "%"+Math.floor(100*part/total);
+	},
 	update : function() {
-		StatusReport.energy.text(StarShip.energy);
+		StatusReport.energy.text(Enterprise.energy);
 		StatusReport.energyConsumption
 				.text(Computer.calculateBaseEnergyConsumption);
-		StatusReport.torpedos.text(StarShip.torpedos);
-		StatusReport.location.text(StarShip.quadrant.regionName + " "
-				+ StarShip.quadrant.x + "," + StarShip.quadrant.y);
-		StatusReport.shields.text(StarShip.shields + " / "
-				+ StarShip.maxShields);
+		StatusReport.torpedos.text(Enterprise.torpedos+" | "+(Enterprise.torpedosOnline?"ONLINE":"OFFLINE"));
+		StatusReport.location.text(Enterprise.quadrant.regionName + " "
+				+ Enterprise.quadrant.x + "," + Enterprise.quadrant.y);
+		StatusReport.shields.text(Enterprise.shields + " / "
+				+ Enterprise.maxShields);
+		StatusReport.phaserPower.text(StatusReport.perc(Enterprise.phaserPower,Constants.ENTERPRISE_MAX_PHASER_POWER));
 		StatusReport.stardate.text(Tools.formatStardate(Computer.stardate));
 		StatusReport.reactor.text("%" + 100
-				* (StarShip.reactorOutput / Constants.MAX_REACTOR_OUTPUT));
-		StatusReport.reactorRemaining.text(StarShip.budget);
+				* (Enterprise.reactorOutput / Constants.MAX_REACTOR_OUTPUT));
+		StatusReport.reactorRemaining.text(Enterprise.budget);
 		StatusReport.klingonsCount.text(StarMap.countKlingons());
 		StatusReport.maxImpulse.text("%"
-				+ Math.round(100 * StarShip.maxImpulse
+				+ Math.round(100 * Enterprise.maxImpulse
 						/ Constants.MAX_IMPULSE_SPEED));
+		StatusReport.lrs.text(Enterprise.lrsOnline?"ONLINE":"OFFLINE");
 	}
 };

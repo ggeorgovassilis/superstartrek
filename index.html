@@ -15,6 +15,7 @@
 <div class="content"></div>
 <a class="single" onkeypress="IO.onKeyPressed(event)" href="#">OK</a>
 </div>
+
 <div id="statusreport" class="screen">
 <h1>NCC-1701</h1>
 <dl>
@@ -26,20 +27,25 @@
 <dd id="report_energy_consumption"></dd>
 <dt>Location</dt>
 <dd id="report_location"></dd>
-<dt>Photon torpedos</dt>
-<dd id="report_torpedos"></dd>
 <dt>Max impulse</dt>
 <dd id="report_max_impulse"></dd>
-<dt>Shields</dt>
-<dd id="report_shields"></dd>
+<dt>LRS</dt>
+<dd id="report_LRS"></dd>
 <dt>Reactor output</dt>
 <dd id="report_reactor"></dd>
 <dt>Energy available for this round</dt>
 <dd id="report_reactor_remaining"></dd>
+<dt>Shields</dt>
+<dd id="report_shields"></dd>
+<dt>Phaser power</dt>
+<dd id="report_phaser_power"></dd>
+<dt>Photon torpedos</dt>
+<dd id="report_torpedos"></dd>
 <dt>Klingons left</dt>
 <dd id="report_klingons_count"></dd>
 </dl>
 </div>
+
 <div id="computerscreen" class="screen">
 <div id="stardate"></div>
 <table id="quadrantscan"></table>
@@ -113,23 +119,24 @@
 </a>
 <a id="cmd_showStatusReport" class="command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
 <a id="cmd_showLongRangeScan">Long range scan</a>
-<a id="cmd_selectPhaserStrength">Phasers</a>
+<a id="cmd_firePhasers">Phasers</a>
 <a id="cmd_fireTorpedos" class="command">Photon torpedos</a>
-<a id="cmd_firePhasers_1">Low</a>
-<a id="cmd_firePhasers_2">Medium</a>
-<a id="cmd_firePhasers_3">Full</a>
 <a id="cmd_dockWithStarbase">Dock at starbase</a>
 <a id="cmd_refuelAtStarbase">Refuel</a>
 <a id="cmd_repairAtStarbase">Refuel &amp; repair</a>
 <a id="cmd_nop">Wait</a>
-<a id="cmd_cancel">Cancel</a>
+<a id="cmd_cancel">Dismiss</a>
 </div>
 <div id="downmarker"></div>
+<!-- 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ -->
+<script type="text/javascript" src="js/jquery.1.9.2.js"></script>
 <script type="text/javascript" src="js/jquery.fastClick.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/setup.js"></script>
 <script type="text/javascript" src="js/sst.js"></script>
+<script type="text/javascript" src="js/enterprise.js"></script>
 <script type="text/javascript" src="js/klingon.js"></script>
 <script type="text/javascript" src="js/navigation.js"></script>
 <script type="text/javascript" src="js/status-report.js"></script>

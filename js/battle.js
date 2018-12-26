@@ -1,10 +1,10 @@
-Controller.firePhasers = function(setting) {
-	var distance = Tools.distance(StarShip.x, StarShip.y, Controller.sector.x, Controller.sector.y);
+Controller.firePhasers = function() {
+	var distance = Tools.distance(Enterprise.x, Enterprise.y, Controller.sector.x, Controller.sector.y);
 	if (Math.floor(distance)>Constants.PHASER_RANGE)
 		return IO.message(Controller.showSectorSelectionMenu,
 				"Target is out of range");
-	var strength = setting*15; //1->15, 2->30, 3->45
-	var klingon = StarMap.getKlingonInQuadrantAt(StarShip.quadrant,
+	var strength = Enterprise.phaserPower;
+	var klingon = StarMap.getKlingonInQuadrantAt(Enterprise.quadrant,
 			Controller.sector.x, Controller.sector.y);
 	if (!klingon) {
 		return IO.message(Controller.showSectorSelectionMenu,
@@ -18,23 +18,26 @@ Controller.firePhasers = function(setting) {
 		return IO.message("Insufficient energy");
 	Computer.consume(consumption);
 	var damage = strength
-			/ Tools.distance(StarShip.x, StarShip.y, klingon.x, klingon.y);
+			/ Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
 	$window.trigger("fired");
 	Klingons.damage(klingon, damage);
 	return IO.endRound();
 };
 
 Controller.fireTorpedos = function() {
-	if (StarShip.torpedos < 1) {
+	if (Enterprise.torpedos < 1) {
 		return IO.message(Controller.showComputerScreen, "Out of torpedos");
 	}
-	if (StarShip.x === Controller.sector.x
-			&& StarShip.y === Controller.sector.y) {
+	if (!Enterprise.torpedosOnline){
+		return IO.message(Controller.showComputerScreen, "Torpedo bay damaged, cannot execute command.");
+	}
+	if (Enterprise.x === Controller.sector.x
+			&& Enterprise.y === Controller.sector.y) {
 		return IO.message(Controller.fireTorpedos, "Cannot fire at self");
 	}
-	var obstacle = Tools.findObstruction(StarShip.quadrant, StarShip.x,
-			StarShip.y, Controller.sector.x, Controller.sector.y);
-	StarShip.torpedos--;
+	var obstacle = Tools.findObstruction(Enterprise.quadrant, Enterprise.x,
+			Enterprise.y, Controller.sector.x, Controller.sector.y);
+	Enterprise.torpedos--;
 	$window.trigger("fired");
 	if (obstacle) {
 		var thing = obstacle.obstacle;
@@ -43,14 +46,14 @@ Controller.fireTorpedos = function() {
 					+ thing.x + "," + thing.y);
 		}
 		if (thing.starbase) {
-			StarShip.quadrant.starbases.remove(thing);
+			Enterprise.quadrant.starbases.remove(thing);
 			return IO.messageAndEndRound("Photon torpedo hit starbase at "
 					+ thing.x + "," + thing.y);
 		}
 		if (thing.klingon) {
 			var klingon = thing;
-			var chance = 1 / Math.log(1 + Tools.distance(StarShip.x,
-					StarShip.y, klingon.x, klingon.y));
+			var chance = 1 / Math.log(1 + Tools.distance(Enterprise.x,
+					Enterprise.y, klingon.x, klingon.y));
 			console.log("chance", chance, klingon);
 			if (Math.random() <= chance) {
 				//photon torpedos are inefficient against shields; damage malus for full shields
