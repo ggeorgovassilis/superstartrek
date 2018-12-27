@@ -236,7 +236,7 @@ var Computer={
 		},
 		hasEnergyBudgetFor: function(amount){
 			if (Enterprise.budget < amount){
-				IO.message(function(){}, "Cannot execute command, reactor capacity reached");
+				IO.message("Cannot execute command, reactor capacity reached").then.SRS();
 				return false;
 			};
 			return true;
@@ -253,46 +253,45 @@ var Computer={
 
 var IO={
 	currentCallback:null,
-	mute:false,
 	onKeyPressed:function(e){
 		IO.hide();
 	},
 	messages:$("#messages"),
 	content:$("#messages .content"),
-	endRound:function(){
-		IO.currentCallback = Controller.endRound;
-		return false;
+	endTurn:function(){
+		IO.currentCallback = Controller.endTurn;
+		return this;
+	},
+	call:function(callback){
+		if (!callback)
+			throw "Callback not defined";
+		if (!isFunction(callback))
+			throw "Callback not a function";
+		IO.currentCallback = callback;
+		return IO;
+	},
+	SRS:function(){
+		return IO.call(Controller.showComputerScreen);
 	},
 	nothing:function(){
-		return true;
+		IO.currentCallback = function(){};
+		return IO;
 	},
-	messageAndEndRound:function(text){
-		IO.message(Controller.endRound,text);
-		return false;
-	},
-	message:function(callback,text){
-		if (IO.mute)
-			return;
-		if (IO.isMessageShown()){
-			IO.content.append("<br>");
-		}
-		IO.content.append(text);
+	message:function(text){
+		IO.content.append("<div>"+text+"</div>");
 		Tools.removePageCss("messages-visible");
 		Tools.addPageCss("messages-visible");
-		IO.currentCallback = callback;
-		repositionWindowScroll();
 		IO.messages.find(".single").focus();
-		return false;
+		repositionWindowScroll();
+		return IO;
 	},
 	gameOverMessage:function(text){
-		IO.message(null, text);
-		IO.message(Controller.startGame, "Click OK to start a new game");
-		IO.mute=true;
-		return false;
+		return IO.message(text).then.message("Click OK to start a new game").then.call(Controller.startGame);
 	},
 	hide:function(){
 		IO.content.empty();
 		Tools.removePageCss("messages-visible");
+		return IO;
 	},
 	isMessageShown:function(){
 		return Tools.hasPageCss("messages-visible");
@@ -303,6 +302,7 @@ var IO={
 			IO.currentCallback();
 	}
 };
+IO.then = IO;
 $("#messages .single").fastClick(IO.onOkClicked);
 
 
@@ -349,7 +349,7 @@ var Controller={
 			Enterprise.torpedos = Constants.MAX_TORPEDOS;
 			Enterprise.shields = 0;
 			Computer.advanceClock(Constants.DURATION_OF_REFUELING);
-			Controller.endRound();
+			Controller.endTurn();
 		},
 		repairAtStarbase:function(){
 			Computer.advanceClock(Constants.DURATION_OF_REPAIRS);
@@ -403,7 +403,7 @@ var Controller={
 			StarMap.constructQuadrants();
 			Enterprise.setup();
 			Enterprise.repositionIfSectorOccupied();
-			$window.trigger("init");
+			Events.trigger(Events.START_GAME);
 			Controller.showIntroScreen();
 		},
 		leaveIntro:function(){
@@ -418,9 +418,9 @@ var Controller={
 			Tools.centerScreen();
 		},
 		nop:function(){
-			Controller.endRound();
+			Controller.endTurn();
 		},
-		startRound:function(){
+		newTurn:function(){
 			Enterprise.budget=Enterprise.reactorOutput;
 			Enterprise.shields = Enterprise.userDefinedShields;
 			var consumption = Computer.calculateBaseEnergyConsumption();
@@ -434,14 +434,14 @@ var Controller={
 		},
 		toggleFireAtWill:function(){
 			Enterprise.fireAtWill = !Enterprise.fireAtWill;
-			$(window).trigger("setting_changed");
+			Events.trigger(Events.SETTINGS_CHANGED);
 		},
 		updateFireAtWillButton:function(){
 			Tools.removePageCss("fireAtWill");
 			if (Enterprise.fireAtWill)
 				Tools.addPageCss("fireAtWill");
 		},
-		endRound:function(){
+		endTurn:function(){
 			if (StarMap.countKlingons()===0){
 				return IO.gameOverMessage("All Klingons destroyed!");
 			}
@@ -455,9 +455,9 @@ var Controller={
 				}
 			}
 			if (IO.isMessageShown())
-				IO.message(Controller.startRound, "");
+				IO.call(Controller.newTurn);
 			else
-				Controller.startRound();
+				Controller.newTurn();
 		}
 };
 
@@ -473,8 +473,8 @@ function repositionWindowScroll(){
 	}
 }
 
-$(window).on("setting_changed", Controller.updateFireAtWillButton);
-$(window).on("enterprise_damaged", Controller.updateShieldsIndicator);
+Events.on(Events.SETTINGS_CHANGED, Controller.updateFireAtWillButton);
+Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
 //window.onbeforeunload = function(e){
 //		return ""; 
 //};

@@ -5,18 +5,18 @@ var Enterprise={
 		repair:function(){
 			Enterprise.energy=Constants.MAX_ENERGY;
 			Enterprise.budget=Constants.MAX_REACTOR_OUTPUT;
-			Enterprise.shields=0; // current shield level. Enemy fire reduces them; they replenish at the beginning of a new round
 			Enterprise.maxShields=Constants.ENTERPRISE_MAX_SHIELDS; // maximum level of shields
-			Enterprise.userDefinedShields=0; // that's how much the player set shields. actual shields (see shields property above) might be lower.
+			Enterprise.shields=Enterprise.maxShields; // current shield level. Enemy fire reduces them; they replenish at the beginning of a new round
+			Enterprise.userDefinedShields=Enterprise.maxShields; // that's how much the player set shields. actual shields (see shields property above) might be lower.
 			Enterprise.reactorOutput=Constants.MAX_REACTOR_OUTPUT;
 			Enterprise.torpedos=Constants.MAX_TORPEDOS;
 			Enterprise.maxImpulse=Constants.MAX_IMPULSE_SPEED;
 			Enterprise.phaserPower=Constants.ENTERPRISE_MAX_PHASER_POWER;
 			Enterprise.lrsOnline=true;
 			Enterprise.torpedosOnline=true;
-			Enterprise.fireAtWill=false;
+			Enterprise.fireAtWill=true;
 			Enterprise.tacticalComputerOnline=true;
-			$(window).trigger("setting_changed");
+			Events.trigger(Events.SETTINGS_CHANGED);
 		},
 		runComputer:function(){
 			console.log("** running computer actions **");
@@ -30,8 +30,7 @@ var Enterprise={
 				var distance = Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
 				if (distance<=Constants.PHASER_RANGE){
 					console.log("Autofiring at",klingon);
-					Enterprise.firePhasersAt(klingon.x, klingon.y);
-					return;
+					return Enterprise._firePhasersAt(klingon.x, klingon.y, true);
 				}
 			}
 		},
@@ -76,35 +75,40 @@ var Enterprise={
 			   Enterprise.tacticalComputerOnline=false;
 			   Enterprise.fireAtWill=false;
 			   message+="<br>Tactical computer was damaged.";
-			   $(window).trigger("settings_changed");
+			   Events.trigger(Events.SETTINGS_CHANGED);
 		   }
 		   console.log(message);
-		   $(window).trigger("enterprise_damaged");
-		   $(window).trigger("settings_changed");
-		   return IO.message(function() {}, message);
+		   Events.trigger(Events.ENTERPRISE_DAMAGED);
+		   return IO.message(message).then.nothing();
 	   },
 	   firePhasersAt:function(targetX, targetY){
+		   var v = Enterprise._firePhasersAt(targetX, targetY, false);
+		   if (v)
+			   return v;
+		   return IO.endTurn();
+	   },
+	   _firePhasersAt:function(targetX, targetY, autoaim){
 			var distance = Tools.distance(Enterprise.x, Enterprise.y, targetX, targetY);
 			if (Math.floor(distance)>Constants.PHASER_RANGE)
-				return IO.message(Controller.showSectorSelectionMenu,
-						"Target is out of range");
+				return IO.message("Target is out of range").then.SRS();
 			var strength = Enterprise.phaserPower;
 			var klingon = StarMap.getKlingonInQuadrantAt(Enterprise.quadrant,
 					targetX, targetY);
 			if (!klingon) {
-				return IO.message(Controller.showSectorSelectionMenu,
-						"No Klingon at that sector");
+				return IO.message("No Klingon at that sector").then.SRS();
 			}
 			if (Math.floor(distance)>Constants.PHASER_RANGE)
-				return IO.message(Controller.showSectorSelectionMenu,
-						"Target is out of range");
+				return IO.message("Target is out of range").then.SRS();
 			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
 			if (!Computer.hasEnergyBudgetFor(consumption))
-				return IO.message("Insufficient energy");
+				return IO.message("Insufficient energy").then.SRS();
 			Computer.consume(consumption);
 			var damage = strength
 					/ Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
-			$window.trigger("fired");
+			Events.trigger(Events.WEAPON_FIRED);
+			if (autoaim)
+				IO.message("Autoaim fires at "+klingon.name);
 			Klingons.damage(klingon, damage);
-		}
+			IO.SRS();
+	   }
 };

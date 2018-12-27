@@ -32,7 +32,7 @@ var Klingons = {
 			return;
 		klingon.x = x;
 		klingon.y = y;
-		$window.trigger("klingon_moved");
+		Events.trigger(Events.KLINGON_MOVED,{target:klingon});
 	},
 	manueverIntoFiringPosition : function(klingon, quadrant) {
 		// find a spot which:
@@ -76,7 +76,7 @@ var Klingons = {
 			}
 		klingon.x = bestX;
 		klingon.y = bestY;
-		$window.trigger("ship_moved");
+		Events.trigger(Events.ENTERPRISE_MOVED);
 		return;
 	},
 	fireOnEnterprise : function(klingon) {
@@ -86,22 +86,22 @@ var Klingons = {
 		console.log("Assign damage to klingon", damage);
 		klingon.shields -= damage;
 		if (klingon.shields > 0) {
-			$window.trigger("klingon_damaged", [ klingon ]);
+			Events.trigger(Events.KLINGON_DAMAGED,{target:klingon})
 		} else {
 			Klingons.destroy(klingon);
 		}
 	},
 	destroy : function(klingon) {
 		klingon.quadrant.klingons.remove(klingon);
-		$window.trigger("klingon_destroyed", [ klingon ])
+		Events.trigger(Events.KLINGON_DESTROYED, {target:klingon})
 	},
 	on_klingon_damaged : function() {
-		IO.message(null, "Target hit");
+		IO.message("Target hit");
 	},
 	on_klingon_destroyed : function(event, klingon) {
-		IO.message(null, "Target destroyed");
+		IO.message("Target destroyed");
 	}
 };
-$(window).on("enterprise_warped", Klingons.on_enterprise_warped);
-$(window).on("klingon_damaged", Klingons.on_klingon_damaged);
-$(window).on("klingon_destroyed", Klingons.on_klingon_destroyed);
+Events.on(Events.ENTERPRISE_WARPED, Klingons.on_enterprise_warped);
+Events.on(Events.KLINGON_DAMAGED, Klingons.on_klingon_damaged);
+Events.on(Events.KLINGON_DESTROYED, Klingons.on_klingon_destroyed);

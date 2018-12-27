@@ -13,8 +13,7 @@ Controller.navigate = function() {
 		return Controller.showComputerScreen();
 	var maxSpeed = Enterprise.maxImpulse;
 	if (distance > maxSpeed) {
-		return IO.message(Controller.showSectorSelectionMenu,
-				"Command exceeds maximum impulse speed " + maxSpeed);
+		return IO.message("Command exceeds maximum impulse speed " + maxSpeed).then.SRS();
 	}
 	var consumption = Computer.calculateEnergyConsumptionForMovement(distance);
 	if (!Computer.hasEnergyBudgetFor(consumption))
@@ -23,8 +22,8 @@ Controller.navigate = function() {
 	Enterprise.x = finalX;
 	Enterprise.y = finalY;
 	Computer.advanceClock(Constants.DURATION_OF_MOVEMENT_PER_SECTOR * distance);
-	$window.trigger("ship_moved");
-	Controller.endRound();
+	Events.trigger(Events.ENTERPRISE_MOVED);
+	Controller.endTurn();
 };
 Controller.selectWarpDestination = function() {
 	Controller.longRangeScan();
@@ -42,9 +41,8 @@ Controller.warpTo = function(quadrant) {
 	Computer.advanceClock(turns);
 	Enterprise.quadrant = quadrant;
 	Enterprise.repositionIfSectorOccupied();
-	$(window).trigger("ship_moved");
-	$(window).trigger("enterprise_warped");
-	Controller.endRound();
+	Events.trigger(Events.ENTERPRISE_WARPED);
+	Controller.endTurn();
 };
 Controller.dockWithStarbase = function() {
 }

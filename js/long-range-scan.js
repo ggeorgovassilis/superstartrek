@@ -5,7 +5,7 @@ var LongRangeScanScreen={
 		element:$("#longrangescan"),
 		show:function(){
 			if (!Enterprise.lrsOnline){
-				return IO.message(Controller.showComputerScreen, "LRS is offline");
+				return IO.message("LRS is offline").then.SRS();
 			}
 			Tools.updatePageCssWithToken("showLongRangeScan");
 			for (var i=0;i<StarMap.quadrants.length;i++)

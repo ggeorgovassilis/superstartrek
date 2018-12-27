@@ -14,12 +14,10 @@ var ShortRangeScan = {
 	},
 	init : function() {
 		console.log("ShortRangeScan.init");
-		ShortRangeScan.update(Enterprise.quadrant);
+		ShortRangeScan.updateMap();
 	},
-	something_changed : function() {
-		ShortRangeScan.update(Enterprise.quadrant);
-	},
-	update : function(quadrant) {
+	updateMap : function() {
+		var quadrant = Enterprise.quadrant;
 		if (ShortRangeScan.constructUi != null) {
 			ShortRangeScan.constructUi();
 			ShortRangeScan.constructUi = null;
@@ -96,12 +94,14 @@ var ShortRangeScanScreen = {
 			}
 	}
 };
+Events.on(Events.START_GAME, ShortRangeScan.init);
 
-$(window).on("ship_moved", ShortRangeScan.something_changed);
-$(window).on("setting_changed", ShortRangeScan.something_changed);
-$(window).on("klingon_moved", ShortRangeScan.something_changed);
-$(window).on("init", ShortRangeScan.init);
-$(window).on("fired", ShortRangeScan.something_changed);
-$(window).on("enterprise_damaged", ShortRangeScan.something_changed);
-$(window).on("klingon_destroyed", ShortRangeScan.something_changed);
-$(window).on("klingon_damaged", ShortRangeScan.something_changed);
+Events.on(Events.ENTERPRISE_MOVED, ShortRangeScan.updateMap);
+Events.on(Events.ENTERPRISE_WARPED, ShortRangeScan.updateMap);
+Events.on(Events.WEAPON_FIRED, ShortRangeScan.updateMap);
+//Events.on(Events.SETTINGS_CHANGED, ShortRangeScan.something_changed);
+//Events.on(Events.ENTERPRISE_DAMAGED, ShortRangeScan.something_changed);
+
+Events.on(Events.KLINGON_MOVED, ShortRangeScan.updateMap);
+Events.on(Events.KLINGON_DESTROYED, ShortRangeScan.updateMap);
+Events.on(Events.KLINGON_DAMAGED, ShortRangeScan.updateMap);
