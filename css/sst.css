@@ -376,7 +376,12 @@ a.progress-bar {
 	display:block;
 }
 
-.page-computer #cmd_showStatusReport, .page-computer #cmd_nop, .page-computer #cmd_showStatusReport, .page-computer #cmd_showLongRangeScan, .page-computer #cmd_toggleShields{
+.page-computer #cmd_showStatusReport, 
+.page-computer #cmd_nop, 
+.page-computer #cmd_showStatusReport, 
+.page-computer #cmd_showLongRangeScan, 
+.page-computer #cmd_toggleShields,
+.page-computer.enterprise-damaged #cmd_repairProvisionally {
 	display:block;
 }
 

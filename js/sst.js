@@ -12,6 +12,7 @@ var Constants = {
 		DURATION_OF_ROUND:1,
 		DURATION_OF_REFUELING:2,
 		DURATION_OF_REPAIRS:4,
+		DURATION_OF_PROVISIONAL_REPAIRS:8,
 		ENERGY_OF_MOVEMENT_PER_SECTOR: 20,
 		ENERGY_PER_SHIELD:2,
 		BASE_CONSUMPTION:1,
@@ -192,6 +193,11 @@ var Computer={
 			var progress = 100*Enterprise.energy/Constants.MAX_ENERGY;
 			$("#cmd_showStatusReport .progress-indicator").css("width",progress+"%");
 		},
+		updateDamagedIndicator:function(){
+			Tools.removePageCss("enterprise-damaged");
+			if (Enterprise.isDamaged)
+				Tools.addPageCss("enterprise-damaged");
+		},
 		updateShieldsIndicator:function(){
 			$("#cmd_toggleShields .progress-indicator").css("width",Enterprise.shields+"%");
 			$("#cmd_toggleShields .max-indicator").css("width",Enterprise.maxShields+"%");
@@ -220,7 +226,12 @@ var Computer={
 			ShortRangeScanScreen.update(Enterprise.quadrant);
 		},
 		calculateBaseEnergyConsumption:function(){
-			return Enterprise.shields*Constants.ENERGY_PER_SHIELD + Constants.BASE_CONSUMPTION;
+			return Enterprise.shields*Constants.ENERGY_PER_SHIELD 
+			+ Constants.BASE_CONSUMPTION
+			+ (Enterprise.tacticalComputerOnline?1:0)
+			+ (Enterprise.fireAtWill?1:0)
+			+ (Enterprise.torpedosOnline?1:0)
+			+ (Enterprise.lrsOnline?1:0);
 		},
 		calculateEnergyConsumptionForMovement:function(distance){
 			return distance*Constants.ENERGY_OF_MOVEMENT_PER_SECTOR;
@@ -354,8 +365,12 @@ var Controller={
 		},
 		repairAtStarbase:function(){
 			Computer.advanceClock(Constants.DURATION_OF_REPAIRS);
-			Enterprise.repair();
+			Enterprise.repairAtStarbase();
 			Controller.refuelAtStarbase();
+			Events.trigger(Events.ENTERPRISE_REPAIRED);
+		},
+		repairProvisionally:function(){
+			Enterprise.repairProvisionally();
 		},
 		selectSector:function(x,y){
 			Controller.sector.x = x;
@@ -475,6 +490,8 @@ function repositionWindowScroll(){
 
 Events.on(Events.SETTINGS_CHANGED, Controller.updateFireAtWillButton);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
+Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateDamagedIndicator);
+Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateDamagedIndicator);
 //window.onbeforeunload = function(e){
 //		return ""; 
 //};

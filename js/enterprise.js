@@ -2,7 +2,7 @@
  * Enterprise
  */
 var Enterprise={
-		repair:function(){
+		repairAtStarbase:function(){
 			Enterprise.energy=Constants.MAX_ENERGY;
 			Enterprise.budget=Constants.MAX_REACTOR_OUTPUT;
 			Enterprise.maxShields=Constants.ENTERPRISE_MAX_SHIELDS; // maximum level of shields
@@ -17,7 +17,61 @@ var Enterprise={
 			Enterprise.fireAtWill=true;
 			Enterprise.tacticalComputerOnline=true;
 			Enterprise.maxWarpSpeed=Constants.ENTERPRISE_MAX_WARP_SPEED;
+			Enterprise.isDamaged=false;
 			Events.trigger(Events.SETTINGS_CHANGED);
+		},
+		repairProvisionally:function(){
+			var message = "";
+			var duration = Constants.DURATION_OF_PROVISIONAL_REPAIRS;
+			var cost = duration * Computer.calculateBaseEnergyConsumption();
+			if (Computer.consume(cost))
+				return;
+			Computer.advanceClock(duration);
+			var message = null;
+			function canFix(){
+				return Math.random()<0.1;
+			}
+			for (var i=0;i<20;i++){//quit loop if nothing repaired after 20 turns
+				if (Enterprise.maxShields<0.60*Constants.ENTERPRISE_MAX_SHIELDS && canFix()){
+					message = "Improved shields.";
+					Enterprise.maxShields+=10;
+					break;
+				}
+				if (Enterprise.phaserPower<0.60*Constants.ENTERPRISE_MAX_PHASER_POWER && canFix()){
+					Enterprise.phaserPower = Enterprise.phaserPower+10;
+					message="Improved phasers.";
+					break;
+				}
+				if (!Enterprise.lrsOnline && canFix()){
+				    Enterprise.lrsOnline=true;
+					message="Repaired long range scan.";
+					break;
+				}
+				if (!Enterprise.torpedosOnline && canFix()){
+				   Enterprise.torpedosOnline=true;
+				   message="Repaired torpedo bay.";
+				   break;
+				}
+				if (!Enterprise.tacticalComputerOnline && canFix()){
+				   Enterprise.tacticalComputerOnline=true;
+				   message="Repaired tactical computer.";
+				   break;
+				}
+				if (Enterprise.maxImpulse<2 && canFix()){
+				   Enterprise.maxImpulse++;
+				   message="Improved impulse drive.";
+				   break;
+				}
+				if (Enterprise.maxWarpSpeed==1 && canFix()){
+				   Enterprise.maxWarpSpeed++;
+				   message="Improved warp drive.";
+				   break;
+				}
+			}
+			if (message)
+				Events.trigger(Events.ENTERPRISE_REPAIRED);
+			else message="Engineering couldn't repair anything at this time.";
+			return IO.message(message).then.endTurn();
 		},
 		runComputer:function(){
 			console.log("** running computer actions **");
@@ -39,7 +93,7 @@ var Enterprise={
 			Enterprise.quadrant=StarMap.quadrants[0];
 			Enterprise.x=0;
 			Enterprise.y=0;
-			Enterprise.repair();
+			Enterprise.repairAtStarbase();
 		},
 	   repositionIfSectorOccupied:function(){
 		   var newX = Enterprise.x;
@@ -83,7 +137,12 @@ var Enterprise={
 			   message+="<br>Impulse drive was damaged.";
 			   Events.trigger(Events.SETTINGS_CHANGED);
 		   }
-		   console.log(message);
+		   if (Math.random()<impact && Enterprise.maxWarpSpeed>1){
+			   Enterprise.maxWarpSpeed--;
+			   message+="<br>Warp drive was damaged.";
+			   Events.trigger(Events.SETTINGS_CHANGED);
+		   }
+		   Enterprise.isDamaged=true;
 		   Events.trigger(Events.ENTERPRISE_DAMAGED);
 		   return IO.message(message).then.nothing();
 	   },
