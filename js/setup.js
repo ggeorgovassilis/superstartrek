@@ -44,7 +44,7 @@ var Setup = {
 		return a;
 	},
 	makeStarbases : function() {
-		var a = new Array();
+		var a = [];
 		var hasStarbase = Constants.CHANCE_OF_STARBASE_IN_QUADRANT > Math
 				.random();
 		if (hasStarbase)

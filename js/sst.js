@@ -19,11 +19,12 @@ var Constants = {
 			return 10+speed*speed*speed;
 		},
 		ENTERPRISE_MAX_SHIELDS:100,
-		MAX_WARP_SPEED:4,
+		ENTERPRISE_MAX_WARP_SPEED:8,
 		MAX_ENERGY:3000,
 		MAX_TORPEDOS:10,
 		MAX_TORPEDO_DAMAGE:50,
 		MAX_IMPULSE_SPEED:3,
+		MAX_WARP_SPEED:4,
 		MAX_REACTOR_OUTPUT:280,
 		PHASER_EFFICIENCY:1,
 		ENTERPRISE_MAX_PHASER_POWER:45,
@@ -33,7 +34,7 @@ var Constants = {
 		PHASER_RANGE:3,
 		SMALL_HEIGHT:450,
 		SMALL_WIDTH:621,
-		CHANCE_OF_STARBASE_IN_QUADRANT:0.08,
+		CHANCE_OF_STARBASE_IN_QUADRANT:0.09,
 		CHANCE_OF_KLINGON_IN_QUADRANT:0.3,
 		MAX_KLINGON_SHIELD:80,
 };
@@ -398,7 +399,6 @@ var Controller={
 			Controller.showComputerScreen();
 		},
 		startGame:function(){
-			IO.mute = false;
 			Computer.stardate=2550;
 			StarMap.constructQuadrants();
 			Enterprise.setup();

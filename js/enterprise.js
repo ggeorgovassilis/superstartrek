@@ -16,6 +16,7 @@ var Enterprise={
 			Enterprise.torpedosOnline=true;
 			Enterprise.fireAtWill=true;
 			Enterprise.tacticalComputerOnline=true;
+			Enterprise.maxWarpSpeed=Constants.ENTERPRISE_MAX_WARP_SPEED;
 			Events.trigger(Events.SETTINGS_CHANGED);
 		},
 		runComputer:function(){
@@ -75,6 +76,11 @@ var Enterprise={
 			   Enterprise.tacticalComputerOnline=false;
 			   Enterprise.fireAtWill=false;
 			   message+="<br>Tactical computer was damaged.";
+			   Events.trigger(Events.SETTINGS_CHANGED);
+		   }
+		   if (Math.random()<impact && Enterprise.maxImpulse){
+			   Enterprise.maxImpulse--;
+			   message+="<br>Impulse drive was damaged.";
 			   Events.trigger(Events.SETTINGS_CHANGED);
 		   }
 		   console.log(message);

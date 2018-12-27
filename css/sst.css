@@ -85,7 +85,7 @@ table a, table a:visited{
 }
 
 .has-starship{
-	background-color:midnightblue;
+	outline: solid turquoise 2px;
 }
 
 .has-starbase{
@@ -177,6 +177,7 @@ table a, table a:visited{
 #commandbar a{
 	display:none;
 	padding:0.5em;
+	line-height:2em;
 	float:left;
 }
 
@@ -346,7 +347,7 @@ a.progress-bar {
 .progress-indicator{
 	height:100%;
 	position:absolute;
-	background-color:mediumvioletred;
+	background-color:darkturquoise;
 	display:block;
 }
 

@@ -33,8 +33,27 @@ Controller.warpTo = function(quadrant) {
 			quadrant.x, quadrant.y);
 	if (distance === 0)
 		return Controller.showComputerScreen();
+	//TODO: rework warp. speeds are quadratic(?). Any distance should be possible but impact time accordingly.
+	if (distance>Enterprise.maxWarpSpeed)
+		return IO.message("That course exceeds maximum warp").then.nothing();
 	var consumption = Computer.calculateEnergyConsumptionForWarpDrive(
 			Enterprise.quadrant, quadrant);
+	var forceStopAtQuadrant = null;
+	// distance of 1 cannot be intercepted, otherwise Enterprise could not escape a quadrant
+	if (distance>=2)
+	Tools.walkLine(Enterprise.quadrant.x, Enterprise.quadrant.y, quadrant.x, quadrant.y, function(x,y){
+		var q = StarMap.getQuadrantAt(x,y);
+		if (!q.klingons.isEmpty()){
+			forceStopAtQuadrant = q;
+			IO.message("We were intercepted by "+q.klingons[0].name).message("Dropping out of warp at "+q.regionName);
+		}
+		return forceStopAtQuadrant==null;
+	});
+	if (forceStopAtQuadrant)
+		quadrant = forceStopAtQuadrant;
+	distance = Tools.distance(Enterprise.quadrant.x, Enterprise.quadrant.y,
+			quadrant.x, quadrant.y);
+	
 	var speed = Math.min(distance, Constants.MAX_WARP_SPEED);
 	var turns = Constants.DURATION_OF_MOVEMENT_PER_QUADRANT * distance / speed;
 	Computer.consume(consumption);
