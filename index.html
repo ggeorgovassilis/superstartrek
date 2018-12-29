@@ -11,7 +11,7 @@
 <div class="glasspanel"></div>
 <div id="topmarker"></div>
 <div id="page">
-<div id="messages" onkeypress="IO.onKeyPressed(event)" tabindex="1">
+<div id="messages" onkeypress="IO.onKeyPressed(event)">
 <div class="content"></div>
 <a class="single" onkeypress="IO.onKeyPressed(event)" href="#">OK</a>
 </div>
@@ -114,21 +114,21 @@
 </div>
 <div id="commandbar" class="command-bar">
 <a id="cmd_navigate">Navigate</a>
-<a id="cmd_toggleShields" class="command top-command progress-bar">
+<a accesskey="s" id="cmd_toggleShields" class="command top-command progress-bar">
 	<span class="max-indicator"></span>
 	<span class="progress-indicator"></span>
 	<span class="progress-text">Shields</span>
 </a>
-<a id="cmd_showStatusReport" class="command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
-<a id="cmd_showLongRangeScan">Long range scan</a>
+<a accesskey="r" id="cmd_showStatusReport" class="command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
+<a accesskey="l" id="cmd_showLongRangeScan">Long range scan</a>
 <a id="cmd_repairProvisionally">Make temporary repairs</a>
-<a id="cmd_firePhasers">Phasers</a>
-<a id="cmd_fireTorpedos" class="command">Photon torpedos</a>
+<a accesskey="p" id="cmd_firePhasers">Phasers</a>
+<a accesskey="t" id="cmd_fireTorpedos" class="command">Photon torpedos</a>
 <a id="cmd_toggleFireAtWill">Fire at will</a>
-<a id="cmd_dockWithStarbase">Dock at starbase</a>
+<a accesskey="d" id="cmd_dockWithStarbase">Dock at starbase</a>
 <a id="cmd_refuelAtStarbase">Refuel</a>
 <a id="cmd_repairAtStarbase">Refuel &amp; repair</a>
-<a id="cmd_nop">Wait</a>
+<a accesskey="w" id="cmd_nop">Wait</a>
 <a id="cmd_cancel">Dismiss</a>
 </div>
 <div id="downmarker"></div>

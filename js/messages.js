@@ -1,7 +1,8 @@
 var IO={
 	currentCallback:null,
+	gameIsOver:false,
 	onKeyPressed:function(e){
-		IO.hide();
+		IO.onOkClicked();
 	},
 	messages:$("#messages"),
 	content:$("#messages .content"),
@@ -9,7 +10,14 @@ var IO={
 		IO.currentCallback = Controller.endTurn;
 		return this;
 	},
+	gameOver:function(message){
+		IO.message(message.message);
+		callback(Controller.gameOver);
+		IO.gameIsOver=true;
+	},
 	call:function(callback){
+		if (IO.gameIsOver) //not accepting callbacks if game is over
+			return;
 		console.log("call",callback);
 		if (!callback)
 			throw "Callback not defined";
@@ -50,4 +58,5 @@ var IO={
 	}
 };
 IO.then = IO;
+Events.on(Events.GAME_OVER,IO.gameOver);
 $("#messages .single").fastClick(IO.onOkClicked);

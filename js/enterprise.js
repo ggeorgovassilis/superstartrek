@@ -168,13 +168,14 @@ var Enterprise={
 			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
 			if (!Computer.hasEnergyBudgetFor(consumption))
 				return IO.message("Insufficient energy").then.SRS();
-			Computer.consume(consumption);
 			var damage = strength
 					/ Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
 			Events.trigger(Events.WEAPON_FIRED);
 			if (autoaim)
 				IO.message("Autoaim fires at "+klingon.name);
 			Klingons.damage(klingon, damage);
+			if (Computer.consume(consumption))
+				return;
 			IO.SRS();
 	   }
 };

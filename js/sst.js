@@ -257,8 +257,9 @@ var Computer={
 			Enterprise.energy-=energy;
 			Enterprise.energy=Math.floor(Enterprise.energy);
 			if (Enterprise.energy<=0){
+				IO.call(Controller.gameOver);
 				Events.trigger(Events.GAME_OVER,{message:"We run out of anti matter.",cause:Enterprise});
-				return;
+				return true;
 			}
 		}
 };
@@ -451,7 +452,6 @@ Events.on(Events.SETTINGS_CHANGED, Controller.updateFireAtWillButton);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateDamagedIndicator);
 Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateDamagedIndicator);
-Events.on(Events.GAME_OVER, Controller.gameOver);
 //window.onbeforeunload = function(e){
 //		return ""; 
 //};
