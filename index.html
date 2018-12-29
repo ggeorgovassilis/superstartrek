@@ -16,8 +16,100 @@
 <a class="single" onkeypress="IO.onKeyPressed(event)" href="#">OK</a>
 </div>
 
-<div id="statusreport" class="screen">
+<div id="statusreport" class="screen" onkeypress="StatusReport.onKeyPressed(event)">
 <h1>NCC-1701</h1>
+<div id="enterprise-schematics">
+<div class="base schematics">
+    _________________       .-------.
+   |________________|)   .-'         `-.
+                ||      /               \
+                ||     /                 \
+             ___||_,--=-      _.--,       |
+            |_________|______/_.-. |      |
+            |______   |      \_`-' |      |
+                || `--=-       `--'       |
+                ||     \                 /
+    ____________||___   \               /
+   |________________|)   `-.         .-'
+                            `-------'
+</div>
+<div title="impulse drive" class="impulse overlay">
+
+
+
+
+                      =-
+                    _
+                    
+                      =-
+</div>
+<div title="phaser array" class="phasers overlay">
+
+
+
+                                ..
+
+                           .          .
+                           '          '	
+
+                                ..
+
+
+
+</div>
+<div title="torpedo bay" class="torpedobay overlay">
+
+
+
+
+
+                                    ╷
+                                    ╵	
+
+
+
+
+</div>
+<div title="scanners" class="scanners overlay">
+
+
+
+
+                                     
+                              _.-.       
+                               `-'       
+                                      
+</div>
+<div title="shields" class="shields overlay">
+                            .-------.
+                         .-'         `-.
+                        /               \
+                       /                 \
+                              _.--,       |
+                      |______/            |
+                      |      \_           |
+                               `--'       |
+                       \                 /
+                        \               /
+                         `-.         .-'
+                            `-------'
+</div>
+<div title="warp engines" class="warp overlay">
+    _________________ 
+   |________________|)
+
+
+
+
+
+
+
+    ________________  
+   |________________|)
+                      
+</div>
+</div>
+<div class=legend><div id=what></div><div id=status></div></div>
 <dl>
 <dt>Star date</dt>
 <dd id="report_stardate"></dd>

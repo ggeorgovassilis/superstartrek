@@ -414,3 +414,50 @@ a.progress-bar {
 	font-weight:bold;
 }
 
+#enterprise-schematics{
+	font-size:1em;
+	height:17em;
+	position:relative;
+	background-color:rgba(0,0,0,0.5);
+}
+
+.schematics, .overlay{
+	white-space: pre;
+	font-family: monospace;
+	top:0;
+}
+
+.overlay{
+	position:absolute;
+	cursor:pointer;
+}
+
+.overlay.base{
+	z-index: 0;
+	position:fixed;
+}
+
+.overlay{
+	z-index:1;
+}
+
+.overlay.impulse{
+	z-index:2;
+}
+
+.overlay.ok{
+	color:turquoise;	
+}
+
+.overlay.damaged{
+	color:orange;
+}
+
+.overlay.offline{
+	color:red;
+}
+
+.legend #what,.legend #status{
+	float:left;
+	width:10em;
+}
