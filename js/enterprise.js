@@ -71,7 +71,7 @@ var Enterprise={
 			if (message)
 				Events.trigger(Events.ENTERPRISE_REPAIRED);
 			else message="Engineering couldn't repair anything at this time.";
-			return IO.message(message).then.endTurn();
+			return IO.message(message);
 		},
 		runComputer:function(){
 			console.log("** running computer actions **");
@@ -105,13 +105,14 @@ var Enterprise={
 		   Enterprise.x = newX;
 		   Enterprise.y = newY;
 	   },
-	   assignDamage:function(damage){
-		   var impact = damage/Enterprise.shields;
+	   assignDamage:function(damage,cause){
+		   var impact = damage/(Enterprise.shields+1);
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
 		   Enterprise.maxShields = Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact));
 		   Enterprise.shields = Math.min(Enterprise.shields, Enterprise.maxShields);
 		   if (Enterprise.shields == 0) {
-			   return IO.gameOverMessage("Klingon ship destroyed us, game over.");
+				Events.trigger(Events.GAME_OVER,{message:"Enterprise was destroyed.", cause:cause.name});
+				return;
 		   }
 		   var message = "Klingon ship fired at us, shields dropped to "+Math.round(Enterprise.shields);
 		   if (Math.random()<impact){

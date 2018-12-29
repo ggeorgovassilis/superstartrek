@@ -80,7 +80,7 @@ var Klingons = {
 		return;
 	},
 	fireOnEnterprise : function(klingon) {
-		return Enterprise.assignDamage(klingon.weaponPower);
+		return Enterprise.assignDamage(klingon.weaponPower,klingon);
 	},
 	damage : function(klingon, damage) {
 		console.log("Assign damage to klingon", damage);

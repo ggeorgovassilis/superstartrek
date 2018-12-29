@@ -16,15 +16,10 @@ var ShortRangeScan = {
 		console.log("ShortRangeScan.init");
 		ShortRangeScan.updateMap();
 	},
-	updateMap : function() {
+	updateMapInner:function() {
 		var quadrant = Enterprise.quadrant;
-		if (ShortRangeScan.constructUi != null) {
-			ShortRangeScan.constructUi();
-			ShortRangeScan.constructUi = null;
-		}
 		ShortRangeScan.element.find("td").html("&nbsp;");
-		ShortRangeScan.updateList("&nbsp;*&nbsp;", quadrant.stars, function(
-				star) {
+		ShortRangeScan.updateList("&nbsp;*&nbsp;", quadrant.stars, function(star) {
 			return "star";
 		});
 		ShortRangeScan.updateList("c-}", quadrant.klingons, function(klingon) {
@@ -50,16 +45,28 @@ var ShortRangeScan = {
 			$("#srs_heading").addClass("red-alert");
 		}
 	},
+	updateMap:function(){
+		//profiling revealed that updateMap is called several times in the same interaction.
+		//that's why I'm deferring it to a single call.
+		ShortRangeScan.constructUi();
+		ShortRangeScan.constructUi=nop; // avoid reconstructing UI every time this function is called
+		if (ShortRangeScan.updatePending)
+			return;
+		ShortRangeScan.updatePending=setTimeout(function(){
+			ShortRangeScan.updatePending=null;
+			ShortRangeScan.updateMapInner();
+		},1);
+	},
 	constructUi : function() {
 		var element = ShortRangeScan.element;
 		for (var y = 0; y < 8; y++) {
 			var tr = $("<tr></tr>");
-			element.append(tr);
 			for (var x = 0; x < 8; x++) {
 				var td = $("<td id='cmd_selectSector_" + x + "_" + y
 						+ "'>&nbsp;</td>");
 				tr.append(td);
 			}
+			element.append(tr);
 		}
 	},
 	selectSectorAt : function(x, y) {
@@ -70,7 +77,7 @@ var ShortRangeScan = {
 
 var ShortRangeScanScreen = {
 	elem : $("#shortrangescan"),
-	update : function(quadrant) {
+	updateQuadrant : function(quadrant) {
 		var index = 0;
 		var qx = quadrant.x;
 		var qy = quadrant.y;
@@ -84,8 +91,7 @@ var ShortRangeScanScreen = {
 				if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
 					var quadrant = StarMap.getQuadrantAt(x, y);
 					quadrant.explored = true;
-					LongRangeScanScreen.updateElementWithQuadrant(quadrant,
-							cell);
+					LongRangeScanScreen.updateElementWithQuadrant(quadrant,cell);
 				} else {
 					cell.text("0");
 					cell.attr("id", null);

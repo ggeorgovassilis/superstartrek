@@ -1,5 +1,6 @@
 var Events={
 	START_GAME:"START_GAME",
+	GAME_OVER:"GAME_OVER",
 	SETTINGS_CHANGED:"SETTINGS_CHANGED",
 	WEAPON_FIRED:"WEAPON_FIRED",
 	ENTERPRISE_DAMAGED:"ENTERPRISE_DAMAGED",
@@ -15,7 +16,7 @@ var Events={
 		console.log("event",event,arg);
 		if (!Events[event])
 			throw "Unknown event "+event;
-		$(window).trigger(event,arg);
+		$(window).trigger(event,[arg]);
 	},
 	on:function(event,callback){
 		if (!Events[event])
@@ -24,8 +25,9 @@ var Events={
 			throw "No callback given";
 		if (!isFunction(callback))
 			throw "Callback is not a function";
-		$(window).on(event,function(e,args){
-			callback(args[0]);
+		$(window).on(event,function(e,arg){
+			console.log("event callback",e,callback,arg);
+			callback(arg);
 		});
 	}
 };

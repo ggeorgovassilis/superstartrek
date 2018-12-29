@@ -188,7 +188,6 @@ var Intro={
 
 var Computer={
 		element:$("#computerscreen"),
-		stardate:2550,
 		updateEnergyIndicator:function(){
 			var progress = 100*Enterprise.energy/Constants.MAX_ENERGY;
 			$("#cmd_showStatusReport .progress-indicator").css("width",progress+"%");
@@ -223,7 +222,7 @@ var Computer={
 			Computer.updateStarbaseDockCommand();
 			Computer.updateShieldsIndicator();
 			Computer.updateEnergyIndicator();
-			ShortRangeScanScreen.update(Enterprise.quadrant);
+			ShortRangeScanScreen.updateQuadrant(Enterprise.quadrant);
 		},
 		calculateBaseEnergyConsumption:function(){
 			return Enterprise.shields*Constants.ENERGY_PER_SHIELD 
@@ -254,69 +253,15 @@ var Computer={
 			return true;
 		},
 		consume:function(energy){
-			Enterprise.budget-=energy;
+			Enterprise.budget=Math.max(0,Enterprise.budget-energy);
 			Enterprise.energy-=energy;
 			Enterprise.energy=Math.floor(Enterprise.energy);
 			if (Enterprise.energy<=0){
-				return IO.gameOverMessage("Game over, out of energy");
+				Events.trigger(Events.GAME_OVER,{message:"We run out of anti matter.",cause:Enterprise});
+				return;
 			}
 		}
 };
-
-var IO={
-	currentCallback:null,
-	onKeyPressed:function(e){
-		IO.hide();
-	},
-	messages:$("#messages"),
-	content:$("#messages .content"),
-	endTurn:function(){
-		IO.currentCallback = Controller.endTurn;
-		return this;
-	},
-	call:function(callback){
-		if (!callback)
-			throw "Callback not defined";
-		if (!isFunction(callback))
-			throw "Callback not a function";
-		IO.currentCallback = callback;
-		return IO;
-	},
-	SRS:function(){
-		return IO.call(Controller.showComputerScreen);
-	},
-	nothing:function(){
-		IO.currentCallback = function(){};
-		return IO;
-	},
-	message:function(text){
-		IO.content.append("<div>"+text+"</div>");
-		Tools.removePageCss("messages-visible");
-		Tools.addPageCss("messages-visible");
-		IO.messages.find(".single").focus();
-		repositionWindowScroll();
-		return IO;
-	},
-	gameOverMessage:function(text){
-		return IO.message(text).then.message("Click OK to start a new game").then.call(Controller.startGame);
-	},
-	hide:function(){
-		IO.content.empty();
-		Tools.removePageCss("messages-visible");
-		return IO;
-	},
-	isMessageShown:function(){
-		return Tools.hasPageCss("messages-visible");
-	},
-	onOkClicked:function(){
-		IO.hide();
-		if (IO.currentCallback)
-			IO.currentCallback();
-	}
-};
-IO.then = IO;
-$("#messages .single").fastClick(IO.onOkClicked);
-
 
 /**
  * Controller
@@ -370,7 +315,8 @@ var Controller={
 			Events.trigger(Events.ENTERPRISE_REPAIRED);
 		},
 		repairProvisionally:function(){
-			Enterprise.repairProvisionally();
+			Enterprise.repairProvisionally()
+			return IO.endTurn();
 		},
 		selectSector:function(x,y){
 			Controller.sector.x = x;
@@ -387,7 +333,7 @@ var Controller={
 			if (shields >= Enterprise.maxShields)
 				shields = 0;
 			else
-				shields=Math.min(Enterprise.budget,Math.min(shields+25, Enterprise.maxShields));
+				shields=Math.max(0,Math.min(Enterprise.budget,Math.min(shields+25, Enterprise.maxShields)));
 			delta+=shields;
 			Computer.consume(delta);
 			Enterprise.userDefinedShields = shields;
@@ -414,6 +360,7 @@ var Controller={
 			Controller.showComputerScreen();
 		},
 		startGame:function(){
+			console.log("Controller.startGame 1");
 			Computer.stardate=2550;
 			StarMap.constructQuadrants();
 			Enterprise.setup();
@@ -443,7 +390,7 @@ var Controller={
 			Enterprise.shields = Math.min(Enterprise.shields,Enterprise.maxShields);
 			if (!IO.isMessageShown())
 				Controller.showComputerScreen();
-			else IO.message(Controller.showComputerScreen,"");
+			else IO.call(Controller.showComputerScreen);
 			Enterprise.runComputer();
 			Controller.showStartScreen();
 		},
@@ -458,7 +405,8 @@ var Controller={
 		},
 		endTurn:function(){
 			if (StarMap.countKlingons()===0){
-				return IO.gameOverMessage("All Klingons destroyed!");
+				Events.trigger(Events.GAME_OVER,{message:"All Klingons were eliminated. Congratulations!",cause:Enterprise});
+				return;
 			}
 			Controller.showComputerScreen();
 			Computer.advanceClock(Constants.DURATION_OF_ROUND);
@@ -473,6 +421,17 @@ var Controller={
 				IO.call(Controller.newTurn);
 			else
 				Controller.newTurn();
+		},
+		gameOver:function(e){ // Because of a bug, newTurn is called after gameOver, overwriting IO.callback.
+			//This is why gameOver is called multiple times. We want to reload page on the last.
+			console.log("***GAME OVER");
+			Controller.newTurn=Controller.gameOver;
+			if (e) IO.message(e.message);
+			else
+				window.setTimeout(function(){
+					window.location.hash="";
+					window.location.reload();
+				},1);
 		}
 };
 
@@ -492,6 +451,7 @@ Events.on(Events.SETTINGS_CHANGED, Controller.updateFireAtWillButton);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateDamagedIndicator);
 Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateDamagedIndicator);
+Events.on(Events.GAME_OVER, Controller.gameOver);
 //window.onbeforeunload = function(e){
 //		return ""; 
 //};

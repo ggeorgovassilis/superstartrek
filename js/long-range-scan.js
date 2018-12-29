@@ -19,19 +19,17 @@ var LongRangeScanScreen={
 			var klingonCount = quadrant.explored?quadrant.klingons.length:0;
 			var hasKlingons = klingonCount > 0;
 			var hasStarbase = quadrant.starbases.length > 0; 
-			e.html((hasKlingons?"K":" ")+" "+(hasStarbase?"!":" ")+" "+quadrant.stars.length);
-			e.removeClass("has-starship");
-			e.removeClass("has-klingons");
-			e.removeClass("has-starbase");
-			e.removeClass("explored");
+			e.text((hasKlingons?"K":" ")+" "+(hasStarbase?"!":" ")+" "+quadrant.stars.length);
+			var css = "";
 			if (Enterprise.quadrant === quadrant)
-				e.addClass("has-starship");
-			if (klingonCount>0)
-				e.addClass("has-klingons");
-			if (quadrant.starbases.length>0)
-				e.addClass("has-starbase");
+				css="has-starship";
+			if (hasKlingons)
+				css+=" has-klingons";
+			if (hasStarbase)
+				css+=" has-starbase";
 			if (quadrant.explored)
-				e.addClass("explored");
+				css+=" explored";
+			e.attr("class",css);
 			e.attr("id","cmd_selectQuadrant_"+quadrant.x+"_"+quadrant.y);
 		}
 };
