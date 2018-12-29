@@ -39,7 +39,6 @@ var Constants = {
 		CHANCE_OF_KLINGON_IN_QUADRANT:0.3,
 		MAX_KLINGON_SHIELD:80,
 };
-$body.fastClick(Tools.handleGlobalClick);
 
 $window.resize(Tools.handleWindowResize);
 Tools.handleWindowResize();
@@ -218,7 +217,7 @@ var Computer={
 			$("#stardate").text(stardateFormatted + " "+Enterprise.budget);
 		},
 		show:function(){
-			Tools.updatePageCssWithToken("computer");
+			Tools.gotoScreen("computer");
 			Computer.updateStarbaseDockCommand();
 			Computer.updateShieldsIndicator();
 			Computer.updateEnergyIndicator();
@@ -271,6 +270,7 @@ var Controller={
 		sector:{x:0,y:0},
 		currentToken:null,
 		onClickedActivityToken:function(token){
+			console.log("onClickedActivityToken",token);
 			if (token == Controller.currentToken)
 				return;
 			if (token.startsWith("cmd_"))
@@ -348,6 +348,9 @@ var Controller={
 		selectQuadrant:function(x,y){
 			var quadrant = StarMap.getQuadrantAt(x, y);
 			Controller.warpTo(quadrant);
+		},
+		computer:function(){
+			Controller.showComputerScreen();
 		},
 		showComputerScreen:function(){
 			Computer.advanceClock(0);

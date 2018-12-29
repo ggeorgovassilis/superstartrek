@@ -14,6 +14,7 @@ var ShortRangeScan = {
 	},
 	init : function() {
 		console.log("ShortRangeScan.init");
+		ShortRangeScanScreen.init();
 		ShortRangeScan.updateMap();
 	},
 	updateMapInner:function() {
@@ -68,6 +69,21 @@ var ShortRangeScan = {
 			}
 			element.append(tr);
 		}
+		element.find("td").on("click", ShortRangeScan.onSectorClicked);
+	},
+	onSectorClicked:function(e){
+		var cell = $(e.currentTarget);
+		var id = cell.attr("id");
+		if (id && id.startsWith("cmd")){
+			window.location.hash="#"+id;
+		}
+	},
+	onQuadrantClicked:function(e){
+		var cell = $(e.currentTarget);
+		var id = cell.attr("id");
+		if (id && id.startsWith("cmd")){
+			window.location.hash="#"+id;
+		}
 	},
 	selectSectorAt : function(x, y) {
 		$("#quadrantscan .selected").removeClass("selected");
@@ -77,6 +93,9 @@ var ShortRangeScan = {
 
 var ShortRangeScanScreen = {
 	elem : $("#shortrangescan"),
+	init:function(){
+		$("#shortrangescan td").on("click", ShortRangeScan.onQuadrantClicked);
+	},
 	updateQuadrant : function(quadrant) {
 		var index = 0;
 		var qx = quadrant.x;

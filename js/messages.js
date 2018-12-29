@@ -59,4 +59,3 @@ var IO={
 };
 IO.then = IO;
 Events.on(Events.GAME_OVER,IO.gameOver);
-$("#messages .single").fastClick(IO.onOkClicked);

@@ -158,16 +158,9 @@ var Tools={
 		hasPageCss:function(css){
 			return Tools.page.attr("class").indexOf(css)!=-1;
 		},
-		handleGlobalClick:function(e){
-			var target = $(e.target);
-			while(target[0]!=$body[0]){
-				var id = target.attr("id");
-				if (/cmd_/.test(id)){
-					Controller.onClickedActivityToken(id);
-					return;
-				}
-				target = target.parent();
-			}
+		gotoScreen:function(screen){
+			window.location.href="#"+screen;
+			Tools.updatePageCssWithToken("page-"+screen);
 		}
 };
 

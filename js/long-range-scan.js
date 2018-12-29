@@ -3,6 +3,14 @@
  */
 var LongRangeScanScreen={
 		element:$("#longrangescan"),
+		init:function(){
+			$("#longrangescan td").on("click",LongRangeScanScreen.onQuadrantSelected);
+		},
+		onQuadrantSelected:function(e){
+			var cell = $(e.currentTarget);
+			var id = cell.attr("id");
+			window.location.hash="#"+id;
+		},
 		show:function(){
 			if (!Enterprise.lrsOnline){
 				return IO.message("LRS is offline").then.SRS();
@@ -33,3 +41,5 @@ var LongRangeScanScreen={
 			e.attr("id","cmd_selectQuadrant_"+quadrant.x+"_"+quadrant.y);
 		}
 };
+
+LongRangeScanScreen.init();

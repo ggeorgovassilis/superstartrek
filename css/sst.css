@@ -16,7 +16,7 @@ html{
 	font-size:12px;
 }
 
-a, a:visited{
+a, a:visited, button{
 	text-decoration:none;
 	color:white;
 	border:solid purple 1px;
@@ -24,13 +24,19 @@ a, a:visited{
 	text-align:center;
 	margin-top:0.5em;
 	cursor:pointer;
+	line-height:1.6em;
 }
 
-a:hover, .quadrants td:hover, #shortrangescan td:hover, #quadrantscan td:hover, .progress-indicator:hover{
+button{
+	background:transparent;
+	background-color:transparent;
+}
+
+a:hover, button:hover, .quadrants td:hover, #shortrangescan td:hover, #quadrantscan td:hover, .progress-indicator:hover{
 	text-decoration:none;
 }
 
-a:hover, #shortrangescan td:hover, .quadrants td:hover{
+a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	background-color:purple;	
 }
 
@@ -418,7 +424,13 @@ a.progress-bar {
 	font-size:1em;
 	height:17em;
 	position:relative;
-	background-color:rgba(0,0,0,0.5);
+	background-color:rgba(0,0,0,0.7);
+}
+
+@media (max-width: 400px)  {
+	#enterprise-schematics{
+		font-size:0.9em;
+	}	
 }
 
 .schematics, .overlay{

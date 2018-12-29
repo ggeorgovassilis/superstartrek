@@ -13,7 +13,7 @@
 <div id="page">
 <div id="messages" onkeypress="IO.onKeyPressed(event)">
 <div class="content"></div>
-<a class="single" onkeypress="IO.onKeyPressed(event)" href="#">OK</a>
+<button class="single" onclick="IO.onKeyPressed(event)">OK</button>
 </div>
 
 <div id="statusreport" class="screen" onkeypress="StatusReport.onKeyPressed(event)">
@@ -190,7 +190,7 @@
                              / /    / / \ \  / /____ / / \ \
                             /_/    /_/   \ \/______//_/   \_\
 </pre>
-<a id="cmd_leaveIntro">Start Game</a>
+<a id="cmd_leaveIntro" href="#cmd_leaveIntro">Start Game</a>
 </div>
 <div class="credits">
 <h3>Credits</h3>
@@ -205,30 +205,29 @@
 
 </div>
 <div id="commandbar" class="command-bar">
-<a id="cmd_navigate">Navigate</a>
-<a accesskey="s" id="cmd_toggleShields" class="command top-command progress-bar">
+<a id="cmd_navigate" href="#cmd_navigate">Navigate</a>
+<button accesskey="s" id="cmd_toggleShields" onclick="Controller.toggleShields()" class="command top-command progress-bar">
 	<span class="max-indicator"></span>
 	<span class="progress-indicator"></span>
 	<span class="progress-text">Shields</span>
-</a>
-<a accesskey="r" id="cmd_showStatusReport" class="command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
-<a accesskey="l" id="cmd_showLongRangeScan">Long range scan</a>
-<a id="cmd_repairProvisionally">Make temporary repairs</a>
-<a accesskey="p" id="cmd_firePhasers">Phasers</a>
-<a accesskey="t" id="cmd_fireTorpedos" class="command">Photon torpedos</a>
+</button>
+<a accesskey="r" id="cmd_showStatusReport" href="#cmd_showStatusReport" class="command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
+<a accesskey="l" id="cmd_showLongRangeScan" href="#cmd_showLongRangeScan">Long range scan</a>
+<button id="cmd_repairProvisionally" onclick="Controller.repairProvisionally()">Make temporary repairs</button>
+<a accesskey="p" id="cmd_firePhasers" href="#cmd_firePhasers">Phasers</a>
+<a accesskey="t" id="cmd_fireTorpedos" href="#cmd_fireTorpedos" class="command">Photon torpedos</a>
 <a id="cmd_toggleFireAtWill">Fire at will</a>
 <a accesskey="d" id="cmd_dockWithStarbase">Dock at starbase</a>
 <a id="cmd_refuelAtStarbase">Refuel</a>
 <a id="cmd_repairAtStarbase">Refuel &amp; repair</a>
-<a accesskey="w" id="cmd_nop">Wait</a>
-<a id="cmd_cancel">Dismiss</a>
+<button accesskey="w" id="cmd_nop" onclick="Controller.nop()">Wait</button>
+<a id="cmd_cancel" href="#cmd_cancel">Dismiss</a>
 </div>
 <div id="downmarker"></div>
 <!-- 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
  -->
 <script type="text/javascript" src="js/jquery.1.9.2.js"></script>
-<script type="text/javascript" src="js/jquery.fastClick.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
 <script type="text/javascript" src="js/events.js"></script>
 <script type="text/javascript" src="js/setup.js"></script>

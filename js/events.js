@@ -29,5 +29,11 @@ var Events={
 			console.log("event callback",e,callback,arg);
 			callback(arg);
 		});
+	},
+	hashchange:function(){
+		window.scrollTo(0, 0);
+		Controller.onClickedActivityToken(window.location.hash.substring("#".length));
 	}
 };
+
+$(window).on('hashchange', Events.hashchange);
