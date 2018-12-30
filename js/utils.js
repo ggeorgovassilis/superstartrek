@@ -44,7 +44,6 @@ var Tools={
 		screenWidth:-1,
 		screenHeight:-1,
 		page:$body,
-		methodsWithCss:/(computer|showStatusReport|showLongRangeScan|selectSector|selectPhaserStrength|dockWithStarbase|intro)_*/,
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
@@ -145,22 +144,27 @@ var Tools={
 		addPageCss:function(css){
 			Tools.page.addClass(css);
 		},
-		updatePageCssWithToken:function(method){
-			if (!Tools.methodsWithCss.test(method))
-				return;
-			var css = Tools.methodsWithCss.exec(method)[1];
-			var allClasses = Tools.page.attr("class").split(" ");
-			for (var i=0;i<allClasses.length;i++)
-				if (allClasses[i].startsWith("page-"))
-					Tools.page.removeClass(allClasses[i]);
-			Tools.page.addClass("page-"+css);
+		addCssRule:function(rule){
+			var eStyle = $("<style>"+rule+"</style>");
+			$("head").append(eStyle);
 		},
 		hasPageCss:function(css){
 			return Tools.page.attr("class").indexOf(css)!=-1;
 		},
+		showScreen:function(screenName){
+			var css = Tools.page.attr("class");
+			css = css.split(" ");
+			var s = "";
+			for (var i=0;i<css.length;i++){
+				if (!css[i].startsWith("screen"))
+					s+=css[i]+" ";
+			}
+			s+=" screen-"+screenName;
+			Tools.page.attr("class",s);
+		},
 		gotoScreen:function(screen){
+			console.log("Tools.gotoScreen",screen);
 			window.location.href="#"+screen;
-			Tools.updatePageCssWithToken("page-"+screen);
 		}
 };
 

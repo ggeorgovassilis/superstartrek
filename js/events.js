@@ -10,6 +10,10 @@ var Events={
 	ENTERPRISE_MOVED:"ENTERPRISE_MOVED",
 	ENTERPRISE_WARPED:"ENTERPRISE_WARPED",
 	ENTERPRISE_REPAIRED:"ENTERPRISE_REPAIRED",
+	SECTOR_SELECTED:"SECTOR_SELECTED",
+	QUADRANT_SELECTED:"QUADRANT_SELECTED",
+	LRS:"LRS",
+	STATUS_REPORT:"STATUS_REPORT",
 	trigger:function(event,arg){
 		if (!arg)
 			arg={};
@@ -31,8 +35,9 @@ var Events={
 		});
 	},
 	hashchange:function(){
-		window.scrollTo(0, 0);
-		Controller.onClickedActivityToken(window.location.hash.substring("#".length));
+		var screen = window.location.hash.substring("#".length);
+		Tools.showScreen(screen);
+		Controller.onClickedActivityToken(screen);
 	}
 };
 

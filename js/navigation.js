@@ -1,4 +1,5 @@
 Controller.navigate = function() {
+	console.log("Controller.navigate");
 	var finalX = Controller.sector.x;
 	var finalY = Controller.sector.y;
 	var obstacle = Tools.findObstruction(Enterprise.quadrant, Enterprise.x,
@@ -64,4 +65,8 @@ Controller.warpTo = function(quadrant) {
 	Controller.endTurn();
 };
 Controller.dockWithStarbase = function() {
+	Tools.addPageCss("docked-starbase");
 }
+
+Events.on(Events.QUADRANT_SELECTED, Controller.warpTo);
+

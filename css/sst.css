@@ -1,4 +1,4 @@
-body,html,div,table,tr,td{
+body,html,div,table,tr,td,span{
 	margin:0;
 	padding:0;
 	/* see http://stackoverflow.com/questions/5210481/disable-orange-outline-highlight-on-focus */
@@ -13,7 +13,7 @@ html{
 	background:black url('../images/stars-background.gif');
 	font-family:arial,sans-serif;
 	color:white;
-	font-size:12px;
+	font-size:100%;
 }
 
 a, a:visited, button{
@@ -24,12 +24,18 @@ a, a:visited, button{
 	text-align:center;
 	margin-top:0.5em;
 	cursor:pointer;
-	line-height:1.6em;
+	line-height:2em;
+	font-size:100%;
+	
 }
 
 button{
 	background:transparent;
 	background-color:transparent;
+}
+
+.full-width{
+	display:block;
 }
 
 a:hover, button:hover, .quadrants td:hover, #shortrangescan td:hover, #quadrantscan td:hover, .progress-indicator:hover{
@@ -38,6 +44,46 @@ a:hover, button:hover, .quadrants td:hover, #shortrangescan td:hover, #quadrants
 
 a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	background-color:purple;	
+}
+
+.requires-sector-selected,.requires-nearby-starbase,.requires-docked-starbase,.requires-enterprise-damaged{
+	display:none;
+}
+
+.enterprise-damaged .requires-enterprise-damaged{
+	display:block;
+}
+
+.visible-anywhere-but-on-computer{
+	display:block;
+}
+
+.screen-computer .visible-anywhere-but-on-computer{
+	display:none;
+}
+
+.screen-computer.sector-selected .visible-anywhere-but-on-computer{
+	display:block;
+}
+
+.starbase-nearby .requires-nearby-starbase{
+	display:block;
+}
+
+.docked-starbase .requires-docked-starbase{
+	display:block;
+}
+
+.docked-starbase .hide-when-docked-with-starbase{
+	display:none;
+}
+
+.sector-selected .hide-when-sector-selected{
+	display:none;
+}
+
+.sector-selected .requires-sector-selected{
+	display:block;
 }
 
 table a, table a:visited{
@@ -157,6 +203,7 @@ table a, table a:visited{
 .short-range-scan-container{
 	overflow:hidden;
 	float:left;
+	margin-right:0.5em;
 }
 
 #shortrangescan td{
@@ -168,7 +215,6 @@ table a, table a:visited{
 
 #shortrangescan{
 	min-width:150px;
-	display:none;
 }
 
 .orientation-vertical #shortrangescan{
@@ -180,10 +226,7 @@ table a, table a:visited{
  * Computer
  */
  
-#commandbar a{
-	display:none;
-	padding:0.5em;
-	line-height:2em;
+#commandbar a, #commandbar button{
 	float:left;
 }
 
@@ -193,7 +236,7 @@ table a, table a:visited{
 	overflow:hidden;
 }
 
-.showStatusReport #statusreport{
+.statusReport #statusreport{
 	display:block;
 }
 
@@ -276,11 +319,11 @@ h1,h3{
  * Status report
  */
  
-#statusreport dl{
+#screen-statusreport dl{
 	overflow:hidden;
 }
 
-#statusreport dt{
+#screen-statusreport dt{
 	clear:left;
 	float:left;
 	width:20%;
@@ -288,7 +331,7 @@ h1,h3{
 	font-weight:bold;
 }
 
-#statusreport dd{
+#screen-statusreport dd{
 	float:left;
 	padding:5px;
 	color:turquoise;
@@ -378,41 +421,12 @@ a.progress-bar {
  * Commands visibility
  */
  
-.page-computer #computerscreen, .page-selectSector #computerscreen, .page-showStatusReport #statusreport, .page-firePhasers #computerscreen, .page-dockWithStarbase #computerscreen{
-	display:block;
-}
-
-.page-computer #cmd_showStatusReport, 
-.page-computer #cmd_nop, 
-.page-computer #cmd_showStatusReport, 
-.page-computer #cmd_showLongRangeScan, 
-.page-computer #cmd_toggleShields,
-.page-computer.enterprise-damaged #cmd_repairProvisionally {
-	display:block;
-}
-
-.page-selectSector #cmd_firePhasers, .page-selectSector #cmd_toggleFireAtWill, .page-selectSector #cmd_fireTorpedos, .page-selectSector #cmd_cancel,.page-selectSector #cmd_navigate{
-	display:block;
-}
-
 .fireAtWill #cmd_toggleFireAtWill{
 	background-color:darkturquoise;
 }
 
-.page-showLongRangeScan #longrangescanscreen, .page-showLongRangeScan #cmd_cancel{
-	display:block;
-}
-
-.page-showStatusReport #cmd_cancel{
-	display:block;
-}
-
-.page-dockWithStarbase #cmd_refuelAtStarbase, .page-dockWithStarbase #cmd_repairAtStarbase, .page-dockWithStarbase #cmd_cancel{
-	display:block;
-}
-
-.page-computer #shortrangescan{
-	display:table;
+#toggleShields{
+	padding:0;
 }
 
 .red-alert{

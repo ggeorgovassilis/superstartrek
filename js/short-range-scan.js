@@ -74,20 +74,22 @@ var ShortRangeScan = {
 	onSectorClicked:function(e){
 		var cell = $(e.currentTarget);
 		var id = cell.attr("id");
-		if (id && id.startsWith("cmd")){
-			window.location.hash="#"+id;
-		}
+		var parts = /\w+_(\d)_(\d)/.exec(id);
+		var x = parseInt(parts[1]);
+		var y = parseInt(parts[2]);
+		$("#quadrantscan .selected").removeClass("selected");
+		cell.addClass("selected");
+		Events.trigger(Events.SECTOR_SELECTED,{x:x,y:y})
 	},
 	onQuadrantClicked:function(e){
 		var cell = $(e.currentTarget);
 		var id = cell.attr("id");
 		if (id && id.startsWith("cmd")){
-			window.location.hash="#"+id;
+			var parts = /\w+_(\d)_(\d)/.exec(id);
+			var x = parseInt(parts[1]);
+			var y = parseInt(parts[2]);
+			Events.trigger(Events.QUADRANT_SELECTED,StarMap.getQuadrantAt(x,y));
 		}
-	},
-	selectSectorAt : function(x, y) {
-		$("#quadrantscan .selected").removeClass("selected");
-		$("#cmd_selectSector_" + x + "_" + y).addClass("selected");
 	}
 };
 

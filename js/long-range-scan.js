@@ -15,7 +15,7 @@ var LongRangeScanScreen={
 			if (!Enterprise.lrsOnline){
 				return IO.message("LRS is offline").then.SRS();
 			}
-			Tools.updatePageCssWithToken("showLongRangeScan");
+			Tools.showScreen("longrangescan");
 			for (var i=0;i<StarMap.quadrants.length;i++)
 				LongRangeScanScreen.updateQuadrant(StarMap.quadrants[i]);
 //			$("#longrangescan .has-starship")[0].scrollIntoView();
@@ -43,3 +43,4 @@ var LongRangeScanScreen={
 };
 
 LongRangeScanScreen.init();
+Events.on(Events.LRS,LongRangeScanScreen.show);
