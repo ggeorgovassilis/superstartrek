@@ -11,20 +11,17 @@ var Klingons = {
 				Enterprise.y);
 		var obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y,
 				Enterprise.x, Enterprise.y);
-		console.log("Klingon distance to us is", distance);
 		if (distance > Constants.DISRUPTOR_RANGE || obstacle)
 			Klingons.manueverIntoFiringPosition(klingon, Enterprise.quadrant);
 		else
 			Klingons.fireOnEnterprise(klingon);
 	},
 	on_enterprise_warped : function() {
-		console.log("Enterprise dropping out of warp")
 		var klingons = Enterprise.quadrant.klingons;
 		for (var i = 0; i < klingons.length; i++)
 			Klingons.moveRandomly(klingons[i]);
 	},
 	moveRandomly : function(klingon) {
-		console.log("moving randomly ",klingon)
 		var x = Math.floor(Math.random() * 8);
 		var y = Math.floor(Math.random() * 8);
 		var obstacle = StarMap.getAnythingInQuadrantAt(klingon.quadrant, x, y);
@@ -40,7 +37,6 @@ var Klingons = {
 		// 2. raider has a clear shot at us
 		// 3. raider can move to unobstructed
 		// 4. isn't more than 2 squares from original
-		console.log("Moving Klingon into firing position");
 		var initialDistanceToEnterprise = Tools.distance(klingon.x, klingon.y,
 				Enterprise.x, Enterprise.y);
 		var bestX = klingon.x;
@@ -83,7 +79,6 @@ var Klingons = {
 		return Enterprise.assignDamage(klingon.weaponPower,klingon);
 	},
 	damage : function(klingon, damage) {
-		console.log("Assign damage to klingon", damage);
 		klingon.shields -= damage;
 		if (klingon.shields > 0) {
 			Events.trigger(Events.KLINGON_DAMAGED,{target:klingon})

@@ -74,7 +74,6 @@ var Enterprise={
 			return IO.message(message);
 		},
 		runComputer:function(){
-			console.log("** running computer actions **");
 			if (Enterprise.fireAtWill && Enterprise.tacticalComputerOnline)
 				Enterprise.autoFire();
 		},
@@ -84,7 +83,6 @@ var Enterprise={
 				var klingon = klingons[i];
 				var distance = Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
 				if (distance<=Constants.PHASER_RANGE){
-					console.log("Autofiring at",klingon);
 					return Enterprise._firePhasersAt(klingon.x, klingon.y, true);
 				}
 			}

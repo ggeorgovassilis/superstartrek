@@ -5,7 +5,6 @@ var Controller={
 		sector:{x:0,y:0},
 		currentToken:null,
 		onClickedActivityToken:function(token){
-			console.log("onClickedActivityToken",token);
 			if (token == Controller.currentToken)
 				return;
 			if (token.startsWith("cmd_"))
@@ -27,8 +26,9 @@ var Controller={
 				method = token;
 			Computer.updateStardate();
 			Tools.showScreen(method);
-			Controller.currentHistoryToken = method;
+			if (Controller[method])
 			try{
+				Controller.currentHistoryToken = method;
 				(Controller[method])(arg1, arg2);
 			}
 			catch(ex){
@@ -71,11 +71,10 @@ var Controller={
 			Computer.consume(delta);
 			Enterprise.userDefinedShields = shields;
 			Enterprise.shields = shields;
-			Computer.updateShieldsIndicator();
+			Events.trigger(Events.SETTINGS_CHANGED);
 			Controller.showStartScreen();
 		},
 		longrangescan:function(){
-			console.log("show lrs")
 			LongRangeScanScreen.show();
 		},
 		selectQuadrant:function(x,y){
@@ -111,13 +110,13 @@ var Controller={
 		},
 		startGame:function(){
 			window.location.hash="#";
-			console.log("Controller.startGame 1");
 			Controller.decorateUI();
 			Computer.stardate=2550;
 			StarMap.constructQuadrants();
 			Enterprise.setup();
 			Enterprise.repositionIfSectorOccupied();
 			Events.trigger(Events.START_GAME);
+			Events.trigger(Events.SETTINGS_CHANGED);
 			Controller.showIntroScreen();
 		},
 		leaveIntro:function(){
@@ -176,7 +175,6 @@ var Controller={
 		},
 		gameOver:function(e){ // Because of a bug, newTurn is called after gameOver, overwriting IO.callback.
 			//This is why gameOver is called multiple times. We want to reload page on the last.
-			console.log("***GAME OVER");
 			Controller.newTurn=Controller.gameOver;
 			if (e) IO.message(e.message);
 			else
@@ -188,4 +186,4 @@ var Controller={
 };
 
 Events.on(Events.SECTOR_SELECTED, Controller.showSectorSelectionMenu);
-
+Events.on(Events.SETTINGS_CHANGED, Controller.updateFireAtWillButton);

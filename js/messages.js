@@ -18,7 +18,6 @@ var IO={
 	call:function(callback){
 		if (IO.gameIsOver) //not accepting callbacks if game is over
 			return;
-		console.log("call",callback);
 		if (!callback)
 			throw "Callback not defined";
 		if (!isFunction(callback))
@@ -34,7 +33,6 @@ var IO={
 		return IO;
 	},
 	message:function(text){
-		console.log("message",text);
 		IO.content.append("<div>"+text+"</div>");
 		Tools.removePageCss("messages-visible");
 		Tools.addPageCss("messages-visible");
@@ -52,7 +50,6 @@ var IO={
 	},
 	onOkClicked:function(){
 		IO.hide();
-		console.log("IO.onOkClicked",IO.currentCallback);
 		if (IO.currentCallback)
 			IO.currentCallback();
 	}

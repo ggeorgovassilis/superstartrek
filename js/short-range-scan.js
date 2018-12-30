@@ -13,7 +13,6 @@ var ShortRangeScan = {
 		}
 	},
 	init : function() {
-		console.log("ShortRangeScan.init");
 		ShortRangeScanScreen.init();
 		ShortRangeScan.updateMap();
 	},
@@ -83,6 +82,7 @@ var ShortRangeScan = {
 	},
 	onQuadrantClicked:function(e){
 		var cell = $(e.currentTarget);
+		console.log(cell);
 		var id = cell.attr("id");
 		if (id && id.startsWith("cmd")){
 			var parts = /\w+_(\d)_(\d)/.exec(id);
@@ -96,6 +96,7 @@ var ShortRangeScan = {
 var ShortRangeScanScreen = {
 	elem : $("#shortrangescan"),
 	init:function(){
+		console.log("instlaling listener")
 		$("#shortrangescan td").on("click", ShortRangeScan.onQuadrantClicked);
 	},
 	updateQuadrant : function(quadrant) {

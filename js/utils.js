@@ -163,7 +163,6 @@ var Tools={
 			Tools.page.attr("class",s);
 		},
 		gotoScreen:function(screen){
-			console.log("Tools.gotoScreen",screen);
 			window.location.href="#"+screen;
 		}
 };

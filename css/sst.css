@@ -137,11 +137,11 @@ table a, table a:visited{
 }
 
 .has-starship{
-	outline: solid turquoise 2px;
+	outline: solid darkturquoise 2px;
 }
 
 .has-starbase{
-	background-color:darkturquoise;
+	background-color:blue;
 }
 
 .has-klingons{
@@ -177,7 +177,6 @@ table a, table a:visited{
 
 #quadrantscan{
 	float:left;
-	margin-top:0.5em;
 	width:100%;
 }
 
@@ -421,7 +420,7 @@ a.progress-bar {
  * Commands visibility
  */
  
-.fireAtWill #cmd_toggleFireAtWill{
+.fireAtWill .highlight-when-fireatwill{
 	background-color:darkturquoise;
 }
 

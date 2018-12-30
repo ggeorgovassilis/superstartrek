@@ -10,6 +10,7 @@ var Events={
 	ENTERPRISE_MOVED:"ENTERPRISE_MOVED",
 	ENTERPRISE_WARPED:"ENTERPRISE_WARPED",
 	ENTERPRISE_REPAIRED:"ENTERPRISE_REPAIRED",
+	ENTERPRISE_ENERGY_CHANGED:"ENTERPRISE_ENERGY_CHANGED",
 	SECTOR_SELECTED:"SECTOR_SELECTED",
 	QUADRANT_SELECTED:"QUADRANT_SELECTED",
 	LRS:"LRS",
@@ -30,7 +31,6 @@ var Events={
 		if (!isFunction(callback))
 			throw "Callback is not a function";
 		$(window).on(event,function(e,arg){
-			console.log("event callback",e,callback,arg);
 			callback(arg);
 		});
 	},

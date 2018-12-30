@@ -31,8 +31,6 @@ var Computer={
 		show:function(){
 			Tools.gotoScreen("computer");
 			Computer.updateStarbaseDockCommand();
-			Computer.updateShieldsIndicator();
-			Computer.updateEnergyIndicator();
 			ShortRangeScanScreen.updateQuadrant(Enterprise.quadrant);
 		},
 		calculateBaseEnergyConsumption:function(){
@@ -72,6 +70,11 @@ var Computer={
 				Events.trigger(Events.GAME_OVER,{message:"We run out of anti matter.",cause:Enterprise});
 				return true;
 			}
+			Events.trigger(Events.ENTERPRISE_ENERGY_CHANGED);
 		}
 };
 
+Events.on(Events.ENTERPRISE_ENERGY_CHANGED,	Computer.updateEnergyIndicator);
+Events.on(Events.SETTINGS_CHANGED, Computer.updateShieldsIndicator);
+Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
+Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateShieldsIndicator);
