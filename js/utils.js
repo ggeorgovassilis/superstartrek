@@ -71,27 +71,6 @@ var Tools={
 			var e = Math.exp(1);
 			return Math.floor(max*(Math.exp(Math.random())-1)/e);
 		},
-		
-		handleWindowResize:function(){
-			var width = $window.width();
-			var height = $window.height();
-			if (Tools.screenHeight === height && Tools.screenWidth === width)
-				return;
-			Tools.screenHeight = height;
-			Tools.screenWidth = width;
-			Tools.removePageCss("orientation-horizonal");
-			Tools.removePageCss("orientation-vertical");
-			Tools.removePageCss("small-height");
-			Tools.removePageCss("small-width");
-			if (width>height)
-				Tools.addPageCss("orientation-horizontal");
-			else
-				Tools.addPageCss("orientation-vertical");
-			if (height<Constants.SMALL_HEIGHT)
-				Tools.addPageCss("small-height");
-			if (height<Constants.SMALL_WIDTH)
-				Tools.addPageCss("small-width");
-		},
 		walkLine:function(x0,y0,x1,y1, callback){
 			var sx=0;
 			var sy=0;

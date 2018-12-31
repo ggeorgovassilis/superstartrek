@@ -71,7 +71,7 @@ var Enterprise={
 			if (message)
 				Events.trigger(Events.ENTERPRISE_REPAIRED);
 			else message="Engineering couldn't repair anything at this time.";
-			return IO.message(message);
+				return IO.message(message);
 		},
 		runComputer:function(){
 			if (Enterprise.fireAtWill && Enterprise.tacticalComputerOnline)

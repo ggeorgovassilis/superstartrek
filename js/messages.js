@@ -12,7 +12,7 @@ var IO={
 	},
 	gameOver:function(message){
 		IO.message(message.message);
-		callback(Controller.gameOver);
+		IO.call(Controller.gameOver);
 		IO.gameIsOver=true;
 	},
 	call:function(callback){

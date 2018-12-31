@@ -26,12 +26,14 @@ a, a:visited, button{
 	cursor:pointer;
 	line-height:2em;
 	font-size:100%;
-	
+	background:#220022;
+	background-color:#220022;
 }
 
-button{
-	background:transparent;
-	background-color:transparent;
+@media (max-width: 400px)  {
+	a,button{
+		font-size:90%;
+	}
 }
 
 .full-width{
@@ -118,10 +120,6 @@ table a, table a:visited{
 
 .region-names td{
 	padding:5px;
-}
-
-.small-height .region-names{
-	display:none;
 }
 
 .quadrants td{
@@ -216,11 +214,6 @@ table a, table a:visited{
 	min-width:150px;
 }
 
-.orientation-vertical #shortrangescan{
-	width:100%;
-	clear:left;
-}
-
 /*
  * Computer
  */
@@ -255,19 +248,28 @@ table a, table a:visited{
  * Intro screen
  */
 
-.page-intro #introscreen{
+.screen-intro #screen-intro{
 	display:block;
 	font-family:monospace;
 }
 
-#introscreen .logo{
-	font-size:1em;
-}
-
-.small-width #introscreen .logo{
-	font-size:7px;
+#screen-intro .logo{
+	font-size:100%;
 	font-weight:bold;
 }
+
+@media (max-width: 500px)  {
+	#screen-intro .logo{
+		font-size:70%;
+	}	
+}
+
+@media (max-width: 400px)  {
+	#screen-intro .logo{
+		font-size:60%;
+	}	
+}
+
 
 .intro-container{
 	margin-bottom:1em;

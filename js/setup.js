@@ -55,5 +55,19 @@ var Setup = {
 				name : "a federation starbase"
 			});
 		return a;
+	},
+	decorateUI:function(){
+		$("button").each(function(i,e){
+			e = $(e);
+			var command = e.attr("command");
+			if (command)
+				e.on("click",Controller[command]);
+		});
+		$(".screen").each(function(i,e){
+			e = $(e);
+			var id = e.attr("id");
+			Tools.addCssRule("."+id+" #"+id+"{display:block;}")
+		});
 	}
+
 }

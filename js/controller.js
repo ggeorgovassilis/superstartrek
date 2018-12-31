@@ -37,17 +37,10 @@ var Controller={
 				throw ex;
 			}
 		},
-		refuelAtStarbase:function(){
-			Enterprise.energy = Constants.MAX_ENERGY;
-			Enterprise.torpedos = Constants.MAX_TORPEDOS;
-			Enterprise.shields = 0;
-			Computer.advanceClock(Constants.DURATION_OF_REFUELING);
-			Controller.endTurn();
-		},
 		repairAtStarbase:function(){
 			Computer.advanceClock(Constants.DURATION_OF_REPAIRS);
 			Enterprise.repairAtStarbase();
-			Controller.refuelAtStarbase();
+			Controller.endTurn();
 			Events.trigger(Events.ENTERPRISE_REPAIRED);
 		},
 		repairProvisionally:function(){
@@ -81,7 +74,7 @@ var Controller={
 			var quadrant = StarMap.getQuadrantAt(x, y);
 			Controller.warpTo(quadrant);
 		},
-		computer:function(){
+		computer:function(){ //#computer
 			Controller.showComputerScreen();
 		},
 		showComputerScreen:function(){
@@ -89,28 +82,15 @@ var Controller={
 			Tools.removePageCss("sector-selected");
 			Computer.show();
 		},
-		statusreport:function(){
+		statusreport:function(){ //#statusreport
 			StatusReport.update();
 		},
 		showStartScreen:function(){
 			Controller.showComputerScreen();
 		},
-		decorateUI:function(){
-			$("button").each(function(i,e){
-				e = $(e);
-				var command = e.attr("command");
-				if (command)
-					e.on("click",Controller[command]);
-			});
-			$(".screen").each(function(i,e){
-				e = $(e);
-				var id = e.attr("id");
-				Tools.addCssRule("."+id+" #"+id+"{display:block;}")
-			});
-		},
 		startGame:function(){
+			Setup.decorateUI();
 			window.location.hash="#";
-			Controller.decorateUI();
 			Computer.stardate=2550;
 			StarMap.constructQuadrants();
 			Enterprise.setup();

@@ -36,12 +36,10 @@ var Constants = {
 		SMALL_HEIGHT:450,
 		SMALL_WIDTH:621,
 		CHANCE_OF_STARBASE_IN_QUADRANT:0.09,
-		CHANCE_OF_KLINGON_IN_QUADRANT:0.3,
+		CHANCE_OF_KLINGON_IN_QUADRANT:0.01,
 		MAX_KLINGON_SHIELD:80,
 };
 
-$window.resize(Tools.handleWindowResize);
-Tools.handleWindowResize();
 /*
  * Starmap
  */
