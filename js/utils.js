@@ -147,6 +147,24 @@ var Tools={
 		hasPageCss:function(css){
 			return Tools.page.attr("class").indexOf(css)!=-1;
 		},
+		findPathBetween:function(quadrant,fromX,fromY,toX,toY){
+			var graph = [];
+			for (var y=0;y<8;y++)
+				graph.push([1,1,1,1,1,1,1,1]);
+			for (var y=0;y<8;y++)
+			for (var x = 0;x<8;x++){
+				var thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
+				if (thing)
+					graph[y][x]=0;
+			}
+			graph[fromY][fromX] = 1;
+			graph[toY][toX] = 1;
+			graph = new Graph(graph,{diagonal:true});
+			var start = graph.grid[fromX][fromY];
+			var end = graph.grid[toX][toY];
+			var path = astar.search(graph, start, end, { heuristic: astar.heuristics.diagonal });
+			return path;
+		},
 		showScreen:function(screenName){
 			var css = Tools.page.attr("class");
 			css = css.split(" ");
