@@ -47,6 +47,7 @@ a, a:visited, button{
 
 .full-width{
 	display:block;
+	width:99%;
 }
 
 a:hover, button:hover, .quadrants td:hover, #shortrangescan td:hover, #quadrantscan td:hover, .progress-indicator:hover{
