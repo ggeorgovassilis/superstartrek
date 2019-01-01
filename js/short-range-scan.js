@@ -5,13 +5,13 @@ var ShortRangeScan = {
 	element : $("#quadrantscan"),
 	quadrantScanCells:[],
 	updateList : function(symbol, list, formatter) {
-		for (var i = 0; i < list.length; i++) {
-			var thing = list[i];
-			var tile = $("#cmd_selectSector_" + thing.x + "_" + thing.y);
+		//function is called a lot, so going native JS
+		list.foreach(function(thing){
+			var tile = document.getElementById("cmd_selectSector_" + thing.x + "_" + thing.y);
 			var css = formatter(thing);
-			tile.attr("class", css);
-			tile.html(symbol);
-		}
+			tile.setAttribute("class", css);
+			tile.innerHTML = symbol;
+		});
 	},
 	init : function() {
 		ShortRangeScanScreen.init();
@@ -119,9 +119,7 @@ var ShortRangeScanScreen = {
 		for (var y = qy - 1; y <= qy + 1; y++)
 			for (var x = qx - 1; x <= qx + 1; x++) {
 				var cell = $(cells[index]);
-				cell.removeClass("has-starbase");
-				cell.removeClass("has-klingons");
-				cell.removeClass("explored");
+				cell.attr("class","");
 				if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
 					var quadrant = StarMap.getQuadrantAt(x, y);
 					quadrant.explored = true;

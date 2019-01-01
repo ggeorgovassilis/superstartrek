@@ -42,6 +42,16 @@ Array.prototype.isEmpty = function(){
 	return this.length==0;
 }
 
+Array.prototype.foreach = function(callback){
+	var len = this.length;
+	while (len--)
+		try{
+			callback(this[len]);
+		} catch (e){
+			console.error(e);
+		}
+}
+
 var Tools={
 		screenWidth:-1,
 		screenHeight:-1,
