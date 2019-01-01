@@ -95,9 +95,10 @@ var ShortRangeScan = {
 		ShortRangeScan.positionSectorSelectionMenu(cell);
 	},
 	positionSectorSelectionMenu:function(eCell){
+		console.log(eCell);
 		var eMenu = $("#sectorselectionbar");
 		var p = eCell.position();
-		eMenu.offset({top:p.top,left:p.left});
+		eMenu.offset({top:p.top,left:0});
 	},
 	onQuadrantClicked:function(e){
 		var cell = $(e.currentTarget);

@@ -34,7 +34,6 @@ var IO={
 	},
 	message:function(text){
 		IO.content.append("<div>"+text+"</div>");
-		Tools.removePageCss("messages-visible");
 		Tools.addPageCss("messages-visible");
 		IO.messages.find(".single").focus();
 		Tools.centerScreen();

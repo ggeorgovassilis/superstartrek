@@ -58,7 +58,7 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	background-color:rgb(50, 158, 159);	
 }
 
-.requires-sector-selected,.requires-nearby-starbase,.requires-docked-starbase,.requires-enterprise-damaged{
+.requires-sector-selected,.requires-nearby-starbase,.requires-enterprise-damaged{
 	display:none;
 }
 
@@ -82,20 +82,13 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	display:block;
 }
 
-.docked-starbase .requires-docked-starbase{
-	display:block;
-}
-
-.docked-starbase .hide-when-docked-with-starbase{
-	display:none;
-}
-
 .sector-selected .hide-when-sector-selected{
 	display:none;
 }
 
 .sector-selected .requires-sector-selected{
-	display:block;
+	display:inline;
+	display:inline-flex;
 }
 
 table a, table a:visited{
@@ -234,12 +227,12 @@ table a, table a:visited{
 }
 
 #sectorselectionbar{
-	padding:2em 0.5em 0.5em 0.5em; /* margin is necessary because of positioning to clicked cell*/
+	padding:0.5em 0.5em 0.5em 0.5em; /* margin is necessary because of positioning to clicked cell*/
+	margin-top:2em;
 	position:absolute;
 	background-color:rgba(0,0,0,0.5);
 	outline:solid grey 1px;
 }
-
 
 .screen{
 	display:none;
@@ -434,6 +427,10 @@ a.progress-bar {
 
 .page-computer .starbase-nearby{
 	display:block !important;
+}
+
+.starbase-nearby .hide-when-starbase-nearby{
+	display:none;
 }
 
 /**

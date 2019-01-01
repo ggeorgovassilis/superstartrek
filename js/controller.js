@@ -37,7 +37,7 @@ var Controller={
 				throw ex;
 			}
 		},
-		repairAtStarbase:function(){
+		dockWithStarbase:function(){
 			Computer.advanceClock(Constants.DURATION_OF_REPAIRS);
 			Enterprise.repairAtStarbase();
 			Controller.endTurn();

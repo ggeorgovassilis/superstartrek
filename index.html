@@ -203,9 +203,8 @@
 <a accesskey="l" class="hide-when-sector-selected" href="#longrangescan">LRS</a>
 <button accesskey="w" command="nop" class="hide-when-sector-selected">Skip</button>
 <a accesskey="r" id="cmd_showStatusReport" href="#statusreport" class="hide-when-sector-selected command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
-<button id="repairProvisionally" class="hide-when-sector-selected requires-enterprise-damaged" onclick="Controller.repairProvisionally()">Make temporary repairs</button>
+<button id="repairProvisionally" class="hide-when-sector-selected requires-enterprise-damaged hide-when-starbase-nearby" onclick="Controller.repairProvisionally()">Make temporary repairs</button>
 <button accesskey="d" command="dockWithStarbase" class="requires-nearby-starbase hide-when-docked-with-starbase">Dock in starbase</button>
-<button command="repairAtStarbase" class="requires-docked-starbase">Refuel &amp; repair</button>
 </div>
 
 </div>

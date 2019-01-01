@@ -63,15 +63,6 @@ Controller.warpTo = function(quadrant) {
 	Events.trigger(Events.ENTERPRISE_WARPED);
 	Controller.endTurn();
 };
-Controller.dockWithStarbase = function() {
-	Tools.addPageCss("docked-starbase");
-}
-
-Controller.undockFromStarbase = function(){
-	Tools.removePageCss("docked-starbase");
-}
 
 Events.on(Events.QUADRANT_SELECTED, Controller.warpTo);
-Events.on(Events.ENTERPRISE_MOVED, Controller.undockFromStarbase);
-Events.on(Events.ENTERPRISE_WARPED, Controller.undockFromStarbase);
 
