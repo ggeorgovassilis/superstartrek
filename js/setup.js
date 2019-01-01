@@ -68,6 +68,7 @@ var Setup = {
 			var id = e.attr("id");
 			Tools.addCssRule("."+id+" #"+id+"{display:block;}")
 		});
+		$("#loading").remove();
 	}
 
 }

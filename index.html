@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="css/sst.css"></link>
 </head>
 <body onload="Controller.startGame()">
+<h1 id="loading">Loading...</h1>
 <div class="glasspanel"></div>
 <div id="topmarker"></div>
 <div id="page">
@@ -196,14 +197,14 @@
 	<span class="progress-indicator"></span>
 	<span class="progress-text">Shields</span>
 </button>
-<a accesskey="r" id="cmd_showStatusReport" href="#statusreport" class="hide-when-sector-selected command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
 <a accesskey="l" class="hide-when-sector-selected" href="#longrangescan">LRS</a>
+<button accesskey="w" command="nop" class="hide-when-sector-selected">Skip</button>
+<a accesskey="r" id="cmd_showStatusReport" href="#statusreport" class="hide-when-sector-selected command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
 <button id="repairProvisionally" class="hide-when-sector-selected requires-enterprise-damaged" onclick="Controller.repairProvisionally()">Make temporary repairs</button>
 <button command="toggleFireAtWill" class="highlight-when-fireatwill requires-sector-selected" >Fire at will</button>
-<button accesskey="w" command="nop" class="hide-when-sector-selected">Wait</button>
-<button command="computer" class="visible-anywhere-but-on-computer">Dismiss</button>
 <button accesskey="d" command="dockWithStarbase" class="requires-nearby-starbase hide-when-docked-with-starbase">Dock in starbase</button>
 <button command="repairAtStarbase" class="requires-docked-starbase">Refuel &amp; repair</button>
+<button command="computer" class="visible-anywhere-but-on-computer">Dismiss</button>
 </div>
 
 </div>
