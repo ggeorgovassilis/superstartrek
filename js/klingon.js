@@ -32,44 +32,15 @@ var Klingons = {
 		Events.trigger(Events.KLINGON_MOVED,{target:klingon});
 	},
 	manueverIntoFiringPosition : function(klingon, quadrant) {
-		// find a spot which:
-		// 1. is empty
-		// 2. raider has a clear shot at us
-		// 3. raider can move to unobstructed
-		// 4. isn't more than 2 squares from original
-		var initialDistanceToEnterprise = Tools.distance(klingon.x, klingon.y,
-				Enterprise.x, Enterprise.y);
-		var bestX = klingon.x;
-		var bestY = klingon.y;
-		var bestDistance = 10;
-
-		//TODO speed this up
-		for (var x = 0; x < 8; x++)
-			for (var y = 0; y < 8; y++) {
-				if (x == klingon.x && y == klingon.y)
-					continue;
-				if (Tools.distance(x, y, klingon.x, klingon.y) > Constants.KLINGON_IMPULSE_SPEED)
-					continue;
-				if (Tools.distance(Enterprise.x, Enterprise.y, x, y) >= initialDistanceToEnterprise)
-					continue;
-				var thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
-				if (thing)
-					continue;
-				var obstacle = Tools.findObstruction(quadrant, klingon.x,
-						klingon.y, x, y);
-				if (obstacle)
-					continue;
-				var distanceToEnterprise = Tools.distance(x, y, Enterprise.x,
-						Enterprise.y);
-				if (distanceToEnterprise < bestDistance) {
-					bestDistance = distanceToEnterprise;
-					bestX = x;
-					bestY = y;
-				}
-			}
-		klingon.x = bestX;
-		klingon.y = bestY;
-		Events.trigger(Events.ENTERPRISE_MOVED);
+		var path = Tools.findPathBetween(quadrant,klingon.x,klingon.y,Enterprise.x, Enterprise.y);
+		console.log(path);
+		if (!path || !path.length)
+			return;
+		var i = Math.min(Constants.KLINGON_IMPULSE_SPEED, path.length)-1;
+		var lastPosition = path[i];
+		klingon.x = lastPosition.x;
+		klingon.y = lastPosition.y;
+		Events.trigger(Events.KLINGON_MOVED);
 		return;
 	},
 	fireOnEnterprise : function(klingon) {
