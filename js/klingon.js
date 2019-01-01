@@ -11,10 +11,10 @@ var Klingons = {
 				Enterprise.y);
 		var obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y,
 				Enterprise.x, Enterprise.y);
-		if (distance > Constants.DISRUPTOR_RANGE || obstacle)
-			Klingons.manueverIntoFiringPosition(klingon, Enterprise.quadrant);
-		else
+		if (distance <= Constants.DISRUPTOR_RANGE && obstacle.obstacle===Enterprise)
 			Klingons.fireOnEnterprise(klingon);
+		else
+			Klingons.manueverIntoFiringPosition(klingon, Enterprise.quadrant);
 	},
 	on_enterprise_warped : function() {
 		var klingons = Enterprise.quadrant.klingons;
@@ -43,6 +43,7 @@ var Klingons = {
 		var bestY = klingon.y;
 		var bestDistance = 10;
 
+		//TODO speed this up
 		for (var x = 0; x < 8; x++)
 			for (var y = 0; y < 8; y++) {
 				if (x == klingon.x && y == klingon.y)
@@ -54,11 +55,7 @@ var Klingons = {
 				var thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
 				if (thing)
 					continue;
-				var obstacle = Tools.findObstruction(quadrant, x, y,
-						Enterprise.x, Enterprise.y);
-				if (obstacle)
-					continue;
-				obstacle = Tools.findObstruction(quadrant, klingon.x,
+				var obstacle = Tools.findObstruction(quadrant, klingon.x,
 						klingon.y, x, y);
 				if (obstacle)
 					continue;

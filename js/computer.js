@@ -41,6 +41,7 @@ var Computer={
 		calculateBaseEnergyConsumption:function(){
 			return Enterprise.shields*Constants.ENERGY_PER_SHIELD 
 			+ Constants.BASE_CONSUMPTION
+			+ (Enterprise.isDamaged?Constants.BASE_CONSUMPTION:0)
 			+ (Enterprise.tacticalComputerOnline?1:0)
 			+ (Enterprise.fireAtWill?1:0)
 			+ (Enterprise.torpedosOnline?1:0)

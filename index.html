@@ -146,7 +146,7 @@
 <dl>
 <dt>Star date</dt>
 <dd id="report_stardate"></dd>
-<dt>Energy</dt>
+<dt>Antimatter</dt>
 <dd id="report_energy"></dd>
 <dt>Baseline energy consumption</dt>
 <dd id="report_energy_consumption"></dd>
@@ -185,8 +185,14 @@
 <tr><td></td><td></td><td></td></tr>
 </table>
 </div>
+<div id="sectorselectionbar" class="requires-sector-selected command-bar">
+<button command="navigate">Navigate</button>
+<button accesskey="p" command="firePhasers">Phasers</button>
+<button accesskey="t" command="fireTorpedos">Photon torpedos</button>
+<button accesskey="d" command="dockWithStarbase" class="requires-nearby-starbase hide-when-docked-with-starbase">Dock in starbase</button>
+<button command="repairAtStarbase" class="requires-docked-starbase">Refuel &amp; repair</button>
+</div>
 <div id="commandbar" class="command-bar">
-<button command="navigate" class="requires-sector-selected">Navigate</button>
 <button accesskey="s" id="toggleShields" command="toggleShields" class="command top-command progress-bar hide-when-sector-selected">
 	<span class="max-indicator"></span>
 	<span class="progress-indicator"></span>
@@ -195,11 +201,7 @@
 <a accesskey="r" id="cmd_showStatusReport" href="#statusreport" class="hide-when-sector-selected command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
 <a accesskey="l" class="hide-when-sector-selected" href="#longrangescan">LRS</a>
 <button id="repairProvisionally" class="hide-when-sector-selected requires-enterprise-damaged" onclick="Controller.repairProvisionally()">Make temporary repairs</button>
-<button accesskey="p" command="firePhasers" class="requires-sector-selected">Phasers</button>
-<button accesskey="t" command="fireTorpedos" class="requires-sector-selected" class="command">Photon torpedos</button>
 <button command="toggleFireAtWill" class="highlight-when-fireatwill requires-sector-selected" >Fire at will</button>
-<button accesskey="d" command="dockWithStarbase" class="requires-nearby-starbase hide-when-docked-with-starbase">Dock in starbase</button>
-<button command="repairAtStarbase" class="requires-docked-starbase">Refuel &amp; repair</button>
 <button accesskey="w" command="nop" class="hide-when-sector-selected">Wait</button>
 <button command="computer" class="visible-anywhere-but-on-computer">Dismiss</button>
 </div>

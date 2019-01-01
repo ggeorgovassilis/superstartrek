@@ -141,6 +141,15 @@ var Enterprise={
 			   message+="<br>Warp drive was damaged.";
 			   Events.trigger(Events.SETTINGS_CHANGED);
 		   }
+		   if (Math.random()<impact && Enterprise.reactorOutput>0){
+			   Enterprise.reactorOutput-=(Constants.MAX_REACTOR_OUTPUT/20);
+			   message+="<br>Reactor was damaged.";
+			   Events.trigger(Events.SETTINGS_CHANGED);
+			   if (Enterprise.reactorOutput<0){
+					Events.trigger(Events.GAME_OVER,{message:"Enterprise was destroyed.", cause:cause.name});
+					return;
+			   }
+		   }
 		   Enterprise.isDamaged=true;
 		   Events.trigger(Events.ENTERPRISE_DAMAGED);
 		   return IO.message(message).then.nothing();

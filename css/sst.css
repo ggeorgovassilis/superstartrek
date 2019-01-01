@@ -1,3 +1,12 @@
+*{
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
 body,html,div,table,tr,td,span{
 	margin:0;
 	padding:0;
@@ -168,7 +177,7 @@ table a, table a:visited{
 
 #quadrantscan td.star{
 	font-size:250%;
-	color:yellow;
+	color:grey;
 	height:0;
 }
 
@@ -221,6 +230,13 @@ table a, table a:visited{
  
 #commandbar a, #commandbar button{
 	float:left;
+}
+
+#sectorselectionbar{
+	padding:2em 0.5em 0.5em 0.5em; /* margin is necessary because of positioning to clicked cell*/
+	position:absolute;
+	background-color:rgba(0,0,0,0.5);
+	outline:solid grey 1px;
 }
 
 
@@ -305,10 +321,6 @@ table a, table a:visited{
 
 .credits a{
 	border:none transparent 0px;
-	background-color:transparent;
-}
-
-.credits a:hover{
 	background-color:transparent;
 	text-decoration:underline;
 }

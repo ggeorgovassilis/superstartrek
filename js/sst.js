@@ -15,9 +15,9 @@ var Constants = {
 		DURATION_OF_PROVISIONAL_REPAIRS:8,
 		ENERGY_OF_MOVEMENT_PER_SECTOR: 20,
 		ENERGY_PER_SHIELD:2,
-		BASE_CONSUMPTION:1,
+		BASE_CONSUMPTION:10,
 		ENERGY_OF_MOVEMENT_PER_QUADRANT_PER_WARP: function(speed){
-			return 10+speed*speed*speed;
+			return 10+speed*speed*speed*10;
 		},
 		ENTERPRISE_MAX_SHIELDS:100,
 		ENTERPRISE_MAX_WARP_SPEED:8,
@@ -145,6 +145,8 @@ var StarMap={
 				   if (thing.x === x && thing.y === y)
 					   return thing;
 			   }
+			   if (Enterprise.quadrant === quadrant && Enterprise.x === x && Enterprise.y === y)
+				   return Enterprise;
 		   },
 		   isStarbaseAdjacent:function(quadrant, x, y){
 			 for (var i=0;i<quadrant.starbases.length;i++){
