@@ -48,12 +48,12 @@ var StatusReport = {
 		StatusReport.torpedos.text(Enterprise.torpedos+" | "+(Enterprise.torpedosOnline?"ONLINE":"OFFLINE"));
 		StatusReport.location.text(Enterprise.quadrant.regionName + " "
 				+ Enterprise.quadrant.x + "," + Enterprise.quadrant.y);
-		StatusReport.shields.text(Enterprise.shields + " / "
-				+ Enterprise.maxShields);
+		StatusReport.shields.text(Math.floor(Enterprise.shields) + " / "
+				+ Math.floor(Enterprise.maxShields));
 		StatusReport.phaserPower.text(StatusReport.perc(Enterprise.phaserPower,Constants.ENTERPRISE_MAX_PHASER_POWER));
 		StatusReport.stardate.text(Tools.formatStardate(Computer.stardate));
 		StatusReport.reactor.text("%" + 100
-				* (Enterprise.reactorOutput / Constants.MAX_REACTOR_OUTPUT));
+				* Math.floor(Enterprise.reactorOutput / Constants.MAX_REACTOR_OUTPUT));
 		StatusReport.reactorRemaining.text(Enterprise.budget);
 		StatusReport.klingonsCount.text(StarMap.countKlingons());
 		StatusReport.tacticalComputer.text(Enterprise.tacticalComputerOnline?"ONLINE":"OFFLINE");

@@ -124,27 +124,26 @@ var StarMap={
 					   return quadrant;
 			   }
 		   },
-		   getKlingonInQuadrantAt:function(quadrant, x, y){
-			   for (var i=0;i<quadrant.klingons.length;i++){
-				   var klingon = quadrant.klingons[i];
-				   if (klingon.x === x && klingon.y === y)
-					   return klingon;
+		   getThingFromListAt:function(list,x,y){
+			   for (var i=0;i<list.length;i++){
+				   var thing = list[i];
+				   if (thing.x === x && thing.y === y)
+					   return thing;
 			   }
+		   },
+		   getKlingonInQuadrantAt:function(quadrant, x, y){
+			   return StarMap.getThingFromListAt(quadrant.klingons, x,y);
 		   },
 		   getAnythingInQuadrantAt:function(quadrant, x, y){
 			   var thing = StarMap.getKlingonInQuadrantAt(quadrant, x, y);
 			   if (thing)
 				   return thing;
-			   for (var i=0;i<quadrant.starbases.length;i++){
-				   thing = quadrant.starbases[i];
-				   if (thing.x === x && thing.y === y)
-					   return thing;
-			   }
-			   for (var i=0;i<quadrant.stars.length;i++){
-				   thing = quadrant.stars[i];
-				   if (thing.x === x && thing.y === y)
-					   return thing;
-			   }
+			   thing = StarMap.getThingFromListAt(quadrant.starbases, x,y);
+			   if (thing)
+				   return thing;
+			   thing = StarMap.getThingFromListAt(quadrant.stars, x,y);
+			   if (thing)
+				   return thing;
 			   if (Enterprise.quadrant === quadrant && Enterprise.x === x && Enterprise.y === y)
 				   return Enterprise;
 		   },
