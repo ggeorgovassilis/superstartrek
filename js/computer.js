@@ -2,7 +2,12 @@ var Computer={
 		element:$("#computerscreen"),
 		updateEnergyIndicator:function(){
 			var progress = 100*Enterprise.energy/Constants.MAX_ENERGY;
-			$("#cmd_showStatusReport .progress-indicator").css("width",progress+"%");
+			var e = $("#cmd_showStatusReport");
+			var indicator = e.find(".progress-indicator");
+			if (progress<30)
+				e.addClass("critical");
+			else e.removeClass("critical");
+			indicator.css("width",progress+"%");
 		},
 		updateDamagedIndicator:function(){
 			Tools.removePageCss("enterprise-damaged");

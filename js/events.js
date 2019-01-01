@@ -18,10 +18,9 @@ var Events={
 	trigger:function(event,arg){
 		if (!arg)
 			arg={};
-		console.log("event",event,arg);
 		if (!Events[event])
 			throw "Unknown event "+event;
-		$(window).trigger(event,[arg]);
+		$window.trigger(event,[arg]);
 	},
 	on:function(event,callback){
 		if (!Events[event])

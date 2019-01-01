@@ -7,6 +7,8 @@ var console = console||{log:function(){}};
 var $body = $("body");
 var $window = $(window);
 var $document = $(document);
+var $page = $("#page");
+
 
 String.prototype.startsWith=function(prefix){
 	return this.indexOf(prefix)===0;
@@ -54,8 +56,13 @@ var Tools={
 			$document.scrollTop(destination);
 		},
 		centerScreen:function(){
-			window.scrollTo(0, 1);
-			window.setTimeout( function(){  }, 50 );
+			var doc = window.document;
+			var delement = doc.documentElement;
+			var scrollOffset = (delement && delement.scrollTop  || doc.body && doc.body.scrollTop  || 0);
+			var top = $page.offset().top;
+			if (scrollOffset > top){
+				window.setTimeout( function(){window.scrollTo(0, 1);}, 50 );
+			}
 		},
 		distance:function(x1,y1,x2,y2){
 			return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));

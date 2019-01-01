@@ -171,18 +171,6 @@ var CommandBar={
 		element:$("#commandbar")
 };
 
-var _page = $("#page");
-
-function repositionWindowScroll(){
-	var doc = window.document;
-	var delement = doc.documentElement;
-	var scrollOffset = (delement && delement.scrollTop  || doc.body && doc.body.scrollTop  || 0);
-	var top = _page.offset().top;
-	if (scrollOffset <= top){
-		Tools.centerScreen();
-	}
-}
-
 Events.on(Events.SETTINGS_CHANGED, Controller.updateFireAtWillButton);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateDamagedIndicator);
@@ -191,4 +179,3 @@ Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateDamagedIndicator);
 //		return ""; 
 //};
 
-$(window).scroll(repositionWindowScroll);

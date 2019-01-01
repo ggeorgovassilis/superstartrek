@@ -37,7 +37,7 @@ var IO={
 		Tools.removePageCss("messages-visible");
 		Tools.addPageCss("messages-visible");
 		IO.messages.find(".single").focus();
-		repositionWindowScroll();
+		Tools.centerScreen();
 		return IO;
 	},
 	hide:function(){

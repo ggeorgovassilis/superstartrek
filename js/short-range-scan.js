@@ -3,6 +3,7 @@
  */
 var ShortRangeScan = {
 	element : $("#quadrantscan"),
+	quadrantScanCells:[],
 	updateList : function(symbol, list, formatter) {
 		for (var i = 0; i < list.length; i++) {
 			var thing = list[i];
@@ -15,10 +16,22 @@ var ShortRangeScan = {
 	init : function() {
 		ShortRangeScanScreen.init();
 		ShortRangeScan.updateMap();
+		var list = ShortRangeScan.element.find("td");
+		for (var i=0;i<list.length;i++)
+			ShortRangeScan.quadrantScanCells.push(list[i]);
+	},
+	clearCells:function(){
+		var cells = ShortRangeScan.quadrantScanCells;
+		var len = cells.length;
+		while (len--)
+			cells[len].textContent="";
+		// this used to be:
+		// ShortRangeScan.element.find("td").html("&nbsp;");
+		// but that lags on mobile phones, so we're going native JS for speed
 	},
 	updateMapInner:function() {
 		var quadrant = Enterprise.quadrant;
-		ShortRangeScan.element.find("td").html("&nbsp;");
+		ShortRangeScan.clearCells();
 		ShortRangeScan.updateList("&nbsp;*&nbsp;", quadrant.stars, function(star) {
 			return "star";
 		});
@@ -55,7 +68,7 @@ var ShortRangeScan = {
 		ShortRangeScan.updatePending=setTimeout(function(){
 			ShortRangeScan.updatePending=null;
 			ShortRangeScan.updateMapInner();
-		},1);
+		},10);
 	},
 	constructUi : function() {
 		var element = ShortRangeScan.element;
@@ -96,7 +109,6 @@ var ShortRangeScan = {
 var ShortRangeScanScreen = {
 	elem : $("#shortrangescan"),
 	init:function(){
-		console.log("instlaling listener")
 		$("#shortrangescan td").on("click", ShortRangeScan.onQuadrantClicked);
 	},
 	updateQuadrant : function(quadrant) {

@@ -1,4 +1,4 @@
-body,html,div,table,tr,td,span{
+sbody,html,div,table,tr,td,span{
 	margin:0;
 	padding:0;
 	/* see http://stackoverflow.com/questions/5210481/disable-orange-outline-highlight-on-focus */
@@ -399,6 +399,10 @@ a.progress-bar {
 	position:absolute;
 	background-color:darkturquoise;
 	display:block;
+}
+
+.critical .progress-indicator{
+	background-color:red;
 }
 
 .progress-text{
