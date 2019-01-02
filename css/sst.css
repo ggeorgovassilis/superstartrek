@@ -37,6 +37,7 @@ a, a:visited, button{
 	font-size:100%;
 	background:rgb(0, 108, 109);
 	background-color:rgb(0, 108, 109);
+	appearance: none;
 }
 
 @media (max-width: 400px)  {
