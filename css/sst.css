@@ -237,6 +237,12 @@ table a, table a:visited{
 	outline:solid grey 1px;
 }
 
+#sectorselectionbar a,#sectorselectionbar button{
+	margin-right:0.5em;
+	padding-left:0.5em;
+	padding-right:0.5em;
+}
+
 .screen{
 	display:none;
 	overflow:hidden;
