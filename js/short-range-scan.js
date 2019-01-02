@@ -53,10 +53,10 @@ var ShortRangeScan = {
 				return "";
 			});
 		$("#quadrant_name").text(Enterprise.quadrant.regionName);
-		$("#srs_heading").removeClass("red-alert");
 		if (!Enterprise.quadrant.klingons.isEmpty()){
 			$("#srs_heading").addClass("red-alert");
-		}
+		} else $("#srs_heading").removeClass("red-alert");
+
 	},
 	updateMap:function(){
 		//profiling revealed that updateMap is called several times in the same interaction.
