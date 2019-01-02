@@ -33,7 +33,6 @@ var Klingons = {
 	},
 	manueverIntoFiringPosition : function(klingon, quadrant) {
 		var path = Tools.findPathBetween(quadrant,klingon.x,klingon.y,Enterprise.x, Enterprise.y);
-		console.log(path);
 		if (!path || !path.length)
 			return;
 		var i = Math.min(Constants.KLINGON_IMPULSE_SPEED, path.length)-1;

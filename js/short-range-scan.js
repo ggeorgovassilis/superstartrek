@@ -92,13 +92,11 @@ var ShortRangeScan = {
 		$("#quadrantscan .selected").removeClass("selected");
 		cell.addClass("selected");
 		Events.trigger(Events.SECTOR_SELECTED,{x:x,y:y});
-		ShortRangeScan.positionSectorSelectionMenu(cell);
+		ShortRangeScan.positionSectorSelectionMenu(e.pageX,e.pageY);
 	},
-	positionSectorSelectionMenu:function(eCell){
-		console.log(eCell);
+	positionSectorSelectionMenu:function(x,y){
 		var eMenu = $("#sectorselectionbar");
-		var p = eCell.position();
-		eMenu.offset({top:p.top,left:0});
+		eMenu.offset({top:y,left:0});
 	},
 	onQuadrantClicked:function(e){
 		var cell = $(e.currentTarget);

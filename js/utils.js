@@ -56,6 +56,7 @@ var Tools={
 		screenWidth:-1,
 		screenHeight:-1,
 		page:$body,
+		pageCss:{},
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
@@ -130,19 +131,6 @@ var Tools={
 			if (thing)
 				return {obstacle:thing, x:lastGoodX, y:lastGoodY};
 		},
-		removePageCss:function(css){
-			Tools.page.removeClass(css);
-		},
-		addPageCss:function(css){
-			Tools.page.addClass(css);
-		},
-		addCssRule:function(rule){
-			var eStyle = $("<style>"+rule+"</style>");
-			$("head").append(eStyle);
-		},
-		hasPageCss:function(css){
-			return Tools.page.attr("class").indexOf(css)!=-1;
-		},
 		findPathBetween:function(quadrant,fromX,fromY,toX,toY){
 			var graph = [];
 			for (var y=0;y<8;y++)
@@ -161,6 +149,25 @@ var Tools={
 			var path = astar.search(graph, start, end, { heuristic: astar.heuristics.diagonal });
 			return path;
 		},
+		addCssRule:function(rule){
+			var eStyle = $("<style>"+rule+"</style>");
+			$("head").append(eStyle);
+		},
+		removePageCss:function(css){
+			if (Tools.hasPageCss(css)){
+				Tools.page.removeClass(css);
+				delete Tools.pageCss[css];
+			}
+		},
+		addPageCss:function(css){
+			if (!Tools.hasPageCss(css)){
+				Tools.page.addClass(css);
+				Tools.pageCss[css]=true;
+			}
+		},
+		hasPageCss:function(css){
+			 return Tools.pageCss.hasOwnProperty(css);
+		},
 		showScreen:function(screenName){
 			var css = Tools.page.attr("class");
 			css = css.split(" ");
@@ -173,7 +180,7 @@ var Tools={
 			Tools.page.attr("class",s);
 		},
 		gotoScreen:function(screen){
-			window.location.href="#"+screen;
+			window.location.hash="#"+screen;
 		}
 };
 

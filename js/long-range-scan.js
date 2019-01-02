@@ -4,7 +4,7 @@
 var LongRangeScanScreen={
 		element:$("#longrangescan"),
 		init:function(){
-			$("#longrangescan td").on("click",LongRangeScanScreen.onQuadrantSelected);
+			$("#longrangescan .quadrants td").on("click",LongRangeScanScreen.onQuadrantSelected);
 		},
 		onQuadrantSelected:function(e){
 			var cell = $(e.currentTarget);
