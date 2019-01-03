@@ -4,10 +4,16 @@
 var LongRangeScanScreen={
 		element:$("#longrangescan"),
 		init:function(){
-			$("#longrangescan .quadrants td").on("click",LongRangeScanScreen.onQuadrantSelected);
+			$("#longrangescan").on("click",LongRangeScanScreen.onQuadrantSelected);
+		},
+		isQuadrantCell:function(cell){
+			var id = cell.attr("id");
+			return id.startsWith("cmd_");
 		},
 		onQuadrantSelected:function(e){
-			var cell = $(e.currentTarget);
+			var cell = $(e.target);
+			if (!LongRangeScanScreen.isQuadrantCell(cell))
+				return;
 			var id = cell.attr("id");
 			window.location.hash="#"+id;
 		},

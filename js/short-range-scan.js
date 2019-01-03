@@ -81,12 +81,14 @@ var ShortRangeScan = {
 			}
 			element.append(tr);
 		}
-		element.find("td").on("click", ShortRangeScan.onSectorClicked);
+		element.on("click", ShortRangeScan.onSectorClicked);
 	},
 	onSectorClicked:function(e){
-		var cell = $(e.currentTarget);
+		var cell = $(e.target);
 		var id = cell.attr("id");
 		var parts = /\w+_(\d)_(\d)/.exec(id);
+		if (!parts || !parts.length) //clicked on something else than a cell?
+			return;
 		var x = parseInt(parts[1]);
 		var y = parseInt(parts[2]);
 		$("#quadrantscan .selected").removeClass("selected");
@@ -100,7 +102,6 @@ var ShortRangeScan = {
 	},
 	onQuadrantClicked:function(e){
 		var cell = $(e.currentTarget);
-		console.log(cell);
 		var id = cell.attr("id");
 		if (id && id.startsWith("cmd")){
 			var parts = /\w+_(\d)_(\d)/.exec(id);
