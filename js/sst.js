@@ -17,7 +17,7 @@ var Constants = {
 		ENERGY_PER_SHIELD:2,
 		BASE_CONSUMPTION:10,
 		ENERGY_OF_MOVEMENT_PER_QUADRANT_PER_WARP: function(speed){
-			return 10+speed*speed*speed*10;
+			return 10+speed*speed*speed*2;
 		},
 		ENTERPRISE_MAX_SHIELDS:100,
 		ENTERPRISE_MAX_WARP_SPEED:8,

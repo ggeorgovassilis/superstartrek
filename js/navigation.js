@@ -17,16 +17,13 @@ Controller.navigate = function() {
 	}
 	var consumption = Computer.calculateEnergyConsumptionForMovement(distance);
 	if (!Computer.hasEnergyBudgetFor(consumption))
-		return;
+		return IO.message("Insufficient reactor output").then.SRS();
 	Computer.consume(consumption);
 	Enterprise.x = finalX;
 	Enterprise.y = finalY;
 	Computer.advanceClock(Constants.DURATION_OF_MOVEMENT_PER_SECTOR * distance);
 	Events.trigger(Events.ENTERPRISE_MOVED);
 	Controller.endTurn();
-};
-Controller.selectWarpDestination = function() {
-	Controller.longRangeScan();
 };
 Controller.warpTo = function(quadrant) {
 	var distance = Tools.distance(Enterprise.quadrant.x, Enterprise.quadrant.y,

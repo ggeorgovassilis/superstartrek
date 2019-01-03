@@ -61,11 +61,7 @@ var Computer={
 			return strength*Constants.PHASER_EFFICIENCY;
 		},
 		hasEnergyBudgetFor: function(amount){
-			if (Enterprise.budget < amount){
-				IO.message("Cannot execute command, reactor capacity reached").then.SRS();
-				return false;
-			};
-			return true;
+			return Enterprise.budget >= amount;
 		},
 		consume:function(energy){
 			Enterprise.budget=Math.max(0,Enterprise.budget-energy);
