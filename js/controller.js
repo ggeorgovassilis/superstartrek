@@ -56,12 +56,10 @@ var Controller={
 		toggleShields:function(){
 			var shields = Enterprise.userDefinedShields;
 			var delta = -shields;
-			if (shields >= Enterprise.maxShields)
+			if (shields === Enterprise.maxShields)
 				shields = 0;
 			else
 				shields=Math.max(0,Math.min(Enterprise.budget,Math.min(shields+25, Enterprise.maxShields)));
-			delta+=shields;
-			Computer.consume(delta);
 			Enterprise.userDefinedShields = shields;
 			Enterprise.shields = shields;
 			Events.trigger(Events.SETTINGS_CHANGED);

@@ -31,7 +31,27 @@ var Enterprise={
 			function canFix(){
 				return Math.random()<0.1;
 			}
-			for (var i=0;i<20;i++){//quit loop if nothing repaired after 20 turns
+			for (var i=0;i<40;i++){//quit loop if nothing repaired after 40 turns
+				if (Enterprise.maxImpulse<2 && canFix()){
+					   Enterprise.maxImpulse++;
+					   message="Improved impulse drive.";
+					   break;
+					}
+				if (!Enterprise.lrsOnline && canFix()){
+				    Enterprise.lrsOnline=true;
+					message="Repaired long range scan.";
+					break;
+				}
+				if (!Enterprise.tacticalComputerOnline && canFix()){
+					   Enterprise.tacticalComputerOnline=true;
+					   message="Repaired tactical computer.";
+					   break;
+					}
+			   if (Enterprise.reactorOutput<0.6*Constants.MAX_REACTOR_OUTPUT){
+					message = "Improved reactor output.";
+					Enterprise.reactorOutput+=70;
+					break;
+			   }
 				if (Enterprise.maxShields<0.60*Constants.ENTERPRISE_MAX_SHIELDS && canFix()){
 					message = "Improved shields.";
 					Enterprise.maxShields+=10;
@@ -42,24 +62,9 @@ var Enterprise={
 					message="Improved phasers.";
 					break;
 				}
-				if (!Enterprise.lrsOnline && canFix()){
-				    Enterprise.lrsOnline=true;
-					message="Repaired long range scan.";
-					break;
-				}
 				if (!Enterprise.torpedosOnline && canFix()){
 				   Enterprise.torpedosOnline=true;
 				   message="Repaired torpedo bay.";
-				   break;
-				}
-				if (!Enterprise.tacticalComputerOnline && canFix()){
-				   Enterprise.tacticalComputerOnline=true;
-				   message="Repaired tactical computer.";
-				   break;
-				}
-				if (Enterprise.maxImpulse<2 && canFix()){
-				   Enterprise.maxImpulse++;
-				   message="Improved impulse drive.";
 				   break;
 				}
 				if (Enterprise.maxWarpSpeed==1 && canFix()){
@@ -104,7 +109,7 @@ var Enterprise={
 		   Enterprise.y = newY;
 	   },
 	   assignDamage:function(damage,cause){
-		   var impact = damage/(Enterprise.shields+1);
+		   var impact = Math.pow(damage/(Enterprise.shields+1),2); //scale impact: low impact doesn't hurt us at all, high impact a lot
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
 		   Enterprise.maxShields = Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact));
 		   Enterprise.shields = Math.min(Enterprise.shields, Enterprise.maxShields);

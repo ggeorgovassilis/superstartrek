@@ -6,15 +6,15 @@ var Klingons = {
 	play : function(klingon, quadrant) {
 		if (Enterprise.quadrant != quadrant)
 			return;
-		// can raider fire on us?
 		var distance = Tools.distance(klingon.x, klingon.y, Enterprise.x,
 				Enterprise.y);
-		var obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y,
-				Enterprise.x, Enterprise.y);
-		if (distance <= Constants.DISRUPTOR_RANGE && obstacle.obstacle===Enterprise)
-			Klingons.fireOnEnterprise(klingon);
-		else
-			Klingons.manueverIntoFiringPosition(klingon, Enterprise.quadrant);
+		if (distance <= Constants.DISRUPTOR_RANGE){
+			var obstacle = Tools.findObstruction(quadrant, klingon.x, klingon.y,
+					Enterprise.x, Enterprise.y);
+			if (!obstacle || obstacle.obstacle === Enterprise)
+				return Klingons.fireOnEnterprise(klingon);
+		}
+		return Klingons.manueverIntoFiringPosition(klingon, Enterprise.quadrant);
 	},
 	on_enterprise_warped : function() {
 		var klingons = Enterprise.quadrant.klingons;

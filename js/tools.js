@@ -135,14 +135,14 @@ var Tools={
 			var graph = [];
 			for (var y=0;y<8;y++)
 				graph.push([1,1,1,1,1,1,1,1]);
-			for (var y=0;y<8;y++)
-			for (var x = 0;x<8;x++){
+			for (var x = 0;x<8;x++)
+			for (var y = 0;y<8;y++){
 				var thing = StarMap.getAnythingInQuadrantAt(quadrant, x, y);
 				if (thing)
-					graph[y][x]=0;
+					graph[x][y]=0;
 			}
-			graph[fromY][fromX] = 1;
-			graph[toY][toX] = 1;
+			graph[fromX][fromY] = 1;
+			graph[toX][toY] = 1;
 			graph = new Graph(graph,{diagonal:true});
 			var start = graph.grid[fromX][fromY];
 			var end = graph.grid[toX][toY];
