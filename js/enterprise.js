@@ -109,7 +109,7 @@ var Enterprise={
 		   Enterprise.y = newY;
 	   },
 	   assignDamage:function(damage,cause){
-		   var impact = Math.pow(damage/(Enterprise.shields+1),2); //scale impact: low impact doesn't hurt us at all, high impact a lot
+		   var impact = Math.pow((damage/(Enterprise.shields+1)),1.5); //scale impact: low impact doesn't hurt us at all, high impact a lot
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
 		   Enterprise.maxShields = Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact));
 		   Enterprise.shields = Math.min(Enterprise.shields, Enterprise.maxShields);

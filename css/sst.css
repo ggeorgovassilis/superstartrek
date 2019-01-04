@@ -7,11 +7,16 @@ body,html{
             user-select: none;
 }
 
-body,html,div,table,tr,td,span{
+body,html,div,table,tr,td,span,header,section{
 	margin:0;
 	padding:0;
 	/* see http://stackoverflow.com/questions/5210481/disable-orange-outline-highlight-on-focus */
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+}
+
+header{
+	display:block;
+	overflow:hidden;
 }
 
 table{
@@ -39,6 +44,16 @@ a, a:visited, button{
 	background:rgb(0, 108, 109);
 	background-color:rgb(0, 108, 109);
 	appearance: none;
+	float:left;
+	width:10em;
+}
+
+ul{
+	list-style:none;
+}
+
+.credits a{
+	outline:none transparent 0px;
 }
 
 @media (max-width: 400px)  {
@@ -224,11 +239,6 @@ table a, table a:visited{
  * Computer
  */
  
-#commandbar > a, #commandbar > button{
-	float:left;
-	width:10em;
-}
-
 #sectorselectionbar{
 	padding:0.5em 0.5em 0.5em 0.5em; /* margin is necessary because of positioning to clicked cell*/
 	margin-top:2em;
