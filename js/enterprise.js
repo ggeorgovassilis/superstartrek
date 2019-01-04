@@ -18,6 +18,7 @@ var Enterprise={
 			Enterprise.tacticalComputerOnline=true;
 			Enterprise.maxWarpSpeed=Constants.ENTERPRISE_MAX_WARP_SPEED;
 			Enterprise.isDamaged=false;
+			Enterprise.phasersFiredThisTurn=false;
 			Events.trigger(Events.SETTINGS_CHANGED);
 		},
 		repairProvisionally:function(){
@@ -109,10 +110,10 @@ var Enterprise={
 		   Enterprise.y = newY;
 	   },
 	   assignDamage:function(damage,cause){
-		   var impact = Math.pow((damage/(Enterprise.shields+1)),1.5); //scale impact: low impact doesn't hurt us at all, high impact a lot
+		   var impact = Math.pow(((damage+1)/(Enterprise.shields+1)),1.9); //scale impact: low impact doesn't hurt us at all, high impact a lot
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
 		   Enterprise.maxShields = Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact));
-		   Enterprise.shields = Math.min(Enterprise.shields, Enterprise.maxShields);
+		   Enterprise.shields = Enterprise.maxShields;
 		   if (Enterprise.shields == 0) {
 				Events.trigger(Events.GAME_OVER,{message:"Enterprise was destroyed.", cause:cause.name});
 				return;
@@ -166,6 +167,8 @@ var Enterprise={
 		   return IO.endTurn();
 	   },
 	   _firePhasersAt:function(targetX, targetY, autoaim){
+		    if (Enterprise.phasersFiredThisTurn)
+				return IO.message("Phasers must be recharged before firing again.").then.SRS();
 			var distance = Tools.distance(Enterprise.x, Enterprise.y, targetX, targetY);
 			if (Math.floor(distance)>Constants.PHASER_RANGE)
 				return IO.message("Target is out of range").then.SRS();
@@ -180,6 +183,7 @@ var Enterprise={
 			var consumption = Computer.calculateEnergyConsumptionForPhasers(strength);
 			if (!Computer.hasEnergyBudgetFor(consumption))
 				return IO.message("Insufficient energy").then.SRS();
+			Enterprise.phasersFiredThisTurn = true;
 			var damage = strength
 					/ Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
 			Events.trigger(Events.WEAPON_FIRED);
@@ -189,5 +193,22 @@ var Enterprise={
 			if (Computer.consume(consumption))
 				return;
 			IO.SRS();
+	   },
+	   toggleShields:function(){
+			var maxShields = Enterprise.maxShields;
+			var shields = Enterprise.userDefinedShields;
+			if (Math.floor(shields) == Math.floor(maxShields))
+				shields = 0;
+			else shields += 25;
+			shields = Math.min(shields, maxShields);
+			Enterprise.userDefinedShields = shields;
+			Enterprise.shields = shields;
+			Events.trigger(Events.SETTINGS_CHANGED);
+			Controller.showStartScreen();
+	   },
+	   rechargeForNewTurn:function(){
+		   Enterprise.phasersFiredThisTurn = false;
 	   }
 };
+
+Events.on(Events.TURN_STARTS,Enterprise.rechargeForNewTurn);

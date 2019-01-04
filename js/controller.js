@@ -54,18 +54,7 @@ var Controller={
 			Tools.addPageCss("sector-selected");
 		},
 		toggleShields:function(){
-			var shields = Enterprise.userDefinedShields;
-			var delta = -shields;
-			var maxShields = Math.min(Enterprise.budget, Enterprise.maxShields);
-			if (shields === maxShields)
-				shields = 0;
-			else{
-				shields = Math.min(shields+25, maxShields);
-			}
-			Enterprise.userDefinedShields = shields;
-			Enterprise.shields = shields;
-			Events.trigger(Events.SETTINGS_CHANGED);
-			Controller.showStartScreen();
+			Enterprise.toggleShields();
 		},
 		longrangescan:function(){
 			LongRangeScanScreen.show();
@@ -114,6 +103,7 @@ var Controller={
 			Controller.endTurn();
 		},
 		newTurn:function(){
+			Events.trigger(Events.TURN_STARTS);
 			Enterprise.budget=Enterprise.reactorOutput;
 			Enterprise.shields = Enterprise.userDefinedShields;
 			var consumption = Computer.calculateBaseEnergyConsumption();
