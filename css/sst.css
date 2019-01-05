@@ -30,6 +30,11 @@ html{
 	font-size:100%;
 }
 
+ul{
+	list-style:none;
+}
+
+
 a, a:visited, button{
 	text-decoration:none;
 	color:white;
@@ -39,7 +44,7 @@ a, a:visited, button{
 	text-align:center;
 	margin-top:0.5em;
 	cursor:pointer;
-	line-height:1.5em;
+	line-height:2em;
 	font-size:100%;
 	background:rgb(0, 108, 109);
 	background-color:rgb(0, 108, 109);
@@ -48,12 +53,9 @@ a, a:visited, button{
 	width:10em;
 }
 
-ul{
-	list-style:none;
-}
-
 .credits a{
 	outline:none transparent 0px;
+	width:auto;
 }
 
 @media (max-width: 400px)  {
@@ -138,7 +140,7 @@ table a, table a:visited{
 }
 
 .region-names td{
-	padding:5px;
+	line-height:2em;
 }
 
 .quadrants td{
@@ -304,9 +306,11 @@ table a, table a:visited{
 		font-size:60%;
 	}
 	#commandbar{
-		width:50%;
+		width:100%;
 	}
-	
+	#shortrangescan, .short-range-scan-container{
+		width:100%;	
+	}
 }
 
 
