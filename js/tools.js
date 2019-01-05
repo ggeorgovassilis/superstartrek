@@ -57,6 +57,7 @@ var Tools={
 		screenHeight:-1,
 		page:$body,
 		pageCss:{},
+		deferredCalls:{},
 		supressNextHistoryEvent:false,
 		formatStardate:function(stardate){
 			return (Math.round(Computer.stardate*10)/10).toFixed(1);
@@ -181,6 +182,16 @@ var Tools={
 		},
 		gotoScreen:function(screen){
 			window.location.hash="#"+screen;
+		},
+		defer:function(id,f){
+			var deferredCalls = Tools.deferredCalls;
+			if (deferredCalls[id]){
+				clearTimeout(deferredCalls[id]);
+			}
+			deferredCalls[id] = setTimeout(function(){
+				f();
+				deferredCalls[id]=null;
+			},1);
 		}
 };
 

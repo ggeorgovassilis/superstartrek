@@ -23,6 +23,8 @@ var ShortRangeScan = {
 	clearCells:function(){
 		var cells = ShortRangeScan.quadrantScanCells;
 		var len = cells.length;
+		//normally the 'class' attribute should be also cleared, but 1) there are (currently) no cell CSS rules
+		//which would make an empty cell look weird and 2) any new content would overwrite the CSS anyway
 		while (len--)
 			cells[len].textContent="";
 		// this used to be:
@@ -117,7 +119,11 @@ var ShortRangeScanScreen = {
 	init:function(){
 		$("#shortrangescan td").on("click", ShortRangeScan.onQuadrantClicked);
 	},
+	//function is called often, so we're deferring it and calling only the last one.
 	updateQuadrant : function(quadrant) {
+		Tools.defer("ShortRangeScanScreen_updateQuadrant",function(){ShortRangeScanScreen._updateQuadrant(quadrant);});
+	},
+	_updateQuadrant : function(quadrant) {
 		var index = 0;
 		var qx = quadrant.x;
 		var qy = quadrant.y;
@@ -125,7 +131,6 @@ var ShortRangeScanScreen = {
 		for (var y = qy - 1; y <= qy + 1; y++)
 			for (var x = qx - 1; x <= qx + 1; x++) {
 				var cell = $(cells[index]);
-				cell.attr("class","");
 				if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
 					var quadrant = StarMap.getQuadrantAt(x, y);
 					quadrant.explored = true;
@@ -133,6 +138,7 @@ var ShortRangeScanScreen = {
 				} else {
 					cell.text("0");
 					cell.attr("id", null);
+					cell.attr("class","");
 				}
 				index++;
 			}

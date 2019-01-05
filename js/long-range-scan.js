@@ -8,7 +8,7 @@ var LongRangeScanScreen={
 		},
 		isQuadrantCell:function(cell){
 			var id = cell.attr("id");
-			return id.startsWith("cmd_");
+			return id && id.startsWith("cmd_");
 		},
 		onQuadrantSelected:function(e){
 			var cell = $(e.target);

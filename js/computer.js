@@ -34,9 +34,11 @@ var Computer={
 			$("#stardate").text(stardateFormatted + " "+Enterprise.budget);
 		},
 		show:function(){
-			Tools.gotoScreen("computer");
-			Computer.updateStarbaseDockCommand();
-			ShortRangeScanScreen.updateQuadrant(Enterprise.quadrant);
+			Tools.defer("Computer_show",function(){
+				Tools.gotoScreen("computer");
+				Computer.updateStarbaseDockCommand();
+				ShortRangeScanScreen.updateQuadrant(Enterprise.quadrant);
+			});
 		},
 		calculateBaseEnergyConsumption:function(){
 			return Enterprise.shields*Constants.ENERGY_PER_SHIELD 
