@@ -31,7 +31,7 @@ var ShortRangeScan = {
 		// ShortRangeScan.element.find("td").html("&nbsp;");
 		// but that lags on mobile phones, so we're going native JS for speed
 	},
-	updateMapInner:function() {
+	_updateMap:function() {
 		var quadrant = Enterprise.quadrant;
 		ShortRangeScan.clearCells();
 		ShortRangeScan.updateList("&nbsp;*&nbsp;", quadrant.stars, function(star) {
@@ -65,12 +65,7 @@ var ShortRangeScan = {
 		//that's why I'm deferring it to a single call.
 		ShortRangeScan.constructUi();
 		ShortRangeScan.constructUi=nop; // avoid reconstructing UI every time this function is called
-		if (ShortRangeScan.updatePending)
-			return;
-		ShortRangeScan.updatePending=setTimeout(function(){
-			ShortRangeScan.updatePending=null;
-			ShortRangeScan.updateMapInner();
-		},10);
+		Tools.defer("ShortRanceScan_updateMap",ShortRangeScan._updateMap);
 	},
 	constructUi : function() {
 		var element = ShortRangeScan.element;
