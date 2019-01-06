@@ -33,7 +33,7 @@ var IO={
 		return IO;
 	},
 	message:function(text){
-		IO.content.append("<div>"+text+"</div>");
+		IO.content.append("<div class=entry>"+text+"</div>");
 		Tools.addPageCss("messages-visible");
 		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
 		Tools.centerScreen();

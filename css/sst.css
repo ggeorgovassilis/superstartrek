@@ -50,7 +50,7 @@ a, a:visited, button{
 	background-color:rgb(0, 108, 109);
 	appearance: none;
 	float:left;
-	width:10em;
+	width:57%;
 }
 
 .credits a{
@@ -61,12 +61,13 @@ a, a:visited, button{
 @media (max-width: 400px)  {
 	a,button{
 		font-size:90%;
+		width:100%;
 	}
 }
 
 .full-width{
 	display:block;
-	width:99%;
+	width:100%;
 }
 
 a:hover, button:hover, .quadrants td:hover, #shortrangescan td:hover, #quadrantscan td:hover, .progress-indicator:hover{
@@ -127,6 +128,7 @@ table a, table a:visited{
 	right:0;
 	color:deepskyblue;
 	font-size:80%;
+	display:none; /* until I figure out where to show it */
 }
 
 /*
@@ -234,6 +236,7 @@ table a, table a:visited{
 
 #shortrangescan{
 	min-width:150px;
+	margin-bottom:5em; /* otherwise some buttons from command bar wrap under SRS*/
 }
 
 /*
@@ -249,7 +252,6 @@ table a, table a:visited{
 }
 
 #sectorselectionbar a,#sectorselectionbar button{
-	margin-right:0.5em;
 	padding-left:0.5em;
 	padding-right:0.5em;
 }
@@ -288,7 +290,7 @@ table a, table a:visited{
 	font-size:100%;
 	font-weight:bold;
 }
-
+/*
 @media (max-width: 500px)  {
 	#screen-intro .logo{
 		font-size:70%;
@@ -300,7 +302,7 @@ table a, table a:visited{
 		float:left;
 	}
 }
-
+*/
 @media (max-width: 400px)  {
 	#screen-intro .logo{
 		font-size:60%;
@@ -309,7 +311,8 @@ table a, table a:visited{
 		width:100%;
 	}
 	#shortrangescan, .short-range-scan-container{
-		width:100%;	
+		width:100%;
+		margin-bottom:0;	
 	}
 }
 
@@ -383,15 +386,19 @@ h1,h3{
 	position:absolute;
 	left:0;
 	right:0;
-	top:2em;
 	background-color:black;
-	border:solid purple 2px;
 	color:white;
 	font-family:courier, courier new, typewriter;
 	padding:10px;
 	display:none;
 	z-index:2;
 	display:none;
+}
+
+#messages .entry:not(:last-child) {
+	border-bottom:solid grey 1px;
+	padding-bottom:0.5em;
+	margin-bottom:0.5em;
 }
 
 a.single{

@@ -32,7 +32,7 @@ Controller.warpTo = function(quadrant) {
 		return Controller.showComputerScreen();
 	//TODO: rework warp. speeds are quadratic(?). Any distance should be possible but impact time accordingly.
 	if (distance>Enterprise.maxWarpSpeed)
-		return IO.message("That course exceeds maximum warp").then.nothing();
+		return IO.message("That course exceeds maximum warp").then.SRS();
 	var consumption = Computer.calculateEnergyConsumptionForWarpDrive(
 			Enterprise.quadrant, quadrant);
 	var forceStopAtQuadrant = null;

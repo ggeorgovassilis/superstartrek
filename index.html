@@ -193,16 +193,16 @@
 </table>
 </div>
 <div id="commandbar" class="command-bar">
+<button accesskey="d" command="dockWithStarbase" class="requires-nearby-starbase hide-when-docked-with-starbase">Dock in starbase</button>
 <button accesskey="s" id="toggleShields" command="toggleShields" class="command top-command progress-bar hide-when-sector-selected">
 	<span class="max-indicator"></span>
 	<span class="progress-indicator"></span>
 	<span class="progress-text">Shields</span>
 </button>
 <a accesskey="l" class="hide-when-sector-selected half-width" href="#longrangescan">LRS</a>
-<button accesskey="w" command="nop" class="hide-when-sector-selected half-width">Skip</button>
 <a accesskey="r" id="cmd_showStatusReport" href="#statusreport" class="hide-when-sector-selected command progress-bar"><span class="progress-indicator"></span><span class=progress-text>Status report</span></a>
 <button id="repairProvisionally" class="hide-when-sector-selected requires-enterprise-damaged hide-when-starbase-nearby" onclick="Controller.repairProvisionally()">Make temporary repairs</button>
-<button accesskey="d" command="dockWithStarbase" class="requires-nearby-starbase hide-when-docked-with-starbase">Dock in starbase</button>
+<button accesskey="w" command="nop" class="hide-when-sector-selected half-width">Skip</button>
 </div>
 </section>
 <div id="sectorselectionbar" class="requires-sector-selected command-bar">
