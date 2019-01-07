@@ -53,6 +53,9 @@ a, a:visited, button{
 	width:57%;
 }
 
+.half-width{
+	width:50%;
+}
 .credits a{
 	outline:none transparent 0px;
 	width:auto;
@@ -487,7 +490,7 @@ a.progress-bar {
 	padding:0;
 }
 
-.red-alert{
+.red-alert, .red-alert *{
 	color:red;
 	font-weight:bold;
 }
