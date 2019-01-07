@@ -119,6 +119,20 @@ var Controller={
 			Enterprise.fireAtWill = !Enterprise.fireAtWill;
 			Events.trigger(Events.SETTINGS_CHANGED);
 		},
+		scanSector:function(){
+			var thing = StarMap.getAnythingInQuadrantAt(Enterprise.quadrant, Controller.sector.x, Controller.sector.y);
+			if (thing === Enterprise)
+				return Tools.gotoScreen("statusreport");
+			var message = "";
+			console.log(thing)
+			if (thing.klingon)
+				message = thing.name + "<br>Shields %"+Tools.perc(thing.shields,thing.maxShields);
+			if (thing.star)
+				message = "A star."
+			if (thing.starbase)
+				message = "A Federation star base."
+			return IO.message(message).then.call(Controller.endTurn);
+		},
 		updateFireAtWillButton:function(){
 			Tools.removePageCss("fireAtWill");
 			if (Enterprise.fireAtWill)

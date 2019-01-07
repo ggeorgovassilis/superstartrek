@@ -208,6 +208,9 @@ var Tools={
 				f();
 				deferredCalls[id]=null;
 			},1);
+		},
+		perc:function(a,b){
+			return Math.floor(100*a/b);
 		}
 };
 

@@ -152,7 +152,7 @@ var Enterprise={
 					return;
 			   }
 		   }
-		   if (Enterprise.shields == 0) {
+		   if (Enterprise.shields < 1) {
 			    message+="<br>Enterprise was destroyed."
 				Events.trigger(Events.GAME_OVER,{message:message, cause:cause.name});
 				return;
