@@ -5,6 +5,8 @@ body,html{
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
+    height:100%;
+    width:100%;
 }
 
 body,html,div,table,tr,td,span,header,section{
@@ -550,4 +552,26 @@ a.progress-bar {
 .legend #what,.legend #status{
 	float:left;
 	width:10em;
+}
+
+#screen-manual{
+	position:fixed;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+.manual{
+	height:100%;
+	position:absolute;
+	margin:0;
+	padding:0;
+	border:none;
+	width:100%;
+	bottom:0;
+	top:3.5em;
+	left:0;
+	right:0;
+	background-color:white;
 }
