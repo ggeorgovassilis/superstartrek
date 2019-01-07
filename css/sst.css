@@ -229,6 +229,7 @@ table a, table a:visited{
 	float:left;
 	margin-right:0.5em;
 	background-color:rgba(10,10,10,0.5);
+	width:20em;
 }
 
 #shortrangescan td{
@@ -248,16 +249,18 @@ table a, table a:visited{
  */
  
 #sectorselectionbar{
-	padding:0.5em 0.5em 0.5em 0.5em; /* margin is necessary because of positioning to clicked cell*/
-	margin-top:2em;
+	padding:0;
+	margin-top:2em; /* margin is necessary because of positioning to clicked cell*/
 	position:absolute;
 	background-color:rgba(0,0,0,0.5);
 	outline:solid grey 1px;
+	width:100%;
 }
 
 #sectorselectionbar a,#sectorselectionbar button{
 	padding-left:0.5em;
 	padding-right:0.5em;
+	width:50%;
 }
 
 .screen{
@@ -307,11 +310,11 @@ table a, table a:visited{
 	}
 }
 */
-@media (max-width: 400px)  {
+@media (max-width: 800px)  {
 	#screen-intro .logo{
 		font-size:60%;
 	}
-	#commandbar{
+	#commandbar, #sectorselectionbar a,#sectorselectionbar button{
 		width:100%;
 	}
 	#shortrangescan, .short-range-scan-container{

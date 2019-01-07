@@ -52,6 +52,22 @@ Array.prototype.foreach = function(callback){
 		}
 }
 
+Array.prototype.filter = function(callback){
+	var a=[];
+	this.foreach(function(e){
+		var r = callback(e);
+		if (r)
+			a.push(r);
+	});
+	return a;
+}
+
+Array.prototype.random = function(){
+	if (this.isEmpty())
+		return null;
+	return this[Math.floor(Math.random()*this.length)];
+}
+
 var Tools={
 		screenWidth:-1,
 		screenHeight:-1,

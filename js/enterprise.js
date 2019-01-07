@@ -85,16 +85,13 @@ var Enterprise={
 		},
 		autoFire:function(){
 			var klingons = Enterprise.quadrant.klingons;
-			var klingonsInRange = [];
-			klingons.foreach(function(klingon){
+			var klingon = klingons.filter(function(klingon){
 				var distance = Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
 				if (distance<=Constants.PHASER_RANGE)
-					klingonsInRange.push(klingon);
-			});
-			if (klingonsInRange.isEmpty())
-				return;
-			var klingon = klingons[Math.floor(Math.random()*klingons.length)];
-			return Enterprise._firePhasersAt(klingon.x, klingon.y, true);
+					return klingon;
+			}).random();
+			if (klingon)
+				return Enterprise._firePhasersAt(klingon.x, klingon.y, true);
 		},
 		setup:function(){
 			Enterprise.quadrant=StarMap.quadrants[0];
