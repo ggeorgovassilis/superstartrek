@@ -27,19 +27,25 @@ var Setup = {
 	},
 	makeKlingons : function(quadrant) {
 		var a = new Array();
-		var hasKlingon = true;
-		while ((hasKlingon = (Constants.CHANCE_OF_KLINGON_IN_QUADRANT > Math
-				.random()))) {
-				a.pushUnique({
-					x : Math.round(Math.random() * 7),
-					y : Math.round(Math.random() * 7),
-					shields : Constants.MAX_KLINGON_SHIELD,
-					maxShields : Constants.MAX_KLINGON_SHIELD,
-					weaponPower : Constants.KLINGON_DISRUPTOR_POWER,
-					klingon : true,
-					quadrant : quadrant,
-					name : "a klingon raider"
-				});
+		var hasKlingon = Constants.CHANCE_OF_KLINGON_IN_QUADRANT > Math.random();
+		if (hasKlingon) {
+				var howMany = Math.floor(1+Math.random()*Constants.MAX_KLINGONS_IN_QUADRANT);
+				while (howMany--){
+					//make lower types more likely
+					var shipTypeIndex = Math.floor(Math.sqrt(Math.random()) * Constants.KLINGON_SHIP_CLASS_MODIFIERS.length);
+					var shipType = Constants.KLINGON_SHIP_CLASS_MODIFIERS[shipTypeIndex];
+					a.pushUnique({
+						x : Math.round(Math.random() * 7),
+						y : Math.round(Math.random() * 7),
+						shields : Constants.MAX_KLINGON_SHIELD*shipType.modifier,
+						maxShields : Constants.MAX_KLINGON_SHIELD*shipType.modifier,
+						weaponPower : Constants.KLINGON_DISRUPTOR_POWER*shipType.modifier,
+						klingon : true,
+						symbol:shipType.symbol,
+						quadrant : quadrant,
+						name : shipType.name
+					});
+				}
 		}
 		return a;
 	},

@@ -4,13 +4,13 @@
 var ShortRangeScan = {
 	element : $("#quadrantscan"),
 	quadrantScanCells:[],
-	updateList : function(symbol, list, formatter) {
+	updateList : function(list, formatter) {
 		//function is called a lot, so going native JS
 		list.foreach(function(thing){
 			var tile = document.getElementById("cmd_selectSector_" + thing.x + "_" + thing.y);
-			var css = formatter(thing);
-			tile.setAttribute("class", css);
-			tile.innerHTML = symbol;
+			var format = formatter(thing);
+			tile.setAttribute("class", format.css);
+			tile.innerHTML = format.symbol;
 		});
 	},
 	init : function() {
@@ -34,25 +34,26 @@ var ShortRangeScan = {
 	_updateMap:function() {
 		var quadrant = Enterprise.quadrant;
 		ShortRangeScan.clearCells();
-		ShortRangeScan.updateList("&nbsp;*&nbsp;", quadrant.stars, function(star) {
-			return "star";
+		ShortRangeScan.updateList(quadrant.stars, function(star) {
+			return {css:"star",symbol:"&nbsp;*&nbsp;"};
 		});
-		ShortRangeScan.updateList("c-}", quadrant.klingons, function(klingon) {
-			if (klingon.shields < 25)
-				return "damage-bad";
-			if (klingon.shields < 50)
-				return "damage-medium";
-			if (klingon.shields < 75)
-				return "damage-light";
-			return "";
+		ShortRangeScan.updateList(quadrant.klingons, function(klingon) {
+			var ratio = klingon.shields/klingon.maxShields;
+			if (ratio<0.33)
+				return {css:"damage-bad",symbol:klingon.symbol};
+			if (ratio<0.66)
+				return {css:"damage-medium",symbol:klingon.symbol};
+			if (ratio<1)
+				return {css:"damage-light",symbol:klingon.symbol};
+			return {css:"",symbol:klingon.symbol};
 		});
-		ShortRangeScan.updateList("&lt;!&gt;", quadrant.starbases, function(
+		ShortRangeScan.updateList(quadrant.starbases, function(
 				starbase) {
-			return "";
+			return {css:"",symbol:"&lt;!&gt;"};
 		});
 		if (Enterprise.quadrant === quadrant)
-			ShortRangeScan.updateList("O=Ξ", [ Enterprise ], function(starhip) {
-				return "";
+			ShortRangeScan.updateList([ Enterprise ], function(starhip) {
+				return {css:"",symbol:"O=Ξ"};
 			});
 		$("#quadrant_name").text(Enterprise.quadrant.regionName);
 		if (!Enterprise.quadrant.klingons.isEmpty()){

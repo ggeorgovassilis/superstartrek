@@ -30,7 +30,7 @@ var Enterprise={
 			Computer.advanceClock(duration);
 			var message = null;
 			function canFix(){
-				return Math.random()<0.1;
+				return Math.random()<0.3;
 			}
 			for (var i=0;i<40;i++){//quit loop if nothing repaired after 40 turns
 				if (Enterprise.maxImpulse<2 && canFix()){
@@ -110,15 +110,11 @@ var Enterprise={
 		   Enterprise.y = newY;
 	   },
 	   assignDamage:function(damage,cause){
-		   var impact = Math.pow(((damage+1)/(Enterprise.shields+1)),1.9); //scale impact: low impact doesn't hurt us at all, high impact a lot
+		   var impact = Math.min(0.5,Math.pow(((damage+1)/(Enterprise.shields+1)),1.2)); //scale impact: low impact doesn't hurt us at all, high impact a lot
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
 		   Enterprise.maxShields = Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact));
 		   Enterprise.shields = Enterprise.maxShields;
-		   if (Enterprise.shields == 0) {
-				Events.trigger(Events.GAME_OVER,{message:"Enterprise was destroyed.", cause:cause.name});
-				return;
-		   }
-		   var message = "Klingon ship fired at us, shields dropped to "+Math.round(Enterprise.shields);
+		   var message = cause.name+" fired at us, shields dropped to "+Math.round(Enterprise.shields);
 		   if (Math.random()<impact){
 			   Enterprise.phaserPower = Enterprise.phaserPower/2;
 			   message+="<br>Phasers were damaged.";
@@ -152,9 +148,14 @@ var Enterprise={
 			   message+="<br>Reactor was damaged.";
 			   Events.trigger(Events.SETTINGS_CHANGED);
 			   if (Enterprise.reactorOutput<0){
-					Events.trigger(Events.GAME_OVER,{message:"Enterprise was destroyed.", cause:cause.name});
+					Events.trigger(Events.GAME_OVER,{message:message, cause:cause.name});
 					return;
 			   }
+		   }
+		   if (Enterprise.shields == 0) {
+			    message+="<br>Enterprise was destroyed."
+				Events.trigger(Events.GAME_OVER,{message:message, cause:cause.name});
+				return;
 		   }
 		   Enterprise.isDamaged=true;
 		   Events.trigger(Events.ENTERPRISE_DAMAGED);
