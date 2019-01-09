@@ -103,12 +103,10 @@ var Controller={
 			Controller.endTurn();
 		},
 		newTurn:function(){
-			Events.trigger(Events.TURN_STARTS);
-			Enterprise.budget=Enterprise.reactorOutput;
-			Enterprise.shields = Enterprise.userDefinedShields;
+			Enterprise.resetForNewTurn();
 			var consumption = Computer.calculateBaseEnergyConsumption();
 			Computer.consume(consumption);
-			Enterprise.shields = Math.min(Enterprise.shields,Enterprise.maxShields);
+			Events.trigger(Events.TURN_STARTS);
 			if (!IO.isMessageShown())
 				Controller.showComputerScreen();
 			else IO.call(Controller.showComputerScreen);

@@ -141,7 +141,7 @@ table a, table a:visited{
  * Long range scan
  */
 .region-names{
-	background-color:#220022;
+	background-color:#111111;
 	color:white;
 	text-align: center;
 	font-size:0.8em;
@@ -175,7 +175,7 @@ table a, table a:visited{
 	background-color:maroon;
 }
 
-.has-starship.has-klingons{
+.has-starbase.has-klingons{
   background: repeating-linear-gradient(
   to right,
   maroon,

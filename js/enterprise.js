@@ -110,7 +110,9 @@ var Enterprise={
 		   Enterprise.y = newY;
 	   },
 	   assignDamage:function(damage,cause){
-		   var impact = Math.min(0.5,Math.pow(((damage+1)/(Enterprise.shields+1)),1.2)); //scale impact: low impact doesn't hurt us at all, high impact a lot
+		   var impact = Math.pow(((damage+1)/(Enterprise.shields+1)),1.2); //scale impact: low impact doesn't hurt us at all, high impact a lot
+		   if (impact<=0)
+			   return;
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
 		   Enterprise.maxShields = Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact));
 		   Enterprise.shields = Enterprise.maxShields;
@@ -160,6 +162,11 @@ var Enterprise={
 		   Enterprise.isDamaged=true;
 		   Events.trigger(Events.ENTERPRISE_DAMAGED);
 		   return IO.message(message).then.nothing();
+	   },
+	   resetForNewTurn:function(){
+			Enterprise.budget=Enterprise.reactorOutput;
+			Enterprise.shields = Enterprise.userDefinedShields;
+			Enterprise.shields = Math.min(Enterprise.shields,Enterprise.maxShields);
 	   },
 	   firePhasersAt:function(targetX, targetY){
 		   var v = Enterprise._firePhasersAt(targetX, targetY, false);

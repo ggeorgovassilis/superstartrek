@@ -98,9 +98,7 @@ var Tools={
 			return null;
 		},
 		random:function(max){
-			max++;
-			var e = Math.exp(1);
-			return Math.floor(max*(Math.exp(Math.random())-1)/e);
+			return Math.floor(max*Math.random());
 		},
 		walkLine:function(x0,y0,x1,y1, callback){
 			var sx=0;
