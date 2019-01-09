@@ -38,14 +38,17 @@ var ShortRangeScan = {
 			return {css:"star",symbol:"&nbsp;*&nbsp;"};
 		});
 		ShortRangeScan.updateList(quadrant.klingons, function(klingon) {
+			var css="";
+			if (klingon.cloaked)
+				css = "cloaked ";
 			var ratio = klingon.shields/klingon.maxShields;
 			if (ratio<0.33)
-				return {css:"damage-bad",symbol:klingon.symbol};
-			if (ratio<0.66)
-				return {css:"damage-medium",symbol:klingon.symbol};
-			if (ratio<1)
-				return {css:"damage-light",symbol:klingon.symbol};
-			return {css:"",symbol:klingon.symbol};
+				css+="damage-bad";
+			else if (ratio<0.66)
+				css+="damage-medium";
+			else if (ratio<1)
+				css+="damage-light";
+			return {css:css,symbol:klingon.symbol};
 		});
 		ShortRangeScan.updateList(quadrant.starbases, function(
 				starbase) {

@@ -43,6 +43,7 @@ var Setup = {
 						klingon : true,
 						symbol:shipType.symbol,
 						quadrant : quadrant,
+						cloaked:true,
 						name : shipType.name
 					});
 				}

@@ -175,6 +175,10 @@ table a, table a:visited{
 	background-color:maroon;
 }
 
+.cloaked{
+	color:transparent;
+}
+
 .has-starbase.has-klingons{
   background: repeating-linear-gradient(
   to right,

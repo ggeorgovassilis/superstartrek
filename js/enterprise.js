@@ -87,7 +87,7 @@ var Enterprise={
 			var klingons = Enterprise.quadrant.klingons;
 			var klingon = klingons.filter(function(klingon){
 				var distance = Tools.distance(Enterprise.x, Enterprise.y, klingon.x, klingon.y);
-				if (distance<=Constants.PHASER_RANGE)
+				if (!klingon.cloaked && distance<=Constants.PHASER_RANGE)
 					return klingon;
 			}).random();
 			if (klingon)

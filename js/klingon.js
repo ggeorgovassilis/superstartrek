@@ -16,10 +16,21 @@ var Klingons = {
 		}
 		return Klingons.manueverIntoFiringPosition(klingon, Enterprise.quadrant);
 	},
+	decloak:function(klingon){
+		if (klingon.cloaked){
+			klingon.cloaked=false;
+			Events.trigger(Events.KLINGON_MOVED,{target:klingon});
+		}
+	},
+	resetKlingons:function(klingons){
+		klingons.foreach(function(klingon){
+			//can't cloaked if damaged too much
+			klingon.cloaked=klingon.shields>klingon.maxShields/2;
+			Klingons.moveRandomly(klingon);
+		})
+	},
 	on_enterprise_warped : function() {
-		var klingons = Enterprise.quadrant.klingons;
-		for (var i = 0; i < klingons.length; i++)
-			Klingons.moveRandomly(klingons[i]);
+		Klingons.resetKlingons(Enterprise.quadrant.klingons);
 	},
 	moveRandomly : function(klingon) {
 		var x = Math.floor(Math.random() * 8);
@@ -29,7 +40,8 @@ var Klingons = {
 			return;
 		klingon.x = x;
 		klingon.y = y;
-		Events.trigger(Events.KLINGON_MOVED,{target:klingon});
+		if (!klingon.cloaked)
+			Events.trigger(Events.KLINGON_MOVED,{target:klingon});
 	},
 	manueverIntoFiringPosition : function(klingon, quadrant) {
 		var path = Tools.findPathBetween(quadrant,klingon.x,klingon.y,Enterprise.x, Enterprise.y);
@@ -39,13 +51,16 @@ var Klingons = {
 		var lastPosition = path[i];
 		klingon.x = lastPosition.x;
 		klingon.y = lastPosition.y;
-		Events.trigger(Events.KLINGON_MOVED);
+		if (!klingon.cloaked)
+			Events.trigger(Events.KLINGON_MOVED);
 		return;
 	},
 	fireOnEnterprise : function(klingon) {
+		Klingons.decloak(klingon);
 		return Enterprise.assignDamage(klingon.weaponPower,klingon);
 	},
 	damage : function(klingon, damage) {
+		Klingons.decloak(klingon);
 		klingon.shields -= damage;
 		if (klingon.shields > 0) {
 			Events.trigger(Events.KLINGON_DAMAGED,{target:klingon})

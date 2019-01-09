@@ -122,7 +122,8 @@ var Controller={
 			if (thing === Enterprise)
 				return Tools.gotoScreen("statusreport");
 			var message = "";
-			console.log(thing)
+			if (!thing)
+				return IO.message("Nothing at sector").then.call(Controller.endTurn);
 			if (thing.klingon)
 				message = thing.name + "<br>Shields %"+Tools.perc(thing.shields,thing.maxShields);
 			if (thing.star)
