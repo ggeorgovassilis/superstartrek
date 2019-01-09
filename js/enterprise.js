@@ -110,12 +110,18 @@ var Enterprise={
 		   Enterprise.y = newY;
 	   },
 	   assignDamage:function(damage,cause){
-		   var impact = Math.pow(((damage+1)/(Enterprise.shields+1)),1.2); //scale impact: low impact doesn't hurt us at all, high impact a lot
+		   console.log("---------------------");
+		   console.log(cause,"assigns damage",damage);
+		   console.log("Shields initially at",Enterprise.shields);
+		   var impact = Math.pow(((damage+1)/(Enterprise.shields+1)),1.1); //scale impact: low impact doesn't hurt us at all, high impact a lot
+		   console.log("Impact",impact);
 		   if (impact<=0)
 			   return;
+		   
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
-		   Enterprise.maxShields = Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact));
-		   Enterprise.shields = Enterprise.maxShields;
+		   Enterprise.maxShields = Math.floor(Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact)));
+		   Enterprise.shields = Math.min(Enterprise.shields,Enterprise.maxShields);
+		   console.log("Shields",Enterprise.shields,"max shields",Enterprise.maxShields);
 		   var message = cause.name+" fired at us, shields dropped to "+Math.round(Enterprise.shields);
 		   if (Math.random()<impact){
 			   Enterprise.phaserPower = Enterprise.phaserPower/2;
@@ -167,6 +173,38 @@ var Enterprise={
 			Enterprise.budget=Enterprise.reactorOutput;
 			Enterprise.shields = Enterprise.userDefinedShields;
 			Enterprise.shields = Math.min(Enterprise.shields,Enterprise.maxShields);
+	   },
+	   fireTorpedosAt:function(targetX,targetY){
+			var obstacle = Tools.findObstruction(Enterprise.quadrant, Enterprise.x,
+					Enterprise.y, targetX, targetY);
+			Enterprise.torpedos--;
+			Events.trigger(Events.WEAPON_FIRED,{weapon:"torpedo"});
+			if (obstacle) {
+				var thing = obstacle.obstacle;
+				if (thing.star) {
+					return IO.message("Photon torpedo hit star at "
+							+ thing.x + "," + thing.y).then.endTurn();
+				}
+				if (thing.starbase) {
+					Enterprise.quadrant.starbases.remove(thing);
+					return IO.message("Photon torpedo hit starbase at "
+							+ thing.x + "," + thing.y).then.endTurn();
+				}
+				if (thing.klingon) {
+					var klingon = thing;
+					var chance = 1 / Math.log(1 + Tools.distance(Enterprise.x,
+							Enterprise.y, klingon.x, klingon.y));
+					if (Math.random() <= chance) {
+						//photon torpedos are inefficient against shields; damage malus for full shields
+						var damage = Constants.MAX_TORPEDO_DAMAGE*(1-0.9*(Math.sqr(klingon.shields/klingon.maxShields)));
+						Klingons.damage(klingon, damage);
+						return IO.endTurn();
+					} else{
+						IO.message("Photon torpedo missed target").then.endTurn();
+					}
+				}
+			} else
+				return IO.message("Photon torpedo exploded in the void.").then.endTurn();
 	   },
 	   firePhasersAt:function(targetX, targetY){
 		   var v = Enterprise._firePhasersAt(targetX, targetY, false);

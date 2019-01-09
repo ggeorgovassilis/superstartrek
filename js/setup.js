@@ -29,10 +29,10 @@ var Setup = {
 		var a = new Array();
 		var hasKlingon = Constants.CHANCE_OF_KLINGON_IN_QUADRANT > Math.random();
 		if (hasKlingon) {
-				var howMany = Math.floor(1+Math.random()*Constants.MAX_KLINGONS_IN_QUADRANT);
+				var howMany = Math.max(1,Tools.random(Constants.MAX_KLINGONS_IN_QUADRANT));
 				while (howMany--){
 					//make lower types more likely
-					var shipTypeIndex = Math.floor(Math.sqrt(Math.random()) * Constants.KLINGON_SHIP_CLASS_MODIFIERS.length);
+					var shipTypeIndex = Math.floor(Math.sqr(Math.random()) * Constants.KLINGON_SHIP_CLASS_MODIFIERS.length);
 					var shipType = Constants.KLINGON_SHIP_CLASS_MODIFIERS[shipTypeIndex];
 					a.pushUnique({
 						x : Math.round(Math.random() * 7),

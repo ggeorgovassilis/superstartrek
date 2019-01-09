@@ -33,15 +33,15 @@ var Constants = {
 		SMALL_HEIGHT:450,
 		SMALL_WIDTH:621,
 		STARBASES_ON_MAP:3,
-		CHANCE_OF_KLINGON_IN_QUADRANT:0.3,
 		
-		KLINGON_DISRUPTOR_POWER:50,
+		CHANCE_OF_KLINGON_IN_QUADRANT:0.3,
+		KLINGON_DISRUPTOR_POWER:10,
 		MAX_KLINGON_SHIELD:100,
 		KLINGON_IMPULSE_SPEED:1,//must be integer because of use in a*
 		MAX_KLINGONS_IN_QUADRANT:5,
 		KLINGON_SHIP_CLASS_MODIFIERS:[
-			{name:"a Klingon raider", modifier:0.2, symbol:"c-}"},
-			{name:"a Klingon Bird-of-Prey", modifier:0.8, symbol:"C-D"}
+			{name:"a Klingon raider", modifier:0.5, symbol:"c-}"},
+			{name:"a Klingon Bird-of-Prey", modifier:1, symbol:"C-D"}
 		],
 		DISRUPTOR_RANGE:2.83, //allow up to 2 sectors diagonically
 };
