@@ -2,15 +2,14 @@
  * Starmap
  */
 var StarMap={
-		constructQuadrants:function(){
-			Setup.makeStarMap(StarMap);
-		},
+		   constructQuadrants:function(){
+			   Setup.makeStarMap(StarMap);
+		   },
 		   getQuadrantAt:function(x,y){
-			   for (var i=0;i<StarMap.quadrants.length;i++){
-				   var quadrant = StarMap.quadrants[i];
-				   if (quadrant.x === x && quadrant.y === y)
-					   return quadrant;
-			   }
+			   var quadrant = StarMap.quadrants[x+y*8];
+			   if (x!=quadrant.x || y!=quadrant.y)
+				   throw "Mislocated quadrant. Requested "+x+":"+y+" but got "+quadrant.x+":"+quadrant.y;
+			   return quadrant;
 		   },
 		   getThingFromListAt:function(list,x,y){
 			   for (var i=0;i<list.length;i++){
