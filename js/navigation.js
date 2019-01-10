@@ -6,7 +6,11 @@ Controller.navigate = function() {
 	if (obstacle) {
 		finalX = obstacle.x;
 		finalY = obstacle.y;
-	}
+		if (obstacle.klingon){
+			Klingons.decloak(obstacle.klingon);
+			IO.message(obstacle.name+" decloaked at "+obstacle.x+":"+obstacle.y);
+		}
+	};
 	// movement obstructed?
 	distance = Tools.distance(Enterprise.x, Enterprise.y, finalX, finalY);
 	if (distance === 0)
