@@ -37,7 +37,7 @@ ul{
 }
 
 
-a, a:visited, button{
+a, a:visited, button, .button{
 	text-decoration:none;
 	color:white;
 	outline: solid darkslategray 1px;
@@ -412,6 +412,10 @@ h1,h3{
 	border-bottom:solid grey 1px;
 	padding-bottom:0.5em;
 	margin-bottom:0.5em;
+}
+
+.entry.damage{
+	color:red;
 }
 
 a.single{

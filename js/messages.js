@@ -32,8 +32,9 @@ var IO={
 		IO.currentCallback = function(){};
 		return IO;
 	},
-	message:function(text){
-		IO.content.append("<div class=entry>"+text+"</div>");
+	message:function(text,type){
+		var css = "entry "+(type?type:"");
+		IO.content.append("<div class=\""+css+"\">"+text+"</div>");
 		Tools.addPageCss("messages-visible");
 		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
 		Tools.centerScreen();

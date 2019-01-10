@@ -73,6 +73,7 @@ var ShortRangeScan = {
 		Tools.defer("ShortRanceScan_updateMap",ShortRangeScan._updateMap);
 	},
 	constructUi : function() {
+		console.log("construct UI");
 		var element = ShortRangeScan.element;
 		for (var y = 0; y < 8; y++) {
 			var tr = $("<tr></tr>");

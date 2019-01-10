@@ -158,6 +158,7 @@ var Controller={
 		},
 		gameOver:function(e){ // Because of a bug, newTurn is called after gameOver, overwriting IO.callback.
 			//This is why gameOver is called multiple times. We want to reload page on the last.
+			window.onbeforeunload = null;
 			Controller.newTurn=Controller.gameOver;
 			if (e) IO.message(e.message);
 			else

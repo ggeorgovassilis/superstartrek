@@ -55,7 +55,7 @@ Events.on(Events.SETTINGS_CHANGED, Controller.updateFireAtWillButton);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateDamagedIndicator);
 Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateDamagedIndicator);
-//window.onbeforeunload = function(e){
-//		return ""; 
-//};
+window.onbeforeunload = function(e){
+		return "Are you sure you want to leave?"; 
+};
 

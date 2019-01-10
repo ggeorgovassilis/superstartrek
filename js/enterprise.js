@@ -46,6 +46,9 @@ var Enterprise={
 				if (!Enterprise.tacticalComputerOnline && canFix()){
 					   Enterprise.tacticalComputerOnline=true;
 					   message="Repaired tactical computer.";
+					   Enterprise.fireAtWill = true;
+						if (message)
+							Events.trigger(Events.SETTINGS_CHANGED);
 					   break;
 					}
 			   if (Enterprise.reactorOutput<0.6*Constants.MAX_REACTOR_OUTPUT){
@@ -77,7 +80,7 @@ var Enterprise={
 			if (message)
 				Events.trigger(Events.ENTERPRISE_REPAIRED);
 			else message="Engineering couldn't repair anything at this time.";
-				return IO.message(message);
+			return IO.message(message);
 		},
 		runComputer:function(){
 			if (Enterprise.fireAtWill && Enterprise.tacticalComputerOnline)
@@ -119,35 +122,35 @@ var Enterprise={
 		   var message = cause.name+" fired at us, shields dropped to "+Math.round(Enterprise.shields);
 		   if (Math.random()<impact){
 			   Enterprise.phaserPower = Enterprise.phaserPower/2;
-			   message+="<br>Phasers were damaged.";
+			   IO.message("Phasers were damaged","damage");
 		   }
 		   if (Math.random()<impact && Enterprise.lrsOnline){
 			   Enterprise.lrsOnline=false;
-			   message+="<br>LRS was damaged.";
+			   IO.message("LRS was damaged.","damage");
 		   }
 		   if (Math.random()<impact && Enterprise.torpedosOnline){
 			   Enterprise.torpedosOnline=false;
-			   message+="<br>Torpedo bay was damaged.";
+			   IO.message("Torpedo bay was damaged.","damage");
 		   }
 		   if (Math.random()<impact && Enterprise.tacticalComputerOnline){
 			   Enterprise.tacticalComputerOnline=false;
 			   Enterprise.fireAtWill=false;
-			   message+="<br>Tactical computer was damaged.";
+			   IO.message("Tactical computer was damaged.","damage");
 			   Events.trigger(Events.SETTINGS_CHANGED);
 		   }
 		   if (Math.random()<impact && Enterprise.maxImpulse){
 			   Enterprise.maxImpulse--;
-			   message+="<br>Impulse drive was damaged.";
+			   IO.message("Impulse drive was damaged.","damage");
 			   Events.trigger(Events.SETTINGS_CHANGED);
 		   }
 		   if (Math.random()<impact && Enterprise.maxWarpSpeed>1){
 			   Enterprise.maxWarpSpeed--;
-			   message+="<br>Warp drive was damaged.";
+			   IO.message("Warp drive was damaged.","damage");
 			   Events.trigger(Events.SETTINGS_CHANGED);
 		   }
 		   if (Math.random()<impact && Enterprise.reactorOutput>0){
 			   Enterprise.reactorOutput-=(Constants.MAX_REACTOR_OUTPUT/20);
-			   message+="<br>Reactor was damaged.";
+			   IO.message("Reactor was damaged.","damage");
 			   Events.trigger(Events.SETTINGS_CHANGED);
 			   if (Enterprise.reactorOutput<0){
 					Events.trigger(Events.GAME_OVER,{message:message, cause:cause.name});
@@ -155,7 +158,7 @@ var Enterprise={
 			   }
 		   }
 		   if (Enterprise.shields < 1) {
-			    message+="<br>Enterprise was destroyed."
+			    IO.message("Enterprise was destroyed.","gameover");
 				Events.trigger(Events.GAME_OVER,{message:message, cause:cause.name});
 				return;
 		   }
