@@ -4,10 +4,11 @@
 var ShortRangeScan = {
 	element : $("#quadrantscan"),
 	quadrantScanCells:[],
+	sectorElements:[[],[],[],[],[],[],[],[]],
 	updateList : function(list, formatter) {
 		//function is called a lot, so going native JS
 		list.foreach(function(thing){
-			var tile = document.getElementById("cmd_selectSector_" + thing.x + "_" + thing.y);
+			var tile = ShortRangeScan.sectorElements[thing.x][thing.y];
 			var format = formatter(thing);
 			tile.setAttribute("class", format.css);
 			tile.innerHTML = format.symbol;
@@ -78,6 +79,7 @@ var ShortRangeScan = {
 			for (var x = 0; x < 8; x++) {
 				var td = $("<td id='cmd_selectSector_" + x + "_" + y
 						+ "'>&nbsp;</td>");
+				ShortRangeScan.sectorElements[x][y]=td[0];
 				tr.append(td);
 			}
 			element.append(tr);

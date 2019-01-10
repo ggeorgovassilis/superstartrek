@@ -16,12 +16,19 @@ var Events={
 	QUADRANT_SELECTED:"QUADRANT_SELECTED",
 	LRS:"LRS",
 	STATUS_REPORT:"STATUS_REPORT",
+	handlers:{},
 	trigger:function(event,arg){
-		if (!arg)
-			arg={};
 		if (!Events[event])
 			throw "Unknown event "+event;
-		$window.trigger(event,[arg]);
+		arg = arg || {};
+		var list = Events.handlers[event] || [];
+		list.foreach(function(handler){
+			try{
+				handler(event,arg);
+			}catch(ex){
+				console.log(ex);
+			}
+		});
 	},
 	on:function(event,callback){
 		if (!Events[event])
@@ -30,7 +37,8 @@ var Events={
 			throw "No callback given";
 		if (!isFunction(callback))
 			throw "Callback is not a function";
-		$(window).on(event,function(e,arg){
+		var list = Events.handlers[event] = (Events.handlers[event]||[]);
+		list.push(function(e,arg){
 			callback(arg);
 		});
 	},

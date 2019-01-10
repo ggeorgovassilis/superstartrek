@@ -110,18 +110,12 @@ var Enterprise={
 		   Enterprise.y = newY;
 	   },
 	   assignDamage:function(damage,cause){
-		   console.log("---------------------");
-		   console.log(cause,"assigns damage",damage);
-		   console.log("Shields initially at",Enterprise.shields);
 		   var impact = Math.pow(((damage+1)/(Enterprise.shields+1)),1.1); //scale impact: low impact doesn't hurt us at all, high impact a lot
-		   console.log("Impact",impact);
 		   if (impact<=0)
 			   return;
-		   
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
 		   Enterprise.maxShields = Math.floor(Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact)));
 		   Enterprise.shields = Math.min(Enterprise.shields,Enterprise.maxShields);
-		   console.log("Shields",Enterprise.shields,"max shields",Enterprise.maxShields);
 		   var message = cause.name+" fired at us, shields dropped to "+Math.round(Enterprise.shields);
 		   if (Math.random()<impact){
 			   Enterprise.phaserPower = Enterprise.phaserPower/2;
