@@ -50,7 +50,6 @@ var Controller={
 		showSectorSelectionMenu:function(s){
 			Controller.sector.x = s.x;
 			Controller.sector.y = s.y;
-			$("#cmd_fireTorpedos").text("Photon torpedos ("+Enterprise.torpedos+")");
 			Tools.addPageCss("sector-selected");
 		},
 		toggleShields:function(){
