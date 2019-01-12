@@ -126,6 +126,11 @@ var Tools={
 			     };
 				};
 		},
+		//jquery 1.9 leaks memory when overwriting text
+		//https://bugs.jquery.com/ticket/11809
+		setElementText:function(element, text){
+			element[0].innerHTML = text;
+		},
 		findObstruction:function(quadrant, xFrom,yFrom,xTo,yTo){
 			var thing = false;
 			var firstStep = true;
@@ -214,4 +219,37 @@ var Tools={
 
 function isFunction(functionToCheck) {
 	 return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+}
+
+function click(el){
+	  if (el.fireEvent) {
+	    el.fireEvent('onclick');
+	  } else {
+	    var evObj = document.createEvent('Events');
+	    evObj.initEvent("click", true, false);
+	    el.dispatchEvent(evObj);
+	  }
+}
+
+var _walkaround_timer = null;
+
+function stop_walking(){
+	if (_walkaround_timer)
+		clearTimeout(_walkaround_timer);
+	_walkaround_timer = null;
+}
+
+function start_walking(){
+	var timeout=20;
+	Enterprise.repairAtStarbase();
+	var x = Tools.random(8);
+	var y = Tools.random(8);
+	var e = $("#quadrantscan td[x='"+x+"'][y='"+y+"']")[0];
+	click(e);
+	_walkaround_timer=window.setTimeout(function(){
+//		click(document.getElementById("button_dismiss"));
+		click($("button[command=navigate]")[0]);
+		click(document.getElementById("hidemessagesbutton"));
+		_walkaround_timer=window.setTimeout(start_walking,timeout);
+	},timeout);
 }

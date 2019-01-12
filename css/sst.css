@@ -408,6 +408,11 @@ h1,h3{
 	display:none;
 }
 
+#messages ol{
+	margin:0;
+	padding:0;
+}
+
 #messages .entry:not(:last-child) {
 	border-bottom:solid grey 1px;
 	padding-bottom:0.5em;

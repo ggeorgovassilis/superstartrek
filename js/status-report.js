@@ -42,28 +42,27 @@ var StatusReport = {
 	},
 	update : function() {
 		StatusReport.updateSchematics();
-		StatusReport.energy.text(Enterprise.energy);
-		StatusReport.energyConsumption
-				.text(Computer.calculateBaseEnergyConsumption);
-		StatusReport.torpedos.text(Enterprise.torpedos+" | "+(Enterprise.torpedosOnline?"ONLINE":"OFFLINE"));
-		StatusReport.location.text(Enterprise.quadrant.regionName + " "
+		Tools.setElementText(StatusReport.energy, Enterprise.energy);
+		Tools.setElementText(StatusReport.energyConsumption, Computer.calculateBaseEnergyConsumption());
+		Tools.setElementText(StatusReport.torpedos, Enterprise.torpedos+" | "+(Enterprise.torpedosOnline?"ONLINE":"OFFLINE"));
+		Tools.setElementText(StatusReport.location, Enterprise.quadrant.regionName + " "
 				+ Enterprise.quadrant.x + "," + Enterprise.quadrant.y);
-		StatusReport.shields.text(Math.floor(Enterprise.shields) + " / "
+		Tools.setElementText(StatusReport.shields, Math.floor(Enterprise.shields) + " / "
 				+ Math.floor(Enterprise.maxShields));
-		StatusReport.phaserPower.text(StatusReport.perc(Enterprise.phaserPower,Constants.ENTERPRISE_MAX_PHASER_POWER));
-		StatusReport.stardate.text(Tools.formatStardate(Computer.stardate));
-		StatusReport.reactor.text("%" + 100
+		Tools.setElementText(StatusReport.phaserPower, StatusReport.perc(Enterprise.phaserPower,Constants.ENTERPRISE_MAX_PHASER_POWER));
+		Tools.setElementText(StatusReport.stardate, Tools.formatStardate(Computer.stardate));
+		Tools.setElementText(StatusReport.reactor, "%" + 100
 				* Math.floor(Enterprise.reactorOutput / Constants.MAX_REACTOR_OUTPUT));
-		StatusReport.reactorRemaining.text(Enterprise.budget);
-		StatusReport.klingonsCount.text(StarMap.countKlingons());
-		StatusReport.tacticalComputer.text(Enterprise.tacticalComputerOnline?"ONLINE":"OFFLINE");
-		StatusReport.maxImpulse.text("%"
+		Tools.setElementText(StatusReport.reactorRemaining, Enterprise.budget);
+		Tools.setElementText(StatusReport.klingonsCount, StarMap.countKlingons());
+		Tools.setElementText(StatusReport.tacticalComputer, Enterprise.tacticalComputerOnline?"ONLINE":"OFFLINE");
+		Tools.setElementText(StatusReport.maxImpulse, "%"
 				+ Math.round(100 * Enterprise.maxImpulse
 						/ Constants.MAX_IMPULSE_SPEED));
-		StatusReport.lrs.text(Enterprise.lrsOnline?"ONLINE":"OFFLINE");
+		Tools.setElementText(StatusReport.lrs, Enterprise.lrsOnline?"ONLINE":"OFFLINE");
 	},
 	legend:function(what,status){
-		$("#what").text(what);
-		$("#status").text(status);
+		Tools.setElementText($("#what"), what);
+		Tools.setElementText($("#status"), status);
 	}
 };

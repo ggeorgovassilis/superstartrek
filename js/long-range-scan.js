@@ -7,15 +7,16 @@ var LongRangeScanScreen={
 			$("#longrangescan").on("click",LongRangeScanScreen.onQuadrantSelected);
 		},
 		isQuadrantCell:function(cell){
-			var id = cell.attr("id");
-			return id && id.startsWith("cmd_");
+			var x = parseInt(cell.attr("x"));
+			return Number.isInteger(x);
 		},
 		onQuadrantSelected:function(e){
 			var cell = $(e.target);
 			if (!LongRangeScanScreen.isQuadrantCell(cell))
 				return;
-			var id = cell.attr("id");
-			window.location.hash="#"+id;
+			var x = parseInt(cell.attr("x"));
+			var y = parseInt(cell.attr("y"));
+			Controller.selectQuadrant(x,y);
 		},
 		show:function(){
 			if (!Enterprise.lrsOnline){
@@ -31,7 +32,7 @@ var LongRangeScanScreen={
 			var klingonCount = quadrant.explored?quadrant.klingons.length:0;
 			var hasKlingons = klingonCount > 0;
 			var hasStarbase = quadrant.starbases.length > 0; 
-			e.text((hasKlingons?"K":" ")+" "+(hasStarbase?"!":" ")+" "+quadrant.stars.length);
+			Tools.setElementText(e,(hasKlingons?"K":" ")+" "+(hasStarbase?"!":" ")+" "+quadrant.stars.length);
 			var css = "";
 			if (Enterprise.quadrant === quadrant)
 				css="has-starship";
@@ -42,7 +43,8 @@ var LongRangeScanScreen={
 			if (quadrant.explored)
 				css+=" explored";
 			e.attr("class",css);
-			e.attr("id","cmd_selectQuadrant_"+quadrant.x+"_"+quadrant.y);
+			e.attr("x",quadrant.x);
+			e.attr("y",quadrant.y);
 		}
 };
 

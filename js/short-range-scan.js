@@ -59,7 +59,7 @@ var ShortRangeScan = {
 			ShortRangeScan.updateList([ Enterprise ], function(starhip) {
 				return {css:"",symbol:"O=Ξ"};
 			});
-		$("#quadrant_name").text(Enterprise.quadrant.regionName);
+		Tools.setElementText($("#quadrant_name"), Enterprise.quadrant.regionName);
 		if (!Enterprise.quadrant.klingons.isEmpty()){
 			$("#srs_heading").addClass("red-alert");
 		} else $("#srs_heading").removeClass("red-alert");
@@ -78,7 +78,7 @@ var ShortRangeScan = {
 		for (var y = 0; y < 8; y++) {
 			var tr = $("<tr></tr>");
 			for (var x = 0; x < 8; x++) {
-				var td = $("<td id='cmd_selectSector_" + x + "_" + y
+				var td = $("<td x='" + x + "' y='" + y
 						+ "'>&nbsp;</td>");
 				ShortRangeScan.sectorElements[x][y]=td[0];
 				tr.append(td);
@@ -89,12 +89,12 @@ var ShortRangeScan = {
 	},
 	onSectorClicked:function(e){
 		var cell = $(e.target);
-		var id = cell.attr("id");
-		var parts = /\w+_(\d)_(\d)/.exec(id);
-		if (!parts || !parts.length) //clicked on something else than a cell?
+		var x = cell.attr("x");
+		var y = cell.attr("y");
+		if (!x) //clicked on something else than a cell?
 			return;
-		var x = parseInt(parts[1]);
-		var y = parseInt(parts[2]);
+		x = parseInt(x);
+		y = parseInt(y);
 		$("#quadrantscan .selected").removeClass("selected");
 		cell.addClass("selected");
 		Events.trigger(Events.SECTOR_SELECTED,{x:x,y:y});
@@ -106,11 +106,11 @@ var ShortRangeScan = {
 	},
 	onQuadrantClicked:function(e){
 		var cell = $(e.currentTarget);
-		var id = cell.attr("id");
-		if (id && id.startsWith("cmd")){
-			var parts = /\w+_(\d)_(\d)/.exec(id);
-			var x = parseInt(parts[1]);
-			var y = parseInt(parts[2]);
+		var x = cell.attr("x");
+		var y = cell.attr("y");
+		if (x){
+			var x = parseInt(x);
+			var y = parseInt(y);
 			Events.trigger(Events.QUADRANT_SELECTED,StarMap.getQuadrantAt(x,y));
 		}
 	}
@@ -138,8 +138,9 @@ var ShortRangeScanScreen = {
 					quadrant.explored = true;
 					LongRangeScanScreen.updateElementWithQuadrant(quadrant,cell);
 				} else {
-					cell.text("0");
-					cell.attr("id", null);
+					Tools.setElementText(cell, "0");
+					cell.attr("x", null);
+					cell.attr("y", null);
 					cell.attr("class","");
 				}
 				index++;
@@ -151,9 +152,6 @@ Events.on(Events.START_GAME, ShortRangeScan.init);
 Events.on(Events.ENTERPRISE_MOVED, ShortRangeScan.updateMap);
 Events.on(Events.ENTERPRISE_WARPED, ShortRangeScan.updateMap);
 Events.on(Events.WEAPON_FIRED, ShortRangeScan.updateMap);
-//Events.on(Events.SETTINGS_CHANGED, ShortRangeScan.something_changed);
-//Events.on(Events.ENTERPRISE_DAMAGED, ShortRangeScan.something_changed);
-
 Events.on(Events.KLINGON_MOVED, ShortRangeScan.updateMap);
 Events.on(Events.KLINGON_DESTROYED, ShortRangeScan.updateMap);
 Events.on(Events.KLINGON_DAMAGED, ShortRangeScan.updateMap);

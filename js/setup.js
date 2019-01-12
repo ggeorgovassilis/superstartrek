@@ -4,7 +4,7 @@ var Setup = {
 			regionName : regionName,
 			x : x,
 			y : y,
-			element : $("#cmd_selectQuadrant_" + x + "_" + y),
+			element : $("td[x='"+x+"'][y='"+y+"']"),
 			stars : Setup.makeStars(),
 			starbases : [],
 			explored : false

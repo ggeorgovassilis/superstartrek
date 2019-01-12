@@ -31,7 +31,7 @@ var Computer={
 		},
 		updateStardate:function(){
 			var stardateFormatted = Tools.formatStardate(Computer.stardate);
-			$("#stardate").text(stardateFormatted + " "+Enterprise.budget);
+			Tools.setElementText($("#stardate"),stardateFormatted + " "+Enterprise.budget);
 		},
 		show:function(){
 			Tools.defer("Computer_show",function(){
