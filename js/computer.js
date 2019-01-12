@@ -10,9 +10,10 @@ var Computer={
 			indicator.css("width",progress+"%");
 		},
 		updateDamagedIndicator:function(){
-			Tools.removePageCss("enterprise-damaged");
 			if (Enterprise.isDamaged)
 				Tools.addPageCss("enterprise-damaged");
+			else
+				Tools.removePageCss("enterprise-damaged");
 		},
 		updateShieldsIndicator:function(){
 			$("#toggleShields .progress-indicator").css("width",Enterprise.shields+"%");
@@ -71,7 +72,8 @@ var Computer={
 			Enterprise.energy=Math.floor(Enterprise.energy);
 			if (Enterprise.energy<=0){
 				IO.call(Controller.gameOver);
-				Events.trigger(Events.GAME_OVER,{message:"We run out of anti matter.",cause:Enterprise});
+			    IO.message("We run out of anti matter.","gameover");
+				Events.trigger(Events.GAME_OVER,{message:"Game over",cause:"Enterprise"});
 				return true;
 			}
 			Events.trigger(Events.ENTERPRISE_ENERGY_CHANGED);

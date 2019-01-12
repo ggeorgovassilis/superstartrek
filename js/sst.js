@@ -51,7 +51,6 @@ var CommandBar={
 		element:$("#commandbar")
 };
 
-Events.on(Events.SETTINGS_CHANGED, Controller.updateFireAtWillButton);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateDamagedIndicator);
 Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateDamagedIndicator);

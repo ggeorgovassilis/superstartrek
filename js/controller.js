@@ -132,9 +132,10 @@ var Controller={
 			return IO.message(message).then.call(Controller.endTurn);
 		},
 		updateFireAtWillButton:function(){
-			Tools.removePageCss("fireAtWill");
 			if (Enterprise.fireAtWill)
 				Tools.addPageCss("fireAtWill");
+			else
+				Tools.removePageCss("fireAtWill");
 		},
 		endTurn:function(){
 			if (StarMap.countKlingons()===0){

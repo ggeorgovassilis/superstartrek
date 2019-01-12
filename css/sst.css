@@ -34,6 +34,8 @@ html{
 
 ul{
 	list-style:none;
+	margin:0;
+	padding:0;
 }
 
 
@@ -361,16 +363,13 @@ table a, table a:visited{
 	clear:both;
 	overflow:hidden;
 	background-color: rgba(0,0,0,0.7);
+	padding-left:0.5em;
 }
 
 .credits a{
 	border:none transparent 0px;
 	background-color:transparent;
 	text-decoration:underline;
-}
-
-h1,h3{
-	padding-left:5px;
 }
 
 /*
