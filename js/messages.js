@@ -34,7 +34,10 @@ var IO={
 	},
 	message:function(text,type){
 		var css = "entry "+(type?type:"");
-		IO.content.append("<li class=\""+css+"\">"+text+"</li>");
+		if (Array.isArray(text))
+			text.foreach(function(t){IO.content.append("<li class=\""+css+"\">"+t+"</li>");});
+		else
+			IO.content.append("<li class=\""+css+"\">"+text+"</li>");
 		Tools.addPageCss("messages-visible");
 		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
 		Tools.centerScreen();

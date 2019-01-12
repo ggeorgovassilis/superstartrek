@@ -120,15 +120,19 @@ var Controller={
 			var thing = StarMap.getAnythingInQuadrantAt(Enterprise.quadrant, Controller.sector.x, Controller.sector.y);
 			if (thing === Enterprise)
 				return Tools.gotoScreen("statusreport");
-			var message = "";
+			var message = [];
 			if (!thing)
 				return IO.message("Nothing at sector").then.call(Controller.endTurn);
-			if (thing.klingon)
-				message = thing.name + "<br>Shields %"+Tools.perc(thing.shields,thing.maxShields);
+			message.push(thing.name+" at "+thing.x+":"+thing.y);
+			if (thing.klingon){
+				message.push("Shields %"+Tools.perc(thing.shields,thing.maxShields));
+				message.push("Engines "+(thing.enginesOnline?"ONLINE":"OFFLINE"));
+				message.push("Weapons "+(thing.disruptorsOnline?"ONLINE":"OFFLINE"));
+			}
 			if (thing.star)
-				message = "A star."
+				message.push("A star.");
 			if (thing.starbase)
-				message = "A Federation star base."
+				message.push("A Federation star base.");
 			return IO.message(message).then.call(Controller.endTurn);
 		},
 		updateFireAtWillButton:function(){

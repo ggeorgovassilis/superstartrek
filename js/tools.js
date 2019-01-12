@@ -44,9 +44,9 @@ Array.prototype.isEmpty = function(){
 
 Array.prototype.foreach = function(callback){
 	var len = this.length;
-	while (len--)
+	for(var i=0;i<len;i++)
 		try{
-			callback(this[len]);
+			callback(this[i]);
 		} catch (e){
 			console.error(e);
 		}

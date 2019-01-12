@@ -194,7 +194,7 @@ var Enterprise={
 					if (Math.random() <= chance) {
 						//photon torpedos are inefficient against shields; damage malus for full shields
 						var damage = Constants.MAX_TORPEDO_DAMAGE*(1-0.9*(Math.sqr(klingon.shields/klingon.maxShields)));
-						Klingons.damage(klingon, damage);
+						Klingons.assignDamage(klingon, damage);
 						return IO.endTurn();
 					} else{
 						if (thing.klingon.cloaked){
@@ -235,7 +235,7 @@ var Enterprise={
 			Events.trigger(Events.WEAPON_FIRED);
 			if (autoaim)
 				IO.message("Autoaim fires at "+klingon.name);
-			Klingons.damage(klingon, damage);
+			Klingons.assignDamage(klingon, damage);
 			if (Computer.consume(consumption))
 				return;
 			IO.SRS();

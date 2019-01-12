@@ -11,6 +11,8 @@ var Klingons = {
 			maxShields : Constants.MAX_KLINGON_SHIELD*shipType.modifier,
 			weaponPower : Constants.KLINGON_DISRUPTOR_POWER*shipType.modifier,
 			klingon : true,
+			enginesOnline: true,
+			disruptorsOnline:true,
 			symbol:shipType.symbol,
 			quadrant : quadrant,
 			cloaked:true,
@@ -41,6 +43,8 @@ var Klingons = {
 		klingons.foreach(function(klingon){
 			//can't cloaked if damaged too much
 			klingon.cloaked=klingon.shields>klingon.maxShields/2;
+			klingon.enginesOnline=true;
+			klingon.disruptorsOnline=true;
 			Klingons.moveRandomly(klingon);
 		})
 	},
@@ -59,6 +63,8 @@ var Klingons = {
 			Events.trigger(Events.KLINGON_MOVED,{target:klingon});
 	},
 	manueverIntoFiringPosition : function(klingon, quadrant) {
+		if (!klingon.enginesOnline)
+			return;
 		var path = Tools.findPathBetween(quadrant,klingon.x,klingon.y,Enterprise.x, Enterprise.y);
 		if (!path || !path.length)
 			return;
@@ -71,23 +77,28 @@ var Klingons = {
 		return;
 	},
 	fireOnEnterprise : function(klingon) {
+		if (!klingon.disruptorsOnline)
+			return;
 		Klingons.decloak(klingon);
 		return Enterprise.assignDamage(klingon.weaponPower,klingon);
 	},
-	damage : function(klingon, damage) {
-		klingon.shields -= (klingon.cloaked?2:1)*damage;
+	assignDamage : function(klingon, damage) {
+		klingon.shields -= damage;
 		if (klingon.cloaked){
 			Klingons.decloak(klingon);
 			Klingons.destroy(klingon);
 		} else if (klingon.shields > 0) {
+			klingon.enginesOnline = klingon.enginesOnline && ((klingon.shields/klingon.maxShields)>=0.5*Math.random());
+			klingon.disruptorsOnline = klingon.disruptorsOnline && ((klingon.shields/klingon.maxShields)>=0.5*Math.random());
 			Events.trigger(Events.KLINGON_DAMAGED,{target:klingon})
 		} else {
 			Klingons.destroy(klingon);
 		}
 	},
 	destroy : function(klingon) {
-		klingon.quadrant.klingons.remove(klingon);
+		klingon.shields = 0;
 		Events.trigger(Events.KLINGON_DESTROYED, {target:klingon})
+		klingon.quadrant.klingons.remove(klingon);
 	},
 	on_klingon_damaged : function() {
 		IO.message("Target hit");
