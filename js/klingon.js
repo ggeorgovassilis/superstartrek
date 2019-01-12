@@ -3,6 +3,20 @@
  */
 
 var Klingons = {
+	makeShip:function(shipType, quadrant){
+		return {
+			x : Math.round(Math.random() * 7),
+			y : Math.round(Math.random() * 7),
+			shields : Constants.MAX_KLINGON_SHIELD*shipType.modifier,
+			maxShields : Constants.MAX_KLINGON_SHIELD*shipType.modifier,
+			weaponPower : Constants.KLINGON_DISRUPTOR_POWER*shipType.modifier,
+			klingon : true,
+			symbol:shipType.symbol,
+			quadrant : quadrant,
+			cloaked:true,
+			name : shipType.name
+		};
+	},
 	play : function(klingon, quadrant) {
 		if (Enterprise.quadrant != quadrant)
 			return;

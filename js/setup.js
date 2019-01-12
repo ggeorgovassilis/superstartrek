@@ -34,18 +34,7 @@ var Setup = {
 					//make lower types more likely
 					var shipTypeIndex = Math.floor(Math.sqr(Math.random()) * Constants.KLINGON_SHIP_CLASS_MODIFIERS.length);
 					var shipType = Constants.KLINGON_SHIP_CLASS_MODIFIERS[shipTypeIndex];
-					a.pushUnique({
-						x : Math.round(Math.random() * 7),
-						y : Math.round(Math.random() * 7),
-						shields : Constants.MAX_KLINGON_SHIELD*shipType.modifier,
-						maxShields : Constants.MAX_KLINGON_SHIELD*shipType.modifier,
-						weaponPower : Constants.KLINGON_DISRUPTOR_POWER*shipType.modifier,
-						klingon : true,
-						symbol:shipType.symbol,
-						quadrant : quadrant,
-						cloaked:true,
-						name : shipType.name
-					});
+					a.pushUnique(Klingons.makeShip(shipType, quadrant));
 				}
 		}
 		return a;
