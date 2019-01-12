@@ -18,6 +18,7 @@ var Klingons = {
 	},
 	decloak:function(klingon){
 		if (klingon.cloaked){
+			IO.message(klingon.name+" decloaked at "+klingon.x+":"+klingon.y);
 			klingon.cloaked=false;
 			Events.trigger(Events.KLINGON_MOVED,{target:klingon});
 		}
@@ -60,9 +61,11 @@ var Klingons = {
 		return Enterprise.assignDamage(klingon.weaponPower,klingon);
 	},
 	damage : function(klingon, damage) {
-		Klingons.decloak(klingon);
-		klingon.shields -= damage;
-		if (klingon.shields > 0) {
+		klingon.shields -= (klingon.cloaked?2:1)*damage;
+		if (klingon.cloaked){
+			Klingons.decloak(klingon);
+			Klingons.destroy(klingon);
+		} else if (klingon.shields > 0) {
 			Events.trigger(Events.KLINGON_DAMAGED,{target:klingon})
 		} else {
 			Klingons.destroy(klingon);

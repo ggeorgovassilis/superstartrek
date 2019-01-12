@@ -197,6 +197,9 @@ var Enterprise={
 						Klingons.damage(klingon, damage);
 						return IO.endTurn();
 					} else{
+						if (thing.klingon.cloaked){
+							return IO.message("Photon torpedo exploded in the void.").then.endTurn();
+						} else
 						IO.message("Photon torpedo missed target").then.endTurn();
 					}
 				}
