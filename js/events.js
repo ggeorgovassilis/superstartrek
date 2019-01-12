@@ -29,7 +29,7 @@ var Events={
 			throw "No callback given";
 		if (!isFunction(callback))
 			throw "Callback is not a function";
-		$(window).on(event,callback);
+		$(window).on(event,function(e,arg){callback(arg)});
 	},
 	hashchange:function(){
 		var screen = window.location.hash.substring("#".length);
