@@ -139,5 +139,19 @@ var Setup = {
 		});
 		$("#loading").remove();
 	}
+}
 
+function registerServiceWorker(){
+	if ('serviceWorker' in navigator) {
+		  console.log("registering service worker...");
+		  navigator.serviceWorker.register('/superstartrek/service-worker.js', {scope: '/superstartrek/'})
+		  .then(function(reg) {
+			App.serviceWorkerRegistration=reg;
+		    // registration worked
+		    console.log('Registration succeeded. Scope is ' + reg.scope);
+		  }).catch(function(error) {
+		    // registration failed
+		    console.log('Registration failed with ' + error);
+		  });
+		}
 }
