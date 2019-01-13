@@ -15,6 +15,7 @@ var Events={
 	SECTOR_SELECTED:"SECTOR_SELECTED",
 	QUADRANT_SELECTED:"QUADRANT_SELECTED",
 	LRS:"LRS",
+	SECTOR_SCAN:"SECTOR_SCAN",
 	STATUS_REPORT:"STATUS_REPORT",
 	trigger:function(event,arg){
 		if (!Events[event])

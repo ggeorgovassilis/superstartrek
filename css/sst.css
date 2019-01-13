@@ -181,6 +181,22 @@ table a, table a:visited{
 	color:transparent;
 }
 
+.needs-klingon{
+	display:none;
+}
+
+.has-klingon .needs-klingon{
+	display:block;
+}
+
+.klingon-scan{
+	width:100%;
+}
+
+.klingon-scan td{
+	padding-right:3em;
+}
+
 .has-starbase.has-klingons{
   background: repeating-linear-gradient(
   to right,
@@ -590,5 +606,13 @@ a.progress-bar {
 
 .hidden{
 	display:none;
+}
+
+.status-online{
+	color:green;
+}
+
+.status-offline{
+	color:red;
 }
 

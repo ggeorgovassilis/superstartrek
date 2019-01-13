@@ -241,10 +241,26 @@
 <tr class="quadrants"><td x="0" y="7"/><td x="1" y="7"/><td x="2" y="7"/><td x="3" y="7"/><td x="4" y="7"/><td x="5" y="7"/><td x="6" y="7"/><td x="7" y="7"/></tr>
 </table>
 </div>
+
 <div id="screen-manual" class="screen">
 <a href="#computer" class="full-width">Back</a>
 <iframe src="manual.html" class="manual" height="auto"></iframe>
 </div>
+
+<div id="screen-sectorscan" class="screen">
+<h2>Sector scan report</h2>
+<div>
+<span id="object-name"></span> in  <span id="object-quadrant"></span> at <span id="object-location"></span>
+</div>
+<br/>
+<table class="klingon-scan needs-klingon">
+<tr><td>Shields</td><td id="scan-report-shields"></td></tr>
+<tr><td>Weapons</td><td id="scan-report-weapons"></td></tr>
+<tr><td>Engines</td><td id="scan-report-engines"></td></tr>
+</table>
+<a href="#computer" class="full-width">Back</a>
+</div>
+
 </div>
 <script type="text/javascript" src="js/jquery.1.9.2.js"></script>
 <script type="text/javascript" src="js/astar.js"></script>
@@ -264,5 +280,6 @@
 <script type="text/javascript" src="js/short-range-scan.js"></script>
 <script type="text/javascript" src="js/long-range-scan.js"></script>
 <script type="text/javascript" src="js/battle.js"></script>
+<script type="text/javascript" src="js/sector-scan.js"></script>
 </body>
 </html>

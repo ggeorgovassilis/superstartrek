@@ -116,25 +116,6 @@ var Controller={
 			Enterprise.fireAtWill = !Enterprise.fireAtWill;
 			Events.trigger(Events.SETTINGS_CHANGED);
 		},
-		scanSector:function(){
-			var thing = StarMap.getAnythingInQuadrantAt(Enterprise.quadrant, Controller.sector.x, Controller.sector.y);
-			if (thing === Enterprise)
-				return Tools.gotoScreen("statusreport");
-			var message = [];
-			if (!thing)
-				return IO.message("Nothing at sector").then.call(Controller.endTurn);
-			message.push(thing.name+" at "+thing.x+":"+thing.y);
-			if (thing.klingon){
-				message.push("Shields %"+Tools.perc(thing.shields,thing.maxShields));
-				message.push("Engines "+(thing.enginesOnline?"ONLINE":"OFFLINE"));
-				message.push("Weapons "+(thing.disruptorsOnline?"ONLINE":"OFFLINE"));
-			}
-			if (thing.star)
-				message.push("A star.");
-			if (thing.starbase)
-				message.push("A Federation star base.");
-			return IO.message(message).then.call(Controller.endTurn);
-		},
 		updateFireAtWillButton:function(){
 			if (Enterprise.fireAtWill)
 				Tools.addPageCss("fireAtWill");
@@ -170,6 +151,9 @@ var Controller={
 					window.location.hash="";
 					window.location.reload();
 				},1);
+		},
+		scanSector:function(){
+			Events.trigger(Events.SECTOR_SCAN,{quadrant:Enterprise.quadrant,x:Controller.sector.x,y:Controller.sector.y});
 		}
 };
 
