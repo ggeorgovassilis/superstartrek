@@ -54,7 +54,7 @@ var CommandBar={
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateDamagedIndicator);
 Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateDamagedIndicator);
-Events.on(Events.START_GAME, registerServiceWorker);
+Events.on(Events.START_GAME, Setup.registerServiceWorker);
 window.onbeforeunload = function(e){
 		return "Are you sure you want to leave?"; 
 };

@@ -31,7 +31,7 @@ var Setup = {
 		if (hasKlingon) {
 				var howMany = Math.max(1,Tools.random(Constants.MAX_KLINGONS_IN_QUADRANT));
 				while (howMany--){
-					//make lower types more likely
+					// make lower types more likely
 					var shipTypeIndex = Math.floor(Math.sqr(Math.random()) * Constants.KLINGON_SHIP_CLASS_MODIFIERS.length);
 					var shipType = Constants.KLINGON_SHIP_CLASS_MODIFIERS[shipTypeIndex];
 					a.pushUnique(Klingons.makeShip(shipType, quadrant));
@@ -138,20 +138,42 @@ var Setup = {
 			Tools.addCssRule("."+id+" #"+id+"{display:block;}")
 		});
 		$("#loading").remove();
+	},
+	registerServiceWorker:function(){
+		if ('serviceWorker' in navigator) {
+			  console.log("registering service worker...");
+			  navigator.serviceWorker.register('/superstartrek/service-worker.js', {scope: '/superstartrek/'})
+			  .then(function(reg) {
+				App.serviceWorkerRegistration=reg;
+			    // registration worked
+			    console.log('Registration succeeded. Scope is ' + reg.scope);
+			  }).catch(function(error) {
+			    // registration failed
+			    console.log('Registration failed with ' + error);
+			  });
+			}
+	},
+	installApp:function(){
+		Setup.appInstallPrompt.prompt();
+		// Wait for the user to respond to the prompt
+		Setup.appInstallPrompt.userChoice.then((choiceResult) => {
+			if (choiceResult.outcome === 'accepted') {
+				console.log('User accepted the A2HS prompt');
+				$("#installAppButton").addClass("hidden");
+			} else {
+				console.log('User dismissed the A2HS prompt');
+			}
+			Setup.appInstallPrompt = null;
+		});
 	}
 }
 
-function registerServiceWorker(){
-	if ('serviceWorker' in navigator) {
-		  console.log("registering service worker...");
-		  navigator.serviceWorker.register('/superstartrek/service-worker.js', {scope: '/superstartrek/'})
-		  .then(function(reg) {
-			App.serviceWorkerRegistration=reg;
-		    // registration worked
-		    console.log('Registration succeeded. Scope is ' + reg.scope);
-		  }).catch(function(error) {
-		    // registration failed
-		    console.log('Registration failed with ' + error);
-		  });
-		}
-}
+window.addEventListener('beforeinstallprompt', function (e){
+  console.log("++++++++++++beforeinstallprompt");
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  Setup.appInstallPrompt = e;
+  $("#installAppButton").removeClass("hidden");
+});
+

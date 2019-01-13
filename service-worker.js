@@ -9,7 +9,6 @@ function removeDuplicates(arr){
 }
 //Add resources that should be available offline to this list.
 let URLS = removeDuplicates([
-	"/favicon.ico",
 	"/superstartrek/css/sst.css",
 	"/superstartrek/images/icon192x192.png",
 	"/superstartrek/images/icon512x512.png",

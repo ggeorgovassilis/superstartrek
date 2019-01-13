@@ -587,3 +587,8 @@ a.progress-bar {
 	right:0;
 	background-color:white;
 }
+
+.hidden{
+	display:none;
+}
+
