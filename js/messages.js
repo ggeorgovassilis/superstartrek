@@ -39,6 +39,11 @@ var IO={
 		else
 			IO.content.append("<li class=\""+css+"\">"+text+"</li>");
 		Tools.addPageCss("messages-visible");
+		var height = $("#messages").height();
+		var wheight = $(window).height();
+		console.log(height,wheight);
+		var offsetTop = Math.max((wheight-height)/2,0);
+		$("#messages").offset({top:offsetTop,left:0});
 		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
 		Tools.centerScreen();
 		return IO;

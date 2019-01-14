@@ -421,6 +421,7 @@ table a, table a:visited{
 	display:none;
 	z-index:2;
 	display:none;
+	border:solid grey 1px;
 }
 
 #messages ol{
@@ -446,9 +447,10 @@ a.single{
 	position:absolute;
 	z-index:1;
 	width:100%;
-	height:200%;
 	top:0;
 	left:0;
+	bottom:0;
+	right:0;
 	background-color:black;
 	opacity:0.75;
 	display:none;

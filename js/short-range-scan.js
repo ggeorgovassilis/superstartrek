@@ -27,7 +27,7 @@ var ShortRangeScan = {
 		//normally the 'class' attribute should be also cleared, but 1) there are (currently) no cell CSS rules
 		//which would make an empty cell look weird and 2) any new content would overwrite the CSS anyway
 		while (len--)
-			cells[len].textContent="";
+			cells[len].innerHTML="";
 		// this used to be:
 		// ShortRangeScan.element.find("td").html("&nbsp;");
 		// but that lags on mobile phones, so we're going native JS for speed
@@ -70,7 +70,7 @@ var ShortRangeScan = {
 		//that's why I'm deferring it to a single call.
 		ShortRangeScan.constructUi();
 		ShortRangeScan.constructUi=nop; // avoid reconstructing UI every time this function is called
-		Tools.defer("ShortRanceScan_updateMap",ShortRangeScan._updateMap);
+		Tools.defer("ShortRangeScan_updateMap",ShortRangeScan._updateMap);
 	},
 	constructUi : function() {
 		console.log("construct UI");
