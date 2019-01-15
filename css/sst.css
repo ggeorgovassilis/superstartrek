@@ -436,7 +436,12 @@ table a, table a:visited{
 }
 
 .entry.damage{
+	color:orange;
+}
+
+.entry.gameover{
 	color:red;
+	font-size:120%;
 }
 
 a.single{
