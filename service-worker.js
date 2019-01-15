@@ -49,7 +49,7 @@ self.addEventListener('fetch', function (e) {
         console.debug('SW','responding with cache : ' + e.request.url)
         return request
       } else {       // if there are no cache, try fetching request
-        console.warn('SW','file is not cached, fetching : ' + e.request.url)
+        console.debug('SW','file is not cached, fetching : ' + e.request.url)
         return fetch(e.request)
       }
 

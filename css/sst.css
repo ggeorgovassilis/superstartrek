@@ -71,6 +71,9 @@ a, a:visited, button, .button{
 		font-size:90%;
 		width:100%;
 	}
+	.status-icons{
+		width:60%;
+	}
 }
 
 .full-width{
@@ -602,7 +605,7 @@ a.progress-bar {
 .left-container{
 	display:block;
 	overflow:hidden;
-	width:50%;
+	width:40%;
 	text-align:center;
 }
 

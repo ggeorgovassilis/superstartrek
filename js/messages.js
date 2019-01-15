@@ -40,9 +40,17 @@ var IO={
 	onPageClick:function(e){
 		IO.clickTop = e.clientY;
 		IO.clickLeft = e.clientX;
-		console.log(IO.clickTop);
+	},
+	hideMessageBoxOnClick:function(){
+		IO.stopHidingMessageBoxOnClick();
+		//defer, otherwise the listener will be called for the click that caused the message and hide it instantly
+		Tools.defer("hideMessageBoxOnClick", function(){$(".glasspanel").on("click", IO.onOkClicked);});
+	},
+	stopHidingMessageBoxOnClick:function(){
+		$(".glasspanel").unbind("click", IO.onOkClicked);
 	},
 	message:function(text,type){
+		console.log("message:",text);
 		var jeMessages = $("#messages");
 		var css = "entry "+(type?type:"");
 		if (Array.isArray(text))
@@ -50,16 +58,18 @@ var IO={
 		else
 			IO.content.append("<li class=\""+css+"\">"+text+"</li>");
 		Tools.addPageCss("messages-visible");
-		var messagesHeight = jeMessages.height();
-		var offsetTop=Math.max(0,Math.min(IO.clickTop,$(window).height()-messagesHeight));
-		jeMessages.offset({top:offsetTop,left:0});
+//		var messagesHeight = jeMessages.height();
+//		var offsetTop = Math.max(0,Math.min(IO.clickTop,$(window).height()-messagesHeight));
+//		jeMessages.offset({top:offsetTop,left:0});
 		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
 		Tools.centerScreen();
+		IO.hideMessageBoxOnClick();
 		return IO;
 	},
 	hide:function(){
-		IO.content.empty();
 		Tools.removePageCss("messages-visible");
+		IO.content.empty();
+		IO.stopHidingMessageBoxOnClick();
 		return IO;
 	},
 	isMessageShown:function(){
