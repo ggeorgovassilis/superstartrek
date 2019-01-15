@@ -1,6 +1,6 @@
 var Computer={
 		element:$("#computerscreen"),
-		updateEnergyIndicator:function(){
+		updateStatusIndicator:function(){
 			var progress = 100*Enterprise.energy/Constants.MAX_ENERGY;
 			var e = $("#cmd_showStatusReport");
 			var indicator = e.find(".progress-indicator");
@@ -8,6 +8,20 @@ var Computer={
 				e.addClass("critical");
 			else e.removeClass("critical");
 			indicator.css("width",progress+"%");
+			if (Enterprise.maxImpulse < Constants.MAX_IMPULSE_SPEED)
+				e.find(".impulse").addClass("damaged");
+			else
+				e.find(".impulse").removeClass("damaged");
+			if (!Enterprise.tacticalComputerOnline)
+				e.find(".tactical-computer").addClass("damaged");
+			else
+				e.find(".tactical-computer").removeClass("damaged");
+			if (!Enterprise.torpedosOnline)
+				e.find(".torpedo-bay").addClass("damaged");
+			else
+				e.find(".torpedo-bay").removeClass("damaged");
+			
+			
 		},
 		updateDamagedIndicator:function(){
 			if (Enterprise.isDamaged)
@@ -80,7 +94,7 @@ var Computer={
 		}
 };
 
-Events.on(Events.ENTERPRISE_ENERGY_CHANGED,	Computer.updateEnergyIndicator);
+Events.on(Events.ENTERPRISE_ENERGY_CHANGED,	Computer.updateStatusIndicator);
 Events.on(Events.SETTINGS_CHANGED, Computer.updateShieldsIndicator);
 Events.on(Events.ENTERPRISE_DAMAGED, Computer.updateShieldsIndicator);
 Events.on(Events.ENTERPRISE_REPAIRED, Computer.updateShieldsIndicator);

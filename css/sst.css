@@ -321,14 +321,16 @@ table a, table a:visited{
 	font-size:100%;
 	font-weight:bold;
 }
+
+#commandbar > a, #commandbar > button{
+	width:100%;
+}
+
 /*
 @media (max-width: 500px)  {
 	#screen-intro .logo{
 		font-size:70%;
 	}	
-	#commandbar > a, #commandbar > button{
-		width:100%;
-	}
 	#commandbar{
 		float:left;
 	}
@@ -419,7 +421,7 @@ table a, table a:visited{
 	font-family:courier, courier new, typewriter;
 	padding:10px;
 	display:none;
-	z-index:2;
+	z-index:100;
 	display:none;
 	border:solid grey 1px;
 }
@@ -435,7 +437,7 @@ table a, table a:visited{
 	margin-bottom:0.5em;
 }
 
-.entry.damage{
+.entry.damage,.damaged{
 	color:orange;
 }
 
@@ -595,6 +597,31 @@ a.progress-bar {
 	bottom:0;
 	left:0;
 	right:0;
+}
+
+.left-container{
+	display:block;
+	overflow:hidden;
+	width:50%;
+	text-align:center;
+}
+
+.status-icons{
+	float:right;
+	display:block;
+	overflow:hidden;
+	font-size:0.8em;
+	z-index:1;
+	position:relative;
+}
+
+.status-icons span{
+	display:block;
+	outline:solid grey 1px;
+	float:left;
+	margin:0.1em;
+	padding:0.5em;
+	background-color:rgba(10,10,10,0.5);
 }
 
 .manual{
