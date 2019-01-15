@@ -1,6 +1,13 @@
 Controller.navigate = function() {
 	var finalX = Controller.sector.x;
 	var finalY = Controller.sector.y;
+	var distance = Tools.distance(Enterprise.x, Enterprise.y, finalX, finalY);
+	if (distance === 0)
+		return Controller.showComputerScreen();
+	var maxSpeed = Enterprise.maxImpulse;
+	if (distance > maxSpeed) {
+		return IO.message("Command exceeds maximum impulse speed " + maxSpeed).then.SRS();
+	}
 	var obstacle = Tools.findObstruction(Enterprise.quadrant, Enterprise.x,
 			Enterprise.y, Controller.sector.x, Controller.sector.y);
 	if (obstacle) {
@@ -12,13 +19,6 @@ Controller.navigate = function() {
 		}
 	};
 	// movement obstructed?
-	distance = Tools.distance(Enterprise.x, Enterprise.y, finalX, finalY);
-	if (distance === 0)
-		return Controller.showComputerScreen();
-	var maxSpeed = Enterprise.maxImpulse;
-	if (distance > maxSpeed) {
-		return IO.message("Command exceeds maximum impulse speed " + maxSpeed).then.SRS();
-	}
 	var consumption = Computer.calculateEnergyConsumptionForMovement(distance);
 	if (!Computer.hasEnergyBudgetFor(consumption))
 		return IO.message("Insufficient reactor output").then.SRS();

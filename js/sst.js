@@ -58,4 +58,3 @@ Events.on(Events.START_GAME, Setup.registerServiceWorker);
 window.onbeforeunload = function(e){
 		return "Are you sure you want to leave?"; 
 };
-

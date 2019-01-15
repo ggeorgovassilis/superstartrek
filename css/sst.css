@@ -426,7 +426,7 @@ table a, table a:visited{
 
 #messages ol{
 	margin:0;
-	padding:0;
+	padding:0 0 1em 0;
 }
 
 #messages .entry:not(:last-child) {

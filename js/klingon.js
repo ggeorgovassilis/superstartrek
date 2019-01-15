@@ -59,8 +59,7 @@ var Klingons = {
 			return;
 		klingon.x = x;
 		klingon.y = y;
-		if (!klingon.cloaked)
-			Events.trigger(Events.KLINGON_MOVED,{target:klingon});
+		Events.trigger(Events.KLINGON_MOVED,{target:klingon});
 	},
 	manueverIntoFiringPosition : function(klingon, quadrant) {
 		if (!klingon.enginesOnline)
@@ -72,8 +71,7 @@ var Klingons = {
 		var lastPosition = path[i];
 		klingon.x = lastPosition.x;
 		klingon.y = lastPosition.y;
-		if (!klingon.cloaked)
-			Events.trigger(Events.KLINGON_MOVED);
+		Events.trigger(Events.KLINGON_MOVED);
 		return;
 	},
 	fireOnEnterprise : function(klingon) {

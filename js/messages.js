@@ -1,4 +1,6 @@
 var IO={
+	clickTop:0,
+	clickLeft:0,
 	currentCallback:null,
 	gameIsOver:false,
 	onKeyPressed:function(e){
@@ -32,18 +34,25 @@ var IO={
 		IO.currentCallback = function(){};
 		return IO;
 	},
+	onClick:function(e){
+		IO.onOkClicked();
+	},
+	onPageClick:function(e){
+		IO.clickTop = e.clientY;
+		IO.clickLeft = e.clientX;
+		console.log(IO.clickTop);
+	},
 	message:function(text,type){
+		var jeMessages = $("#messages");
 		var css = "entry "+(type?type:"");
 		if (Array.isArray(text))
 			text.foreach(function(t){IO.content.append("<li class=\""+css+"\">"+t+"</li>");});
 		else
 			IO.content.append("<li class=\""+css+"\">"+text+"</li>");
 		Tools.addPageCss("messages-visible");
-		var height = $("#messages").height();
-		var wheight = $(window).height();
-		console.log(height,wheight);
-		var offsetTop = Math.max((wheight-height)/2,0);
-		$("#messages").offset({top:offsetTop,left:0});
+		var messagesHeight = jeMessages.height();
+		var offsetTop=Math.max(0,Math.min(IO.clickTop,$(window).height()-messagesHeight));
+		jeMessages.offset({top:offsetTop,left:0});
 		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
 		Tools.centerScreen();
 		return IO;
@@ -64,3 +73,5 @@ var IO={
 };
 IO.then = IO;
 Events.on(Events.GAME_OVER,IO.gameOver);
+$(document.body).on("click",IO.onPageClick);
+
