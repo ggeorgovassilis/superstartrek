@@ -59,15 +59,17 @@ var IO={
 		else
 			IO.content.append("<li class=\""+css+"\">"+text+"</li>");
 		Tools.addPageCss("messages-visible");
+		
 //		var messagesHeight = jeMessages.height();
 //		var offsetTop = Math.max(0,Math.min(IO.clickTop,$(window).height()-messagesHeight));
 //		jeMessages.offset({top:offsetTop,left:0});
-		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
+//		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
 		Tools.centerScreen();
-		IO.hideMessageBoxOnClick();
+//		IO.hideMessageBoxOnClick();
 		return IO;
 	},
 	hide:function(){
+		console.log("hide messages");
 		Tools.removePageCss("messages-visible");
 		IO.content.empty();
 		IO.stopHidingMessageBoxOnClick();

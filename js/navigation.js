@@ -62,7 +62,7 @@ warpTo:function(quadrant){
 	var consumption = Computer.calculateEnergyConsumptionForWarpDrive(Enterprise.quadrant, quadrant);
 	var forceStopAtQuadrant = null;
 	if (Math.random()>Navigation.computeChanceOfEscape(Enterprise, quadrant)){
-		return IO.message("We can't find a clear path").then.endTurn();
+		return IO.message("Navigation obstructed.").then.endTurn();
 	}
 	// distance of 1 cannot be intercepted, otherwise Enterprise could not escape a quadrant
 	if (distance>=2)

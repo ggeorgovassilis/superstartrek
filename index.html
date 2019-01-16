@@ -12,14 +12,14 @@
 <body onload="Controller.startGame()">
 
 <h1 id="loading">Loading...</h1>
-<div class="glasspanel"></div>
+<div class="glasspanel" onkeydown="IO.onKeyPressed(event)" onclick="IO.onClick(event)"></div>
 <div id="topmarker"></div>
 <div id="page">
 
 <!-- messages -->
 <div id="messages" onkeydown="IO.onKeyPressed(event)" onclick="IO.onClick(event)">
 <ol class="content"></ol>
-<button id="hidemessagesbutton" class="single full-width" onclick="IO.onKeyPressed(event)">Dismiss</button>
+<span class=remark>(tap anywhere to dismiss)</span>
 </div>
 
 <!-- intro -->
