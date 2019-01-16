@@ -18,16 +18,19 @@ var StatusReport = {
 	perc:function(part,total){
 		return "%"+Math.floor(100*part/total);
 	},
+	//also used in computer
 	statusColor:function(part,total,e){
 		var p = part/total;
 		var c = "";
-		if (p>0.9)
+		if (p>0.99)
 			c="ok";
-		else
-		if (p>0.5)
+		else if (p>0.5)
 			c="damaged";
+		else if (p>0.1)
+			c="critical";
 		else
 			c="offline";
+		e.removeClass("ok damaged critical offline");
 		e.addClass(c);
 	},
 	updateSchematics:function(){

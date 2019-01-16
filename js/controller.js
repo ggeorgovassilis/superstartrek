@@ -60,7 +60,7 @@ var Controller={
 		},
 		selectQuadrant:function(x,y){
 			var quadrant = StarMap.getQuadrantAt(x, y);
-			Controller.warpTo(quadrant);
+			Navigation.warpTo(quadrant);
 		},
 		computer:function(){ //#computer
 			Controller.showComputerScreen();

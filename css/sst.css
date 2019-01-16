@@ -178,7 +178,7 @@ table a, table a:visited{
 }
 
 .cloaked{
-	color:transparent;
+	color:transparent !important;
 }
 
 .needs-klingon{
@@ -234,15 +234,15 @@ table a, table a:visited{
 }
 
 .damage-light{
-	color:yellow !important;
+	color:yellow;
 }
 
 .damage-medium{
-	color:orange !important;
+	color:orange;
 }
 
 .damage-bad{
-	color:red !important;
+	color:red;
 }
 
 /**
@@ -578,12 +578,16 @@ a.progress-bar {
 	color:turquoise;	
 }
 
-.overlay.damaged{
+.damaged{
 	color:orange;
 }
 
-.overlay.offline{
+.critical{
 	color:red;
+}
+
+.offline{
+	color:gray;
 }
 
 .legend #what,.legend #status{

@@ -8,20 +8,10 @@ var Computer={
 				e.addClass("critical");
 			else e.removeClass("critical");
 			indicator.css("width",progress+"%");
-			if (Enterprise.maxImpulse < Constants.MAX_IMPULSE_SPEED)
-				e.find(".impulse").addClass("damaged");
-			else
-				e.find(".impulse").removeClass("damaged");
-			if (!Enterprise.tacticalComputerOnline)
-				e.find(".tactical-computer").addClass("damaged");
-			else
-				e.find(".tactical-computer").removeClass("damaged");
-			if (!Enterprise.torpedosOnline)
-				e.find(".torpedo-bay").addClass("damaged");
-			else
-				e.find(".torpedo-bay").removeClass("damaged");
-			
-			
+
+			StatusReport.statusColor(Enterprise.maxImpulse,Constants.MAX_IMPULSE_SPEED,e.find(".impulse"));
+			StatusReport.statusColor(Enterprise.tacticalComputerOnline?1:0,1,e.find(".tactical-computer"));
+			StatusReport.statusColor(Enterprise.torpedosOnline?1:0,1,e.find(".torpedo-bay"));
 		},
 		updateDamagedIndicator:function(){
 			if (Enterprise.isDamaged)
