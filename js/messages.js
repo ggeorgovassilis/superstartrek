@@ -42,6 +42,7 @@ var IO={
 		IO.clickLeft = e.clientX;
 	},
 	hideMessageBoxOnClick:function(){
+		return;
 		IO.stopHidingMessageBoxOnClick();
 		//defer, otherwise the listener will be called for the click that caused the message and hide it instantly
 		Tools.defer("hideMessageBoxOnClick", function(){$(".glasspanel").on("click", IO.onOkClicked);},100);
