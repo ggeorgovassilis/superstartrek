@@ -202,7 +202,10 @@ var Tools={
 		gotoScreen:function(screen){
 			window.location.hash="#"+screen;
 		},
-		defer:function(id,f){
+		defer:function(id,f,ms){
+			var amount = 1;
+			if (Number.isInteger(ms))
+				amount = ms;
 			var deferredCalls = Tools.deferredCalls;
 			if (deferredCalls[id]){
 				clearTimeout(deferredCalls[id]);
@@ -210,8 +213,9 @@ var Tools={
 			deferredCalls[id] = setTimeout(function(){
 				f();
 				deferredCalls[id]=null;
-			},1);
+			},ms);
 		},
+		
 		perc:function(a,b){
 			return Math.floor(100*a/b);
 		}

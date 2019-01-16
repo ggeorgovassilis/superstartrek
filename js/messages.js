@@ -44,7 +44,7 @@ var IO={
 	hideMessageBoxOnClick:function(){
 		IO.stopHidingMessageBoxOnClick();
 		//defer, otherwise the listener will be called for the click that caused the message and hide it instantly
-		Tools.defer("hideMessageBoxOnClick", function(){$(".glasspanel").on("click", IO.onOkClicked);});
+		Tools.defer("hideMessageBoxOnClick", function(){$(".glasspanel").on("click", IO.onOkClicked);},100);
 	},
 	stopHidingMessageBoxOnClick:function(){
 		$(".glasspanel").unbind("click", IO.onOkClicked);
