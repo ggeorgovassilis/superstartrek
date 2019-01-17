@@ -63,7 +63,7 @@ var IO={
 //		var messagesHeight = jeMessages.height();
 //		var offsetTop = Math.max(0,Math.min(IO.clickTop,$(window).height()-messagesHeight));
 //		jeMessages.offset({top:offsetTop,left:0});
-//		$("#hidemessagesbutton")[0].focus(); //native js faster than jquery
+		$("#messages")[0].focus(); //native js faster than jquery
 		Tools.centerScreen();
 //		IO.hideMessageBoxOnClick();
 		return IO;

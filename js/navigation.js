@@ -4,7 +4,7 @@ computeChanceOfEscape:function(Enterprise,targetQuadrant){
 	var obstacles = 0;
 	var smallestDistanceToKlingon = 1000;
 	sourceQuadrant.klingons.foreach(function(k){
-		if (k.disruptorsOnline || k.enginesOnline){
+		if ((k.disruptorsOnline || k.enginesOnline) && !k.cloaked){
 			obstacles++;
 			var d = Tools.distance(Enterprise.x,Enterprise.y,k.x,k.y);
 			smallestDistanceToKlingon = Math.min(d,smallestDistanceToKlingon);
@@ -56,6 +56,7 @@ navigate:function(){
 	},
 	
 warpTo:function(quadrant){
+	console.log("warpTo");
 	var distance = Tools.distance(Enterprise.quadrant.x, Enterprise.quadrant.y, quadrant.x, quadrant.y);
 	if (distance === 0)
 		return Controller.showComputerScreen();

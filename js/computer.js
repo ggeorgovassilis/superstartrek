@@ -24,9 +24,10 @@ var Computer={
 			$("#toggleShields .max-indicator").css("width",Enterprise.maxShields+"%");
 		},
 		updateStarbaseDockCommand:function(){
-			var starbaseNearby = StarMap.isStarbaseAdjacent(Enterprise.quadrant, Enterprise.x, Enterprise.y);
-			var isStarbaseNearby = !!starbaseNearby;
-			if (isStarbaseNearby)
+			var isStarbaseInQuadrant = !Enterprise.quadrant.starbases.isEmpty();
+			var isStarbaseNearby = StarMap.isStarbaseAdjacent(Enterprise.quadrant, Enterprise.x, Enterprise.y);
+			var areKlingonsInQuadrant = !Enterprise.quadrant.klingons.isEmpty();
+			if (isStarbaseInQuadrant && (isStarbaseNearby || !areKlingonsInQuadrant))
 				Tools.addPageCss("starbase-nearby");
 			else
 				Tools.removePageCss("starbase-nearby");
@@ -81,6 +82,11 @@ var Computer={
 				return true;
 			}
 			Events.trigger(Events.ENTERPRISE_ENERGY_CHANGED);
+		},
+		//not meant to be used in the game; for debugging/cheating purposes
+		decloak:function(){
+			Enterprise.quadrant.klingons.foreach(function(k){k.cloaked=false});
+			ShortRangeScan.updateMap();
 		}
 };
 

@@ -39,8 +39,18 @@ var Controller={
 		},
 		dockWithStarbase:function(){
 			Computer.advanceClock(Constants.DURATION_OF_REPAIRS);
+			var sx = Enterprise.quadrant.starbases[0].x;
+			var sy = Enterprise.quadrant.starbases[0].y;
+			var moved = false;
+			while (Tools.distance(sx,sy,Enterprise.x,Enterprise.y)>2 || StarMap.getAnythingInQuadrantAt(Enterprise.quadrant, Enterprise.x, Enterprise.y)!=Enterprise){
+				Enterprise.x = Math.max(0,Math.min(7,sx+1-Tools.random(2)));
+				Enterprise.y = Math.max(0,Math.min(sy+1-Tools.random(2)));
+				moved = true;
+			}
 			Enterprise.repairAtStarbase();
 			Controller.endTurn();
+			if (moved)
+				Events.trigger(Events.ENTERPRISE_MOVED);
 			Events.trigger(Events.ENTERPRISE_REPAIRED);
 		},
 		repairProvisionally:function(){
