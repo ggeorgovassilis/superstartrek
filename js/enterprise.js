@@ -119,7 +119,7 @@ var Enterprise={
 		   Enterprise.shields = Math.max(0,Enterprise.shields - damage);
 		   Enterprise.maxShields = Math.floor(Math.max(0,Enterprise.maxShields-(Enterprise.maxShields*impact)));
 		   Enterprise.shields = Math.min(Enterprise.shields,Enterprise.maxShields);
-		   var message = cause.name+" fired at us, shields dropped to "+Math.round(Enterprise.shields);
+		   IO.message(cause.name+" fired at us, shields dropped to "+Math.round(Enterprise.shields)).then.nothing();
 		   if (Math.random()<impact){
 			   Enterprise.phaserPower = Enterprise.phaserPower/2;
 			   IO.message("Phasers were damaged","damage");
@@ -164,7 +164,7 @@ var Enterprise={
 		   }
 		   Enterprise.isDamaged=true;
 		   Events.trigger(Events.ENTERPRISE_DAMAGED);
-		   return IO.message(message).then.nothing();
+		   return IO.nothing();
 	   },
 	   resetForNewTurn:function(){
 			Enterprise.budget=Enterprise.reactorOutput;

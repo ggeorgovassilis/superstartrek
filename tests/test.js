@@ -12,9 +12,13 @@ var Test={
 		var script = document.createElement('script');
 		Test.outstandingScripts++;
 		script.onload=function(){
-			Test.outstandingScripts--;
+			window.setTimeout(function(){
+				Test.outstandingScripts--;
+				if (!Test.outstandingScripts)
+					Test.executeTests();
+			},100);
 		};
-		document.body.append(script);
+		document.getElementsByTagName("head")[0].append(script);
 		script.src = src;
 	},
 	executeTests(){
@@ -35,6 +39,10 @@ var Test={
 		}catch(e){
 			console.error(e);
 		}
+	},
+	assertEuals:function(a,b,message){
+		if (a!=b)
+			throw "message";
 	}
 };
 
@@ -57,10 +65,12 @@ window.addEventListener('error', function (evt) {
 var IO={
 		message:function(m){
 			Test.messages.push(m);
+			return IO;
 		},
-		then:IO,
 		nothing:function(){}
-}
+};
+
+IO.then = IO;
 
 Test.loadScript("../../js/jquery.1.9.2.js");
 Test.loadScript("../../js/constants.js");
