@@ -11,7 +11,7 @@ computeChanceOfEscape:function(Enterprise,targetQuadrant){
 		}
 	});
 	if (obstacles>0) // stars further obstruct warp only if there are active klingons
-		obstacles+=Enterprise.quadrant.stars.length/2;
+		obstacles+=0.3*Enterprise.quadrant.stars.length;
 	if (smallestDistanceToKlingon<4) //being close to an active klingon reduces escape changes further
 		obstacles+=1;
 	var distanceFromCentre = Tools.distance(Enterprise.x,Enterprise.y,3.5,3.5);
@@ -35,10 +35,13 @@ navigate:function(){
 	if (obstacle) {
 		finalX = obstacle.x;
 		finalY = obstacle.y;
+		distance = Tools.distance(Enterprise.x, Enterprise.y, finalX, finalY);
 		if (obstacle.klingon){
 			Klingons.decloak(obstacle.klingon);
 			IO.message(obstacle.name+" decloaked at "+obstacle.x+":"+obstacle.y);
 		}
+		if (distance<1)
+			return IO.SRS();
 	};
 	// movement obstructed?
 	var consumption = Computer.calculateEnergyConsumptionForMovement(distance);
