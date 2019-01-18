@@ -614,17 +614,15 @@ a.progress-bar {
 	float:right;
 	display:block;
 	overflow:hidden;
-	font-size:0.8em;
+	font-size:0.6em;
 	z-index:1;
 	position:relative;
 }
 
 .status-icons span{
 	display:block;
-	outline:solid grey 1px;
 	float:left;
-	margin:0.1em;
-	padding:0.5em;
+	padding:0.8em 0.4em;
 	background-color:rgba(10,10,10,0.5);
 }
 

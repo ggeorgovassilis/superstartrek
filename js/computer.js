@@ -12,6 +12,7 @@ var Computer={
 			StatusReport.statusColor(Enterprise.maxImpulse,Constants.MAX_IMPULSE_SPEED,e.find(".impulse"));
 			StatusReport.statusColor(Enterprise.tacticalComputerOnline?1:0,1,e.find(".tactical-computer"));
 			StatusReport.statusColor(Enterprise.torpedosOnline?1:0,1,e.find(".torpedo-bay"));
+			StatusReport.statusColor(Enterprise.phaserPower,Constants.ENTERPRISE_MAX_PHASER_POWER,e.find(".phasers"));
 		},
 		updateDamagedIndicator:function(){
 			if (Enterprise.isDamaged)
