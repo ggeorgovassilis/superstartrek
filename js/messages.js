@@ -51,7 +51,6 @@ var IO={
 		$(".glasspanel").unbind("click", IO.onOkClicked);
 	},
 	message:function(text,type){
-		console.log("message:",text);
 		var jeMessages = $("#messages");
 		var css = "entry "+(type?type:"");
 		if (Array.isArray(text))
@@ -69,7 +68,6 @@ var IO={
 		return IO;
 	},
 	hide:function(){
-		console.log("hide messages");
 		Tools.removePageCss("messages-visible");
 		IO.content.empty();
 		IO.stopHidingMessageBoxOnClick();

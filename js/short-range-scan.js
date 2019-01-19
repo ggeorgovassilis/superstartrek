@@ -26,8 +26,10 @@ var ShortRangeScan = {
 		var len = cells.length;
 		//normally the 'class' attribute should be also cleared, but 1) there are (currently) no cell CSS rules
 		//which would make an empty cell look weird and 2) any new content would overwrite the CSS anyway
-		while (len--)
+		while (len--){
 			cells[len].innerHTML="";
+			cells[len].setAttribute("class","");
+		}
 		// this used to be:
 		// ShortRangeScan.element.find("td").html("&nbsp;");
 		// but that lags on mobile phones, so we're going native JS for speed

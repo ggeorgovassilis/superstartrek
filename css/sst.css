@@ -206,21 +206,23 @@ table a, table a:visited{
   midnightblue 10px
 );
 }
-
+#quadrantscan tr{
+	height:1em;
+}
 #quadrantscan td{
 	border:solid gray 1px;
-	height:1em;
 	text-align:center;
 	width:12.5%;
-	padding:0.1em;
+	margin:0;
+	padding:0;
 	cursor:pointer;
-	line-height:0.5em;
 }
 
 #quadrantscan td.star{
-	font-size:250%;
-	color:grey;
-	height:0;
+	font-size:150%;
+	color:lightblue;
+	line-height:0.5em;
+	padding-top:0.2em;
 }
 
 
@@ -603,27 +605,22 @@ a.progress-bar {
 	right:0;
 }
 
-.left-container{
-	display:block;
-	overflow:hidden;
-	width:40%;
-	text-align:center;
-}
 
 .status-icons{
-	float:right;
 	display:block;
+	width:100%;
 	overflow:hidden;
 	font-size:0.6em;
+	background-color:rgba(10,10,10,0.5);
+	position:absolute;
 	z-index:1;
-	position:relative;
 }
 
 .status-icons span{
 	display:block;
 	float:left;
-	padding:0.8em 0.4em;
-	background-color:rgba(10,10,10,0.5);
+	width:24%;
+	line-height:1.5em;
 }
 
 .manual{

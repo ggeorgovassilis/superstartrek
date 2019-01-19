@@ -10,13 +10,16 @@ computeChanceOfEscape:function(Enterprise,targetQuadrant){
 			smallestDistanceToKlingon = Math.min(d,smallestDistanceToKlingon);
 		}
 	});
+	if (obstacles == 0)
+		return 1;
 	if (obstacles>0) // stars further obstruct warp only if there are active klingons
 		obstacles+=0.3*Enterprise.quadrant.stars.length;
 	if (smallestDistanceToKlingon<4) //being close to an active klingon reduces escape changes further
 		obstacles+=1;
+	var warpFactor = Enterprise.maxWarpSpeed/Constants.ENTERPRISE_MAX_WARP_SPEED;
 	var distanceFromCentre = Tools.distance(Enterprise.x,Enterprise.y,3.5,3.5);
 	obstacles=Math.max(0,obstacles-0.5*distanceFromCentre);
-	var chance = (1/(1+obstacles));
+	var chance = warpFactor*(1/(1+obstacles));
 	console.log("escape chance",chance);
 	return chance;
 },
