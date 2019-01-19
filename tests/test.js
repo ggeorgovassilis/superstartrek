@@ -1,8 +1,8 @@
 var Test={
 	errors:[],
 	tests:[],
-	messages:[],
 	outstandingScripts:0,
+	waypoints:[],
 	logerror:function(e){
 		console.error("test error",e);
 		Test.errors.push(e);
@@ -21,26 +21,60 @@ var Test={
 		document.getElementsByTagName("head")[0].append(script);
 		script.src = src;
 	},
+	setupLogger:function(){
+		$("head").append($("<style type='text/css'>#logger{font-family:sans-serif};\n.running-test{float:left;}\n.test-ok{color:green}\n.test-failure{color:red}</style>"));
+		return $("<div id=logger></div>");
+	},
 	executeTests(){
+		var logger = Test.setupLogger();
+		$(document.body).append(logger);
 		console.log("Running tests");
 		for (var i=0;i<Test.tests.length;i++) try{
+			var test = Test.tests[i];
 			Test.errors=[];
-			Test.messages=[];
-			Test.tests[i]();
+			IO.messages=[];
+			Test.waypoints=[];
+			logger.append($("<div class='running-test'>Running test "+test.name+"</div>"));
+			console.log("Running test",test.name);
+			test.code();
 			if (Test.errors.length>0)
 				throw "Test failed";
+			logger.append($("<div class=test-ok>OK</div>"));
 		}catch(e){
+			logger.append($("<div class=test-failure>FAIL</div>"));
 			console.error(e);
 		}
 	},
-	declare:function(f){
-		Test.tests.push(f);
+	logWaypoint:function(waypoint){
+		Test.waypoints.push(waypoint);
+	},
+	assertWaypoint:function(waypoint){
+		var found = false;
+		for (var i=0;i<Test.waypoints.length;i++)
+			found|=Test.waypoints[i]==waypoint;
+		if (!found)
+			throw "Waypoing "+waypoint+" not encountered";
+		console.log("Assert waypoint",waypoint);
+	},
+	assertNoWaypoint:function(waypoint){
+		var found = false;
+		for (var i=0;i<Test.waypoints.length;i++)
+			found|=Test.waypoints[i]==waypoint;
+		if (found)
+			throw "Waypoing "+waypoint+" not encountered";
+	},
+	declare:function(name,f){
+		if (!(typeof name === "string"))
+			throw "Name is not a string";
+		if (!(typeof f === "function"))
+			throw "F is not a function";
+		Test.tests.push({name:name, code:f});
 		try{
 		}catch(e){
 			console.error(e);
 		}
 	},
-	assertEuals:function(a,b,message){
+	assertEquals:function(a,b,message){
 		if (a!=b)
 			throw "message";
 	}
@@ -63,8 +97,13 @@ window.addEventListener('error', function (evt) {
 });
 
 var IO={
+		messages:[],
+		assertMessage:function(message){
+			if (!IO.messages.includes(message))
+				throw "Message "+message+" was not logged";
+		},
 		message:function(m){
-			Test.messages.push(m);
+			IO.messages.push(m);
 			return IO;
 		},
 		nothing:function(){}
