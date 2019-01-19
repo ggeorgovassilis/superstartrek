@@ -208,6 +208,7 @@ table a, table a:visited{
 }
 #quadrantscan tr{
 	height:1em;
+	font-size:130%
 }
 #quadrantscan td{
 	border:solid gray 1px;
