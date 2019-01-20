@@ -1,80 +1,92 @@
-<project>
-	<groupId>ggeorgovassilis</groupId>
-	<artifactId>superstartrek</artifactId>
-	<version>1.0-SNAPSHOT</version>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                        http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
-	<name>Super Star Trek</name>
+	<groupId>com.github.ggeorgovassilis</groupId>
+	<artifactId>sst</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<description>Super Star Trek</description>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<gwt.version>1.8</gwt.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>2.8.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-dev</artifactId>
+			<version>2.8.2</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.1.0</version>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
-						<id>copy-resources</id>
-						<phase>generate-resources</phase>
+						<id>attach-sources</id>
 						<goals>
-							<goal>copy-resources</goal>
+							<goal>jar</goal>
 						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/minified</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}</directory>
-									<filtering>true</filtering>
-									<includes>
-										<include>**/*.css</include>
-										<include>**/*.js</include>
-										<include>**/*.png</include>
-										<include>**/*.html</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.primefaces.extensions</groupId>
-				<artifactId>resources-optimizer-maven-plugin</artifactId>
-				<version>2.3.2</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.2</version>
+				<configuration>
+					<warName>sst</warName>
+					<outputDirectory>${project.build.directory}/sst</outputDirectory>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webappDirectory>${project.build.directory}/sst</webappDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>2.8.2</version>
 				<executions>
 					<execution>
-						<id>optimize</id>
 						<goals>
-							<goal>optimize</goal>
+							<goal>compile</goal>
+							<goal>test</goal>
 						</goals>
-						<configuration>
-							<resourcesSets>
-								<resourcesSet>
-									<inputDir>${project.build.directory}/minified/js</inputDir>
-									<includes>
-										<include>**/*.js</include>
-									</includes>
-									<aggregations>
-										<aggregation>
-											<outputFile>${project.build.directory}/minified/lib.js</outputFile>
-											<removeIncluded>true</removeIncluded>
-										</aggregation>
-									</aggregations>
-								</resourcesSet>
-								<resourcesSet>
-									<inputDir>${project.build.directory}/minified/css</inputDir>
-									<includes>
-										<include>**/*.css</include>
-									</includes>
-								</resourcesSet>
-								<resourcesSet>
-									<inputDir>${project.build.directory}/minified</inputDir>
-									<includes>
-										<include>index.html</include>
-									</includes>
-								</resourcesSet>
-							</resourcesSets>
-						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<draftCompile>true</draftCompile>
+					<deploy>${project.build.directory}/deploy</deploy>
+					<outputDirectory>${project.build.directory}/sst</outputDirectory>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
