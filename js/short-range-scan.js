@@ -51,7 +51,7 @@ var ShortRangeScan = {
 				css+="damage-medium";
 			else if (ratio<1)
 				css+="damage-light";
-			return {css:css,symbol:klingon.symbol};
+			return {css:css,symbol:klingon.cloaked?"":klingon.symbol};
 		});
 		ShortRangeScan.updateList(quadrant.starbases, function(
 				starbase) {
@@ -62,9 +62,20 @@ var ShortRangeScan = {
 				return {css:"",symbol:"O=Ξ"};
 			});
 		Tools.setElementText($("#quadrant_name"), Enterprise.quadrant.regionName);
+		//show some alert
 		if (!Enterprise.quadrant.klingons.isEmpty()){
-			$("#srs_heading").addClass("red-alert");
-		} else $("#srs_heading").removeClass("red-alert");
+			var alert = "yellow-alert";
+			Enterprise.quadrant.klingons.foreach(function(k){
+				if (Tools.distance(Enterprise.x,Enterprise.y,k.x,k.y)<3)
+					alert = "red-alert";
+			});
+			$("#srs_heading").removeClass("red-alert");	
+			$("#srs_heading").removeClass("yellow-alert");	
+			$("#srs_heading").addClass(alert);
+		} else {
+			$("#srs_heading").removeClass("red-alert");	
+			$("#srs_heading").removeClass("yellow-alert");	
+		}
 
 	},
 	updateMap:function(){

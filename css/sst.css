@@ -540,6 +540,11 @@ a.progress-bar {
 	font-weight:bold;
 }
 
+.yellow-alert, .yellow-alert *{
+	color:yellow;
+	font-weight:bold;
+}
+
 #enterprise-schematics{
 	font-size:1em;
 	height:17em;

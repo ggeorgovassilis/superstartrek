@@ -33,6 +33,19 @@ var Enterprise={
 				return Math.random()<0.3;
 			}
 			for (var i=0;i<40;i++){//quit loop if nothing repaired after 40 turns
+				if (!Enterprise.tacticalComputerOnline && canFix()){
+					   Enterprise.tacticalComputerOnline=true;
+					   message="Repaired tactical computer.";
+					   Enterprise.fireAtWill = true;
+						if (message)
+							Events.trigger(Events.SETTINGS_CHANGED);
+					   break;
+				}
+				if (!Enterprise.torpedosOnline && canFix()){
+					   Enterprise.torpedosOnline=true;
+					   message="Repaired torpedo bay.";
+					   break;
+					}
 				if (Enterprise.maxImpulse<2 && canFix()){
 					   Enterprise.maxImpulse++;
 					   message="Improved impulse drive.";
@@ -43,14 +56,6 @@ var Enterprise={
 					message="Repaired long range scan.";
 					break;
 				}
-				if (!Enterprise.tacticalComputerOnline && canFix()){
-					   Enterprise.tacticalComputerOnline=true;
-					   message="Repaired tactical computer.";
-					   Enterprise.fireAtWill = true;
-						if (message)
-							Events.trigger(Events.SETTINGS_CHANGED);
-					   break;
-					}
 			   if (Enterprise.reactorOutput<0.6*Constants.MAX_REACTOR_OUTPUT){
 					message = "Improved reactor output.";
 					Enterprise.reactorOutput+=70;
@@ -65,11 +70,6 @@ var Enterprise={
 					Enterprise.phaserPower = Enterprise.phaserPower+10;
 					message="Improved phasers.";
 					break;
-				}
-				if (!Enterprise.torpedosOnline && canFix()){
-				   Enterprise.torpedosOnline=true;
-				   message="Repaired torpedo bay.";
-				   break;
 				}
 				if (Enterprise.maxWarpSpeed==1 && canFix()){
 				   Enterprise.maxWarpSpeed++;
