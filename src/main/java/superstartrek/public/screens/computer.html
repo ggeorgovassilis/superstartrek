@@ -1,0 +1,38 @@
+<div id="screen-computer" class="screen">
+<div id="stardate"></div>
+<table id="quadrantscan"></table>
+<section class=helm>
+<div class="short-range-scan-container">
+<header id="srs_heading" class="short-range-scan-label"><button class="half-width">SRS <span id="quadrant_name"></span></button><a accesskey="l" class="hide-when-sector-selected half-width" href="#longrangescan">LRS</a></header>
+<table id="shortrangescan">
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td></tr>
+</table>
+</div>
+<div id="commandbar" class="command-bar">
+<button accesskey="d" command="dockWithStarbase" class="requires-nearby-starbase hide-when-docked-with-starbase">Dock in starbase</button>
+<button accesskey="s" id="toggleShields" command="toggleShields" class="command top-command progress-bar hide-when-sector-selected">
+	<span class="max-indicator"></span>
+	<span class="progress-indicator"></span>
+	<span class="progress-text">Shields</span>
+</button>
+<a accesskey="r" id="cmd_showStatusReport" href="#statusreport" class="hide-when-sector-selected command progress-bar">
+
+<span class=status-icons><span class=impulse>Impulse</span><span class="tactical-computer">Tactical</span><span class="phasers">Phasers</span><span class="torpedo-bay">Torpedos</span></span>
+<span class="progress-indicator"></span><span class=progress-text>Status report</span>
+</a>
+<button id="repairProvisionally" class="hide-when-sector-selected requires-enterprise-damaged hide-when-starbase-nearby" onclick="Controller.repairProvisionally()">Make temporary repairs</button>
+<button accesskey="w" command="nop" class="hide-when-sector-selected">Skip</button>
+</div>
+</section>
+<div id="sectorselectionbar" class="requires-sector-selected command-bar">
+<button command="navigate">Navigate</button>
+<button accesskey="p" command="firePhasers">Phasers</button>
+<button accesskey="t" command="fireTorpedos">Photon torpedos</button>
+<button command="toggleFireAtWill" class="highlight-when-fireatwill requires-sector-selected" >Fire at will</button>
+<button command="scanSector" class="visible-anywhere-but-on-computer">Scan sector</button>
+<button id="button_dismiss" command="computer" class="visible-anywhere-but-on-computer">Dismiss</button>
+</div>
+
+</div>

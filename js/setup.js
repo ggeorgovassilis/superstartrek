@@ -141,6 +141,7 @@ var Setup = {
 		$("#loading").remove();
 	},
 	registerServiceWorker:function(){
+		return;
 		if ('serviceWorker' in navigator) {
 			  console.log("registering service worker...");
 			  navigator.serviceWorker.register('/superstartrek/service-worker.js', {scope: '/superstartrek/'})
