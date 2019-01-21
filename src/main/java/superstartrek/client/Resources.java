@@ -10,4 +10,10 @@ public interface Resources extends ClientBundle {
 	@Source("superstartrek/public/screens/intro.html")
 	public TextResource introScreen();
 
+	@Source("superstartrek/public/screens/computer.html")
+	public TextResource computerScreen();
+
+	@Source("superstartrek/public/screens/manual.html")
+	public TextResource manualScreen();
+
 }

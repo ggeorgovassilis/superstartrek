@@ -1,4 +1,4 @@
-package superstartrek.client.activities.intro;
+package superstartrek.client.activities.computer;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -7,30 +7,20 @@ import com.google.gwt.user.client.History;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.loading.GameStartedEvent;
-import superstartrek.client.activities.loading.GameStartedHandler;
 
-public class IntroPresenter extends BasePresenter implements GameStartedHandler{
+public class ComputerPresenter extends BasePresenter{
 
-	public IntroPresenter(Application application) {
+	public ComputerPresenter(Application application) {
 		super(application);
-		application.events.addHandler(GameStartedEvent.TYPE, this);
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
-			
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				if ("intro".equals(event.getValue())) {
+				if ("computer".equals(event.getValue()))
 					getScreen().show();
-				} else
+				else
 					getScreen().hide();
 			}
 		});
 	}
-	
-	@Override
-	public void onGameStared(GameStartedEvent evt) {
-		History.newItem("intro");
-	}
-
 
 }

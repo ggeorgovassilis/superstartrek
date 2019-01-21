@@ -8,7 +8,7 @@ import superstartrek.client.activities.BaseScreen;
 public class IntroScreen extends BaseScreen{
 
 	public IntroScreen(IntroPresenter presenter) {
-		super(presenter, DOM.createDiv());
+		super(presenter);
 		getElement().setInnerHTML(Resources.INSTANCE.introScreen().getText());
 		presenter.getApplication().page.add(this);
 	}
