@@ -19,6 +19,8 @@ import superstartrek.client.activities.loading.LoadingPresenter;
 import superstartrek.client.activities.loading.LoadingScreen;
 import superstartrek.client.activities.manual.ManualPresenter;
 import superstartrek.client.activities.manual.ManualScreen;
+import superstartrek.client.model.Setup;
+import superstartrek.client.model.StarMap;
 
 public class Application implements EntryPoint{
 
@@ -28,6 +30,7 @@ public class Application implements EntryPoint{
 	public IntroPresenter introPresenter;
 	public ManualPresenter manualPresenter;
 	public HTMLPanel page;
+	public StarMap starMap;
 	
 	protected void setupHistory() {
 		History.addValueChangeHandler(new ValueChangeHandler<String>() {
@@ -35,6 +38,11 @@ public class Application implements EntryPoint{
 			public void onValueChange(ValueChangeEvent<String> event) {
 			}
 		});
+	}
+	
+	protected void setupStarMap() {
+		Setup setup = new Setup();
+		starMap = setup.createNewMap();
 	}
 	
 	protected void setupScreens() {
@@ -56,6 +64,8 @@ public class Application implements EntryPoint{
 		GWT.log("Application started");
 		events = GWT.create(SimpleEventBus.class);
 		setupScreens();
+		setupHistory();
+		setupStarMap();
 		events.fireEvent(new GameStartedEvent());
 	}
 

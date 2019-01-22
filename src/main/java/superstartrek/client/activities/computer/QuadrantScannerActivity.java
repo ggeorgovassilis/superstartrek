@@ -30,6 +30,11 @@ public class QuadrantScannerActivity extends BaseActivity {
 		CSS.addClass(eSectors[x][y], "selected");
 	}
 	
+	public void updateSector(int x, int y, String content, String css) {
+		eSectors[x][y].setInnerHTML(content);
+		eSectors[x][y].setClassName(css);
+	}
+	
 	@Override
 	protected HTMLPanel createPanel() {
 		
