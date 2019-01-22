@@ -629,17 +629,16 @@ a.progress-bar {
 }
 
 .manual{
-	height:100%;
-	position:absolute;
-	margin:0;
-	padding:0;
-	border:none;
-	width:100%;
-	bottom:0;
-	top:3.5em;
-	left:0;
-	right:0;
-	background-color:white;
+	background-color:black;
+	color:white;
+	padding-left:0.5em;
+}
+
+.manual a{
+	display:inline;
+	background:transparent;
+	float:none;
+	outline:none;
 }
 
 .hidden{

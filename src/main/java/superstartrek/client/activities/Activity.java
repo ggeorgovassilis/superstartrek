@@ -1,6 +1,6 @@
 package superstartrek.client.activities;
 
-public interface Screen {
+public interface Activity {
 
 	void show();
 	void hide();

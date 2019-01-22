@@ -4,14 +4,14 @@ import superstartrek.client.Application;
 
 public abstract class BasePresenter implements Presenter{
 
-	protected Screen screen;
+	protected Activity screen;
 	protected Application application;
 	
 	protected BasePresenter(Application application) {
 		this.application = application;
 	}
 	
-	public Screen getScreen() {
+	public Activity getScreen() {
 		return screen;
 	}
 	
@@ -20,7 +20,7 @@ public abstract class BasePresenter implements Presenter{
 	}
 	
 	
-	public void setScreen(Screen screen) {
+	public void setScreen(Activity screen) {
 		this.screen = screen;
 	}
 }
