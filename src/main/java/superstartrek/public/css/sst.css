@@ -86,38 +86,6 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	background-color:rgb(50, 158, 159);	
 }
 
-.requires-sector-selected,.requires-nearby-starbase,.requires-enterprise-damaged{
-	display:none;
-}
-
-.enterprise-damaged .requires-enterprise-damaged{
-	display:block;
-}
-
-.visible-anywhere-but-on-computer{
-	display:block;
-}
-
-.screen-computer .visible-anywhere-but-on-computer{
-	display:none;
-}
-
-.screen-computer.sector-selected .visible-anywhere-but-on-computer{
-	display:block;
-}
-
-.starbase-nearby .requires-nearby-starbase{
-	display:block;
-}
-
-.sector-selected .hide-when-sector-selected{
-	display:none;
-}
-
-.sector-selected .requires-sector-selected{
-	display:inline;
-}
-
 table a, table a:visited{
 	padding:0;
 	margin:0;
@@ -275,7 +243,7 @@ table a, table a:visited{
  * Computer
  */
  
-#sectorselectionbar{
+.sectorselectionbar{
 	padding:0;
 	margin-top:2em; /* margin is necessary because of positioning to clicked cell*/
 	position:absolute;
@@ -284,14 +252,10 @@ table a, table a:visited{
 	width:100%;
 }
 
-#sectorselectionbar a,#sectorselectionbar button{
+.sectorselectionbar a,.sectorselectionbar button{
 	padding-left:0.5em;
 	padding-right:0.5em;
 	width:50%;
-}
-
-.screen{
-	overflow:hidden;
 }
 
 .statusReport #statusreport{

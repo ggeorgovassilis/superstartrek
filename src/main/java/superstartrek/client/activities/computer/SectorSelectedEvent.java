@@ -7,10 +7,14 @@ public class SectorSelectedEvent extends GwtEvent<SectorSelectedHandler>{
 	public static Type<SectorSelectedHandler> TYPE = new Type<SectorSelectedHandler>();
 	public final int x;
 	public final int y;
+	public final int screenX;
+	public final int screenY;
 	
-	public SectorSelectedEvent(int x, int y) {
+	public SectorSelectedEvent(int x, int y, int screenX, int screenY) {
 		this.x = x;
 		this.y = y;
+		this.screenX = screenX;
+		this.screenY = screenY;
 	}
 
 	@Override

@@ -26,6 +26,7 @@ public abstract class BaseActivity extends Composite implements Activity{
 		panel = createPanel();
 		initWidget(panel);
 		presenter.setScreen(this);
+		finishUiConstruction();
 	}
 	
 	public void show() {

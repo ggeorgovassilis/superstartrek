@@ -7,7 +7,6 @@ public abstract class BaseScreen extends BaseActivity{
 	public BaseScreen(Presenter p) {
 		super(p);
 		setupUI();
-		finishUiConstruction();
 		hide();
 	}
 	

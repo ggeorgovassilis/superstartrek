@@ -4,5 +4,7 @@ public class Star extends Thing{
 
 	public Star() {
 		setName("a star");
+		setSymbol("*");
+		setCss("star");
 	}
 }

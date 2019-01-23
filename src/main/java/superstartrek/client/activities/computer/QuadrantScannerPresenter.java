@@ -16,14 +16,18 @@ import superstartrek.client.model.Thing;
 
 public class QuadrantScannerPresenter extends BasePresenter implements SectorSelectedHandler, GameStartedHandler {
 
-	public void onSectorSelected(int x, int y) {
-		application.events.fireEvent(new SectorSelectedEvent(x, y));
+	SectorMenuPresenter sectorMenuPresenter;
+	
+	public void onSectorSelected(int x, int y, int screenX, int screenY) {
+		application.events.fireEvent(new SectorSelectedEvent(x, y, screenX, screenY));
 	}
 
 	public QuadrantScannerPresenter(Application application) {
 		super(application);
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
 		application.events.addHandler(GameStartedEvent.TYPE, this);
+		sectorMenuPresenter = new SectorMenuPresenter(application);
+		sectorMenuPresenter.setScreen(new SectorMenuActivity(sectorMenuPresenter));
 	}
 
 	@Override
@@ -43,20 +47,9 @@ public class QuadrantScannerPresenter extends BasePresenter implements SectorSel
 				Thing thing = starMap.findThingAt(q, x, y);
 				String content = "";
 				String css = "";
-				if (thing instanceof Star) {
-					content = "*";
-					css = "star";
-				} else if (thing instanceof StarBase) {
-					content = "<!>";
-					css = "starbase";
-				} else
-				if (thing instanceof Enterprise) {
-					content = "O=Ξ";
-					css = "enterprise";
-				} else
-				if (thing instanceof Klingon) {
-					content = "C-]";
-					css ="klingon";
+				if (thing!=null) {
+					content = thing.getSymbol();
+					css = thing.getCss();
 				}
 				((QuadrantScannerActivity) screen).updateSector(x, y, content, css);
 			}

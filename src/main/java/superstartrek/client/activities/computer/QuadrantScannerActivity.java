@@ -64,7 +64,7 @@ public class QuadrantScannerActivity extends BaseActivity {
 				Element e = event.getNativeEvent().getEventTarget().cast();
 				int x = Integer.parseInt(e.getAttribute("x"));
 				int y = Integer.parseInt(e.getAttribute("y"));
-				presenter.onSectorSelected(x, y);
+				presenter.onSectorSelected(x, y, event.getClientX(), event.getClientY());
 			}
 		}, ClickEvent.getType());
 	}

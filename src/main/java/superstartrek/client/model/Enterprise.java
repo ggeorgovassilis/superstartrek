@@ -4,6 +4,8 @@ public class Enterprise extends Thing{
 
 	public Enterprise() {
 		setName("NCC 1701 USS Enterprise");
+		setSymbol("O=Ξ");
+		setCss("enterprise");
 	}
 	
 }

@@ -16,4 +16,7 @@ public interface Resources extends ClientBundle {
 	@Source("superstartrek/public/screens/manual.html")
 	public TextResource manualScreen();
 
+	@Source("superstartrek/public/screens/sectorselectionmenu.html")
+	public TextResource sectorSelectionMenu();
+
 }
