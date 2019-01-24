@@ -4,11 +4,12 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class ComputerEvent extends GwtEvent<ComputerHandler> {
 	
+	public static Type<ComputerHandler> TYPE = new Type<ComputerHandler>();
+
 	public enum Action{hideScreen,showScreen};
 	
 	protected final Action action;
 
-	public static Type<ComputerHandler> TYPE = new Type<ComputerHandler>();
 
 	public ComputerEvent(Action action) {
 		this.action = action;

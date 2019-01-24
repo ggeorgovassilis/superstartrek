@@ -21,6 +21,9 @@ import superstartrek.client.activities.loading.LoadingPresenter;
 import superstartrek.client.activities.loading.LoadingScreen;
 import superstartrek.client.activities.manual.ManualPresenter;
 import superstartrek.client.activities.manual.ManualScreen;
+import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
+import superstartrek.client.activities.sector.scan.ScanSectorView;
+import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 
@@ -32,6 +35,7 @@ public class Application implements EntryPoint{
 	public IntroPresenter introPresenter;
 	public GlassPanelPresenter glassPanelPresenter;
 	public ManualPresenter manualPresenter;
+	public ScanSectorPresenter scanSectorPresenter;
 	public HTMLPanel page;
 	public StarMap starMap;
 	
@@ -63,6 +67,9 @@ public class Application implements EntryPoint{
 		
 		glassPanelPresenter = new GlassPanelPresenter(this);
 		new GlassPanelView(glassPanelPresenter);
+		
+		scanSectorPresenter = new ScanSectorPresenter(this);
+		new ScanSectorView(scanSectorPresenter);
 	}
 	
 	@Override

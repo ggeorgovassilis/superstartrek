@@ -1,4 +1,4 @@
-package superstartrek.client.activities.sector;
+package superstartrek.client.activities.sector.contextmenu;
 
 import superstartrek.client.activities.Activity;
 

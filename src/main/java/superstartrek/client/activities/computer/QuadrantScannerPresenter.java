@@ -4,10 +4,11 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
-import superstartrek.client.activities.sector.SectorMenuPresenter;
-import superstartrek.client.activities.sector.SectorMenuView;
-import superstartrek.client.activities.sector.SectorSelectedEvent;
-import superstartrek.client.activities.sector.SectorSelectedHandler;
+import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
+import superstartrek.client.activities.sector.contextmenu.SectorMenuView;
+import superstartrek.client.activities.sector.contextmenu.SectorSelectedEvent;
+import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
+import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
@@ -16,8 +17,9 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	SectorMenuPresenter sectorMenuPresenter;
 	
+	
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
-		application.events.fireEvent(new SectorSelectedEvent(x, y, screenX, screenY));
+		application.events.fireEvent(new SectorSelectedEvent(new Location(x,y), application.starMap.enterprise.getQuadrant(), screenX, screenY));
 	}
 
 	public QuadrantScannerPresenter(Application application) {
@@ -31,7 +33,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
 		((QuadrantScannerView) getView()).deselectSectors();
-		((QuadrantScannerView) getView()).selectSector(event.x, event.y);
+		((QuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
 	}
 
 	protected void updateScreen() {

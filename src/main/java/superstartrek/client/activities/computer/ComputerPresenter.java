@@ -6,6 +6,8 @@ import com.google.gwt.user.client.History;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.glasspanel.GlassPanelEvent;
+import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
 
 public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler{
 
@@ -25,6 +27,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 
 	@Override
 	public void showScreen() {
+		application.events.fireEvent(new GlassPanelEvent(Action.hide));
 		getView().show();
 	}
 

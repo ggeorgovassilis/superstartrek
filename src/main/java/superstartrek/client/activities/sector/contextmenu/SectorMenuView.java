@@ -1,4 +1,4 @@
-package superstartrek.client.activities.sector;
+package superstartrek.client.activities.sector.contextmenu;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
@@ -31,8 +31,8 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>{
 			public void onClick(ClickEvent event) {
 				Element e = event.getNativeEvent().getEventTarget().cast();
 				String command = e.getAttribute("id");
-				if ("cmd_computer".equals(command))
-					((SectorMenuPresenter)getPresenter()).onComputerClicked();
+				if (command!=null && !command.isEmpty())
+					((SectorMenuPresenter)getPresenter()).onCommandClicked(command);
 				
 			}
 		}, ClickEvent.getType());

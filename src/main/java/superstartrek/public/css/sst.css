@@ -621,3 +621,8 @@ a.progress-bar {
 	color:gray;
 }
 
+#screen-sectorscan{
+	position:absolute;
+	z-index:10;
+	background:rgba(10,10,10,0.5);
+}

@@ -1,4 +1,4 @@
-package superstartrek.client.activities.sector;
+package superstartrek.client.activities.sector.contextmenu;
 
 import com.google.gwt.event.shared.EventHandler;
 
