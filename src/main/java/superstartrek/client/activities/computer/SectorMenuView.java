@@ -1,17 +1,12 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.Resources;
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.activities.Presenter;
 
 public class SectorMenuView extends BaseView<SectorMenuActivity>{
 

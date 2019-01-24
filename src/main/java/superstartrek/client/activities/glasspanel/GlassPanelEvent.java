@@ -1,9 +1,6 @@
 package superstartrek.client.activities.glasspanel;
 
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
-
-import superstartrek.client.activities.computer.SectorSelectedHandler;
 
 public class GlassPanelEvent extends GwtEvent<GlassPanelHandler> {
 

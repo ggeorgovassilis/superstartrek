@@ -1,16 +1,10 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Klingon;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 

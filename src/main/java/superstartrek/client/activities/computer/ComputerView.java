@@ -2,7 +2,6 @@ package superstartrek.client.activities.computer;
 
 import superstartrek.client.Resources;
 import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.activities.Presenter;
 
 public class ComputerView extends BaseScreen<ComputerActivity>{
 
@@ -19,7 +18,7 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 		panel.add(quadrantScannerActivity,"quadrantscancontainer");
 	}
 	
-	public ComputerView(Presenter<ComputerActivity> presenter) {
+	public ComputerView(ComputerPresenter presenter) {
 		super(presenter);
 	}
 	
