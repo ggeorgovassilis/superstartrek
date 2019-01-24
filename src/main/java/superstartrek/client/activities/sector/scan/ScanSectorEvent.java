@@ -26,5 +26,13 @@ public class ScanSectorEvent extends GwtEvent<ScanSectorHandler> {
 	protected void dispatch(ScanSectorHandler handler) {
 		handler.scanSector(this);
 	}
+	
+	public Location getLocation() {
+		return location;
+	}
+	
+	public Quadrant getQuadrant() {
+		return quadrant;
+	}
 
 }

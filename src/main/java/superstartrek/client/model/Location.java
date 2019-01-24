@@ -5,6 +5,11 @@ public class Location {
 	protected int x;
 	protected int y;
 	
+	@Override
+	public String toString() {
+		return x+":"+y;
+	}
+	
 	public Location() {
 	}
 
