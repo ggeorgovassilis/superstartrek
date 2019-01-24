@@ -1,4 +1,4 @@
-package superstartrek.client.activities.computer;
+package superstartrek.client.activities.sector;
 
 import com.google.gwt.event.shared.EventHandler;
 

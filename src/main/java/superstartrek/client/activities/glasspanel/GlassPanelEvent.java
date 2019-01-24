@@ -4,12 +4,13 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class GlassPanelEvent extends GwtEvent<GlassPanelHandler> {
 
+	public static Type<GlassPanelHandler> TYPE = new Type<GlassPanelHandler>();
+
 	public enum Action {
 		show, hide, click
 	};
 
 	protected final Action action;
-	public static Type<GlassPanelHandler> TYPE = new Type<GlassPanelHandler>();
 
 	public GlassPanelEvent(Action action) {
 		this.action = action;

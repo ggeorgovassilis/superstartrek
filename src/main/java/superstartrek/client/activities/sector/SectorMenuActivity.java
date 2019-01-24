@@ -1,4 +1,4 @@
-package superstartrek.client.activities.computer;
+package superstartrek.client.activities.sector;
 
 import superstartrek.client.activities.Activity;
 

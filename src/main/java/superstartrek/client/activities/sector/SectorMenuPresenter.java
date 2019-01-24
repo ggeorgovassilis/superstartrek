@@ -1,4 +1,6 @@
-package superstartrek.client.activities.computer;
+package superstartrek.client.activities.sector;
+
+import com.google.gwt.user.client.History;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
@@ -21,9 +23,13 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 		getApplication().events.fireEvent(new GlassPanelEvent(GlassPanelEvent.Action.show));
 	}
 	
-	public void onMenuClicked() {
+	protected void hideMenu() {
 		application.events.fireEvent(new GlassPanelEvent(Action.hide));
 		getView().hide();
+	}
+	
+	public void onMenuClicked() {
+		hideMenu();
 	}
 
 	@Override
@@ -37,6 +43,10 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 
 	@Override
 	public void glassPanelClicked() {
+	}
+	
+	public void onComputerClicked() {
+		hideMenu();
 	}
 
 }
