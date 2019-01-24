@@ -250,6 +250,7 @@ table a, table a:visited{
 	background-color:rgba(0,0,0,0.5);
 	outline:solid grey 1px;
 	width:100%;
+	z-index: 100;
 }
 
 .sectorselectionbar a,.sectorselectionbar button{
@@ -416,7 +417,7 @@ a.single{
 	display:block;
 }
 
-.glasspanel{
+#glasspanel{
 	position:absolute;
 	z-index:1;
 	width:100%;
@@ -426,7 +427,6 @@ a.single{
 	right:0;
 	background-color:black;
 	opacity:0.75;
-	display:none;
 }
 
 .messages-visible #messages, .messages-visible .glasspanel{

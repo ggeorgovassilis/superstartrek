@@ -1,6 +1,7 @@
 package superstartrek.client.activities;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -13,6 +14,10 @@ public abstract class BaseActivity extends Composite implements Activity{
 
 	protected final Presenter presenter;
 	protected HTMLPanel panel;
+	
+	public Presenter getPresenter() {
+		return presenter;
+	}
 	
 	public void finishUiConstruction() {
 	}

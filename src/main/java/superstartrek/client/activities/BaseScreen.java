@@ -15,8 +15,6 @@ public abstract class BaseScreen extends BaseActivity{
 	
 	@Override
 	public void finishUiConstruction() {
-		GWT.log("1");
 		presenter.getApplication().page.add(this);
-		GWT.log("2");
 	}
 }

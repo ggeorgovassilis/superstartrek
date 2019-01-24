@@ -2,6 +2,11 @@ package superstartrek.client.activities.computer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.Resources;
@@ -12,7 +17,6 @@ public class SectorMenuActivity extends BaseActivity{
 
 	public SectorMenuActivity(Presenter presenter) {
 		super(presenter);
-		GWT.log("SectorMenuActivity()");
 	}
 
 	@Override
@@ -22,9 +26,15 @@ public class SectorMenuActivity extends BaseActivity{
 	
 	@Override
 	public void finishUiConstruction() {
-		GWT.log("SectorMenuActivity.finsihUiCosntruction");
 		addStyleName("sectorselectionbar");
 		presenter.getApplication().page.add(this);
+		addDomHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				((SectorMenuPresenter)(getPresenter())).onMenuClicked();
+			}
+		}, ClickEvent.getType());
 		hide();
 	}
 	

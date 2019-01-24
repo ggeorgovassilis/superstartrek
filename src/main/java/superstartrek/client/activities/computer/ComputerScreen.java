@@ -18,7 +18,6 @@ public class ComputerScreen extends BaseScreen{
 		getElement().setInnerHTML(Resources.INSTANCE.computerScreen().getText());
 		presenter.getApplication().page.add(this);
 		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication());
-		GWT.log("ABC123");
 		quadrantScannerActivity = new QuadrantScannerActivity(quadrantScannerPresenter);
 		panel.add(quadrantScannerActivity,"quadrantscancontainer");
 	}

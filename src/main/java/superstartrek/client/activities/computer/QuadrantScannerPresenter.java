@@ -32,7 +32,6 @@ public class QuadrantScannerPresenter extends BasePresenter implements SectorSel
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
-		GWT.log("sectorselected");
 		((QuadrantScannerActivity) screen).deselectSectors();
 		((QuadrantScannerActivity) screen).selectSector(event.x, event.y);
 	}

@@ -13,7 +13,6 @@ public class LoadingPresenter extends BasePresenter implements GameStartedHandle
 	}
 
 	public void onGameStared(GameStartedEvent evt) {
-		GWT.log("onGameStarted");
 		getScreen().hide();
 	}
 
