@@ -10,7 +10,7 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
 
-public class IntroPresenter extends BasePresenter implements GameStartedHandler{
+public class IntroPresenter extends BasePresenter<IntroActivity> implements GameStartedHandler{
 
 	public IntroPresenter(Application application) {
 		super(application);
@@ -20,9 +20,9 @@ public class IntroPresenter extends BasePresenter implements GameStartedHandler{
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				if ("intro".equals(event.getValue())) {
-					getScreen().show();
+					getView().show();
 				} else
-					getScreen().hide();
+					getView().hide();
 			}
 		});
 	}

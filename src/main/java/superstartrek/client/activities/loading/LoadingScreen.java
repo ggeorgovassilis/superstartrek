@@ -4,12 +4,9 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-import superstartrek.client.Application;
-import superstartrek.client.activities.BaseActivity;
 import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.activities.Presenter;
 
-public class LoadingScreen extends BaseScreen {
+public class LoadingScreen extends BaseScreen<LoadingActivity> {
 
 	@Override
 	protected HTMLPanel createPanel() {

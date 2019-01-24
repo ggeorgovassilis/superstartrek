@@ -3,7 +3,7 @@ package superstartrek.client.activities.manual;
 import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.Resources;
-import superstartrek.client.activities.BaseActivity;
+import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.Presenter;
 

@@ -1,19 +1,18 @@
 package superstartrek.client.activities.loading;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 
-public class LoadingPresenter extends BasePresenter implements GameStartedHandler{
+public class LoadingPresenter extends BasePresenter<LoadingActivity> implements GameStartedHandler{
 
 	public LoadingPresenter(Application application) {
 		super(application);
 		application.events.addHandler(GameStartedEvent.TYPE, this);
 	}
 
+	@Override
 	public void onGameStared(GameStartedEvent evt) {
-		getScreen().hide();
+		getView().hide();
 	}
 
 }

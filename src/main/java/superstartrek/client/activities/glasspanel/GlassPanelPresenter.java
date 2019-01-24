@@ -6,7 +6,7 @@ import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
 
-public class GlassPanelPresenter extends BasePresenter implements GlassPanelHandler, GameStartedHandler{
+public class GlassPanelPresenter extends BasePresenter<GlassPanelActivity> implements GlassPanelHandler, GameStartedHandler{
 
 	public GlassPanelPresenter(Application application) {
 		super(application);
@@ -14,9 +14,10 @@ public class GlassPanelPresenter extends BasePresenter implements GlassPanelHand
 		application.events.addHandler(GameStartedEvent.TYPE, this);
 	}
 	
+	@Override
 	public void glassPanelClicked(){
 		application.events.fireEvent(new GlassPanelEvent(Action.hide));
-		((GlassPanelActivity)getScreen()).hide();
+		getView().hide();
 	}
 
 	public void glassPanelWasClicked(){
@@ -25,17 +26,17 @@ public class GlassPanelPresenter extends BasePresenter implements GlassPanelHand
 
 	@Override
 	public void glassPanelShown() {
-		((GlassPanelActivity)getScreen()).show();
+		getView().show();
 	}
 
 	@Override
 	public void glassPanelHidden() {
-		((GlassPanelActivity)getScreen()).hide();
+		getView().hide();
 	}
 
 	@Override
 	public void onGameStared(GameStartedEvent evt) {
-		((GlassPanelActivity)getScreen()).hide();
+		getView().hide();
 	}
 
 }

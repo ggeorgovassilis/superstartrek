@@ -1,10 +1,8 @@
 package superstartrek.client.activities;
 
-import com.google.gwt.core.shared.GWT;
+public abstract class BaseScreen<A extends Activity> extends BaseView<A>{
 
-public abstract class BaseScreen extends BaseActivity{
-
-	public BaseScreen(Presenter p) {
+	public BaseScreen(Presenter<A> p) {
 		super(p);
 		setupUI();
 		hide();

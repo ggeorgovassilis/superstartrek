@@ -7,7 +7,7 @@ import com.google.gwt.user.client.History;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 
-public class ManualPresenter extends BasePresenter{
+public class ManualPresenter extends BasePresenter<ManualActivity>{
 
 	public ManualPresenter(Application application) {
 		super(application);
@@ -16,9 +16,9 @@ public class ManualPresenter extends BasePresenter{
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				if ("manual".equals(event.getValue())) {
-					getScreen().show();
+					getView().show();
 				} else
-					getScreen().hide();
+					getView().hide();
 			}
 		});
 	}

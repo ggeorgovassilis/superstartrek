@@ -1,16 +1,13 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.shared.GWT;
-
 import superstartrek.client.Resources;
-import superstartrek.client.activities.BaseActivity;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.Presenter;
 
-public class ComputerScreen extends BaseScreen{
+public class ComputerView extends BaseScreen<ComputerActivity>{
 
 	QuadrantScannerPresenter quadrantScannerPresenter;
-	QuadrantScannerActivity quadrantScannerActivity;
+	QuadrantScannerView quadrantScannerActivity;
 	
 	@Override
 	protected void setupUI() {
@@ -18,17 +15,12 @@ public class ComputerScreen extends BaseScreen{
 		getElement().setInnerHTML(Resources.INSTANCE.computerScreen().getText());
 		presenter.getApplication().page.add(this);
 		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication());
-		quadrantScannerActivity = new QuadrantScannerActivity(quadrantScannerPresenter);
+		quadrantScannerActivity = new QuadrantScannerView(quadrantScannerPresenter);
 		panel.add(quadrantScannerActivity,"quadrantscancontainer");
 	}
 	
-	public ComputerScreen(Presenter presenter) {
+	public ComputerView(Presenter<ComputerActivity> presenter) {
 		super(presenter);
 	}
 	
-	@Override
-	public void finishUiConstruction() {
-		super.finishUiConstruction();
-	}
-
 }

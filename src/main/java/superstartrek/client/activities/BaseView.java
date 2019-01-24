@@ -1,21 +1,14 @@
 package superstartrek.client.activities;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Widget;
 
-import superstartrek.client.Application;
+public abstract class BaseView<A extends Activity> extends Composite implements View<A>{
 
-public abstract class BaseActivity extends Composite implements Activity{
-
-	protected final Presenter presenter;
+	protected final Presenter<A> presenter;
 	protected HTMLPanel panel;
 	
-	public Presenter getPresenter() {
+	public Presenter<A> getPresenter() {
 		return presenter;
 	}
 	
@@ -26,18 +19,20 @@ public abstract class BaseActivity extends Composite implements Activity{
 		return new HTMLPanel("");
 	}
 	
-	protected BaseActivity(Presenter presenter) {
+	protected BaseView(Presenter<A> presenter) {
 		this.presenter = presenter;
 		panel = createPanel();
 		initWidget(panel);
-		presenter.setScreen(this);
+		presenter.setView(this);
 		finishUiConstruction();
 	}
 	
+	@Override
 	public void show() {
 		setVisible(true);
 	}
 	
+	@Override
 	public void hide() {
 		setVisible(false);
 	}

@@ -8,7 +8,7 @@ import superstartrek.client.activities.glasspanel.GlassPanelEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
 import superstartrek.client.activities.glasspanel.GlassPanelHandler;
 
-public class SectorMenuPresenter extends BasePresenter implements SectorSelectedHandler, GlassPanelHandler{
+public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> implements SectorSelectedHandler, GlassPanelHandler{
 
 	public SectorMenuPresenter(Application application) {
 		super(application);
@@ -18,14 +18,14 @@ public class SectorMenuPresenter extends BasePresenter implements SectorSelected
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
-		((SectorMenuActivity)getScreen()).setLocation(0, event.screenY);
-		((SectorMenuActivity)getScreen()).show();
+		((SectorMenuView)getView()).setLocation(0, event.screenY);
+		getView().show();
 		getApplication().events.fireEvent(new GlassPanelEvent(GlassPanelEvent.Action.show));
 	}
 	
 	public void onMenuClicked() {
 		application.events.fireEvent(new GlassPanelEvent(Action.hide));
-		((SectorMenuActivity)getScreen()).hide();
+		getView().hide();
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class SectorMenuPresenter extends BasePresenter implements SectorSelected
 
 	@Override
 	public void glassPanelHidden() {
-		((SectorMenuActivity)getScreen()).hide();
+		getView().hide();
 	}
 
 	@Override

@@ -11,11 +11,11 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.computer.ComputerPresenter;
-import superstartrek.client.activities.computer.ComputerScreen;
-import superstartrek.client.activities.glasspanel.GlassPanelActivity;
+import superstartrek.client.activities.computer.ComputerView;
+import superstartrek.client.activities.glasspanel.GlassPanelView;
 import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.activities.intro.IntroPresenter;
-import superstartrek.client.activities.intro.IntroScreen;
+import superstartrek.client.activities.intro.IntroView;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.LoadingPresenter;
 import superstartrek.client.activities.loading.LoadingScreen;
@@ -53,18 +53,19 @@ public class Application implements EntryPoint{
 		new LoadingScreen(loadingPresenter);
 		
 		introPresenter = new IntroPresenter(this);
-		new IntroScreen(introPresenter);
+		new IntroView(introPresenter);
 	
 		manualPresenter = new ManualPresenter(this);
 		new ManualScreen(manualPresenter);
 		
 		computerPresenter = new ComputerPresenter(this);
-		new ComputerScreen(computerPresenter);
+		new ComputerView(computerPresenter);
 		
 		glassPanelPresenter = new GlassPanelPresenter(this);
-		new GlassPanelActivity(glassPanelPresenter);
+		new GlassPanelView(glassPanelPresenter);
 	}
 	
+	@Override
 	public void onModuleLoad() {
 		page = HTMLPanel.wrap(DOM.getElementById("page"));
 		events = GWT.create(SimpleEventBus.class);
