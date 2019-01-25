@@ -2,6 +2,8 @@ package superstartrek.client.activities.computer;
 
 import superstartrek.client.Resources;
 import superstartrek.client.activities.BaseScreen;
+import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
+import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerView;
 
 public class ComputerView extends BaseScreen<ComputerActivity>{
 

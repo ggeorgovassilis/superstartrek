@@ -1,4 +1,4 @@
-package superstartrek.client.activities.computer;
+package superstartrek.client.activities.computer.quadrantscanner;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;

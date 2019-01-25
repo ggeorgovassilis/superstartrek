@@ -1,4 +1,4 @@
-package superstartrek.client.activities.computer;
+package superstartrek.client.activities.computer.quadrantscanner;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
