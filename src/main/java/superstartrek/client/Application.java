@@ -12,6 +12,10 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.ComputerView;
+import superstartrek.client.activities.computer.TurnEndedEvent;
+import superstartrek.client.activities.computer.TurnStartedEvent;
+import superstartrek.client.activities.computer.srs.SRSPresenter;
+import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.glasspanel.GlassPanelView;
 import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.activities.intro.IntroPresenter;
@@ -70,6 +74,22 @@ public class Application implements EntryPoint{
 		
 		scanSectorPresenter = new ScanSectorPresenter(this);
 		new ScanSectorView(scanSectorPresenter);
+		
+	}
+	
+	public void startGame() {
+		History.replaceItem("intro");
+		History.fireCurrentHistoryState();
+		events.fireEvent(new GameStartedEvent());
+		startTurn();
+	}
+	
+	public void endTurn() {
+		events.fireEvent(new TurnEndedEvent());
+	}
+	
+	public void startTurn() {
+		events.fireEvent(new TurnStartedEvent());
 	}
 	
 	@Override
@@ -79,7 +99,7 @@ public class Application implements EntryPoint{
 		setupScreens();
 		setupHistory();
 		setupStarMap();
-		events.fireEvent(new GameStartedEvent());
+		startGame();
 	}
 
 }
