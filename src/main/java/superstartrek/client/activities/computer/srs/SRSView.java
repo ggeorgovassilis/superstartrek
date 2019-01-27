@@ -30,7 +30,6 @@ public class SRSView extends BaseView<SRSActivity> {
 	}
 	
 	public void updateCell(int x, int y, String symbol, String css) {
-		GWT.log("Update cell "+x+":"+y);
 		eCells[x][y].setInnerText(symbol);
 		eCells[x][y].setClassName(css);
 	}

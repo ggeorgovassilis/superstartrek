@@ -4,6 +4,8 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
+import superstartrek.client.activities.navigation.ThingMovedEvent;
+import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuView;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedEvent;
@@ -13,7 +15,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 
-public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler {
+public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler {
 
 	SectorMenuPresenter sectorMenuPresenter;
 	
@@ -26,6 +28,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		super(application);
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
 		application.events.addHandler(GameStartedEvent.TYPE, this);
+		application.events.addHandler(ThingMovedEvent.TYPE, this);
 		sectorMenuPresenter = new SectorMenuPresenter(application);
 		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
 	}
@@ -35,6 +38,18 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		((QuadrantScannerView) getView()).deselectSectors();
 		((QuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
 	}
+	
+	protected void updateSector(Quadrant q, int x, int y) {
+		StarMap starMap = getApplication().starMap;
+		Thing thing = starMap.findThingAt(q, x, y);
+		String content = "";
+		String css = "";
+		if (thing!=null) {
+			content = thing.getSymbol();
+			css = thing.getCss();
+		}
+		((QuadrantScannerView) view).updateSector(x, y, content, css);
+	}
 
 	protected void updateScreen() {
 		StarMap starMap = getApplication().starMap;
@@ -43,20 +58,19 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 			throw new RuntimeException("q is null");
 		for (int y = 0; y < 8; y++)
 			for (int x = 0; x < 8; x++) {
-				Thing thing = starMap.findThingAt(q, x, y);
-				String content = "";
-				String css = "";
-				if (thing!=null) {
-					content = thing.getSymbol();
-					css = thing.getCss();
-				}
-				((QuadrantScannerView) view).updateSector(x, y, content, css);
+				updateSector(q, x,y);
 			}
 	}
 
 	@Override
 	public void onGameStared(GameStartedEvent evt) {
 		updateScreen();
+	}
+
+	@Override
+	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+		updateSector(qFrom, lFrom.getX(), lFrom.getY());
+		updateSector(qTo, lTo.getX(), lTo.getY());
 	}
 
 }

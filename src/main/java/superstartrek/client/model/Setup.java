@@ -2,12 +2,20 @@ package superstartrek.client.model;
 
 import com.google.gwt.user.client.Random;
 
+import superstartrek.client.Application;
+
 public class Setup {
 
 	final String names[] = { "Antares", "Siruis", "Rigel", "Deneb", "Procyon", "Capella", "Vega", "Betelgeuse",
 			"Canopus", "Aldebaran", "Altair", "Regolus", "Saggitarius","Arcturus","Pollux","Spica" };
 
 	final String roman[]= {"I","II","III","IV"};
+	
+	final Application application;
+	
+	public Setup(Application application) {
+		this.application = application;
+	}
 	
 	protected Quadrant makeQuadrant(StarMap map, int x, int y) {
 		Quadrant q = new Quadrant(names[(int)Math.floor((y*8+x)/4)]+ " "+roman[(y*8+x) & 4],x,y);
@@ -41,7 +49,7 @@ public class Setup {
 	
 	public StarMap createNewMap() {
 		StarMap map = new StarMap();
-		map.enterprise = new Enterprise();
+		map.enterprise = new Enterprise(application);
 		for (int y = 0; y < 8; y++)
 			for (int x = 0; x < 8; x++) {
 				Quadrant q = makeQuadrant(map, x, y);

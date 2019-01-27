@@ -52,7 +52,7 @@ public class Application implements EntryPoint{
 	}
 	
 	protected void setupStarMap() {
-		Setup setup = new Setup();
+		Setup setup = new Setup(this);
 		starMap = setup.createNewMap();
 	}
 	
