@@ -387,9 +387,7 @@ table a, table a:visited{
 	color:white;
 	font-family:courier, courier new, typewriter;
 	padding:10px;
-	display:none;
 	z-index:100;
-	display:none;
 	border:solid grey 1px;
 }
 

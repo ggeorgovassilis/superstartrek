@@ -25,6 +25,9 @@ import superstartrek.client.activities.loading.LoadingPresenter;
 import superstartrek.client.activities.loading.LoadingScreen;
 import superstartrek.client.activities.manual.ManualPresenter;
 import superstartrek.client.activities.manual.ManualScreen;
+import superstartrek.client.activities.messages.MessagesView;
+import superstartrek.client.activities.messages.MessageEvent;
+import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
 import superstartrek.client.model.Enterprise;
@@ -40,6 +43,7 @@ public class Application implements EntryPoint{
 	public GlassPanelPresenter glassPanelPresenter;
 	public ManualPresenter manualPresenter;
 	public ScanSectorPresenter scanSectorPresenter;
+	public MessagesPresenter messagesPresenter;
 	public HTMLPanel page;
 	public StarMap starMap;
 	
@@ -75,6 +79,9 @@ public class Application implements EntryPoint{
 		scanSectorPresenter = new ScanSectorPresenter(this);
 		new ScanSectorView(scanSectorPresenter);
 		
+		messagesPresenter = new MessagesPresenter(this);
+		new MessagesView(messagesPresenter);
+		
 	}
 	
 	public void startGame() {
@@ -90,6 +97,14 @@ public class Application implements EntryPoint{
 	
 	public void startTurn() {
 		events.fireEvent(new TurnStartedEvent());
+	}
+
+	public void message(String formattedMessage) {
+		message(formattedMessage, "info");
+	}
+
+	public void message(String formattedMessage, String category) {
+		events.fireEvent(new MessageEvent(formattedMessage, category));
 	}
 	
 	@Override
