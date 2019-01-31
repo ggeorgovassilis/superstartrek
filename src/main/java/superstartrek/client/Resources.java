@@ -5,7 +5,8 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 
 public interface Resources extends ClientBundle {
-	public static final Resources INSTANCE = GWT.create(Resources.class);
+	//TODO: find a way to set INSTANCE to null once we don't need it anymore (conserve memory)
+	public final static Resources INSTANCE = GWT.create(Resources.class);
 
 	@Source("superstartrek/public/screens/intro.html")
 	public TextResource introScreen();
@@ -21,5 +22,8 @@ public interface Resources extends ClientBundle {
 
 	@Source("superstartrek/public/screens/sector-scan.html")
 	public TextResource sectorScanScreen();
+
+	@Source("superstartrek/public/screens/lrs.html")
+	public TextResource lrsScreen();
 
 }

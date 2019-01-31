@@ -2,6 +2,7 @@ package superstartrek.client.activities;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 
 public class CSS {
 
@@ -23,4 +24,8 @@ public class CSS {
 		e.setAttribute("class", newCss);
 		return e;
 	}
+	
+	public final static native NodeList<Element> querySelectorAll(String selectors) /*-{
+	 return $doc.querySelectorAll(selectors);
+	 }-*/;
 }
