@@ -9,6 +9,7 @@ import superstartrek.client.Resources;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.Presenter;
+import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.utils.Strings;
 
@@ -18,7 +19,7 @@ import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 
-public class LRSScreen extends BaseScreen<LRSActivity>{
+public class LRSScreen extends BaseScreen<LRSActivity> implements MapCellRenderer{
 	
 	Element[][] cells;
 	
@@ -61,7 +62,8 @@ public class LRSScreen extends BaseScreen<LRSActivity>{
 		cells[x][y].addClassName(css);
 	}
 	
-	public void updateQuadrant(int x, int y, String text, String css){
+	@Override
+	public void updateCell(int x, int y, String text, String css){
 		cells[x][y].setInnerHTML(text);
 		cells[x][y].setClassName(css);
 	}

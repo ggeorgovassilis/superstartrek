@@ -13,6 +13,7 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.utils.Maps;
 
 public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandler, EnterpriseWarpedHandler {
 
@@ -41,20 +42,7 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 	protected void updateQuadrant(int x, int y) {
 		StarMap map = application.starMap;
 		Quadrant q = map.getQuadrant(x, y);
-		String text = "";
-		String css = q.isExplored()?"explored":"";
-		if (q.isExplored() && !q.getKlingons().isEmpty()) {
-			css += " has-klingons";
-			text += "K";
-		} else
-			text += " ";
-		if (!q.getStarBases().isEmpty()) {
-			css += " has-starbase";
-			text += "!";
-		} else
-			text += " ";
-		text += q.getStars().size();
-		((LRSScreen) getView()).updateQuadrant(x, y, text, css);
+		Maps.renderCell(x, y, map, q, (LRSScreen) getView());
 	}
 	
 	protected void updateEnterpriseLocation() {

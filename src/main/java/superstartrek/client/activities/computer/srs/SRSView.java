@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.Presenter;
 
-public class SRSView extends BaseView<SRSActivity> {
+public class SRSView extends BaseView<SRSActivity> implements MapCellRenderer{
 
 	Element[][] eCells;
 	
@@ -29,6 +29,7 @@ public class SRSView extends BaseView<SRSActivity> {
 		return table;
 	}
 	
+	@Override
 	public void updateCell(int x, int y, String symbol, String css) {
 		eCells[x][y].setInnerText(symbol);
 		eCells[x][y].setClassName(css);
