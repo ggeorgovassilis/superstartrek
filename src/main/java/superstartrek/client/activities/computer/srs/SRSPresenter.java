@@ -39,6 +39,15 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStar
 					Maps.renderCell(x, y, map, null, view);
 			}
 	}
+	
+	public void quadrantWasClicked(int dx, int dy) {
+		StarMap map = application.starMap;
+		Quadrant q = application.starMap.enterprise.getQuadrant();
+		int x = q.getX()+dx;
+		int y = q.getY()+dy;
+		if (map.isOnMap(x, y))
+			map.enterprise.warpTo(map.getQuadrant(x, y));
+	}
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {

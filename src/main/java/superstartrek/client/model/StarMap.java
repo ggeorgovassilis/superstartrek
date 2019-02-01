@@ -19,12 +19,14 @@ public class StarMap {
 	public static double distance(Location l1, Location l2) {
 		return distance(l1.x, l1.y, l2.x, l2.y);
 	}
+	
+	public boolean isOnMap(int x, int y) {
+		return (x >= 0 && x <= 7 && y >= 0 && y <= 7 );
+	}
 
 	public Quadrant getQuadrant(int x, int y) {
-		if (x < 0 || x > 7)
-			throw new IllegalArgumentException("x = " + x);
-		if (y < 0 || y > 7)
-			throw new IllegalArgumentException("y = " + y);
+		if (!isOnMap(x, y))
+			throw new IllegalArgumentException(x+":"+y);
 		return quadrants[x][y];
 	}
 
