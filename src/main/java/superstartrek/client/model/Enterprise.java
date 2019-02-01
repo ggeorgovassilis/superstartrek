@@ -27,7 +27,16 @@ public class Enterprise extends Thing{
 		EnterpriseWarpedEvent event = new EnterpriseWarpedEvent(this, getQuadrant(), 
 				new Location(getX(), getY()), qTo, new Location(getX(), getY()));
 		setQuadrant(qTo);
-		qTo.setExplored(true);
+		int qx = qTo.getX();
+		int qy = qTo.getY();
+		StarMap map = application.starMap;
+		int xFrom = Math.max(0, qx-1);
+		int xTo = Math.min(7, qx+1);
+		int yFrom = Math.max(0, qy-1);
+		int yTo = Math.min(7, qy+1);
+		for (int y=yFrom;y<=yTo;y++)
+		for (int x=xFrom;x<=xTo;x++)
+			map.getQuadrant(x, y).setExplored(true);
 		application.events.fireEvent(event);
 	}
 	

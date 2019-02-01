@@ -114,6 +114,7 @@ public class Application implements EntryPoint{
 		setupScreens();
 		setupStarMap();
 		startGame();
+		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
 	}
 
 }
