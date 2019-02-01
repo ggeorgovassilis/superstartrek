@@ -55,8 +55,10 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 		hideMenu();
 		if ("cmd_scanSector".equals(command))
 			application.events.fireEvent(new ScanSectorEvent(sector, quadrant));
-		if ("cmd_navigate".equals(command))
+		else if ("cmd_navigate".equals(command))
 			application.starMap.enterprise.navigateTo(sector);
+		else if ("cmd_firePhasers".equals(command))
+			application.starMap.enterprise.firePhasersAt(sector);
 	}
 
 }

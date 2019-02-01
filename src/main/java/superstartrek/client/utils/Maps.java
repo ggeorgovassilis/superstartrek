@@ -12,12 +12,13 @@ public class Maps {
 		String symbol = "";
 		String css = map.enterprise.getQuadrant() == q ?"has-enterprise":"";
 		if (q != null) {
-			if (q.isExplored()) css+=" explored";
-			if (!q.getKlingons().isEmpty()) {
-				symbol += "K";
-				css += " has-klingons";
-			} else
-				symbol += " ";
+			if (q.isExplored()) {
+				css+=" explored";	
+				if (!q.getKlingons().isEmpty()) {
+					symbol += "K";
+					css += " has-klingons";
+				} 
+			}
 			if (!q.getStarBases().isEmpty()) {
 				symbol += "!";
 				css += " has-starbase";

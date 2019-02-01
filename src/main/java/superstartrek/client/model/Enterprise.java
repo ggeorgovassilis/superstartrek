@@ -2,7 +2,10 @@ package superstartrek.client.model;
 
 import java.util.List;
 
+import com.google.gwt.core.shared.GWT;
+
 import superstartrek.client.Application;
+import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 
@@ -60,4 +63,18 @@ public class Enterprise extends Thing{
 		application.events.fireEvent(new ThingMovedEvent(this, getQuadrant(), oldLoc, getQuadrant(), loc));
 	}
 	
+	public void firePhasersAt(Location sector) {
+		Thing thing = application.starMap.findThingAt(quadrant, sector.getX(), sector.getY());
+		if (thing == null) {
+			application.message("There is nothing at "+sector);
+			return;
+		}
+		if (!(thing instanceof Klingon)) {
+			application.message("Phasers can target only enemy vessels");
+			return;
+		}
+		Klingon klingon = (Klingon)thing;
+		FireEvent event = new FireEvent(this, klingon, "phasers", 100);
+		application.events.fireEvent(event);
+	}
 }
