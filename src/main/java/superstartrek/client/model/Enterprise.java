@@ -3,6 +3,7 @@ package superstartrek.client.model;
 import java.util.List;
 
 import superstartrek.client.Application;
+import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 
 public class Enterprise extends Thing{
@@ -20,6 +21,14 @@ public class Enterprise extends Thing{
 	
 	public Setting getImpulse() {
 		return impulse;
+	}
+	
+	public void warpTo(Quadrant qTo) {
+		EnterpriseWarpedEvent event = new EnterpriseWarpedEvent(this, getQuadrant(), 
+				new Location(getX(), getY()), qTo, new Location(getX(), getY()));
+		setQuadrant(qTo);
+		qTo.setExplored(true);
+		application.events.fireEvent(event);
 	}
 	
 	public void navigateTo(Location loc) {

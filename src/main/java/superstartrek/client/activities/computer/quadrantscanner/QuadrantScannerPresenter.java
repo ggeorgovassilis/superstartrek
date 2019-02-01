@@ -1,21 +1,26 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
+import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
+import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuView;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedEvent;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
+import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 
-public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler {
+public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler, EnterpriseWarpedHandler {
 
 	SectorMenuPresenter sectorMenuPresenter;
 	
@@ -29,6 +34,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
 		application.events.addHandler(GameStartedEvent.TYPE, this);
 		application.events.addHandler(ThingMovedEvent.TYPE, this);
+		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 		sectorMenuPresenter = new SectorMenuPresenter(application);
 		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
 	}
@@ -53,7 +59,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	protected void updateScreen() {
 		StarMap starMap = getApplication().starMap;
-		Quadrant q = starMap.getQuadrant(0, 0);
+		Quadrant q = starMap.enterprise.getQuadrant();
 		if (q == null)
 			throw new RuntimeException("q is null");
 		for (int y = 0; y < 8; y++)
@@ -71,6 +77,12 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		updateSector(qFrom, lFrom.getX(), lFrom.getY());
 		updateSector(qTo, lTo.getX(), lTo.getY());
+	}
+
+	@Override
+	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+		GWT.log("QuadrantScanner.onEnterpriseWarped");
+		updateScreen();
 	}
 
 }

@@ -32,6 +32,7 @@ public class Setup {
 			Location loc = map.findFreeSpot(q);
 			starBase.setLocation(loc);
 			starBase.setQuadrant(q);
+			q.setExplored(true);
 			q.getStarBases().add(starBase);
 		}
 		if (Random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
@@ -58,6 +59,7 @@ public class Setup {
 		
 		//TODO: find free spot
 		map.enterprise.setQuadrant(map.quadrants[0][0]);
+		map.enterprise.getQuadrant().setExplored(true);
 		map.enterprise.setLocation(map.findFreeSpot(map.quadrants[0][0]));
 		return map;
 	}

@@ -8,6 +8,11 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
+import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
+import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
+import superstartrek.client.model.Enterprise;
+import superstartrek.client.model.Location;
+import superstartrek.client.model.Quadrant;
 
 public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler{
 

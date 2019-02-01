@@ -8,6 +8,7 @@ public class Quadrant {
 	protected final String name;
 	protected final int x;
 	protected final int y;
+	protected boolean explored;
 	protected List<Star> stars = new ArrayList<>();
 	protected List<StarBase> starBases = new ArrayList<>();
 	protected List<Klingon> klingons = new ArrayList<>();
@@ -18,6 +19,14 @@ public class Quadrant {
 		this.y = y;
 	}
 	
+	public boolean isExplored() {
+		return explored;
+	}
+
+	public void setExplored(boolean explored) {
+		this.explored = explored;
+	}
+
 	public List<Klingon> getKlingons() {
 		return klingons;
 	}

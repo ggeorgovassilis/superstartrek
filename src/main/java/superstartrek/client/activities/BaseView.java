@@ -1,5 +1,6 @@
 package superstartrek.client.activities;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
@@ -8,8 +9,8 @@ public abstract class BaseView<A extends Activity> extends Composite implements 
 	protected final Presenter<A> presenter;
 	protected HTMLPanel panel;
 	
-	public Presenter<A> getPresenter() {
-		return presenter;
+	public <T extends Presenter<A>> T getPresenter() {
+		return (T)presenter;
 	}
 	
 	public void finishUiConstruction() {
