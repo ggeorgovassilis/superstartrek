@@ -12,13 +12,17 @@ public class Quadrant {
 	protected final int y;
 	protected boolean explored;
 	protected List<Star> stars = new ArrayList<>();
-	protected List<StarBase> starBases = new ArrayList<>();
+	protected StarBase starBase;
 	protected List<Klingon> klingons = new ArrayList<>();
 	
 	public Quadrant(String name, int x, int y) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void setStarBase(StarBase starBase) {
+		this.starBase = starBase;
 	}
 	
 	public boolean isExplored() {
@@ -37,8 +41,8 @@ public class Quadrant {
 		return stars;
 	}
 	
-	public List<StarBase> getStarBases() {
-		return starBases;
+	public StarBase getStarBase() {
+		return starBase;
 	}
 
 	public String getName() {

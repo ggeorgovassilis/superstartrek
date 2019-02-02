@@ -36,6 +36,13 @@ public class Enterprise extends Vessel{
 		application.events.fireEvent(event);
 	}
 	
+	// only for internal use, bypasses checks
+	public void _navigateTo(Location loc) {
+		Location oldLoc = new Location(getX(), getY());
+		this.setLocation(loc);
+		application.events.fireEvent(new ThingMovedEvent(this, getQuadrant(), oldLoc, getQuadrant(), loc));
+	}
+	
 	public void navigateTo(Location loc) {
 		Location oldLoc = new Location(getX(), getY());
 		if (StarMap.distance(oldLoc, loc)>getImpulse().getValue()) {
@@ -52,8 +59,7 @@ public class Enterprise extends Vessel{
 			application.message("Path isn't clear "+things.size()+" "+things.get(1).getName()+" "+things.get(1));
 			return;
 		}
-		this.setLocation(loc);
-		application.events.fireEvent(new ThingMovedEvent(this, getQuadrant(), oldLoc, getQuadrant(), loc));
+		_navigateTo(loc);
 	}
 	
 	public void firePhasersAt(Location sector) {
@@ -74,5 +80,9 @@ public class Enterprise extends Vessel{
 		Klingon klingon = (Klingon)thing;
 		FireEvent event = new FireEvent(this, klingon, "phasers", phasers.getValue()/distance);
 		application.events.fireEvent(event);
+	}
+	
+	public void dockAtStarbase(StarBase starBase) {
+		phasers.repair();
 	}
 }

@@ -13,6 +13,8 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.StarBase;
+import superstartrek.client.model.StarMap;
 
 public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, TurnStartedHandler{
 
@@ -42,10 +44,33 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	public void hideScreen() {
 		getView().hide();
 	}
+	
+	public void onDockInStarbaseButtonClicked() {
+		StarMap map = application.starMap;
+		Enterprise enterprise = map.enterprise;
+		Quadrant q = enterprise.getQuadrant();
+		Location loc = application.starMap.findFreeSpotAround(q, q.getStarBase(),1);
+		if (loc==null) {
+			application.message("No space around starbase");
+			return;
+		}
+		enterprise._navigateTo(loc);
+		enterprise.dockAtStarbase(q.getStarBase());
+	}
+	
+	public void updateDockInStarbaseButton() {
+		Enterprise enterprise = application.starMap.enterprise;
+		Quadrant q = enterprise.getQuadrant();
+		StarBase starBase = q.getStarBase();
+		boolean visible = starBase!=null && (q.getKlingons().isEmpty() || StarMap.distance(enterprise, starBase)<2);
+		((ComputerView)getView()).setDockInStarbaseButtonVisibility(visible);
+	}
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
-		((ComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
+		ComputerView view = (ComputerView)getView();
+		view.showStarDate(""+application.starMap.getStarDate());
+		updateDockInStarbaseButton();
 	}
 
 }

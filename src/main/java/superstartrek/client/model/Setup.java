@@ -34,7 +34,7 @@ public class Setup {
 			starBase.setLocation(loc);
 			starBase.setQuadrant(q);
 			q.setExplored(true);
-			q.getStarBases().add(starBase);
+			q.setStarBase(starBase);
 		}
 		if (Random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
 			int klingons = 1+Random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT-1);

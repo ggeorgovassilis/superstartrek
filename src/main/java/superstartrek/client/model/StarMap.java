@@ -47,9 +47,9 @@ public class StarMap {
 		for (Star star : q.getStars())
 			if (star.getX() == x && star.getY() == y)
 				return star;
-		for (StarBase starBase : q.getStarBases())
-			if (starBase.getX() == x && starBase.getY() == y)
-				return starBase;
+		if (q.getStarBase()!=null)
+			if (q.getStarBase().getX() == x && q.getStarBase().getY() == y)
+				return q.getStarBase();
 		for (Klingon klingon : q.getKlingons())
 			if (klingon.getX() == x && klingon.getY() == y)
 				return klingon;
@@ -114,6 +114,19 @@ public class StarMap {
 			}
 		});
 		return found;
+	}
+	
+	public Location findFreeSpotAround(Quadrant q, Location loc, int radius) {
+		int minX = Math.max(0, loc.getX()-1);
+		int minY = Math.max(0, loc.getY()-1);
+		int maxX = Math.min(8, loc.getX()+1);
+		int maxY = Math.min(8, loc.getY()+1);
+		for (int x=minX;x<maxX;x++)
+		for (int y=minY;y<maxY;y++) {
+			if (null==findThingAt(q, x, y))
+				return new Location(x,y);
+		}
+		return null;
 	}
 
 }

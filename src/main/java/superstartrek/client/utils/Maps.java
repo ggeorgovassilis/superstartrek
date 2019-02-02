@@ -19,7 +19,7 @@ public class Maps {
 					css += " has-klingons";
 				} 
 			}
-			if (!q.getStarBases().isEmpty()) {
+			if (q.getStarBase()!=null) {
 				symbol += "!";
 				css += " has-starbase";
 			} else
