@@ -4,6 +4,8 @@ import com.google.gwt.core.client.GWT;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.TurnStartedEvent;
 import superstartrek.client.activities.computer.TurnStartedHandler;
 import superstartrek.client.activities.loading.GameStartedEvent;
@@ -13,14 +15,16 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.Maps;
 
-public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStartedHandler, EnterpriseWarpedHandler {
+public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStartedHandler, EnterpriseWarpedHandler, FireHandler {
 
 	public SRSPresenter(Application application) {
 		super(application);
 		application.events.addHandler(TurnStartedEvent.TYPE, this);
 		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
+		application.events.addHandler(FireEvent.TYPE, this);
 	}
 
 	void updateRadar() {
@@ -57,6 +61,17 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStar
 	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		updateRadar();
+	}
+
+	@Override
+	public void onFire(Vessel actor, Vessel target, String weapon, double damage) {
+		//postponing because damage might not have been assigned yet to target
+		application.postpone(new Runnable() {
+			@Override
+			public void run() {
+				updateRadar();
+			}
+		});
 	}
 
 }

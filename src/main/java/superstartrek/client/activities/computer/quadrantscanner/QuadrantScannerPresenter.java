@@ -4,6 +4,9 @@ import com.google.gwt.core.client.GWT;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.CSS;
+import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
@@ -19,8 +22,9 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 
-public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler, EnterpriseWarpedHandler {
+public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler {
 
 	SectorMenuPresenter sectorMenuPresenter;
 	
@@ -35,6 +39,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		application.events.addHandler(GameStartedEvent.TYPE, this);
 		application.events.addHandler(ThingMovedEvent.TYPE, this);
 		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
+		application.events.addHandler(FireEvent.TYPE, this);
 		sectorMenuPresenter = new SectorMenuPresenter(application);
 		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
 	}
@@ -53,6 +58,11 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		if (thing!=null) {
 			content = thing.getSymbol();
 			css = thing.getCss();
+			if (thing instanceof Vessel) {
+				Vessel vessel = (Vessel)thing;
+				double status = vessel.getShields().ratio();
+				css+=" "+CSS.damageClass(status);
+			}
 		}
 		((QuadrantScannerView) view).updateSector(x, y, content, css);
 	}
@@ -81,8 +91,18 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		GWT.log("QuadrantScanner.onEnterpriseWarped");
 		updateScreen();
+	}
+
+	@Override
+	public void onFire(Vessel actor, Vessel target, String weapon, double damage) {
+		// postponing because depending on event handler order, damage might not have been assigned
+		// to target yet
+		application.postpone(new Runnable() {
+			@Override
+			public void run() {
+				updateSector(target.getQuadrant(), target.getX(), target.getY());
+			}});
 	}
 
 }

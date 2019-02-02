@@ -25,6 +25,21 @@ public class CSS {
 		return e;
 	}
 	
+	/**
+	 * Return a CSS damage class
+	 * @param value between 0 and 1
+	 * @return
+	 */
+	public static String damageClass(double value) {
+		if (value<0.33)
+			return "damage-bad";
+		if (value<0.66)
+			return "damage-medium";
+		if (value<1)
+			return "damage-light";
+		return "";
+	}
+	
 	public final static native NodeList<Element> querySelectorAll(String selectors) /*-{
 	 return $doc.querySelectorAll(selectors);
 	 }-*/;

@@ -8,6 +8,8 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.computer.ComputerPresenter;
@@ -105,6 +107,16 @@ public class Application implements EntryPoint{
 
 	public void message(String formattedMessage, String category) {
 		events.fireEvent(new MessageEvent(formattedMessage, category));
+	}
+	
+	public void postpone(Runnable r) {
+		new Timer() {
+			
+			@Override
+			public void run() {
+				r.run();
+			}
+		}.schedule(1);
 	}
 	
 	@Override

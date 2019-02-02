@@ -19,8 +19,12 @@ public class Setting {
 		return defaultValue;
 	}
 
-	public String percentage() {
-		return "%"+Math.floor(100*value/maximum);
+	public double ratio() {
+		return value/maximum;
+	}
+
+	public int percentage() {
+		return (int)Math.floor(100*ratio());
 	}
 
 	public String getName() {
@@ -44,11 +48,24 @@ public class Setting {
 	}
 
 	public void setValue(double value) {
-		this.value = value;
+		this.value = Math.min(value, getCurrentUpperBound());
 	}
 
 	public double getMaximum() {
 		return maximum;
 	}
+	
+	public double decrease(double delta) {
+		value = value - delta;
+		return value;
+	}
+	
+	public void reset() {
+		setValue(getDefaultValue());
+	}
 
+	public void repair() {
+		setCurrentUpperBound(getMaximum());
+		reset();
+	}
 }

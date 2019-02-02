@@ -5,16 +5,17 @@ import com.google.gwt.event.shared.GwtEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Klingon;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 
 public class FireEvent extends GwtEvent<FireHandler>{
 	
 	public static Type<FireHandler> TYPE = new Type<FireHandler>();
-	public final Thing actor;
-	public final Thing target;
+	public final Vessel actor;
+	public final Vessel target;
 	public final String weapon;
-	public final int damage;
+	public final double damage;
 
-	public FireEvent(Thing actor, Thing target, String weapon, int damage) {
+	public FireEvent(Vessel actor, Vessel target, String weapon, double damage) {
 		this.actor = actor;
 		this.target= target;
 		this.weapon = weapon;

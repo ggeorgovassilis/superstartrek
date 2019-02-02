@@ -2,28 +2,20 @@ package superstartrek.client.model;
 
 import java.util.List;
 
-import com.google.gwt.core.shared.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 
-public class Enterprise extends Thing{
+public class Enterprise extends Vessel{
+	
+	protected Setting phasers = new Setting(50, 50);
 
-	protected Application application;
-	
-	protected final Setting impulse = new Setting(3, 3);
-	
 	public Enterprise(Application app) {
-		this.application = app;
+		super(app, new Setting(3,3), new Setting(100,100));
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");
-	}
-	
-	public Setting getImpulse() {
-		return impulse;
 	}
 	
 	public void warpTo(Quadrant qTo) {
@@ -73,8 +65,13 @@ public class Enterprise extends Thing{
 			application.message("Phasers can target only enemy vessels");
 			return;
 		}
+		double distance = StarMap.distance(this, thing);
+		if (distance>3) {
+			application.message("Target is too far away.");
+			return;
+		}
 		Klingon klingon = (Klingon)thing;
-		FireEvent event = new FireEvent(this, klingon, "phasers", 100);
+		FireEvent event = new FireEvent(this, klingon, "phasers", phasers.getValue()/distance);
 		application.events.fireEvent(event);
 	}
 }

@@ -38,7 +38,8 @@ public class Setup {
 		if (Random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
 			int klingons = 1+Random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT-1);
 			while (klingons-->0) {
-				Klingon k = new Klingon(application);
+				int cIndex = Random.nextInt(Klingon.ShipClass.values().length);
+				Klingon k = new Klingon(application, Klingon.ShipClass.values()[cIndex]);
 				k.setQuadrant(q);
 				Location loc = map.findFreeSpot(q);
 				k.setLocation(loc);
