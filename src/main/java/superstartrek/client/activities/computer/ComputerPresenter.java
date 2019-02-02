@@ -14,7 +14,7 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 
-public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler{
+public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, TurnStartedHandler{
 
 	public ComputerPresenter(Application application) {
 		super(application);
@@ -28,17 +28,24 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 			}
 		});
 		application.events.addHandler(ComputerEvent.TYPE, this);
+		application.events.addHandler(TurnStartedEvent.TYPE, this);
 	}
 
 	@Override
 	public void showScreen() {
 		application.events.fireEvent(new GlassPanelEvent(Action.hide));
 		getView().show();
+		((ComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
 	}
 
 	@Override
 	public void hideScreen() {
 		getView().hide();
+	}
+
+	@Override
+	public void onTurnStarted(TurnStartedEvent evt) {
+		((ComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
 	}
 
 }

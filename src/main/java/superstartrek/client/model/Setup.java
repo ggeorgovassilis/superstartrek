@@ -3,6 +3,7 @@ package superstartrek.client.model;
 import com.google.gwt.user.client.Random;
 
 import superstartrek.client.Application;
+import superstartrek.client.activities.klingons.Klingon;
 
 public class Setup {
 

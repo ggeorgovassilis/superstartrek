@@ -1,5 +1,7 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.user.client.DOM;
+
 import superstartrek.client.Resources;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
@@ -31,4 +33,7 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 		super(presenter);
 	}
 	
+	public void showStarDate(String sd){
+		DOM.getElementById("stardate").setInnerText(sd);
+	}
 }

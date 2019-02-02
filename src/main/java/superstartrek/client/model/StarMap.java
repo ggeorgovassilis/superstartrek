@@ -5,15 +5,26 @@ import java.util.List;
 
 import com.google.gwt.user.client.Random;
 
+import superstartrek.client.activities.klingons.Klingon;
+
 public class StarMap {
 
 	protected Quadrant[][] quadrants = new Quadrant[8][8];
 	public Enterprise enterprise;
+	protected long starDate = 0;
 
 	public static double distance(int x1, int y1, int x2, int y2) {
 		int dx = x1 - x2;
 		int dy = y1 - y2;
 		return Math.sqrt(dx * dx + dy * dy);
+	}
+	
+	public long getStarDate() {
+		return starDate;
+	}
+	
+	public void advanceStarDate(long value) {
+		starDate+=value;
 	}
 
 	public static double distance(Location l1, Location l2) {

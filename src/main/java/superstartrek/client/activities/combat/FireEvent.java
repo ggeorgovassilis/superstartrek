@@ -2,8 +2,8 @@ package superstartrek.client.activities.combat;
 
 import com.google.gwt.event.shared.GwtEvent;
 
+import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Klingon;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 

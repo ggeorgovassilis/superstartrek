@@ -22,6 +22,7 @@ import superstartrek.client.activities.glasspanel.GlassPanelView;
 import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.activities.intro.IntroPresenter;
 import superstartrek.client.activities.intro.IntroView;
+import superstartrek.client.activities.klingons.KlingonTurnEvent;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.LoadingPresenter;
 import superstartrek.client.activities.loading.LoadingScreen;
@@ -32,15 +33,22 @@ import superstartrek.client.activities.lrs.LRSScreen;
 import superstartrek.client.activities.manual.ManualPresenter;
 import superstartrek.client.activities.manual.ManualScreen;
 import superstartrek.client.activities.messages.MessagesView;
+import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
+import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
+import superstartrek.client.activities.navigation.ThingMovedEvent;
+import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.messages.MessageEvent;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
 import superstartrek.client.model.Enterprise;
+import superstartrek.client.model.Location;
+import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.model.Thing;
 
-public class Application implements EntryPoint{
+public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler{
 
 	public EventBus events;
 	public LoadingPresenter loadingPresenter;
@@ -53,6 +61,17 @@ public class Application implements EntryPoint{
 	public LRSPresenter lrsPresenter;
 	public HTMLPanel page;
 	public StarMap starMap;
+	
+	public void endTurnAfterThis() {
+		postpone(new Runnable() {
+			
+			@Override
+			public void run() {
+				endTurn();
+				startTurn();
+			}
+		});
+	}
 	
 	protected void setupStarMap() {
 		Setup setup = new Setup(this);
@@ -89,15 +108,19 @@ public class Application implements EntryPoint{
 	public void startGame() {
 		History.replaceItem("intro");
 		History.fireCurrentHistoryState();
+		events.addHandler(EnterpriseWarpedEvent.TYPE, this);
+		events.addHandler(ThingMovedEvent.TYPE, this);
 		events.fireEvent(new GameStartedEvent());
 		startTurn();
 	}
 	
 	public void endTurn() {
 		events.fireEvent(new TurnEndedEvent());
+		events.fireEvent(new KlingonTurnEvent());
 	}
 	
 	public void startTurn() {
+		starMap.advanceStarDate(1);
 		events.fireEvent(new TurnStartedEvent());
 	}
 
@@ -127,6 +150,17 @@ public class Application implements EntryPoint{
 		setupStarMap();
 		startGame();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
+	}
+
+	@Override
+	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+		if (thing == starMap.enterprise)
+			endTurnAfterThis();
+	}
+
+	@Override
+	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+		endTurnAfterThis();
 	}
 
 }

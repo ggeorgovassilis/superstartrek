@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import superstartrek.client.activities.klingons.Klingon;
+
 public class Quadrant {
 
 	protected final String name;

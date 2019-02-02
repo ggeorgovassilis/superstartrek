@@ -4,6 +4,7 @@ import java.util.List;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 
@@ -48,7 +49,7 @@ public class Enterprise extends Vessel{
 		}
 		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getX(), getY(), loc.getX(), loc.getY());
 		if (things.size()>1) { //there's always at least 1 thing, the USS Enterprise
-			application.message("Path isn't clear");
+			application.message("Path isn't clear "+things.size()+" "+things.get(1).getName()+" "+things.get(1));
 			return;
 		}
 		this.setLocation(loc);
