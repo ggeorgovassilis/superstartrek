@@ -95,7 +95,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 
 	@Override
-	public void onFire(Vessel actor, Vessel target, String weapon, double damage) {
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		// postponing because depending on event handler order, damage might not have been assigned
 		// to target yet
 		application.postpone(new Runnable() {

@@ -15,6 +15,7 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.Maps;
 
@@ -64,7 +65,7 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStar
 	}
 
 	@Override
-	public void onFire(Vessel actor, Vessel target, String weapon, double damage) {
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		//postponing because damage might not have been assigned yet to target
 		application.postpone(new Runnable() {
 			@Override

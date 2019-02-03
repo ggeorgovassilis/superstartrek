@@ -59,6 +59,8 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 			application.starMap.enterprise.navigateTo(sector);
 		else if ("cmd_firePhasers".equals(command))
 			application.starMap.enterprise.firePhasersAt(sector);
+		else if ("cmd_fireTorpedos".equals(command))
+			application.starMap.enterprise.fireTorpedosAt(sector);
 	}
 
 }

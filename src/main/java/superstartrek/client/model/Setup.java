@@ -22,7 +22,7 @@ public class Setup {
 		Quadrant q = new Quadrant(names[(int)Math.floor((y*8+x)/4)]+ " "+roman[(y*8+x) & 4],x,y);
 		int stars = Random.nextInt(Constants.MAX_STARS_IN_QUADRANT);
 		while (stars-->0) {
-			Star star = new Star();
+			Star star = new Star(application);
 			Location loc = map.findFreeSpot(q);
 			star.setLocation(loc);
 			star.setQuadrant(q);

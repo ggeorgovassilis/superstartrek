@@ -39,7 +39,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 	}
 
 	@Override
-	public void onFire(Vessel actor, Vessel target, String weapon, double damage) {
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		if (target == this) {
 			shields.decrease(damage);
 			application.message(weapon+" hit "+target.getName()+" at "+target);

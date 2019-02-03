@@ -2,21 +2,28 @@ package superstartrek.client.model;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Random;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.computer.TurnStartedEvent;
+import superstartrek.client.activities.computer.TurnStartedHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 
-public class Enterprise extends Vessel{
+public class Enterprise extends Vessel implements TurnStartedHandler{
 	
 	protected Setting phasers = new Setting(50, 50);
+	protected Setting torpedos = new Setting(10, 10);
 
 	public Enterprise(Application app) {
 		super(app, new Setting(3,3), new Setting(100,100));
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");
+		app.events.addHandler(TurnStartedEvent.TYPE, this);
 	}
 	
 	public void warpTo(Quadrant qTo) {
@@ -59,7 +66,39 @@ public class Enterprise extends Vessel{
 			application.message("Path isn't clear "+things.size()+" "+things.get(1).getName()+" "+things.get(1));
 			return;
 		}
+		impulse.decrease(impulse.getValue());
 		_navigateTo(loc);
+	}
+	
+	public void fireTorpedosAt(Location sector) {
+		if (torpedos.getValue()<1) {
+			application.message("Torpedo bay is empty");
+			return;
+		}
+		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getX(), getY(), sector.getX(), sector.getY());
+		things.remove(this);
+		for (Thing thing:things) {
+			boolean hit = false;
+			if (thing instanceof Star) {
+				hit = true;
+			} else
+			if (thing instanceof StarBase) {
+				hit = true;
+			} else
+			if (thing instanceof Klingon) {
+				double distance = StarMap.distance(this, thing);
+				double chance = 1/distance;
+				hit = Random.nextDouble()<=chance;
+			}
+			if (hit) {
+				FireEvent event = new FireEvent(this, thing, "torpedos", 50);
+				application.events.fireEvent(event);
+				application.endTurnAfterThis();
+				return;
+			}
+		}
+		application.message("Torpedo exploded in the void");
+		application.endTurnAfterThis();
 	}
 	
 	public void firePhasersAt(Location sector) {
@@ -80,9 +119,19 @@ public class Enterprise extends Vessel{
 		Klingon klingon = (Klingon)thing;
 		FireEvent event = new FireEvent(this, klingon, "phasers", phasers.getValue()/distance);
 		application.events.fireEvent(event);
+		phasers.setValue(0);
+		application.endTurnAfterThis();
 	}
 	
 	public void dockAtStarbase(StarBase starBase) {
 		phasers.repair();
+		torpedos.repair();
+		impulse.repair();
+	}
+
+	@Override
+	public void onTurnStarted(TurnStartedEvent evt) {
+		phasers.reset();
+		impulse.reset();
 	}
 }
