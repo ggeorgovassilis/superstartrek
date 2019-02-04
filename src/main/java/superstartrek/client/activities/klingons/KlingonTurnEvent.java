@@ -15,7 +15,7 @@ public class KlingonTurnEvent extends GwtEvent<KlingonTurnHandler> {
 
 	@Override
 	protected void dispatch(KlingonTurnHandler handler) {
-		handler.move();
+		handler.executeKlingonMove();
 	}
 
 }

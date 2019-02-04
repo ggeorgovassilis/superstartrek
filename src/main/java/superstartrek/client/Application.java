@@ -23,9 +23,12 @@ import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.activities.intro.IntroPresenter;
 import superstartrek.client.activities.intro.IntroView;
 import superstartrek.client.activities.klingons.KlingonTurnEvent;
+import superstartrek.client.activities.loading.GameOverEvent;
+import superstartrek.client.activities.loading.GameOverHandler;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.LoadingPresenter;
 import superstartrek.client.activities.loading.LoadingScreen;
+import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.lrs.LRSEvent;
 import superstartrek.client.activities.lrs.LRSEvent.Action;
 import superstartrek.client.activities.lrs.LRSPresenter;
@@ -48,7 +51,7 @@ import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 
-public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler{
+public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler{
 
 	public EventBus events;
 	public LoadingPresenter loadingPresenter;
@@ -110,8 +113,8 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 		History.fireCurrentHistoryState();
 		events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 		events.addHandler(ThingMovedEvent.TYPE, this);
+		events.addHandler(GameOverEvent.TYPE, this);
 		events.fireEvent(new GameStartedEvent());
-		startTurn();
 	}
 	
 	public void endTurn() {
@@ -161,6 +164,25 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		endTurnAfterThis();
+	}
+
+	public void gameOver(GameOverEvent.Outcome outcome) {
+		events.fireEvent(new GameOverEvent(outcome));
+	}
+
+	@Override
+	public void gameOver() {
+		message("Game over.");
+	}
+
+	@Override
+	public void gameLost() {
+		message("The Enterprise was destroyed.");
+	}
+
+	@Override
+	public void gameWon() {
+		message("Congratulations, all Klingons were destroyed.");
 	}
 
 }

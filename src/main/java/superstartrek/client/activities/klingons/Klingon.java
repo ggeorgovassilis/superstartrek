@@ -1,5 +1,7 @@
 package superstartrek.client.activities.klingons;
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 
 import superstartrek.client.Application;
@@ -14,19 +16,23 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
 public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
+
+	protected final Setting disruptor;
 	
 	public enum ShipClass{
 		
-		Raider("a Klingon raider", 50, "c-}"), BirdOfPrey("a Bird-of-prey",100,"C-D");
+		Raider("a Klingon raider", 50, 20, "c-}"), BirdOfPrey("a Bird-of-prey",100,40,"C-D");
 		
-		ShipClass(String name, int shields, String symbol){
+		ShipClass(String name, int shields, int disruptor, String symbol){
 			this.name = name;
 			this.shields = shields;
 			this.symbol = symbol;
+			this.disruptor = disruptor;
 		}
 		final String name;
 		final int shields;
 		final String symbol;
+		final int disruptor;
 	}
 
 	public Klingon(Application app, ShipClass c) {
@@ -34,6 +40,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 		setName(c.name());
 		setSymbol(c.symbol);
 		setCss("klingon");
+		this.disruptor = new Setting(c.disruptor, c.disruptor);
 		app.events.addHandler(FireEvent.TYPE, this);
 		app.events.addHandler(KlingonTurnEvent.TYPE, this);
 	}
@@ -50,9 +57,8 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 			}
 		}
 	}
-
-	@Override
-	public void move() {
+	
+	public void repositionKlingon() {
 		StarMap map = application.starMap;
 		Enterprise enterprise = map.enterprise;
 		if (enterprise.getQuadrant() != getQuadrant())
@@ -68,5 +74,28 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 		setX(tx);
 		setY(ty);
 		application.events.fireEvent(event);
+	}
+	
+	public void fireOnEnterprise() {
+		StarMap map = application.starMap;
+		Enterprise enterprise = map.enterprise;
+		if (enterprise.getQuadrant() != getQuadrant())
+			return;
+		double distance = StarMap.distance(this, enterprise);
+		if (distance >2)
+			return;
+		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getX(), getY(), enterprise.getX(), enterprise.getY());
+		obstacles.remove(this);
+		obstacles.remove(enterprise);
+		if (!obstacles.isEmpty())
+			return;
+		FireEvent event = new FireEvent(this, enterprise, "disruptor", disruptor.getValue());
+		application.events.fireEvent(event);
+	}
+
+	@Override
+	public void executeKlingonMove() {
+		repositionKlingon();
+		fireOnEnterprise();
 	}
 }

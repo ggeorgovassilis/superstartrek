@@ -7,13 +7,16 @@ import com.google.gwt.user.client.Random;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.TurnStartedEvent;
 import superstartrek.client.activities.computer.TurnStartedHandler;
 import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.activities.loading.GameOverEvent;
+import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 
-public class Enterprise extends Vessel implements TurnStartedHandler{
+public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler{
 	
 	protected Setting phasers = new Setting(50, 50);
 	protected Setting torpedos = new Setting(10, 10);
@@ -24,6 +27,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler{
 		setSymbol("O=Ξ");
 		setCss("enterprise");
 		app.events.addHandler(TurnStartedEvent.TYPE, this);
+		app.events.addHandler(FireEvent.TYPE, this);
 	}
 	
 	public void warpTo(Quadrant qTo) {
@@ -133,5 +137,15 @@ public class Enterprise extends Vessel implements TurnStartedHandler{
 	public void onTurnStarted(TurnStartedEvent evt) {
 		phasers.reset();
 		impulse.reset();
+	}
+
+	@Override
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
+		if (target!=this)
+			return;
+		shields.decrease(damage);
+		application.message(actor.getName()+" fired on us");
+		if (shields.getValue()<0)
+			application.gameOver(Outcome.lost);
 	}
 }
