@@ -73,6 +73,10 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		boolean visible = starBase!=null && (q.getKlingons().isEmpty() || StarMap.distance(enterprise, starBase)<2);
 		((ComputerView)getView()).setDockInStarbaseButtonVisibility(visible);
 	}
+	
+	public void updateRepairButton() {
+		((ComputerView)getView()).setRepairButtonVisibility(application.starMap.enterprise.isDamaged());
+	}
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
@@ -80,6 +84,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		view.showStarDate(""+application.starMap.getStarDate());
 		updateDockInStarbaseButton();
 		updateShieldsView();
+		updateRepairButton();
 	}
 	
 	public void updateShieldsView() {
@@ -99,5 +104,9 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 			value = Math.min(value+shields.getMaximum()/10, shields.getCurrentUpperBound());
 		shields.setValue(value);
 		updateShieldsView();
+	}
+	
+	public void onRepairButtonClicked() {
+		
 	}
 }

@@ -27,6 +27,7 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 	Element eDockInStarbase;
 	Element eSkip;
 	Element eToggleShields;
+	Element eRepair;
 	
 	@Override
 	protected void setupCompositeUI() {
@@ -68,6 +69,18 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 				((ComputerPresenter)getPresenter()).onToggleShieldsButtonClicked();
 			}
 		});
+		
+		eRepair = DOM.getElementById("cmd_repairProvisionally");
+		DOM.sinkEvents(eRepair, Event.ONCLICK);
+		DOM.setEventListener(eRepair, new EventListener() {
+			
+			@Override
+			public void onBrowserEvent(Event event) {
+				((ComputerPresenter)getPresenter()).onRepairButtonClicked();
+			}
+		});
+		
+		setRepairButtonVisibility(false);
 	}
 	
 	public void updateShields(Setting shields) {
@@ -87,5 +100,9 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 	
 	public void setDockInStarbaseButtonVisibility(boolean visible) {
 		eDockInStarbase.getStyle().setDisplay(visible?Display.INITIAL:Display.NONE);
+	}
+	
+	public void setRepairButtonVisibility(boolean visible) {
+		eRepair.getStyle().setDisplay(visible?Display.INITIAL:Display.NONE);
 	}
 }

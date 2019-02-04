@@ -143,11 +143,19 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		phasers.reset();
 		impulse.reset();
 	}
+	
+	public boolean isDamaged() {
+		return impulse.getCurrentUpperBound()<impulse.getMaximum() ||
+				shields.getCurrentUpperBound()<shields.getMaximum() ||
+				phasers.getCurrentUpperBound()<phasers.getCurrentUpperBound() ||
+				torpedos.getCurrentUpperBound()<torpedos.getMaximum();
+	}
 
 	@Override
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		if (target!=this)
 			return;
+		shields.setCurrentUpperBound(Math.max(0, shields.getCurrentUpperBound()-damage));
 		shields.decrease(damage);
 		application.message(actor.getName()+" fired on us");
 		if (shields.getValue()<0)

@@ -56,7 +56,7 @@ public class Setting {
 	}
 	
 	public double decrease(double delta) {
-		value = value - delta;
+		value = Math.max(0,value - delta);
 		return value;
 	}
 	
