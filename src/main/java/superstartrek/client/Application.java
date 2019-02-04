@@ -41,6 +41,7 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.messages.MessageEvent;
+import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
@@ -51,7 +52,7 @@ import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 
-public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler{
+public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler, MessageHandler{
 
 	public EventBus events;
 	public LoadingPresenter loadingPresenter;
@@ -64,6 +65,7 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	public LRSPresenter lrsPresenter;
 	public HTMLPanel page;
 	public StarMap starMap;
+	public boolean gameIsRunning=true;
 	
 	public void endTurnAfterThis() {
 		postpone(new Runnable() {
@@ -114,6 +116,7 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 		events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 		events.addHandler(ThingMovedEvent.TYPE, this);
 		events.addHandler(GameOverEvent.TYPE, this);
+		events.addHandler(MessageEvent.TYPE, this);
 		events.fireEvent(new GameStartedEvent());
 	}
 	
@@ -132,7 +135,7 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	}
 
 	public void message(String formattedMessage, String category) {
-		events.fireEvent(new MessageEvent(formattedMessage, category));
+		events.fireEvent(new MessageEvent(MessageEvent.Action.show, formattedMessage, category));
 	}
 	
 	public void postpone(Runnable r) {
@@ -173,6 +176,7 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	@Override
 	public void gameOver() {
 		message("Game over.");
+		this.gameIsRunning = false;
 	}
 
 	@Override
@@ -183,6 +187,16 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	@Override
 	public void gameWon() {
 		message("Congratulations, all Klingons were destroyed.");
+	}
+
+	@Override
+	public void showMessage(String formattedMessage, String category) {
+	}
+
+	@Override
+	public void messagesHidden() {
+		if (!this.gameIsRunning)
+			Window.Location.reload();
 	}
 
 }

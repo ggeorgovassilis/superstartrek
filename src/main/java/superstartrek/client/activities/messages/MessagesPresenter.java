@@ -24,6 +24,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	public void hideMessages() {
 		((MessagesView)getView()).clear();
 		getView().hide();
+		application.events.fireEvent(new MessageEvent(MessageEvent.Action.hide, null, null));
 	}
 
 	@Override
@@ -37,6 +38,10 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	@Override
 	public void glassPanelClicked() {
 		hideMessages();
+	}
+
+	@Override
+	public void messagesHidden() {
 	}
 
 }
