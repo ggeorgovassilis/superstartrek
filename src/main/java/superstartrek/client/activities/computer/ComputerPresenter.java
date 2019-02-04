@@ -13,6 +13,7 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 
@@ -78,6 +79,25 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		ComputerView view = (ComputerView)getView();
 		view.showStarDate(""+application.starMap.getStarDate());
 		updateDockInStarbaseButton();
+		updateShieldsView();
+	}
+	
+	public void updateShieldsView() {
+		Enterprise enterprise = application.starMap.enterprise;
+		Setting shields = enterprise.getShields();
+		ComputerView view = (ComputerView)getView();
+		view.updateShields(shields);
 	}
 
+	public void onToggleShieldsButtonClicked() {
+		Enterprise enterprise = application.starMap.enterprise;
+		Setting shields = enterprise.getShields();
+		double value = enterprise.getShields().getValue();
+		if (value == shields.getCurrentUpperBound())
+			value = 0;
+		else
+			value = Math.min(value+shields.getMaximum()/10, shields.getCurrentUpperBound());
+		shields.setValue(value);
+		updateShieldsView();
+	}
 }

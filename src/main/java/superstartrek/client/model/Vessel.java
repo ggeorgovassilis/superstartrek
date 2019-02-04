@@ -27,4 +27,7 @@ public abstract class Vessel extends Thing{
 		this.impulse = impulse;
 		this.shields = shields;
 	}
+	
+	public void destroy() {
+	}
 }

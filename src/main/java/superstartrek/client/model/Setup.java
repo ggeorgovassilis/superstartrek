@@ -37,7 +37,7 @@ public class Setup {
 			q.setStarBase(starBase);
 		}
 		if (Random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
-			int klingons = 1+Random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT-1);
+			int klingons = 1+Random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT);
 			while (klingons-->0) {
 				int cIndex = Random.nextInt(Klingon.ShipClass.values().length);
 				Klingon k = new Klingon(application, Klingon.ShipClass.values()[cIndex]);

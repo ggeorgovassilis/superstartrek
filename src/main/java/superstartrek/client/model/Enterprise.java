@@ -13,6 +13,7 @@ import superstartrek.client.activities.computer.TurnStartedHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.loading.GameOverEvent;
 import superstartrek.client.activities.loading.GameOverEvent.Outcome;
+import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 
@@ -58,7 +59,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		Location oldLoc = new Location(getX(), getY());
 		double distance = StarMap.distance(oldLoc, loc);
 		if (distance>getImpulse().getValue()) {
-			application.message("Distance exceeds maximum impulse power "+getImpulse().getValue());
+			application.message("Course "+distance+" exceeds maximum impulse power "+getImpulse().getValue());
 			return;
 		}
 		Thing thing = application.starMap.findThingAt(quadrant, loc.x, loc.y);
@@ -133,6 +134,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		torpedos.repair();
 		impulse.repair();
 		shields.repair();
+		application.events.fireEvent(new EnterpriseRepairedEvent());
 		application.endTurnAfterThis();
 	}
 

@@ -3,6 +3,7 @@ package superstartrek.client.activities.klingons;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
@@ -18,10 +19,12 @@ import superstartrek.client.model.Vessel;
 public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 
 	protected final Setting disruptor;
+	protected HandlerRegistration fireHandler;
+	protected HandlerRegistration klingonTurnHandler;
 	
 	public enum ShipClass{
 		
-		Raider("a Klingon raider", 50, 20, "c-}"), BirdOfPrey("a Bird-of-prey",100,40,"C-D");
+		Raider("a Klingon raider", 50, 10, "c-}"), BirdOfPrey("a Bird-of-prey",100,30,"C-D");
 		
 		ShipClass(String name, int shields, int disruptor, String symbol){
 			this.name = name;
@@ -41,8 +44,8 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 		setSymbol(c.symbol);
 		setCss("klingon");
 		this.disruptor = new Setting(c.disruptor, c.disruptor);
-		app.events.addHandler(FireEvent.TYPE, this);
-		app.events.addHandler(KlingonTurnEvent.TYPE, this);
+		fireHandler = app.events.addHandler(FireEvent.TYPE, this);
+		klingonTurnHandler = app.events.addHandler(KlingonTurnEvent.TYPE, this);
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 			if (shields.getValue()<=0) {
 				application.message(target.getName()+" was destroyed "+target);
 				if (target instanceof Klingon)
-					target.getQuadrant().getKlingons().remove(target);
+					destroy();
 			}
 		}
 	}
@@ -97,5 +100,13 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 	public void executeKlingonMove() {
 		repositionKlingon();
 		fireOnEnterprise();
+	}
+	
+	@Override
+	public void destroy() {
+		super.destroy();
+		fireHandler.removeHandler();
+		klingonTurnHandler.removeHandler();
+		getQuadrant().getKlingons().remove(this);
 	}
 }

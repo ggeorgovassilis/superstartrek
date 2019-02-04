@@ -9,6 +9,8 @@ import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
+import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
+import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
@@ -24,7 +26,7 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler {
+public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler, EnterpriseRepairedHandler {
 
 	SectorMenuPresenter sectorMenuPresenter;
 	
@@ -40,6 +42,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		application.events.addHandler(ThingMovedEvent.TYPE, this);
 		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 		application.events.addHandler(FireEvent.TYPE, this);
+		application.events.addHandler(EnterpriseRepairedEvent.TYPE, this);
 		sectorMenuPresenter = new SectorMenuPresenter(application);
 		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
 	}
@@ -103,6 +106,12 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 			public void run() {
 				updateSector(target.getQuadrant(), target.getX(), target.getY());
 			}});
+	}
+
+	@Override
+	public void onEnterpriseRepaired() {
+		Enterprise enterprise = application.starMap.enterprise;
+		updateSector(enterprise.getQuadrant(), enterprise.getX(), enterprise.getY());
 	}
 
 }
