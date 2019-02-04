@@ -32,6 +32,10 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		application.events.addHandler(ComputerEvent.TYPE, this);
 		application.events.addHandler(TurnStartedEvent.TYPE, this);
 	}
+	
+	public void onSkipButtonClicked() {
+		application.endTurnAfterThis();
+	}
 
 	@Override
 	public void showScreen() {

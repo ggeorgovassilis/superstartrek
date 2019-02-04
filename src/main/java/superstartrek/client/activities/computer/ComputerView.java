@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.user.client.DOM;
@@ -21,10 +22,11 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 	SRSPresenter srsPresenter;
 	
 	Element eDockInStarbase;
+	Element eSkip;
 	
 	@Override
-	protected void setupUI() {
-		super.setupUI();
+	protected void setupCompositeUI() {
+		super.setupCompositeUI();
 		getElement().setInnerHTML(Resources.INSTANCE.computerScreen().getText());
 		presenter.getApplication().page.add(this);
 		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication());
@@ -34,13 +36,22 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 		srsPresenter = new SRSPresenter(presenter.getApplication());
 		SRSView srsView = new SRSView(srsPresenter);
 		panel.addAndReplaceElement(srsView, "shortrangescan");
-		
 		eDockInStarbase = DOM.getElementById("cmd_dockInStarbase");
 		DOM.sinkEvents(eDockInStarbase, Event.ONCLICK);
-		DOM.setEventListener(getElement(), new EventListener() {
+		DOM.setEventListener(eDockInStarbase, new EventListener() {
 			@Override
 			public void onBrowserEvent(Event event) {
 				((ComputerPresenter)getPresenter()).onDockInStarbaseButtonClicked();
+			}
+		});
+
+		eSkip = DOM.getElementById("cmd_skip");
+		DOM.sinkEvents(eSkip, Event.ONCLICK);
+		DOM.setEventListener(eSkip, new EventListener() {
+			
+			@Override
+			public void onBrowserEvent(Event event) {
+				((ComputerPresenter)getPresenter()).onSkipButtonClicked();
 			}
 		});
 	}

@@ -4,11 +4,11 @@ public abstract class BaseScreen<A extends Activity> extends BaseView<A>{
 
 	public BaseScreen(Presenter<A> p) {
 		super(p);
-		setupUI();
+		setupCompositeUI();
 		hide();
 	}
 	
-	protected void setupUI() {
+	protected void setupCompositeUI() {
 	}
 	
 	@Override

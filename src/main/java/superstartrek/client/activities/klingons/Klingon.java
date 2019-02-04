@@ -61,7 +61,6 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 		int dy = (int)Math.signum(enterprise.getY()-getY());
 		int tx = getX()+dx;
 		int ty = getY()+dy;
-		GWT.log(this+" "+dx+":"+dy+" "+tx+":"+ty);
 		Thing thing = map.findThingAt(getQuadrant(), tx, ty);
 		if (thing!=null)
 			return;
