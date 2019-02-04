@@ -66,12 +66,17 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	public HTMLPanel page;
 	public StarMap starMap;
 	public boolean gameIsRunning=true;
+	protected boolean endTurnPending = false;
 	
 	public void endTurnAfterThis() {
+		if (endTurnPending)
+			return;
+		endTurnPending = true;
 		postpone(new Runnable() {
 			
 			@Override
 			public void run() {
+				endTurnPending = false;
 				endTurn();
 				startTurn();
 			}

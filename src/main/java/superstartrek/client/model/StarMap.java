@@ -119,10 +119,10 @@ public class StarMap {
 	public Location findFreeSpotAround(Quadrant q, Location loc, int radius) {
 		int minX = Math.max(0, loc.getX()-1);
 		int minY = Math.max(0, loc.getY()-1);
-		int maxX = Math.min(8, loc.getX()+1);
-		int maxY = Math.min(8, loc.getY()+1);
-		for (int x=minX;x<maxX;x++)
-		for (int y=minY;y<maxY;y++) {
+		int maxX = Math.min(7, loc.getX()+1);
+		int maxY = Math.min(7, loc.getY()+1);
+		for (int x=minX;x<=maxX;x++)
+		for (int y=minY;y<=maxY;y++) {
 			if (null==findThingAt(q, x, y))
 				return new Location(x,y);
 		}

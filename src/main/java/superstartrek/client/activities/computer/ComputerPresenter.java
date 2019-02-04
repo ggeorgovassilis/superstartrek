@@ -53,12 +53,15 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		StarMap map = application.starMap;
 		Enterprise enterprise = map.enterprise;
 		Quadrant q = enterprise.getQuadrant();
-		Location loc = application.starMap.findFreeSpotAround(q, q.getStarBase(),1);
-		if (loc==null) {
-			application.message("No space around starbase");
-			return;
+		double distance = StarMap.distance(enterprise, q.getStarBase());
+		if (distance>1) {
+			Location loc = application.starMap.findFreeSpotAround(q, q.getStarBase(),1);
+			if (loc==null) {
+				application.message("No space around starbase");
+				return;
+			}
+			enterprise._navigateTo(loc);
 		}
-		enterprise._navigateTo(loc);
 		enterprise.dockAtStarbase(q.getStarBase());
 	}
 	

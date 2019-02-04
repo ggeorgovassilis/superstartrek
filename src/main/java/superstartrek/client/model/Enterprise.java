@@ -56,7 +56,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	
 	public void navigateTo(Location loc) {
 		Location oldLoc = new Location(getX(), getY());
-		if (StarMap.distance(oldLoc, loc)>getImpulse().getValue()) {
+		double distance = StarMap.distance(oldLoc, loc);
+		if (distance>getImpulse().getValue()) {
 			application.message("Distance exceeds maximum impulse power "+getImpulse().getValue());
 			return;
 		}
@@ -131,6 +132,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		phasers.repair();
 		torpedos.repair();
 		impulse.repair();
+		shields.repair();
+		application.endTurnAfterThis();
 	}
 
 	@Override
