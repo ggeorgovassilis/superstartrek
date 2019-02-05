@@ -18,26 +18,26 @@ public class StarMap {
 		int dy = y1 - y2;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
-	
+
 	public long getStarDate() {
 		return starDate;
 	}
-	
+
 	public void advanceStarDate(long value) {
-		starDate+=value;
+		starDate += value;
 	}
 
 	public static double distance(Location l1, Location l2) {
 		return distance(l1.x, l1.y, l2.x, l2.y);
 	}
-	
+
 	public boolean isOnMap(int x, int y) {
-		return (x >= 0 && x <= 7 && y >= 0 && y <= 7 );
+		return (x >= 0 && x <= 7 && y >= 0 && y <= 7);
 	}
 
 	public Quadrant getQuadrant(int x, int y) {
 		if (!isOnMap(x, y))
-			throw new IllegalArgumentException(x+":"+y);
+			throw new IllegalArgumentException(x + ":" + y);
 		return quadrants[x][y];
 	}
 
@@ -47,7 +47,7 @@ public class StarMap {
 		for (Star star : q.getStars())
 			if (star.getX() == x && star.getY() == y)
 				return star;
-		if (q.getStarBase()!=null)
+		if (q.getStarBase() != null)
 			if (q.getStarBase().getX() == x && q.getStarBase().getY() == y)
 				return q.getStarBase();
 		for (Klingon klingon : q.getKlingons())
@@ -115,18 +115,26 @@ public class StarMap {
 		});
 		return found;
 	}
-	
+
 	public Location findFreeSpotAround(Quadrant q, Location loc, int radius) {
-		int minX = Math.max(0, loc.getX()-1);
-		int minY = Math.max(0, loc.getY()-1);
-		int maxX = Math.min(7, loc.getX()+1);
-		int maxY = Math.min(7, loc.getY()+1);
-		for (int x=minX;x<=maxX;x++)
-		for (int y=minY;y<=maxY;y++) {
-			if (null==findThingAt(q, x, y))
-				return new Location(x,y);
-		}
+		int minX = Math.max(0, loc.getX() - 1);
+		int minY = Math.max(0, loc.getY() - 1);
+		int maxX = Math.min(7, loc.getX() + 1);
+		int maxY = Math.min(7, loc.getY() + 1);
+		for (int x = minX; x <= maxX; x++)
+			for (int y = minY; y <= maxY; y++) {
+				if (null == findThingAt(q, x, y))
+					return new Location(x, y);
+			}
 		return null;
+	}
+
+	public boolean hasKlingons() {
+		for (int x = 0; x < quadrants.length; x++)
+			for (int y = 0; y < quadrants[x].length; y++)
+				if (!quadrants[x][y].getKlingons().isEmpty())
+					return true;
+		return false;
 	}
 
 }

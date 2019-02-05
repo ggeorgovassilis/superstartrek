@@ -8,6 +8,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.loading.GameOverEvent;
+import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -108,5 +110,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 		fireHandler.removeHandler();
 		klingonTurnHandler.removeHandler();
 		getQuadrant().getKlingons().remove(this);
+		if (!application.starMap.hasKlingons())
+			application.gameOver(Outcome.won);
 	}
 }
