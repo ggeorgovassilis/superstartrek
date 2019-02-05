@@ -26,7 +26,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 	
 	public enum ShipClass{
 		
-		Raider("a Klingon raider", 50, 10, "c-}"), BirdOfPrey("a Bird-of-prey",100,30,"C-D");
+		Raider("a Klingon raider", 50, 8, "c-}"), BirdOfPrey("a Bird-of-prey",100,20,"C-D");
 		
 		ShipClass(String name, int shields, int disruptor, String symbol){
 			this.name = name;

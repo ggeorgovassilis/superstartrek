@@ -19,8 +19,17 @@ import superstartrek.client.activities.navigation.ThingMovedEvent;
 
 public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler{
 	
-	protected Setting phasers = new Setting(150, 150);
+	protected Setting phasers = new Setting(30, 150);
 	protected Setting torpedos = new Setting(10, 10);
+
+	
+	public Setting getPhasers() {
+		return phasers;
+	}
+
+	public Setting getTorpedos() {
+		return torpedos;
+	}
 
 	public Enterprise(Application app) {
 		super(app, new Setting(3,3), new Setting(100,100));

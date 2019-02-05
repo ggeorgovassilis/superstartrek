@@ -40,6 +40,8 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.activities.report.StatusReportPresenter;
+import superstartrek.client.activities.report.StatusReportView;
 import superstartrek.client.activities.messages.MessageEvent;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.messages.MessagesPresenter;
@@ -55,6 +57,11 @@ import superstartrek.client.model.Thing;
 public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler, MessageHandler{
 
 	public EventBus events;
+	public HTMLPanel page;
+	public StarMap starMap;
+	public boolean gameIsRunning=true;
+	protected boolean endTurnPending = false;
+
 	public LoadingPresenter loadingPresenter;
 	public ComputerPresenter computerPresenter;
 	public IntroPresenter introPresenter;
@@ -63,10 +70,7 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	public ScanSectorPresenter scanSectorPresenter;
 	public MessagesPresenter messagesPresenter;
 	public LRSPresenter lrsPresenter;
-	public HTMLPanel page;
-	public StarMap starMap;
-	public boolean gameIsRunning=true;
-	protected boolean endTurnPending = false;
+	public StatusReportPresenter statusReportPresenter;
 	
 	public void endTurnAfterThis() {
 		if (endTurnPending)
@@ -112,6 +116,9 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 		
 		lrsPresenter = new LRSPresenter(this);
 		new LRSScreen(lrsPresenter);
+		
+		statusReportPresenter = new StatusReportPresenter(this);
+		new StatusReportView(statusReportPresenter);
 		
 	}
 	

@@ -23,6 +23,10 @@ public class Setting {
 		return value/maximum;
 	}
 
+	public int percentageHealth() {
+		return (int)Math.floor(100*getCurrentUpperBound()/getMaximum());
+	}
+
 	public int percentage() {
 		return (int)Math.floor(100*ratio());
 	}
