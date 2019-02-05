@@ -78,15 +78,34 @@
 					<execution>
 						<goals>
 							<goal>compile</goal>
-							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
 					<draftCompile>true</draftCompile>
 					<deploy>${project.build.directory}/deploy</deploy>
-					<outputDirectory>${project.build.directory}/sst</outputDirectory>
+					<outputDirectory>${project.basedir}/site</outputDirectory>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<move  todir="${project.basedir}/site" >
+									<fileset dir="${project.basedir}/site/superstartrek.superstartrek"/>
+								</move>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
