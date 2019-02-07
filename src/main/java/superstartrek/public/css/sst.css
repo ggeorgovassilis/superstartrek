@@ -376,6 +376,10 @@ table a, table a:visited{
 	color:red;
 }
 
+.damage-offline{
+	color:grey;
+}
+
 
 #messages{
 	position:absolute;

@@ -46,6 +46,7 @@ public class Setting {
 
 	public void setCurrentUpperBound(double currentUpperBound) {
 		this.currentUpperBound = currentUpperBound;
+		this.value = Math.min(this.value, this.currentUpperBound);
 	}
 
 	public double getValue() {
@@ -53,7 +54,7 @@ public class Setting {
 	}
 
 	public void setValue(double value) {
-		this.value = Math.min(value, getCurrentUpperBound());
+		this.value = Math.max(0,Math.min(value, getCurrentUpperBound()));
 	}
 
 	public double getMaximum() {
@@ -63,6 +64,11 @@ public class Setting {
 	public double decrease(double delta) {
 		value = Math.max(0,value - delta);
 		return value;
+	}
+	
+	public void damage(double delta) {
+		setCurrentUpperBound(Math.max(0,getCurrentUpperBound()-delta));
+		setValue(Math.min(getValue(), getCurrentUpperBound()));
 	}
 	
 	public void reset() {

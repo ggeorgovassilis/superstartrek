@@ -28,6 +28,18 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 	Element eSkip;
 	Element eToggleShields;
 	Element eRepair;
+	Element eStatusButton;
+	Element eStatusIconImpulse;
+	Element eStatusIconTactical;
+	Element eStatusIconPhasers;
+	Element eStatusIconTorpedos;
+	
+	public void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos) {
+		eStatusIconImpulse.setClassName(cssImpulse);
+		eStatusIconTactical.setClassName(cssTactical);
+		eStatusIconPhasers.setClassName(cssPhasers);
+		eStatusIconTorpedos.setClassName(cssTorpedos);
+	}
 	
 	@Override
 	protected void setupCompositeUI() {
@@ -80,6 +92,11 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 			}
 		});
 		
+		eStatusButton = DOM.getElementById("cmd_showStatusReport");
+		eStatusIconImpulse = CSS.querySelectorAll("#cmd_showStatusReport .impulse").getItem(0);
+		eStatusIconTactical = CSS.querySelectorAll("#cmd_showStatusReport .tactical-computer").getItem(0);
+		eStatusIconTorpedos = CSS.querySelectorAll("#cmd_showStatusReport .torpedo-bay").getItem(0);
+		eStatusIconPhasers = CSS.querySelectorAll("#cmd_showStatusReport .phasers").getItem(0);
 		setRepairButtonVisibility(false);
 	}
 	
@@ -87,7 +104,7 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 		Element eMax = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		Element eValue = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
 		eMax.getStyle().setWidth(100*shields.getCurrentUpperBound()/shields.getMaximum(), Unit.PCT);
-		eValue.getStyle().setWidth(100*shields.getValue()/shields.getCurrentUpperBound(), Unit.PCT);
+		eValue.getStyle().setWidth(100*shields.getValue()/shields.getMaximum(), Unit.PCT);
 	}
 	
 	public ComputerView(ComputerPresenter presenter) {

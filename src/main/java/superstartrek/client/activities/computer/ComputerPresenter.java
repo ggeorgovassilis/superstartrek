@@ -4,9 +4,11 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
@@ -78,6 +80,16 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	public void updateRepairButton() {
 		((ComputerView)getView()).setRepairButtonVisibility(application.starMap.enterprise.isDamaged());
 	}
+	
+	public void updateStatusButton() {
+		Enterprise enterprise = application.starMap.enterprise;
+		String cssImpulse = CSS.damageClass(enterprise.getImpulse().health());
+		String cssTactical= CSS.damageClass(1.0);
+		String cssPhasers = CSS.damageClass(enterprise.getPhasers().health());
+		String cssTorpedos= CSS.damageClass(enterprise.getTorpedos().health());
+		
+		((ComputerView)getView()).updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
+	}
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
@@ -85,14 +97,22 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		view.showStarDate(""+application.starMap.getStarDate());
 		updateDockInStarbaseButton();
 		updateShieldsView();
+		updateStatusButton();
 		updateRepairButton();
 	}
 	
 	public void updateShieldsView() {
-		Enterprise enterprise = application.starMap.enterprise;
-		Setting shields = enterprise.getShields();
-		ComputerView view = (ComputerView)getView();
-		view.updateShields(shields);
+		//defer update because other events might modify values
+		new Timer() {
+			
+			@Override
+			public void run() {
+				Enterprise enterprise = application.starMap.enterprise;
+				Setting shields = enterprise.getShields();
+				ComputerView view = (ComputerView)getView();
+				view.updateShields(shields);
+			}
+		}.schedule(1);
 	}
 
 	public void onToggleShieldsButtonClicked() {
@@ -110,5 +130,6 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	public void onRepairButtonClicked() {
 		Enterprise enterprise = application.starMap.enterprise;
 		enterprise.repairProvisionally();
+		updateStatusButton();
 	}
 }

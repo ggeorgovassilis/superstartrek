@@ -21,6 +21,8 @@ public class StatusReportPresenter extends BasePresenter<StatusReportActivity>{
 		view.setProperty("report_shields", "%"+(enterprise.getShields().percentageHealth()));
 		view.setProperty("report_phaser_power", "%"+(enterprise.getPhasers().percentageHealth()));
 		view.setProperty("report_torpedos", ""+(enterprise.getTorpedos().getValue()));
+		view.setProperty("report_energy", ""+(enterprise.getAntimatter().getValue()));
+		view.setProperty("report_reactor", "%"+(enterprise.getReactor().percentageHealth()));
 		
 		view.setOverlay("impulse", CSS.damageClass(enterprise.getImpulse().health()));
 		view.setOverlay("phasers", CSS.damageClass(enterprise.getPhasers().health()));

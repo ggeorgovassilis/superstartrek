@@ -36,7 +36,8 @@ public class Setup {
 			q.setExplored(true);
 			q.setStarBase(starBase);
 		}
-		if (Random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
+		//don't put klingons in start quadrant
+		if (x+y!=0 && Random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
 			int klingons = 1+Random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT);
 			while (klingons-->0) {
 				int cIndex = Random.nextInt(Klingon.ShipClass.values().length);

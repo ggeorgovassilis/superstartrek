@@ -21,7 +21,12 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);
-
+	protected Setting antimatter = new Setting("antimatter", 1000, 1000);
+	protected Setting reactor = new Setting("reactor", 0, 100);
+	
+	public Setting getReactor() {
+		return reactor;
+	}
 	
 	public Setting getPhasers() {
 		return phasers;
@@ -38,6 +43,10 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		setCss("enterprise");
 		app.events.addHandler(TurnStartedEvent.TYPE, this);
 		app.events.addHandler(FireEvent.TYPE, this);
+	}
+	
+	public Setting getAntimatter() {
+		return antimatter;
 	}
 	
 	public void warpTo(Quadrant qTo) {
@@ -174,6 +183,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
 		phasers.reset();
+		reactor.reset();
+		shields.reset();
 		impulse.reset();
 	}
 	
@@ -183,15 +194,36 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 				phasers.getCurrentUpperBound()<phasers.getCurrentUpperBound() ||
 				torpedos.getCurrentUpperBound()<torpedos.getMaximum();
 	}
+	
+	public void applyDamage(double damage) {
+		double impact = damage/(shields.getValue()+1.0);
+		GWT.log("damage: "+damage+" shields:"+shields.getValue()+" impact:"+impact);
+		shields.decrease(damage);
+		if (shields.getCurrentUpperBound()>0 && Random.nextDouble()<impact) {
+			shields.damage(30);
+			application.message("Shields damaged");
+		}
+		if (impulse.getCurrentUpperBound()>0 && Random.nextDouble()<impact) {
+			impulse.damage(1);
+			application.message("Impulse damaged");
+		}
+		if (torpedos.getCurrentUpperBound()>0 && Random.nextDouble()<impact) {
+			torpedos.damage(torpedos.getCurrentUpperBound());
+			application.message("Torpedo bay damaged");
+		}
+		if (phasers.getCurrentUpperBound()>0 && Random.nextDouble()<impact) {
+			phasers.damage(phasers.getMaximum()*0.3);
+			application.message("Phaser array damaged");
+		}
+		if (shields.getValue()<=0)
+			application.gameOver(Outcome.lost);
+	}
 
 	@Override
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		if (target!=this)
 			return;
-		shields.setCurrentUpperBound(Math.max(0, shields.getCurrentUpperBound()-damage));
-		shields.decrease(damage);
 		application.message(actor.getName()+" fired on us");
-		if (shields.getValue()<0)
-			application.gameOver(Outcome.lost);
+		applyDamage(damage);
 	}
 }
