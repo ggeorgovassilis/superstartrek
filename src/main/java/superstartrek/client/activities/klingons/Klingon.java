@@ -41,11 +41,11 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 	}
 
 	public Klingon(Application app, ShipClass c) {
-		super(app, new Setting(1,1), new Setting(c.shields, c.shields));
+		super(app, new Setting("impulse", 1,1), new Setting("shields", c.shields, c.shields));
 		setName(c.name());
 		setSymbol(c.symbol);
 		setCss("klingon");
-		this.disruptor = new Setting(c.disruptor, c.disruptor);
+		this.disruptor = new Setting("disruptor", c.disruptor, c.disruptor);
 		fireHandler = app.events.addHandler(FireEvent.TYPE, this);
 		klingonTurnHandler = app.events.addHandler(KlingonTurnEvent.TYPE, this);
 	}
@@ -54,6 +54,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler{
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		if (target == this) {
 			shields.decrease(damage);
+			shields.setCurrentUpperBound(shields.getCurrentUpperBound()-damage);
 			application.message(weapon+" hit "+target.getName()+" at "+target);
 			if (shields.getValue()<=0) {
 				application.message(target.getName()+" was destroyed "+target);

@@ -19,8 +19,8 @@ import superstartrek.client.activities.navigation.ThingMovedEvent;
 
 public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler{
 	
-	protected Setting phasers = new Setting(30, 150);
-	protected Setting torpedos = new Setting(10, 10);
+	protected Setting phasers = new Setting("phasers", 30, 150);
+	protected Setting torpedos = new Setting("torpedos", 10, 10);
 
 	
 	public Setting getPhasers() {
@@ -32,7 +32,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	}
 
 	public Enterprise(Application app) {
-		super(app, new Setting(3,3), new Setting(100,100));
+		super(app, new Setting("impulse", 3,3), new Setting("shields",100,100));
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");
@@ -145,6 +145,30 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		shields.repair();
 		application.events.fireEvent(new EnterpriseRepairedEvent());
 		application.endTurnAfterThis();
+	}
+	
+	protected boolean maybeRepairProvisionally(Setting setting) {
+		boolean needsRepair = setting.getCurrentUpperBound()<0.75*setting.getMaximum();
+		if (!needsRepair)
+			return false;
+		if (Random.nextDouble()<0.5)
+			return false;
+		setting.setCurrentUpperBound(setting.getMaximum()*0.75);
+		setting.setValue(setting.getDefaultValue());
+		application.message("Repaired "+setting.getName());
+		return true;
+	}
+	
+	public void repairProvisionally() {
+		int i=10;
+		while (i-->0) {
+			boolean repaired = maybeRepairProvisionally(impulse) || maybeRepairProvisionally(shields) || maybeRepairProvisionally(phasers);
+			if (repaired) {
+				application.endTurnAfterThis();
+				return;
+			}
+		}
+		application.message("Couldn't repair anything");
 	}
 
 	@Override

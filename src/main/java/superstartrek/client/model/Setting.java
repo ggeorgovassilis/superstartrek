@@ -6,9 +6,10 @@ public class Setting {
 	protected final double defaultValue;
 	protected double currentUpperBound;
 	protected double value;
-	protected String name;
+	protected final String name;
 	
-	public Setting(double defaultValue, double maximum) {
+	public Setting(String name, double defaultValue, double maximum) {
+		this.name = name;
 		this.maximum = maximum;
 		this.defaultValue = defaultValue;
 		this.currentUpperBound = maximum;
@@ -23,6 +24,10 @@ public class Setting {
 		return value/maximum;
 	}
 
+	public double health() {
+		return getCurrentUpperBound()/getMaximum();
+	}
+
 	public int percentageHealth() {
 		return (int)Math.floor(100*getCurrentUpperBound()/getMaximum());
 	}
@@ -33,10 +38,6 @@ public class Setting {
 
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public double getCurrentUpperBound() {

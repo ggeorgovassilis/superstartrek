@@ -63,7 +63,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 			css = thing.getCss();
 			if (thing instanceof Vessel) {
 				Vessel vessel = (Vessel)thing;
-				double status = vessel.getShields().ratio();
+				double status = vessel.getShields().health();
 				css+=" "+CSS.damageClass(status);
 			}
 		}

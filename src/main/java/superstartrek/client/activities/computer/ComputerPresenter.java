@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -107,6 +108,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	}
 	
 	public void onRepairButtonClicked() {
-		
+		Enterprise enterprise = application.starMap.enterprise;
+		enterprise.repairProvisionally();
 	}
 }

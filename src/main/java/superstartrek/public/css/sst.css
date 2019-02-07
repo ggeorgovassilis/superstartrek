@@ -195,18 +195,6 @@ table a, table a:visited{
 	background-color:midnightblue;
 }
 
-.damage-light{
-	color:yellow;
-}
-
-.damage-medium{
-	color:orange;
-}
-
-.damage-bad{
-	color:red;
-}
-
 /**
  * Short range scan
  */
@@ -352,6 +340,11 @@ table a, table a:visited{
  * Status report
  */
  
+ .overlay{
+	color:turquoise;	
+}
+ 
+ 
 #screen-statusreport dl{
 	overflow:hidden;
 }
@@ -359,7 +352,8 @@ table a, table a:visited{
 #screen-statusreport dt{
 	clear:left;
 	float:left;
-	width:20%;
+	width:50%;
+	max-width:20em;
 	padding:5px;
 	font-weight:bold;
 }
@@ -369,6 +363,19 @@ table a, table a:visited{
 	padding:5px;
 	color:turquoise;
 }
+
+.damage-light{
+	color:yellow;
+}
+
+.damage-medium{
+	color:orange;
+}
+
+.damage-bad{
+	color:red;
+}
+
 
 #messages{
 	position:absolute;
@@ -532,22 +539,6 @@ a.progress-bar {
 
 .overlay.impulse{
 	z-index:2;
-}
-
-.overlay.ok{
-	color:turquoise;	
-}
-
-.damaged{
-	color:orange;
-}
-
-.critical{
-	color:red;
-}
-
-.offline{
-	color:gray;
 }
 
 .legend #what,.legend #status{

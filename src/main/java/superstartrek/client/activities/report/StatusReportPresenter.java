@@ -6,10 +6,12 @@ import com.google.gwt.user.client.History;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.CSS;
 import superstartrek.client.model.Enterprise;
 
 public class StatusReportPresenter extends BasePresenter<StatusReportActivity>{
 
+	
 	public void updateView() {
 		StatusReportView view = (StatusReportView)getView();
 		Enterprise enterprise = application.starMap.enterprise;
@@ -18,7 +20,12 @@ public class StatusReportPresenter extends BasePresenter<StatusReportActivity>{
 		view.setProperty("report_max_impulse", "%"+enterprise.getImpulse().percentageHealth());
 		view.setProperty("report_shields", "%"+(enterprise.getShields().percentageHealth()));
 		view.setProperty("report_phaser_power", "%"+(enterprise.getPhasers().percentageHealth()));
-		view.setProperty("report_torpedos", "%"+(enterprise.getTorpedos().getValue()));
+		view.setProperty("report_torpedos", ""+(enterprise.getTorpedos().getValue()));
+		
+		view.setOverlay("impulse", CSS.damageClass(enterprise.getImpulse().health()));
+		view.setOverlay("phasers", CSS.damageClass(enterprise.getPhasers().health()));
+		view.setOverlay("torpedobay", CSS.damageClass(enterprise.getTorpedos().health()));
+		view.setOverlay("shields", CSS.damageClass(enterprise.getShields().health()));
 	}
 	
 	public StatusReportPresenter(Application application) {

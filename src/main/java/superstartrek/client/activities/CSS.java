@@ -31,9 +31,11 @@ public class CSS {
 	 * @return
 	 */
 	public static String damageClass(double value) {
-		if (value<0.33)
+		if (value<0.10)
+			return "damage-offline";
+		if (value<0.50)
 			return "damage-bad";
-		if (value<0.66)
+		if (value<0.75)
 			return "damage-medium";
 		if (value<1)
 			return "damage-light";
