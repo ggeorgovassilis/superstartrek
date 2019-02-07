@@ -162,6 +162,7 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	
 	@Override
 	public void onModuleLoad() {
+		GWT.log("onModuleLoad");
 		page = HTMLPanel.wrap(DOM.getElementById("page"));
 		events = GWT.create(SimpleEventBus.class);
 		setupScreens();
