@@ -101,7 +101,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		if (value == shields.getCurrentUpperBound())
 			value = 0;
 		else
-			value = Math.min(value+shields.getMaximum()/10, shields.getCurrentUpperBound());
+			value = Math.min(value+shields.getMaximum()/4, shields.getCurrentUpperBound());
 		shields.setValue(value);
 		updateShieldsView();
 	}
