@@ -7,7 +7,16 @@ public class Setting {
 	protected double currentUpperBound;
 	protected double value;
 	protected final String name;
+	protected boolean enabled=true;
 	
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public Setting(String name, double defaultValue, double maximum) {
 		this.name = name;
 		this.maximum = maximum;
@@ -25,7 +34,7 @@ public class Setting {
 	}
 
 	public double health() {
-		return getCurrentUpperBound()/getMaximum();
+		return (isEnabled()?1.0:0.0)*getCurrentUpperBound()/getMaximum();
 	}
 
 	public int percentageHealth() {

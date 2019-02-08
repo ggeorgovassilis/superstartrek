@@ -38,4 +38,9 @@ public abstract class BaseView<A extends Activity> extends Composite implements 
 		setVisible(false);
 	}
 	
+	@Override
+	public boolean isVisible() {
+		return super.isVisible();
+	}
+	
 }

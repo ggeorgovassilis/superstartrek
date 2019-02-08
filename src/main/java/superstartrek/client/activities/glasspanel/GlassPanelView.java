@@ -20,7 +20,7 @@ public class GlassPanelView extends BaseView<GlassPanelActivity>{
 			
 			@Override
 			public void onBrowserEvent(Event event) {
-				((GlassPanelPresenter)getPresenter()).glassPanelWasClicked();
+				((GlassPanelPresenter)getPresenter()).glassPanelClicked();
 			}
 		});
 	}

@@ -76,7 +76,7 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 		if (endTurnPending)
 			return;
 		endTurnPending = true;
-		postpone(new Runnable() {
+		superstartrek.client.utils.Timer.postpone(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -148,16 +148,6 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 
 	public void message(String formattedMessage, String category) {
 		events.fireEvent(new MessageEvent(MessageEvent.Action.show, formattedMessage, category));
-	}
-	
-	public void postpone(Runnable r) {
-		new Timer() {
-			
-			@Override
-			public void run() {
-				r.run();
-			}
-		}.schedule(1);
 	}
 	
 	@Override

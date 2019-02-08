@@ -8,6 +8,8 @@ import com.google.gwt.user.client.Random;
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.computer.TurnEndedEvent;
+import superstartrek.client.activities.computer.TurnEndedHandler;
 import superstartrek.client.activities.computer.TurnStartedEvent;
 import superstartrek.client.activities.computer.TurnStartedHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -17,17 +19,17 @@ import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 
-public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler{
-	
+public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler, TurnEndedHandler {
+
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);
 	protected Setting antimatter = new Setting("antimatter", 1000, 1000);
-	protected Setting reactor = new Setting("reactor", 0, 100);
-	
+	protected Setting reactor = new Setting("reactor", 100, 100);
+
 	public Setting getReactor() {
 		return reactor;
 	}
-	
+
 	public Setting getPhasers() {
 		return phasers;
 	}
@@ -37,82 +39,97 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	}
 
 	public Enterprise(Application app) {
-		super(app, new Setting("impulse", 3,3), new Setting("shields",100,100));
+		super(app, new Setting("impulse", 3, 3), new Setting("shields", 100, 100));
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");
 		app.events.addHandler(TurnStartedEvent.TYPE, this);
 		app.events.addHandler(FireEvent.TYPE, this);
+		app.events.addHandler(TurnEndedEvent.TYPE, this);
 	}
-	
+
 	public Setting getAntimatter() {
 		return antimatter;
 	}
-	
+
 	public void warpTo(Quadrant qTo) {
-		EnterpriseWarpedEvent event = new EnterpriseWarpedEvent(this, getQuadrant(), 
-				new Location(getX(), getY()), qTo, new Location(getX(), getY()));
+		EnterpriseWarpedEvent event = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(getX(), getY()), qTo,
+				new Location(getX(), getY()));
+		if (!consume(20)) {
+			application.message("Insufficient reactor output");
+			return;
+		}
 		setQuadrant(qTo);
 		int qx = qTo.getX();
 		int qy = qTo.getY();
 		StarMap map = application.starMap;
-		int xFrom = Math.max(0, qx-1);
-		int xTo = Math.min(7, qx+1);
-		int yFrom = Math.max(0, qy-1);
-		int yTo = Math.min(7, qy+1);
-		for (int y=yFrom;y<=yTo;y++)
-		for (int x=xFrom;x<=xTo;x++)
-			map.getQuadrant(x, y).setExplored(true);
+		int xFrom = Math.max(0, qx - 1);
+		int xTo = Math.min(7, qx + 1);
+		int yFrom = Math.max(0, qy - 1);
+		int yTo = Math.min(7, qy + 1);
+		for (int y = yFrom; y <= yTo; y++)
+			for (int x = xFrom; x <= xTo; x++)
+				map.getQuadrant(x, y).setExplored(true);
 		application.events.fireEvent(event);
 	}
-	
+
 	// only for internal use, bypasses checks
 	public void _navigateTo(Location loc) {
 		Location oldLoc = new Location(getX(), getY());
 		this.setLocation(loc);
 		application.events.fireEvent(new ThingMovedEvent(this, getQuadrant(), oldLoc, getQuadrant(), loc));
 	}
-	
+
 	public void navigateTo(Location loc) {
 		Location oldLoc = new Location(getX(), getY());
 		double distance = StarMap.distance(oldLoc, loc);
-		if (distance>getImpulse().getValue()) {
-			application.message("Course "+distance+" exceeds maximum impulse power "+getImpulse().getValue());
+		if (distance > getImpulse().getValue()) {
+			application.message("Course " + distance + " exceeds maximum impulse power " + getImpulse().getValue());
 			return;
 		}
 		Thing thing = application.starMap.findThingAt(quadrant, loc.x, loc.y);
-		if (thing!=null) {
+		if (thing != null) {
 			application.message("Destination is occupied");
 			return;
 		}
 		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getX(), getY(), loc.getX(), loc.getY());
-		if (things.size()>1) { //there's always at least 1 thing, the USS Enterprise
-			application.message("Path isn't clear "+things.size()+" "+things.get(1).getName()+" "+things.get(1));
+		if (things.size() > 1) { // there's always at least 1 thing, the USS Enterprise
+			application
+					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " " + things.get(1));
 			return;
 		}
+		if (!consume(impulse.getValue() * 10)) {
+			application.message("Insufficient reactor output");
+			return;
+		}
+
 		impulse.decrease(impulse.getValue());
 		_navigateTo(loc);
 	}
-	
+
 	public void fireTorpedosAt(Location sector) {
-		if (torpedos.getValue()<1) {
+		if (!torpedos.isEnabled()) {
+			application.message("Torpedo bay is damaged");
+			return;
+		}
+		if (torpedos.getValue() < 1) {
 			application.message("Torpedo bay is empty");
 			return;
 		}
-		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getX(), getY(), sector.getX(), sector.getY());
+		
+		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getX(), getY(), sector.getX(),
+				sector.getY());
 		things.remove(this);
-		for (Thing thing:things) {
+		for (Thing thing : things) {
 			boolean hit = false;
 			if (thing instanceof Star) {
 				hit = true;
-			} else
-			if (thing instanceof StarBase) {
+			} else if (thing instanceof StarBase) {
 				hit = true;
-			} else
-			if (thing instanceof Klingon) {
+			} else if (thing instanceof Klingon) {
 				double distance = StarMap.distance(this, thing);
-				double chance = 1/distance;
-				hit = Random.nextDouble()<=chance;
+				double chance = 1 / distance;
+				hit = Random.nextDouble() <= chance;
 			}
 			if (hit) {
 				FireEvent event = new FireEvent(this, thing, "torpedos", 50);
@@ -124,11 +141,11 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		application.message("Torpedo exploded in the void");
 		application.endTurnAfterThis();
 	}
-	
+
 	public void firePhasersAt(Location sector) {
 		Thing thing = application.starMap.findThingAt(quadrant, sector.getX(), sector.getY());
 		if (thing == null) {
-			application.message("There is nothing at "+sector);
+			application.message("There is nothing at " + sector);
 			return;
 		}
 		if (!(thing instanceof Klingon)) {
@@ -136,17 +153,21 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			return;
 		}
 		double distance = StarMap.distance(this, thing);
-		if (distance>3) {
+		if (distance > 3) {
 			application.message("Target is too far away.");
 			return;
 		}
-		Klingon klingon = (Klingon)thing;
-		FireEvent event = new FireEvent(this, klingon, "phasers", phasers.getValue()/distance);
+		if (!consume(phasers.getValue())) {
+			application.message("Insufficient reactor output");
+			return;
+		}
+		Klingon klingon = (Klingon) thing;
+		FireEvent event = new FireEvent(this, klingon, "phasers", phasers.getValue() / distance);
 		application.events.fireEvent(event);
 		phasers.setValue(0);
 		application.endTurnAfterThis();
 	}
-	
+
 	public void dockAtStarbase(StarBase starBase) {
 		phasers.repair();
 		torpedos.repair();
@@ -155,23 +176,25 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		application.events.fireEvent(new EnterpriseRepairedEvent());
 		application.endTurnAfterThis();
 	}
-	
+
 	protected boolean maybeRepairProvisionally(Setting setting) {
-		boolean needsRepair = setting.getCurrentUpperBound()<0.75*setting.getMaximum();
+		boolean needsRepair = !setting.isEnabled() || setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
 		if (!needsRepair)
 			return false;
-		if (Random.nextDouble()<0.5)
+		if (superstartrek.client.utils.Random.nextDouble() < 0.5)
 			return false;
-		setting.setCurrentUpperBound(setting.getMaximum()*0.75);
+		setting.setCurrentUpperBound(setting.getMaximum() * 0.75);
 		setting.setValue(setting.getDefaultValue());
-		application.message("Repaired "+setting.getName());
+		setting.setEnabled(true);
+		application.message("Repaired " + setting.getName());
 		return true;
 	}
-	
+
 	public void repairProvisionally() {
-		int i=10;
-		while (i-->0) {
-			boolean repaired = maybeRepairProvisionally(impulse) || maybeRepairProvisionally(shields) || maybeRepairProvisionally(phasers);
+		int i = 10;
+		while (i-- > 0) {
+			boolean repaired = maybeRepairProvisionally(impulse) || maybeRepairProvisionally(shields)
+					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos);
 			if (repaired) {
 				application.endTurnAfterThis();
 				return;
@@ -180,50 +203,80 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		application.message("Couldn't repair anything");
 	}
 
+	public boolean isDamaged() {
+		return impulse.getCurrentUpperBound() < impulse.getMaximum()
+				|| shields.getCurrentUpperBound() < shields.getMaximum()
+				|| phasers.getCurrentUpperBound() < phasers.getCurrentUpperBound() || torpedos.isEnabled();
+	}
+
+	public void damageShields() {
+		shields.damage(30);
+		application.message("Shields damaged");
+	}
+
+	public void damageImpulse() {
+		impulse.damage(1);
+		application.message("Impulse damaged");
+	}
+
+	public void damageTorpedos() {
+		torpedos.setEnabled(false);
+		application.message("Torpedo bay damaged");
+	}
+	
+	public void damagePhasers() {
+		phasers.damage(phasers.getMaximum() * 0.3);
+		application.message("Phaser array damaged");
+	}
+
+	public void applyDamage(double damage) {
+		double impact = damage / (shields.getValue() + 1.0);
+		shields.decrease(damage);
+		if (shields.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
+			damageShields();
+		if (impulse.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
+			damageImpulse();
+		if (torpedos.isEnabled() && Random.nextDouble() < impact)
+			damageTorpedos();
+		if (phasers.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
+			damagePhasers();
+		if (shields.getValue() <= 0)
+			application.gameOver(Outcome.lost);
+	}
+
+	@Override
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
+		if (target != this)
+			return;
+		application.message(actor.getName() + " fired on us");
+		applyDamage(damage);
+	}
+
+	public boolean consume(double value) {
+		GWT.log("Consume "+value+" of current capacity "+getReactor().getValue());
+		if (getReactor().getValue() < value)
+			return false;
+		getReactor().decrease(value);
+		return true;
+	}
+
+	public double computeEnergyConsumption() {
+		return getShields().getValue()/10 + 10.0;
+	}
+
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
 		phasers.reset();
 		reactor.reset();
 		shields.reset();
 		impulse.reset();
-	}
-	
-	public boolean isDamaged() {
-		return impulse.getCurrentUpperBound()<impulse.getMaximum() ||
-				shields.getCurrentUpperBound()<shields.getMaximum() ||
-				phasers.getCurrentUpperBound()<phasers.getCurrentUpperBound() ||
-				torpedos.getCurrentUpperBound()<torpedos.getMaximum();
-	}
-	
-	public void applyDamage(double damage) {
-		double impact = damage/(shields.getValue()+1.0);
-		GWT.log("damage: "+damage+" shields:"+shields.getValue()+" impact:"+impact);
-		shields.decrease(damage);
-		if (shields.getCurrentUpperBound()>0 && Random.nextDouble()<impact) {
-			shields.damage(30);
-			application.message("Shields damaged");
-		}
-		if (impulse.getCurrentUpperBound()>0 && Random.nextDouble()<impact) {
-			impulse.damage(1);
-			application.message("Impulse damaged");
-		}
-		if (torpedos.getCurrentUpperBound()>0 && Random.nextDouble()<impact) {
-			torpedos.damage(torpedos.getCurrentUpperBound());
-			application.message("Torpedo bay damaged");
-		}
-		if (phasers.getCurrentUpperBound()>0 && Random.nextDouble()<impact) {
-			phasers.damage(phasers.getMaximum()*0.3);
-			application.message("Phaser array damaged");
-		}
-		if (shields.getValue()<=0)
-			application.gameOver(Outcome.lost);
+		GWT.log("Energy at beginning of turn "+getReactor().getValue());
 	}
 
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-		if (target!=this)
-			return;
-		application.message(actor.getName()+" fired on us");
-		applyDamage(damage);
+	public void onTurnEnded(TurnEndedEvent evt) {
+		if (!consume(computeEnergyConsumption()))
+			application.gameLost();
+		GWT.log("Energy at end of turn "+getReactor().getValue());
 	}
 }

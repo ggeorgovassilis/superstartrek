@@ -20,11 +20,18 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 		application.events.fireEvent(new GlassPanelEvent(Action.show));
 		getView().show();
 	}
+	
+	public void dismissButtonClicked() {
+		hideMessages();
+	}
 
 	public void hideMessages() {
-		((MessagesView)getView()).clear();
+		if (!getView().isVisible())
+			return;
 		getView().hide();
+		((MessagesView)getView()).clear();
 		application.events.fireEvent(new MessageEvent(MessageEvent.Action.hide, null, null));
+		application.events.fireEvent(new GlassPanelEvent(Action.hide));
 	}
 
 	@Override
@@ -33,6 +40,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 
 	@Override
 	public void glassPanelHidden() {
+		hideMessages();
 	}
 
 	@Override
