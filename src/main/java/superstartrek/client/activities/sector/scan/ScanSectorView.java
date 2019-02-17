@@ -49,5 +49,11 @@ public class ScanSectorView extends BaseScreen<ScanSectorActivity>{
 	public void setObjectQuadrant(String value) {
 		panel.getElementById("object-quadrant").setInnerText(value);
 	}
+	
+	public void setProperty(String rowId, String cellId, String rowCss, String value) {
+		DOM.getElementById(rowId).setClassName(rowCss);
+		DOM.getElementById(cellId).setInnerText(value);
+	}
+
 
 }

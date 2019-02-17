@@ -7,6 +7,11 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
+import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
+import superstartrek.client.activities.klingons.KlingonUncloakedEvent;
+import superstartrek.client.activities.klingons.KlingonUncloakedHandler;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.GameStartedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
@@ -26,7 +31,7 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler, EnterpriseRepairedHandler {
+public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler, EnterpriseRepairedHandler, KlingonUncloakedHandler, KlingonDestroyedHandler {
 
 	SectorMenuPresenter sectorMenuPresenter;
 	
@@ -43,6 +48,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 		application.events.addHandler(FireEvent.TYPE, this);
 		application.events.addHandler(EnterpriseRepairedEvent.TYPE, this);
+		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
+		application.events.addHandler(KlingonUncloakedEvent.TYPE, this);
 		sectorMenuPresenter = new SectorMenuPresenter(application);
 		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
 	}
@@ -112,6 +119,16 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	public void onEnterpriseRepaired() {
 		Enterprise enterprise = application.starMap.enterprise;
 		updateSector(enterprise.getQuadrant(), enterprise.getX(), enterprise.getY());
+	}
+
+	@Override
+	public void klingonUncloaked(Klingon klingon) {
+		updateSector(klingon.getQuadrant(), klingon.getX(), klingon.getY());
+	}
+
+	@Override
+	public void klingonDestroyed(Klingon klingon) {
+		updateSector(klingon.getQuadrant(), klingon.getX(), klingon.getY());
 	}
 
 }

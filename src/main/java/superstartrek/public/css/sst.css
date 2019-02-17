@@ -66,7 +66,7 @@ a, a:visited, button, .button{
 	float:none;
 }
 
-@media (max-width: 400px)  {
+@media (max-width: 800px)  {
 	a,button{
 		font-size:90%;
 		width:100%;
@@ -144,16 +144,8 @@ table a, table a:visited{
 	display:none;
 }
 
-.has-klingon .needs-klingon{
-	display:block;
-}
-
-.klingon-scan{
+.vessel-scan{
 	width:100%;
-}
-
-.klingon-scan td{
-	padding-right:3em;
 }
 
 .has-starbase.has-klingons{
@@ -214,8 +206,7 @@ table a, table a:visited{
 }
 
 #shortrangescan{
-	min-width:150px;
-	margin-bottom:5em; /* otherwise some buttons from command bar wrap under SRS*/
+	min-width:20em;
 }
 
 /*
@@ -272,18 +263,8 @@ table a, table a:visited{
 	width:100%;
 }
 
-/*
-@media (max-width: 500px)  {
-	#screen-intro .logo{
-		font-size:70%;
-	}	
-	#commandbar{
-		float:left;
-	}
-}
-*/
-@media (max-width: 800px)  {
-	#screen-intro .logo{
+@media (max-width: 1000px)  {
+	.intro-container .logo{
 		font-size:60%;
 	}
 	#commandbar, #sectorselectionbar a,#sectorselectionbar button{
@@ -609,4 +590,6 @@ a.progress-bar {
 	position:absolute;
 	z-index:10;
 	background:rgba(10,10,10,0.5);
+	top:10%;
+	padding:0.5em;
 }

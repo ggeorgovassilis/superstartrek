@@ -86,6 +86,7 @@ public class Setting {
 
 	public void repair() {
 		setCurrentUpperBound(getMaximum());
+		setEnabled(true);
 		reset();
 	}
 }

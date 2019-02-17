@@ -5,8 +5,11 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.computer.ComputerEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
+import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 
 public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> implements ScanSectorHandler{
 
@@ -26,6 +29,23 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 		v.setObjectName(name);
 		v.setObjectLocation(event.getLocation().toString());
 		v.setObjectQuadrant(q.getName());
+		if (thing instanceof Vessel) {
+			Vessel vessel = (Vessel)thing;
+			v.setProperty("scan-report-shields", "scan-report-shields-value", "", "%"+vessel.getShields().percentage());
+			if (vessel instanceof Klingon) {
+				Klingon k = (Klingon)vessel;
+				v.setProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isEnabled()?"":"damage-offline", k.getDisruptor().isEnabled()?"online":"offline");
+			}
+			if (vessel instanceof Enterprise) {
+				Enterprise e = (Enterprise)vessel;
+				v.setProperty("scan-report-weapons", "scan-report-weapons-value", e.getPhasers().isEnabled()?"":"damage-offline", e.getPhasers().isEnabled()?"online":"offline");
+			}
+			v.setProperty("scan-report-engines", "scan-report-engines-value", vessel.getImpulse().isEnabled()?"":"damage-offline", vessel.getImpulse().isEnabled()?"online":"offline");
+		} else {
+			v.setProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
+			v.setProperty("scan-report-weapons", "scan-report-weapons-value", "hidden", "");
+			v.setProperty("scan-report-engines", "scan-report-engines-value", "hidden", "");
+		}
 	}
 	
 	public void onCommandClicked(String cmd) {

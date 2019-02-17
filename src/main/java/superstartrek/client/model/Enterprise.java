@@ -24,7 +24,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);
 	protected Setting antimatter = new Setting("antimatter", 1000, 1000);
-	protected Setting reactor = new Setting("reactor", 100, 100);
+	protected Setting reactor = new Setting("reactor", 70, 70);
+	protected Setting autoAim = new Setting("auto aim", 1, 1);
 
 	public Setting getReactor() {
 		return reactor;
@@ -36,6 +37,10 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 
 	public Setting getTorpedos() {
 		return torpedos;
+	}
+	
+	public Setting getAutoAim() {
+		return autoAim;
 	}
 
 	public Enterprise(Application app) {
@@ -206,7 +211,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	public boolean isDamaged() {
 		return impulse.getCurrentUpperBound() < impulse.getMaximum()
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
-				|| phasers.getCurrentUpperBound() < phasers.getCurrentUpperBound() || torpedos.isEnabled();
+				|| phasers.getCurrentUpperBound() < phasers.getCurrentUpperBound() || !torpedos.isEnabled();
 	}
 
 	public void damageShields() {

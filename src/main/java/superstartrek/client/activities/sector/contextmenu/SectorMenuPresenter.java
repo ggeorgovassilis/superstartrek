@@ -6,6 +6,7 @@ import superstartrek.client.activities.glasspanel.GlassPanelEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
 import superstartrek.client.activities.glasspanel.GlassPanelHandler;
 import superstartrek.client.activities.sector.scan.ScanSectorEvent;
+import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 
@@ -19,14 +20,23 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
 		application.events.addHandler(GlassPanelEvent.TYPE, this);
 	}
+	
+	public void showMenu(int screenY, Location sector, Quadrant quadrant) {
+		SectorMenuView v = (SectorMenuView)getView();
+		Enterprise e = application.starMap.enterprise;
+		v.enableButton("cmd_navigate", e.getImpulse().isEnabled());
+		v.enableButton("cmd_firePhasers", e.getPhasers().isEnabled());
+		v.enableButton("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue()>0);
+		v.enableButton("cmd_toggleFireAtWill", e.getAutoAim().isEnabled()&&e.getAutoAim().getValue()>0);
+		
+		v.setLocation(0, screenY);
+		v.show();
+		getApplication().events.fireEvent(new GlassPanelEvent(GlassPanelEvent.Action.show));
+	}
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
-		((SectorMenuView)getView()).setLocation(0, event.screenY);
-		sector = event.getSector();
-		quadrant = event.getQuadrant();
-		getView().show();
-		getApplication().events.fireEvent(new GlassPanelEvent(GlassPanelEvent.Action.show));
+		showMenu(event.screenY, event.getSector(), event.getQuadrant());
 	}
 	
 	protected void hideMenu() {
