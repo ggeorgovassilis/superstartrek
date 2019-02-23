@@ -21,6 +21,8 @@ import superstartrek.client.activities.navigation.ThingMovedEvent;
 
 public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler, TurnEndedHandler {
 
+	public final static double PHASER_RANGE=3;
+	
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);
 	protected Setting antimatter = new Setting("antimatter", 1000, 1000);
@@ -147,7 +149,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		application.endTurnAfterThis();
 	}
 
-	public void firePhasersAt(Location sector) {
+	public void firePhasersAt(Location sector, boolean isAutoAim) {
 		Thing thing = application.starMap.findThingAt(quadrant, sector.getX(), sector.getY());
 		if (thing == null) {
 			application.message("There is nothing at " + sector);
@@ -158,19 +160,28 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			return;
 		}
 		double distance = StarMap.distance(this, thing);
-		if (distance > 3) {
+		if (distance > PHASER_RANGE) {
 			application.message("Target is too far away.");
 			return;
 		}
+		if (!phasers.isEnabled()) {
+			if (!isAutoAim) application.message("Phaser array is disabled");
+			return;
+		}
+		if (phasers.getValue()==0) {
+			application.message("Phasers already fired.");
+			return;
+		}
 		if (!consume(phasers.getValue())) {
-			application.message("Insufficient reactor output");
+			if (!isAutoAim) application.message("Insufficient reactor output");
 			return;
 		}
 		Klingon klingon = (Klingon) thing;
 		FireEvent event = new FireEvent(this, klingon, "phasers", phasers.getValue() / distance);
 		application.events.fireEvent(event);
 		phasers.setValue(0);
-		application.endTurnAfterThis();
+		if (!isAutoAim)
+			application.endTurnAfterThis();
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
@@ -216,22 +227,22 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 
 	public void damageShields() {
 		shields.damage(30);
-		application.message("Shields damaged");
+		application.message("Shields damaged","damage");
 	}
 
 	public void damageImpulse() {
 		impulse.damage(1);
-		application.message("Impulse damaged");
+		application.message("Impulse damaged","damage");
 	}
 
 	public void damageTorpedos() {
 		torpedos.setEnabled(false);
-		application.message("Torpedo bay damaged");
+		application.message("Torpedo bay damaged","damage");
 	}
 	
 	public void damagePhasers() {
 		phasers.damage(phasers.getMaximum() * 0.3);
-		application.message("Phaser array damaged");
+		application.message("Phaser array damaged","damage");
 	}
 
 	public void applyDamage(double damage) {
@@ -246,14 +257,14 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		if (phasers.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
 			damagePhasers();
 		if (shields.getValue() <= 0)
-			application.gameOver(Outcome.lost);
+			application.gameOver(Outcome.lost, "shields");
 	}
 
 	@Override
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		if (target != this)
 			return;
-		application.message(actor.getName() + " fired on us");
+		application.message(actor.getName() + " fired on us", "damage");
 		applyDamage(damage);
 	}
 
@@ -268,6 +279,19 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	public double computeEnergyConsumption() {
 		return getShields().getValue()/10 + 10.0;
 	}
+	
+	public void autoAim() {
+		for (Klingon k:getQuadrant().getKlingons())
+			if (!k.isCloaked() && k.getDisruptor().isEnabled() && StarMap.distance(this, k)<PHASER_RANGE) {
+				firePhasersAt(k, true);
+				return;
+			}
+	}
+	
+	public void playComputerTurn() {
+		if (getAutoAim().isEnabled())
+			autoAim();
+	}
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
@@ -276,6 +300,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		shields.reset();
 		impulse.reset();
 		GWT.log("Energy at beginning of turn "+getReactor().getValue());
+		playComputerTurn();
 	}
 
 	@Override
@@ -283,5 +308,9 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		if (!consume(computeEnergyConsumption()))
 			application.gameLost();
 		GWT.log("Energy at end of turn "+getReactor().getValue());
+	}
+	
+	public void toggleAutoAim() {
+		getAutoAim().setValue(!getAutoAim().getBooleanValue() && getAutoAim().isEnabled());
 	}
 }

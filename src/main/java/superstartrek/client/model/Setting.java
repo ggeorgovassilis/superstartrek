@@ -89,4 +89,12 @@ public class Setting {
 		setEnabled(true);
 		reset();
 	}
+	
+	public boolean getBooleanValue() {
+		return getValue()>0;
+	}
+	
+	public void setValue(boolean v) {
+		setValue(v?1:0);
+	}
 }

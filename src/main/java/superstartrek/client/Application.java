@@ -1,11 +1,16 @@
 package superstartrek.client;
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
@@ -38,6 +43,7 @@ import superstartrek.client.activities.manual.ManualScreen;
 import superstartrek.client.activities.messages.MessagesView;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
+import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.report.StatusReportPresenter;
@@ -54,12 +60,13 @@ import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 
-public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler, MessageHandler{
+public class Application
+		implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler, MessageHandler {
 
 	public EventBus events;
 	public HTMLPanel page;
 	public StarMap starMap;
-	public boolean gameIsRunning=true;
+	public boolean gameIsRunning = true;
 	protected boolean endTurnPending = false;
 
 	public LoadingPresenter loadingPresenter;
@@ -71,13 +78,14 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	public MessagesPresenter messagesPresenter;
 	public LRSPresenter lrsPresenter;
 	public StatusReportPresenter statusReportPresenter;
-	
+	public static Application that;
+
 	public void endTurnAfterThis() {
 		if (endTurnPending)
 			return;
 		endTurnPending = true;
 		superstartrek.client.utils.Timer.postpone(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				endTurnPending = false;
@@ -86,42 +94,42 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 			}
 		});
 	}
-	
+
 	protected void setupStarMap() {
 		Setup setup = new Setup(this);
 		starMap = setup.createNewMap();
 	}
-	
+
 	protected void setupScreens() {
 		loadingPresenter = new LoadingPresenter(this);
 		new LoadingScreen(loadingPresenter);
-		
+
 		introPresenter = new IntroPresenter(this);
 		new IntroView(introPresenter);
-	
+
 		manualPresenter = new ManualPresenter(this);
 		new ManualScreen(manualPresenter);
-		
+
 		computerPresenter = new ComputerPresenter(this);
 		new ComputerView(computerPresenter);
-		
+
 		glassPanelPresenter = new GlassPanelPresenter(this);
 		new GlassPanelView(glassPanelPresenter);
-		
+
 		scanSectorPresenter = new ScanSectorPresenter(this);
 		new ScanSectorView(scanSectorPresenter);
-		
+
 		messagesPresenter = new MessagesPresenter(this);
 		new MessagesView(messagesPresenter);
-		
+
 		lrsPresenter = new LRSPresenter(this);
 		new LRSScreen(lrsPresenter);
-		
+
 		statusReportPresenter = new StatusReportPresenter(this);
 		new StatusReportView(statusReportPresenter);
-		
+
 	}
-	
+
 	public void startGame() {
 		History.replaceItem("intro");
 		History.fireCurrentHistoryState();
@@ -131,12 +139,12 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 		events.addHandler(MessageEvent.TYPE, this);
 		events.fireEvent(new GameStartedEvent());
 	}
-	
+
 	public void endTurn() {
 		events.fireEvent(new TurnEndedEvent());
 		events.fireEvent(new KlingonTurnEvent());
 	}
-	
+
 	public void startTurn() {
 		starMap.advanceStarDate(1);
 		events.fireEvent(new TurnStartedEvent());
@@ -149,9 +157,36 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 	public void message(String formattedMessage, String category) {
 		events.fireEvent(new MessageEvent(MessageEvent.Action.show, formattedMessage, category));
 	}
-	
+
+	/**
+	 * * Set an uncaught exception handler that unwraps the exception *
+	 * (UmbrellaException) for SuperDevMode.
+	 */
+	private void setUncaughtExceptionHandler() {
+		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+			@Override
+			public void onUncaughtException(Throwable e) {
+				Throwable unwrapped = unwrap(e);
+				GWT.log(e.getMessage(), unwrapped);
+//				Logger.getAnonymousLogger().log(Level.SEVERE, "onUncaughtException " + e.getMessage(), unwrapped);
+			}
+
+			public Throwable unwrap(Throwable e) {
+				if (e instanceof UmbrellaException) {
+					UmbrellaException ue = (UmbrellaException) e;
+					if (ue.getCauses().size() == 1) {
+						return unwrap(ue.getCauses().iterator().next());
+					}
+				}
+				return e;
+			}
+		});
+
+	}
+
 	@Override
 	public void onModuleLoad() {
+		setUncaughtExceptionHandler();
 		GWT.log("onModuleLoad");
 		page = HTMLPanel.wrap(DOM.getElementById("page"));
 		events = GWT.create(SimpleEventBus.class);
@@ -159,6 +194,8 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 		setupStarMap();
 		startGame();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
+		that = this;
+		exportStaticMethod();
 	}
 
 	@Override
@@ -172,8 +209,9 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 		endTurnAfterThis();
 	}
 
-	public void gameOver(GameOverEvent.Outcome outcome) {
-		events.fireEvent(new GameOverEvent(outcome));
+	public void gameOver(GameOverEvent.Outcome outcome, String reason) {
+		GWT.log(reason);
+		events.fireEvent(new GameOverEvent(outcome, reason));
 	}
 
 	@Override
@@ -184,12 +222,12 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 
 	@Override
 	public void gameLost() {
-		message("The Enterprise was destroyed.");
+		message("The Enterprise was destroyed.","gameover");
 	}
 
 	@Override
 	public void gameWon() {
-		message("Congratulations, all Klingons were destroyed.");
+		message("Congratulations, all Klingons were destroyed.","gamewon");
 	}
 
 	@Override
@@ -201,5 +239,19 @@ public class Application implements EntryPoint, EnterpriseWarpedHandler, ThingMo
 		if (!this.gameIsRunning)
 			Window.Location.reload();
 	}
+
+	public static void computePath(int toX, int toY) {
+		Enterprise e = that.starMap.enterprise;
+		PathFinder pf = new PathFinder(e.getQuadrant());
+		List<Location> path = pf.findPath(e, new Location(toX, toY));
+		for (Location l : path)
+			GWT.log(l.toString());
+	}
+
+	public static native void exportStaticMethod()
+	/*-{
+	$wnd.path =
+		$entry(@superstartrek.client.Application::computePath(II));
+	}-*/;
 
 }

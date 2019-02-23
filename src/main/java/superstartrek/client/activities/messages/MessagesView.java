@@ -49,7 +49,7 @@ public class MessagesView extends BaseView<MessageActivity>{
 	public void showMessage(String formattedMessage, String category) {
 		Element line = DOM.createElement("li");
 		line.setInnerHTML(formattedMessage);
-		line.addClassName(category);
+		line.addClassName("entry "+category);
 		eContent.appendChild(line);
 	}
 	

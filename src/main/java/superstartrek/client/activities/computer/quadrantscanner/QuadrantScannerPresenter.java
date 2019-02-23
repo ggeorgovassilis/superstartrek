@@ -7,6 +7,7 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.computer.ComputerView;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
@@ -86,6 +87,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 			for (int x = 0; x < 8; x++) {
 				updateSector(q, x,y);
 			}
+		updateQuadrantHeader();
 	}
 
 	@Override
@@ -97,6 +99,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		updateSector(qFrom, lFrom.getX(), lFrom.getY());
 		updateSector(qTo, lTo.getX(), lTo.getY());
+		updateQuadrantHeader();
 	}
 
 	@Override
@@ -130,5 +133,23 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	public void klingonDestroyed(Klingon klingon) {
 		updateSector(klingon.getQuadrant(), klingon.getX(), klingon.getY());
 	}
+	
+	public void updateQuadrantHeader() {
+		QuadrantScannerView view = (QuadrantScannerView)getView();
+		String alert = "";
+		Quadrant q = application.starMap.enterprise.getQuadrant();
+		Enterprise e = application.starMap.enterprise;
+		if (!q.getKlingons().isEmpty()) {
+			alert = "yellow-alert";
+			double minDistance = 3;
+			for (Klingon k:q.getKlingons())
+				minDistance = Math.min(minDistance, StarMap.distance(e, k));
+			if (minDistance<3)
+				alert="red-alert";
+		}
+		
+		view.setQuadrantHeader(q.getName(), alert);
+	}
+
 
 }

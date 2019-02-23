@@ -122,4 +122,5 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 	public void setRepairButtonVisibility(boolean visible) {
 		eRepair.getStyle().setDisplay(visible?Display.INITIAL:Display.NONE);
 	}
+	
 }

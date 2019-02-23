@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
 <module>
-	<inherits name="com.google.gwt.user.User"/>
-	<inherits name="com.google.gwt.http.HTTP"/>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.http.HTTP" />
 	<inherits name="com.google.gwt.resources.Resources" />
-	<source path="client"/>
-	<resource path="public/screens"/>
-	<entry-point class="superstartrek.client.Application"/>
-	<set-property name="compiler.useSourceMaps" value="true"/>	
+	<source path="client" />
+	<resource path="public/screens" />
+	<entry-point class="superstartrek.client.Application" />
+	<set-property name="compiler.useSourceMaps" value="true" />
+	<set-property name="compiler.stackMode" value="emulated" />
+	<set-configuration-property
+		name="compiler.emulatedStack.recordLineNumbers" value="true" />
 </module>

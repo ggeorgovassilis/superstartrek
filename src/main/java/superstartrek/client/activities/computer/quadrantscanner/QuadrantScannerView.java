@@ -62,5 +62,12 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> {
 			}
 		}, ClickEvent.getType());
 	}
+	
+	public void setQuadrantHeader(String name, String css){
+		Element e = DOM.getElementById("quadrantheader");
+		e.setInnerText(name);
+		e.setClassName(css);
+	}
+
 
 }

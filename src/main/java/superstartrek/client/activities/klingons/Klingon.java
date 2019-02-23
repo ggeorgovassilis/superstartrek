@@ -1,5 +1,6 @@
 package superstartrek.client.activities.klingons;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -10,6 +11,7 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
+import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -82,9 +84,9 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		}
 		shields.decrease(damage);
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
-		application.message(weapon + " hit " + target.getName() + " at " + target);
+		application.message(weapon + " hit " + target.getName() + " at " + target, "damage");
 		if (shields.getValue() <= 0) {
-			application.message(target.getName() + " was destroyed " + target);
+			application.message(target.getName() + " was destroyed " + target, "damage");
 			if (target instanceof Klingon)
 				destroy();
 		}
@@ -93,17 +95,30 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 	public void repositionKlingon() {
 		StarMap map = application.starMap;
 		Enterprise enterprise = map.enterprise;
-		int dx = (int) Math.signum(enterprise.getX() - getX());
-		int dy = (int) Math.signum(enterprise.getY() - getY());
-		int tx = getX() + dx;
-		int ty = getY() + dy;
-		Thing thing = map.findThingAt(getQuadrant(), tx, ty);
-		if (thing != null)
+		if (StarMap.distance(enterprise, this)<=2) {
+			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getX(), getY(), enterprise.getX(), enterprise.getY());
+			obstacles.remove(enterprise);
+			obstacles.remove(this);
+			if (obstacles.isEmpty())
+				return;
+		}
+		PathFinder pathFinder = new PathFinder(getQuadrant());
+		List<Location> path = pathFinder.findPath(this, enterprise);
+		if (path == null || path.isEmpty())
 			return;
+		Location dest = path.get(Math.min(2, path.size()-1));
+		if (map.findThingAt(getQuadrant(), dest.getX(), dest.getY())!=null)
+			dest = path.get(Math.min(1, path.size()-1));
+		if (map.findThingAt(getQuadrant(), dest.getX(), dest.getY())!=null)
+			return;
+		jumpTo(dest);
+	}
+	
+	public void jumpTo(Location dest) {
 		ThingMovedEvent event = new ThingMovedEvent(this, getQuadrant(), new Location(getX(), getY()), getQuadrant(),
-				new Location(tx, ty));
-		setX(tx);
-		setY(ty);
+				dest);
+		setX(dest.getX());
+		setY(dest.getY());
 		application.events.fireEvent(event);
 	}
 
@@ -142,14 +157,16 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 			hr.removeHandler();
 		getQuadrant().getKlingons().remove(this);
 		if (!application.starMap.hasKlingons())
-			application.gameOver(Outcome.won);
+			application.gameOver(Outcome.won, "");
 	}
 
 	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		if (enterprise.getQuadrant() == this.getQuadrant()) {
-			this.cloaked = !cloaked && canCloak();
-			css = "klingon cloaked";
+		if (qTo == this.getQuadrant()) {
+			this.cloaked = canCloak();
+			css = "klingon "+(cloaked?"cloaked":"");
+			Location newLocation = getQuadrant().getRandomEmptyLocation(Arrays.asList(lTo));
+			jumpTo(newLocation);
 		}
 	}
 	

@@ -6,6 +6,16 @@ public class Location {
 	protected int y;
 	
 	@Override
+	public int hashCode() {
+		return x+y*10;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return (obj instanceof Location) && ((Location)obj).getX() == x && ((Location)obj).getY()==y;
+	}
+	
+	@Override
 	public String toString() {
 		return x+":"+y;
 	}

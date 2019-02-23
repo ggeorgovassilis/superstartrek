@@ -389,8 +389,17 @@ table a, table a:visited{
 	color:orange;
 }
 
+.entry.fire{
+	color:yellow;
+}
+
 .entry.gameover{
 	color:red;
+	font-size:120%;
+}
+
+.entry.gamewon{
+	color:lightblue;
 	font-size:120%;
 }
 
@@ -592,4 +601,9 @@ a.progress-bar {
 	background:rgba(10,10,10,0.5);
 	top:10%;
 	padding:0.5em;
+}
+
+button.disabled{
+	background-color:rgb(20,40,60);
+	color:darkgay;
 }

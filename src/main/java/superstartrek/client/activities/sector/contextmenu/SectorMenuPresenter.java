@@ -27,7 +27,7 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 		v.enableButton("cmd_navigate", e.getImpulse().isEnabled());
 		v.enableButton("cmd_firePhasers", e.getPhasers().isEnabled());
 		v.enableButton("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue()>0);
-		v.enableButton("cmd_toggleFireAtWill", e.getAutoAim().isEnabled()&&e.getAutoAim().getValue()>0);
+		v.enableButton("cmd_toggleFireAtWill", e.getAutoAim().isEnabled()&&e.getAutoAim().getBooleanValue());
 		
 		v.setLocation(0, screenY);
 		v.show();
@@ -36,7 +36,9 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
+		this.sector = event.getSector();
 		showMenu(event.screenY, event.getSector(), event.getQuadrant());
+		
 	}
 	
 	protected void hideMenu() {
@@ -68,9 +70,11 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 		else if ("cmd_navigate".equals(command))
 			application.starMap.enterprise.navigateTo(sector);
 		else if ("cmd_firePhasers".equals(command))
-			application.starMap.enterprise.firePhasersAt(sector);
+			application.starMap.enterprise.firePhasersAt(sector, false);
 		else if ("cmd_fireTorpedos".equals(command))
 			application.starMap.enterprise.fireTorpedosAt(sector);
+		else if ("cmd_toggleFireAtWill".equals(command))
+			application.starMap.enterprise.toggleAutoAim();
 	}
 
 }
