@@ -135,7 +135,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 				hit = true;
 			} else if (thing instanceof Klingon) {
 				double distance = StarMap.distance(this, thing);
-				double chance = 1 / distance;
+				double chance = Math.sqrt(2) / distance;
 				hit = Random.nextDouble() <= chance;
 			}
 			if (hit) {
@@ -264,7 +264,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		if (target != this)
 			return;
-		application.message(actor.getName() + " fired on us", "damage");
+		application.message(actor.getName() + " at "+actor+" fired on us", "damage");
 		applyDamage(damage);
 	}
 

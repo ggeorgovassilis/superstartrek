@@ -132,6 +132,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
 		updateSector(klingon.getQuadrant(), klingon.getX(), klingon.getY());
+		updateQuadrantHeader();
 	}
 	
 	public void updateQuadrantHeader() {

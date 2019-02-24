@@ -158,6 +158,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		getQuadrant().getKlingons().remove(this);
 		if (!application.starMap.hasKlingons())
 			application.gameOver(Outcome.won, "");
+		application.events.fireEvent(new KlingonDestroyedEvent(this));
 	}
 
 	@Override
