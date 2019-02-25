@@ -146,6 +146,7 @@ public class Application
 	}
 
 	public void startTurn() {
+		GWT.log("------------------------------ new turn");
 		starMap.advanceStarDate(1);
 		events.fireEvent(new TurnStartedEvent());
 	}

@@ -62,7 +62,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	public void warpTo(Quadrant qTo) {
 		EnterpriseWarpedEvent event = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(getX(), getY()), qTo,
 				new Location(getX(), getY()));
-		if (!consume(20)) {
+		if (!consume("warp",20)) {
 			application.message("Insufficient reactor output");
 			return;
 		}
@@ -105,7 +105,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " " + things.get(1));
 			return;
 		}
-		if (!consume(impulse.getValue() * 10)) {
+		if (!consume("implse",impulse.getValue() * 10)) {
 			application.message("Insufficient reactor output");
 			return;
 		}
@@ -172,7 +172,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			application.message("Phasers already fired.");
 			return;
 		}
-		if (!consume(phasers.getValue())) {
+		if (!consume("phasers",phasers.getValue())) {
 			if (!isAutoAim) application.message("Insufficient reactor output");
 			return;
 		}
@@ -212,6 +212,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			boolean repaired = maybeRepairProvisionally(impulse) || maybeRepairProvisionally(shields)
 					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos);
 			if (repaired) {
+				application.events.fireEvent(new EnterpriseRepairedEvent());
 				application.endTurnAfterThis();
 				return;
 			}
@@ -227,22 +228,22 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 
 	public void damageShields() {
 		shields.damage(30);
-		application.message("Shields damaged","damage");
+		application.message("Shields damaged, dropped to %"+shields.percentageHealth(),"enterprise-damaged");
 	}
 
 	public void damageImpulse() {
 		impulse.damage(1);
-		application.message("Impulse damaged","damage");
+		application.message("Impulse drive damaged","enterprise-damaged");
 	}
 
 	public void damageTorpedos() {
 		torpedos.setEnabled(false);
-		application.message("Torpedo bay damaged","damage");
+		application.message("Torpedo bay damaged","enterprise-damaged");
 	}
 	
 	public void damagePhasers() {
 		phasers.damage(phasers.getMaximum() * 0.3);
-		application.message("Phaser array damaged","damage");
+		application.message("Phaser array damaged","enterprise-damaged");
 	}
 
 	public void applyDamage(double damage) {
@@ -268,8 +269,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		applyDamage(damage);
 	}
 
-	public boolean consume(double value) {
-		GWT.log("Consume "+value+" of current capacity "+getReactor().getValue());
+	public boolean consume(String what, double value) {
+		GWT.log(what+" consumes "+value+" of current capacity "+getReactor().getValue());
 		if (getReactor().getValue() < value)
 			return false;
 		getReactor().decrease(value);
@@ -300,13 +301,13 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		shields.reset();
 		impulse.reset();
 		GWT.log("Energy at beginning of turn "+getReactor().getValue());
+		if (!consume("energy",computeEnergyConsumption()))
+			application.events.fireEvent(new GameOverEvent(Outcome.lost, "Out of energy"));
 		playComputerTurn();
 	}
 
 	@Override
 	public void onTurnEnded(TurnEndedEvent evt) {
-		if (!consume(computeEnergyConsumption()))
-			application.gameLost();
 		GWT.log("Energy at end of turn "+getReactor().getValue());
 	}
 	

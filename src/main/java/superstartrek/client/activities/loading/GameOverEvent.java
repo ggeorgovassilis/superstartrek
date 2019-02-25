@@ -11,6 +11,7 @@ public class GameOverEvent extends GwtEvent<GameOverHandler>{
 	final String reason;
 	
 	public GameOverEvent(Outcome outcome, String reason) {
+		GWT.log("GameOverEvent "+outcome+" "+reason);
 		this.outcome = outcome;
 		this.reason = reason;
 	}

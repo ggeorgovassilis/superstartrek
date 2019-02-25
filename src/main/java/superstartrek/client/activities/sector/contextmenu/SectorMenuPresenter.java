@@ -1,5 +1,7 @@
 package superstartrek.client.activities.sector.contextmenu;
 
+import com.google.gwt.core.shared.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent;
@@ -22,6 +24,7 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 	}
 	
 	public void showMenu(int screenY, Location sector, Quadrant quadrant) {
+		this.quadrant = quadrant;
 		SectorMenuView v = (SectorMenuView)getView();
 		Enterprise e = application.starMap.enterprise;
 		v.enableButton("cmd_navigate", e.getImpulse().isEnabled());

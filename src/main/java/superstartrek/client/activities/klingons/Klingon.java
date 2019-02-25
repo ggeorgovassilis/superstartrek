@@ -31,22 +31,22 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 
 		Raider("a Klingon raider", 50, 8, "c-}"), BirdOfPrey("a Bird-of-prey", 100, 20, "C-D");
 
-		ShipClass(String name, int shields, int disruptor, String symbol) {
-			this.name = name;
+		ShipClass(String label, int shields, int disruptor, String symbol) {
+			this.label = label;
 			this.shields = shields;
 			this.symbol = symbol;
 			this.disruptor = disruptor;
 		}
 
-		final String name;
-		final int shields;
-		final String symbol;
-		final int disruptor;
+		public final String label;
+		public final int shields;
+		public final String symbol;
+		public final int disruptor;
 	}
 
 	public Klingon(Application app, ShipClass c) {
 		super(app, new Setting("impulse", 1, 1), new Setting("shields", c.shields, c.shields));
-		setName(c.name());
+		setName(c.label);
 		setSymbol(c.symbol);
 		setCss("klingon cloaked");
 		this.disruptor = new Setting("disruptor", c.disruptor, c.disruptor);

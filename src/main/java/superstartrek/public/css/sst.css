@@ -245,28 +245,30 @@ table a, table a:visited{
 	display:block;
 }
 
+#quadrantheader{
+	padding:0.1em;
+}
+
 /*
  * Intro screen
  */
 
-.screen-intro #screen-intro{
+#screen-intro{
 	display:block;
 	font-family:monospace;
-}
-
-#screen-intro .logo{
-	font-size:100%;
-	font-weight:bold;
 }
 
 #commandbar > a, #commandbar > button{
 	width:100%;
 }
 
+.logo{
+	font-size:100%;
+	font-weight:bold;
+}
+
+
 @media (max-width: 1000px)  {
-	.intro-container .logo{
-		font-size:60%;
-	}
 	#commandbar, #sectorselectionbar a,#sectorselectionbar button{
 		width:100%;
 	}
@@ -387,6 +389,10 @@ table a, table a:visited{
 
 .entry.damage,.damaged{
 	color:orange;
+}
+
+.entry.enterprise-damaged{
+	color:red;
 }
 
 .entry.fire{
