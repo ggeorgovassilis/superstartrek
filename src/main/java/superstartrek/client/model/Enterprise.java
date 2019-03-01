@@ -1,5 +1,6 @@
 package superstartrek.client.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -22,6 +23,7 @@ import superstartrek.client.activities.navigation.ThingMovedEvent;
 public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler, TurnEndedHandler {
 
 	public final static double PHASER_RANGE=3;
+	public final static double ANTIMATTER_CONSUMPTION_WARP = 10;
 	
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);
@@ -59,21 +61,47 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		return antimatter;
 	}
 
-	public void warpTo(Quadrant qTo) {
-		EnterpriseWarpedEvent event = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(getX(), getY()), qTo,
+	public void warpTo(Quadrant destinationQuadrant) {
+		EnterpriseWarpedEvent event = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(getX(), getY()), destinationQuadrant,
 				new Location(getX(), getY()));
 		if (!consume("warp",20)) {
 			application.message("Insufficient reactor output");
 			return;
 		}
-		setQuadrant(qTo);
-		int qx = qTo.getX();
-		int qy = qTo.getY();
+		int destinationX = destinationQuadrant.getX();
+		int destinationY = destinationQuadrant.getY();
+		
+		List<Location> container = new ArrayList<Location>();
+		
 		StarMap map = application.starMap;
-		int xFrom = Math.max(0, qx - 1);
-		int xTo = Math.min(7, qx + 1);
-		int yFrom = Math.max(0, qy - 1);
-		int yTo = Math.min(7, qy + 1);
+		
+		map.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationX, destinationY, new Walker() {
+			
+			@Override
+			public boolean visit(int x, int y) {
+				Quadrant q = map.getQuadrant(x, y);
+				List<Klingon> klingons = q.getKlingons();
+				Location dropLocation = new Location(x,y);
+				container.clear();
+				container.add(0, dropLocation);
+				GWT.log("warping past "+x+":"+y+" "+klingons.size());
+				if (!klingons.isEmpty()) {
+					application.message("We were intercepted by "+klingons.get(0).getName(), "intercepted");
+					return false;
+				}
+				return true;
+			}
+		});
+
+		Location dropLocation = container.get(0);
+		destinationX = dropLocation.getX();
+		destinationY = dropLocation.getY();
+		setQuadrant(map.getQuadrant(destinationX, destinationY));
+		
+		int xFrom = Math.max(0, destinationX - 1);
+		int xTo = Math.min(7, destinationX + 1);
+		int yFrom = Math.max(0, destinationY - 1);
+		int yTo = Math.min(7, destinationY + 1);
 		for (int y = yFrom; y <= yTo; y++)
 			for (int x = xFrom; x <= xTo; x++)
 				map.getQuadrant(x, y).setExplored(true);

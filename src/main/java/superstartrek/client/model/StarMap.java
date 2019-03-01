@@ -66,7 +66,7 @@ public class StarMap {
 		}
 	}
 
-	public void walkLine(Quadrant q, int x0, int y0, int x1, int y1, Walker callback) {
+	public void walkLine(int x0, int y0, int x1, int y1, Walker callback) {
 		int sx = 0;
 		int sy = 0;
 		int err = 0;
@@ -84,7 +84,7 @@ public class StarMap {
 		err = dx - dy;
 
 		while (true) {
-			if (!callback.visit(q, x0, y0))
+			if (!callback.visit(x0, y0))
 				break;
 			if (x0 == x1 && y0 == y1)
 				break;
@@ -100,12 +100,12 @@ public class StarMap {
 		}
 	};
 
-	public List<Thing> findObstaclesInLine(Quadrant q, int xFrom, int yFrom, int xTo, int yTo) {
+	public List<Thing> findObstaclesInLine(final Quadrant q, int xFrom, int yFrom, int xTo, int yTo) {
 		List<Thing> found = new ArrayList<>();
-		walkLine(q, xFrom, yFrom, xTo, yTo, new Walker() {
+		walkLine(xFrom, yFrom, xTo, yTo, new Walker() {
 
 			@Override
-			public boolean visit(Quadrant q, int x, int y) {
+			public boolean visit(int x, int y) {
 				Thing thing = findThingAt(q, x, y);
 				if (thing != null) {
 					found.add(thing);
