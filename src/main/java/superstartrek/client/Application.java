@@ -244,7 +244,7 @@ public class Application
 	public static void computePath(int toX, int toY) {
 		Enterprise e = that.starMap.enterprise;
 		PathFinder pf = new PathFinder(e.getQuadrant());
-		List<Location> path = pf.findPath(e, new Location(toX, toY));
+		List<Location> path = pf.findPathBetween(e.getLocation(), new Location(toX, toY));
 		for (Location l : path)
 			GWT.log(l.toString());
 	}

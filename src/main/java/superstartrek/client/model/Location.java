@@ -27,6 +27,11 @@ public class Location {
 		setX(x);
 		setY(y);
 	}
+	
+	public Location(Location l) {
+		setX(l.getX());
+		setY(l.getY());
+	}
 
 	public int getX() {
 		return x;

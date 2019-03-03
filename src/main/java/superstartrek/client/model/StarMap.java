@@ -30,6 +30,14 @@ public class StarMap {
 	public static double distance(Location l1, Location l2) {
 		return distance(l1.x, l1.y, l2.x, l2.y);
 	}
+	
+	public static double distance(Thing t1, Thing t2) {
+		return distance(t1.getLocation(), t2.getLocation());
+	}
+
+	public static double distance(Thing t1, Location l2) {
+		return distance(t1.getLocation(), l2);
+	}
 
 	public boolean isOnMap(int x, int y) {
 		return (x >= 0 && x <= 7 && y >= 0 && y <= 7);
@@ -42,16 +50,16 @@ public class StarMap {
 	}
 
 	public Thing findThingAt(Quadrant q, int x, int y) {
-		if (enterprise.getQuadrant() == q && enterprise.getX() == x && enterprise.getY() == y)
+		if (enterprise.getQuadrant() == q && enterprise.getLocation().getX() == x && enterprise.getLocation().getY() == y)
 			return enterprise;
 		for (Star star : q.getStars())
-			if (star.getX() == x && star.getY() == y)
+			if (star.getLocation().getX() == x && star.getLocation().getY() == y)
 				return star;
 		if (q.getStarBase() != null)
-			if (q.getStarBase().getX() == x && q.getStarBase().getY() == y)
+			if (q.getStarBase().getLocation().getX() == x && q.getStarBase().getLocation().getY() == y)
 				return q.getStarBase();
 		for (Klingon klingon : q.getKlingons())
-			if (klingon.getX() == x && klingon.getY() == y)
+			if (klingon.getLocation().getX() == x && klingon.getLocation().getY() == y)
 				return klingon;
 		return null;
 	}

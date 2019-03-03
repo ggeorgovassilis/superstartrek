@@ -26,8 +26,6 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 		application.events.fireEvent(new GlassPanelEvent(Action.show));
 		ScanSectorView v = (ScanSectorView)getView();
 		Quadrant q = event.getQuadrant();
-		GWT.log("q "+q);
-		GWT.log("location "+event.getLocation());
 		Thing thing = application.starMap.findThingAt(q, event.getLocation().getX(), event.getLocation().getY());
 		String name = thing==null?"Nothing":thing.getName();
 		v.setObjectName(name);

@@ -62,8 +62,9 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	}
 
 	public void warpTo(Quadrant destinationQuadrant) {
-		EnterpriseWarpedEvent event = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(getX(), getY()), destinationQuadrant,
-				new Location(getX(), getY()));
+		Location location = getLocation();
+		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(location), destinationQuadrant,
+				new Location(location));
 		if (!consume("warp",20)) {
 			application.message("Insufficient reactor output");
 			return;
@@ -97,7 +98,9 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		destinationX = dropLocation.getX();
 		destinationY = dropLocation.getY();
 		setQuadrant(map.getQuadrant(destinationX, destinationY));
-		
+		Location freeSpot = map.findFreeSpotAround(getQuadrant(), getLocation(), 3);
+		Location oldLocation = new Location(getLocation());
+		setLocation(freeSpot);
 		int xFrom = Math.max(0, destinationX - 1);
 		int xTo = Math.min(7, destinationX + 1);
 		int yFrom = Math.max(0, destinationY - 1);
@@ -105,19 +108,20 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		for (int y = yFrom; y <= yTo; y++)
 			for (int x = xFrom; x <= xTo; x++)
 				map.getQuadrant(x, y).setExplored(true);
-		application.events.fireEvent(event);
+		application.events.fireEvent(warpEvent);
+		ThingMovedEvent moveEvent = new ThingMovedEvent(this, warpEvent.qFrom, oldLocation, warpEvent.qTo, freeSpot);
+		application.events.fireEvent(moveEvent);
 	}
 
 	// only for internal use, bypasses checks
 	public void _navigateTo(Location loc) {
-		Location oldLoc = new Location(getX(), getY());
+		Location oldLoc = new Location(getLocation());
 		this.setLocation(loc);
 		application.events.fireEvent(new ThingMovedEvent(this, getQuadrant(), oldLoc, getQuadrant(), loc));
 	}
 
 	public void navigateTo(Location loc) {
-		Location oldLoc = new Location(getX(), getY());
-		double distance = StarMap.distance(oldLoc, loc);
+		double distance = StarMap.distance(this, loc);
 		if (distance > getImpulse().getValue()) {
 			application.message("Course " + distance + " exceeds maximum impulse power " + getImpulse().getValue());
 			return;
@@ -127,7 +131,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			application.message("Destination is occupied");
 			return;
 		}
-		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getX(), getY(), loc.getX(), loc.getY());
+		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY());
 		if (things.size() > 1) { // there's always at least 1 thing, the USS Enterprise
 			application
 					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " " + things.get(1));
@@ -152,7 +156,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			return;
 		}
 		
-		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getX(), getY(), sector.getX(),
+		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getLocation().getX(), getLocation().getY(), sector.getX(),
 				sector.getY());
 		things.remove(this);
 		for (Thing thing : things) {
@@ -293,7 +297,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		if (target != this)
 			return;
-		application.message(actor.getName() + " at "+actor+" fired on us", "damage");
+		application.message(actor.getName() + " at "+actor.getLocation()+" fired on us", "damage");
 		applyDamage(damage);
 	}
 
@@ -312,7 +316,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	public void autoAim() {
 		for (Klingon k:getQuadrant().getKlingons())
 			if (!k.isCloaked() && k.getDisruptor().isEnabled() && StarMap.distance(this, k)<PHASER_RANGE) {
-				firePhasersAt(k, true);
+				firePhasersAt(k.getLocation(), true);
 				return;
 			}
 	}

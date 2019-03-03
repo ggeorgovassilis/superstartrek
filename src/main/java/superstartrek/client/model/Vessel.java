@@ -31,4 +31,5 @@ public abstract class Vessel extends Thing{
 	
 	public void destroy() {
 	}
+	
 }

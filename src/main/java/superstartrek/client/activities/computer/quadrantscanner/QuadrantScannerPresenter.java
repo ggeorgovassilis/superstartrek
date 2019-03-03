@@ -114,24 +114,24 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		superstartrek.client.utils.Timer.postpone(new Runnable() {
 			@Override
 			public void run() {
-				updateSector(target.getQuadrant(), target.getX(), target.getY());
+				updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
 			}});
 	}
 
 	@Override
 	public void onEnterpriseRepaired() {
 		Enterprise enterprise = application.starMap.enterprise;
-		updateSector(enterprise.getQuadrant(), enterprise.getX(), enterprise.getY());
+		updateSector(enterprise.getQuadrant(), enterprise.getLocation().getX(), enterprise.getLocation().getY());
 	}
 
 	@Override
 	public void klingonUncloaked(Klingon klingon) {
-		updateSector(klingon.getQuadrant(), klingon.getX(), klingon.getY());
+		updateSector(klingon.getQuadrant(), klingon.getLocation().getX(), klingon.getLocation().getY());
 	}
 
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
-		updateSector(klingon.getQuadrant(), klingon.getX(), klingon.getY());
+		updateSector(klingon.getQuadrant(), klingon.getLocation().getX(), klingon.getLocation().getY());
 		updateQuadrantHeader();
 	}
 	

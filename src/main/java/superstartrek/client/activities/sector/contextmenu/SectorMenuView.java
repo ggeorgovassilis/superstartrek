@@ -46,7 +46,6 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>{
 	}
 	
 	public void enableButton(String id, boolean status) {
-		GWT.log(id+" "+status);
 		DOM.getElementById(id).setClassName(status?"":"disabled");
 	}
 

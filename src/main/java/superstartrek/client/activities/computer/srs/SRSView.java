@@ -45,7 +45,6 @@ public class SRSView extends BaseView<SRSActivity> implements MapCellRenderer{
 			@Override
 			public void onClick(ClickEvent event) {
 				Element eTd = event.getNativeEvent().getEventTarget().cast();
-				GWT.log(""+eTd.getAttribute("dx"));
 				if (!Strings.isEmpty(eTd.getAttribute("dx"))) {
 					int dx = Integer.parseInt(eTd.getAttribute("dx"));
 					int dy = Integer.parseInt(eTd.getAttribute("dy"));

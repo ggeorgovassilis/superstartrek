@@ -14,6 +14,7 @@ import superstartrek.client.activities.navigation.astar.Node;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.Thing;
 
 public class PathFinder {
 
@@ -23,13 +24,20 @@ public class PathFinder {
 		this.quadrant = quadrant;
 	}
 	
-	public List<Location> findPath(Location from, Location to){
+	List<Location> locations(List<? extends Thing> things){
+		List<Location> locations = new ArrayList<>();
+		for (Thing t:things)
+			locations.add(t.getLocation());
+		return locations;
+	}
+	
+	public List<Location> findPathBetween(Location from, Location to){
 		AStar astar = new AStar(8, 8, new Node(from.getY(), from.getX()), new Node(to.getY(), to.getX()));
 		List<Location> obstacles = new ArrayList<>();
 		if (quadrant.getStarBase()!=null)
-			obstacles.add(quadrant.getStarBase());
-		obstacles.addAll(quadrant.getKlingons());
-		obstacles.addAll(quadrant.getStars());
+			obstacles.add(quadrant.getStarBase().getLocation());
+		obstacles.addAll(locations(quadrant.getKlingons()));
+		obstacles.addAll(locations(quadrant.getStars()));
 		obstacles.remove(from);
 		obstacles.remove(to);
 		int[][] blocks = new int[obstacles.size()][2];

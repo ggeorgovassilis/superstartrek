@@ -66,7 +66,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 	public void uncloak() {
 		this.cloaked = false;
 		setCss("klingon");
-		application.message(getName()+" uncloaked at "+this);
+		application.message(getName()+" uncloaked at "+this.getLocation());
 		application.events.fireEvent(new KlingonUncloakedEvent(this));
 	}
 	
@@ -84,9 +84,9 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		}
 		shields.decrease(damage);
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
-		application.message(weapon + " hit " + target.getName() + " at " + target, "damage");
+		application.message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "damage");
 		if (shields.getValue() <= 0) {
-			application.message(target.getName() + " was destroyed " + target, "damage");
+			application.message(target.getName() + " was destroyed by " + actor.getName(), "damage");
 			destroy();
 		}
 	}
@@ -94,30 +94,31 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 	public void repositionKlingon() {
 		StarMap map = application.starMap;
 		Enterprise enterprise = map.enterprise;
+		if (enterprise.getQuadrant()!=getQuadrant())
+			return;
+		//no need to move if distance is <=2 and Klingon has a clear shot at the Enterprise
 		if (StarMap.distance(enterprise, this)<=2) {
-			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getX(), getY(), enterprise.getX(), enterprise.getY());
+			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation().getX(), getLocation().getY(), enterprise.getLocation().getX(), enterprise.getLocation().getY());
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
 			if (obstacles.isEmpty())
 				return;
 		}
 		PathFinder pathFinder = new PathFinder(getQuadrant());
-		List<Location> path = pathFinder.findPath(this, enterprise);
+		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation());
 		if (path == null || path.isEmpty())
 			return;
-		Location dest = path.get(Math.min(2, path.size()-1));
-		if (map.findThingAt(getQuadrant(), dest.getX(), dest.getY())!=null)
-			dest = path.get(Math.min(1, path.size()-1));
-		if (map.findThingAt(getQuadrant(), dest.getX(), dest.getY())!=null)
-			return;
-		jumpTo(dest);
+		
+		Location spotBeforeTarget = path.get(path.size()-2);
+		jumpTo(spotBeforeTarget);
 	}
 	
 	public void jumpTo(Location dest) {
-		ThingMovedEvent event = new ThingMovedEvent(this, getQuadrant(), new Location(getX(), getY()), getQuadrant(),
+		ThingMovedEvent event = new ThingMovedEvent(this, getQuadrant(), getLocation(), getQuadrant(),
 				dest);
-		setX(dest.getX());
-		setY(dest.getY());
+		if (null!=application.starMap.findThingAt(getQuadrant(), dest.getX(), dest.getY()))
+			throw new RuntimeException("There is something at "+dest);
+		setLocation(new Location(dest));
 		application.events.fireEvent(event);
 	}
 
@@ -127,8 +128,9 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		double distance = StarMap.distance(this, enterprise);
 		if (distance > 2)
 			return;
-		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getX(), getY(), enterprise.getX(),
-				enterprise.getY());
+		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation().getX(), getLocation().getY(), 
+				enterprise.getLocation().getX(),
+				enterprise.getLocation().getY());
 		obstacles.remove(this);
 		obstacles.remove(enterprise);
 		if (!obstacles.isEmpty())
@@ -165,7 +167,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		if (qTo == this.getQuadrant()) {
 			this.cloaked = canCloak();
 			css = "klingon "+(cloaked?"cloaked":"");
-			Location newLocation = getQuadrant().getRandomEmptyLocation(Arrays.asList(lTo));
+			Location newLocation = getApplication().starMap.findFreeSpot(getQuadrant());
 			jumpTo(newLocation);
 		}
 	}

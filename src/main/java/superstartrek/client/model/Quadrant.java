@@ -59,13 +59,4 @@ public class Quadrant {
 		return y;
 	}
 
-	public Location getRandomEmptyLocation(List<Location> except) {
-		if (except == null)
-			except = new ArrayList<>();
-		while(true) {
-			Location l = new Location(Random.nextInt(8), Random.nextInt(8));
-			if (!l.equals(getStarBase()) && !getStars().contains(l) && !getKlingons().contains(l) && !except.contains(l))
-				return l;
-		}
-	}
 }
