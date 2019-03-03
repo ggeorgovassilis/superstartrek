@@ -34,6 +34,6 @@ public class TestDamageEnterprise {
 		enterprise.damageTorpedos();
 		
 		assertFalse(enterprise.getTorpedos().isEnabled());
-		verify(handler).showMessage(eq("Torpedo bay damaged"), eq("info"));
+		verify(handler).showMessage(eq("Torpedo bay damaged"), eq("enterprise-damaged"));
 	}
 }

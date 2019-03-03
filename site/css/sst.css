@@ -66,7 +66,7 @@ a, a:visited, button, .button{
 	float:none;
 }
 
-@media (max-width: 400px)  {
+@media (max-width: 800px)  {
 	a,button{
 		font-size:90%;
 		width:100%;
@@ -144,16 +144,8 @@ table a, table a:visited{
 	display:none;
 }
 
-.has-klingon .needs-klingon{
-	display:block;
-}
-
-.klingon-scan{
+.vessel-scan{
 	width:100%;
-}
-
-.klingon-scan td{
-	padding-right:3em;
 }
 
 .has-starbase.has-klingons{
@@ -195,18 +187,6 @@ table a, table a:visited{
 	background-color:midnightblue;
 }
 
-.damage-light{
-	color:yellow;
-}
-
-.damage-medium{
-	color:orange;
-}
-
-.damage-bad{
-	color:red;
-}
-
 /**
  * Short range scan
  */
@@ -226,8 +206,7 @@ table a, table a:visited{
 }
 
 #shortrangescan{
-	min-width:150px;
-	margin-bottom:5em; /* otherwise some buttons from command bar wrap under SRS*/
+	min-width:20em;
 }
 
 /*
@@ -266,38 +245,30 @@ table a, table a:visited{
 	display:block;
 }
 
+#quadrantheader{
+	padding:0.1em;
+}
+
 /*
  * Intro screen
  */
 
-.screen-intro #screen-intro{
+#screen-intro{
 	display:block;
 	font-family:monospace;
-}
-
-#screen-intro .logo{
-	font-size:100%;
-	font-weight:bold;
 }
 
 #commandbar > a, #commandbar > button{
 	width:100%;
 }
 
-/*
-@media (max-width: 500px)  {
-	#screen-intro .logo{
-		font-size:70%;
-	}	
-	#commandbar{
-		float:left;
-	}
+.logo{
+	font-size:100%;
+	font-weight:bold;
 }
-*/
-@media (max-width: 800px)  {
-	#screen-intro .logo{
-		font-size:60%;
-	}
+
+
+@media (max-width: 1000px)  {
 	#commandbar, #sectorselectionbar a,#sectorselectionbar button{
 		width:100%;
 	}
@@ -352,6 +323,11 @@ table a, table a:visited{
  * Status report
  */
  
+ .overlay{
+	color:turquoise;	
+}
+ 
+ 
 #screen-statusreport dl{
 	overflow:hidden;
 }
@@ -359,7 +335,8 @@ table a, table a:visited{
 #screen-statusreport dt{
 	clear:left;
 	float:left;
-	width:20%;
+	width:50%;
+	max-width:20em;
 	padding:5px;
 	font-weight:bold;
 }
@@ -369,6 +346,23 @@ table a, table a:visited{
 	padding:5px;
 	color:turquoise;
 }
+
+.damage-light{
+	color:yellow;
+}
+
+.damage-medium{
+	color:orange;
+}
+
+.damage-bad{
+	color:red;
+}
+
+.damage-offline{
+	color:grey;
+}
+
 
 #messages{
 	position:absolute;
@@ -397,8 +391,21 @@ table a, table a:visited{
 	color:orange;
 }
 
+.entry.enterprise-damaged{
+	color:red;
+}
+
+.entry.fire{
+	color:yellow;
+}
+
 .entry.gameover{
 	color:red;
+	font-size:120%;
+}
+
+.entry.gamewon{
+	color:lightblue;
 	font-size:120%;
 }
 
@@ -534,22 +541,6 @@ a.progress-bar {
 	z-index:2;
 }
 
-.overlay.ok{
-	color:turquoise;	
-}
-
-.damaged{
-	color:orange;
-}
-
-.critical{
-	color:red;
-}
-
-.offline{
-	color:gray;
-}
-
 .legend #what,.legend #status{
 	float:left;
 	width:10em;
@@ -614,4 +605,11 @@ a.progress-bar {
 	position:absolute;
 	z-index:10;
 	background:rgba(10,10,10,0.5);
+	top:10%;
+	padding:0.5em;
+}
+
+button.disabled{
+	background-color:rgb(20,40,60);
+	color:darkgay;
 }
