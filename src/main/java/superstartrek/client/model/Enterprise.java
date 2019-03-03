@@ -28,7 +28,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);
 	protected Setting antimatter = new Setting("antimatter", 1000, 1000);
-	protected Setting reactor = new Setting("reactor", 70, 70);
+	protected Setting reactor = new Setting("reactor", 80, 80);
 	protected Setting autoAim = new Setting("auto aim", 1, 1);
 
 	public Setting getReactor() {
@@ -84,8 +84,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 				Location dropLocation = new Location(x,y);
 				container.clear();
 				container.add(0, dropLocation);
-				GWT.log("warping past "+x+":"+y+" "+klingons.size());
-				if (!klingons.isEmpty()) {
+				//TODO for now, allow warping out of the departure quadrant
+				if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
 					application.message("We were intercepted by "+klingons.get(0).getName(), "intercepted");
 					return false;
 				}
