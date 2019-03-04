@@ -1,6 +1,5 @@
 package superstartrek.client.activities;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 
@@ -9,7 +8,8 @@ public class CSS {
 	public static Element removeClass(Element e, String c) {
 		String css = e.getAttribute("class");
 		String newCss = css.replaceAll(" "+c+" ", " ").replaceAll("^"+c+"$","").replaceAll("^"+c+" ", " ").replaceAll(" "+c+"$", " ");
-		e.setAttribute("class", newCss);
+		if (!newCss.equals(css))
+			e.setAttribute("class", newCss);
 		return e;
 	}
 	

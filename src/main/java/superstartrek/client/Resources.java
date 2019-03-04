@@ -1,12 +1,9 @@
 package superstartrek.client;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 
 public interface Resources extends ClientBundle {
-	//TODO: find a way to set INSTANCE to null once we don't need it anymore (conserve memory)
-	public final static Resources INSTANCE = GWT.create(Resources.class);
 
 	@Source("superstartrek/public/screens/intro.html")
 	public TextResource introScreen();

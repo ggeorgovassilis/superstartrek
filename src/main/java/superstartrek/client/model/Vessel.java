@@ -1,8 +1,6 @@
 package superstartrek.client.model;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.loading.GameOverEvent;
-import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 
 public abstract class Vessel extends Thing{
 

@@ -1,13 +1,12 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.computer.ComputerView;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
@@ -111,11 +110,13 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		// postponing because depending on event handler order, damage might not have been assigned
 		// to target yet
-		superstartrek.client.utils.Timer.postpone(new Runnable() {
+		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
 			@Override
-			public void run() {
+			public void execute() {
 				updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
-			}});
+				
+			}
+		});
 	}
 
 	@Override

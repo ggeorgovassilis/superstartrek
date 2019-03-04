@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
@@ -8,14 +7,12 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 
-import superstartrek.client.Resources;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerView;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSView;
-import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.model.Setting;
 
 public class ComputerView extends BaseScreen<ComputerActivity>{
@@ -44,7 +41,7 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 	@Override
 	protected void setupCompositeUI() {
 		super.setupCompositeUI();
-		getElement().setInnerHTML(Resources.INSTANCE.computerScreen().getText());
+		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
 		presenter.getApplication().page.add(this);
 		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication());
 		quadrantScannerActivity = new QuadrantScannerView(quadrantScannerPresenter);

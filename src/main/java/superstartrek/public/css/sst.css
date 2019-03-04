@@ -276,8 +276,17 @@ table a, table a:visited{
 		width:100%;
 		margin-bottom:0;	
 	}
+	.logo{
+		font-size:80%;
+	}
+
 }
 
+@media (max-width: 600px)  {
+	.logo{
+		font-size:60%;
+	}
+}
 
 .intro-container{
 	margin-bottom:1em;

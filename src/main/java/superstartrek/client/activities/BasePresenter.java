@@ -11,9 +11,10 @@ public abstract class BasePresenter<A extends Activity> implements Presenter<A>{
 		this.application = application;
 	}
 	
-	public View<A> getView() {
-		return view;
+	public <T extends View<A>> T getView() {
+		return (T)view;
 	}
+
 	
 	@Override
 	public Application getApplication() {

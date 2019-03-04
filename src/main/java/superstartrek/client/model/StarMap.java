@@ -1,7 +1,9 @@
 package superstartrek.client.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gwt.user.client.Random;
 
@@ -18,6 +20,14 @@ public class StarMap {
 		int dy = y1 - y2;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
+	
+	public static Set<Location> locations(List<? extends Thing> things){
+		Set<Location> locations = new HashSet<>();
+		for (Thing t:things)
+			locations.add(t.getLocation());
+		return locations;
+	}
+
 
 	public long getStarDate() {
 		return starDate;
@@ -108,9 +118,9 @@ public class StarMap {
 		}
 	};
 
-	public List<Thing> findObstaclesInLine(final Quadrant q, int xFrom, int yFrom, int xTo, int yTo) {
+	public List<Thing> findObstaclesInLine(final Quadrant q, final Location from, final Location to) {
 		List<Thing> found = new ArrayList<>();
-		walkLine(xFrom, yFrom, xTo, yTo, new Walker() {
+		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), new Walker() {
 
 			@Override
 			public boolean visit(int x, int y) {

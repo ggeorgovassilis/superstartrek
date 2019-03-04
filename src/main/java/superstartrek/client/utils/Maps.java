@@ -1,7 +1,5 @@
 package superstartrek.client.utils;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;

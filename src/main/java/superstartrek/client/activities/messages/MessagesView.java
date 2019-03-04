@@ -1,16 +1,13 @@
 package superstartrek.client.activities.messages;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-import superstartrek.client.Application;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.Presenter;
-import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 
 public class MessagesView extends BaseView<MessageActivity>{
 	

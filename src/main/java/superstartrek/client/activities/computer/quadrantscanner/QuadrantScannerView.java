@@ -31,7 +31,6 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> {
 	
 	@Override
 	protected HTMLPanel createPanel() {
-		
 		HTMLPanel p = new HTMLPanel("<table id=quadrantscan></table>");
 		Event.sinkEvents(p.getElementById("quadrantscan"), Event.ONCLICK);
 		return p;

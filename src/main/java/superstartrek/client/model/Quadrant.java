@@ -3,8 +3,6 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.user.client.Random;
-
 import superstartrek.client.activities.klingons.Klingon;
 
 public class Quadrant {

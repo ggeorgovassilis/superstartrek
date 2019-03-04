@@ -1,19 +1,14 @@
 package superstartrek.client;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
@@ -21,8 +16,6 @@ import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.ComputerView;
 import superstartrek.client.activities.computer.TurnEndedEvent;
 import superstartrek.client.activities.computer.TurnStartedEvent;
-import superstartrek.client.activities.computer.srs.SRSPresenter;
-import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.glasspanel.GlassPanelView;
 import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.activities.intro.IntroPresenter;
@@ -33,9 +26,6 @@ import superstartrek.client.activities.loading.GameOverHandler;
 import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.LoadingPresenter;
 import superstartrek.client.activities.loading.LoadingScreen;
-import superstartrek.client.activities.loading.GameOverEvent.Outcome;
-import superstartrek.client.activities.lrs.LRSEvent;
-import superstartrek.client.activities.lrs.LRSEvent.Action;
 import superstartrek.client.activities.lrs.LRSPresenter;
 import superstartrek.client.activities.lrs.LRSScreen;
 import superstartrek.client.activities.manual.ManualPresenter;
@@ -79,15 +69,20 @@ public class Application
 	public LRSPresenter lrsPresenter;
 	public StatusReportPresenter statusReportPresenter;
 	public static Application that;
+	protected Resources resources;
 
+	public Resources getResources() {
+		return resources;
+	}
+	
 	public void endTurnAfterThis() {
 		if (endTurnPending)
 			return;
 		endTurnPending = true;
-		superstartrek.client.utils.Timer.postpone(new Runnable() {
-
+		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
+			
 			@Override
-			public void run() {
+			public void execute() {
 				endTurnPending = false;
 				endTurn();
 				startTurn();
@@ -143,6 +138,8 @@ public class Application
 	public void endTurn() {
 		events.fireEvent(new TurnEndedEvent());
 		events.fireEvent(new KlingonTurnEvent());
+		//release resources so that it can be (hopefully) garbage collected; at this point, everyone who needs resources should have them
+		resources = null;
 	}
 
 	public void startTurn() {
@@ -187,6 +184,7 @@ public class Application
 
 	@Override
 	public void onModuleLoad() {
+		resources = GWT.create(Resources.class);
 		setUncaughtExceptionHandler();
 		GWT.log("onModuleLoad");
 		page = HTMLPanel.wrap(DOM.getElementById("page"));
@@ -223,12 +221,12 @@ public class Application
 
 	@Override
 	public void gameLost() {
-		message("The Enterprise was destroyed.","gameover");
+		message("The Enterprise was destroyed.", "gameover");
 	}
 
 	@Override
 	public void gameWon() {
-		message("Congratulations, all Klingons were destroyed.","gamewon");
+		message("Congratulations, all Klingons were destroyed.", "gamewon");
 	}
 
 	@Override

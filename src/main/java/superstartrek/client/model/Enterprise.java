@@ -131,7 +131,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			application.message("Destination is occupied");
 			return;
 		}
-		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY());
+		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getLocation(), loc);
 		if (things.size() > 1) { // there's always at least 1 thing, the USS Enterprise
 			application
 					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " " + things.get(1));
@@ -156,8 +156,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			return;
 		}
 		
-		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getLocation().getX(), getLocation().getY(), sector.getX(),
-				sector.getY());
+		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getLocation(), sector);
 		things.remove(this);
 		for (Thing thing : things) {
 			boolean hit = false;

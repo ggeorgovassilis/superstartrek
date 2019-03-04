@@ -1,6 +1,5 @@
 package superstartrek.client.activities.klingons;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -98,7 +97,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 			return;
 		//no need to move if distance is <=2 and Klingon has a clear shot at the Enterprise
 		if (StarMap.distance(enterprise, this)<=2) {
-			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation().getX(), getLocation().getY(), enterprise.getLocation().getX(), enterprise.getLocation().getY());
+			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), enterprise.getLocation());
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
 			if (obstacles.isEmpty())
@@ -128,9 +127,8 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		double distance = StarMap.distance(this, enterprise);
 		if (distance > 2)
 			return;
-		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation().getX(), getLocation().getY(), 
-				enterprise.getLocation().getX(),
-				enterprise.getLocation().getY());
+		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), 
+				enterprise.getLocation());
 		obstacles.remove(this);
 		obstacles.remove(enterprise);
 		if (!obstacles.isEmpty())

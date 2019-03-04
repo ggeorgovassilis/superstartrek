@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -11,9 +10,6 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
-import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
-import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;

@@ -1,7 +1,5 @@
 package superstartrek.client.activities.sector.contextmenu;
 
-import com.google.gwt.core.shared.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent;

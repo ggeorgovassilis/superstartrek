@@ -5,19 +5,14 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-import superstartrek.client.Resources;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.Presenter;
 import superstartrek.client.activities.computer.srs.MapCellRenderer;
-import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.utils.Strings;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 
 public class LRSScreen extends BaseScreen<LRSActivity> implements MapCellRenderer{
 	
@@ -25,7 +20,7 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements MapCellRendere
 	
 	@Override
 	protected HTMLPanel createPanel() {
-		return new HTMLPanel(Resources.INSTANCE.lrsScreen().getText());
+		return new HTMLPanel(presenter.getApplication().getResources().lrsScreen().getText());
 	}
 	
 	@Override

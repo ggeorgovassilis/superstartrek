@@ -3,8 +3,6 @@ package superstartrek;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;

@@ -1,6 +1,6 @@
 package superstartrek.client.activities.computer.srs;
 
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
@@ -8,7 +8,6 @@ import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.TurnStartedEvent;
 import superstartrek.client.activities.computer.TurnStartedHandler;
-import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.model.Enterprise;
@@ -67,10 +66,12 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStar
 	@Override
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 		//postponing because damage might not have been assigned yet to target
-		superstartrek.client.utils.Timer.postpone(new Runnable() {
+		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
+			
 			@Override
-			public void run() {
+			public void execute() {
 				updateRadar();
+				
 			}
 		});
 	}

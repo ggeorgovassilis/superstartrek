@@ -6,15 +6,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-import superstartrek.client.Resources;
 import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
 
 public class ScanSectorView extends BaseScreen<ScanSectorActivity>{
 
 	@Override
 	protected HTMLPanel createPanel() {
-		HTMLPanel panel = new HTMLPanel(Resources.INSTANCE.sectorScanScreen().getText());
+		HTMLPanel panel = new HTMLPanel(presenter.getApplication().getResources().sectorScanScreen().getText());
 		return panel;
 	}
 	
