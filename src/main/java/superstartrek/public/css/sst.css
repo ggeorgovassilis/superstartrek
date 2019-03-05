@@ -413,6 +413,14 @@ table a, table a:visited{
 	font-size:120%;
 }
 
+.entry.klingon-uncloaked{
+	color:yellow;
+}
+
+.entry.klingon-damaged{
+	color:cyan;	
+}
+
 .entry.gamewon{
 	color:lightblue;
 	font-size:120%;

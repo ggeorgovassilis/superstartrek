@@ -24,11 +24,12 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 
 	public final static double PHASER_RANGE=3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 10;
+	public final static double IMPULSE_CONSUMPTION=6;
 	
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);
 	protected Setting antimatter = new Setting("antimatter", 1000, 1000);
-	protected Setting reactor = new Setting("reactor", 80, 80);
+	protected Setting reactor = new Setting("reactor", 70, 70);
 	protected Setting autoAim = new Setting("auto aim", 1, 1);
 
 	public Setting getReactor() {
@@ -137,7 +138,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " " + things.get(1));
 			return;
 		}
-		if (!consume("implse",impulse.getValue() * 10)) {
+		if (!consume("implse",impulse.getValue() * IMPULSE_CONSUMPTION)) {
 			application.message("Insufficient reactor output");
 			return;
 		}
@@ -278,7 +279,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	}
 
 	public void applyDamage(double damage) {
-		double impact = damage / (shields.getValue() + 1.0);
+		double impact = 0.5*damage / (shields.getValue() + 1.0);
 		shields.decrease(damage);
 		if (shields.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
 			damageShields();

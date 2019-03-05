@@ -25,10 +25,12 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 	protected final Setting disruptor;
 	protected HandlerRegistration[] handlers = new HandlerRegistration[3];
 	protected boolean cloaked = true;
-
+	public final static int MAX_SECTOR_SPEED = 1;
+	public final static int DISRUPTOR_RANGE_SECTORS = 2;
+	
 	public enum ShipClass {
 
-		Raider("a Klingon raider", 50, 8, "c-}"), BirdOfPrey("a Bird-of-prey", 100, 20, "C-D");
+		Raider("a Klingon raider", 50, 10, "c-}"), BirdOfPrey("a Bird-of-prey", 100, 20, "C-D");
 
 		ShipClass(String label, int shields, int disruptor, String symbol) {
 			this.label = label;
@@ -65,7 +67,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 	public void uncloak() {
 		this.cloaked = false;
 		setCss("klingon");
-		application.message(getName()+" uncloaked at "+this.getLocation());
+		application.message(getName()+" uncloaked at "+this.getLocation(),"klingon-uncloaked");
 		application.events.fireEvent(new KlingonUncloakedEvent(this));
 	}
 	
@@ -83,9 +85,9 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		}
 		shields.decrease(damage);
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
-		application.message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "damage");
+		application.message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
 		if (shields.getValue() <= 0) {
-			application.message(target.getName() + " was destroyed by " + actor.getName(), "damage");
+			application.message(target.getName() + " was destroyed by " + actor.getName(), "klingon-damaged");
 			destroy();
 		}
 	}
@@ -96,7 +98,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		if (enterprise.getQuadrant()!=getQuadrant())
 			return;
 		//no need to move if distance is <=2 and Klingon has a clear shot at the Enterprise
-		if (StarMap.distance(enterprise, this)<=2) {
+		if (StarMap.distance(enterprise, this)<=DISRUPTOR_RANGE_SECTORS) {
 			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), enterprise.getLocation());
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
@@ -104,19 +106,20 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 				return;
 		}
 		PathFinder pathFinder = new PathFinder(getQuadrant());
+		//path includes start and end
 		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation());
 		if (path == null || path.isEmpty())
 			return;
-		
-		Location spotBeforeTarget = path.get(path.size()-2);
-		jumpTo(spotBeforeTarget);
+		Location sector = path.get(Math.max(0,Math.min(MAX_SECTOR_SPEED, path.size()-2)));
+		jumpTo(sector);
 	}
 	
 	public void jumpTo(Location dest) {
 		ThingMovedEvent event = new ThingMovedEvent(this, getQuadrant(), getLocation(), getQuadrant(),
 				dest);
-		if (null!=application.starMap.findThingAt(getQuadrant(), dest.getX(), dest.getY()))
-			throw new RuntimeException("There is something at "+dest);
+		Thing obstacle = application.starMap.findThingAt(getQuadrant(), dest.getX(), dest.getY());
+		if (null!=obstacle)
+			throw new RuntimeException("There is "+obstacle.getName()+" at "+dest);
 		setLocation(new Location(dest));
 		application.events.fireEvent(event);
 	}
