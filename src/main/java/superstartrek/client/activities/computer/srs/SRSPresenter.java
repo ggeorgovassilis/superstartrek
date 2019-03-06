@@ -64,16 +64,13 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStar
 	}
 
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
+	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
 		//postponing because damage might not have been assigned yet to target
-		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
-			
-			@Override
-			public void execute() {
-				updateRadar();
-				
-			}
-		});
+		updateRadar();
+	}
+
+	@Override
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
 	}
 
 }

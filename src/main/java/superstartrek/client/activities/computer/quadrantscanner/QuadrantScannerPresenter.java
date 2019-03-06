@@ -107,19 +107,6 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-		// postponing because depending on event handler order, damage might not have been assigned
-		// to target yet
-		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
-			@Override
-			public void execute() {
-				updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
-				
-			}
-		});
-	}
-
-	@Override
 	public void onEnterpriseRepaired() {
 		Enterprise enterprise = application.starMap.enterprise;
 		updateSector(enterprise.getQuadrant(), enterprise.getLocation().getX(), enterprise.getLocation().getY());
@@ -151,6 +138,17 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		}
 		
 		view.setQuadrantHeader(q.getName(), alert);
+	}
+	
+	
+	@Override
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
+	}
+
+
+	@Override
+	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
+		updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
 	}
 
 

@@ -8,4 +8,5 @@ import superstartrek.client.model.Vessel;
 public interface FireHandler extends EventHandler{
 
 	void onFire(Vessel actor, Thing target, String weapon, double damage);
+	void afterFire(Vessel actor, Thing target, String weapon, double damage);
 }

@@ -8,6 +8,7 @@ import com.google.gwt.user.client.Random;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireEvent.Phase;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.TurnEndedEvent;
 import superstartrek.client.activities.computer.TurnEndedHandler;
@@ -171,7 +172,9 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 				hit = Random.nextDouble() <= chance;
 			}
 			if (hit) {
-				FireEvent event = new FireEvent(this, thing, "torpedos", 50);
+				FireEvent event = new FireEvent(Phase.fire, this, thing, "torpedos", 50);
+				application.events.fireEvent(event);
+				event = new FireEvent(Phase.afterFire, this, thing, "torpedos", 50);
 				application.events.fireEvent(event);
 				application.endTurnAfterThis();
 				return;
@@ -209,8 +212,12 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			return;
 		}
 		Klingon klingon = (Klingon) thing;
-		FireEvent event = new FireEvent(this, klingon, "phasers", phasers.getValue() / distance);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", phasers.getValue() / distance);
 		application.events.fireEvent(event);
+
+		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", phasers.getValue() / distance);
+		application.events.fireEvent(event);
+
 		phasers.setValue(0);
 		if (!isAutoAim)
 			application.endTurnAfterThis();
@@ -293,14 +300,6 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			application.gameOver(Outcome.lost, "shields");
 	}
 
-	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-		if (target != this)
-			return;
-		application.message(actor.getName() + " at "+actor.getLocation()+" fired on us", "damage");
-		applyDamage(damage);
-	}
-
 	public boolean consume(String what, double value) {
 		GWT.log(what+" consumes "+value+" of current capacity "+getReactor().getValue());
 		if (getReactor().getValue() < value)
@@ -345,5 +344,17 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	
 	public void toggleAutoAim() {
 		getAutoAim().setValue(!getAutoAim().getBooleanValue() && getAutoAim().isEnabled());
+	}
+	
+	@Override
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
+		if (target != this)
+			return;
+		application.message(actor.getName() + " at "+actor.getLocation()+" fired on us", "damage");
+		applyDamage(damage);
+	}
+
+	@Override
+	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
 	}
 }

@@ -6,6 +6,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireEvent.Phase;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
@@ -75,23 +76,6 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		return disruptor;
 	}
 
-	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-		if (target != this)
-			return;
-		if (isCloaked()) {
-			destroy();
-			return;
-		}
-		shields.decrease(damage);
-		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
-		application.message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
-		if (shields.getValue() <= 0) {
-			application.message(target.getName() + " was destroyed by " + actor.getName(), "klingon-damaged");
-			destroy();
-		}
-	}
-
 	public void repositionKlingon() {
 		StarMap map = application.starMap;
 		Enterprise enterprise = map.enterprise;
@@ -138,7 +122,9 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 			return;
 		if (isCloaked())
 			uncloak();
-		FireEvent event = new FireEvent(this, enterprise, "disruptor", disruptor.getValue());
+		FireEvent event = new FireEvent(Phase.fire, this, enterprise, "disruptor", disruptor.getValue());
+		application.events.fireEvent(event);
+		event = new FireEvent(Phase.afterFire, this, enterprise, "disruptor", disruptor.getValue());
 		application.events.fireEvent(event);
 	}
 
@@ -171,6 +157,27 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 			Location newLocation = getApplication().starMap.findFreeSpot(getQuadrant());
 			jumpTo(newLocation);
 		}
+	}
+
+	@Override
+	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
+		if (target != this)
+			return;
+		if (isCloaked()) {
+			destroy();
+			return;
+		}
+		shields.decrease(damage);
+		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
+		application.message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
+		if (shields.getValue() <= 0) {
+			application.message(target.getName() + " was destroyed by " + actor.getName(), "klingon-damaged");
+			destroy();
+		}
+	}
+
+	@Override
+	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
 	}
 	
 }
