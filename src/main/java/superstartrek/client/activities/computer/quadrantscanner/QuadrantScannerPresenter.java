@@ -1,7 +1,5 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
-import com.google.gwt.core.client.Scheduler;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;

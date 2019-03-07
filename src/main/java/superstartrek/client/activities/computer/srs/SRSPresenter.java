@@ -1,7 +1,5 @@
 package superstartrek.client.activities.computer.srs;
 
-import com.google.gwt.core.client.Scheduler;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.combat.FireEvent;

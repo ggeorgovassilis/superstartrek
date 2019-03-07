@@ -64,9 +64,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	}
 
 	public void warpTo(Quadrant destinationQuadrant) {
-		Location location = getLocation();
-		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(location), destinationQuadrant,
-				new Location(location));
+		Location targetLocationInQuadrant = getLocation();
 		if (!consume("warp",20)) {
 			application.message("Insufficient reactor output");
 			return;
@@ -74,7 +72,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		int destinationX = destinationQuadrant.getX();
 		int destinationY = destinationQuadrant.getY();
 		
-		List<Location> container = new ArrayList<Location>();
+		List<Quadrant> container = new ArrayList<Quadrant>();
 		
 		StarMap map = application.starMap;
 		
@@ -84,9 +82,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			public boolean visit(int x, int y) {
 				Quadrant q = map.getQuadrant(x, y);
 				List<Klingon> klingons = q.getKlingons();
-				Location dropLocation = new Location(x,y);
 				container.clear();
-				container.add(0, dropLocation);
+				container.add(q);
 				//TODO for now, allow warping out of the departure quadrant
 				if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
 					application.message("We were intercepted by "+klingons.get(0).getName(), "intercepted");
@@ -96,10 +93,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			}
 		});
 
-		Location dropLocation = container.get(0);
-		destinationX = dropLocation.getX();
-		destinationY = dropLocation.getY();
-		setQuadrant(map.getQuadrant(destinationX, destinationY));
+		Quadrant dropQuadrant = container.get(0);
+		setQuadrant(dropQuadrant);
 		Location freeSpot = map.findFreeSpotAround(getQuadrant(), getLocation(), 3);
 		Location oldLocation = new Location(getLocation());
 		setLocation(freeSpot);
@@ -110,6 +105,10 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		for (int y = yFrom; y <= yTo; y++)
 			for (int x = xFrom; x <= xTo; x++)
 				map.getQuadrant(x, y).setExplored(true);
+		
+		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(location), dropQuadrant,
+				new Location(freeSpot));
+
 		application.events.fireEvent(warpEvent);
 		ThingMovedEvent moveEvent = new ThingMovedEvent(this, warpEvent.qFrom, oldLocation, warpEvent.qTo, freeSpot);
 		application.events.fireEvent(moveEvent);
@@ -272,6 +271,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 
 	public void damageImpulse() {
 		impulse.damage(1);
+		if (impulse.getValue()<1)
+			impulse.setEnabled(false);
 		application.message("Impulse drive damaged","enterprise-damaged");
 	}
 
@@ -282,6 +283,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	
 	public void damagePhasers() {
 		phasers.damage(phasers.getMaximum() * 0.3);
+		if (phasers.getCurrentUpperBound()<1)
+			phasers.setEnabled(false);
 		application.message("Phaser array damaged","enterprise-damaged");
 	}
 
@@ -314,14 +317,14 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	
 	public void autoAim() {
 		for (Klingon k:getQuadrant().getKlingons())
-			if (!k.isCloaked() && k.getDisruptor().isEnabled() && StarMap.distance(this, k)<PHASER_RANGE) {
+			if (!k.isCloaked() && StarMap.distance(this, k)<PHASER_RANGE) {
 				firePhasersAt(k.getLocation(), true);
 				return;
 			}
 	}
 	
 	public void playComputerTurn() {
-		if (getAutoAim().isEnabled())
+		if (getAutoAim().getBooleanValue() && getAutoAim().isEnabled())
 			autoAim();
 	}
 
