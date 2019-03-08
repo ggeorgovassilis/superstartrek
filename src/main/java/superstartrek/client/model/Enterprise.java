@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Random;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
@@ -20,6 +19,7 @@ import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
+import superstartrek.client.utils.Random;
 
 public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler, TurnEndedHandler {
 
@@ -65,6 +65,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 
 	public void warpTo(Quadrant destinationQuadrant) {
 		Location targetLocationInQuadrant = getLocation();
+		Location fromLocation = getLocation();
+		Quadrant fromQuadrant = getQuadrant();
 		if (!consume("warp",20)) {
 			application.message("Insufficient reactor output");
 			return;
@@ -106,7 +108,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			for (int x = xFrom; x <= xTo; x++)
 				map.getQuadrant(x, y).setExplored(true);
 		
-		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, getQuadrant(), new Location(location), dropQuadrant,
+		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, fromQuadrant, new Location(fromLocation), dropQuadrant,
 				new Location(freeSpot));
 
 		application.events.fireEvent(warpEvent);

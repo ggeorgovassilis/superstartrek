@@ -7,10 +7,15 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
+import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireEvent.Phase;
+import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
@@ -21,6 +26,9 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
+import superstartrek.client.utils.Random;
+import superstartrek.client.utils.RandomNumberFactory;
 
 
 public class TestKlingon {
@@ -69,5 +77,43 @@ public class TestKlingon {
 		assertEquals(klingon, evt.get().thing);
 		assertEquals(new Location(1,3), evt.get().lFrom);
 		assertEquals(new Location(1,4), evt.get().lTo);
+	}
+
+	@Test
+	public void testFireOnEnterprise() {
+		RandomNumberFactory random = mock(RandomNumberFactory.class);
+		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
+			int counter = 0;
+			double numbers[]= {0.5,0.6,0.1};
+			@Override
+			public Double answer(InvocationOnMock invocation) throws Throwable {
+				return numbers[counter++];
+			}
+		});
+		Random.setFactory(random);
+		klingon.jumpTo(new Location(1,3));
+		enterprise.setLocation(new Location(2,3));
+		events.addHandler(FireEvent.TYPE, new FireHandler() {
+			
+			@Override
+			public void onFire(Vessel actor, Thing target, String weapon, double damage) {
+				assertEquals(klingon, actor);
+				assertEquals(enterprise, target);
+				assertEquals("disruptor", weapon);
+				assertEquals(10,damage,0.1);
+			}
+			
+			@Override
+			public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
+				assertEquals(klingon, actor);
+				assertEquals(enterprise, target);
+				assertEquals("disruptor", weapon);
+				assertEquals(10,damage,0.1);
+			}
+		});
+		
+		
+		klingon.fireOnEnterprise();
+		assertEquals(2, events.getHandlerCount(FireEvent.TYPE));
 	}
 }
