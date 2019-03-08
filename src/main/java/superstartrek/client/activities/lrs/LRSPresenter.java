@@ -6,6 +6,7 @@ import com.google.gwt.user.client.History;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.model.Enterprise;
@@ -19,7 +20,8 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 	public LRSPresenter(Application application) {
 		super(application);
 		application.events.addHandler(LRSEvent.TYPE, this);
-		History.addValueChangeHandler(new ValueChangeHandler<String>() {
+		
+		application.addHistoryListener(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				if ("longrangescan".equals(event.getValue()))
@@ -41,13 +43,13 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 	protected void updateQuadrant(int x, int y) {
 		StarMap map = application.starMap;
 		Quadrant q = map.getQuadrant(x, y);
-		Maps.renderCell(x, y, map, q, (LRSScreen) getView());
+		Maps.renderCell(x, y, map, q, (MapCellRenderer) getView());
 	}
 	
 	protected void updateEnterpriseLocation() {
 		Enterprise enterprise = application.starMap.enterprise;
 		Quadrant q = enterprise.getQuadrant();
-		((LRSScreen) getView()).addCss(q.getX(), q.getY(), "has-enterprise");
+		((ILRSScreen) getView()).addCss(q.getX(), q.getY(), "has-enterprise");
 	}
 
 	public void updateLrsView() {

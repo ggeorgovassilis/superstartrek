@@ -14,7 +14,7 @@ import superstartrek.client.utils.Strings;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 
-public class LRSScreen extends BaseScreen<LRSActivity> implements MapCellRenderer{
+public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 	
 	Element[][] cells;
 	
@@ -53,6 +53,7 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements MapCellRendere
 		super(p);
 	}
 	
+	@Override
 	public void addCss(int x, int y, String css) {
 		cells[x][y].addClassName(css);
 	}

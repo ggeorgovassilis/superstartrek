@@ -4,6 +4,7 @@ import java.util.List;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.event.shared.UmbrellaException;
@@ -73,6 +74,11 @@ public class Application
 
 	public Resources getResources() {
 		return resources;
+	}
+	
+	public void addHistoryListener(ValueChangeHandler<String> handler) {
+		if (GWT.isClient()) // ignore in unit tests
+			History.addValueChangeHandler(handler);
 	}
 	
 	public void endTurnAfterThis() {
