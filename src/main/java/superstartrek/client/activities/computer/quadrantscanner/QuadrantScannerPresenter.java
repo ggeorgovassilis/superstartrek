@@ -38,7 +38,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		application.events.fireEvent(new SectorSelectedEvent(new Location(x,y), application.starMap.enterprise.getQuadrant(), screenX, screenY));
 	}
 
-	public QuadrantScannerPresenter(Application application) {
+	public QuadrantScannerPresenter(Application application, SectorMenuPresenter sectorMenuPresenter) {
 		super(application);
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
 		application.events.addHandler(GameStartedEvent.TYPE, this);
@@ -48,14 +48,13 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		application.events.addHandler(EnterpriseRepairedEvent.TYPE, this);
 		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
 		application.events.addHandler(KlingonUncloakedEvent.TYPE, this);
-		sectorMenuPresenter = new SectorMenuPresenter(application);
-		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
+		this.sectorMenuPresenter = sectorMenuPresenter;
 	}
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
-		((QuadrantScannerView) getView()).deselectSectors();
-		((QuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
+		((IQuadrantScannerView) getView()).deselectSectors();
+		((IQuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
 	}
 	
 	protected void updateSector(Quadrant q, int x, int y) {
@@ -72,7 +71,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 				css+=" "+CSS.damageClass(status);
 			}
 		}
-		((QuadrantScannerView) view).updateSector(x, y, content, css);
+		((IQuadrantScannerView) view).updateSector(x, y, content, css);
 	}
 
 	protected void updateScreen() {
@@ -122,7 +121,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 	
 	public void updateQuadrantHeader() {
-		QuadrantScannerView view = (QuadrantScannerView)getView();
+		IQuadrantScannerView view = (IQuadrantScannerView)getView();
 		String alert = "";
 		Quadrant q = application.starMap.enterprise.getQuadrant();
 		Enterprise e = application.starMap.enterprise;

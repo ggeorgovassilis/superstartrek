@@ -27,6 +27,10 @@ public class StarMap {
 			locations.add(t.getLocation());
 		return locations;
 	}
+	
+	public void setQuadrant(Quadrant q) {
+		quadrants[q.getX()][q.getY()] = q;
+	}
 
 
 	public long getStarDate() {

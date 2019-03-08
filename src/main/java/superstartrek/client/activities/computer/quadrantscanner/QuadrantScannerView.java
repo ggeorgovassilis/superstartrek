@@ -10,20 +10,23 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.CSS;
 
-public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> {
+public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> implements IQuadrantScannerView<QuadrantScannerActivity> {
 
 	Element[][] eSectors = new Element[8][8];
 	
+	@Override
 	public void deselectSectors() {
 		for (int x=0;x<8;x++)
 		for (int y=0;y<8;y++)
 			CSS.removeClass(eSectors[x][y], "selected");
 	}
 	
+	@Override
 	public void selectSector(int x, int y) {
 		CSS.addClass(eSectors[x][y], "selected");
 	}
 	
+	@Override
 	public void updateSector(int x, int y, String content, String css) {
 		eSectors[x][y].setInnerHTML(content);
 		eSectors[x][y].setClassName(css);
@@ -62,6 +65,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> {
 		}, ClickEvent.getType());
 	}
 	
+	@Override
 	public void setQuadrantHeader(String name, String css){
 		Element e = DOM.getElementById("quadrantheader");
 		e.setInnerText(name);

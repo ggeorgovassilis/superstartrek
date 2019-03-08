@@ -13,6 +13,8 @@ import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerP
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerView;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSView;
+import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
+import superstartrek.client.activities.sector.contextmenu.SectorMenuView;
 import superstartrek.client.model.Setting;
 
 public class ComputerView extends BaseScreen<ComputerActivity>{
@@ -43,7 +45,11 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 		super.setupCompositeUI();
 		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
 		presenter.getApplication().page.add(this);
-		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication());
+		
+		SectorMenuPresenter sectorMenuPresenter = new SectorMenuPresenter(presenter.getApplication());
+		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
+
+		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(), sectorMenuPresenter);
 		quadrantScannerActivity = new QuadrantScannerView(quadrantScannerPresenter);
 		panel.add(quadrantScannerActivity,"quadrantscancontainer");
 		

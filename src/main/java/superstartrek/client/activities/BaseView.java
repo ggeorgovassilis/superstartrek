@@ -3,15 +3,17 @@ package superstartrek.client.activities;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-public abstract class BaseView<A extends Activity> extends Composite implements View<A>{
+public abstract class BaseView<A extends Activity> extends Composite implements View<A>, IBaseView<A>{
 
 	protected final Presenter<A> presenter;
 	protected HTMLPanel panel;
 	
+	@Override
 	public <T extends Presenter<A>> T getPresenter() {
 		return (T)presenter;
 	}
 	
+	@Override
 	public void finishUiConstruction() {
 	}
 	

@@ -15,6 +15,11 @@ public class Star extends Thing implements FireHandler{
 		setCss("star");
 		application.events.addHandler(FireEvent.TYPE, this);
 	}
+	
+	public Star(Application app, int x, int y) {
+		this(app);
+		setLocation(new Location(x,y));
+	}
 
 	@Override
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
