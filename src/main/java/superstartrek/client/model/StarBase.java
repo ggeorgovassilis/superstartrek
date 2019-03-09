@@ -7,4 +7,9 @@ public class StarBase extends Thing{
 		setSymbol("&lt;!&gt;");
 		setCss("starbase");
 	}
+	
+	public StarBase(Location l) {
+		this();
+		setLocation(l);
+	}
 }

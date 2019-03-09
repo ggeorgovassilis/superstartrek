@@ -17,7 +17,7 @@ import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuView;
 import superstartrek.client.model.Setting;
 
-public class ComputerView extends BaseScreen<ComputerActivity>{
+public class ComputerView extends BaseScreen<ComputerActivity> implements IComputerView{
 
 	QuadrantScannerPresenter quadrantScannerPresenter;
 	QuadrantScannerView quadrantScannerActivity;
@@ -33,6 +33,7 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 	Element eStatusIconPhasers;
 	Element eStatusIconTorpedos;
 	
+	@Override
 	public void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos) {
 		eStatusIconImpulse.setClassName(cssImpulse);
 		eStatusIconTactical.setClassName(cssTactical);
@@ -103,6 +104,7 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 		setRepairButtonVisibility(false);
 	}
 	
+	@Override
 	public void updateShields(Setting shields) {
 		Element eMax = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		Element eValue = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
@@ -114,14 +116,17 @@ public class ComputerView extends BaseScreen<ComputerActivity>{
 		super(presenter);
 	}
 	
+	@Override
 	public void showStarDate(String sd){
 		DOM.getElementById("stardate").setInnerText(sd);
 	}
 	
+	@Override
 	public void setDockInStarbaseButtonVisibility(boolean visible) {
 		eDockInStarbase.getStyle().setDisplay(visible?Display.INITIAL:Display.NONE);
 	}
 	
+	@Override
 	public void setRepairButtonVisibility(boolean visible) {
 		eRepair.getStyle().setDisplay(visible?Display.INITIAL:Display.NONE);
 	}
