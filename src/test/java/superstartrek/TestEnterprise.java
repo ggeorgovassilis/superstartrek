@@ -111,7 +111,7 @@ public class TestEnterprise {
 		
 		assertEquals(0, enterprise.getImpulse().getValue(), 0.1);
 		assertEquals(new Location(2,2), enterprise.getLocation());
-		assertEquals(1, events.getHandlerCount(ThingMovedEvent.TYPE));
+		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
 	}
 	
 	@Test
@@ -145,6 +145,6 @@ public class TestEnterprise {
 		});
 		enterprise.warpTo(targetQuadrant);
 		
-		assertEquals(1, events.getHandlerCount(EnterpriseWarpedEvent.TYPE));
+		assertEquals(1, events.getFiredCount(EnterpriseWarpedEvent.TYPE));
 	}
 }

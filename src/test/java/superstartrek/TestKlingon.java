@@ -71,7 +71,7 @@ public class TestKlingon {
 		});
 		klingon.repositionKlingon();
 		assertEquals(new Location(1,4), klingon.getLocation());
-		assertEquals(1, events.getHandlerCount(ThingMovedEvent.TYPE));
+		assertEquals(2, events.getFiredCount(ThingMovedEvent.TYPE));
 		assertEquals(quadrant, evt.get().qFrom);
 		assertEquals(quadrant, evt.get().qTo);
 		assertEquals(klingon, evt.get().thing);
@@ -114,6 +114,6 @@ public class TestKlingon {
 		
 		
 		klingon.fireOnEnterprise();
-		assertEquals(2, events.getHandlerCount(FireEvent.TYPE));
+		assertEquals(2, events.getFiredCount(FireEvent.TYPE));
 	}
 }

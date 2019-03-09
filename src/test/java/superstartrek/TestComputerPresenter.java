@@ -22,6 +22,7 @@ import superstartrek.client.activities.computer.IComputerView;
 import superstartrek.client.activities.computer.TurnStartedEvent;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
+import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.model.Enterprise;
@@ -87,6 +88,36 @@ public class TestComputerPresenter {
 		verify(view).setDockInStarbaseButtonVisibility(true);
 		verify(view).setRepairButtonVisibility(false);
 		verify(view).updateShortStatus(eq(""), eq(""), eq("damage-light"), eq(""));
+	}
+	
+	@Test
+	public void testDockWithStarbase() {
+		enterprise.setLocation(new Location(1,1));
+		enterprise.getPhasers().damage(10);
+		enterprise.getAntimatter().decrease(10);
+		enterprise.getTorpedos().damage(1);
+		enterprise.getImpulse().damage(1);
+		quadrant.setStarBase(new StarBase(new Location(3,3)));
+		
+		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
+			
+			@Override
+			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+				assertEquals(enterprise, thing);
+				assertEquals(quadrant, qFrom);
+				assertEquals(new Location(1,1), lFrom);
+				assertEquals(quadrant, qTo);
+				assertEquals(new Location(2,2), lTo);
+			}
+		});
+		
+		presenter.onDockInStarbaseButtonClicked();
+		
+		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
+		assertEquals(new Location(2,2), enterprise.getLocation());
+		
+		assertEquals(1, events.getFiredCount(EnterpriseRepairedEvent.TYPE));
+		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
 	}
 
 }

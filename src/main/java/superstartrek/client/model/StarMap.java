@@ -122,8 +122,8 @@ public class StarMap {
 		}
 	};
 
-	public List<Thing> findObstaclesInLine(final Quadrant q, final Location from, final Location to) {
 		List<Thing> found = new ArrayList<>();
+		public List<Thing> findObstaclesInLine(final Quadrant q, final Location from, final Location to) {
 		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), new Walker() {
 
 			@Override
