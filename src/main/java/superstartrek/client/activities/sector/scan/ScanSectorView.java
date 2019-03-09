@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.BaseScreen;
 
-public class ScanSectorView extends BaseScreen<ScanSectorActivity>{
+public class ScanSectorView extends BaseScreen<ScanSectorActivity> implements IScanSectorView{
 
 	@Override
 	protected HTMLPanel createPanel() {
@@ -36,18 +36,22 @@ public class ScanSectorView extends BaseScreen<ScanSectorActivity>{
 		super(presenter);
 	}
 
+	@Override
 	public void setObjectName(String value) {
 		panel.getElementById("object-name").setInnerText(value);
 	}
 
+	@Override
 	public void setObjectLocation(String value) {
 		panel.getElementById("object-location").setInnerText(value);
 	}
 
+	@Override
 	public void setObjectQuadrant(String value) {
 		panel.getElementById("object-quadrant").setInnerText(value);
 	}
 	
+	@Override
 	public void setProperty(String rowId, String cellId, String rowCss, String value) {
 		DOM.getElementById(rowId).setClassName(rowCss);
 		DOM.getElementById(cellId).setInnerText(value);

@@ -22,7 +22,7 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 	public void scanSector(ScanSectorEvent event) {
 		getView().show();
 		application.events.fireEvent(new GlassPanelEvent(Action.show));
-		ScanSectorView v = (ScanSectorView)getView();
+		IScanSectorView v = (IScanSectorView)getView();
 		Quadrant q = event.getQuadrant();
 		Thing thing = application.starMap.findThingAt(q, event.getLocation().getX(), event.getLocation().getY());
 		String name = thing==null?"Nothing":thing.getName();
