@@ -75,7 +75,19 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<!-- 
+					<compilerId>jikes</compilerId>
+					<executable>${project.basedir}/bin</executable>
+					<fork>true</fork> -->
 				</configuration>
+				<!--  
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.plexus</groupId>
+						<artifactId>plexus-compiler-jikes</artifactId>
+						<version>2.8.5</version>
+					</dependency>
+				</dependencies>-->
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
