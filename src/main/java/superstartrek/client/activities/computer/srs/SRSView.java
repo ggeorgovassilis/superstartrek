@@ -10,7 +10,7 @@ import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.Presenter;
 import superstartrek.client.utils.Strings;
 
-public class SRSView extends BaseView<SRSActivity> implements MapCellRenderer{
+public class SRSView extends BaseView<SRSActivity> implements ISRSView{
 
 	Element[][] eCells;
 	

@@ -25,8 +25,8 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStar
 		application.events.addHandler(FireEvent.TYPE, this);
 	}
 
-	void updateRadar() {
-		SRSView view = (SRSView) getView();
+	public void updateRadar() {
+		ISRSView view = (ISRSView) getView();
 		StarMap map = application.starMap;
 		Quadrant q0 = map.enterprise.getQuadrant();
 		for (int y = 0; y < 3; y++)
