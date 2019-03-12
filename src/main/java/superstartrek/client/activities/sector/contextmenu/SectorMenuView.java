@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.BaseView;
 
-public class SectorMenuView extends BaseView<SectorMenuActivity>{
+public class SectorMenuView extends BaseView<SectorMenuActivity> implements ISectorMenuView{
 
 	public SectorMenuView(SectorMenuPresenter presenter) {
 		super(presenter);
@@ -37,11 +37,13 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>{
 		hide();
 	}
 	
+	@Override
 	public void setLocation(int x, int y) {
 		getElement().getStyle().setTop(y, Unit.PX);
 		getElement().getStyle().setLeft(x, Unit.PX);
 	}
 	
+	@Override
 	public void enableButton(String id, boolean status) {
 		DOM.getElementById(id).setClassName(status?"":"disabled");
 	}

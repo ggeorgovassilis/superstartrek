@@ -23,7 +23,7 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 	
 	public void showMenu(int screenY, Location sector, Quadrant quadrant) {
 		this.quadrant = quadrant;
-		SectorMenuView v = (SectorMenuView)getView();
+		ISectorMenuView v = (ISectorMenuView)getView();
 		Enterprise e = application.starMap.enterprise;
 		v.enableButton("cmd_navigate", e.getImpulse().isEnabled());
 		v.enableButton("cmd_firePhasers", e.getPhasers().isEnabled());

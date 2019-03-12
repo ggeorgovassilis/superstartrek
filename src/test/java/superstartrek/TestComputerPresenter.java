@@ -120,4 +120,5 @@ public class TestComputerPresenter {
 		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
 	}
 
+	
 }
