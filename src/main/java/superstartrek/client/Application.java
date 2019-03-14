@@ -252,6 +252,7 @@ public class Application
 
 	@Override
 	public void messagesHidden() {
+		//TODO: this is too implicit. The intention is that, once the game has been lost/won and the user clicks away the informing message, the game should reload.
 		if (!this.gameIsRunning)
 			Window.Location.reload();
 	}

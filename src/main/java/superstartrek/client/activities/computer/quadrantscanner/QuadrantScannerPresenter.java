@@ -92,6 +92,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+		//TODO: this all assumes that qTo is the currently visible quadrant. Validate respectively.
 		updateSector(qFrom, lFrom.getX(), lFrom.getY());
 		updateSector(qTo, lTo.getX(), lTo.getY());
 		updateQuadrantHeader();
@@ -120,7 +121,6 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 	
 	public void updateQuadrantHeader() {
-		IQuadrantScannerView view = (IQuadrantScannerView)getView();
 		String alert = "";
 		Quadrant q = application.starMap.enterprise.getQuadrant();
 		Enterprise e = application.starMap.enterprise;
@@ -133,6 +133,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 				alert="red-alert";
 		}
 		
+		IQuadrantScannerView view = (IQuadrantScannerView)getView();
 		view.setQuadrantHeader(q.getName(), alert);
 	}
 	
