@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Random;
 
 import superstartrek.client.activities.klingons.Klingon;
@@ -20,18 +21,17 @@ public class StarMap {
 		int dy = y1 - y2;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
-	
-	public static Set<Location> locations(List<? extends Thing> things){
+
+	public static Set<Location> locations(List<? extends Thing> things) {
 		Set<Location> locations = new HashSet<>();
-		for (Thing t:things)
+		for (Thing t : things)
 			locations.add(t.getLocation());
 		return locations;
 	}
-	
+
 	public void setQuadrant(Quadrant q) {
 		quadrants[q.getX()][q.getY()] = q;
 	}
-
 
 	public long getStarDate() {
 		return starDate;
@@ -44,7 +44,7 @@ public class StarMap {
 	public static double distance(Location l1, Location l2) {
 		return distance(l1.x, l1.y, l2.x, l2.y);
 	}
-	
+
 	public static double distance(Thing t1, Thing t2) {
 		return distance(t1.getLocation(), t2.getLocation());
 	}
@@ -64,7 +64,8 @@ public class StarMap {
 	}
 
 	public Thing findThingAt(Quadrant q, int x, int y) {
-		if (enterprise.getQuadrant() == q && enterprise.getLocation().getX() == x && enterprise.getLocation().getY() == y)
+		if (enterprise.getQuadrant() == q && enterprise.getLocation().getX() == x
+				&& enterprise.getLocation().getY() == y)
 			return enterprise;
 		for (Star star : q.getStars())
 			if (star.getLocation().getX() == x && star.getLocation().getY() == y)
@@ -122,8 +123,8 @@ public class StarMap {
 		}
 	};
 
+	public List<Thing> findObstaclesInLine(final Quadrant q, final Location from, final Location to) {
 		List<Thing> found = new ArrayList<>();
-		public List<Thing> findObstaclesInLine(final Quadrant q, final Location from, final Location to) {
 		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), new Walker() {
 
 			@Override

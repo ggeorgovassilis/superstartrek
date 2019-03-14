@@ -2,6 +2,7 @@ package superstartrek.client.activities.klingons;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Random;
@@ -176,6 +177,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		getQuadrant().getKlingons().remove(this);
 		if (!application.starMap.hasKlingons())
 			application.gameOver(Outcome.won, "");
+		application.message(getName()+" was destroyed", "klingon-destroyed");
 		application.events.fireEvent(new KlingonDestroyedEvent(this));
 	}
 
@@ -202,6 +204,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		if (target != this)
 			return;
 		if (isCloaked()) {
+			uncloak();
 			destroy();
 			return;
 		}

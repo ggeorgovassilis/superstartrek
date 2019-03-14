@@ -137,7 +137,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getLocation(), loc);
 		if (things.size() > 1) { // there's always at least 1 thing, the USS Enterprise
 			application
-					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " " + things.get(1));
+					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " at " + things.get(1).getLocation());
 			return;
 		}
 		if (!consume("implse",impulse.getValue() * IMPULSE_CONSUMPTION)) {

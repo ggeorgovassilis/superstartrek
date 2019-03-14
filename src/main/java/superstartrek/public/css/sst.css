@@ -417,7 +417,7 @@ table a, table a:visited{
 	color:yellow;
 }
 
-.entry.klingon-damaged{
+.entry.klingon-damaged, .entry.klingon-destroyed{
 	color:cyan;	
 }
 
