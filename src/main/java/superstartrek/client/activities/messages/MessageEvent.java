@@ -37,8 +37,8 @@ public class MessageEvent extends GwtEvent<MessageHandler> {
 	@Override
 	protected void dispatch(MessageHandler handler) {
 		if (action == MessageEvent.Action.show)
-			handler.showMessage(formattedMessage, category);
+			handler.messagePosted(formattedMessage, category);
 		else if (action == MessageEvent.Action.hide)
-			handler.messagesHidden();
+			handler.messagesAcknowledged();
 	}
 }

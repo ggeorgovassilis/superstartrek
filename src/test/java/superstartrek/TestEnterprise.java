@@ -45,7 +45,7 @@ public class TestEnterprise {
 		enterprise.damageTorpedos();
 		
 		assertFalse(enterprise.getTorpedos().isEnabled());
-		verify(handler).showMessage(eq("Torpedo bay damaged"), eq("enterprise-damaged"));
+		verify(handler).messagePosted(eq("Torpedo bay damaged"), eq("enterprise-damaged"));
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ public class TestEnterprise {
 		enterprise.damagePhasers();
 		assertEquals(0, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		assertFalse(enterprise.getPhasers().isEnabled());
-		verify(handler, times(4)).showMessage(eq("Phaser array damaged"), eq("enterprise-damaged"));
+		verify(handler, times(4)).messagePosted(eq("Phaser array damaged"), eq("enterprise-damaged"));
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class TestEnterprise {
 		assertFalse(enterprise.getImpulse().isEnabled());
 		assertEquals(0, enterprise.getImpulse().getCurrentUpperBound(), 0.1);
 
-		verify(handler, times(3)).showMessage(eq("Impulse drive damaged"), eq("enterprise-damaged"));
+		verify(handler, times(3)).messagePosted(eq("Impulse drive damaged"), eq("enterprise-damaged"));
 		
 	}
 	

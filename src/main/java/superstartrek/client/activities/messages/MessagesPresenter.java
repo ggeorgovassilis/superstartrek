@@ -15,7 +15,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	}
 
 	@Override
-	public void showMessage(String formattedMessage, String category) {
+	public void messagePosted(String formattedMessage, String category) {
 		((MessagesView)getView()).showMessage(formattedMessage, category);
 		application.events.fireEvent(new GlassPanelEvent(Action.show));
 		getView().show();
@@ -49,7 +49,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	}
 
 	@Override
-	public void messagesHidden() {
+	public void messagesAcknowledged() {
 	}
 
 }
