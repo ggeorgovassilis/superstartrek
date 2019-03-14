@@ -139,7 +139,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " at " + things.get(1).getLocation());
 			return;
 		}
-		if (!consume("implse",impulse.getValue() * IMPULSE_CONSUMPTION)) {
+		if (!consume("impulse",impulse.getValue() * IMPULSE_CONSUMPTION)) {
 			Application.get().message("Insufficient reactor output");
 			return;
 		}

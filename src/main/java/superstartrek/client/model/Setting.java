@@ -9,6 +9,14 @@ public class Setting {
 	protected final String name;
 	protected boolean enabled=true;
 	
+	public Setting(String name, double defaultValue, double maximum) {
+		this.name = name;
+		this.maximum = maximum;
+		this.defaultValue = defaultValue;
+		this.currentUpperBound = maximum;
+		this.value = defaultValue;
+	}
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -17,14 +25,6 @@ public class Setting {
 		this.enabled = enabled;
 	}
 
-	public Setting(String name, double defaultValue, double maximum) {
-		this.name = name;
-		this.maximum = maximum;
-		this.defaultValue = defaultValue;
-		this.currentUpperBound = maximum;
-		this.value = defaultValue;
-	}
-	
 	public double getDefaultValue() {
 		return defaultValue;
 	}

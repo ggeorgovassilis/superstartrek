@@ -217,7 +217,6 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 
 		Application.get().message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
 		if (shields.getValue() <= 0) {
-			Application.get().message(target.getName() + " was destroyed by " + actor.getName(), "klingon-damaged");
 			destroy();
 		}
 	}

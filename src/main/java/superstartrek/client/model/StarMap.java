@@ -63,17 +63,17 @@ public class StarMap {
 	}
 
 	public Thing findThingAt(Quadrant q, int x, int y) {
-		if (enterprise.getQuadrant() == q && enterprise.getLocation().getX() == x
-				&& enterprise.getLocation().getY() == y)
+		Location loc = Location.location(x, y);
+		if (enterprise.getQuadrant() == q && enterprise.getLocation() == loc)
 			return enterprise;
 		for (Star star : q.getStars())
-			if (star.getLocation().getX() == x && star.getLocation().getY() == y)
+			if (star.getLocation() == loc)
 				return star;
 		if (q.getStarBase() != null)
-			if (q.getStarBase().getLocation().getX() == x && q.getStarBase().getLocation().getY() == y)
+			if (q.getStarBase().getLocation() == loc)
 				return q.getStarBase();
 		for (Klingon klingon : q.getKlingons())
-			if (klingon.getLocation().getX() == x && klingon.getLocation().getY() == y)
+			if (klingon.getLocation() == loc)
 				return klingon;
 		return null;
 	}
