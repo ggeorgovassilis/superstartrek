@@ -13,6 +13,7 @@ import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.PathFinder;
+import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -119,9 +120,9 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 			if (obstacles.isEmpty())
 				return;
 		}
-		PathFinder pathFinder = new PathFinder(getQuadrant());
+		PathFinder pathFinder = new PathFinderImpl();
 		// path includes start and end
-		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation());
+		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation(), enterprise.getQuadrant());
 		if (path == null || path.isEmpty())
 			return;
 		Location sector = path.get(Math.max(0, Math.min(MAX_SECTOR_SPEED, path.size() - 2)));

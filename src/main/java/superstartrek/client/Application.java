@@ -35,6 +35,7 @@ import superstartrek.client.activities.messages.MessagesView;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.PathFinder;
+import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.report.StatusReportPresenter;
@@ -259,8 +260,8 @@ public class Application
 
 	public static void computePath(int toX, int toY) {
 		Enterprise e = that.starMap.enterprise;
-		PathFinder pf = new PathFinder(e.getQuadrant());
-		List<Location> path = pf.findPathBetween(e.getLocation(), Location.location(toX, toY));
+		PathFinder pf = new PathFinderImpl();
+		List<Location> path = pf.findPathBetween(e.getLocation(), Location.location(toX, toY), e.getQuadrant());
 		for (Location l : path)
 			GWT.log(l.toString());
 	}
