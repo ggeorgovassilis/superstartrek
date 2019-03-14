@@ -6,7 +6,7 @@ public abstract class Thing {
 	protected String symbol;
 	protected Quadrant quadrant;
 	protected String css;
-	protected Location location = new Location(0,0);
+	protected Location location = Location.location(0,0);
 
 	public void setCss(String css) {
 		this.css = css;

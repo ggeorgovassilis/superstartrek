@@ -18,7 +18,7 @@ public class Star extends Thing implements FireHandler{
 	
 	public Star(Application app, int x, int y) {
 		this(app);
-		setLocation(new Location(x,y));
+		setLocation(Location.location(x,y));
 	}
 
 	@Override

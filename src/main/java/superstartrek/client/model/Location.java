@@ -2,34 +2,30 @@ package superstartrek.client.model;
 
 public class Location {
 
+	protected final static Location[][] cache = new Location[8][8];
+	static {
+		for (int x=0;x<8;x++)
+			for (int y=0;y<8;y++)
+				cache[x][y] = new Location(x,y);
+	}
+
 	protected final int x;
 	protected final int y;
-	
-	@Override
-	public int hashCode() {
-		return x+y*10;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		return (obj instanceof Location) && ((Location)obj).getX() == x && ((Location)obj).getY()==y;
-	}
-	
+
 	@Override
 	public String toString() {
 		return x+":"+y;
 	}
 	
-	public Location(int x, int y) {
+	private Location(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	public Location(Location l) {
-		this.x = l.getX();
-		this.y = l.getY();
+	public static Location location(int x, int y) {
+		return cache[x][y];
 	}
-	
+
 	public int getX() {
 		return x;
 	}

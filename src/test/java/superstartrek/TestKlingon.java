@@ -14,7 +14,6 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
-import superstartrek.client.activities.combat.FireEvent.Phase;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
@@ -23,7 +22,6 @@ import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
@@ -42,7 +40,7 @@ public class TestKlingon {
 
 	@Before
 	public void setup() {
-		app  = new Application();
+		app  = Application.get();
 		app.events = events = new CountingEventBus();
 		
 		quadrant = new Quadrant("test", 1,2);
@@ -59,8 +57,8 @@ public class TestKlingon {
 
 	@Test
 	public void testReppositionKlingon() {
-		klingon.jumpTo(new Location(1,3));
-		enterprise.setLocation(new Location(2,7));
+		klingon.jumpTo(Location.location(1,3));
+		enterprise.setLocation(Location.location(2,7));
 		AtomicReference<ThingMovedEvent> evt = new AtomicReference<ThingMovedEvent>();
 		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
 			
@@ -70,13 +68,13 @@ public class TestKlingon {
 			}
 		});
 		klingon.repositionKlingon();
-		assertEquals(new Location(1,4), klingon.getLocation());
+		assertEquals(Location.location(1,4), klingon.getLocation());
 		assertEquals(2, events.getFiredCount(ThingMovedEvent.TYPE));
 		assertEquals(quadrant, evt.get().qFrom);
 		assertEquals(quadrant, evt.get().qTo);
 		assertEquals(klingon, evt.get().thing);
-		assertEquals(new Location(1,3), evt.get().lFrom);
-		assertEquals(new Location(1,4), evt.get().lTo);
+		assertEquals(Location.location(1,3), evt.get().lFrom);
+		assertEquals(Location.location(1,4), evt.get().lTo);
 	}
 
 	@Test
@@ -91,8 +89,8 @@ public class TestKlingon {
 			}
 		});
 		Random.setFactory(random);
-		klingon.jumpTo(new Location(1,3));
-		enterprise.setLocation(new Location(2,3));
+		klingon.jumpTo(Location.location(1,3));
+		enterprise.setLocation(Location.location(2,3));
 		events.addHandler(FireEvent.TYPE, new FireHandler() {
 			
 			@Override

@@ -30,7 +30,7 @@ public class TestEnterprise {
 	
 	@Before
 	public void setup() {
-		application = new Application();
+		application = Application.get();
 		application.events = events = new CountingEventBus();
 		application.starMap = map = new StarMap();
 		map.enterprise = enterprise = new Enterprise(application);
@@ -94,7 +94,7 @@ public class TestEnterprise {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
-		enterprise.setLocation(new Location(0,0));
+		enterprise.setLocation(Location.location(0,0));
 		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
 			
 			@Override
@@ -102,15 +102,15 @@ public class TestEnterprise {
 				assertEquals(enterprise, thing);
 				assertEquals(quadrant, qFrom);
 				assertEquals(quadrant, qTo);
-				assertEquals(new Location(2,2), lTo);
+				assertEquals(Location.location(2,2), lTo);
 			}
 		});
 		
 		
-		enterprise.navigateTo(new Location(2,2));
+		enterprise.navigateTo(Location.location(2,2));
 		
 		assertEquals(0, enterprise.getImpulse().getValue(), 0.1);
-		assertEquals(new Location(2,2), enterprise.getLocation());
+		assertEquals(Location.location(2,2), enterprise.getLocation());
 		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
 	}
 	
@@ -119,7 +119,7 @@ public class TestEnterprise {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
-		enterprise.setLocation(new Location(0,0));
+		enterprise.setLocation(Location.location(0,0));
 		
 		//path between source and target needs to exist for collision check
 		map.setQuadrant(new Quadrant("_", 2,3));
@@ -139,8 +139,8 @@ public class TestEnterprise {
 				assertEquals(enterprise, enterprise);
 				assertEquals(quadrant, qFrom);
 				assertEquals(targetQuadrant, qTo);
-				assertEquals(new Location(0,0), lFrom);
-				assertEquals(new Location(0,1), lTo);
+				assertEquals(Location.location(0,0), lFrom);
+				assertEquals(Location.location(0,1), lTo);
 			}
 		});
 		enterprise.warpTo(targetQuadrant);

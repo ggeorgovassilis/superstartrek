@@ -1,6 +1,5 @@
 package superstartrek;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -28,7 +27,7 @@ public class TestSRSPresenter {
 	
 	@Before
 	public void setup() {
-		app = new Application();
+		app = Application.get();
 		app.events = events = new CountingEventBus();
 		app.starMap = new StarMap();
 		presenter = new SRSPresenter(app);
@@ -39,7 +38,7 @@ public class TestSRSPresenter {
 	Quadrant makeQuadrant(int x, int y, boolean hasStarBase, int stars, int klingons) {
 		Quadrant q = new Quadrant("test quadrant", x, y);
 		if (hasStarBase) 
-			q.setStarBase(new StarBase(new Location(0,0)));
+			q.setStarBase(new StarBase(Location.location(0,0)));
 		for (int i=0;i<stars;i++) {
 			q.getStars().add(new Star(app, i, 1));
 		}
@@ -66,7 +65,7 @@ public class TestSRSPresenter {
 		Quadrant q = map.getQuadrant(1, 1);
 		Enterprise e = map.enterprise = new Enterprise(app);
 		e.setQuadrant(q);
-		e.setLocation(new Location(6,7));
+		e.setLocation(Location.location(6,7));
 		presenter.updateRadar();
 		verify(view).updateCell(0, 0, "!0", " has-starbase");
 		verify(view).updateCell(1, 0, " 1", "");

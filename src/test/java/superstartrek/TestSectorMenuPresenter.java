@@ -25,7 +25,7 @@ public class TestSectorMenuPresenter {
 	
 	@Before
 	public void setup() {
-		app = new Application();
+		app = Application.get();
 		app.events = events = new CountingEventBus();
 		app.starMap = new StarMap();
 		presenter = new SectorMenuPresenter(app);
@@ -40,7 +40,7 @@ public class TestSectorMenuPresenter {
 		Enterprise e = new Enterprise(app);
 		e.setQuadrant(q);
 		map.enterprise = e;
-		presenter.showMenu(77, new Location(1,2), q);
+		presenter.showMenu(77, Location.location(1,2), q);
 		verify(view).enableButton("cmd_navigate", true);
 		verify(view).enableButton("cmd_firePhasers", true);
 		verify(view).enableButton("cmd_fireTorpedos", true);

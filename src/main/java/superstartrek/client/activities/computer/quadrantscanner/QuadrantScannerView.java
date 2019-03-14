@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.CSS;
 
-public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> implements IQuadrantScannerView<QuadrantScannerActivity> {
+public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> implements IQuadrantScannerView {
 
 	Element[][] eSectors = new Element[8][8];
 	

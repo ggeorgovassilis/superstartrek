@@ -18,7 +18,7 @@ public class TestRepairProvisionally {
 	
 	@Before
 	public void setup() {
-		application = new Application();
+		application = Application.get();
 		application.events = events = new CountingEventBus();
 		enterprise = new Enterprise(application);
 	}

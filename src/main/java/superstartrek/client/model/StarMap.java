@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Random;
 
 import superstartrek.client.activities.klingons.Klingon;
@@ -85,7 +84,7 @@ public class StarMap {
 			int y = Random.nextInt(8);
 			Thing thing = findThingAt(q, x, y);
 			if (thing == null)
-				return new Location(x, y);
+				return Location.location(x, y);
 		}
 	}
 
@@ -147,7 +146,7 @@ public class StarMap {
 		for (int x = minX; x <= maxX; x++)
 			for (int y = minY; y <= maxY; y++) {
 				if (null == findThingAt(q, x, y))
-					return new Location(x, y);
+					return Location.location(x, y);
 			}
 		return null;
 	}

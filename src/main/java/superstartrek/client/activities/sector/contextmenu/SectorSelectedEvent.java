@@ -14,7 +14,7 @@ public class SectorSelectedEvent extends GwtEvent<SectorSelectedHandler>{
 	public final int screenY;
 	
 	public SectorSelectedEvent(Location sector, Quadrant quadrant, int screenX, int screenY) {
-		this.sector = new Location(sector.getX(), sector.getY());
+		this.sector = Location.location(sector.getX(), sector.getY());
 		this.quadrant = quadrant;
 		this.screenX = screenX;
 		this.screenY = screenY;

@@ -69,8 +69,20 @@ public class Application
 	public MessagesPresenter messagesPresenter;
 	public LRSPresenter lrsPresenter;
 	public StatusReportPresenter statusReportPresenter;
-	public static Application that;
+	private static Application that;
 	protected Resources resources;
+	
+	public static Application get() {
+		if (that == null)
+			that = new Application();
+		return that;
+	}
+	
+	public Application() {
+		if (Application.that!=null)
+			throw new RuntimeException("There already is an application instance");
+		Application.that = this;
+	}
 
 	public Resources getResources() {
 		return resources;
@@ -199,7 +211,6 @@ public class Application
 		setupStarMap();
 		startGame();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
-		that = this;
 		exportStaticMethod();
 	}
 
@@ -248,7 +259,7 @@ public class Application
 	public static void computePath(int toX, int toY) {
 		Enterprise e = that.starMap.enterprise;
 		PathFinder pf = new PathFinder(e.getQuadrant());
-		List<Location> path = pf.findPathBetween(e.getLocation(), new Location(toX, toY));
+		List<Location> path = pf.findPathBetween(e.getLocation(), Location.location(toX, toY));
 		for (Location l : path)
 			GWT.log(l.toString());
 	}

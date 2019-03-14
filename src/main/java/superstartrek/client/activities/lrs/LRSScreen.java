@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.Presenter;
-import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.utils.Strings;
 
 import com.google.gwt.dom.client.Element;

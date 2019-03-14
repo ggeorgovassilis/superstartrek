@@ -37,7 +37,7 @@ public class PathFinder {
 		List<Node> path = astar.findPath();
 		List<Location> lPath = new ArrayList<>();
 		for (Node node:path)
-			lPath.add(new Location(node.getCol(), node.getRow()));
+			lPath.add(Location.location(node.getCol(), node.getRow()));
 		return lPath;
 	}
 }

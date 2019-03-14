@@ -6,7 +6,6 @@ import org.junit.Test;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.messages.MessageEvent;
 import superstartrek.client.activities.sector.scan.IScanSectorView;
 import superstartrek.client.activities.sector.scan.ScanSectorEvent;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
@@ -15,7 +14,6 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class TestSectorScannerPresenter {
@@ -29,7 +27,7 @@ public class TestSectorScannerPresenter {
 	
 	@Before
 	public void setup() {
-		application = new Application();
+		application = Application.get();
 		application.events = events = new CountingEventBus();
 		application.starMap = map = new StarMap();
 		presenter = new ScanSectorPresenter(application);
@@ -44,9 +42,9 @@ public class TestSectorScannerPresenter {
 		map.setQuadrant(q);
 		Enterprise enterprise = new Enterprise(application);
 		map.enterprise = enterprise;
-		enterprise.setLocation(new Location(0,0));
+		enterprise.setLocation(Location.location(0,0));
 		enterprise.setQuadrant(q);
-		Location l = new Location(4,5);
+		Location l = Location.location(4,5);
 		ScanSectorEvent event = new ScanSectorEvent(l, q);
 		presenter.scanSector(event);
 		
@@ -65,9 +63,9 @@ public class TestSectorScannerPresenter {
 		map.setQuadrant(q);
 		Enterprise enterprise = new Enterprise(application);
 		map.enterprise = enterprise;
-		enterprise.setLocation(new Location(0,0));
+		enterprise.setLocation(Location.location(0,0));
 		enterprise.setQuadrant(q);
-		Location l = new Location(0,0);
+		Location l = Location.location(0,0);
 		ScanSectorEvent event = new ScanSectorEvent(l, q);
 		presenter.scanSector(event);
 		

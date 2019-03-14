@@ -19,7 +19,6 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
-import superstartrek.client.activities.sector.contextmenu.SectorMenuView;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedEvent;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.model.Enterprise;
@@ -35,7 +34,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	
 	
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
-		application.events.fireEvent(new SectorSelectedEvent(new Location(x,y), application.starMap.enterprise.getQuadrant(), screenX, screenY));
+		application.events.fireEvent(new SectorSelectedEvent(Location.location(x,y), application.starMap.enterprise.getQuadrant(), screenX, screenY));
 	}
 
 	public QuadrantScannerPresenter(Application application, SectorMenuPresenter sectorMenuPresenter) {
