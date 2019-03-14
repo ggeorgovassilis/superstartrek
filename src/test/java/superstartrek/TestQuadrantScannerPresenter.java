@@ -61,7 +61,7 @@ public class TestQuadrantScannerPresenter {
 		qTo.getStars().add(new Star(6,5));
 		qTo.getStars().add(new Star(5,6));
 		
-		Klingon k = new Klingon(app, ShipClass.BirdOfPrey);
+		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(7,7));
 		qTo.getKlingons().add(k);
 		

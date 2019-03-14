@@ -40,7 +40,7 @@ public class Setup {
 			int klingons = 1+Random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT);
 			while (klingons-->0) {
 				int cIndex = Random.nextInt(Klingon.ShipClass.values().length);
-				Klingon k = new Klingon(application, (Klingon.ShipClass.values()[cIndex]));
+				Klingon k = new Klingon((Klingon.ShipClass.values()[cIndex]));
 				k.setQuadrant(q);
 				Location loc = map.findFreeSpot(q);
 				k.setLocation(loc);

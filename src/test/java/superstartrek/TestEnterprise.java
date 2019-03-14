@@ -4,10 +4,15 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.verification.VerificationMode;
 
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
+import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageEvent;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
@@ -19,8 +24,12 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 
 import static org.mockito.Mockito.*;
+
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
 
 public class TestEnterprise {
 	Enterprise enterprise;
@@ -147,4 +156,105 @@ public class TestEnterprise {
 		
 		assertEquals(1, events.getFiredCount(EnterpriseWarpedEvent.TYPE));
 	}
+	
+	@Test
+	public void testFirePhasers() {
+		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
+		map.setQuadrant(quadrant);
+		enterprise.setQuadrant(quadrant);
+		
+		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
+		klingon.setQuadrant(quadrant);
+		quadrant.getKlingons().add(klingon);
+		klingon.setLocation(Location.location(1, 1));
+		klingon.registerActionHandlers();
+		klingon.uncloak();
+		
+		FireHandler handler = mock(FireHandler.class);
+		
+		Application.get().events.addHandler(FireEvent.TYPE, handler);
+
+		assertEquals(100, klingon.getShields().getValue(), 0.1 );
+		enterprise.firePhasersAt(klingon.getLocation(), false);
+		assertEquals(78, klingon.getShields().getValue(), 10 );
+		
+		//once for before phase + once after phase
+		assertEquals(2, events.getFiredCount(FireEvent.TYPE));
+		verify(handler, times(1)).onFire(eq(enterprise), eq(klingon), eq("phasers"), doubleThat(new BaseMatcher<Double>() {
+
+			@Override
+			public boolean matches(Object o) {
+				return o instanceof Double && Math.abs(((Double)o).doubleValue()-20)<2;
+			}
+
+			@Override
+			public void describeTo(Description d) {
+				d.appendText("value");
+			}
+		}));
+		verify(handler, times(1)).afterFire(eq(enterprise), eq(klingon), eq("phasers"), doubleThat(new BaseMatcher<Double>() {
+
+			@Override
+			public boolean matches(Object o) {
+				return o instanceof Double && Math.abs(((Double)o).doubleValue()-20)<2;
+			}
+
+			@Override
+			public void describeTo(Description d) {
+				d.appendText("value");
+			}
+		}));
+	}
+
+	@Test
+	public void testFireTorpedos() {
+		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
+		map.setQuadrant(quadrant);
+		enterprise.setQuadrant(quadrant);
+		
+		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
+		klingon.setQuadrant(quadrant);
+		quadrant.getKlingons().add(klingon);
+		klingon.setLocation(Location.location(1, 1));
+		klingon.registerActionHandlers();
+		klingon.uncloak();
+		
+		FireHandler handler = mock(FireHandler.class);
+		
+		Application.get().events.addHandler(FireEvent.TYPE, handler);
+
+		assertEquals(100, klingon.getShields().getValue(), 0.1 );
+		enterprise.fireTorpedosAt(klingon.getLocation());
+		assertEquals(50, klingon.getShields().getValue(), 10 );
+		
+		//once for before phase + once after phase
+		assertEquals(2, events.getFiredCount(FireEvent.TYPE));
+		verify(handler, times(1)).onFire(eq(enterprise), eq(klingon), eq("torpedos"), doubleThat(new BaseMatcher<Double>() {
+
+			@Override
+			public boolean matches(Object o) {
+				return o instanceof Double && Math.abs(((Double)o).doubleValue()-50)<2;
+			}
+
+			@Override
+			public void describeTo(Description d) {
+				d.appendText("value");
+			}
+		}));
+		verify(handler, times(1)).afterFire(eq(enterprise), eq(klingon), eq("torpedos"), doubleThat(new BaseMatcher<Double>() {
+
+			@Override
+			public boolean matches(Object o) {
+				return o instanceof Double && Math.abs(((Double)o).doubleValue()-50)<2;
+			}
+
+			@Override
+			public void describeTo(Description d) {
+				d.appendText("value");
+			}
+		}));
+		
+		
+	}
+
 }

@@ -154,7 +154,7 @@ public class StarMap {
 	public boolean hasKlingons() {
 		for (int x = 0; x < quadrants.length; x++)
 			for (int y = 0; y < quadrants[x].length; y++)
-				if (!quadrants[x][y].getKlingons().isEmpty())
+				if (quadrants[x][y]!=null && !quadrants[x][y].getKlingons().isEmpty())
 					return true;
 		return false;
 	}

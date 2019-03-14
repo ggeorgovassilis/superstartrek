@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Random;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
@@ -22,6 +21,7 @@ import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.utils.Random;
 
 public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, EnterpriseWarpedHandler {
 
@@ -51,13 +51,13 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		public final int disruptor;
 	}
 
-	public Klingon(Application app, ShipClass c) {
+	public Klingon(ShipClass c) {
 		super(new Setting("impulse", 1, 1), new Setting("shields", c.shields, c.shields));
 		setName(c.label);
 		setSymbol(c.symbol);
 		setCss("klingon cloaked");
 		this.disruptor = new Setting("disruptor", c.disruptor, c.disruptor);
-		enterpriseWarpedHandler = app.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
+		enterpriseWarpedHandler = Application.get().events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 	}
 
 	/*
