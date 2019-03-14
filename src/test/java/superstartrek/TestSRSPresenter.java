@@ -40,10 +40,10 @@ public class TestSRSPresenter {
 		if (hasStarBase) 
 			q.setStarBase(new StarBase(Location.location(0,0)));
 		for (int i=0;i<stars;i++) {
-			q.getStars().add(new Star(app, i, 1));
+			q.getStars().add(new Star(i, 1));
 		}
 		for (int i=0;i<klingons;i++) {
-			q.getStars().add(new Star(app, i, 2));
+			q.getStars().add(new Star(i, 2));
 		}
 		return q;
 	}

@@ -53,8 +53,8 @@ public class TestLRSPresenter {
 		sb.setLocation(Location.location(1,7));
 		qTo.setStarBase(sb);
 		
-		qTo.getStars().add(new Star(app, 6,5));
-		qTo.getStars().add(new Star(app, 5,6));
+		qTo.getStars().add(new Star(6,5));
+		qTo.getStars().add(new Star(5,6));
 		
 		Klingon k = new Klingon(app, ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(7,7));
