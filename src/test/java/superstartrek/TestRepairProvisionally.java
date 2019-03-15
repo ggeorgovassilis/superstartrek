@@ -33,4 +33,17 @@ public class TestRepairProvisionally {
 		assertTrue(enterprise.getTorpedos().isEnabled());
 		assertEquals(3,events.getFiredCount(MessageEvent.TYPE));
 	}
+
+	@Test
+	public void testRepairPhasers() {
+		enterprise.getPhasers().damage(enterprise.getPhasers().getMaximum()/2);
+		enterprise.getPhasers().setEnabled(false);
+		enterprise.repairProvisionally();
+		enterprise.repairProvisionally();
+		enterprise.repairProvisionally();
+		
+		assertTrue(enterprise.getPhasers().isEnabled());
+		assertTrue(enterprise.getPhasers().getValue()>10);
+		assertEquals(3,events.getFiredCount(MessageEvent.TYPE));
+	}
 }

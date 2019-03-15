@@ -6,16 +6,17 @@ import superstartrek.client.activities.combat.FireHandler;
 
 public class Star extends Thing implements FireHandler{
 
-	public Star() {
+	public Star(int x, int y, boolean registerEvents) {
 		setName("a star");
 		setSymbol("*");
 		setCss("star");
-		Application.get().events.addHandler(FireEvent.TYPE, this);
-	}
-	
-	public Star(int x, int y) {
-		this();
+		if (registerEvents)
+			Application.get().events.addHandler(FireEvent.TYPE, this);
 		setLocation(Location.location(x,y));
+	}
+
+	public Star(int x, int y) {
+		this(x,y, true);
 	}
 
 	@Override

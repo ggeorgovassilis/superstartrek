@@ -30,7 +30,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);
 	protected Setting antimatter = new Setting("antimatter", 1000, 1000);
-	protected Setting reactor = new Setting("reactor", 70, 70);
+	protected Setting reactor = new Setting("reactor", 60, 60);
 	protected Setting autoAim = new Setting("auto aim", 1, 1);
 
 	public Setting getReactor() {
@@ -125,7 +125,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	public void navigateTo(Location loc) {
 		double distance = StarMap.distance(this, loc);
 		if (distance > getImpulse().getValue()) {
-			Application.get().message("Course " + distance + " exceeds maximum impulse power " + getImpulse().getValue());
+			Application.get().message("Course " + Math.round(distance) + " exceeds maximum impulse power " + getImpulse().getValue());
 			return;
 		}
 		Thing thing = Application.get().starMap.findThingAt(quadrant, loc.x, loc.y);
@@ -139,7 +139,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " at " + things.get(1).getLocation());
 			return;
 		}
-		if (!consume("impulse",impulse.getValue() * IMPULSE_CONSUMPTION)) {
+		if (!consume("impulse",distance * IMPULSE_CONSUMPTION)) {
 			Application.get().message("Insufficient reactor output");
 			return;
 		}
@@ -172,6 +172,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 				hit = Random.nextDouble() <= chance;
 			}
 			if (hit) {
+				getTorpedos().decrease(1);
 				FireEvent event = new FireEvent(Phase.fire, this, thing, "torpedos", 50);
 				Application.get().events.fireEvent(event);
 				event = new FireEvent(Phase.afterFire, this, thing, "torpedos", 50);
@@ -228,17 +229,22 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		torpedos.repair();
 		impulse.repair();
 		shields.repair();
+		autoAim.repair();
 		Application.get().events.fireEvent(new EnterpriseRepairedEvent());
 		Application.get().endTurnAfterThis();
 	}
+	
+	protected boolean canBeRepaired(Setting setting) {
+		return !setting.isEnabled() || setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
+	}
 
 	protected boolean maybeRepairProvisionally(Setting setting) {
-		boolean needsRepair = !setting.isEnabled() || setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
+		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
 		if (superstartrek.client.utils.Random.nextDouble() < 0.5)
 			return false;
-		setting.setCurrentUpperBound(setting.getMaximum() * 0.75);
+		setting.setCurrentUpperBound(Math.max(1,setting.getMaximum() * 0.75)); //boolean settings can be repaired fully
 		setting.setValue(setting.getDefaultValue());
 		setting.setEnabled(true);
 		Application.get().message("Repaired " + setting.getName());
@@ -249,7 +255,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		int i = 10;
 		while (i-- > 0) {
 			boolean repaired = maybeRepairProvisionally(impulse) || maybeRepairProvisionally(shields)
-					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos);
+					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos) || maybeRepairProvisionally(autoAim);
 			if (repaired) {
 				Application.get().events.fireEvent(new EnterpriseRepairedEvent());
 				Application.get().endTurnAfterThis();
@@ -258,11 +264,15 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		}
 		Application.get().message("Couldn't repair anything");
 	}
+	
+	public boolean canRepairProvisionally() {
+		return canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers) || canBeRepaired(torpedos) || canBeRepaired(autoAim);
+	}
 
 	public boolean isDamaged() {
 		return impulse.getCurrentUpperBound() < impulse.getMaximum()
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
-				|| phasers.getCurrentUpperBound() < phasers.getCurrentUpperBound() || !torpedos.isEnabled();
+				|| phasers.getCurrentUpperBound() < phasers.getCurrentUpperBound() || !torpedos.isEnabled() || !autoAim.isEnabled();
 	}
 
 	public void damageShields() {
@@ -289,10 +299,15 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		Application.get().message("Phaser array damaged","enterprise-damaged");
 	}
 
+	public void damageAutoaim() {
+		autoAim.setEnabled(false);
+		Application.get().message("Tactical computer damaged","enterprise-damaged");
+	}
+
 	public void applyDamage(double damage) {
 		double impact = 0.5*damage / (shields.getValue() + 1.0);
 		shields.decrease(damage);
-		if (shields.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
+		if (shields.getCurrentUpperBound() > 0 && 0.7*Random.nextDouble() < impact)
 			damageShields();
 		if (impulse.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
 			damageImpulse();
@@ -300,6 +315,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 			damageTorpedos();
 		if (phasers.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
 			damagePhasers();
+		if (autoAim.isEnabled() && Random.nextDouble()*1.2<impact)
+			damageAutoaim();
 		if (shields.getValue() <= 0)
 			Application.get().gameOver(Outcome.lost, "shields");
 	}

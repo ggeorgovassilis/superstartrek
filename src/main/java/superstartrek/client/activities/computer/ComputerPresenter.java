@@ -75,13 +75,14 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	}
 	
 	public void updateRepairButton() {
-		((IComputerView)getView()).setRepairButtonVisibility(application.starMap.enterprise.isDamaged());
+		Enterprise enterprise = application.starMap.enterprise;
+		((IComputerView)getView()).setRepairButtonVisibility(enterprise.isDamaged() || enterprise.canRepairProvisionally());
 	}
 	
 	public void updateStatusButton() {
 		Enterprise enterprise = application.starMap.enterprise;
 		String cssImpulse = CSS.damageClass(enterprise.getImpulse().health());
-		String cssTactical= CSS.damageClass(1.0);
+		String cssTactical= CSS.damageClass(enterprise.getAutoAim().health());
 		String cssPhasers = CSS.damageClass(enterprise.getPhasers().health());
 		String cssTorpedos= CSS.damageClass(enterprise.getTorpedos().health());
 		

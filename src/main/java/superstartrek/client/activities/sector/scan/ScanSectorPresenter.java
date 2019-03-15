@@ -35,6 +35,7 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 			if (vessel instanceof Klingon) {
 				Klingon k = (Klingon)vessel;
 				v.setProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isEnabled()?"":"damage-offline", k.getDisruptor().isEnabled()?"online":"offline");
+				v.setProperty("scan-report-cloak", "scan-report-cloak-value", k.getCloak().isEnabled()?"":"damage-offline", k.getCloak().isEnabled()?"online":"offline");
 			}
 			if (vessel instanceof Enterprise) {
 				Enterprise e = (Enterprise)vessel;
@@ -45,6 +46,7 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 			v.setProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
 			v.setProperty("scan-report-weapons", "scan-report-weapons-value", "hidden", "");
 			v.setProperty("scan-report-engines", "scan-report-engines-value", "hidden", "");
+			v.setProperty("scan-report-cloak", "scan-report-cloak-value", "hidden", "");
 		}
 	}
 	

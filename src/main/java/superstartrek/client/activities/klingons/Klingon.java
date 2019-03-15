@@ -27,11 +27,12 @@ import superstartrek.client.utils.Random;
 public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, EnterpriseWarpedHandler {
 
 	protected final Setting disruptor;
+	protected final Setting cloak;
+	
 	private HandlerRegistration enterpriseWarpedHandler;
 	private HandlerRegistration fireHandler;
 	private HandlerRegistration klingonTurnHandler;
 	
-	protected boolean cloaked = true;
 	public final static int MAX_SECTOR_SPEED = 1;
 	public final static int DISRUPTOR_RANGE_SECTORS = 2;
 
@@ -54,6 +55,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 
 	public Klingon(ShipClass c) {
 		super(new Setting("impulse", 1, 1), new Setting("shields", c.shields, c.shields));
+		cloak = new Setting("cloak", 1, 1);
 		setName(c.label);
 		setSymbol(c.symbol);
 		setCss("klingon cloaked");
@@ -86,15 +88,19 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 	}
 
 	public boolean isCloaked() {
-		return cloaked;
+		return cloak.getBooleanValue();
 	}
 
 	public boolean canCloak() {
-		return (impulse.isEnabled() && disruptor.isEnabled());
+		return cloak.isEnabled();
+	}
+	
+	public Setting getCloak() {
+		return cloak;
 	}
 
 	public void uncloak() {
-		this.cloaked = false;
+		cloak.setValue(0);
 		setCss("klingon");
 		Application.get().message(getName() + " uncloaked at " + this.getLocation(), "klingon-uncloaked");
 		Application.get().events.fireEvent(new KlingonUncloakedEvent(this));
@@ -184,14 +190,15 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 	public void repair() {
 		getImpulse().setEnabled(true);
 		getDisruptor().setEnabled(true);
+		cloak.setEnabled(true);
 	}
 
 	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		if (qTo == this.getQuadrant()) {
 			registerActionHandlers();
-			this.cloaked = canCloak();
-			css = "klingon " + (cloaked ? "cloaked" : "");
+			cloak.setValue(canCloak());
+			css = "klingon " + (isCloaked() ? "cloaked" : "");
 			Location newLocation = Application.get().starMap.findFreeSpot(getQuadrant());
 			jumpTo(newLocation);
 			repair();
