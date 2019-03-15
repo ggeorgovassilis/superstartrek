@@ -417,7 +417,7 @@ table a, table a:visited{
 	color:yellow;
 }
 
-.entry.klingon-damaged{
+.entry.klingon-damaged, .entry.klingon-destroyed{
 	color:cyan;	
 }
 
@@ -622,8 +622,10 @@ a.progress-bar {
 	position:absolute;
 	z-index:10;
 	background:rgba(10,10,10,0.5);
-	top:10%;
-	padding:0.5em;
+	top:2%;
+	margin-left:2%;
+	outline: cyan solid 1px;
+	padding:1em;
 }
 
 button.disabled{
