@@ -1,6 +1,9 @@
 package superstartrek.client;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -72,6 +75,7 @@ public class Application
 	public StatusReportPresenter statusReportPresenter;
 	private static Application that;
 	protected Resources resources;
+	protected Set<String> flags;
 	
 	public static Application get() {
 		if (that == null)
@@ -249,6 +253,19 @@ public class Application
 
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
+	}
+	
+	public Set<String> getFlags(){
+		if (flags==null) {
+			String sflags = Window.Location.getParameter("flags");
+			if (sflags==null)
+				sflags = "";
+			String[] split = sflags.split(",");
+			flags = new HashSet<>();
+			for (String s:split)
+				flags.add(s);
+		}
+		return flags;
 	}
 
 	@Override

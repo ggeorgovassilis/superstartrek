@@ -167,7 +167,10 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 
 	@Override
 	public void executeKlingonMove() {
-		StarMap map = Application.get().starMap;
+		Application app = Application.get();
+		if (app.getFlags().contains("nopc"))
+			return;
+		StarMap map = app.starMap;
 		Enterprise enterprise = map.enterprise;
 		if (enterprise.getQuadrant() != getQuadrant())
 			return;
