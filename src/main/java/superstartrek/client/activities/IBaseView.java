@@ -6,10 +6,4 @@ public interface IBaseView<A extends Activity> extends View<A>{
 
 	void finishUiConstruction();
 
-	void show();
-
-	void hide();
-
-	boolean isVisible();
-
 }

@@ -4,8 +4,6 @@ import superstartrek.client.activities.IBaseView;
 
 public interface IScanSectorView extends IBaseView<ScanSectorActivity>{
 
-	void finishUiConstruction();
-
 	void setObjectName(String value);
 
 	void setObjectLocation(String value);
