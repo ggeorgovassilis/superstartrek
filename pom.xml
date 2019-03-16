@@ -133,6 +133,10 @@
 					<draftCompile>true</draftCompile>
 					<deploy>${project.build.directory}/deploy</deploy>
 					<outputDirectory>${project.basedir}/site</outputDirectory>
+					<compileReport>true</compileReport>
+					<methodNameDisplayMode>FULL</methodNameDisplayMode>
+					<saveSource>true</saveSource>
+					<style>DETAILED</style>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -1,5 +1,8 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -55,10 +58,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		((IQuadrantScannerView) getView()).deselectSectors();
 		((IQuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
 	}
-	
-	protected void updateSector(Quadrant q, int x, int y) {
-		StarMap starMap = getApplication().starMap;
-		Thing thing = starMap.findThingAt(q, x, y);
+
+	protected void updateSector(Quadrant q, int x, int y, Thing thing){
 		String content = "";
 		String css = "";
 		if (thing!=null) {
@@ -72,16 +73,34 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		}
 		((IQuadrantScannerView) view).updateSector(x, y, content, css);
 	}
+	
+	protected void updateSector(Quadrant q, int x, int y) {
+		StarMap starMap = getApplication().starMap;
+		Thing thing = starMap.findThingAt(q, x, y);
+		updateSector(q, x, y, thing);
+	}
 
 	protected void updateScreen() {
 		StarMap starMap = getApplication().starMap;
 		Quadrant q = starMap.enterprise.getQuadrant();
 		if (q == null)
 			throw new RuntimeException("q is null");
+		// since findThingAt is slow it cannot be used for the full screen update
+		// that's why we iterate over the things in the quadrant instead over the sectors
+		
 		for (int y = 0; y < 8; y++)
 			for (int x = 0; x < 8; x++) {
-				updateSector(q, x,y);
+				((IQuadrantScannerView) view).updateSector(x, y, "", "");
 			}
+		List<Thing> things = new ArrayList<>();
+		things.addAll(q.getKlingons());
+		things.addAll(q.getStars());
+		if (q.getStarBase()!=null)
+			things.add(q.getStarBase());
+		things.add(starMap.enterprise);
+		for (Thing thing:things) {
+			updateSector(q, thing.getLocation().getX(), thing.getLocation().getY(), thing);
+		}
 		updateQuadrantHeader();
 	}
 
