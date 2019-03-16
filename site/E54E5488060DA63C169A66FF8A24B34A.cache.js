@@ -3,7 +3,7 @@ var __gwtModuleFunction = $wnd.superstartrek_superstartrek;
 var $sendStats = __gwtModuleFunction.__sendStats;
 $sendStats('moduleStartup', 'moduleEvalStart');
 var $gwt_version = "2.8.2";
-var $strongName = 'A92371B68CCCB59B06C70DB879C50334';
+var $strongName = 'E54E5488060DA63C169A66FF8A24B34A';
 var $gwt = {};
 var $doc = $wnd.document;
 var $moduleName, $moduleBase;
@@ -8859,7 +8859,7 @@ cggdc.com_google_gwt_dom_client_DOMImpl_$clinit__V = function com_google_gwt_dom
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cggdc.com_google_gwt_dom_client_DOMImpl_$clinit__V;
   ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '21' , cggdc).com_google_gwt_dom_client_DOMImpl_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
   jl.java_lang_Object_$clinit__V();
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '23' , cggdc).com_google_gwt_dom_client_DOMImpl_impl = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new cggdc.com_google_gwt_dom_client_DOMImplIE9_DOMImplIE9__V, 36);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '23' , cggdc).com_google_gwt_dom_client_DOMImpl_impl = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new cggdc.com_google_gwt_dom_client_DOMImplMozilla_DOMImplMozilla__V, 36);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -9744,14 +9744,13 @@ cggdc.com_google_gwt_dom_client_DOMImplIE9_$clinit__V.displayName = 'com.google.
 cggdc.com_google_gwt_dom_client_DOMImplIE9_DOMImplIE9__V = function com_google_gwt_dom_client_DOMImplIE9_DOMImplIE9__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cggdc.com_google_gwt_dom_client_DOMImplIE9_DOMImplIE9__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '21' , cggdc).com_google_gwt_dom_client_DOMImplIE9_$clinit__V();
-  cggdc.com_google_gwt_dom_client_DOMImplStandardBase_DOMImplStandardBase__V.call(this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '21' , cggdc).com_google_gwt_dom_client_DOMImplStandardBase_DOMImplStandardBase__V.call(this);
   this.private$com_google_gwt_dom_client_DOMImplIE9$$init__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
 cggdc.com_google_gwt_dom_client_DOMImplIE9_DOMImplIE9__V.displayName = 'com.google.gwt.dom.client.DOMImplIE9.DOMImplIE9';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(269, 147, {36:1, 1:1}, cggdc.com_google_gwt_dom_client_DOMImplIE9_DOMImplIE9__V);
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(454, 147, {1:1});
 _.private$com_google_gwt_dom_client_DOMImplIE9$$init__V = function com_google_gwt_dom_client_DOMImplIE9_$init__V(){
 }
 ;
@@ -9890,7 +9889,7 @@ _.isOrHasChild__Lcom_google_gwt_dom_client_Node_2Lcom_google_gwt_dom_client_Node
 }
 ;
 _.isOrHasChild__Lcom_google_gwt_dom_client_Node_2Lcom_google_gwt_dom_client_Node_2Z.displayName = 'com.google.gwt.dom.client.DOMImplIE9.isOrHasChild';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1dom_1client_1DOMImplIE9_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.dom.client', 'DOMImplIE9', 269, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1dom_1client_1DOMImplStandardBase_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1dom_1client_1DOMImplIE9_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.dom.client', 'DOMImplIE9', 454, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1dom_1client_1DOMImplStandardBase_12_1classLit);
 cggdc.com_google_gwt_dom_client_DOMImplMozilla_$clinit__V = function com_google_gwt_dom_client_DOMImplMozilla_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cggdc.com_google_gwt_dom_client_DOMImplMozilla_$clinit__V;
@@ -9903,7 +9902,8 @@ cggdc.com_google_gwt_dom_client_DOMImplMozilla_$clinit__V.displayName = 'com.goo
 cggdc.com_google_gwt_dom_client_DOMImplMozilla_DOMImplMozilla__V = function com_google_gwt_dom_client_DOMImplMozilla_DOMImplMozilla__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cggdc.com_google_gwt_dom_client_DOMImplMozilla_DOMImplMozilla__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '21' , cggdc).com_google_gwt_dom_client_DOMImplStandard_DOMImplStandard__V.call(this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '21' , cggdc).com_google_gwt_dom_client_DOMImplMozilla_$clinit__V();
+  cggdc.com_google_gwt_dom_client_DOMImplStandard_DOMImplStandard__V.call(this);
   this.private$com_google_gwt_dom_client_DOMImplMozilla$$init__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -9934,7 +9934,7 @@ cggdc.com_google_gwt_dom_client_DOMImplMozilla_isGecko19__Z = function com_googl
 }
 ;
 cggdc.com_google_gwt_dom_client_DOMImplMozilla_isGecko19__Z.displayName = 'com.google.gwt.dom.client.DOMImplMozilla.isGecko19';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(454, 146, {1:1});
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(269, 146, {36:1, 1:1}, cggdc.com_google_gwt_dom_client_DOMImplMozilla_DOMImplMozilla__V);
 _.private$com_google_gwt_dom_client_DOMImplMozilla$$init__V = function com_google_gwt_dom_client_DOMImplMozilla_$init__V(){
 }
 ;
@@ -10060,7 +10060,7 @@ _.toString__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2 = function c
 }
 ;
 _.toString__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2.displayName = 'com.google.gwt.dom.client.DOMImplMozilla.toString';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1dom_1client_1DOMImplMozilla_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.dom.client', 'DOMImplMozilla', 454, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1dom_1client_1DOMImplStandard_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1dom_1client_1DOMImplMozilla_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.dom.client', 'DOMImplMozilla', 269, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1dom_1client_1DOMImplStandard_12_1classLit);
 cggdc.com_google_gwt_dom_client_DOMImplStandardBase$ClientRect_$clinit__V = function com_google_gwt_dom_client_DOMImplStandardBase$ClientRect_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cggdc.com_google_gwt_dom_client_DOMImplStandardBase$ClientRect_$clinit__V;
@@ -17715,7 +17715,7 @@ cgguc.com_google_gwt_user_client_DOM_$clinit__V = function com_google_gwt_user_c
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguc.com_google_gwt_user_client_DOM_$clinit__V;
   ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '35' , cgguc).com_google_gwt_user_client_DOM_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
   jl.java_lang_Object_$clinit__V();
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '65' , cgguc).com_google_gwt_user_client_DOM_impl = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new cgguci.com_google_gwt_user_client_impl_DOMImplIE9_DOMImplIE9__V, 93);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '65' , cgguc).com_google_gwt_user_client_DOM_impl = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_DOMImplMozilla__V, 93);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -18691,7 +18691,7 @@ cgguc.com_google_gwt_user_client_Window_$clinit__V = function com_google_gwt_use
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguc.com_google_gwt_user_client_Window_$clinit__V;
   ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '45' , cgguc).com_google_gwt_user_client_Window_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
   jl.java_lang_Object_$clinit__V();
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '514' , cgguc).com_google_gwt_user_client_Window_impl = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new cgguci.com_google_gwt_user_client_impl_WindowImplIE_WindowImplIE__V, 105);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '514' , cgguc).com_google_gwt_user_client_Window_impl = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new cgguci.com_google_gwt_user_client_impl_WindowImplMozilla_WindowImplMozilla__V, 105);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -19475,14 +19475,13 @@ cgguci.com_google_gwt_user_client_impl_DOMImplIE9_$clinit__V.displayName = 'com.
 cgguci.com_google_gwt_user_client_impl_DOMImplIE9_DOMImplIE9__V = function com_google_gwt_user_client_impl_DOMImplIE9_DOMImplIE9__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_DOMImplIE9_DOMImplIE9__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '24' , cgguci).com_google_gwt_user_client_impl_DOMImplIE9_$clinit__V();
-  cgguci.com_google_gwt_user_client_impl_DOMImplStandardBase_DOMImplStandardBase__V.call(this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '24' , cgguci).com_google_gwt_user_client_impl_DOMImplStandardBase_DOMImplStandardBase__V.call(this);
   this.private$com_google_gwt_user_client_impl_DOMImplIE9$$init__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
 cgguci.com_google_gwt_user_client_impl_DOMImplIE9_DOMImplIE9__V.displayName = 'com.google.gwt.user.client.impl.DOMImplIE9.DOMImplIE9';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(236, 143, {93:1, 1:1}, cgguci.com_google_gwt_user_client_impl_DOMImplIE9_DOMImplIE9__V);
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(425, 143, {1:1});
 _.private$com_google_gwt_user_client_impl_DOMImplIE9$$init__V = function com_google_gwt_user_client_impl_DOMImplIE9_$init__V(){
 }
 ;
@@ -19498,7 +19497,7 @@ _.sinkBitlessEventImpl__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2V
 }
 ;
 _.sinkBitlessEventImpl__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2V.displayName = 'com.google.gwt.user.client.impl.DOMImplIE9.sinkBitlessEventImpl';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1DOMImplIE9_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'DOMImplIE9', 236, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1DOMImplStandardBase_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1DOMImplIE9_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'DOMImplIE9', 425, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1DOMImplStandardBase_12_1classLit);
 cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_$clinit__V = function com_google_gwt_user_client_impl_DOMImplMozilla_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_$clinit__V;
@@ -19514,7 +19513,8 @@ cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_$clinit__V.displayName = '
 cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_DOMImplMozilla__V = function com_google_gwt_user_client_impl_DOMImplMozilla_DOMImplMozilla__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_DOMImplMozilla__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '23' , cgguci).com_google_gwt_user_client_impl_DOMImplStandard_DOMImplStandard__V.call(this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '23' , cgguci).com_google_gwt_user_client_impl_DOMImplMozilla_$clinit__V();
+  cgguci.com_google_gwt_user_client_impl_DOMImplStandard_DOMImplStandard__V.call(this);
   this.private$com_google_gwt_user_client_impl_DOMImplMozilla$$init__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -19528,7 +19528,7 @@ cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_addMozillaCaptureEventDisp
 }
 ;
 cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_addMozillaCaptureEventDispatchers__V.displayName = 'com.google.gwt.user.client.impl.DOMImplMozilla.addMozillaCaptureEventDispatchers';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(425, 59, {1:1});
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(236, 59, {93:1, 1:1}, cgguci.com_google_gwt_user_client_impl_DOMImplMozilla_DOMImplMozilla__V);
 _.private$com_google_gwt_user_client_impl_DOMImplMozilla$$init__V = function com_google_gwt_user_client_impl_DOMImplMozilla_$init__V(){
 }
 ;
@@ -19581,7 +19581,7 @@ _.sinkEventsMozilla__Lcom_google_gwt_dom_client_Element_2IV = function com_googl
 }
 ;
 _.sinkEventsMozilla__Lcom_google_gwt_dom_client_Element_2IV.displayName = 'com.google.gwt.user.client.impl.DOMImplMozilla.sinkEventsMozilla';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1DOMImplMozilla_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'DOMImplMozilla', 425, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1DOMImplStandard_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1DOMImplMozilla_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'DOMImplMozilla', 236, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1DOMImplStandard_12_1classLit);
 cgguci.com_google_gwt_user_client_impl_DOMImplWebkit_$clinit__V = function com_google_gwt_user_client_impl_DOMImplWebkit_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_DOMImplWebkit_$clinit__V;
@@ -19674,14 +19674,13 @@ cgguci.com_google_gwt_user_client_impl_WindowImplIE_$clinit__V.displayName = 'co
 cgguci.com_google_gwt_user_client_impl_WindowImplIE_WindowImplIE__V = function com_google_gwt_user_client_impl_WindowImplIE_WindowImplIE__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_WindowImplIE_WindowImplIE__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '28' , cgguci).com_google_gwt_user_client_impl_WindowImplIE_$clinit__V();
-  cgguci.com_google_gwt_user_client_impl_WindowImpl_WindowImpl__V.call(this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '28' , cgguci).com_google_gwt_user_client_impl_WindowImpl_WindowImpl__V.call(this);
   this.private$com_google_gwt_user_client_impl_WindowImplIE$$init__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
 cgguci.com_google_gwt_user_client_impl_WindowImplIE_WindowImplIE__V.displayName = 'com.google.gwt.user.client.impl.WindowImplIE.WindowImplIE';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(327, 105, {105:1, 1:1}, cgguci.com_google_gwt_user_client_impl_WindowImplIE_WindowImplIE__V);
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(653, 105, {1:1});
 _.private$com_google_gwt_user_client_impl_WindowImplIE$$init__V = function com_google_gwt_user_client_impl_WindowImplIE_$init__V(){
 }
 ;
@@ -19696,7 +19695,7 @@ _.getHash__Ljava_lang_String_2 = function com_google_gwt_user_client_impl_Window
 }
 ;
 _.getHash__Ljava_lang_String_2.displayName = 'com.google.gwt.user.client.impl.WindowImplIE.getHash';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplIE_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplIE', 327, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImpl_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplIE_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplIE', 653, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImpl_12_1classLit);
 cgguci.com_google_gwt_user_client_impl_WindowImplIE$1_$clinit__V = function com_google_gwt_user_client_impl_WindowImplIE$1_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_WindowImplIE$1_$clinit__V;
@@ -19705,8 +19704,8 @@ cgguci.com_google_gwt_user_client_impl_WindowImplIE$1_$clinit__V = function com_
 }
 ;
 cgguci.com_google_gwt_user_client_impl_WindowImplIE$1_$clinit__V.displayName = 'com.google.gwt.user.client.impl.WindowImplIE$1.$clinit';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(653, 1, {1:1});
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplIE$1_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplIE/1', 653, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(654, 1, {1:1});
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplIE$1_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplIE/1', 654, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
 cgguci.com_google_gwt_user_client_impl_WindowImplIE$2_$clinit__V = function com_google_gwt_user_client_impl_WindowImplIE$2_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_WindowImplIE$2_$clinit__V;
@@ -19715,8 +19714,8 @@ cgguci.com_google_gwt_user_client_impl_WindowImplIE$2_$clinit__V = function com_
 }
 ;
 cgguci.com_google_gwt_user_client_impl_WindowImplIE$2_$clinit__V.displayName = 'com.google.gwt.user.client.impl.WindowImplIE$2.$clinit';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(654, 1, {1:1});
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplIE$2_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplIE/2', 654, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(655, 1, {1:1});
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplIE$2_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplIE/2', 655, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
 cgguci.com_google_gwt_user_client_impl_WindowImplIE$3_$clinit__V = function com_google_gwt_user_client_impl_WindowImplIE$3_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_WindowImplIE$3_$clinit__V;
@@ -19725,8 +19724,8 @@ cgguci.com_google_gwt_user_client_impl_WindowImplIE$3_$clinit__V = function com_
 }
 ;
 cgguci.com_google_gwt_user_client_impl_WindowImplIE$3_$clinit__V.displayName = 'com.google.gwt.user.client.impl.WindowImplIE$3.$clinit';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(655, 1, {1:1});
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplIE$3_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplIE/3', 655, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(656, 1, {1:1});
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplIE$3_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplIE/3', 656, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
 cgguci.com_google_gwt_user_client_impl_WindowImplIE$Resources_$clinit__V = function com_google_gwt_user_client_impl_WindowImplIE$Resources_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_WindowImplIE$Resources_$clinit__V;
@@ -19748,13 +19747,14 @@ cgguci.com_google_gwt_user_client_impl_WindowImplMozilla_$clinit__V.displayName 
 cgguci.com_google_gwt_user_client_impl_WindowImplMozilla_WindowImplMozilla__V = function com_google_gwt_user_client_impl_WindowImplMozilla_WindowImplMozilla__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguci.com_google_gwt_user_client_impl_WindowImplMozilla_WindowImplMozilla__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '21' , cgguci).com_google_gwt_user_client_impl_WindowImpl_WindowImpl__V.call(this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '21' , cgguci).com_google_gwt_user_client_impl_WindowImplMozilla_$clinit__V();
+  cgguci.com_google_gwt_user_client_impl_WindowImpl_WindowImpl__V.call(this);
   this.private$com_google_gwt_user_client_impl_WindowImplMozilla$$init__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
 cgguci.com_google_gwt_user_client_impl_WindowImplMozilla_WindowImplMozilla__V.displayName = 'com.google.gwt.user.client.impl.WindowImplMozilla.WindowImplMozilla';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(656, 105, {1:1});
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(327, 105, {105:1, 1:1}, cgguci.com_google_gwt_user_client_impl_WindowImplMozilla_WindowImplMozilla__V);
 _.private$com_google_gwt_user_client_impl_WindowImplMozilla$$init__V = function com_google_gwt_user_client_impl_WindowImplMozilla_$init__V(){
 }
 ;
@@ -19769,7 +19769,7 @@ _.getHash__Ljava_lang_String_2 = function com_google_gwt_user_client_impl_Window
 }
 ;
 _.getHash__Ljava_lang_String_2.displayName = 'com.google.gwt.user.client.impl.WindowImplMozilla.getHash';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplMozilla_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplMozilla', 656, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImpl_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImplMozilla_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.user.client.impl', 'WindowImplMozilla', 327, cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1user_1client_1impl_1WindowImpl_12_1classLit);
 cggucu.com_google_gwt_user_client_ui_HasVisibility_$clinit__V = function com_google_gwt_user_client_ui_HasVisibility_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cggucu.com_google_gwt_user_client_ui_HasVisibility_$clinit__V;
@@ -21438,7 +21438,7 @@ cgguc2.com_google_gwt_useragent_client_UserAgentAsserter_UserAgentAsserter__V.di
 cgguc2.com_google_gwt_useragent_client_UserAgentAsserter_assertCompileTimeUserAgent__V = function com_google_gwt_useragent_client_UserAgentAsserter_assertCompileTimeUserAgent__V(){
   var compileTimeValue, impl, runtimeValue, JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguc2.com_google_gwt_useragent_client_UserAgentAsserter_assertCompileTimeUserAgent__V;
-  impl = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '50' , cgguc2).com_google_gwt_useragent_client_UserAgentImplIe9_UserAgentImplIe9__V, 341);
+  impl = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '50' , cgguc2).com_google_gwt_useragent_client_UserAgentImplGecko1_18_UserAgentImplGecko1_18__V, 341);
   compileTimeValue = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '52' , impl).getCompileTimeValue__Ljava_lang_String_2();
   runtimeValue = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '53' , impl).getRuntimeValue__Ljava_lang_String_2();
   if (!($JsStackEmulator_location[JsStackEmulator_stackIndex] = '55' , jl).java_lang_String_equals_1Ljava_1lang_1Object_1_1Z_1_1devirtual$__Ljava_lang_String_2Ljava_lang_Object_2Z(compileTimeValue, runtimeValue)) {
@@ -21660,13 +21660,14 @@ cgguc2.com_google_gwt_useragent_client_UserAgentImplGecko1_18_$clinit__V.display
 cgguc2.com_google_gwt_useragent_client_UserAgentImplGecko1_18_UserAgentImplGecko1_18__V = function com_google_gwt_useragent_client_UserAgentImplGecko1_18_UserAgentImplGecko1_18__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguc2.com_google_gwt_useragent_client_UserAgentImplGecko1_18_UserAgentImplGecko1_18__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '3' , java_lang_Object_Object__V).call(this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '3' , cgguc2).com_google_gwt_useragent_client_UserAgentImplGecko1_18_$clinit__V();
+  java_lang_Object_Object__V.call(this);
   this.private$com_google_gwt_useragent_client_UserAgentImplGecko1_18$$init__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
 cgguc2.com_google_gwt_useragent_client_UserAgentImplGecko1_18_UserAgentImplGecko1_18__V.displayName = 'com.google.gwt.useragent.client.UserAgentImplGecko1_8.UserAgentImplGecko1_8';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(440, 1, {1:1});
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(159, 1, {341:1, 1:1}, cgguc2.com_google_gwt_useragent_client_UserAgentImplGecko1_18_UserAgentImplGecko1_18__V);
 _.private$com_google_gwt_useragent_client_UserAgentImplGecko1_18$$init__V = function com_google_gwt_useragent_client_UserAgentImplGecko1_18_$init__V(){
 }
 ;
@@ -21743,7 +21744,7 @@ _.getRuntimeValue__Ljava_lang_String_2 = function com_google_gwt_useragent_clien
 }
 ;
 _.getRuntimeValue__Ljava_lang_String_2.displayName = 'com.google.gwt.useragent.client.UserAgentImplGecko1_8.getRuntimeValue';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1useragent_1client_1UserAgentImplGecko1_118_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.useragent.client', 'UserAgentImplGecko1_8', 440, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1useragent_1client_1UserAgentImplGecko1_118_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.useragent.client', 'UserAgentImplGecko1_8', 159, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
 cgguc2.com_google_gwt_useragent_client_UserAgentImplIe10_$clinit__V = function com_google_gwt_useragent_client_UserAgentImplIe10_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguc2.com_google_gwt_useragent_client_UserAgentImplIe10_$clinit__V;
@@ -21762,7 +21763,7 @@ cgguc2.com_google_gwt_useragent_client_UserAgentImplIe10_UserAgentImplIe10__V = 
 }
 ;
 cgguc2.com_google_gwt_useragent_client_UserAgentImplIe10_UserAgentImplIe10__V.displayName = 'com.google.gwt.useragent.client.UserAgentImplIe10.UserAgentImplIe10';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(438, 1, {1:1});
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(439, 1, {1:1});
 _.private$com_google_gwt_useragent_client_UserAgentImplIe10$$init__V = function com_google_gwt_useragent_client_UserAgentImplIe10_$init__V(){
 }
 ;
@@ -21839,7 +21840,7 @@ _.getRuntimeValue__Ljava_lang_String_2 = function com_google_gwt_useragent_clien
 }
 ;
 _.getRuntimeValue__Ljava_lang_String_2.displayName = 'com.google.gwt.useragent.client.UserAgentImplIe10.getRuntimeValue';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1useragent_1client_1UserAgentImplIe10_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.useragent.client', 'UserAgentImplIe10', 438, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1useragent_1client_1UserAgentImplIe10_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.useragent.client', 'UserAgentImplIe10', 439, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
 cgguc2.com_google_gwt_useragent_client_UserAgentImplIe8_$clinit__V = function com_google_gwt_useragent_client_UserAgentImplIe8_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguc2.com_google_gwt_useragent_client_UserAgentImplIe8_$clinit__V;
@@ -21948,14 +21949,13 @@ cgguc2.com_google_gwt_useragent_client_UserAgentImplIe9_$clinit__V.displayName =
 cgguc2.com_google_gwt_useragent_client_UserAgentImplIe9_UserAgentImplIe9__V = function com_google_gwt_useragent_client_UserAgentImplIe9_UserAgentImplIe9__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguc2.com_google_gwt_useragent_client_UserAgentImplIe9_UserAgentImplIe9__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '3' , cgguc2).com_google_gwt_useragent_client_UserAgentImplIe9_$clinit__V();
-  java_lang_Object_Object__V.call(this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '3' , java_lang_Object_Object__V).call(this);
   this.private$com_google_gwt_useragent_client_UserAgentImplIe9$$init__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
 cgguc2.com_google_gwt_useragent_client_UserAgentImplIe9_UserAgentImplIe9__V.displayName = 'com.google.gwt.useragent.client.UserAgentImplIe9.UserAgentImplIe9';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(159, 1, {341:1, 1:1}, cgguc2.com_google_gwt_useragent_client_UserAgentImplIe9_UserAgentImplIe9__V);
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(438, 1, {1:1});
 _.private$com_google_gwt_useragent_client_UserAgentImplIe9$$init__V = function com_google_gwt_useragent_client_UserAgentImplIe9_$init__V(){
 }
 ;
@@ -22032,7 +22032,7 @@ _.getRuntimeValue__Ljava_lang_String_2 = function com_google_gwt_useragent_clien
 }
 ;
 _.getRuntimeValue__Ljava_lang_String_2.displayName = 'com.google.gwt.useragent.client.UserAgentImplIe9.getRuntimeValue';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1useragent_1client_1UserAgentImplIe9_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.useragent.client', 'UserAgentImplIe9', 159, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1useragent_1client_1UserAgentImplIe9_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.useragent.client', 'UserAgentImplIe9', 438, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
 cgguc2.com_google_gwt_useragent_client_UserAgentImplSafari_$clinit__V = function com_google_gwt_useragent_client_UserAgentImplSafari_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgguc2.com_google_gwt_useragent_client_UserAgentImplSafari_$clinit__V;
@@ -22051,7 +22051,7 @@ cgguc2.com_google_gwt_useragent_client_UserAgentImplSafari_UserAgentImplSafari__
 }
 ;
 cgguc2.com_google_gwt_useragent_client_UserAgentImplSafari_UserAgentImplSafari__V.displayName = 'com.google.gwt.useragent.client.UserAgentImplSafari.UserAgentImplSafari';
-com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(439, 1, {1:1});
+com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V(440, 1, {1:1});
 _.private$com_google_gwt_useragent_client_UserAgentImplSafari$$init__V = function com_google_gwt_useragent_client_UserAgentImplSafari_$init__V(){
 }
 ;
@@ -22128,7 +22128,7 @@ _.getRuntimeValue__Ljava_lang_String_2 = function com_google_gwt_useragent_clien
 }
 ;
 _.getRuntimeValue__Ljava_lang_String_2.displayName = 'com.google.gwt.useragent.client.UserAgentImplSafari.getRuntimeValue';
-cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1useragent_1client_1UserAgentImplSafari_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.useragent.client', 'UserAgentImplSafari', 439, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
+cggl.com_google_gwt_lang_ClassLiteralHolder_Lcom_1google_1gwt_1useragent_1client_1UserAgentImplSafari_12_1classLit = java_lang_Class_createForClass__Ljava_lang_String_2Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Class_2Ljava_lang_Class_2('com.google.gwt.useragent.client', 'UserAgentImplSafari', 440, cggl.com_google_gwt_lang_ClassLiteralHolder_Ljava_1lang_1Object_12_1classLit);
 cgwbes.com_google_web_bindery_event_shared_SimpleEventBus$1_$clinit__V = function com_google_web_bindery_event_shared_SimpleEventBus$1_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = cgwbes.com_google_web_bindery_event_shared_SimpleEventBus$1_$clinit__V;
@@ -33464,7 +33464,7 @@ _.setQuadrantHeader__Ljava_lang_String_2Ljava_lang_String_2V.displayName = 'supe
 _.updateSector__IILjava_lang_String_2Ljava_lang_String_2V = function superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_updateSector__IILjava_lang_String_2Ljava_lang_String_2V(x_0, y_0, content, css){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_updateSector__IILjava_lang_String_2Ljava_lang_String_2V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '32' , cggdc).com_google_gwt_dom_client_Element_$setInnerHTML__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2V(this.superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_eSectors[x_0][y_0], content);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '32' , cggdc).com_google_gwt_dom_client_Element_$setInnerText__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2V(this.superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_eSectors[x_0][y_0], content);
   ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '33' , cggdc).com_google_gwt_dom_client_Element_$setClassName__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2V(this.superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_eSectors[x_0][y_0], css);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -38249,7 +38249,7 @@ scm.superstartrek_client_model_StarBase_StarBase__V = function superstartrek_cli
   scm.superstartrek_client_model_Thing_Thing__V.call(this);
   this.private$superstartrek_client_model_StarBase$$init__V();
   this.setName__Ljava_lang_String_2V(($JsStackEmulator_tmp = 'a Federation star base' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '6' , $JsStackEmulator_tmp));
-  this.setSymbol__Ljava_lang_String_2V(($JsStackEmulator_tmp = '&lt;!&gt;' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '7' , $JsStackEmulator_tmp));
+  this.setSymbol__Ljava_lang_String_2V(($JsStackEmulator_tmp = '<!>' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '7' , $JsStackEmulator_tmp));
   this.setCss__Ljava_lang_String_2V(($JsStackEmulator_tmp = 'starbase' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '8' , $JsStackEmulator_tmp));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -38728,7 +38728,7 @@ cggl.com_google_gwt_lang_ClassLiteralHolder_V_1classLit = java_lang_Class_create
 var $entry = com_google_gwt_lang_ModuleUtils_registerEntry__Lcom_google_gwt_core_client_JavaScriptObject_2();
 var gwtOnLoad = gwtOnLoad = com_google_gwt_lang_ModuleUtils_gwtOnLoad__Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2Lcom_google_gwt_core_client_JavaScriptObject_2V;
 com_google_gwt_lang_ModuleUtils_addInitFunctions__V(com_google_gwt_lang_superstartrek_100046superstartrek_1_1EntryMethodHolder_init__V);
-com_google_gwt_lang_ModuleUtils_setGwtProperty__Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2V('permProps', [[['locale', 'default'], ['user.agent', 'ie9']]]);
+com_google_gwt_lang_ModuleUtils_setGwtProperty__Ljava_lang_String_2Lcom_google_gwt_core_client_JavaScriptObject_2V('permProps', [[['locale', 'default'], ['user.agent', 'gecko1_8']]]);
 $sendStats('moduleStartup', 'moduleEvalEnd');
 gwtOnLoad(__gwtModuleFunction.__errFn, __gwtModuleFunction.__moduleName, __gwtModuleFunction.__moduleBase, __gwtModuleFunction.__softPermutationId,__gwtModuleFunction.__computePropValue);
 $sendStats('moduleStartup', 'end');

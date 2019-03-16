@@ -29,7 +29,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	
 	@Override
 	public void updateSector(int x, int y, String content, String css) {
-		eSectors[x][y].setInnerHTML(content);
+		eSectors[x][y].setInnerText(content);
 		eSectors[x][y].setClassName(css);
 	}
 	

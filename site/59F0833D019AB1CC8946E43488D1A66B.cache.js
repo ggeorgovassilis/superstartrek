@@ -3,7 +3,7 @@ var __gwtModuleFunction = $wnd.superstartrek_superstartrek;
 var $sendStats = __gwtModuleFunction.__sendStats;
 $sendStats('moduleStartup', 'moduleEvalStart');
 var $gwt_version = "2.8.2";
-var $strongName = '0832E28A129AEBA24B4EAD3F4A93C4B3';
+var $strongName = '59F0833D019AB1CC8946E43488D1A66B';
 var $gwt = {};
 var $doc = $wnd.document;
 var $moduleName, $moduleBase;
@@ -33464,7 +33464,7 @@ _.setQuadrantHeader__Ljava_lang_String_2Ljava_lang_String_2V.displayName = 'supe
 _.updateSector__IILjava_lang_String_2Ljava_lang_String_2V = function superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_updateSector__IILjava_lang_String_2Ljava_lang_String_2V(x_0, y_0, content, css){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_updateSector__IILjava_lang_String_2Ljava_lang_String_2V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '32' , cggdc).com_google_gwt_dom_client_Element_$setInnerHTML__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2V(this.superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_eSectors[x_0][y_0], content);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '32' , cggdc).com_google_gwt_dom_client_Element_$setInnerText__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2V(this.superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_eSectors[x_0][y_0], content);
   ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '33' , cggdc).com_google_gwt_dom_client_Element_$setClassName__Lcom_google_gwt_dom_client_Element_2Ljava_lang_String_2V(this.superstartrek_client_activities_computer_quadrantscanner_QuadrantScannerView_eSectors[x_0][y_0], css);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -38249,7 +38249,7 @@ scm.superstartrek_client_model_StarBase_StarBase__V = function superstartrek_cli
   scm.superstartrek_client_model_Thing_Thing__V.call(this);
   this.private$superstartrek_client_model_StarBase$$init__V();
   this.setName__Ljava_lang_String_2V(($JsStackEmulator_tmp = 'a Federation star base' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '6' , $JsStackEmulator_tmp));
-  this.setSymbol__Ljava_lang_String_2V(($JsStackEmulator_tmp = '&lt;!&gt;' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '7' , $JsStackEmulator_tmp));
+  this.setSymbol__Ljava_lang_String_2V(($JsStackEmulator_tmp = '<!>' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '7' , $JsStackEmulator_tmp));
   this.setCss__Ljava_lang_String_2V(($JsStackEmulator_tmp = 'starbase' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '8' , $JsStackEmulator_tmp));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }

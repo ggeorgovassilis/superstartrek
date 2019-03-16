@@ -70,7 +70,7 @@ public class TestQuadrantScannerPresenter {
 		verify(view, times(64)).updateSector(any(int.class), any(int.class), eq(""), eq(""));
 		verify(view).updateSector(5, 6, "*", "star");
 		verify(view).updateSector(6, 5, "*", "star");
-		verify(view).updateSector(1, 7, "&lt;!&gt;", "starbase");
+		verify(view).updateSector(1, 7, "<!>", "starbase");
 		verify(view).updateSector(7, 7, "C-D", "klingon cloaked ");
 		
 	}
