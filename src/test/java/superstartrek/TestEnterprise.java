@@ -118,7 +118,7 @@ public class TestEnterprise {
 		
 		enterprise.navigateTo(Location.location(2,2));
 		
-		assertEquals(0, enterprise.getImpulse().getValue(), 0.1);
+		assertEquals(0, enterprise.getImpulse().getValue(), 0.5);
 		assertEquals(Location.location(2,2), enterprise.getLocation());
 		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
 	}

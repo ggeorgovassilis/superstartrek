@@ -123,29 +123,38 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	}
 
 	public void navigateTo(Location loc) {
+		Application app = Application.get();
 		double distance = StarMap.distance(this, loc);
 		if (distance > getImpulse().getValue()) {
-			Application.get().message("Course " + Math.round(distance) + " exceeds maximum impulse power " + getImpulse().getValue());
+			app.message("Course " + Math.round(distance) + " exceeds maximum impulse power " + getImpulse().getValue());
 			return;
 		}
-		Thing thing = Application.get().starMap.findThingAt(quadrant, loc.x, loc.y);
-		if (thing != null) {
-			Application.get().message("Destination is occupied");
-			return;
-		}
-		List<Thing> things = Application.get().starMap.findObstaclesInLine(quadrant, getLocation(), loc);
-		if (things.size() > 1) { // there's always at least 1 thing, the USS Enterprise
-			Application.get()
-					.message("Path isn't clear " + things.size() + " " + things.get(1).getName() + " at " + things.get(1).getLocation());
-			return;
-		}
+		Thing thing = app.starMap.findThingAt(quadrant, loc.x, loc.y);
+		List<Location> path = new ArrayList<>();
+		path.add(getLocation());
+		app.starMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), new Walker() {
+			
+			@Override
+			public boolean visit(int x, int y) {
+				Thing thing = app.starMap.findThingAt(getQuadrant(), x, y);
+				if (thing!=null && thing!=app.starMap.enterprise) {
+					if (thing instanceof Klingon && ((Klingon)thing).isCloaked()) {
+						((Klingon)thing).uncloak();
+					}
+					return false;
+				}
+				path.add(Location.location(x, y));
+				return true;
+			}
+		});
+		Location drop = path.get(path.size()-1);
 		if (!consume("impulse",distance * IMPULSE_CONSUMPTION)) {
-			Application.get().message("Insufficient reactor output");
+			app.message("Insufficient reactor output");
 			return;
 		}
 
-		impulse.decrease(impulse.getValue());
-		_navigateTo(loc);
+		impulse.decrease(distance);
+		_navigateTo(drop);
 	}
 
 	public void fireTorpedosAt(Location sector) {
