@@ -1,5 +1,7 @@
 package superstartrek.client.activities.messages;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent;
@@ -50,6 +52,6 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 
 	@Override
 	public void messagesAcknowledged() {
-	}
+}
 
 }

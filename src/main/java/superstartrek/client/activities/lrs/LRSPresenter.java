@@ -36,8 +36,8 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 	public void quadrantWasClicked(int x, int y) {
 		Quadrant qTo = application.starMap.getQuadrant(x, y);
 		Enterprise enterprise = application.starMap.enterprise;
-		enterprise.warpTo(qTo);
-		History.newItem("computer");
+		if (enterprise.warpTo(qTo))
+			History.newItem("computer");
 	}
 	
 	protected void updateQuadrant(int x, int y) {

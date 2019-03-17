@@ -33,8 +33,9 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 			int y = Integer.parseInt(eTd.getAttribute("y"));
 			cells[x][y] = eTd;
 		}
-		DOM.sinkEvents(getElement(), Event.ONCLICK);
-		DOM.setEventListener(getElement(), new EventListener() {
+		Element eLrs = DOM.getElementById("longrangescan");
+		DOM.sinkEvents(eLrs, Event.ONCLICK);
+		DOM.setEventListener(eLrs, new EventListener() {
 			
 			@Override
 			public void onBrowserEvent(Event event) {

@@ -63,12 +63,14 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		return antimatter;
 	}
 
-	public void warpTo(Quadrant destinationQuadrant) {
+	public boolean warpTo(Quadrant destinationQuadrant) {
 		Location fromLocation = getLocation();
 		Quadrant fromQuadrant = getQuadrant();
+		if (destinationQuadrant==fromQuadrant)
+			return false;
 		if (!consume("warp",20)) {
 			Application.get().message("Insufficient reactor output");
-			return;
+			return false;
 		}
 		int destinationX = destinationQuadrant.getX();
 		int destinationY = destinationQuadrant.getY();
@@ -113,6 +115,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		Application.get().events.fireEvent(warpEvent);
 		ThingMovedEvent moveEvent = new ThingMovedEvent(this, warpEvent.qFrom, oldLocation, warpEvent.qTo, freeSpot);
 		Application.get().events.fireEvent(moveEvent);
+		return true;
 	}
 
 	// only for internal use, bypasses checks
