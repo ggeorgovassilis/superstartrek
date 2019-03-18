@@ -8,7 +8,7 @@ import superstartrek.client.activities.glasspanel.GlassPanelEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
 import superstartrek.client.activities.glasspanel.GlassPanelHandler;
 
-public class MessagesPresenter extends BasePresenter<MessageActivity> implements MessageHandler, GlassPanelHandler{
+public class MessagesPresenter extends BasePresenter<MessageActivity> implements MessageHandler, GlassPanelHandler {
 
 	public MessagesPresenter(Application application) {
 		super(application);
@@ -18,11 +18,11 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
-		((MessagesView)getView()).showMessage(formattedMessage, category);
+		((MessagesView) getView()).showMessage(formattedMessage, category);
 		application.events.fireEvent(new GlassPanelEvent(Action.show));
 		getView().show();
 	}
-	
+
 	public void dismissButtonClicked() {
 		hideMessages();
 	}
@@ -31,7 +31,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 		if (!getView().isVisible())
 			return;
 		getView().hide();
-		((MessagesView)getView()).clear();
+		((MessagesView) getView()).clear();
 		application.events.fireEvent(new MessageEvent(MessageEvent.Action.hide, null, null));
 		application.events.fireEvent(new GlassPanelEvent(Action.hide));
 	}
@@ -52,6 +52,6 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 
 	@Override
 	public void messagesAcknowledged() {
-}
+	}
 
 }

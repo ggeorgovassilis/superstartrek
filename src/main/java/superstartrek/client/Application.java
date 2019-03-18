@@ -108,7 +108,13 @@ public class Application
 			public void execute() {
 				endTurnPending = false;
 				endTurn();
-				startTurn();
+				superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
+					
+					@Override
+					public void execute() {
+						startTurn();
+					}
+				});
 			}
 		});
 	}

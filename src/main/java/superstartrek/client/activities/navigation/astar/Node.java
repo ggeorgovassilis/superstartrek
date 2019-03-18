@@ -11,8 +11,9 @@ public class Node {
 	private int g;
 	private int f;
 	private int h;
-	private int row;
-	private int col;
+	private final int row;
+	private final int col;
+	private final int hashcode;
 	private boolean isBlock;
 	private Node parent;
 
@@ -20,6 +21,7 @@ public class Node {
 		super();
 		this.row = row;
 		this.col = col;
+		hashcode = row*1024+col;
 	}
 
 	public void calculateHeuristic(Node finalNode) {
@@ -29,7 +31,7 @@ public class Node {
 	public void setNodeData(Node currentNode, int cost) {
 		int gCost = currentNode.getG() + cost;
 		setParent(currentNode);
-		setG(gCost);
+		g = gCost;
 		calculateFinalCost();
 	}
 
@@ -43,8 +45,7 @@ public class Node {
 	}
 
 	private void calculateFinalCost() {
-		int finalCost = getG() + getH();
-		setF(finalCost);
+		f = getG() + h;
 	}
 
 	@Override
@@ -54,32 +55,21 @@ public class Node {
 	}
 
 	@Override
+	public int hashCode() {
+		return hashcode;
+	}
+
+	@Override
 	public String toString() {
 		return "Node [row=" + row + ", col=" + col + "]";
-	}
-
-	public int getH() {
-		return h;
-	}
-
-	public void setH(int h) {
-		this.h = h;
 	}
 
 	public int getG() {
 		return g;
 	}
 
-	public void setG(int g) {
-		this.g = g;
-	}
-
 	public int getF() {
 		return f;
-	}
-
-	public void setF(int f) {
-		this.f = f;
 	}
 
 	public Node getParent() {
@@ -102,15 +92,8 @@ public class Node {
 		return row;
 	}
 
-	public void setRow(int row) {
-		this.row = row;
-	}
-
 	public int getCol() {
 		return col;
 	}
 
-	public void setCol(int col) {
-		this.col = col;
-	}
 }
