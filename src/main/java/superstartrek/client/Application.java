@@ -108,13 +108,7 @@ public class Application
 			public void execute() {
 				endTurnPending = false;
 				endTurn();
-				superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
-					
-					@Override
-					public void execute() {
-						startTurn();
-					}
-				});
+				startTurnAfterThis();
 			}
 		});
 	}
@@ -170,6 +164,16 @@ public class Application
 		//release resources so that it can be (hopefully) garbage collected; at this point, everyone who needs resources should have them
 		resources = null;
 	}
+	
+	public void startTurnAfterThis() {
+		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
+			
+			@Override
+			public void execute() {
+				startTurn();
+			}
+		});
+	}
 
 	public void startTurn() {
 		GWT.log("------------------------------ new turn");
@@ -223,6 +227,7 @@ public class Application
 		startGame();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
 		exportStaticMethod();
+		startTurnAfterThis();
 	}
 
 	@Override

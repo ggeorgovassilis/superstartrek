@@ -10,6 +10,7 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.quadrantscanner.IQuadrantScannerView;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
+import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
@@ -67,7 +68,7 @@ public class TestQuadrantScannerPresenter {
 		
 		presenter.onEnterpriseWarped(enterprise, qFrom, lFrom, qTo, lTo);
 		verify(view).updateSector(eq(0), eq(0), eq("O=Ξ"), eq("enterprise "));
-		verify(view, times(64)).updateSector(any(int.class), any(int.class), eq(""), eq(""));
+		verify(view, times(64)).updateSector(any(int.class), any(int.class), eq(MapCellRenderer.nbsp), eq(""));
 		verify(view).updateSector(5, 6, "*", "star");
 		verify(view).updateSector(6, 5, "*", "star");
 		verify(view).updateSector(1, 7, "<!>", "starbase");

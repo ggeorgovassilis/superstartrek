@@ -8,6 +8,7 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
@@ -60,7 +61,9 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 
 	protected void updateSector(Quadrant q, int x, int y, Thing thing){
-		String content = "";
+		//empty table cells need an &nbsp; to keep height stable, otherwise they will "pump" when content changes
+		// and relayout the entire screen which is slow on mobile devices
+		String content = MapCellRenderer.nbsp;
 		String css = "";
 		if (thing!=null) {
 			content = thing.getSymbol();
@@ -90,7 +93,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		
 		for (int y = 0; y < 8; y++)
 			for (int x = 0; x < 8; x++) {
-				((IQuadrantScannerView) view).updateSector(x, y, "", "");
+				((IQuadrantScannerView) view).updateSector(x, y, MapCellRenderer.nbsp, "");
 			}
 		List<Thing> things = new ArrayList<>();
 		things.addAll(q.getKlingons());

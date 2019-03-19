@@ -1,5 +1,7 @@
 package superstartrek.client.activities.computer.srs;
 
+import com.google.gwt.core.shared.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.combat.FireEvent;
@@ -20,12 +22,14 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStar
 
 	public SRSPresenter(Application application) {
 		super(application);
+		GWT.log("SRSPresenter()");
 		application.events.addHandler(TurnStartedEvent.TYPE, this);
 		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 		application.events.addHandler(FireEvent.TYPE, this);
 	}
 
 	public void updateRadar() {
+		GWT.log("SRS update");
 		ISRSView view = (ISRSView) getView();
 		StarMap map = application.starMap;
 		Quadrant q0 = map.enterprise.getQuadrant();
