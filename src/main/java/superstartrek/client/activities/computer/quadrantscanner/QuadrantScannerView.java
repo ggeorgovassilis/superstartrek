@@ -68,7 +68,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	
 	@Override
 	public void setQuadrantHeader(String name, String css){
-		Element e = DOM.getElementById("quadrantheader");
+		Element e = DOM.getElementById("quadrant_name");
 		e.setInnerText(name);
 		e.setClassName(css);
 	}

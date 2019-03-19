@@ -76,7 +76,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	
 	public void updateRepairButton() {
 		Enterprise enterprise = application.starMap.enterprise;
-		((IComputerView)getView()).setRepairButtonVisibility(enterprise.isDamaged() || enterprise.canRepairProvisionally());
+		((IComputerView)getView()).setRepairButtonVisibility(enterprise.canRepairProvisionally());
 	}
 	
 	public void updateStatusButton() {
