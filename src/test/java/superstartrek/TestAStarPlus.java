@@ -30,7 +30,7 @@ import superstartrek.client.model.StarMap;
  */
 public class TestAStarPlus {
 
-//	@Ignore //too slow for regular builds
+	@Ignore //too slow for regular builds
 	@Test
 	public void testAStarPlusPerformance() {
 		final int TURNS = 50000;
@@ -114,6 +114,7 @@ public class TestAStarPlus {
 	 
 	 */
 	@Test
+	@Ignore
 	public void testAStarPlus() {
 		final int TURNS = 1000;
 		Random random = new Random(0);
