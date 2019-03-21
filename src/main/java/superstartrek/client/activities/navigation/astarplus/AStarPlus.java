@@ -1,6 +1,7 @@
 package superstartrek.client.activities.navigation.astarplus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import superstartrek.client.model.Location;
@@ -12,8 +13,8 @@ public class AStarPlus {
 
 	final static int OCCUPIED = -1;
 	final static int FREE = 0;
-	int[] matrix = new int[65]; // 0 is never used, look into code for explanation
-	int[] todo = new int[64];
+	final int[] matrix = new int[65]; // 0 is never used, look into code for explanation
+	final int[] todo = new int[64];
 	int todoHead = 0;
 	int todoTail = 0;
 
@@ -35,6 +36,10 @@ public class AStarPlus {
 	}
 
 	int getNextTodo() {
+		//it's better to do the overflow check here rather than in addTodo because:
+		//1. addToDo can't break a head<tail relation unless it's broken already, so a check there would
+		//only uncover an already broken association
+		//2. getNextTodo is called _at_most_ as many times as addToDo, usually fewer times
 		if (todoHead >= todoTail)
 			throw new IndexOutOfBoundsException("Head after tail " + todoHead + " " + todoTail);
 		return todo[todoHead++];
@@ -69,38 +74,39 @@ public class AStarPlus {
 			markOccupied(map.enterprise);
 	}
 
-	void addNeighboursToTodo(int sectorIndex) {
-		int sectorX = indexToX(sectorIndex);
-		int sectorY = indexToY(sectorIndex);
+	void addNeighboursToTodo(int fromSectorIndex) {
+		int sectorX = indexToX(fromSectorIndex);
+		int sectorY = indexToY(fromSectorIndex);
 
 		int minX = Math.max(0, sectorX - 1);
 		int maxX = Math.min(7, sectorX + 1);
 		int minY = Math.max(0, sectorY - 1);
 		int maxY = Math.min(7, sectorY + 1);
+		int dx = maxX - minX;
+		int index = coordsToIndex(minX, minY);
 		for (int y = minY; y <= maxY; y++) {
-			int index = coordsToIndex(minX, y);
-			for (int x = minX; x <= maxX; x++) {
-				if (index != sectorIndex) {
-					int c = matrix[index];
-					if (c == FREE) {
-						matrix[index] = sectorIndex;
-						addToDo(index);
-					}
+			final int rowStartIndex = index;
+			final int rowEndIndex = index + dx;
+			for (; index <= rowEndIndex; index++) {
+				if (index != fromSectorIndex && matrix[index] == FREE) {
+					matrix[index] = fromSectorIndex;
+					addToDo(index);
 				}
-				index++;
 			}
+			index = rowStartIndex + 8;
 		}
 	}
 
-	List<Location> reconstructPath(int indexTo) {
+	List<Location> reconstructPath(int indexFrom, int indexTo) {
 		List<Location> path = new ArrayList<Location>();
 		int previousIndex = indexTo;
-		while (previousIndex != OCCUPIED) {
+		while (previousIndex != indexFrom) {
 			int x = indexToX(previousIndex);
 			int y = indexToY(previousIndex);
-			path.add(0, Location.location(x, y));
+			path.add(Location.location(x, y));
 			previousIndex = matrix[previousIndex];
 		}
+		Collections.reverse(path);
 		return path;
 	}
 
@@ -123,7 +129,7 @@ public class AStarPlus {
 		if (from == to)
 			return new ArrayList<Location>();
 		initialiseMatrix(quadrant, map);
-		int indexFrom = coordsToIndex(from.getX(), from.getY());
+		final int indexFrom = coordsToIndex(from.getX(), from.getY());
 		addToDo(indexFrom);
 		matrix[indexFrom] = OCCUPIED;
 		int indexTo = coordsToIndex(to.getX(), to.getY());
@@ -131,7 +137,7 @@ public class AStarPlus {
 		while (hasMoreTodo()) {
 			int indexNext = getNextTodo();
 			if (indexNext == indexTo) {
-				return reconstructPath(indexTo);
+				return reconstructPath(indexFrom, indexTo);
 			}
 			addNeighboursToTodo(indexNext);
 		}

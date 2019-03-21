@@ -101,7 +101,6 @@ public class TestAStarPlus {
 		assertTrue(StarMap.distance(to, solutionToCheck.get(solutionToCheck.size() - 1)) < 2);
 	}
 
-	@Ignore 
 	/* surprisingly, a* reference implementation fails with this map, which a*+ solves: 
 	 
     #  E
