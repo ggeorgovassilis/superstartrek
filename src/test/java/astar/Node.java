@@ -1,4 +1,4 @@
-package superstartrek.client.activities.navigation.astar;
+package astar;
 
 /**
  * Node Class

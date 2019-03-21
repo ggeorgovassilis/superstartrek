@@ -128,7 +128,7 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		}
 		PathFinder pathFinder = new PathFinderImpl();
 		// path includes start and end
-		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation(), enterprise.getQuadrant());
+		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation(), enterprise.getQuadrant(), map);
 		if (path == null || path.isEmpty())
 			return;
 		Location sector = path.get(Math.max(0, Math.min(MAX_SECTOR_SPEED, path.size() - 2)));

@@ -9,112 +9,125 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 
 public class AStarPlus {
-	
+
 	final static int OCCUPIED = -1;
-	final static int FREE=0;
-	int[][] matrix;
-	int[] todo = new int[64]; //32 probably also enough
+	final static int FREE = 0;
+	int[] matrix = new int[65]; // 0 is never used, look into code for explanation
+	int[] todo = new int[64];
 	int todoHead = 0;
 	int todoTail = 0;
-	
+
 	int coordsToIndex(int x, int y) {
 		// need to add 1 because "0" (0*8+8) means "free"
-		return 1+x+y*8;
+		return 1 + x + y * 8;
 	}
 
 	int indexToX(int index) {
-		return (index-1) % 8;
+		return (index - 1) % 8;
 	}
-	
+
 	int indexToY(int index) {
-		return (index-1)/8;
+		return (index - 1) / 8;
 	}
-	
+
 	void addToDo(int index) {
-		todo[todoTail++]=index;
+		todo[todoTail++] = index;
 	}
-	
+
 	int getNextTodo() {
-		if (todoHead>=todoTail)
-			throw new IndexOutOfBoundsException("Head after tail "+todoHead+" "+todoTail);
+		if (todoHead >= todoTail)
+			throw new IndexOutOfBoundsException("Head after tail " + todoHead + " " + todoTail);
 		return todo[todoHead++];
 	}
-	
+
 	boolean hasMoreTodo() {
-		return todoTail>todoHead;
+		return todoTail > todoHead;
 	}
-	
-	
+
 	/**
-	 * 0 means traversable and not visited yet
-	 * -1 means not traversable
-	 * anything else means visited where the value is the index of the sector
-	 * we came from
+	 * 0 means traversable and not visited yet -1 means not traversable anything
+	 * else means visited where the value is the index of the sector we came from
 	 */
-	
+
 	void markOccupied(Thing thing) {
 		Location l = thing.getLocation();
-		matrix[l.getX()][l.getY()] = OCCUPIED;
+		int index = coordsToIndex(l.getX(), l.getY());
+		matrix[index] = OCCUPIED;
 	}
-	
-	int[][] initialiseMatrix(Quadrant quadrant, StarMap map) {
-		matrix = new int[8][8];
-		for (int x=0;x<8;x++)
-			for (int y=0;y<8;y++)
-				matrix[x][y]=FREE;
-		for (Thing obstacle:quadrant.getKlingons())
+
+	void initialiseMatrix(Quadrant quadrant, StarMap map) {
+		for (int i = 0; i < matrix.length; i++)
+			matrix[i] = FREE;
+		for (Thing obstacle : quadrant.getKlingons())
 			markOccupied(obstacle);
-		for (Thing obstacle:quadrant.getStars())
+		for (Thing obstacle : quadrant.getStars())
 			markOccupied(obstacle);
-		if (quadrant.getStarBase()!=null)
+		if (quadrant.getStarBase() != null)
 			markOccupied(quadrant.getStarBase());
-		//null only in some unit tests
-		if (map.enterprise!=null)
+		// null only in some unit tests
+		if (map.enterprise != null)
 			markOccupied(map.enterprise);
-		return matrix;
 	}
-	
+
 	void addNeighboursToTodo(int sectorIndex) {
 		int sectorX = indexToX(sectorIndex);
 		int sectorY = indexToY(sectorIndex);
-		
-		int minX = Math.max(0, sectorX-1);
-		int maxX = Math.min(7, sectorX+1);
-		int minY = Math.max(0, sectorY-1);
-		int maxY = Math.min(7, sectorY+1);
-		for (int x=minX;x<=maxX;x++)
-			for (int y=minY;y<=maxY;y++) 
-			if (x!=sectorX || y!=sectorY){
-				int c = matrix[x][y];
-				if (c==FREE) {
-					matrix[x][y] = sectorIndex;
-					addToDo(coordsToIndex(x, y));
+
+		int minX = Math.max(0, sectorX - 1);
+		int maxX = Math.min(7, sectorX + 1);
+		int minY = Math.max(0, sectorY - 1);
+		int maxY = Math.min(7, sectorY + 1);
+		for (int y = minY; y <= maxY; y++) {
+			int index = coordsToIndex(minX, y);
+			for (int x = minX; x <= maxX; x++) {
+				if (index != sectorIndex) {
+					int c = matrix[index];
+					if (c == FREE) {
+						matrix[index] = sectorIndex;
+						addToDo(index);
+					}
 				}
+				index++;
 			}
+		}
 	}
-	
-	List<Location> reconstructPath(int indexTo){
+
+	List<Location> reconstructPath(int indexTo) {
 		List<Location> path = new ArrayList<Location>();
-		int x = indexToX(indexTo);
-		int y = indexToY(indexTo);
-		int previousIndex = matrix[x][y];
-		while(previousIndex!=OCCUPIED) {
-			x = indexToX(previousIndex);
-			y = indexToY(previousIndex);
-			path.add(0,Location.location(x, y));
-			previousIndex = matrix[x][y];
+		int previousIndex = indexTo;
+		while (previousIndex != OCCUPIED) {
+			int x = indexToX(previousIndex);
+			int y = indexToY(previousIndex);
+			path.add(0, Location.location(x, y));
+			previousIndex = matrix[previousIndex];
 		}
 		return path;
 	}
-	
-	
-	
-	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, StarMap map){
-		matrix = initialiseMatrix(quadrant, map);
-		addToDo(coordsToIndex(from.getX(), from.getY()));
-		matrix[from.getX()][from.getY()]=OCCUPIED;
-		
+
+	void printMatrix() {
+		for (int y = 0; y < 8; y++) {
+			for (int x = 0; x < 8; x++) {
+				int index = coordsToIndex(x, y);
+				if (matrix[index] == FREE)
+					System.out.print(" ");
+				else if (matrix[index] == OCCUPIED)
+					System.out.print("#");
+				else
+					System.out.print(".");
+			}
+			System.out.println();
+		}
+	}
+
+	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, StarMap map) {
+		if (from == to)
+			return new ArrayList<Location>();
+		initialiseMatrix(quadrant, map);
+		int indexFrom = coordsToIndex(from.getX(), from.getY());
+		addToDo(indexFrom);
+		matrix[indexFrom] = OCCUPIED;
 		int indexTo = coordsToIndex(to.getX(), to.getY());
+		matrix[indexTo] = FREE;
 		while (hasMoreTodo()) {
 			int indexNext = getNextTodo();
 			if (indexNext == indexTo) {

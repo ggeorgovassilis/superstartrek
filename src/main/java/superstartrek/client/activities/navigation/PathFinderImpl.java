@@ -5,8 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import superstartrek.client.activities.navigation.astar.AStar;
-import superstartrek.client.activities.navigation.astar.Node;
+import superstartrek.client.activities.navigation.astarplus.AStarPlus;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
@@ -34,21 +33,13 @@ public class PathFinderImpl implements PathFinder{
 	}
 	
 	@Override
-	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant){
+	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, StarMap map){
 		//TODO: ideas to speed this up
 		/* This method is called frequently: once per turn per klingon in the quadrant and is thus a hotspot.
 	     */
 		
-		
-		AStar astar = new AStar(8, 8, new Node(from.getY(), from.getX()), new Node(to.getY(), to.getX()));
-		int[][] blocks = getObstacles(from, to, quadrant);
-		astar.setBlocks(blocks);
-		
-		//maybe rewrite the a* implementation to directly use our data representation instead of its own nodes?
-		List<Node> path = astar.findPath();
-		List<Location> lPath = new ArrayList<>();
-		for (Node node:path)
-			lPath.add(Location.location(node.getCol(), node.getRow()));
-		return lPath;
+		AStarPlus astar = new AStarPlus();
+		List<Location> path = astar.findPathBetween(from, to, quadrant, map);
+		return path;
 	}
 }

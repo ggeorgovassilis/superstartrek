@@ -226,7 +226,6 @@ public class Application
 		setupStarMap();
 		startGame();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
-		exportStaticMethod();
 		startTurnAfterThis();
 	}
 
@@ -285,19 +284,5 @@ public class Application
 		if (!this.gameIsRunning)
 			Window.Location.reload();
 	}
-
-	public static void computePath(int toX, int toY) {
-		Enterprise e = that.starMap.enterprise;
-		PathFinder pf = new PathFinderImpl();
-		List<Location> path = pf.findPathBetween(e.getLocation(), Location.location(toX, toY), e.getQuadrant());
-		for (Location l : path)
-			GWT.log(l.toString());
-	}
-
-	public static native void exportStaticMethod()
-	/*-{
-	$wnd.path =
-		$entry(@superstartrek.client.Application::computePath(II));
-	}-*/;
 
 }

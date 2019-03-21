@@ -6,8 +6,8 @@ import java.util.Random;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import superstartrek.client.activities.navigation.astar.AStar;
-import superstartrek.client.activities.navigation.astar.Node;
+import astar.AStar;
+import astar.Node;
 import superstartrek.client.activities.navigation.astarplus.AStarPlus;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
