@@ -16,6 +16,29 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gwt.version>1.8</gwt.version>
 	</properties>
+	
+	<profiles>
+	<profile>
+		<id>profile</id>
+		<properties>
+			<gwt.draftCompile>true</gwt.draftCompile>
+			<gwt.module>superstartrek.sst-profile</gwt.module>
+			<gwt.methodNameDisplayMode>FULL</gwt.methodNameDisplayMode>
+			<gwt.saveSource>true</gwt.saveSource>
+			<gwt.style>DETAILED</gwt.style>
+		</properties>
+	</profile>
+	<profile>
+		<id>production</id>
+		<properties>
+			<gwt.draftCompile>false</gwt.draftCompile>
+			<gwt.module>superstartrek.sst-prod</gwt.module>
+			<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
+			<gwt.saveSource>false</gwt.saveSource>
+			<gwt.style>OBFUSCATED</gwt.style>
+		</properties>
+	</profile>
+	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -118,13 +141,13 @@
 					</execution>
 				</executions>
 				<configuration>
-					<draftCompile>false</draftCompile>
+					<draftCompile>${gwt.draftCompile}</draftCompile>
 					<deploy>${project.build.directory}/deploy</deploy>
 					<outputDirectory>${project.basedir}/site</outputDirectory>
-					<module>superstartrek.sst-prod</module>
-					<methodNameDisplayMode>FULL</methodNameDisplayMode>
-					<saveSource>true</saveSource>
-					<style>DETAILED</style>
+					<module>${gwt.module}</module>
+					<methodNameDisplayMode>${gwt.methodNameDisplayMode}</methodNameDisplayMode>
+					<saveSource>${gwt.saveSource}</saveSource>
+					<style>${gwt.style}</style>
 				</configuration>
 			</plugin>
 			<plugin>

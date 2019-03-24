@@ -1,5 +1,6 @@
 package superstartrek.client.activities.sector.scan;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;
@@ -26,8 +27,8 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 	@Override
 	public void scanSector(ScanSectorEvent event) {
 		getView().show();
-		glassPanelHandler = application.events.addHandler(GlassPanelEvent.TYPE, this);
 		application.events.fireEvent(new GlassPanelEvent(Action.show));
+		glassPanelHandler = application.events.addHandler(GlassPanelEvent.TYPE, this);
 		IScanSectorView v = (IScanSectorView)getView();
 		Quadrant q = event.getQuadrant();
 		Thing thing = application.starMap.findThingAt(q, event.getLocation().getX(), event.getLocation().getY());
@@ -57,7 +58,13 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 	}
 	
 	public void doneWithMenu() {
+		if (!getView().isVisible())
+			return;
+		GWT.log("doneWithMenu");
 		getView().hide();
+		if (glassPanelHandler!=null)
+			glassPanelHandler.removeHandler();
+		glassPanelHandler = null;
 		application.events.fireEvent(new ComputerEvent(ComputerEvent.Action.showScreen));
 	}
 	
@@ -75,8 +82,7 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 
 	@Override
 	public void glassPanelHidden() {
-		if (glassPanelHandler!=null)
-			glassPanelHandler.removeHandler();
+		doneWithMenu();
 	}
 
 	@Override
