@@ -636,3 +636,13 @@ button.disabled{
 	background-color:rgb(20,40,60);
 	color:darkgay;
 }
+
+#installappprompt{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	display:block;
+	background-color:white;
+	color:black;
+}

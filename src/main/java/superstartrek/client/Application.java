@@ -14,6 +14,7 @@ import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.computer.ComputerPresenter;

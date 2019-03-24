@@ -2,39 +2,16 @@ var APP_PREFIX = 'sst'     // Identifier for this app (this needs to be consiste
 var VERSION = '1'              // Version of the off-line cache (change this value everytime you want to update cache)
 var CACHE_NAME = APP_PREFIX + VERSION
 
-function removeDuplicates(arr){
-	return arr.filter(function(item, pos) {
-	    return arr.indexOf(item) == pos;
-	});
-}
 //Add resources that should be available offline to this list.
-let URLS = removeDuplicates([
-	"/superstartrek/css/sst.css",
-	"/superstartrek/images/icon192x192.png",
-	"/superstartrek/images/icon512x512.png",
-	"/superstartrek/images/stars-background.gif",
-	"/superstartrek/js/astar.js",
-	"/superstartrek/js/battle.js",
-	"/superstartrek/js/computer.js",
-	"/superstartrek/js/controller.js",
-	"/superstartrek/js/enterprise.js",
-	"/superstartrek/js/events.js",
-	"/superstartrek/js/intro.js",
-	"/superstartrek/js/jquery.1.9.2.js",
-	"/superstartrek/js/klingon.js",
-	"/superstartrek/js/long-range-scan.js",
-	"/superstartrek/js/messages.js",
-	"/superstartrek/js/navigation.js",
-	"/superstartrek/js/setup.js",
-	"/superstartrek/js/short-range-scan.js",
-	"/superstartrek/js/sst.js",
-	"/superstartrek/js/starmap.js",
-	"/superstartrek/js/status-report.js",
-	"/superstartrek/js/tools.js",
-	"/superstartrek/service-worker.js",
-	"/superstartrek/index.html",
-	"/superstartrek/manual.html"
-	]);
+let URLS = [
+	"/superstartrek/site/index.html",
+	"/superstartrek/site/images/icon192x192.png",
+	"/superstartrek/site/images/icon512x512.png",
+	"/superstartrek/site/images/stars-background.gif",
+	"/superstartrek/site/css/sst.css",
+	"/superstartrek/site/superstartrek.superstartrek.nocache.js",
+	"/superstartrek/site/images/stars-background.gif"
+];
 
 // Respond with cached resources
 self.addEventListener('fetch', function (e) {
@@ -65,10 +42,7 @@ self.addEventListener('install', function (e) {
   e.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       console.log("SW",'installing cache : ' + CACHE_NAME);
-      for (var i=0;i<URLS.length;i++){
-    	  console.debug("SW","caching",URLS[i]);
-    	  cache.add(URLS[i]);
-      }
+      cache.addAll(URLS);
       return true;
     })
   )

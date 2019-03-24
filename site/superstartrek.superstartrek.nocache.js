@@ -1,5 +1,5 @@
 function superstartrek_superstartrek(){
-  var $intern_0 = '', $intern_1 = 0, $intern_2 = 'gwt.codesvr=', $intern_3 = 'gwt.hosted=', $intern_4 = 'gwt.hybrid', $intern_5 = 'superstartrek.superstartrek', $intern_6 = '__gwt_marker_superstartrek.superstartrek', $intern_7 = '<script id="', $intern_8 = '"><\/script>', $intern_9 = 'SCRIPT', $intern_10 = '#', $intern_11 = '?', $intern_12 = '/', $intern_13 = 1, $intern_14 = 'base', $intern_15 = 'img', $intern_16 = 'clear.cache.gif', $intern_17 = 'meta', $intern_18 = 'name', $intern_19 = 'gwt:property', $intern_20 = 'content', $intern_21 = '=', $intern_22 = 'gwt:onPropertyErrorFn', $intern_23 = 'Bad handler "', $intern_24 = '" for "gwt:onPropertyErrorFn"', $intern_25 = 'gwt:onLoadErrorFn', $intern_26 = '" for "gwt:onLoadErrorFn"', $intern_27 = 'user.agent', $intern_28 = 'webkit', $intern_29 = 'safari', $intern_30 = 'msie', $intern_31 = 10, $intern_32 = 11, $intern_33 = 'ie10', $intern_34 = 9, $intern_35 = 'ie9', $intern_36 = 8, $intern_37 = 'ie8', $intern_38 = 'gecko', $intern_39 = 'gecko1_8', $intern_40 = 2, $intern_41 = 3, $intern_42 = 4, $intern_43 = 'Single-script hosted mode not yet implemented. See issue ', $intern_44 = 'http://code.google.com/p/google-web-toolkit/issues/detail?id=2079', $intern_45 = '6F44B504A71BC83BA571DFA534BD09D8', $intern_46 = ':1', $intern_47 = ':2', $intern_48 = ':3', $intern_49 = ':4', $intern_50 = ':', $intern_51 = 'DOMContentLoaded', $intern_52 = 50;
+  var $intern_0 = '', $intern_1 = 0, $intern_2 = 'gwt.codesvr=', $intern_3 = 'gwt.hosted=', $intern_4 = 'gwt.hybrid', $intern_5 = 'superstartrek.superstartrek', $intern_6 = '__gwt_marker_superstartrek.superstartrek', $intern_7 = '<script id="', $intern_8 = '"><\/script>', $intern_9 = 'SCRIPT', $intern_10 = '#', $intern_11 = '?', $intern_12 = '/', $intern_13 = 1, $intern_14 = 'base', $intern_15 = 'img', $intern_16 = 'clear.cache.gif', $intern_17 = 'meta', $intern_18 = 'name', $intern_19 = 'gwt:property', $intern_20 = 'content', $intern_21 = '=', $intern_22 = 'gwt:onPropertyErrorFn', $intern_23 = 'Bad handler "', $intern_24 = '" for "gwt:onPropertyErrorFn"', $intern_25 = 'gwt:onLoadErrorFn', $intern_26 = '" for "gwt:onLoadErrorFn"', $intern_27 = 'user.agent', $intern_28 = 'webkit', $intern_29 = 'safari', $intern_30 = 'msie', $intern_31 = 10, $intern_32 = 11, $intern_33 = 'ie10', $intern_34 = 9, $intern_35 = 'ie9', $intern_36 = 8, $intern_37 = 'ie8', $intern_38 = 'gecko', $intern_39 = 'gecko1_8', $intern_40 = 2, $intern_41 = 3, $intern_42 = 4, $intern_43 = 'Single-script hosted mode not yet implemented. See issue ', $intern_44 = 'http://code.google.com/p/google-web-toolkit/issues/detail?id=2079', $intern_45 = '0B352498C73D5735E09A96E98F725C62', $intern_46 = ':1', $intern_47 = ':2', $intern_48 = ':3', $intern_49 = ':4', $intern_50 = ':', $intern_51 = 'DOMContentLoaded', $intern_52 = 50;
   var $wnd = window, $doc = document, gwtOnLoad, bodyDone, base = $intern_0, metaProps = {}, values = [], providers = [], answers = [], softPermutationId = $intern_1, onLoadErrorFunc, propertyErrorFunc;
   if (!$wnd.__gwt_stylesLoaded) {
     $wnd.__gwt_stylesLoaded = {};
@@ -241,7 +241,7 @@ function superstartrek_superstartrek(){
 }
 
 superstartrek_superstartrek();
-(function () {var $gwt_version = "2.8.2";var $wnd = window;var $doc = $wnd.document;var $moduleName, $moduleBase;var $stats = $wnd.__gwtStatsEvent ? function(a) {$wnd.__gwtStatsEvent(a)} : null;var $strongName = '6F44B504A71BC83BA571DFA534BD09D8';var cggl = {}, $JsStackEmulator_stack = [], $JsStackEmulator_stackDepth = -1, $JsStackEmulator_location = [], $JsStackEmulator_tmp;
+(function () {var $gwt_version = "2.8.2";var $wnd = window;var $doc = $wnd.document;var $moduleName, $moduleBase;var $stats = $wnd.__gwtStatsEvent ? function(a) {$wnd.__gwtStatsEvent(a)} : null;var $strongName = '0B352498C73D5735E09A96E98F725C62';var cggl = {}, $JsStackEmulator_stack = [], $JsStackEmulator_stackDepth = -1, $JsStackEmulator_location = [], $JsStackEmulator_tmp;
 var jl = {};
 var cggcc = {};
 var ji = {};
@@ -31319,7 +31319,7 @@ cggl.com_google_gwt_lang_ClassLiteralHolder_Lsuperstartrek_1client_1activities_1
 sc.superstartrek_client_Application_$clinit__V = function superstartrek_client_Application_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application_$clinit__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '58' , sc).superstartrek_client_Application_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '59' , sc).superstartrek_client_Application_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
   jl.java_lang_Object_$clinit__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -31328,12 +31328,12 @@ sc.superstartrek_client_Application_$clinit__V.displayName = 'superstartrek.clie
 sc.superstartrek_client_Application_Application__V = function superstartrek_client_Application_Application__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application_Application__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '86' , sc).superstartrek_client_Application_$clinit__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '87' , sc).superstartrek_client_Application_$clinit__V();
   java_lang_Object_Object__V.call(this);
   this.private$superstartrek_client_Application$$init__V();
-  if (com_google_gwt_lang_Cast_isNotNull__Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '87' , sc).superstartrek_client_Application_that))
-    throw com_google_gwt_lang_Exceptions_toJs__Ljava_lang_Object_2Ljava_lang_Object_2(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '88' , jl).java_lang_RuntimeException_RuntimeException__Ljava_lang_String_2V('There already is an application instance'));
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '89' , sc).superstartrek_client_Application_that = this;
+  if (com_google_gwt_lang_Cast_isNotNull__Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '88' , sc).superstartrek_client_Application_that))
+    throw com_google_gwt_lang_Exceptions_toJs__Ljava_lang_Object_2Ljava_lang_Object_2(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '89' , jl).java_lang_RuntimeException_RuntimeException__Ljava_lang_String_2V('There already is an application instance'));
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '90' , sc).superstartrek_client_Application_that = this;
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31341,10 +31341,10 @@ sc.superstartrek_client_Application_Application__V.displayName = 'superstartrek.
 sc.superstartrek_client_Application_get__Lsuperstartrek_client_Application_2 = function superstartrek_client_Application_get__Lsuperstartrek_client_Application_2(){
   var JsStackEmulator_stackIndex, JsStackEmulator_returnTemp;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application_get__Lsuperstartrek_client_Application_2;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '80' , sc).superstartrek_client_Application_$clinit__V();
-  if (com_google_gwt_lang_Cast_isNull__Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '81' , sc).superstartrek_client_Application_that))
-    ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '82' , sc).superstartrek_client_Application_that = new sc.superstartrek_client_Application_Application__V;
-  JsStackEmulator_returnTemp = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '83' , sc).superstartrek_client_Application_that;
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '81' , sc).superstartrek_client_Application_$clinit__V();
+  if (com_google_gwt_lang_Cast_isNull__Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '82' , sc).superstartrek_client_Application_that))
+    ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '83' , sc).superstartrek_client_Application_that = new sc.superstartrek_client_Application_Application__V;
+  JsStackEmulator_returnTemp = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '84' , sc).superstartrek_client_Application_that;
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
   return JsStackEmulator_returnTemp;
 }
@@ -31354,8 +31354,8 @@ com_google_gwt_lang_Runtime_defineClass__Lcom_google_gwt_core_client_JavaScriptO
 _.private$superstartrek_client_Application$$init__V = function superstartrek_client_Application_$init__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_$init__V;
-  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '64' , this.superstartrek_client_Application_gameIsRunning = true;
-  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '65' , this.superstartrek_client_Application_endTurnPending = false;
+  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '65' , this.superstartrek_client_Application_gameIsRunning = true;
+  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '66' , this.superstartrek_client_Application_endTurnPending = false;
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31363,8 +31363,8 @@ _.private$superstartrek_client_Application$$init__V.displayName = 'superstartrek
 _.addHistoryListener__Lcom_google_gwt_event_logical_shared_ValueChangeHandler_2V = function superstartrek_client_Application_addHistoryListener__Lcom_google_gwt_event_logical_shared_ValueChangeHandler_2V(handler){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_addHistoryListener__Lcom_google_gwt_event_logical_shared_ValueChangeHandler_2V;
-  if ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '97' , com_google_gwt_core_client_GWT_isClient__Z())
-    ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '98' , cgguc).com_google_gwt_user_client_History_addValueChangeHandler__Lcom_google_gwt_event_logical_shared_ValueChangeHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2(handler);
+  if ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '98' , com_google_gwt_core_client_GWT_isClient__Z())
+    ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '99' , cgguc).com_google_gwt_user_client_History_addValueChangeHandler__Lcom_google_gwt_event_logical_shared_ValueChangeHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2(handler);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31372,9 +31372,9 @@ _.addHistoryListener__Lcom_google_gwt_event_logical_shared_ValueChangeHandler_2V
 _.endTurn__V = function superstartrek_client_Application_endTurn__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_endTurn__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '162' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scac2.superstartrek_client_activities_computer_TurnEndedEvent_TurnEndedEvent__V);
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '163' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scak.superstartrek_client_activities_klingons_KlingonTurnEvent_KlingonTurnEvent__V);
-  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '165' , this.superstartrek_client_Application_resources = null;
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '163' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scac2.superstartrek_client_activities_computer_TurnEndedEvent_TurnEndedEvent__V);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '164' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scak.superstartrek_client_activities_klingons_KlingonTurnEvent_KlingonTurnEvent__V);
+  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '166' , this.superstartrek_client_Application_resources = null;
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31382,12 +31382,12 @@ _.endTurn__V.displayName = 'superstartrek.client.Application.endTurn';
 _.endTurnAfterThis__V = function superstartrek_client_Application_endTurnAfterThis__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_endTurnAfterThis__V;
-  if ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '102' , this.superstartrek_client_Application_endTurnPending) {
+  if ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '103' , this.superstartrek_client_Application_endTurnPending) {
     $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
     return;
   }
-  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '104' , this.superstartrek_client_Application_endTurnPending = true;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '105' , scu).superstartrek_client_utils_Timer_postpone__Lcom_google_gwt_core_client_Scheduler$ScheduledCommand_2V(new sc.superstartrek_client_Application$1_Application$1__Lsuperstartrek_client_Application_2V(this));
+  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '105' , this.superstartrek_client_Application_endTurnPending = true;
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '106' , scu).superstartrek_client_utils_Timer_postpone__Lcom_google_gwt_core_client_Scheduler$ScheduledCommand_2V(new sc.superstartrek_client_Application$1_Application$1__Lsuperstartrek_client_Application_2V(this));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31395,7 +31395,7 @@ _.endTurnAfterThis__V.displayName = 'superstartrek.client.Application.endTurnAft
 _.gameLost__V = function superstartrek_client_Application_gameLost__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_gameLost__V;
-  this.message__Ljava_lang_String_2Ljava_lang_String_2V('The Enterprise was destroyed.', ($JsStackEmulator_tmp = 'gameover' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '256' , $JsStackEmulator_tmp));
+  this.message__Ljava_lang_String_2Ljava_lang_String_2V('The Enterprise was destroyed.', ($JsStackEmulator_tmp = 'gameover' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '257' , $JsStackEmulator_tmp));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31403,8 +31403,8 @@ _.gameLost__V.displayName = 'superstartrek.client.Application.gameLost';
 _.gameOver__V = function superstartrek_client_Application_gameOver__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_gameOver__V;
-  this.message__Ljava_lang_String_2V(($JsStackEmulator_tmp = 'Game over.' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '250' , $JsStackEmulator_tmp));
-  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '251' , this.superstartrek_client_Application_gameIsRunning = false;
+  this.message__Ljava_lang_String_2V(($JsStackEmulator_tmp = 'Game over.' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '251' , $JsStackEmulator_tmp));
+  $JsStackEmulator_location[JsStackEmulator_stackIndex] = '252' , this.superstartrek_client_Application_gameIsRunning = false;
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31412,8 +31412,8 @@ _.gameOver__V.displayName = 'superstartrek.client.Application.gameOver';
 _.gameOver__Lsuperstartrek_client_activities_loading_GameOverEvent$Outcome_2Ljava_lang_String_2V = function superstartrek_client_Application_gameOver__Lsuperstartrek_client_activities_loading_GameOverEvent$Outcome_2Ljava_lang_String_2V(outcome, reason){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_gameOver__Lsuperstartrek_client_activities_loading_GameOverEvent$Outcome_2Ljava_lang_String_2V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '244' , cggcc).com_google_gwt_core_client_GWT_log__Ljava_lang_String_2V(reason);
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '245' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scal.superstartrek_client_activities_loading_GameOverEvent_GameOverEvent__Lsuperstartrek_client_activities_loading_GameOverEvent$Outcome_2Ljava_lang_String_2V(outcome, reason));
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '245' , cggcc).com_google_gwt_core_client_GWT_log__Ljava_lang_String_2V(reason);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '246' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scal.superstartrek_client_activities_loading_GameOverEvent_GameOverEvent__Lsuperstartrek_client_activities_loading_GameOverEvent$Outcome_2Ljava_lang_String_2V(outcome, reason));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31421,7 +31421,7 @@ _.gameOver__Lsuperstartrek_client_activities_loading_GameOverEvent$Outcome_2Ljav
 _.gameWon__V = function superstartrek_client_Application_gameWon__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_gameWon__V;
-  this.message__Ljava_lang_String_2Ljava_lang_String_2V('Congratulations, all Klingons were destroyed.', ($JsStackEmulator_tmp = 'gamewon' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '261' , $JsStackEmulator_tmp));
+  this.message__Ljava_lang_String_2Ljava_lang_String_2V('Congratulations, all Klingons were destroyed.', ($JsStackEmulator_tmp = 'gamewon' , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '262' , $JsStackEmulator_tmp));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31429,18 +31429,18 @@ _.gameWon__V.displayName = 'superstartrek.client.Application.gameWon';
 _.getFlags__Ljava_util_Set_2 = function superstartrek_client_Application_getFlags__Ljava_util_Set_2(){
   var s, s$array, s$index, s$max, sflags, split_0, JsStackEmulator_stackIndex, JsStackEmulator_returnTemp;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_getFlags__Ljava_util_Set_2;
-  if (com_google_gwt_lang_Cast_isNull__Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '269' , this.superstartrek_client_Application_flags))) {
-    sflags = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '270' , cgguc).com_google_gwt_user_client_Window$Location_getParameter__Ljava_lang_String_2Ljava_lang_String_2('flags');
-    if (com_google_gwt_lang_Cast_jsEquals__Ljava_lang_Object_2Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '271' , sflags), null))
-      $JsStackEmulator_location[JsStackEmulator_stackIndex] = '272' , sflags = '';
-    split_0 = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '273' , jl).java_lang_String_split_1Ljava_1lang_1String_1_1_1Ljava_1lang_1String_1_1_1devirtual$__Ljava_lang_String_2Ljava_lang_String_2_3Ljava_lang_String_2(sflags, ',');
-    this.superstartrek_client_Application_flags = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '274' , ju).java_util_HashSet_HashSet__V;
-    for (s$array = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '275' , split_0) , s$index = 0 , s$max = s$array.length; ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '275' , s$index) < s$max; $JsStackEmulator_location[JsStackEmulator_stackIndex] = '275' , ++s$index) {
+  if (com_google_gwt_lang_Cast_isNull__Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '270' , this.superstartrek_client_Application_flags))) {
+    sflags = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '271' , cgguc).com_google_gwt_user_client_Window$Location_getParameter__Ljava_lang_String_2Ljava_lang_String_2('flags');
+    if (com_google_gwt_lang_Cast_jsEquals__Ljava_lang_Object_2Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '272' , sflags), null))
+      $JsStackEmulator_location[JsStackEmulator_stackIndex] = '273' , sflags = '';
+    split_0 = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '274' , jl).java_lang_String_split_1Ljava_1lang_1String_1_1_1Ljava_1lang_1String_1_1_1devirtual$__Ljava_lang_String_2Ljava_lang_String_2_3Ljava_lang_String_2(sflags, ',');
+    this.superstartrek_client_Application_flags = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '275' , ju).java_util_HashSet_HashSet__V;
+    for (s$array = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '276' , split_0) , s$index = 0 , s$max = s$array.length; ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '276' , s$index) < s$max; $JsStackEmulator_location[JsStackEmulator_stackIndex] = '276' , ++s$index) {
       s = s$array[s$index];
-      ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '276' , this.superstartrek_client_Application_flags).add__Ljava_lang_Object_2Z(s);
+      ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '277' , this.superstartrek_client_Application_flags).add__Ljava_lang_Object_2Z(s);
     }
   }
-  JsStackEmulator_returnTemp = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '278' , this.superstartrek_client_Application_flags);
+  JsStackEmulator_returnTemp = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '279' , this.superstartrek_client_Application_flags);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
   return JsStackEmulator_returnTemp;
 }
@@ -31449,7 +31449,7 @@ _.getFlags__Ljava_util_Set_2.displayName = 'superstartrek.client.Application.get
 _.getResources__Lsuperstartrek_client_Resources_2 = function superstartrek_client_Application_getResources__Lsuperstartrek_client_Resources_2(){
   var JsStackEmulator_stackIndex, JsStackEmulator_returnTemp;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_getResources__Lsuperstartrek_client_Resources_2;
-  JsStackEmulator_returnTemp = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '93' , this.superstartrek_client_Application_resources);
+  JsStackEmulator_returnTemp = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '94' , this.superstartrek_client_Application_resources);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
   return JsStackEmulator_returnTemp;
 }
@@ -31458,7 +31458,7 @@ _.getResources__Lsuperstartrek_client_Resources_2.displayName = 'superstartrek.c
 _.message__Ljava_lang_String_2V = function superstartrek_client_Application_message__Ljava_lang_String_2V(formattedMessage){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_message__Ljava_lang_String_2V;
-  this.message__Ljava_lang_String_2Ljava_lang_String_2V(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '185' , formattedMessage), 'info');
+  this.message__Ljava_lang_String_2Ljava_lang_String_2V(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '186' , formattedMessage), 'info');
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31466,7 +31466,7 @@ _.message__Ljava_lang_String_2V.displayName = 'superstartrek.client.Application.
 _.message__Ljava_lang_String_2Ljava_lang_String_2V = function superstartrek_client_Application_message__Ljava_lang_String_2Ljava_lang_String_2V(formattedMessage, category){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_message__Ljava_lang_String_2Ljava_lang_String_2V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '189' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scam.superstartrek_client_activities_messages_MessageEvent_MessageEvent__Lsuperstartrek_client_activities_messages_MessageEvent$Action_2Ljava_lang_String_2Ljava_lang_String_2V((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '7' , scam).superstartrek_client_activities_messages_MessageEvent$Action_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '189' , scam).superstartrek_client_activities_messages_MessageEvent$Action_show), formattedMessage, category));
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '190' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scam.superstartrek_client_activities_messages_MessageEvent_MessageEvent__Lsuperstartrek_client_activities_messages_MessageEvent$Action_2Ljava_lang_String_2Ljava_lang_String_2V((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '7' , scam).superstartrek_client_activities_messages_MessageEvent$Action_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '190' , scam).superstartrek_client_activities_messages_MessageEvent$Action_show), formattedMessage, category));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31478,8 +31478,8 @@ _.messagePosted__Ljava_lang_String_2Ljava_lang_String_2V.displayName = 'supersta
 _.messagesAcknowledged__V = function superstartrek_client_Application_messagesAcknowledged__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_messagesAcknowledged__V;
-  if (!($JsStackEmulator_location[JsStackEmulator_stackIndex] = '284' , this.superstartrek_client_Application_gameIsRunning))
-    ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '285' , cgguc).com_google_gwt_user_client_Window$Location_reload__V();
+  if (!($JsStackEmulator_location[JsStackEmulator_stackIndex] = '285' , this.superstartrek_client_Application_gameIsRunning))
+    ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '286' , cgguc).com_google_gwt_user_client_Window$Location_reload__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31487,7 +31487,7 @@ _.messagesAcknowledged__V.displayName = 'superstartrek.client.Application.messag
 _.onEnterpriseWarped__Lsuperstartrek_client_model_Enterprise_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2V = function superstartrek_client_Application_onEnterpriseWarped__Lsuperstartrek_client_model_Enterprise_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2V(enterprise, qFrom, lFrom, qTo, lTo){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_onEnterpriseWarped__Lsuperstartrek_client_model_Enterprise_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2V;
-  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '240' , $JsStackEmulator_tmp).endTurnAfterThis__V();
+  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '241' , $JsStackEmulator_tmp).endTurnAfterThis__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31495,16 +31495,16 @@ _.onEnterpriseWarped__Lsuperstartrek_client_model_Enterprise_2Lsuperstartrek_cli
 _.onModuleLoad__V = function superstartrek_client_Application_onModuleLoad__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_onModuleLoad__V;
-  this.superstartrek_client_Application_resources = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '220' , sc).superstartrek_client_Resources_1default_1InlineClientBundleGenerator_Resources_1default_1InlineClientBundleGenerator__V, 372);
-  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '221' , $JsStackEmulator_tmp).private$superstartrek_client_Application$setUncaughtExceptionHandler__V();
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '222' , cggcc).com_google_gwt_core_client_GWT_log__Ljava_lang_String_2V('onModuleLoad');
-  this.superstartrek_client_Application_page = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '223' , cggucu).com_google_gwt_user_client_ui_HTMLPanel_wrap__Lcom_google_gwt_dom_client_Element_2Lcom_google_gwt_user_client_ui_HTMLPanel_2(cgguc.com_google_gwt_user_client_DOM_getElementById__Ljava_lang_String_2Lcom_google_gwt_user_client_Element_2('page'));
-  this.superstartrek_client_Application_events = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '224' , cgges).com_google_gwt_event_shared_SimpleEventBus_SimpleEventBus__V, 110);
-  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '225' , $JsStackEmulator_tmp).setupScreens__V();
-  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '226' , $JsStackEmulator_tmp).setupStarMap__V();
-  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '227' , $JsStackEmulator_tmp).startGame__V();
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '228' , this.superstartrek_client_Application_starMap).superstartrek_client_model_StarMap_enterprise.warpTo__Lsuperstartrek_client_model_Quadrant_2Z(this.superstartrek_client_Application_starMap.superstartrek_client_model_StarMap_enterprise.getQuadrant__Lsuperstartrek_client_model_Quadrant_2());
-  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '229' , $JsStackEmulator_tmp).startTurnAfterThis__V();
+  this.superstartrek_client_Application_resources = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '221' , sc).superstartrek_client_Resources_1default_1InlineClientBundleGenerator_Resources_1default_1InlineClientBundleGenerator__V, 372);
+  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '222' , $JsStackEmulator_tmp).private$superstartrek_client_Application$setUncaughtExceptionHandler__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '223' , cggcc).com_google_gwt_core_client_GWT_log__Ljava_lang_String_2V('onModuleLoad');
+  this.superstartrek_client_Application_page = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '224' , cggucu).com_google_gwt_user_client_ui_HTMLPanel_wrap__Lcom_google_gwt_dom_client_Element_2Lcom_google_gwt_user_client_ui_HTMLPanel_2(cgguc.com_google_gwt_user_client_DOM_getElementById__Ljava_lang_String_2Lcom_google_gwt_user_client_Element_2('page'));
+  this.superstartrek_client_Application_events = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '225' , cgges).com_google_gwt_event_shared_SimpleEventBus_SimpleEventBus__V, 110);
+  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '226' , $JsStackEmulator_tmp).setupScreens__V();
+  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '227' , $JsStackEmulator_tmp).setupStarMap__V();
+  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '228' , $JsStackEmulator_tmp).startGame__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '229' , this.superstartrek_client_Application_starMap).superstartrek_client_model_StarMap_enterprise.warpTo__Lsuperstartrek_client_model_Quadrant_2Z(this.superstartrek_client_Application_starMap.superstartrek_client_model_StarMap_enterprise.getQuadrant__Lsuperstartrek_client_model_Quadrant_2());
+  ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '230' , $JsStackEmulator_tmp).startTurnAfterThis__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31512,7 +31512,7 @@ _.onModuleLoad__V.displayName = 'superstartrek.client.Application.onModuleLoad';
 _.private$superstartrek_client_Application$setUncaughtExceptionHandler__V = function superstartrek_client_Application_setUncaughtExceptionHandler__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_setUncaughtExceptionHandler__V;
-  com_google_gwt_core_client_GWT_setUncaughtExceptionHandler__Lcom_google_gwt_core_client_GWT$UncaughtExceptionHandler_2V(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '197' , sc).superstartrek_client_Application$3_Application$3__Lsuperstartrek_client_Application_2V(this));
+  com_google_gwt_core_client_GWT_setUncaughtExceptionHandler__Lcom_google_gwt_core_client_GWT$UncaughtExceptionHandler_2V(new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '198' , sc).superstartrek_client_Application$3_Application$3__Lsuperstartrek_client_Application_2V(this));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31520,24 +31520,24 @@ _.private$superstartrek_client_Application$setUncaughtExceptionHandler__V.displa
 _.setupScreens__V = function superstartrek_client_Application_setupScreens__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_setupScreens__V;
-  this.superstartrek_client_Application_loadingPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '122' , scal).superstartrek_client_activities_loading_LoadingPresenter_LoadingPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '123' , scal).superstartrek_client_activities_loading_LoadingScreen_LoadingScreen__Lsuperstartrek_client_activities_loading_LoadingPresenter_2V(this.superstartrek_client_Application_loadingPresenter);
-  this.superstartrek_client_Application_introPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '125' , scai).superstartrek_client_activities_intro_IntroPresenter_IntroPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '126' , scai).superstartrek_client_activities_intro_IntroView_IntroView__Lsuperstartrek_client_activities_intro_IntroPresenter_2V(this.superstartrek_client_Application_introPresenter);
-  this.superstartrek_client_Application_manualPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '128' , scam2).superstartrek_client_activities_manual_ManualPresenter_ManualPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '129' , scam2).superstartrek_client_activities_manual_ManualScreen_ManualScreen__Lsuperstartrek_client_activities_manual_ManualPresenter_2V(this.superstartrek_client_Application_manualPresenter);
-  this.superstartrek_client_Application_computerPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '131' , scac2).superstartrek_client_activities_computer_ComputerPresenter_ComputerPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '132' , scac2).superstartrek_client_activities_computer_ComputerView_ComputerView__Lsuperstartrek_client_activities_computer_ComputerPresenter_2V(this.superstartrek_client_Application_computerPresenter);
-  this.superstartrek_client_Application_glassPanelPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '134' , scag).superstartrek_client_activities_glasspanel_GlassPanelPresenter_GlassPanelPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '135' , scag).superstartrek_client_activities_glasspanel_GlassPanelView_GlassPanelView__Lsuperstartrek_client_activities_glasspanel_GlassPanelPresenter_2V(this.superstartrek_client_Application_glassPanelPresenter);
-  this.superstartrek_client_Application_scanSectorPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '137' , scass).superstartrek_client_activities_sector_scan_ScanSectorPresenter_ScanSectorPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '138' , scass).superstartrek_client_activities_sector_scan_ScanSectorView_ScanSectorView__Lsuperstartrek_client_activities_sector_scan_ScanSectorPresenter_2V(this.superstartrek_client_Application_scanSectorPresenter);
-  this.superstartrek_client_Application_messagesPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '140' , scam).superstartrek_client_activities_messages_MessagesPresenter_MessagesPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '141' , scam).superstartrek_client_activities_messages_MessagesView_MessagesView__Lsuperstartrek_client_activities_Presenter_2V(this.superstartrek_client_Application_messagesPresenter);
-  this.superstartrek_client_Application_lrsPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '143' , scal2).superstartrek_client_activities_lrs_LRSPresenter_LRSPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '144' , scal2).superstartrek_client_activities_lrs_LRSScreen_LRSScreen__Lsuperstartrek_client_activities_Presenter_2V(this.superstartrek_client_Application_lrsPresenter);
-  this.superstartrek_client_Application_statusReportPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '146' , scar).superstartrek_client_activities_report_StatusReportPresenter_StatusReportPresenter__Lsuperstartrek_client_Application_2V(this);
-  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '147' , scar).superstartrek_client_activities_report_StatusReportView_StatusReportView__Lsuperstartrek_client_activities_Presenter_2V(this.superstartrek_client_Application_statusReportPresenter);
+  this.superstartrek_client_Application_loadingPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '123' , scal).superstartrek_client_activities_loading_LoadingPresenter_LoadingPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '124' , scal).superstartrek_client_activities_loading_LoadingScreen_LoadingScreen__Lsuperstartrek_client_activities_loading_LoadingPresenter_2V(this.superstartrek_client_Application_loadingPresenter);
+  this.superstartrek_client_Application_introPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '126' , scai).superstartrek_client_activities_intro_IntroPresenter_IntroPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '127' , scai).superstartrek_client_activities_intro_IntroView_IntroView__Lsuperstartrek_client_activities_intro_IntroPresenter_2V(this.superstartrek_client_Application_introPresenter);
+  this.superstartrek_client_Application_manualPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '129' , scam2).superstartrek_client_activities_manual_ManualPresenter_ManualPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '130' , scam2).superstartrek_client_activities_manual_ManualScreen_ManualScreen__Lsuperstartrek_client_activities_manual_ManualPresenter_2V(this.superstartrek_client_Application_manualPresenter);
+  this.superstartrek_client_Application_computerPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '132' , scac2).superstartrek_client_activities_computer_ComputerPresenter_ComputerPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '133' , scac2).superstartrek_client_activities_computer_ComputerView_ComputerView__Lsuperstartrek_client_activities_computer_ComputerPresenter_2V(this.superstartrek_client_Application_computerPresenter);
+  this.superstartrek_client_Application_glassPanelPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '135' , scag).superstartrek_client_activities_glasspanel_GlassPanelPresenter_GlassPanelPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '136' , scag).superstartrek_client_activities_glasspanel_GlassPanelView_GlassPanelView__Lsuperstartrek_client_activities_glasspanel_GlassPanelPresenter_2V(this.superstartrek_client_Application_glassPanelPresenter);
+  this.superstartrek_client_Application_scanSectorPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '138' , scass).superstartrek_client_activities_sector_scan_ScanSectorPresenter_ScanSectorPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '139' , scass).superstartrek_client_activities_sector_scan_ScanSectorView_ScanSectorView__Lsuperstartrek_client_activities_sector_scan_ScanSectorPresenter_2V(this.superstartrek_client_Application_scanSectorPresenter);
+  this.superstartrek_client_Application_messagesPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '141' , scam).superstartrek_client_activities_messages_MessagesPresenter_MessagesPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '142' , scam).superstartrek_client_activities_messages_MessagesView_MessagesView__Lsuperstartrek_client_activities_Presenter_2V(this.superstartrek_client_Application_messagesPresenter);
+  this.superstartrek_client_Application_lrsPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '144' , scal2).superstartrek_client_activities_lrs_LRSPresenter_LRSPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '145' , scal2).superstartrek_client_activities_lrs_LRSScreen_LRSScreen__Lsuperstartrek_client_activities_Presenter_2V(this.superstartrek_client_Application_lrsPresenter);
+  this.superstartrek_client_Application_statusReportPresenter = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '147' , scar).superstartrek_client_activities_report_StatusReportPresenter_StatusReportPresenter__Lsuperstartrek_client_Application_2V(this);
+  new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '148' , scar).superstartrek_client_activities_report_StatusReportView_StatusReportView__Lsuperstartrek_client_activities_Presenter_2V(this.superstartrek_client_Application_statusReportPresenter);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31545,8 +31545,8 @@ _.setupScreens__V.displayName = 'superstartrek.client.Application.setupScreens';
 _.setupStarMap__V = function superstartrek_client_Application_setupStarMap__V(){
   var setup, JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_setupStarMap__V;
-  setup = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '117' , scm).superstartrek_client_model_Setup_Setup__Lsuperstartrek_client_Application_2V(this);
-  this.superstartrek_client_Application_starMap = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '118' , setup).createNewMap__Lsuperstartrek_client_model_StarMap_2();
+  setup = new ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '118' , scm).superstartrek_client_model_Setup_Setup__Lsuperstartrek_client_Application_2V(this);
+  this.superstartrek_client_Application_starMap = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '119' , setup).createNewMap__Lsuperstartrek_client_model_StarMap_2();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31554,13 +31554,13 @@ _.setupStarMap__V.displayName = 'superstartrek.client.Application.setupStarMap';
 _.startGame__V = function superstartrek_client_Application_startGame__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_startGame__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '152' , cgguc).com_google_gwt_user_client_History_replaceItem__Ljava_lang_String_2V('intro');
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '153' , cgguc).com_google_gwt_user_client_History_fireCurrentHistoryState__V();
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '154' , this.superstartrek_client_Application_events).addHandler__Lcom_google_gwt_event_shared_GwtEvent$Type_2Lcom_google_gwt_event_shared_EventHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '10' , scan).superstartrek_client_activities_navigation_EnterpriseWarpedEvent_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '154' , scan).superstartrek_client_activities_navigation_EnterpriseWarpedEvent_TYPE), this);
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '155' , this.superstartrek_client_Application_events).addHandler__Lcom_google_gwt_event_shared_GwtEvent$Type_2Lcom_google_gwt_event_shared_EventHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '11' , scan).superstartrek_client_activities_navigation_ThingMovedEvent_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '155' , scan).superstartrek_client_activities_navigation_ThingMovedEvent_TYPE), this);
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '156' , this.superstartrek_client_Application_events).addHandler__Lcom_google_gwt_event_shared_GwtEvent$Type_2Lcom_google_gwt_event_shared_EventHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '9' , scal).superstartrek_client_activities_loading_GameOverEvent_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '156' , scal).superstartrek_client_activities_loading_GameOverEvent_TYPE), this);
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '157' , this.superstartrek_client_Application_events).addHandler__Lcom_google_gwt_event_shared_GwtEvent$Type_2Lcom_google_gwt_event_shared_EventHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '8' , scam).superstartrek_client_activities_messages_MessageEvent_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '157' , scam).superstartrek_client_activities_messages_MessageEvent_TYPE), this);
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '158' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scal.superstartrek_client_activities_loading_GameStartedEvent_GameStartedEvent__V);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '153' , cgguc).com_google_gwt_user_client_History_replaceItem__Ljava_lang_String_2V('intro');
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '154' , cgguc).com_google_gwt_user_client_History_fireCurrentHistoryState__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '155' , this.superstartrek_client_Application_events).addHandler__Lcom_google_gwt_event_shared_GwtEvent$Type_2Lcom_google_gwt_event_shared_EventHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '10' , scan).superstartrek_client_activities_navigation_EnterpriseWarpedEvent_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '155' , scan).superstartrek_client_activities_navigation_EnterpriseWarpedEvent_TYPE), this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '156' , this.superstartrek_client_Application_events).addHandler__Lcom_google_gwt_event_shared_GwtEvent$Type_2Lcom_google_gwt_event_shared_EventHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '11' , scan).superstartrek_client_activities_navigation_ThingMovedEvent_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '156' , scan).superstartrek_client_activities_navigation_ThingMovedEvent_TYPE), this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '157' , this.superstartrek_client_Application_events).addHandler__Lcom_google_gwt_event_shared_GwtEvent$Type_2Lcom_google_gwt_event_shared_EventHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '9' , scal).superstartrek_client_activities_loading_GameOverEvent_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '157' , scal).superstartrek_client_activities_loading_GameOverEvent_TYPE), this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '158' , this.superstartrek_client_Application_events).addHandler__Lcom_google_gwt_event_shared_GwtEvent$Type_2Lcom_google_gwt_event_shared_EventHandler_2Lcom_google_gwt_event_shared_HandlerRegistration_2((($JsStackEmulator_location[JsStackEmulator_stackIndex] = '8' , scam).superstartrek_client_activities_messages_MessageEvent_$clinit__V() , ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '158' , scam).superstartrek_client_activities_messages_MessageEvent_TYPE), this);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '159' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scal.superstartrek_client_activities_loading_GameStartedEvent_GameStartedEvent__V);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31568,9 +31568,9 @@ _.startGame__V.displayName = 'superstartrek.client.Application.startGame';
 _.startTurn__V = function superstartrek_client_Application_startTurn__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_startTurn__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '179' , cggcc).com_google_gwt_core_client_GWT_log__Ljava_lang_String_2V('------------------------------ new turn');
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '180' , this.superstartrek_client_Application_starMap).advanceStarDate__JV(1);
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '181' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scac2.superstartrek_client_activities_computer_TurnStartedEvent_TurnStartedEvent__V);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '180' , cggcc).com_google_gwt_core_client_GWT_log__Ljava_lang_String_2V('------------------------------ new turn');
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '181' , this.superstartrek_client_Application_starMap).advanceStarDate__JV(1);
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '182' , this.superstartrek_client_Application_events).fireEvent__Lcom_google_gwt_event_shared_GwtEvent_2V(new scac2.superstartrek_client_activities_computer_TurnStartedEvent_TurnStartedEvent__V);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31578,7 +31578,7 @@ _.startTurn__V.displayName = 'superstartrek.client.Application.startTurn';
 _.startTurnAfterThis__V = function superstartrek_client_Application_startTurnAfterThis__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_startTurnAfterThis__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '169' , scu).superstartrek_client_utils_Timer_postpone__Lcom_google_gwt_core_client_Scheduler$ScheduledCommand_2V(new sc.superstartrek_client_Application$2_Application$2__Lsuperstartrek_client_Application_2V(this));
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '170' , scu).superstartrek_client_utils_Timer_postpone__Lcom_google_gwt_core_client_Scheduler$ScheduledCommand_2V(new sc.superstartrek_client_Application$2_Application$2__Lsuperstartrek_client_Application_2V(this));
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31586,8 +31586,8 @@ _.startTurnAfterThis__V.displayName = 'superstartrek.client.Application.startTur
 _.thingMoved__Lsuperstartrek_client_model_Thing_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2V = function superstartrek_client_Application_thingMoved__Lsuperstartrek_client_model_Thing_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2V(thing, qFrom, lFrom, qTo, lTo){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application_thingMoved__Lsuperstartrek_client_model_Thing_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2Lsuperstartrek_client_model_Quadrant_2Lsuperstartrek_client_model_Location_2V;
-  if (com_google_gwt_lang_Cast_jsEquals__Ljava_lang_Object_2Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '234' , thing), this.superstartrek_client_Application_starMap.superstartrek_client_model_StarMap_enterprise))
-    ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '235' , $JsStackEmulator_tmp).endTurnAfterThis__V();
+  if (com_google_gwt_lang_Cast_jsEquals__Ljava_lang_Object_2Ljava_lang_Object_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '235' , thing), this.superstartrek_client_Application_starMap.superstartrek_client_model_StarMap_enterprise))
+    ($JsStackEmulator_tmp = this , $JsStackEmulator_location[JsStackEmulator_stackIndex] = '236' , $JsStackEmulator_tmp).endTurnAfterThis__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31598,7 +31598,7 @@ cggl.com_google_gwt_lang_ClassLiteralHolder_Lsuperstartrek_1client_1Application_
 sc.superstartrek_client_Application$1_$clinit__V = function superstartrek_client_Application$1_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application$1_$clinit__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '105' , sc).superstartrek_client_Application$1_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '106' , sc).superstartrek_client_Application$1_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
   jl.java_lang_Object_$clinit__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -31607,7 +31607,7 @@ sc.superstartrek_client_Application$1_$clinit__V.displayName = 'superstartrek.cl
 sc.superstartrek_client_Application$1_Application$1__Lsuperstartrek_client_Application_2V = function superstartrek_client_Application$1_Application$1__Lsuperstartrek_client_Application_2V(this$0){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application$1_Application$1__Lsuperstartrek_client_Application_2V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '105' , sc).superstartrek_client_Application$1_$clinit__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '106' , sc).superstartrek_client_Application$1_$clinit__V();
   this.superstartrek_client_Application$1_this$01 = this$0;
   java_lang_Object_Object__V.call(this);
   this.private$superstartrek_client_Application$1$$init__V();
@@ -31623,9 +31623,9 @@ _.private$superstartrek_client_Application$1$$init__V.displayName = 'superstartr
 _.execute__V = function superstartrek_client_Application$1_execute__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application$1_execute__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '109' , this.superstartrek_client_Application$1_this$01).superstartrek_client_Application_endTurnPending = false;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '110' , this.superstartrek_client_Application$1_this$01).endTurn__V();
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '111' , this.superstartrek_client_Application$1_this$01).startTurnAfterThis__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '110' , this.superstartrek_client_Application$1_this$01).superstartrek_client_Application_endTurnPending = false;
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '111' , this.superstartrek_client_Application$1_this$01).endTurn__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '112' , this.superstartrek_client_Application$1_this$01).startTurnAfterThis__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31634,7 +31634,7 @@ cggl.com_google_gwt_lang_ClassLiteralHolder_Lsuperstartrek_1client_1Application$
 sc.superstartrek_client_Application$2_$clinit__V = function superstartrek_client_Application$2_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application$2_$clinit__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '169' , sc).superstartrek_client_Application$2_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '170' , sc).superstartrek_client_Application$2_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
   jl.java_lang_Object_$clinit__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -31643,7 +31643,7 @@ sc.superstartrek_client_Application$2_$clinit__V.displayName = 'superstartrek.cl
 sc.superstartrek_client_Application$2_Application$2__Lsuperstartrek_client_Application_2V = function superstartrek_client_Application$2_Application$2__Lsuperstartrek_client_Application_2V(this$0){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application$2_Application$2__Lsuperstartrek_client_Application_2V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '169' , sc).superstartrek_client_Application$2_$clinit__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '170' , sc).superstartrek_client_Application$2_$clinit__V();
   this.superstartrek_client_Application$2_this$01 = this$0;
   java_lang_Object_Object__V.call(this);
   this.private$superstartrek_client_Application$2$$init__V();
@@ -31659,7 +31659,7 @@ _.private$superstartrek_client_Application$2$$init__V.displayName = 'superstartr
 _.execute__V = function superstartrek_client_Application$2_execute__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application$2_execute__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '173' , this.superstartrek_client_Application$2_this$01).startTurn__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '174' , this.superstartrek_client_Application$2_this$01).startTurn__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31668,7 +31668,7 @@ cggl.com_google_gwt_lang_ClassLiteralHolder_Lsuperstartrek_1client_1Application$
 sc.superstartrek_client_Application$3_$clinit__V = function superstartrek_client_Application$3_$clinit__V(){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application$3_$clinit__V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '197' , sc).superstartrek_client_Application$3_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '198' , sc).superstartrek_client_Application$3_$clinit__V = com_google_gwt_lang_Runtime_emptyMethod__V;
   jl.java_lang_Object_$clinit__V();
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
@@ -31677,7 +31677,7 @@ sc.superstartrek_client_Application$3_$clinit__V.displayName = 'superstartrek.cl
 sc.superstartrek_client_Application$3_Application$3__Lsuperstartrek_client_Application_2V = function superstartrek_client_Application$3_Application$3__Lsuperstartrek_client_Application_2V(this$0){
   var JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = sc.superstartrek_client_Application$3_Application$3__Lsuperstartrek_client_Application_2V;
-  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '197' , sc).superstartrek_client_Application$3_$clinit__V();
+  ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '198' , sc).superstartrek_client_Application$3_$clinit__V();
   this.superstartrek_client_Application$3_this$01 = this$0;
   java_lang_Object_Object__V.call(this);
   this.private$superstartrek_client_Application$3$$init__V();
@@ -31693,8 +31693,8 @@ _.private$superstartrek_client_Application$3$$init__V.displayName = 'superstartr
 _.onUncaughtException__Ljava_lang_Throwable_2V = function superstartrek_client_Application$3_onUncaughtException__Ljava_lang_Throwable_2V(e){
   var unwrapped, JsStackEmulator_stackIndex;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application$3_onUncaughtException__Ljava_lang_Throwable_2V;
-  unwrapped = this.unwrap__Ljava_lang_Throwable_2Ljava_lang_Throwable_2(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '200' , e));
-  com_google_gwt_core_client_GWT_log__Ljava_lang_String_2Ljava_lang_Throwable_2V(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '201' , e).getMessage__Ljava_lang_String_2(), unwrapped);
+  unwrapped = this.unwrap__Ljava_lang_Throwable_2Ljava_lang_Throwable_2(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '201' , e));
+  com_google_gwt_core_client_GWT_log__Ljava_lang_String_2Ljava_lang_Throwable_2V(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '202' , e).getMessage__Ljava_lang_String_2(), unwrapped);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
 }
 ;
@@ -31702,15 +31702,15 @@ _.onUncaughtException__Ljava_lang_Throwable_2V.displayName = 'superstartrek.clie
 _.unwrap__Ljava_lang_Throwable_2Ljava_lang_Throwable_2 = function superstartrek_client_Application$3_unwrap__Ljava_lang_Throwable_2Ljava_lang_Throwable_2(e){
   var ue, JsStackEmulator_stackIndex, JsStackEmulator_returnTemp;
   $JsStackEmulator_stack[JsStackEmulator_stackIndex = ++$JsStackEmulator_stackDepth] = superstartrek_client_Application$3_unwrap__Ljava_lang_Throwable_2Ljava_lang_Throwable_2;
-  if (com_google_gwt_lang_Cast_instanceOf__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '206' , e), 48)) {
-    ue = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '207' , e), 48);
-    if (($JsStackEmulator_location[JsStackEmulator_stackIndex] = '208' , ue).getCauses__Ljava_util_Set_2().size__I() == 1) {
-      JsStackEmulator_returnTemp = this.unwrap__Ljava_lang_Throwable_2Ljava_lang_Throwable_2(com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '209' , ue).getCauses__Ljava_util_Set_2().iterator__Ljava_util_Iterator_2().next__Ljava_lang_Object_2(), 7));
+  if (com_google_gwt_lang_Cast_instanceOf__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Z(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '207' , e), 48)) {
+    ue = com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '208' , e), 48);
+    if (($JsStackEmulator_location[JsStackEmulator_stackIndex] = '209' , ue).getCauses__Ljava_util_Set_2().size__I() == 1) {
+      JsStackEmulator_returnTemp = this.unwrap__Ljava_lang_Throwable_2Ljava_lang_Throwable_2(com_google_gwt_lang_Cast_castTo__Ljava_lang_Object_2Lcom_google_gwt_core_client_JavaScriptObject_2Ljava_lang_Object_2(($JsStackEmulator_location[JsStackEmulator_stackIndex] = '210' , ue).getCauses__Ljava_util_Set_2().iterator__Ljava_util_Iterator_2().next__Ljava_lang_Object_2(), 7));
       $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
       return JsStackEmulator_returnTemp;
     }
   }
-  JsStackEmulator_returnTemp = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '212' , e);
+  JsStackEmulator_returnTemp = ($JsStackEmulator_location[JsStackEmulator_stackIndex] = '213' , e);
   $JsStackEmulator_stackDepth = JsStackEmulator_stackIndex - 1;
   return JsStackEmulator_returnTemp;
 }

@@ -3,19 +3,19 @@
   "name": "Super Star Trek",
   "icons": [
     {
-    "src": "/superstartrek/images/icon192x192.png",
+    "src": "/superstartrek/site/images/icon192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-     "src": "/superstartrek/images/icon512x512.png",
+     "src": "/superstartrek/site/images/icon512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "/superstartrek/index.html",
+  "start_url": "/superstartrek/site/index.html",
   "background_color": "#000000",
   "display": "standalone",
-  "scope": "/superstartrek/",
+  "scope": "/superstartrek/site/index.html",
   "theme_color": "#F0F0F0"
 }
