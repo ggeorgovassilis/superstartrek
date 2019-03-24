@@ -8,6 +8,11 @@ import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.TurnStartedEvent;
 import superstartrek.client.activities.computer.TurnStartedHandler;
+import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
+import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
+import superstartrek.client.activities.loading.GameStartedEvent;
+import superstartrek.client.activities.loading.GameStartedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.model.Enterprise;
@@ -18,18 +23,16 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.Maps;
 
-public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStartedHandler, EnterpriseWarpedHandler, FireHandler {
+public class SRSPresenter extends BasePresenter<SRSActivity> implements GameStartedHandler, EnterpriseWarpedHandler, KlingonDestroyedHandler {
 
 	public SRSPresenter(Application application) {
 		super(application);
-		GWT.log("SRSPresenter()");
-		application.events.addHandler(TurnStartedEvent.TYPE, this);
+		application.events.addHandler(GameStartedEvent.TYPE, this);
 		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
-		application.events.addHandler(FireEvent.TYPE, this);
+		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
 	}
 
 	public void updateRadar() {
-		GWT.log("SRS update");
 		ISRSView view = (ISRSView) getView();
 		StarMap map = application.starMap;
 		Quadrant q0 = map.enterprise.getQuadrant();
@@ -56,23 +59,18 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements TurnStar
 	}
 
 	@Override
-	public void onTurnStarted(TurnStartedEvent evt) {
-		updateRadar();
-	}
-
-	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		updateRadar();
 	}
 
 	@Override
-	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
-		//postponing because damage might not have been assigned yet to target
+	public void klingonDestroyed(Klingon klingon) {
 		updateRadar();
 	}
 
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
+	public void onGameStared(GameStartedEvent evt) {
+		updateRadar();
 	}
 
 }

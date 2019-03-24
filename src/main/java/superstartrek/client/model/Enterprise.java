@@ -343,7 +343,6 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	}
 
 	public boolean consume(String what, double value) {
-		GWT.log(what + " consumes " + value + " of current capacity " + getReactor().getValue());
 		if (getReactor().getValue() < value)
 			return false;
 		getReactor().decrease(value);
@@ -373,7 +372,6 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		reactor.reset();
 		shields.reset();
 		impulse.reset();
-		GWT.log("Energy at beginning of turn " + getReactor().getValue());
 		if (!consume("energy", computeEnergyConsumption()))
 			Application.get().events.fireEvent(new GameOverEvent(Outcome.lost, "Out of energy"));
 		playComputerTurn();
@@ -381,7 +379,6 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 
 	@Override
 	public void onTurnEnded(TurnEndedEvent evt) {
-		GWT.log("Energy at end of turn " + getReactor().getValue());
 	}
 
 	public void toggleAutoAim() {

@@ -22,7 +22,6 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
-		GWT.log("message posted "+formattedMessage);
 		((MessagesView) getView()).showMessage(formattedMessage, category);
 		application.events.fireEvent(new GlassPanelEvent(Action.show));
 		getView().show();
@@ -33,7 +32,6 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	}
 	
 	public void hideMessages() {
-		GWT.log("Hide messages async "+getView().isVisible());
 		if (!getView().isVisible())
 			return;
 		Timer.postpone(new ScheduledCommand() {
@@ -45,7 +43,6 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	}
 	
 	public void hideMessagesNow() {
-		GWT.log("Hide messages now "+getView().isVisible());
 		getView().hide();
 		((MessagesView) getView()).clear();
 		application.events.fireEvent(new MessageEvent(MessageEvent.Action.hide, null, null));
@@ -58,13 +55,11 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 
 	@Override
 	public void glassPanelHidden() {
-		GWT.log("glass panel hidden");
 		hideMessages();
 	}
 
 	@Override
 	public void glassPanelClicked() {
-		GWT.log("glass panel clicked");
 		hideMessages();
 	}
 

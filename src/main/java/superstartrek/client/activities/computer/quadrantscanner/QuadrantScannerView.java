@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -17,8 +18,9 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	
 	@Override
 	public void deselectSectors() {
-		if (eSelectedSector!=null)
+		if (eSelectedSector!=null) {
 			CSS.removeClass(eSelectedSector, "selected");
+		}
 	}
 	
 	@Override

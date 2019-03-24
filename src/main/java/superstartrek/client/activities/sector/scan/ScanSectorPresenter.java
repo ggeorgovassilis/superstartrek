@@ -1,18 +1,23 @@
 package superstartrek.client.activities.sector.scan;
 
+import com.google.gwt.event.shared.HandlerRegistration;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.computer.ComputerEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent;
 import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
+import superstartrek.client.activities.glasspanel.GlassPanelHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> implements ScanSectorHandler{
+public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> implements ScanSectorHandler, GlassPanelHandler{
 
+	HandlerRegistration glassPanelHandler;
+	
 	public ScanSectorPresenter(Application application) {
 		super(application);
 		application.events.addHandler(ScanSectorEvent.TYPE, this);
@@ -21,6 +26,7 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 	@Override
 	public void scanSector(ScanSectorEvent event) {
 		getView().show();
+		glassPanelHandler = application.events.addHandler(GlassPanelEvent.TYPE, this);
 		application.events.fireEvent(new GlassPanelEvent(Action.show));
 		IScanSectorView v = (IScanSectorView)getView();
 		Quadrant q = event.getQuadrant();
@@ -50,11 +56,32 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 		}
 	}
 	
+	public void doneWithMenu() {
+		getView().hide();
+		application.events.fireEvent(new ComputerEvent(ComputerEvent.Action.showScreen));
+	}
+	
 	public void onCommandClicked(String cmd) {
 		if ("screen-sectorscan-back".equals(cmd)) {
-			getView().hide();
-			application.events.fireEvent(new ComputerEvent(ComputerEvent.Action.showScreen));
+			doneWithMenu();
 		}
+	}
+
+	@Override
+	public void glassPanelShown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void glassPanelHidden() {
+		if (glassPanelHandler!=null)
+			glassPanelHandler.removeHandler();
+	}
+
+	@Override
+	public void glassPanelClicked() {
+		doneWithMenu();
 	}
 
 }

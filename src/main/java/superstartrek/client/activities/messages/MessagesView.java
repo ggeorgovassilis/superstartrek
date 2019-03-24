@@ -52,6 +52,9 @@ public class MessagesView extends BaseView<MessageActivity>{
 	
 	@Override
 	public void show() {
+		//profiling showed high CPU usage of focus; this check attempts to reduce invocations of focus
+		if (isVisible())
+			return;
 		super.show();
 		eButton.focus();
 	}
