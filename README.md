@@ -7,6 +7,10 @@ A mobile friendly web remake of [Super Star Trek](https://en.wikipedia.org/wiki/
 
 [Play it online](https://ggeorgovassilis.github.io/superstartrek/site/index.html)
 
+## Playing on a mobile device
+
+The app can be installed for offline use by adding it to the home screen. In Chrome, click on the "Install" button at the bottom of the screen and in Firefox click on the home + icon on the top of the screen.
+
 ## developing
 
 Development takes place in the gh-pages branch.
