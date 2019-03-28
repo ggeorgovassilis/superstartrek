@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+<meta name="theme-color" content="#F0F0F0">
+<title>Super Star Trek</title>
+<link rel=manifest href="manifest.json">
+<link rel="stylesheet" type="text/css" href="css/sst.css"></link>
+</head>
+<body>
+<h1 id="screen-loading">Loading...</h1>
+<div id="glasspanel"></div>
+<!-- messages -->
+<div id="messages" tabindex="1" style="display:none">
+<ol id="messages-content" class="content"></ol>
+<button id="dismiss-message-button">Dismiss</button>
+</div>
+<div id="topmarker"></div>
+<div id="page">
+</div>
+<div id="installappprompt" style="display:none">
+<div class=question>Do you want to install Super StarTrek offline?</div>
+<button onclick="installAppOffline()">install</button>
+<button onclick="hideAppInstallationPrompt()">dismiss</button>
+</div>
+<script type="text/javascript">//<![CDATA[
+if (navigator.serviceWorker) {
+	navigator.serviceWorker.register("service-worker.js")
+			.then(function(arg){
+					console.log("registered service worker successfully");
+					return null;
+				});
+			}
+			
+var deferredPrompt;
+
+function showAppInstallationPrompt(){
+	document.getElementById("installappprompt").style.display="block";
+}
+
+function hideAppInstallationPrompt(){
+	document.getElementById("installappprompt").style.display="none";
+}
+
+window.addEventListener('beforeinstallprompt', function (e){
+  console.log("++++++++++++beforeinstallprompt");
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+  showAppInstallationPrompt();
+});
+
+function installAppOffline(){
+	try{
+	  deferredPrompt.prompt();
+	  deferredPrompt.userChoice
+	    .then((choiceResult) => {
+	      if (choiceResult.outcome === 'accepted') {
+	        console.log('User accepted the installation prompt');
+	      } else {
+	        console.log('User dismissed the installation prompt');
+	      }
+	      deferredPrompt = null;
+	    });
+	}
+	catch(e){
+		console.log(e);
+	}
+};
+//]]></script>
+<script type="text/javascript" src="superstartrek.superstartrek.nocache.js"></script>
+</body>
+</html>

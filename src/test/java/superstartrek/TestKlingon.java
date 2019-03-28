@@ -71,13 +71,13 @@ public class TestKlingon {
 			
 		//a*+ moves a bit strangely; it can move temporarily away from a target (even if that is not necessary)
 		//as long as the path is optimal
-		assertEquals(Location.location(0,5), klingon.getLocation());
+		assertEquals(Location.location(0,4), klingon.getLocation());
 		assertEquals(2, events.getFiredCount(ThingMovedEvent.TYPE));
 		assertEquals(quadrant, evt.get().qFrom);
 		assertEquals(quadrant, evt.get().qTo);
 		assertEquals(klingon, evt.get().thing);
 		assertEquals(Location.location(1,3), evt.get().lFrom);
-		assertEquals(Location.location(0,5), evt.get().lTo);
+		assertEquals(Location.location(0,4), evt.get().lTo);
 	}
 
 	@Test
