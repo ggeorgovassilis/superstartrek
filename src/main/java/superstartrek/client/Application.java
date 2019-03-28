@@ -1,7 +1,6 @@
 package superstartrek.client;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -14,7 +13,6 @@ import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.Navigator;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.computer.ComputerPresenter;
@@ -36,8 +34,6 @@ import superstartrek.client.activities.manual.ManualScreen;
 import superstartrek.client.activities.messages.MessagesView;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
-import superstartrek.client.activities.navigation.PathFinder;
-import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.report.StatusReportPresenter;

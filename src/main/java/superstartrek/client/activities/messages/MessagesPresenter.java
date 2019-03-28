@@ -1,8 +1,5 @@
 package superstartrek.client.activities.messages;
 
-import javax.swing.text.Utilities;
-
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 
 import superstartrek.client.Application;

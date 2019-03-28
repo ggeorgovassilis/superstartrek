@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -69,12 +68,5 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 		}, ClickEvent.getType());
 	}
 	
-	@Override
-	public void setQuadrantHeader(String name, String css){
-		Element e = DOM.getElementById("quadrant_name");
-		e.setInnerText(name);
-		e.setClassName(css);
-	}
-
 
 }

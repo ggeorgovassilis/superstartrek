@@ -1,6 +1,5 @@
 package superstartrek.client.activities.loading;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.GwtEvent;
 
 public class GameOverEvent extends GwtEvent<GameOverHandler>{

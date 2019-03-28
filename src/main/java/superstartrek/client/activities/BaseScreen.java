@@ -15,4 +15,5 @@ public abstract class BaseScreen<A extends Activity> extends BaseView<A>{
 	public void finishUiConstruction() {
 		presenter.getApplication().page.add(this);
 	}
+	
 }

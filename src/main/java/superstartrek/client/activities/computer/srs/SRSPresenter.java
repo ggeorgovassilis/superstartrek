@@ -1,13 +1,7 @@
 package superstartrek.client.activities.computer.srs;
 
-import com.google.gwt.core.shared.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.combat.FireEvent;
-import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.computer.TurnStartedEvent;
-import superstartrek.client.activities.computer.TurnStartedHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
@@ -19,8 +13,6 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
-import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.Maps;
 
 public class SRSPresenter extends BasePresenter<SRSActivity> implements GameStartedHandler, EnterpriseWarpedHandler, KlingonDestroyedHandler {

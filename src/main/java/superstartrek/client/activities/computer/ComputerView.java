@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
@@ -132,6 +131,13 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 	@Override
 	public void setRepairButtonVisibility(boolean visible) {
 		eRepair.getStyle().setDisplay(visible?Display.INITIAL:Display.NONE);
+	}
+
+	@Override
+	public void setQuadrantName(String name, String css) {
+		Element e = ((HTMLPanel)widgetImpl).getElementById("quadrant_name");
+		e.setInnerText(name);
+		e.setClassName(css);
 	}
 	
 }

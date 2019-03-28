@@ -104,7 +104,6 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		for (Thing thing:things) {
 			updateSector(q, thing.getLocation().getX(), thing.getLocation().getY(), thing);
 		}
-		updateQuadrantHeader();
 	}
 
 	@Override
@@ -117,7 +116,6 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		//TODO: this all assumes that qTo is the currently visible quadrant. Validate respectively.
 		updateSector(qFrom, lFrom.getX(), lFrom.getY());
 		updateSector(qTo, lTo.getX(), lTo.getY());
-		updateQuadrantHeader();
 	}
 
 	@Override
@@ -139,26 +137,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
 		updateSector(klingon.getQuadrant(), klingon.getLocation().getX(), klingon.getLocation().getY());
-		updateQuadrantHeader();
 	}
-	
-	public void updateQuadrantHeader() {
-		String alert = "";
-		Quadrant q = application.starMap.enterprise.getQuadrant();
-		Enterprise e = application.starMap.enterprise;
-		if (!q.getKlingons().isEmpty()) {
-			alert = "yellow-alert";
-			double minDistance = 3;
-			for (Klingon k:q.getKlingons())
-				minDistance = Math.min(minDistance, StarMap.distance(e, k));
-			if (minDistance<3)
-				alert="red-alert";
-		}
-		
-		IQuadrantScannerView view = (IQuadrantScannerView)getView();
-		view.setQuadrantHeader(q.getName(), alert);
-	}
-	
 	
 	@Override
 	public void onFire(Vessel actor, Thing target, String weapon, double damage) {

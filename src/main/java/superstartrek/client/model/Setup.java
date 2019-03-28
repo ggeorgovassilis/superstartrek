@@ -27,7 +27,7 @@ public class Setup {
 			star.setQuadrant(q);
 			q.getStars().add(star);
 		}
-		if ((x+y*8) % ((int)(64/Constants.NO_OF_STARBASES_ON_MAP)) ==0) {
+		if ((x+y*8) % (64/Constants.NO_OF_STARBASES_ON_MAP) ==0) {
 			StarBase starBase = new StarBase();
 			Location loc = map.findFreeSpot(q);
 			starBase.setLocation(loc);

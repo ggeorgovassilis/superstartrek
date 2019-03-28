@@ -6,6 +6,7 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -94,7 +95,26 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		updateShieldsView();
 		updateStatusButton();
 		updateRepairButton();
+		updateQuadrantHeader();
 	}
+	
+	public void updateQuadrantHeader() {
+		String alert = "";
+		Quadrant q = application.starMap.enterprise.getQuadrant();
+		Enterprise e = application.starMap.enterprise;
+		if (!q.getKlingons().isEmpty()) {
+			alert = "yellow-alert";
+			double minDistance = 3;
+			for (Klingon k:q.getKlingons())
+				minDistance = Math.min(minDistance, StarMap.distance(e, k));
+			if (minDistance<3)
+				alert="red-alert";
+		}
+		
+		IComputerView view = (IComputerView)getView();
+		view.setQuadrantName(q.getName(), alert);
+	}
+
 	
 	public void updateShieldsView() {
 		Enterprise enterprise = application.starMap.enterprise;

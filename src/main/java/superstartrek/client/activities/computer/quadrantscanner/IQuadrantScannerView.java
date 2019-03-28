@@ -10,6 +10,4 @@ public interface IQuadrantScannerView extends IBaseView<QuadrantScannerActivity>
 
 	void updateSector(int x, int y, String content, String css);
 
-	void setQuadrantHeader(String name, String css);
-
 }

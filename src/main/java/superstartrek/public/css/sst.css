@@ -233,12 +233,8 @@ table a, table a:visited{
 	width:50%;
 }
 
-.statusReport #statusreport{
-	display:block;
-}
-
-.showLongRangeScan #longrangescanscreen{
-	display:block;
+#screen-longrangescan{
+	background:rgba(0,0,0,0.5);
 }
 
 #longrangescan{

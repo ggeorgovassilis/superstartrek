@@ -1,21 +1,17 @@
 package superstartrek.client.activities.sector.scan;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.activities.lrs.LRSPresenter;
-import superstartrek.client.utils.Strings;
 
 public class ScanSectorView extends BaseScreen<ScanSectorActivity> implements IScanSectorView{
 

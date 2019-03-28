@@ -6,12 +6,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-
 import org.junit.Ignore;
 import org.junit.Test;
-
-import com.google.web.bindery.event.shared.testing.CountingEventBus;
 
 import astar.AStar;
 import astar.Node;
@@ -19,7 +15,6 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.astarplus.AStarPlus;
-import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;

@@ -14,5 +14,7 @@ public interface IComputerView extends IBaseView<ComputerActivity>{
 	void setDockInStarbaseButtonVisibility(boolean visible);
 
 	void setRepairButtonVisibility(boolean visible);
+	
+	void setQuadrantName(String name, String css);
 
 }
