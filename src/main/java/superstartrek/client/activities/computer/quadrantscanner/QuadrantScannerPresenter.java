@@ -60,7 +60,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		((IQuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
 	}
 
-	protected void updateSector(Quadrant q, int x, int y, Thing thing){
+	protected void updateSector(Thing thing){
 		//empty table cells need an &nbsp; to keep height stable, otherwise they will "pump" when content changes
 		// and relayout the entire screen which is slow on mobile devices
 		String content = MapCellRenderer.nbsp;
@@ -74,13 +74,19 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 				css+=" "+CSS.damageClass(status);
 			}
 		}
-		((IQuadrantScannerView) view).updateSector(x, y, content, css);
+		((IQuadrantScannerView) view).updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content, css);
+	}
+	
+	protected void clearSector(int x, int y) {
+		((IQuadrantScannerView)getView()).updateSector(x, y, "", "");
 	}
 	
 	protected void updateSector(Quadrant q, int x, int y) {
 		StarMap starMap = getApplication().starMap;
 		Thing thing = starMap.findThingAt(q, x, y);
-		updateSector(q, x, y, thing);
+		if (thing!=null)
+			updateSector(thing);
+		else clearSector(x, y);
 	}
 
 	protected void updateScreen() {
@@ -102,7 +108,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 			things.add(q.getStarBase());
 		things.add(starMap.enterprise);
 		for (Thing thing:things) {
-			updateSector(q, thing.getLocation().getX(), thing.getLocation().getY(), thing);
+			updateSector(thing);
 		}
 	}
 
@@ -114,8 +120,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	@Override
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		//TODO: this all assumes that qTo is the currently visible quadrant. Validate respectively.
-		updateSector(qFrom, lFrom.getX(), lFrom.getY());
-		updateSector(qTo, lTo.getX(), lTo.getY());
+		clearSector(lFrom.getX(), lFrom.getY());
+		updateSector(thing);
 	}
 
 	@Override
@@ -131,12 +137,12 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void klingonUncloaked(Klingon klingon) {
-		updateSector(klingon.getQuadrant(), klingon.getLocation().getX(), klingon.getLocation().getY());
+		updateSector(klingon);
 	}
 
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
-		updateSector(klingon.getQuadrant(), klingon.getLocation().getX(), klingon.getLocation().getY());
+		clearSector(klingon.getLocation().getX(), klingon.getLocation().getY());
 	}
 	
 	@Override
@@ -146,6 +152,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
+		//target might have been destroyed (so not on map anymore), that's why we don't call updateSector(target)
 		updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
 	}
 
