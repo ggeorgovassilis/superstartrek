@@ -35,7 +35,7 @@ public class MessagesView extends BaseView<MessageActivity>{
 	}
 	
 	@Override
-	protected HTMLPanel createPanel() {
+	protected HTMLPanel createWidgetImplementation() {
 		return HTMLPanel.wrap(DOM.getElementById("messages"));
 	}
 	

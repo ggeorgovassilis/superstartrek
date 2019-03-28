@@ -11,7 +11,7 @@ import superstartrek.client.activities.Presenter;
 public class StatusReportView extends BaseScreen<StatusReportActivity>{
 
 	@Override
-	protected HTMLPanel createPanel() {
+	protected HTMLPanel createWidgetImplementation() {
 		return new HTMLPanel(presenter.getApplication().getResources().statusReport().getText());
 	}
 	

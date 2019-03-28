@@ -446,6 +446,15 @@ a.single{
 	opacity:0.75;
 }
 
+.glasspanel{
+	background-color:black;
+	opacity:0.75;
+}
+
+.gwt-PopupPanel{
+	width:100%;
+}
+
 .messages-visible #messages, .messages-visible .glasspanel{
 	display:block !important;
 }
@@ -623,11 +632,7 @@ a.progress-bar {
 }
 
 #screen-sectorscan{
-	position:absolute;
-	z-index:10;
 	background:rgba(10,10,10,0.5);
-	top:2%;
-	margin-left:2%;
 	outline: cyan solid 1px;
 	padding:1em;
 }

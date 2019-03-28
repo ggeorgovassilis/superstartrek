@@ -1,19 +1,41 @@
 package superstartrek.client.activities.sector.scan;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseScreen;
 
 public class ScanSectorView extends BaseScreen<ScanSectorActivity> implements IScanSectorView{
 
+	HTMLPanel html;
+	PopupPanel popup;
+	
 	@Override
-	protected HTMLPanel createPanel() {
-		HTMLPanel panel = new HTMLPanel(presenter.getApplication().getResources().sectorScanScreen().getText());
-		return panel;
+	public void show() {
+		popup.show();
+	}
+	
+	@Override
+	public void hide() {
+		popup.hide();
+	}
+	
+	@Override
+	protected Widget createWidgetImplementation() {
+		popup = new PopupPanel(true, true);
+		popup.setGlassStyleName("glasspanel");
+		html = new HTMLPanel(presenter.getApplication().getResources().sectorScanScreen().getText());
+		popup.add(html);
+		popup.setGlassEnabled(true);
+		return new FlowPanel();
 	}
 	
 	@Override
@@ -38,17 +60,17 @@ public class ScanSectorView extends BaseScreen<ScanSectorActivity> implements IS
 
 	@Override
 	public void setObjectName(String value) {
-		panel.getElementById("object-name").setInnerText(value);
+		html.getElementById("object-name").setInnerText(value);
 	}
 
 	@Override
 	public void setObjectLocation(String value) {
-		panel.getElementById("object-location").setInnerText(value);
+		html.getElementById("object-location").setInnerText(value);
 	}
 
 	@Override
 	public void setObjectQuadrant(String value) {
-		panel.getElementById("object-quadrant").setInnerText(value);
+		html.getElementById("object-quadrant").setInnerText(value);
 	}
 	
 	@Override

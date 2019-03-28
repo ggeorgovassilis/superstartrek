@@ -9,7 +9,7 @@ import superstartrek.client.activities.BaseScreen;
 public class LoadingScreen extends BaseScreen<LoadingActivity> {
 
 	@Override
-	protected HTMLPanel createPanel() {
+	protected HTMLPanel createWidgetImplementation() {
 		Element e = DOM.getElementById("screen-loading");
 		return HTMLPanel.wrap(e);
 	}

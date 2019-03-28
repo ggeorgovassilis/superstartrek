@@ -15,7 +15,7 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView{
 	Element[][] eCells;
 	
 	@Override
-	protected HTMLPanel createPanel() {
+	protected HTMLPanel createWidgetImplementation() {
 		eCells = new Element[3][3];
 		HTMLPanel table = new HTMLPanel("<table id='shortrangescan'><tbody id='xxxyyy'></tbody></table>");
 		Element e = table.getElementById("xxxyyy");

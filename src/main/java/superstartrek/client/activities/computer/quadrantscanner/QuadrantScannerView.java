@@ -36,7 +36,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	}
 	
 	@Override
-	protected HTMLPanel createPanel() {
+	protected HTMLPanel createWidgetImplementation() {
 		HTMLPanel p = new HTMLPanel("<table id=quadrantscan></table>");
 		Event.sinkEvents(p.getElementById("quadrantscan"), Event.ONCLICK);
 		return p;
@@ -44,6 +44,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	
 	public QuadrantScannerView(QuadrantScannerPresenter presenter) {
 		super(presenter);
+		HTMLPanel panel = (HTMLPanel)widgetImpl;
 		Element e = panel.getElementById("quadrantscan");
 		for (int y = 0; y < 8; y++) {
 			Element eTr = DOM.createTR();

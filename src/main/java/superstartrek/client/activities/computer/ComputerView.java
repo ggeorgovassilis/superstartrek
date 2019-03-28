@@ -7,6 +7,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
@@ -53,6 +54,7 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 
 		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(), sectorMenuPresenter);
 		quadrantScannerActivity = new QuadrantScannerView(quadrantScannerPresenter);
+		HTMLPanel panel = (HTMLPanel)getWidgetImplementation();
 		panel.add(quadrantScannerActivity,"quadrantscancontainer");
 		
 		srsPresenter = new SRSPresenter(presenter.getApplication());

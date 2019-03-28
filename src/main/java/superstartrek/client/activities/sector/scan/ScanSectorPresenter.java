@@ -6,19 +6,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.computer.ComputerEvent;
-import superstartrek.client.activities.glasspanel.GlassPanelEvent;
-import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
-import superstartrek.client.activities.glasspanel.GlassPanelHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> implements ScanSectorHandler, GlassPanelHandler{
+public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> implements ScanSectorHandler{
 
-	HandlerRegistration glassPanelHandler;
-	
 	public ScanSectorPresenter(Application application) {
 		super(application);
 		application.events.addHandler(ScanSectorEvent.TYPE, this);
@@ -27,8 +22,6 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 	@Override
 	public void scanSector(ScanSectorEvent event) {
 		getView().show();
-		application.events.fireEvent(new GlassPanelEvent(Action.show));
-		glassPanelHandler = application.events.addHandler(GlassPanelEvent.TYPE, this);
 		IScanSectorView v = (IScanSectorView)getView();
 		Quadrant q = event.getQuadrant();
 		Thing thing = application.starMap.findThingAt(q, event.getLocation().getX(), event.getLocation().getY());
@@ -62,9 +55,6 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 			return;
 		GWT.log("doneWithMenu");
 		getView().hide();
-		if (glassPanelHandler!=null)
-			glassPanelHandler.removeHandler();
-		glassPanelHandler = null;
 		application.events.fireEvent(new ComputerEvent(ComputerEvent.Action.showScreen));
 	}
 	
@@ -72,22 +62,6 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 		if ("screen-sectorscan-back".equals(cmd)) {
 			doneWithMenu();
 		}
-	}
-
-	@Override
-	public void glassPanelShown() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void glassPanelHidden() {
-		doneWithMenu();
-	}
-
-	@Override
-	public void glassPanelClicked() {
-		doneWithMenu();
 	}
 
 }

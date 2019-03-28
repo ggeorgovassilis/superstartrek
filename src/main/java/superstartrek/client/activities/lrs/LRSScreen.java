@@ -18,7 +18,7 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 	Element[][] cells;
 	
 	@Override
-	protected HTMLPanel createPanel() {
+	protected HTMLPanel createWidgetImplementation() {
 		return new HTMLPanel(presenter.getApplication().getResources().lrsScreen().getText());
 	}
 	

@@ -16,7 +16,7 @@ public class SectorMenuView extends BaseView<SectorMenuActivity> implements ISec
 	}
 
 	@Override
-	protected HTMLPanel createPanel() {
+	protected HTMLPanel createWidgetImplementation() {
 		return new HTMLPanel(presenter.getApplication().getResources().sectorSelectionMenu().getText());
 	}
 	

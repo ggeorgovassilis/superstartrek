@@ -131,7 +131,8 @@ public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, 
 		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation(), enterprise.getQuadrant(), map);
 		if (path == null || path.isEmpty())
 			return;
-		Location sector = path.get(Math.max(0, Math.min(MAX_SECTOR_SPEED, path.size() - 2)));
+		//path used to contain origin sector (old a* impl); it doesn't anymore, that's why MAX_SECTOR_SPEED-1
+		Location sector = path.get(Math.max(0, Math.min(MAX_SECTOR_SPEED-1, path.size() - 2)));
 		jumpTo(sector);
 	}
 
