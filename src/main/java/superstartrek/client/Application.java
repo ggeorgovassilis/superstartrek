@@ -21,8 +21,6 @@ import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.ComputerView;
 import superstartrek.client.activities.computer.TurnEndedEvent;
 import superstartrek.client.activities.computer.TurnStartedEvent;
-import superstartrek.client.activities.glasspanel.GlassPanelView;
-import superstartrek.client.activities.glasspanel.GlassPanelPresenter;
 import superstartrek.client.activities.intro.IntroPresenter;
 import superstartrek.client.activities.intro.IntroView;
 import superstartrek.client.activities.klingons.KlingonTurnEvent;
@@ -68,7 +66,6 @@ public class Application
 	public LoadingPresenter loadingPresenter;
 	public ComputerPresenter computerPresenter;
 	public IntroPresenter introPresenter;
-	public GlassPanelPresenter glassPanelPresenter;
 	public ManualPresenter manualPresenter;
 	public ScanSectorPresenter scanSectorPresenter;
 	public MessagesPresenter messagesPresenter;
@@ -131,9 +128,6 @@ public class Application
 
 		computerPresenter = new ComputerPresenter(this);
 		new ComputerView(computerPresenter);
-
-		glassPanelPresenter = new GlassPanelPresenter(this);
-		new GlassPanelView(glassPanelPresenter);
 
 		scanSectorPresenter = new ScanSectorPresenter(this);
 		new ScanSectorView(scanSectorPresenter);

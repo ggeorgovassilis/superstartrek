@@ -6,8 +6,6 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.glasspanel.GlassPanelEvent;
-import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -40,7 +38,6 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 
 	@Override
 	public void showScreen() {
-		application.events.fireEvent(new GlassPanelEvent(Action.hide));
 		getView().show();
 		((IComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
 	}

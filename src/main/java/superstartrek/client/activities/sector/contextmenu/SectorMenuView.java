@@ -5,26 +5,47 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
 
 public class SectorMenuView extends BaseView<SectorMenuActivity> implements ISectorMenuView{
 
+	PopupPanel popupPanel;
+	HTMLPanel html;
+	
 	public SectorMenuView(SectorMenuPresenter presenter) {
 		super(presenter);
 	}
+	
+	@Override
+	public void show() {
+		popupPanel.show();
+	}
+	
+	@Override
+	public void hide() {
+		popupPanel.hide();
+	}
 
 	@Override
-	protected HTMLPanel createWidgetImplementation() {
-		return new HTMLPanel(presenter.getApplication().getResources().sectorSelectionMenu().getText());
+	protected Widget createWidgetImplementation() {
+		popupPanel = new PopupPanel(true,true);
+		popupPanel.setGlassEnabled(true);
+		popupPanel.setGlassStyleName("glasspanel");
+		html = new HTMLPanel(presenter.getApplication().getResources().sectorSelectionMenu().getText());
+		html.addStyleName("sectorselectionbar");
+		popupPanel.add(html);
+		return new FlowPanel();
 	}
 	
 	@Override
 	public void finishUiConstruction() {
-		addStyleName("sectorselectionbar");
 		presenter.getApplication().page.add(this);
-		addDomHandler(new ClickHandler() {
+		html.addDomHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				Element e = event.getNativeEvent().getEventTarget().cast();
@@ -45,7 +66,7 @@ public class SectorMenuView extends BaseView<SectorMenuActivity> implements ISec
 	
 	@Override
 	public void enableButton(String id, boolean status) {
-		DOM.getElementById(id).setClassName(status?"":"disabled");
+		html.getElementById(id).setClassName(status?"":"disabled");
 	}
 
 }

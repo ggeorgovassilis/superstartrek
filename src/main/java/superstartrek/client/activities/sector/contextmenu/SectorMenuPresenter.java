@@ -2,15 +2,12 @@ package superstartrek.client.activities.sector.contextmenu;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.glasspanel.GlassPanelEvent;
-import superstartrek.client.activities.glasspanel.GlassPanelEvent.Action;
-import superstartrek.client.activities.glasspanel.GlassPanelHandler;
 import superstartrek.client.activities.sector.scan.ScanSectorEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 
-public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> implements SectorSelectedHandler, GlassPanelHandler{
+public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> implements SectorSelectedHandler{
 
 	Location sector;
 	Quadrant quadrant;
@@ -18,7 +15,6 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 	public SectorMenuPresenter(Application application) {
 		super(application);
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
-		application.events.addHandler(GlassPanelEvent.TYPE, this);
 	}
 	
 	public void showMenu(int screenY, Location sector, Quadrant quadrant) {
@@ -32,7 +28,6 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 		
 		v.setLocation(0, screenY);
 		v.show();
-		getApplication().events.fireEvent(new GlassPanelEvent(GlassPanelEvent.Action.show));
 	}
 
 	@Override
@@ -43,7 +38,6 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 	}
 	
 	protected void hideMenu() {
-		application.events.fireEvent(new GlassPanelEvent(Action.hide));
 		getView().hide();
 	}
 	
@@ -51,19 +45,6 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 		hideMenu();
 	}
 
-	@Override
-	public void glassPanelShown() {
-	}
-
-	@Override
-	public void glassPanelHidden() {
-		getView().hide();
-	}
-
-	@Override
-	public void glassPanelClicked() {
-	}
-	
 	public void onCommandClicked(String command) {
 		hideMenu();
 		if ("cmd_scanSector".equals(command))

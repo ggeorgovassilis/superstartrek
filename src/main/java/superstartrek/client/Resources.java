@@ -26,4 +26,7 @@ public interface Resources extends ClientBundle {
 	@Source("superstartrek/public/screens/status-report.html")
 	public TextResource statusReport();
 
+	@Source("superstartrek/public/screens/messages.html")
+	public TextResource messages();
+
 }

@@ -635,6 +635,8 @@ a.progress-bar {
 	background:rgba(10,10,10,0.5);
 	outline: cyan solid 1px;
 	padding:1em;
+	overflow:hidden;
+	margin:0.1em;
 }
 
 button.disabled{
