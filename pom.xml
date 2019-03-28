@@ -15,6 +15,7 @@
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gwt.version>1.8</gwt.version>
+		<skip.tests>false</skip.tests>
 	</properties>
 	
 	<profiles>
@@ -26,6 +27,7 @@
 			<gwt.methodNameDisplayMode>FULL</gwt.methodNameDisplayMode>
 			<gwt.saveSource>true</gwt.saveSource>
 			<gwt.style>DETAILED</gwt.style>
+			<skip.tests>true</skip.tests>
 		</properties>
 	</profile>
 	<profile>
@@ -105,6 +107,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.1</version>
+				<configuration>
+					<skip>${skip.tests}</skip>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -125,6 +130,7 @@
 				<version>3.2.2</version>
 				<configuration>
 					<warName>sst</warName>
+					<skip>true</skip>
 					<outputDirectory>${project.build.directory}/sst</outputDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<webappDirectory>${project.build.directory}/sst</webappDirectory>

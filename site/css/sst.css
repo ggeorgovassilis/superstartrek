@@ -233,12 +233,8 @@ table a, table a:visited{
 	width:50%;
 }
 
-.statusReport #statusreport{
-	display:block;
-}
-
-.showLongRangeScan #longrangescanscreen{
-	display:block;
+#screen-longrangescan{
+	background:rgba(0,0,0,0.5);
 }
 
 #longrangescan{
@@ -644,12 +640,18 @@ button.disabled{
 	color:darkgay;
 }
 
-#installappprompt{
+.install-pwa-prompt{
+	background-color:black;
+	overflow:hidden;
 	position:absolute;
 	bottom:0;
 	left:0;
 	right:0;
-	display:block;
-	background-color:white;
-	color:black;
+}
+
+.install-pwa-prompt .label{
+}
+
+.install-pwa-prompt button{
+	width:49%;
 }

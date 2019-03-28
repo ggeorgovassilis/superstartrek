@@ -49,6 +49,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
+import superstartrek.client.pwa.PWA;
 
 public class Application
 		implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler, MessageHandler {
@@ -207,20 +208,6 @@ public class Application
 	}
 
 	@Override
-	public void onModuleLoad() {
-		resources = GWT.create(Resources.class);
-		setUncaughtExceptionHandler();
-		GWT.log("onModuleLoad");
-		page = HTMLPanel.wrap(DOM.getElementById("page"));
-		events = GWT.create(SimpleEventBus.class);
-		setupScreens();
-		setupStarMap();
-		startGame();
-		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
-		startTurnAfterThis();
-	}
-
-	@Override
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		if (thing == starMap.enterprise)
 			endTurnAfterThis();
@@ -275,5 +262,21 @@ public class Application
 		if (!this.gameIsRunning)
 			Window.Location.reload();
 	}
+	
+	@Override
+	public void onModuleLoad() {
+		resources = GWT.create(Resources.class);
+		setUncaughtExceptionHandler();
+		GWT.log("onModuleLoad");
+		page = HTMLPanel.wrap(DOM.getElementById("page"));
+		events = GWT.create(SimpleEventBus.class);
+		setupScreens();
+		setupStarMap();
+		startGame();
+		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
+		startTurnAfterThis();
+		new PWA(this).run();
+	}
+
 
 }
