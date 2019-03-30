@@ -430,21 +430,10 @@ a.single{
 	display:block;
 }
 
-#glasspanel{
-	position:absolute;
-	z-index:1;
-	width:100%;
-	top:0;
-	left:0;
-	bottom:0;
-	right:0;
-	background-color:black;
-	opacity:0.75;
-}
-
 .glasspanel{
 	background-color:black;
 	opacity:0.75;
+	z-index:2;
 }
 
 .gwt-PopupPanel{

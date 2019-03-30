@@ -7,6 +7,8 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
+import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -16,7 +18,7 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, TurnStartedHandler, FireHandler{
+public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, TurnStartedHandler, FireHandler, KlingonDestroyedHandler{
 
 	public ComputerPresenter(Application application) {
 		super(application);
@@ -31,6 +33,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		});
 		application.events.addHandler(ComputerEvent.TYPE, this);
 		application.events.addHandler(TurnStartedEvent.TYPE, this);
+		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
 	}
 	
 	public void onSkipButtonClicked() {
@@ -103,12 +106,10 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		Quadrant q = application.starMap.enterprise.getQuadrant();
 		Enterprise e = application.starMap.enterprise;
 		if (!q.getKlingons().isEmpty()) {
-			alert = "yellow-alert";
 			double minDistance = 3;
 			for (Klingon k:q.getKlingons())
 				minDistance = Math.min(minDistance, StarMap.distance(e, k));
-			if (minDistance<3)
-				alert="red-alert";
+			alert = minDistance<3?"red-alert":"yellow-alert";
 		}
 		
 		IComputerView view = (IComputerView)getView();
@@ -150,5 +151,10 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		if (target == application.starMap.enterprise) {
 			updateShieldsView();
 		}
+	}
+
+	@Override
+	public void klingonDestroyed(Klingon klingon) {
+		updateQuadrantHeader();
 	}
 }

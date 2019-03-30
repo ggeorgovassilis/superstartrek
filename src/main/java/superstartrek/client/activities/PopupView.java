@@ -23,6 +23,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	@Override
 	protected Widget createWidgetImplementation() {
 		popupPanel = new PopupPanel(true, true);
+		popupPanel.setPreviewingAllNativeEvents(true);
 		popupPanel.setGlassEnabled(true);
 		popupPanel.setGlassStyleName("glasspanel");
 		htmlPanel = new HTMLPanel(getContentForHtmlPanel());
