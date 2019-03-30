@@ -1,14 +1,27 @@
 package superstartrek.client.activities;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.PopupPanel.AnimationType;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class PopupView<T extends Activity> extends BaseView<T>{
 
-	protected PopupPanel popupPanel;
 	protected HTMLPanel htmlPanel;
+	protected Element glassPanel;
 	
 	protected PopupView(Presenter<T> presenter) {
 		super(presenter);
@@ -22,23 +35,48 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	
 	@Override
 	protected Widget createWidgetImplementation() {
-		popupPanel = new PopupPanel(true, true);
-		popupPanel.setPreviewingAllNativeEvents(true);
-		popupPanel.setGlassEnabled(true);
-		popupPanel.setGlassStyleName("glasspanel");
 		htmlPanel = new HTMLPanel(getContentForHtmlPanel());
-		popupPanel.add(htmlPanel);
+		htmlPanel.addStyleName("PopupView");
+		htmlPanel.addHandler(new KeyDownHandler() {
+			
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				event.preventDefault();
+				event.stopPropagation();
+				hide();
+			}
+		}, KeyDownEvent.getType());
 		return new FlowPanel();
 	}
 	
 	@Override
 	public void show() {
-		popupPanel.show();
+		if (htmlPanel.isAttached())
+			return;
+		RootPanel.get().add(htmlPanel);
+		glassPanel = DOM.createDiv();
+		glassPanel.addClassName("glasspanel");
+		RootPanel.get().getElement().appendChild(glassPanel);
+		Event.setEventListener(glassPanel, new EventListener() {
+			
+			@Override
+			public void onBrowserEvent(Event event) {
+				event.preventDefault();
+				event.stopPropagation();
+				hide();
+			}
+		});
+		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONTOUCHSTART | Event.ONKEYDOWN | Event.ONKEYPRESS);
+		htmlPanel.getElement().focus();
 	}
 	
 	@Override
 	public void hide() {
-		popupPanel.hide();
+		if (!htmlPanel.isAttached())
+			return;
+		glassPanel.removeFromParent();
+		glassPanel = null;
+		RootPanel.get().remove(htmlPanel);
 	}
 
 }

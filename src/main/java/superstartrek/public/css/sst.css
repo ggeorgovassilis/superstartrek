@@ -434,8 +434,21 @@ a.single{
 	background-color:black;
 	opacity:0.75;
 	z-index:2;
+	touch-action: none;
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
 }
 
+.PopupView{
+	position:absolute;
+	z-index:3;
+	top:0;
+	left:0;
+	right:0;
+}
 .gwt-PopupPanel{
 	width:100%;
 }
