@@ -47,7 +47,7 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements GameStar
 		int x = q.getX()+dx;
 		int y = q.getY()+dy;
 		if (map.isOnMap(x, y))
-			map.enterprise.warpTo(map.getQuadrant(x, y));
+			map.enterprise.warpTo(map.getQuadrant(x, y), null);
 	}
 
 	@Override

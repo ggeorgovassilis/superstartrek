@@ -59,6 +59,7 @@ public class TestLRSPresenter {
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(7,7));
 		qTo.getKlingons().add(k);
+		when(view.isVisible()).thenReturn(true);
 		presenter.setView(view);
 		
 		presenter.onEnterpriseWarped(enterprise, qFrom, lFrom, qTo, lTo);

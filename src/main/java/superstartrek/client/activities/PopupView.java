@@ -57,7 +57,8 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 		glassPanel = DOM.createDiv();
 		glassPanel.addClassName("glasspanel");
 		RootPanel.get().getElement().appendChild(glassPanel);
-		Event.setEventListener(glassPanel, new EventListener() {
+		Element keySink = glassPanel;
+		Event.setEventListener(keySink, new EventListener() {
 			
 			@Override
 			public void onBrowserEvent(Event event) {
@@ -66,7 +67,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 				hide();
 			}
 		});
-		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONTOUCHSTART | Event.ONKEYDOWN | Event.ONKEYPRESS);
+		Event.sinkEvents(keySink, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONTOUCHSTART | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		htmlPanel.getElement().focus();
 	}
 	

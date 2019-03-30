@@ -148,7 +148,7 @@ public class TestEnterprise {
 				assertEquals(Location.location(0,1), lTo);
 			}
 		});
-		enterprise.warpTo(targetQuadrant);
+		enterprise.warpTo(targetQuadrant, null);
 		
 		assertEquals(1, events.getFiredCount(EnterpriseWarpedEvent.TYPE));
 	}

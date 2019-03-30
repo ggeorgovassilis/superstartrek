@@ -36,7 +36,18 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 	public void quadrantWasClicked(int x, int y) {
 		Quadrant qTo = application.starMap.getQuadrant(x, y);
 		Enterprise enterprise = application.starMap.enterprise;
-		if (enterprise.warpTo(qTo))
+		if (enterprise.getQuadrant() == qTo)
+			return;
+		//there's a significant benefit in hiding LRS before going through the CPU intensive
+		//warping event cascade
+		if (enterprise.warpTo(qTo, new Runnable() {
+			
+			//invoked only before successful warp
+			@Override
+			public void run() {
+				lrsHidden();
+			}
+		}))
 			History.newItem("computer");
 	}
 	
@@ -77,6 +88,8 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 
 	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+		if (!getView().isVisible())
+			return;
 		updateQuadrant(qFrom.getX(), qFrom.getY());
 		updateQuadrant(qTo.getX(), qTo.getY());
 		updateEnterpriseLocation();

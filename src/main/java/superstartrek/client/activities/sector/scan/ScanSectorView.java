@@ -12,42 +12,10 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseScreen;
+import superstartrek.client.activities.PopupView;
 
-public class ScanSectorView extends BaseScreen<ScanSectorActivity> implements IScanSectorView{
+public class ScanSectorView extends PopupView<ScanSectorActivity> implements IScanSectorView{
 
-	HTMLPanel html;
-	PopupPanel popup;
-	
-	@Override
-	public void show() {
-		popup.show();
-	}
-	
-	@Override
-	public void hide() {
-		popup.hide();
-	}
-	
-	@Override
-	protected Widget createWidgetImplementation() {
-		popup = new PopupPanel(true, true);
-		popup.setGlassStyleName("glasspanel");
-		html = new HTMLPanel(presenter.getApplication().getResources().sectorScanScreen().getText());
-		popup.add(html);
-		Element button = html.getElementById("screen-sectorscan-back");
-		DOM.sinkEvents(button, Event.ONCLICK);
-		DOM.setEventListener(button, new EventListener() {
-			
-			@Override
-			public void onBrowserEvent(Event event) {
-				((ScanSectorPresenter)getPresenter()).doneWithMenu();
-			}
-		});
-
-		popup.setGlassEnabled(true);
-		return new FlowPanel();
-	}
-	
 	@Override
 	public void finishUiConstruction() {
 		super.finishUiConstruction();
@@ -62,6 +30,15 @@ public class ScanSectorView extends BaseScreen<ScanSectorActivity> implements IS
 				
 			}
 		}, ClickEvent.getType());
+		Element button = getHtmlPanel().getElementById("screen-sectorscan-back");
+		DOM.sinkEvents(button, Event.ONCLICK);
+		DOM.setEventListener(button, new EventListener() {
+			
+			@Override
+			public void onBrowserEvent(Event event) {
+				((ScanSectorPresenter)getPresenter()).doneWithMenu();
+			}
+		});
 	}
 	
 	public ScanSectorView(ScanSectorPresenter presenter) {
@@ -70,23 +47,28 @@ public class ScanSectorView extends BaseScreen<ScanSectorActivity> implements IS
 
 	@Override
 	public void setObjectName(String value) {
-		html.getElementById("object-name").setInnerText(value);
+		getHtmlPanel().getElementById("object-name").setInnerText(value);
 	}
 
 	@Override
 	public void setObjectLocation(String value) {
-		html.getElementById("object-location").setInnerText(value);
+		getHtmlPanel().getElementById("object-location").setInnerText(value);
 	}
 
 	@Override
 	public void setObjectQuadrant(String value) {
-		html.getElementById("object-quadrant").setInnerText(value);
+		getHtmlPanel().getElementById("object-quadrant").setInnerText(value);
 	}
 	
 	@Override
 	public void setProperty(String rowId, String cellId, String rowCss, String value) {
 		DOM.getElementById(rowId).setClassName(rowCss);
 		DOM.getElementById(cellId).setInnerText(value);
+	}
+
+	@Override
+	protected String getContentForHtmlPanel() {
+		return presenter.getApplication().getResources().sectorScanScreen().getText();
 	}
 
 

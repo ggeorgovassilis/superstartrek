@@ -42,8 +42,8 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 
 	@Override
 	public void showScreen() {
-		getView().show();
 		((IComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
+		getView().show();
 	}
 
 	@Override

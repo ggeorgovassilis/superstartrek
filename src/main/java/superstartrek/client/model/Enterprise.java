@@ -61,7 +61,7 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		return antimatter;
 	}
 
-	public boolean warpTo(Quadrant destinationQuadrant) {
+	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
 		Location fromLocation = getLocation();
 		Quadrant fromQuadrant = getQuadrant();
 		if (destinationQuadrant == fromQuadrant)
@@ -109,7 +109,8 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		for (int y = yFrom; y <= yTo; y++)
 			for (int x = xFrom; x <= xTo; x++)
 				map.getQuadrant(x, y).setExplored(true);
-
+		if (callbackBeforeWarping!=null)
+			callbackBeforeWarping.run();
 		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, fromQuadrant, fromLocation, dropQuadrant,
 				freeSpot);
 

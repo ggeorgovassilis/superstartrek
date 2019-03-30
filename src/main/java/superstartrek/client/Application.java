@@ -273,7 +273,7 @@ public class Application
 		setupScreens();
 		setupStarMap();
 		startGame();
-		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant());
+		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
 		startTurnAfterThis();
 		new PWA(this).run();
 	}
