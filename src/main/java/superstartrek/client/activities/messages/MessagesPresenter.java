@@ -1,5 +1,6 @@
 package superstartrek.client.activities.messages;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 
 import superstartrek.client.Application;
@@ -15,9 +16,11 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
+		GWT.log("messagePosted "+formattedMessage);
 		((MessagesView) getView()).showMessage(formattedMessage, category);
-		if (!getView().isVisible())
-			getView().show();
+		// the "if" check sometimes says that msg is visible while it isn't; disabling until further notice
+		//		if (!getView().isVisible())
+		getView().show();
 	}
 
 	public void dismissButtonClicked() {
@@ -27,7 +30,12 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	public void hideMessages() {
 		if (!getView().isVisible())
 			return;
-		hideMessagesNow();
+		Timer.postpone(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				hideMessagesNow();
+			}
+		});
 	}
 	
 	public void hideMessagesNow() {
