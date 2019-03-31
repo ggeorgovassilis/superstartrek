@@ -19,7 +19,7 @@ public class PWA {
 															}-*/;
 
 	public static native void registerServiceWorker(String url) /*-{
-																navigator.serviceWorker.register(url)
+																navigator.serviceWorker.register(url, {scope:'.'})
 																.then(function(arg){
 																console.log("REGISTERED SW");
 																return null;
