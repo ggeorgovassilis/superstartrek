@@ -17,29 +17,29 @@
 		<gwt.version>1.8</gwt.version>
 		<skip.tests>false</skip.tests>
 	</properties>
-	
+
 	<profiles>
-	<profile>
-		<id>profile</id>
-		<properties>
-			<gwt.draftCompile>true</gwt.draftCompile>
-			<gwt.module>superstartrek.sst-profile</gwt.module>
-			<gwt.methodNameDisplayMode>FULL</gwt.methodNameDisplayMode>
-			<gwt.saveSource>true</gwt.saveSource>
-			<gwt.style>DETAILED</gwt.style>
-			<skip.tests>true</skip.tests>
-		</properties>
-	</profile>
-	<profile>
-		<id>production</id>
-		<properties>
-			<gwt.draftCompile>false</gwt.draftCompile>
-			<gwt.module>superstartrek.sst-prod</gwt.module>
-			<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
-			<gwt.saveSource>false</gwt.saveSource>
-			<gwt.style>OBFUSCATED</gwt.style>
-		</properties>
-	</profile>
+		<profile>
+			<id>profile</id>
+			<properties>
+				<gwt.draftCompile>true</gwt.draftCompile>
+				<gwt.module>superstartrek.sst-profile</gwt.module>
+				<gwt.methodNameDisplayMode>FULL</gwt.methodNameDisplayMode>
+				<gwt.saveSource>true</gwt.saveSource>
+				<gwt.style>DETAILED</gwt.style>
+				<skip.tests>true</skip.tests>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<properties>
+				<gwt.draftCompile>false</gwt.draftCompile>
+				<gwt.module>superstartrek.sst-prod</gwt.module>
+				<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
+				<gwt.saveSource>false</gwt.saveSource>
+				<gwt.style>OBFUSCATED</gwt.style>
+			</properties>
+		</profile>
 	</profiles>
 
 	<dependencies>
@@ -177,6 +177,32 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>net.nicoulaj.maven.plugins</groupId>
+				<artifactId>checksum-maven-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>files</goal>
+						</goals>
+						<phase>package</phase>
+						<configuration>
+							<fileSets>
+								<fileSet>
+									<directory>${project.basedir}/site</directory>
+								</fileSet>
+							</fileSets>
+							<algorithms>MD5</algorithms>
+							<shasumSummary>true</shasumSummary>
+							<shasumSummaryFile>${project.basedir}/site/checksum.sha</shasumSummaryFile>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- put your configurations here -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

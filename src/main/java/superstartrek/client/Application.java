@@ -2,6 +2,7 @@ package superstartrek.client;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -49,10 +50,12 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
+import superstartrek.client.pwa.ApplicationUpdateCheckHandler;
+import superstartrek.client.pwa.ApplicationUpdateEvent;
 import superstartrek.client.pwa.PWA;
 
 public class Application
-		implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler, MessageHandler {
+		implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler, MessageHandler, ApplicationUpdateCheckHandler {
 
 	public EventBus events;
 	public HTMLPanel page;
@@ -139,14 +142,19 @@ public class Application
 		new StatusReportView(statusReportPresenter);
 
 	}
-
-	public void startGame() {
-		History.replaceItem("intro");
-		History.fireCurrentHistoryState();
+	
+	public void registerEventHandlers() {
 		events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 		events.addHandler(ThingMovedEvent.TYPE, this);
 		events.addHandler(GameOverEvent.TYPE, this);
 		events.addHandler(MessageEvent.TYPE, this);
+		events.addHandler(ApplicationUpdateEvent.TYPE, this);
+	}
+
+	public void startGame() {
+		History.replaceItem("intro");
+		History.fireCurrentHistoryState();
+		registerEventHandlers();
 		events.fireEvent(new GameStartedEvent());
 	}
 
@@ -276,6 +284,20 @@ public class Application
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
 		startTurnAfterThis();
 		new PWA(this).run();
+	}
+
+	@Override
+	public void newVersionAvailable() {
+		message("A new version is available","product-info");
+		message("If you want to update, please uninstall this version first","product-info");
+	}
+
+	@Override
+	public void versionIsCurrent() {
+	}
+
+	@Override
+	public void checkFailed() {
 	}
 
 

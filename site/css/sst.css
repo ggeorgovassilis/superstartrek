@@ -426,6 +426,12 @@ table a, table a:visited{
 	font-size:120%;
 }
 
+.entry.product-info{
+	color:lime;
+	font-weight:bold;
+	font-size:120%;
+}
+
 a.single{
 	display:block;
 }

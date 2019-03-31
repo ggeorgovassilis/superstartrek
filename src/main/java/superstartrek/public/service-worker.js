@@ -10,7 +10,7 @@ let URLS = [
 	"/superstartrek/site/images/stars-background.gif",
 	"/superstartrek/site/css/sst.css",
 	"/superstartrek/site/superstartrek.superstartrek.nocache.js",
-	"/superstartrek/site/images/stars-background.gif"
+	"/superstartrek/site/superstartrek.superstartrek.nocache.js.md5",
 ];
 
 // Respond with cached resources

@@ -1,18 +1,28 @@
 package superstartrek.client.pwa;
 
+import java.util.logging.Logger;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 
 import superstartrek.client.Application;
+import superstartrek.client.pwa.ApplicationUpdateEvent.Status;
 
 public class PWA {
 
 	AppInstallationEvent deferredInstallationPrompt;
-	InstallationPrompt prompt;
 	Application application;
+	
+	private static Logger log = Logger.getLogger("");
 
 	public static native boolean supportsServiceWorker() /*-{
 															return navigator.serviceWorker!=null;
@@ -26,6 +36,9 @@ public class PWA {
 																})
 																['catch'](console.error);
 																}-*/;
+	public static native void checkIfServiceWorkerIsRegistered(String url, RequestCallback callback)/*-{
+	}-*/;
+	
 
 	/*
 	 * Tricky thing to remember: if the user dismisses the native installation prompt, the "beforeinstallprompt"
@@ -42,13 +55,10 @@ public class PWA {
 	public void installationEventCallback(AppInstallationEvent e) {
 		deferredInstallationPrompt = e;
 		deferredInstallationPrompt.preventDefault();
-		prompt = new InstallationPrompt(this);
-		application.page.add(prompt);
 	}
 	
 	public void installApplication() {
 		deferredInstallationPrompt.prompt();
-		application.page.remove(prompt);
 		deferredInstallationPrompt = null;
 	}
 	
@@ -57,9 +67,59 @@ public class PWA {
 	}
 
 	public void dismissInstallationPrompt() {
-		application.page.remove(prompt);
 		deferredInstallationPrompt = null;
-		prompt = null;
+	}
+	
+	public void getChecksumOfInstalledApplication(RequestCallback callback) {
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, "/superstartrek/site/superstartrek.superstartrek.nocache.js.md5");
+		try {
+			rb.sendRequest("", callback);
+		} catch (RequestException e) {
+			GWT.log(e.getMessage(),e);
+		}
+	}
+
+	public void getChecksumOfNewestVersion(RequestCallback callback) {
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, "/superstartrek/site/superstartrek.superstartrek.nocache.js.md5?rnd="+Random.nextInt());
+		try {
+			rb.sendRequest("", callback);
+		} catch (RequestException e) {
+			GWT.log(e.getMessage(),e);
+		}
+	}
+	
+	public void checkForNewVersion(Application app) {
+		
+		log.info("check for new version");
+		getChecksumOfInstalledApplication(new RequestCallback() {
+			
+			@Override
+			public void onResponseReceived(Request request, Response response) {
+				String checksumOfInstalledApplication = response.getText();
+				log.info("installed version id "+checksumOfInstalledApplication);
+				getChecksumOfNewestVersion(new RequestCallback() {
+					
+					@Override
+					public void onResponseReceived(Request request, Response response) {
+						String checksumOfNewestVersion = response.getText();
+						log.info("newest version id "+checksumOfNewestVersion);
+						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
+						app.events.fireEvent(new ApplicationUpdateEvent(isSame?Status.appIsUpToDate:Status.appIsOutdated));
+						
+					}
+					
+					@Override
+					public void onError(Request request, Throwable exception) {
+						app.events.fireEvent(new ApplicationUpdateEvent(Status.checkFailed));
+					}
+				});
+			}
+			
+			@Override
+			public void onError(Request request, Throwable exception) {
+				app.events.fireEvent(new ApplicationUpdateEvent(Status.checkFailed));
+			}
+		});
 	}
 
 	public void run() {
@@ -69,5 +129,6 @@ public class PWA {
 			return;
 		registerServiceWorker("service-worker.js");
 		addInstallationListener();
+		checkForNewVersion(application);
 	}
 }
