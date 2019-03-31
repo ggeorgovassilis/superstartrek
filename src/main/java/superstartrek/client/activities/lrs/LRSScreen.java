@@ -60,7 +60,7 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 	
 	@Override
 	public void updateCell(int x, int y, String text, String css){
-		cells[x][y].setInnerHTML(text);
+		cells[x][y].setInnerText(text);
 		cells[x][y].setClassName(css);
 	}
 }

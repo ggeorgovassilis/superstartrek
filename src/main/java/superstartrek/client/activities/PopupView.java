@@ -76,6 +76,8 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 		if (!htmlPanel.isAttached())
 			return;
 		glassPanel.removeFromParent();
+		//listeners leak
+		Event.setEventListener(glassPanel, null);
 		glassPanel = null;
 		RootPanel.get().remove(htmlPanel);
 	}

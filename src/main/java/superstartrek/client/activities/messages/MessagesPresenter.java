@@ -16,7 +16,8 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
 		((MessagesView) getView()).showMessage(formattedMessage, category);
-		getView().show();
+		if (!getView().isVisible())
+			getView().show();
 	}
 
 	public void dismissButtonClicked() {
@@ -26,12 +27,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	public void hideMessages() {
 		if (!getView().isVisible())
 			return;
-		Timer.postpone(new ScheduledCommand() {
-			@Override
-			public void execute() {
-				hideMessagesNow();
-			}
-		});
+		hideMessagesNow();
 	}
 	
 	public void hideMessagesNow() {

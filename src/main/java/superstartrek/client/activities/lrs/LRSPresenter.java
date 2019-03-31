@@ -1,5 +1,6 @@
 package superstartrek.client.activities.lrs;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -88,8 +89,8 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 
 	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		if (!getView().isVisible())
-			return;
+//		if (!getView().isVisible())
+//			return;
 		updateQuadrant(qFrom.getX(), qFrom.getY());
 		updateQuadrant(qTo.getX(), qTo.getY());
 		updateEnterpriseLocation();

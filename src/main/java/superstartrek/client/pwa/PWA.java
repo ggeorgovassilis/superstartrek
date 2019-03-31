@@ -90,19 +90,16 @@ public class PWA {
 	
 	public void checkForNewVersion(Application app) {
 		
-		log.info("check for new version");
 		getChecksumOfInstalledApplication(new RequestCallback() {
 			
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				String checksumOfInstalledApplication = response.getText();
-				log.info("installed version id "+checksumOfInstalledApplication);
 				getChecksumOfNewestVersion(new RequestCallback() {
 					
 					@Override
 					public void onResponseReceived(Request request, Response response) {
 						String checksumOfNewestVersion = response.getText();
-						log.info("newest version id "+checksumOfNewestVersion);
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
 						app.events.fireEvent(new ApplicationUpdateEvent(isSame?Status.appIsUpToDate:Status.appIsOutdated));
 						

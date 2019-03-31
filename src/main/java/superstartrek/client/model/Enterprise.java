@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.shared.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireEvent.Phase;
@@ -62,10 +64,9 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 	}
 
 	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
+		GWT.log("Enterprise warpTo");
 		Location fromLocation = getLocation();
 		Quadrant fromQuadrant = getQuadrant();
-		if (destinationQuadrant == fromQuadrant)
-			return false;
 		if (!consume("warp", 20)) {
 			// we can let this slide if no enemies in quadrant
 			if (!getQuadrant().getKlingons().isEmpty()) {
@@ -102,10 +103,10 @@ public class Enterprise extends Vessel implements TurnStartedHandler, FireHandle
 		Location freeSpot = map.findFreeSpotAround(getQuadrant(), getLocation(), 3);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
-		int xFrom = Math.max(0, destinationX - 1);
-		int xTo = Math.min(7, destinationX + 1);
-		int yFrom = Math.max(0, destinationY - 1);
-		int yTo = Math.min(7, destinationY + 1);
+		int xFrom = Math.max(0, dropQuadrant.getX() - 1);
+		int xTo = Math.min(7, dropQuadrant.getX() + 1);
+		int yFrom = Math.max(0, dropQuadrant.getY() - 1);
+		int yTo = Math.min(7, dropQuadrant.getY() + 1);
 		for (int y = yFrom; y <= yTo; y++)
 			for (int x = xFrom; x <= xTo; x++)
 				map.getQuadrant(x, y).setExplored(true);
