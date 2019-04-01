@@ -7,17 +7,17 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
-import superstartrek.client.activities.loading.GameStartedEvent;
-import superstartrek.client.activities.loading.GameStartedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
+import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Maps;
 
-public class SRSPresenter extends BasePresenter<SRSActivity> implements GameStartedHandler, EnterpriseWarpedHandler, KlingonDestroyedHandler {
+public class SRSPresenter extends BasePresenter<SRSActivity> implements GamePhaseHandler, EnterpriseWarpedHandler, KlingonDestroyedHandler {
 
 	public SRSPresenter(Application application) {
 		super(application);
@@ -63,7 +63,7 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements GameStar
 	}
 
 	@Override
-	public void onGameStared(GameStartedEvent evt) {
+	public void onGameStarted(GameStartedEvent evt) {
 		updateRadar();
 	}
 

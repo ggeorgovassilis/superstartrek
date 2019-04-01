@@ -1,11 +1,11 @@
-package superstartrek.client.activities.loading;
+package superstartrek.client.control;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class GameOverEvent extends GwtEvent<GameOverHandler>{
+public class GameOverEvent extends GwtEvent<GamePhaseHandler>{
 
 	public enum Outcome{lost,won};
-	final public static Type<GameOverHandler> TYPE = new Type<>();
+	final public static Type<GamePhaseHandler> TYPE = new Type<>();
 	final Outcome outcome;
 	final String reason;
 	
@@ -15,7 +15,7 @@ public class GameOverEvent extends GwtEvent<GameOverHandler>{
 	}
 	
 	@Override
-	public Type<GameOverHandler> getAssociatedType() {
+	public Type<GamePhaseHandler> getAssociatedType() {
 		return TYPE;
 	}
 	
@@ -24,7 +24,7 @@ public class GameOverEvent extends GwtEvent<GameOverHandler>{
 	}
 
 	@Override
-	protected void dispatch(GameOverHandler handler) {
+	protected void dispatch(GamePhaseHandler handler) {
 		if (outcome == Outcome.lost)
 			handler.gameLost();
 		if (outcome == Outcome.won)

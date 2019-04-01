@@ -9,12 +9,14 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireEvent.Phase;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
+import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.KlingonTurnEvent;
+import superstartrek.client.control.GameOverEvent.Outcome;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -24,7 +26,7 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.Random;
 
-public class Klingon extends Vessel implements FireHandler, KlingonTurnHandler, EnterpriseWarpedHandler {
+public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, EnterpriseWarpedHandler {
 
 	protected final Setting disruptor;
 	protected final Setting cloak;

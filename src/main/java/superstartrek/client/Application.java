@@ -18,14 +18,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.ComputerView;
-import superstartrek.client.activities.computer.TurnEndedEvent;
-import superstartrek.client.activities.computer.TurnStartedEvent;
 import superstartrek.client.activities.intro.IntroPresenter;
 import superstartrek.client.activities.intro.IntroView;
-import superstartrek.client.activities.klingons.KlingonTurnEvent;
-import superstartrek.client.activities.loading.GameOverEvent;
-import superstartrek.client.activities.loading.GameOverHandler;
-import superstartrek.client.activities.loading.GameStartedEvent;
 import superstartrek.client.activities.loading.LoadingPresenter;
 import superstartrek.client.activities.loading.LoadingScreen;
 import superstartrek.client.activities.lrs.LRSPresenter;
@@ -44,6 +38,12 @@ import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
+import superstartrek.client.control.GameOverEvent;
+import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.GameStartedEvent;
+import superstartrek.client.control.KlingonTurnEvent;
+import superstartrek.client.control.TurnEndedEvent;
+import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -55,7 +55,7 @@ import superstartrek.client.pwa.ApplicationUpdateEvent;
 import superstartrek.client.pwa.PWA;
 
 public class Application
-		implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GameOverHandler, MessageHandler, ApplicationUpdateCheckHandler {
+		implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GamePhaseHandler, MessageHandler, ApplicationUpdateCheckHandler {
 
 	public EventBus events;
 	public HTMLPanel page;

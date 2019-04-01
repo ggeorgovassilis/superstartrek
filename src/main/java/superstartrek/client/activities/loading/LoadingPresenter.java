@@ -2,8 +2,10 @@ package superstartrek.client.activities.loading;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.GameStartedEvent;
 
-public class LoadingPresenter extends BasePresenter<LoadingActivity> implements GameStartedHandler{
+public class LoadingPresenter extends BasePresenter<LoadingActivity> implements GamePhaseHandler{
 
 	public LoadingPresenter(Application application) {
 		super(application);
@@ -11,7 +13,7 @@ public class LoadingPresenter extends BasePresenter<LoadingActivity> implements 
 	}
 
 	@Override
-	public void onGameStared(GameStartedEvent evt) {
+	public void onGameStarted(GameStartedEvent evt) {
 		getView().hide();
 	}
 

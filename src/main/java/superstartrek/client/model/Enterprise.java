@@ -9,19 +9,18 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireEvent.Phase;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.computer.TurnEndedEvent;
-import superstartrek.client.activities.computer.TurnEndedHandler;
-import superstartrek.client.activities.computer.TurnStartedEvent;
-import superstartrek.client.activities.computer.TurnStartedHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.loading.GameOverEvent;
-import superstartrek.client.activities.loading.GameOverEvent.Outcome;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
+import superstartrek.client.control.GameOverEvent;
+import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.TurnEndedEvent;
+import superstartrek.client.control.TurnStartedEvent;
+import superstartrek.client.control.GameOverEvent.Outcome;
 import superstartrek.client.utils.Random;
 
-public class Enterprise extends Vessel implements TurnStartedHandler, FireHandler, TurnEndedHandler {
+public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
 
 	public final static double PHASER_RANGE = 3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 10;

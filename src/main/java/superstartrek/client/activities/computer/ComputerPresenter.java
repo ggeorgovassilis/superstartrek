@@ -9,6 +9,8 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
+import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -18,7 +20,7 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, TurnStartedHandler, FireHandler, KlingonDestroyedHandler{
+public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler{
 
 	public ComputerPresenter(Application application) {
 		super(application);

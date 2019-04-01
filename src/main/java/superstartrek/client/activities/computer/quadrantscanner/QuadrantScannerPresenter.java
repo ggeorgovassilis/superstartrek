@@ -14,8 +14,6 @@ import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.klingons.KlingonUncloakedEvent;
 import superstartrek.client.activities.klingons.KlingonUncloakedHandler;
-import superstartrek.client.activities.loading.GameStartedEvent;
-import superstartrek.client.activities.loading.GameStartedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
@@ -25,6 +23,8 @@ import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedEvent;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
+import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -32,7 +32,7 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GameStartedHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler, EnterpriseRepairedHandler, KlingonUncloakedHandler, KlingonDestroyedHandler {
+public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler, EnterpriseRepairedHandler, KlingonUncloakedHandler, KlingonDestroyedHandler {
 
 	SectorMenuPresenter sectorMenuPresenter;
 	
@@ -113,7 +113,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 
 	@Override
-	public void onGameStared(GameStartedEvent evt) {
+	public void onGameStarted(GameStartedEvent evt) {
 		updateScreen();
 	}
 

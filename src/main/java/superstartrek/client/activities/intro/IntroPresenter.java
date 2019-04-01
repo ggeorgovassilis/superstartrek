@@ -6,10 +6,10 @@ import com.google.gwt.user.client.History;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.loading.GameStartedEvent;
-import superstartrek.client.activities.loading.GameStartedHandler;
+import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.GameStartedEvent;
 
-public class IntroPresenter extends BasePresenter<IntroActivity> implements GameStartedHandler{
+public class IntroPresenter extends BasePresenter<IntroActivity> implements GamePhaseHandler{
 
 	public IntroPresenter(Application application) {
 		super(application);
@@ -27,7 +27,7 @@ public class IntroPresenter extends BasePresenter<IntroActivity> implements Game
 	}
 	
 	@Override
-	public void onGameStared(GameStartedEvent evt) {
+	public void onGameStarted(GameStartedEvent evt) {
 		History.newItem("intro");
 	}
 
