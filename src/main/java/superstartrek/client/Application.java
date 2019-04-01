@@ -38,6 +38,7 @@ import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
+import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
@@ -55,7 +56,7 @@ import superstartrek.client.pwa.ApplicationUpdateEvent;
 import superstartrek.client.pwa.PWA;
 
 public class Application
-		implements EntryPoint, EnterpriseWarpedHandler, ThingMovedHandler, GamePhaseHandler, MessageHandler, ApplicationUpdateCheckHandler {
+		implements EntryPoint, GamePhaseHandler, MessageHandler, ApplicationUpdateCheckHandler {
 
 	public EventBus events;
 	public HTMLPanel page;
@@ -72,6 +73,7 @@ public class Application
 	public LRSPresenter lrsPresenter;
 	public StatusReportPresenter statusReportPresenter;
 	private static Application that;
+	public GameController gameController;
 	protected Resources resources;
 	protected Set<String> flags;
 	
@@ -144,8 +146,6 @@ public class Application
 	}
 	
 	public void registerEventHandlers() {
-		events.addHandler(EnterpriseWarpedEvent.TYPE, this);
-		events.addHandler(ThingMovedEvent.TYPE, this);
 		events.addHandler(GameOverEvent.TYPE, this);
 		events.addHandler(MessageEvent.TYPE, this);
 		events.addHandler(ApplicationUpdateEvent.TYPE, this);
@@ -215,17 +215,6 @@ public class Application
 
 	}
 
-	@Override
-	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		if (thing == starMap.enterprise)
-			endTurnAfterThis();
-	}
-
-	@Override
-	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		endTurnAfterThis();
-	}
-
 	public void gameOver(GameOverEvent.Outcome outcome, String reason) {
 		GWT.log(reason);
 		events.fireEvent(new GameOverEvent(outcome, reason));
@@ -272,21 +261,6 @@ public class Application
 	}
 	
 	@Override
-	public void onModuleLoad() {
-		resources = GWT.create(Resources.class);
-		setUncaughtExceptionHandler();
-		GWT.log("onModuleLoad");
-		page = HTMLPanel.wrap(DOM.getElementById("page"));
-		events = GWT.create(SimpleEventBus.class);
-		setupScreens();
-		setupStarMap();
-		startGame();
-		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
-		startTurnAfterThis();
-		new PWA(this).run();
-	}
-
-	@Override
 	public void newVersionAvailable() {
 		message("A new version is available","product-info");
 		message("If you want to update, please uninstall this version first","product-info");
@@ -298,6 +272,26 @@ public class Application
 
 	@Override
 	public void checkFailed() {
+	}
+	
+	public void setupGameController() {
+		gameController = new GameController(this);
+	}
+
+	@Override
+	public void onModuleLoad() {
+		GWT.log("onModuleLoad");
+		resources = GWT.create(Resources.class);
+		setUncaughtExceptionHandler();
+		page = HTMLPanel.wrap(DOM.getElementById("page"));
+		events = GWT.create(SimpleEventBus.class);
+		setupScreens();
+		setupStarMap();
+		setupGameController();
+		startGame();
+		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
+		startTurnAfterThis();
+		new PWA(this).run();
 	}
 
 

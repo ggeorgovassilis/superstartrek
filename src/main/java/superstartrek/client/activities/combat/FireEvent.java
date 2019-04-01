@@ -14,13 +14,15 @@ public class FireEvent extends GwtEvent<FireHandler>{
 	public final String weapon;
 	public final double damage;
 	public final Phase phase;
-
-	public FireEvent(Phase phase, Vessel actor, Thing target, String weapon, double damage) {
+	public final boolean wasAutoFire;
+	
+	public FireEvent(Phase phase, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
 		this.actor = actor;
 		this.target= target;
 		this.weapon = weapon;
 		this.damage = damage;
 		this.phase = phase;
+		this.wasAutoFire = wasAutoFire;
 	}
 	
 	@Override
@@ -31,9 +33,9 @@ public class FireEvent extends GwtEvent<FireHandler>{
 	@Override
 	protected void dispatch(FireHandler handler) {
 		if (phase == Phase.fire)
-			handler.onFire(actor, target, weapon, damage);
+			handler.onFire(this);
 		else if (phase == Phase.afterFire)
-			handler.afterFire(actor, target, weapon, damage);
+			handler.afterFire(this);
 	}
 
 }

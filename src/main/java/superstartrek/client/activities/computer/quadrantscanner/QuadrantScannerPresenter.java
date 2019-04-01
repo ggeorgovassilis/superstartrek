@@ -146,13 +146,10 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 	
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-	}
-
-
-	@Override
-	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
+	public void afterFire(FireEvent evt) {
 		//target might have been destroyed (so not on map anymore), that's why we don't call updateSector(target)
+		Thing target = evt.target;
+		if (target!=null)
 		updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
 	}
 

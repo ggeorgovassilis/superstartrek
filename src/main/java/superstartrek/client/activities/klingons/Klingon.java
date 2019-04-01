@@ -162,9 +162,9 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			return;
 		if (isCloaked())
 			uncloak();
-		FireEvent event = new FireEvent(Phase.fire, this, enterprise, "disruptor", disruptor.getValue());
+		FireEvent event = new FireEvent(Phase.fire, this, enterprise, "disruptor", disruptor.getValue(), true);
 		Application.get().events.fireEvent(event);
-		event = new FireEvent(Phase.afterFire, this, enterprise, "disruptor", disruptor.getValue());
+		event = new FireEvent(Phase.afterFire, this, enterprise, "disruptor", disruptor.getValue(), true);
 		Application.get().events.fireEvent(event);
 	}
 
@@ -213,30 +213,26 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	}
 
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-		if (target != this)
+	public void onFire(FireEvent evt) {
+		if (evt.target != this)
 			return;
 		if (isCloaked()) {
 			uncloak();
 			destroy();
 			return;
 		}
-		double impact = damage / (shields.getValue() + 1);
-		shields.decrease(damage);
-		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
+		double impact = evt.damage / (shields.getValue() + 1);
+		shields.decrease(evt.damage);
+		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - evt.damage);
 		if (getImpulse().isEnabled() && Random.nextDouble() < impact)
 			getImpulse().setEnabled(false);
 		if (getDisruptor().isEnabled() && Random.nextDouble() < impact)
 			getDisruptor().setEnabled(false);
 
-		Application.get().message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
+		Application.get().message(evt.weapon + " hit " + evt.target.getName() + " at " + evt.target.getLocation(), "klingon-damaged");
 		if (shields.getValue() <= 0) {
 			destroy();
 		}
-	}
-
-	@Override
-	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
 	}
 
 }

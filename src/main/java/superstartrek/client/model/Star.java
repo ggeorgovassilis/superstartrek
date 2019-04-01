@@ -20,12 +20,9 @@ public class Star extends Thing implements FireHandler{
 	}
 
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-		if (target == this)
-			Application.get().message(weapon+" hit "+getName()+" at "+getLocation());
+	public void onFire(FireEvent evt) {
+		if (evt.target == this)
+			Application.get().message(evt.weapon+" hit "+getName()+" at "+getLocation());
 	}
 
-	@Override
-	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
-	}
 }

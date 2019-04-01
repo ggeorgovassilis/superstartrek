@@ -97,19 +97,19 @@ public class TestKlingon {
 		events.addHandler(FireEvent.TYPE, new FireHandler() {
 			
 			@Override
-			public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-				assertEquals(klingon, actor);
-				assertEquals(enterprise, target);
-				assertEquals("disruptor", weapon);
-				assertEquals(10,damage,0.1);
+			public void onFire(FireEvent evt) {
+				assertEquals(klingon, evt.actor);
+				assertEquals(enterprise, evt.target);
+				assertEquals("disruptor", evt.weapon);
+				assertEquals(10,evt.damage,0.1);
 			}
 			
 			@Override
-			public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
-				assertEquals(klingon, actor);
-				assertEquals(enterprise, target);
-				assertEquals("disruptor", weapon);
-				assertEquals(10,damage,0.1);
+			public void afterFire(FireEvent evt) {
+				assertEquals(klingon, evt.actor);
+				assertEquals(enterprise, evt.target);
+				assertEquals("disruptor", evt.weapon);
+				assertEquals(10,evt.damage,0.1);
 			}
 		});
 		

@@ -5,6 +5,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
+import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
@@ -20,19 +21,11 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler{
+public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>{
 
 	public ComputerPresenter(Application application) {
 		super(application);
-		application.addHistoryListener(new ValueChangeHandler<String>() {
-			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-				if ("computer".equals(event.getValue()))
-					showScreen();
-				else
-					hideScreen();
-			}
-		});
+		application.addHistoryListener(this);
 		application.events.addHandler(ComputerEvent.TYPE, this);
 		application.events.addHandler(TurnStartedEvent.TYPE, this);
 		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
@@ -145,12 +138,8 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	}
 
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-	}
-
-	@Override
-	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
-		if (target == application.starMap.enterprise) {
+	public void afterFire(FireEvent evt) {
+		if (evt.target == application.starMap.enterprise) {
 			updateShieldsView();
 		}
 	}
@@ -158,5 +147,13 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
 		updateQuadrantHeader();
+	}
+
+	@Override
+	public void onValueChange(ValueChangeEvent<String> event) {
+		if ("computer".equals(event.getValue()))
+			showScreen();
+		else
+			hideScreen();
 	}
 }

@@ -9,26 +9,25 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
 
-public class IntroPresenter extends BasePresenter<IntroActivity> implements GamePhaseHandler{
+public class IntroPresenter extends BasePresenter<IntroActivity> implements GamePhaseHandler, ValueChangeHandler<String>{
 
 	public IntroPresenter(Application application) {
 		super(application);
 		application.events.addHandler(GameStartedEvent.TYPE, this);
-		History.addValueChangeHandler(new ValueChangeHandler<String>() {
-			
-			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-				if ("intro".equals(event.getValue())) {
-					getView().show();
-				} else
-					getView().hide();
-			}
-		});
+		History.addValueChangeHandler(this);
 	}
 	
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
 		History.newItem("intro");
+	}
+
+	@Override
+	public void onValueChange(ValueChangeEvent<String> event) {
+		if ("intro".equals(event.getValue())) {
+			getView().show();
+		} else
+			getView().hide();
 	}
 
 

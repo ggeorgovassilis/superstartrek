@@ -134,7 +134,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			app.message("Course " + Math.round(distance) + " exceeds maximum impulse power " + getImpulse().getValue());
 			return;
 		}
-		Thing thing = app.starMap.findThingAt(quadrant, loc.x, loc.y);
 		List<Location> path = new ArrayList<>();
 		path.add(getLocation());
 		app.starMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), new Walker() {
@@ -174,6 +173,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 		List<Thing> things = Application.get().starMap.findObstaclesInLine(quadrant, getLocation(), sector);
 		things.remove(this);
+		getTorpedos().decrease(1);
+		Thing target=null;
 		for (Thing thing : things) {
 			boolean hit = false;
 			if (thing instanceof Star) {
@@ -186,17 +187,17 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				hit = Random.nextDouble() <= chance;
 			}
 			if (hit) {
-				getTorpedos().decrease(1);
-				FireEvent event = new FireEvent(Phase.fire, this, thing, "torpedos", 50);
-				Application.get().events.fireEvent(event);
-				event = new FireEvent(Phase.afterFire, this, thing, "torpedos", 50);
-				Application.get().events.fireEvent(event);
-				Application.get().endTurnAfterThis();
-				return;
+				target = thing;
+				break;
 			}
 		}
-		Application.get().message("Torpedo exploded in the void");
-		Application.get().endTurnAfterThis();
+
+		FireEvent event = new FireEvent(Phase.fire, this, target, "torpedos", 50, false);
+		Application.get().events.fireEvent(event);
+		event = new FireEvent(Phase.afterFire, this, target, "torpedos", 50, false);
+		Application.get().events.fireEvent(event);
+		if (target == null)
+			Application.get().message("Torpedo exploded in the void");
 	}
 
 	public void firePhasersAt(Location sector, boolean isAutoAim) {
@@ -229,15 +230,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return;
 		}
 		Klingon klingon = (Klingon) thing;
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", phasers.getValue() / distance);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", phasers.getValue() / distance, isAutoAim);
 		Application.get().events.fireEvent(event);
 
-		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", phasers.getValue() / distance);
+		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", phasers.getValue() / distance, isAutoAim);
 		Application.get().events.fireEvent(event);
 
 		phasers.setValue(0);
-		if (!isAutoAim)
-			Application.get().endTurnAfterThis();
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
@@ -247,7 +246,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		shields.repair();
 		autoAim.repair();
 		Application.get().events.fireEvent(new EnterpriseRepairedEvent());
-		Application.get().endTurnAfterThis();
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -276,7 +274,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 					|| maybeRepairProvisionally(autoAim);
 			if (repaired) {
 				Application.get().events.fireEvent(new EnterpriseRepairedEvent());
-				Application.get().endTurnAfterThis();
 				return;
 			}
 		}
@@ -376,23 +373,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		playComputerTurn();
 	}
 
-	@Override
-	public void onTurnEnded(TurnEndedEvent evt) {
-	}
-
 	public void toggleAutoAim() {
 		getAutoAim().setValue(!getAutoAim().getBooleanValue() && getAutoAim().isEnabled());
 	}
 
 	@Override
-	public void onFire(Vessel actor, Thing target, String weapon, double damage) {
-		if (target != this)
+	public void onFire(FireEvent evt) {
+		if (evt.target != this)
 			return;
-		Application.get().message(actor.getName() + " at " + actor.getLocation() + " fired on us", "damage");
-		applyDamage(damage);
+		Application.get().message(evt.actor.getName() + " at " + evt.actor.getLocation() + " fired on us", "damage");
+		applyDamage(evt.damage);
 	}
 
-	@Override
-	public void afterFire(Vessel actor, Thing target, String weapon, double damage) {
-	}
 }
