@@ -18,7 +18,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	public void messagePosted(String formattedMessage, String category) {
 		GWT.log("messagePosted "+formattedMessage);
 		((MessagesView) getView()).showMessage(formattedMessage, category);
-		// the "if" check sometimes says that msg is visible while it isn't; disabling until further notice
+		// the "if" check sometimes says that msg is visible while it isn't; probably because it's a popup. disabling until further notice
 		//		if (!getView().isVisible())
 		getView().show();
 	}
@@ -42,10 +42,6 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 		getView().hide();
 		((MessagesView) getView()).clear();
 		application.events.fireEvent(new MessageEvent(MessageEvent.Action.hide, null, null));
-	}
-
-	@Override
-	public void messagesAcknowledged() {
 	}
 
 }

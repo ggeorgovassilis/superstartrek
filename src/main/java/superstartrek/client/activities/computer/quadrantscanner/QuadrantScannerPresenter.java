@@ -32,13 +32,15 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity> implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler, EnterpriseRepairedHandler, KlingonUncloakedHandler, KlingonDestroyedHandler {
+public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity>
+		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
+		EnterpriseRepairedHandler, KlingonUncloakedHandler, KlingonDestroyedHandler {
 
 	SectorMenuPresenter sectorMenuPresenter;
-	
-	
+
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
-		application.events.fireEvent(new SectorSelectedEvent(Location.location(x,y), application.starMap.enterprise.getQuadrant(), screenX, screenY));
+		application.events.fireEvent(new SectorSelectedEvent(Location.location(x, y),
+				application.starMap.enterprise.getQuadrant(), screenX, screenY));
 	}
 
 	public QuadrantScannerPresenter(Application application, SectorMenuPresenter sectorMenuPresenter) {
@@ -60,33 +62,32 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		((IQuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
 	}
 
-	protected void updateSector(Thing thing){
-		//empty table cells need an &nbsp; to keep height stable, otherwise they will "pump" when content changes
+	protected void updateSector(Thing thing) {
+		// empty table cells need an &nbsp; to keep height stable, otherwise they will
+		// "pump" when content changes
 		// and relayout the entire screen which is slow on mobile devices
-		String content = MapCellRenderer.nbsp;
-		String css = "";
-		if (thing!=null) {
-			content = thing.getSymbol();
-			css = thing.getCss();
-			if (thing instanceof Vessel) {
-				Vessel vessel = (Vessel)thing;
-				double status = vessel.getShields().health();
-				css+=" "+CSS.damageClass(status);
-			}
+		String content = thing.getSymbol();
+		String css = thing.getCss();
+		if (thing instanceof Vessel) {
+			Vessel vessel = (Vessel) thing;
+			double status = vessel.getShields().health();
+			css += " " + CSS.damageClass(status);
 		}
-		((IQuadrantScannerView) view).updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content, css);
+		((IQuadrantScannerView) view).updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content,
+				css);
 	}
-	
+
 	protected void clearSector(int x, int y) {
-		((IQuadrantScannerView)getView()).updateSector(x, y, "", "");
+		((IQuadrantScannerView) getView()).updateSector(x, y, "", "");
 	}
-	
+
 	protected void updateSector(Quadrant q, int x, int y) {
 		StarMap starMap = getApplication().starMap;
 		Thing thing = starMap.findThingAt(q, x, y);
-		if (thing!=null)
+		if (thing != null)
 			updateSector(thing);
-		else clearSector(x, y);
+		else
+			clearSector(x, y);
 	}
 
 	protected void updateScreen() {
@@ -95,8 +96,9 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		if (q == null)
 			throw new RuntimeException("q is null");
 		// since findThingAt is slow it cannot be used for the full screen update
-		// that's why we iterate over the things in the quadrant instead over the sectors
-		
+		// that's why we iterate over the things in the quadrant instead over the
+		// sectors
+
 		for (int y = 0; y < 8; y++)
 			for (int x = 0; x < 8; x++) {
 				((IQuadrantScannerView) view).updateSector(x, y, MapCellRenderer.nbsp, "");
@@ -104,10 +106,10 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		List<Thing> things = new ArrayList<>();
 		things.addAll(q.getKlingons());
 		things.addAll(q.getStars());
-		if (q.getStarBase()!=null)
+		if (q.getStarBase() != null)
 			things.add(q.getStarBase());
 		things.add(starMap.enterprise);
-		for (Thing thing:things) {
+		for (Thing thing : things) {
 			updateSector(thing);
 		}
 	}
@@ -119,7 +121,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		//TODO: this all assumes that qTo is the currently visible quadrant. Validate respectively.
+		// TODO: this all assumes that qTo is the currently visible quadrant. Validate
+		// respectively.
 		clearSector(lFrom.getX(), lFrom.getY());
 		updateSector(thing);
 	}
@@ -143,14 +146,14 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	public void klingonDestroyed(Klingon klingon) {
 		clearSector(klingon.getLocation().getX(), klingon.getLocation().getY());
 	}
-	
+
 	@Override
 	public void afterFire(FireEvent evt) {
-		//target might have been destroyed (so not on map anymore), that's why we don't call updateSector(target)
+		// target might have been destroyed (so not on map anymore), that's why we don't
+		// call updateSector(target)
 		Thing target = evt.target;
-		if (target!=null)
-		updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
+		if (target != null)
+			updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
 	}
-
 
 }

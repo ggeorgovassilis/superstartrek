@@ -65,13 +65,6 @@ public class Application
 	protected boolean endTurnPending = false;
 	protected boolean startTurnPending = false;
 
-	public ComputerPresenter computerPresenter;
-	public IntroPresenter introPresenter;
-	public ManualPresenter manualPresenter;
-	public ScanSectorPresenter scanSectorPresenter;
-	public MessagesPresenter messagesPresenter;
-	public LRSPresenter lrsPresenter;
-	public StatusReportPresenter statusReportPresenter;
 	private static Application that;
 	public GameController gameController;
 	protected Resources resources;
@@ -119,30 +112,15 @@ public class Application
 	}
 
 	protected void setupScreens() {
-		LoadingPresenter loadingPresenter = new LoadingPresenter(this);
-		new LoadingScreen(loadingPresenter);
-
-		introPresenter = new IntroPresenter(this);
-		new IntroView(introPresenter);
-
-		manualPresenter = new ManualPresenter(this);
-		new ManualScreen(manualPresenter);
-
-		computerPresenter = new ComputerPresenter(this);
-		new ComputerView(computerPresenter);
-
-		scanSectorPresenter = new ScanSectorPresenter(this);
-		new ScanSectorView(scanSectorPresenter);
-
-		messagesPresenter = new MessagesPresenter(this);
-		new MessagesView(messagesPresenter);
-
-		lrsPresenter = new LRSPresenter(this);
-		new LRSScreen(lrsPresenter);
-
-		statusReportPresenter = new StatusReportPresenter(this);
-		new StatusReportView(statusReportPresenter);
-
+		//since every presenter registers itself as an event listener they won't be garbage-collected, so we don't need to keep references to them
+		new LoadingScreen(new LoadingPresenter(this));
+		new IntroView(new IntroPresenter(this));
+		new ManualScreen(new ManualPresenter(this));
+		new ComputerView(new ComputerPresenter(this));
+		new ScanSectorView(new ScanSectorPresenter(this));
+		new MessagesView(new MessagesPresenter(this));
+		new LRSScreen(new LRSPresenter(this));
+		new StatusReportView(new StatusReportPresenter(this));
 	}
 	
 	public void registerEventHandlers() {
@@ -240,9 +218,6 @@ public class Application
 		message("Congratulations, all Klingons were destroyed.", "gamewon");
 	}
 
-	@Override
-	public void messagePosted(String formattedMessage, String category) {
-	}
 	
 	public Set<String> getFlags(){
 		if (flags==null) {

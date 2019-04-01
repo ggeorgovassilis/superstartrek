@@ -4,6 +4,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface MessageHandler extends EventHandler{
 
-	void messagePosted(String formattedMessage, String category);
-	void messagesAcknowledged();
+	default void messagePosted(String formattedMessage, String category) {};
+	default void messagesAcknowledged() {};
 }
