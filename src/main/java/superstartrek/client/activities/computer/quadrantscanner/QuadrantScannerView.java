@@ -18,20 +18,20 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	@Override
 	public void deselectSectors() {
 		if (eSelectedSector!=null) {
-			CSS.removeClass(eSelectedSector, "selected");
+			eSelectedSector.removeClassName("selected");
 		}
 	}
 	
 	@Override
 	public void selectSector(int x, int y) {
-		eSelectedSector = eSectors[x][y];
-		CSS.addClass(eSelectedSector, "selected");
+		eSectors[x][y].addClassName("selected");
 	}
 	
 	@Override
 	public void updateSector(int x, int y, String content, String css) {
-		eSectors[x][y].setInnerText(content);
-		eSectors[x][y].setClassName(css);
+		Element e = eSectors[x][y];
+		e.setInnerText(content);
+		e.setClassName(css);
 	}
 	
 	@Override

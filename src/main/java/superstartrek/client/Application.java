@@ -63,8 +63,8 @@ public class Application
 	public StarMap starMap;
 	public boolean gameIsRunning = true;
 	protected boolean endTurnPending = false;
+	protected boolean startTurnPending = false;
 
-	public LoadingPresenter loadingPresenter;
 	public ComputerPresenter computerPresenter;
 	public IntroPresenter introPresenter;
 	public ManualPresenter manualPresenter;
@@ -119,7 +119,7 @@ public class Application
 	}
 
 	protected void setupScreens() {
-		loadingPresenter = new LoadingPresenter(this);
+		LoadingPresenter loadingPresenter = new LoadingPresenter(this);
 		new LoadingScreen(loadingPresenter);
 
 		introPresenter = new IntroPresenter(this);
@@ -166,10 +166,14 @@ public class Application
 	}
 	
 	public void startTurnAfterThis() {
+		if (startTurnPending)
+			return;
+		startTurnPending = true;
 		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
 			
 			@Override
 			public void execute() {
+				startTurnPending = false;
 				startTurn();
 			}
 		});

@@ -245,7 +245,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		impulse.repair();
 		shields.repair();
 		autoAim.repair();
-		Application.get().events.fireEvent(new EnterpriseRepairedEvent());
+		Application.get().events.fireEvent(new EnterpriseRepairedEvent(this));
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -273,7 +273,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos)
 					|| maybeRepairProvisionally(autoAim);
 			if (repaired) {
-				Application.get().events.fireEvent(new EnterpriseRepairedEvent());
+				Application.get().events.fireEvent(new EnterpriseRepairedEvent(this));
 				return;
 			}
 		}
@@ -368,8 +368,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		reactor.reset();
 		shields.reset();
 		impulse.reset();
-		if (!consume("energy", computeEnergyConsumption()))
+		if (!consume("energy", computeEnergyConsumption())) {
 			Application.get().events.fireEvent(new GameOverEvent(Outcome.lost, "Out of energy"));
+			return;
+		}
 		playComputerTurn();
 	}
 

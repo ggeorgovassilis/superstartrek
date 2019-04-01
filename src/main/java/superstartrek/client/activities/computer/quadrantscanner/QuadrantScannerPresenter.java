@@ -130,8 +130,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 
 	@Override
-	public void onEnterpriseRepaired() {
-		Enterprise enterprise = application.starMap.enterprise;
+	public void onEnterpriseRepaired(Enterprise enterprise) {
 		updateSector(enterprise.getQuadrant(), enterprise.getLocation().getX(), enterprise.getLocation().getY());
 	}
 

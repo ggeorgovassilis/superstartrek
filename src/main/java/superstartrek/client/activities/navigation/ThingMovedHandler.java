@@ -8,5 +8,5 @@ import superstartrek.client.model.Thing;
 
 public interface ThingMovedHandler extends EventHandler{
 
-	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo);
+	void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo);
 }

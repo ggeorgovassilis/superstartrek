@@ -183,13 +183,11 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	@Override
 	public void destroy() {
-		super.destroy();
 		unregisterActionHandlers();
 		enterpriseWarpedHandler.removeHandler();
 		getQuadrant().getKlingons().remove(this);
-		if (!Application.get().starMap.hasKlingons())
-			Application.get().gameOver(Outcome.won, "");
 		Application.get().message(getName()+" was destroyed", "klingon-destroyed");
+		super.destroy();
 		Application.get().events.fireEvent(new KlingonDestroyedEvent(this));
 	}
 

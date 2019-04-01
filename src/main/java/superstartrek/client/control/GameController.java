@@ -3,16 +3,20 @@ package superstartrek.client.control;
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
+import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.control.GameOverEvent.Outcome;
+import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
 
-public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler{
+public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler, KlingonDestroyedHandler{
 
 	Application application;
 	
@@ -26,6 +30,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		application.events.addHandler(FireEvent.TYPE, this);
 		application.events.addHandler(EnterpriseRepairedEvent.TYPE, this);
 		application.events.addHandler(ThingMovedEvent.TYPE, this);
+		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
 	}
 
 	@Override
@@ -35,7 +40,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	@Override
-	public void onEnterpriseRepaired() {
+	public void onEnterpriseRepaired(Enterprise enterprise) {
 		application.endTurnAfterThis();
 	}
 
@@ -43,5 +48,11 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		if (thing == application.starMap.enterprise)
 			application.endTurnAfterThis();
+	}
+
+	@Override
+	public void klingonDestroyed(Klingon klingon) {
+		if (!application.starMap.hasKlingons())
+			application.events.fireEvent(new GameOverEvent(Outcome.won, "All Klingons were destroyed"));
 	}
 }

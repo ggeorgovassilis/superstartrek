@@ -25,10 +25,7 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 	SRSPresenter srsPresenter;
 	
 	Element eDockInStarbase;
-	Element eSkip;
-	Element eToggleShields;
 	Element eRepair;
-	Element eStatusButton;
 	Element eStatusIconImpulse;
 	Element eStatusIconTactical;
 	Element eStatusIconPhasers;
@@ -68,7 +65,7 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 			}
 		});
 
-		eSkip = DOM.getElementById("cmd_skip");
+		Element eSkip = DOM.getElementById("cmd_skip");
 		DOM.sinkEvents(eSkip, Event.ONCLICK);
 		DOM.setEventListener(eSkip, new EventListener() {
 			
@@ -78,7 +75,7 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 			}
 		});
 		
-		eToggleShields = DOM.getElementById("cmd_toggleShields");
+		Element eToggleShields = DOM.getElementById("cmd_toggleShields");
 		DOM.sinkEvents(eToggleShields, Event.ONCLICK);
 		DOM.setEventListener(eToggleShields, new EventListener() {
 			
@@ -98,7 +95,6 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 			}
 		});
 		
-		eStatusButton = DOM.getElementById("cmd_showStatusReport");
 		eStatusIconImpulse = CSS.querySelectorAll("#cmd_showStatusReport .impulse").getItem(0);
 		eStatusIconTactical = CSS.querySelectorAll("#cmd_showStatusReport .tactical-computer").getItem(0);
 		eStatusIconTorpedos = CSS.querySelectorAll("#cmd_showStatusReport .torpedo-bay").getItem(0);

@@ -9,7 +9,7 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.model.Enterprise;
 
-public class StatusReportPresenter extends BasePresenter<StatusReportActivity>{
+public class StatusReportPresenter extends BasePresenter<StatusReportActivity> implements ValueChangeHandler<String>{
 
 	
 	public void updateView() {
@@ -33,17 +33,17 @@ public class StatusReportPresenter extends BasePresenter<StatusReportActivity>{
 	
 	public StatusReportPresenter(Application application) {
 		super(application);
-		History.addValueChangeHandler(new ValueChangeHandler<String>() {
-			@Override
-			public void onValueChange(ValueChangeEvent<String> event) {
-				if ("statusreport".equals(event.getValue())) {
-					updateView();
-					getView().show();
-				}
-				else
-					getView().hide();
-			}
-		});
+		History.addValueChangeHandler(this);
+	}
+
+	@Override
+	public void onValueChange(ValueChangeEvent<String> event) {
+		if ("statusreport".equals(event.getValue())) {
+			updateView();
+			getView().show();
+		}
+		else
+			getView().hide();
 	}
 	
 
