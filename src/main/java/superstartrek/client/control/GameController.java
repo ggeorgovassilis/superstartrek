@@ -21,8 +21,6 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	Application application;
 	
 	public GameController(Application application) {
-		if (application==null)
-			Window.alert("Application is null 1");
 		this.application = application;
 		application.events.addHandler(GameStartedEvent.TYPE, this);
 		application.events.addHandler(GameOverEvent.TYPE, this);
