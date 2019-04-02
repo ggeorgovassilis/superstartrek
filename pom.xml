@@ -16,7 +16,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gwt.version>1.8</gwt.version>
 		<skip.tests>false</skip.tests>
+		<skip.deploy>true</skip.deploy>
+		<skip.gwt>false</skip.gwt>
 	</properties>
+
+	<scm>
+		<connection>scm:git:https://github.com/ggeorgovassilis/superstartrek/</connection>
+		<developerConnection>scm:git:https://github.com/ggeorgovassilis/superstartrek/</developerConnection>
+		<url>https://github.com/ggeorgovassilis/superstartrek/</url>
+	</scm>
 
 	<profiles>
 		<profile>
@@ -38,6 +46,7 @@
 				<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
 				<gwt.saveSource>false</gwt.saveSource>
 				<gwt.style>OBFUSCATED</gwt.style>
+				<skip.deploy>false</skip.deploy>
 			</properties>
 		</profile>
 	</profiles>
@@ -155,6 +164,7 @@
 					<methodNameDisplayMode>${gwt.methodNameDisplayMode}</methodNameDisplayMode>
 					<saveSource>${gwt.saveSource}</saveSource>
 					<style>${gwt.style}</style>
+					<skip>${skip.gwt}</skip>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -169,11 +179,12 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<move todir="${project.basedir}/site">
+								<move todir="${project.basedir}/site" >
 									<fileset
 										dir="${project.basedir}/site/superstartrek.superstartrek" />
 								</move>
 							</tasks>
+							<skip>false</skip>
 						</configuration>
 					</execution>
 				</executions>
@@ -204,6 +215,45 @@
 					<!-- put your configurations here -->
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.11.2</version>
+				<executions>
+					<execution>
+						<id>add-files</id>
+						<phase>package</phase>
+						<goals><goal>add</goal></goals>
+						<configuration>
+							<connectionType>connection</connectionType>
+							<basedir>${project.basedir}</basedir>
+							<includes>/site/**</includes>
+							<skip>${skip.deploy}</skip>
+							<workItem>auto deploy</workItem>
+							<pushChanges>true</pushChanges>
+						</configuration>
+					</execution>
+					<execution>
+						<id>push-files</id>
+						<phase>package</phase>
+						<goals><goal>checkin</goal></goals>
+						<configuration>
+							<connectionType>connection</connectionType>
+							<basedir>${project.basedir}</basedir>
+							<includes>/site/**</includes>
+							<skip>${skip.deploy}</skip>
+							<message>auto deploy</message>
+							<pushChanges>true</pushChanges>
+							<scmVersion>gh-pages</scmVersion>
+							<scmVersionType>branch</scmVersionType>
+							<username>${sst.git.username}</username>
+							<username>${sst.git.password}</username>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
