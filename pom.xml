@@ -232,6 +232,7 @@
 							<skip>${skip.deploy}</skip>
 							<workItem>auto deploy</workItem>
 							<pushChanges>true</pushChanges>
+							<username>g.georgovassilis@gmail.com</username>
 						</configuration>
 					</execution>
 					<execution>
