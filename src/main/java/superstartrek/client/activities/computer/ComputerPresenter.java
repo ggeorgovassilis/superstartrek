@@ -1,14 +1,13 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
-import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnStartedEvent;
@@ -18,8 +17,6 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
-import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
 
 public class ComputerPresenter extends BasePresenter<ComputerActivity> implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>{
 
@@ -37,6 +34,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 
 	@Override
 	public void showScreen() {
+		GWT.log("show screen");
 		((IComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
 		getView().show();
 	}

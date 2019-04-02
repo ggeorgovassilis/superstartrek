@@ -13,7 +13,7 @@ import org.mockito.stubbing.Answer;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireHandler.*;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;

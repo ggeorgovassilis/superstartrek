@@ -1,16 +1,13 @@
 package superstartrek.client.control;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.control.GameOverEvent.Outcome;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -53,6 +50,6 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
 		if (!application.starMap.hasKlingons())
-			application.events.fireEvent(new GameOverEvent(Outcome.won, "All Klingons were destroyed"));
+			application.events.fireEvent(new GameOverEvent(GameOverEvent.Outcome.won, "All Klingons were destroyed"));
 	}
 }

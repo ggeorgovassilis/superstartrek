@@ -6,7 +6,7 @@ import org.junit.Test;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.messages.MessageEvent;
+import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.model.Enterprise;
 import static org.junit.Assert.*;
 
@@ -31,7 +31,7 @@ public class TestRepairProvisionally {
 		enterprise.repairProvisionally();
 		
 		assertTrue(enterprise.getTorpedos().isEnabled());
-		assertEquals(3,events.getFiredCount(MessageEvent.TYPE));
+		assertEquals(3,events.getFiredCount(MessageHandler.MessageEvent.TYPE));
 	}
 
 	@Test
@@ -44,6 +44,6 @@ public class TestRepairProvisionally {
 		
 		assertTrue(enterprise.getPhasers().isEnabled());
 		assertTrue(enterprise.getPhasers().getValue()>10);
-		assertEquals(3,events.getFiredCount(MessageEvent.TYPE));
+		assertEquals(3,events.getFiredCount(MessageHandler.MessageEvent.TYPE));
 	}
 }

@@ -161,31 +161,51 @@ table a, table a:visited{
   midnightblue 10px
 );
 }
-#quadrantscan tr{
-	height:1em;
-	font-size:130%
+
+#quadrantscan{
+	width:100%;
+	font-size:130%;
+	margin:0;
+	padding:0;
+	height:10em;
+	position:relative;
+	border-left:solid gray 1px;
+	border-top:solid gray 1px;
 }
-#quadrantscan td{
-	border:solid gray 1px;
+
+#quadrantscan .row{
+	height:1.2em;
+	overflow:hidden;
+	font-size:inherit;
+	margin:0;
+	padding:0;
+	position:absolute;
+	border-bottom:solid gray 1px;
+	left:0;
+	right:0;
+}
+
+#quadrantscan .row div{
+	border-right:solid gray 1px;
 	text-align:center;
 	width:12.5%;
 	margin:0;
 	padding:0;
 	cursor:pointer;
+	font-size:inherit;
+	height:1.2em;
+	overflow:hidden;
+	position:absolute;
 }
 
-#quadrantscan td.star{
-	font-size:150%;
+#quadrantscan .row div.c0{
+	left:0%;
+}
+
+#quadrantscan .star{
 	color:lightblue;
-	line-height:0.5em;
-	padding-top:0.2em;
 }
 
-
-#quadrantscan{
-	float:left;
-	width:100%;
-}
 
 .selected{
 	background-color:midnightblue;
@@ -499,14 +519,6 @@ a.progress-bar {
 	position:absolute;
 	height:100%;
 	display:block;
-}
-
-.page-computer .starbase-nearby{
-	display:block !important;
-}
-
-.starbase-nearby .hide-when-starbase-nearby{
-	display:none;
 }
 
 /**

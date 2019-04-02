@@ -7,11 +7,10 @@ import org.junit.Test;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireEvent;
+import superstartrek.client.activities.combat.FireHandler.*;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
-import superstartrek.client.activities.messages.MessageEvent;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
@@ -26,7 +25,6 @@ import static org.mockito.Mockito.*;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 
 public class TestEnterprise {
 	Enterprise enterprise;
@@ -46,7 +44,7 @@ public class TestEnterprise {
 	@Test
 	public void testDamageTorpedos() {
 		MessageHandler handler = mock(MessageHandler.class);
-		events.addHandler(MessageEvent.TYPE, handler);
+		events.addHandler(MessageHandler.MessageEvent.TYPE, handler);
 
 		enterprise.damageTorpedos();
 
@@ -57,7 +55,7 @@ public class TestEnterprise {
 	@Test
 	public void testDamagePhasers() {
 		MessageHandler handler = mock(MessageHandler.class);
-		events.addHandler(MessageEvent.TYPE, handler);
+		events.addHandler(MessageHandler.MessageEvent.TYPE, handler);
 
 		enterprise.damagePhasers();
 		assertTrue(enterprise.getPhasers().isEnabled());
@@ -77,7 +75,7 @@ public class TestEnterprise {
 	@Test
 	public void testDamageImpulse() {
 		MessageHandler handler = mock(MessageHandler.class);
-		events.addHandler(MessageEvent.TYPE, handler);
+		events.addHandler(MessageHandler.MessageEvent.TYPE, handler);
 
 		enterprise.damageImpulse();
 		assertTrue(enterprise.getImpulse().isEnabled());

@@ -6,8 +6,6 @@ import java.util.List;
 import com.google.gwt.core.shared.GWT;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireEvent;
-import superstartrek.client.activities.combat.FireEvent.Phase;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
@@ -17,7 +15,6 @@ import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
-import superstartrek.client.control.GameOverEvent.Outcome;
 import superstartrek.client.utils.Random;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
@@ -192,9 +189,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			}
 		}
 
-		FireEvent event = new FireEvent(Phase.fire, this, target, "torpedos", 50, false);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, target, "torpedos", 50, false);
 		Application.get().events.fireEvent(event);
-		event = new FireEvent(Phase.afterFire, this, target, "torpedos", 50, false);
+		event = new FireEvent(FireEvent.Phase.afterFire, this, target, "torpedos", 50, false);
 		Application.get().events.fireEvent(event);
 		if (target == null)
 			Application.get().message("Torpedo exploded in the void");
@@ -335,7 +332,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (autoAim.isEnabled() && Random.nextDouble() * 1.2 < impact)
 			damageAutoaim();
 		if (shields.getValue() <= 0)
-			Application.get().gameOver(Outcome.lost, "shields");
+			Application.get().gameOver(GameOverEvent.Outcome.lost, "shields");
 	}
 
 	public boolean consume(String what, double value) {
@@ -369,7 +366,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		shields.reset();
 		impulse.reset();
 		if (!consume("energy", computeEnergyConsumption())) {
-			Application.get().events.fireEvent(new GameOverEvent(Outcome.lost, "Out of energy"));
+			Application.get().events.fireEvent(new GameOverEvent(GameOverEvent.Outcome.lost, "Out of energy"));
 			return;
 		}
 		playComputerTurn();

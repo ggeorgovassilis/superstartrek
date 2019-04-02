@@ -6,8 +6,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireEvent;
-import superstartrek.client.activities.combat.FireEvent.Phase;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
@@ -16,7 +14,6 @@ import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KlingonTurnEvent;
-import superstartrek.client.control.GameOverEvent.Outcome;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -105,7 +102,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		cloak.setValue(0);
 		setCss("klingon");
 		Application.get().message(getName() + " uncloaked at " + this.getLocation(), "klingon-uncloaked");
-		Application.get().events.fireEvent(new KlingonUncloakedEvent(this));
+		Application.get().events.fireEvent(new KlingonUncloakedHandler.KlingonUncloakedEvent(this));
 	}
 
 	public Setting getDisruptor() {
@@ -162,9 +159,9 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			return;
 		if (isCloaked())
 			uncloak();
-		FireEvent event = new FireEvent(Phase.fire, this, enterprise, "disruptor", disruptor.getValue(), true);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, enterprise, "disruptor", disruptor.getValue(), true);
 		Application.get().events.fireEvent(event);
-		event = new FireEvent(Phase.afterFire, this, enterprise, "disruptor", disruptor.getValue(), true);
+		event = new FireEvent(FireEvent.Phase.afterFire, this, enterprise, "disruptor", disruptor.getValue(), true);
 		Application.get().events.fireEvent(event);
 	}
 
@@ -188,7 +185,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		getQuadrant().getKlingons().remove(this);
 		Application.get().message(getName()+" was destroyed", "klingon-destroyed");
 		super.destroy();
-		Application.get().events.fireEvent(new KlingonDestroyedEvent(this));
+		Application.get().events.fireEvent(new KlingonDestroyedHandler.KlingonDestroyedEvent(this));
 	}
 
 	public void repair() {

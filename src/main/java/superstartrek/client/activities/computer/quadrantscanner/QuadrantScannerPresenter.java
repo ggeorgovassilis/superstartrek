@@ -6,13 +6,10 @@ import java.util.List;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
-import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.KlingonDestroyedEvent;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
-import superstartrek.client.activities.klingons.KlingonUncloakedEvent;
 import superstartrek.client.activities.klingons.KlingonUncloakedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
@@ -78,7 +75,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 
 	protected void clearSector(int x, int y) {
-		((IQuadrantScannerView) getView()).updateSector(x, y, "", "");
+		((IQuadrantScannerView) getView()).updateSector(x, y, MapCellRenderer.nbsp, "");
 	}
 
 	protected void updateSector(Quadrant q, int x, int y) {

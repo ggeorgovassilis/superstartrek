@@ -1,6 +1,8 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
@@ -36,7 +38,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	
 	@Override
 	protected HTMLPanel createWidgetImplementation() {
-		HTMLPanel p = new HTMLPanel("<table id=quadrantscan></table>");
+		HTMLPanel p = new HTMLPanel("<div id=quadrantscan></div>");
 		Event.sinkEvents(p.getElementById("quadrantscan"), Event.ONCLICK);
 		return p;
 	}
@@ -46,12 +48,15 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 		HTMLPanel panel = (HTMLPanel)widgetImpl;
 		Element e = panel.getElementById("quadrantscan");
 		for (int y = 0; y < 8; y++) {
-			Element eTr = DOM.createTR();
+			Element eTr = DOM.createDiv();
+			eTr.addClassName("row");
+			eTr.getStyle().setTop(12.5*(double)y, Unit.PCT);
 			for (int x = 0; x < 8; x++) {
-				Element eTd = DOM.createTD();
+				Element eTd = DOM.createDiv();
 				eTd.setAttribute("x", "" + x);
 				eTd.setAttribute("y", "" + y);
 				eTr.appendChild(eTd);
+				eTd.getStyle().setLeft(12.5*(double)x, Unit.PCT);
 				eSectors[x][y] = eTd;
 			}
 			e.appendChild(eTr);

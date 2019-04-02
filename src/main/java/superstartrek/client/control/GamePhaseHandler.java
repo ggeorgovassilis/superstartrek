@@ -3,7 +3,7 @@ package superstartrek.client.control;
 import com.google.gwt.event.shared.EventHandler;
 
 public interface GamePhaseHandler extends EventHandler {
-
+	
 	default void onTurnStarted(TurnStartedEvent evt) {};
 
 	default void onTurnEnded(TurnEndedEvent evt) {};

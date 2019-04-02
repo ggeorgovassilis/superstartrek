@@ -16,12 +16,10 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Maps;
 
-public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandler, EnterpriseWarpedHandler, ValueChangeHandler<String> {
+public class LRSPresenter extends BasePresenter<LRSActivity> implements EnterpriseWarpedHandler, ValueChangeHandler<String> {
 
 	public LRSPresenter(Application application) {
 		super(application);
-		application.events.addHandler(LRSEvent.TYPE, this);
-		
 		application.addHistoryListener(this);
 		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 	}
@@ -38,7 +36,7 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 			//invoked only before successful warp
 			@Override
 			public void run() {
-				lrsHidden();
+				getView().hide();
 			}
 		}))
 			History.newItem("computer");
@@ -64,19 +62,9 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 		updateEnterpriseLocation();
 	}
 
-	@Override
-	public void lrsShown() {
+	public void showLrs() {
 		updateLrsView();
 		getView().show();
-	}
-
-	@Override
-	public void lrsHidden() {
-		getView().hide();
-	}
-
-	@Override
-	public void quadrantSelected() {
 	}
 
 	@Override
@@ -91,9 +79,9 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements LRSHandl
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		if ("longrangescan".equals(event.getValue()))
-			lrsShown();
+			showLrs();
 		else
-			lrsHidden();
+			getView().hide();
 	}
 
 }

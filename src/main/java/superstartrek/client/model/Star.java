@@ -1,7 +1,6 @@
 package superstartrek.client.model;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireEvent;
 import superstartrek.client.activities.combat.FireHandler;
 
 public class Star extends Thing implements FireHandler{
