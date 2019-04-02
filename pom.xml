@@ -248,7 +248,7 @@
 							<scmVersion>gh-pages</scmVersion>
 							<scmVersionType>branch</scmVersionType>
 							<username>${sst.git.username}</username>
-							<username>${sst.git.password}</username>
+							<password>${sst.git.password}</password>
 						</configuration>
 					</execution>
 				</executions>

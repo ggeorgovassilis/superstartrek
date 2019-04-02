@@ -1,5 +1,8 @@
 package superstartrek.client.control;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -18,6 +21,8 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	Application application;
 	
 	public GameController(Application application) {
+//		if (application==null)
+//			Window.alert("Application is null");
 		this.application = application;
 		application.events.addHandler(GameStartedEvent.TYPE, this);
 		application.events.addHandler(GameOverEvent.TYPE, this);
