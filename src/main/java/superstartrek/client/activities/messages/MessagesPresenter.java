@@ -29,18 +29,10 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	public void hideMessages() {
 		if (!getView().isVisible())
 			return;
-		Timer.postpone(new ScheduledCommand() {
-			@Override
-			public void execute() {
-				hideMessagesNow();
-			}
-		});
-	}
-	
-	public void hideMessagesNow() {
 		getView().hide();
 		((MessagesView) getView()).clear();
 		application.events.fireEvent(new MessageEvent(MessageEvent.Action.hide, null, null));
 	}
+	
 
 }

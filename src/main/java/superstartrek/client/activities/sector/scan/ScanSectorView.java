@@ -39,6 +39,7 @@ public class ScanSectorView extends PopupView<ScanSectorActivity> implements ISc
 				((ScanSectorPresenter)getPresenter()).doneWithMenu();
 			}
 		});
+		getHtmlPanel().getElement().setId("screen-sectorscan");
 	}
 	
 	public ScanSectorView(ScanSectorPresenter presenter) {

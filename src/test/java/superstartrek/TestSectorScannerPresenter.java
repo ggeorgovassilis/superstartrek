@@ -7,7 +7,7 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.sector.scan.IScanSectorView;
-import superstartrek.client.activities.sector.scan.ScanSectorEvent;
+import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -45,7 +45,7 @@ public class TestSectorScannerPresenter {
 		enterprise.setLocation(Location.location(0,0));
 		enterprise.setQuadrant(q);
 		Location l = Location.location(4,5);
-		ScanSectorEvent event = new ScanSectorEvent(l, q);
+		ScanSectorHandler.ScanSectorEvent event = new ScanSectorHandler.ScanSectorEvent(l, q);
 		presenter.scanSector(event);
 		
 		verify(view).setObjectLocation(eq("4:5"));
@@ -66,7 +66,7 @@ public class TestSectorScannerPresenter {
 		enterprise.setLocation(Location.location(0,0));
 		enterprise.setQuadrant(q);
 		Location l = Location.location(0,0);
-		ScanSectorEvent event = new ScanSectorEvent(l, q);
+		ScanSectorHandler.ScanSectorEvent event = new ScanSectorHandler.ScanSectorEvent(l, q);
 		presenter.scanSector(event);
 		
 		verify(view).setObjectLocation(eq("0:0"));

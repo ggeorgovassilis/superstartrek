@@ -20,6 +20,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.model.Star.StarClass;
 
 public class TestQuadrantScannerPresenter {
 
@@ -59,8 +60,8 @@ public class TestQuadrantScannerPresenter {
 		sb.setLocation(Location.location(1,7));
 		qTo.setStarBase(sb);
 		
-		qTo.getStars().add(new Star(6,5));
-		qTo.getStars().add(new Star(5,6));
+		qTo.getStars().add(new Star(6,5, StarClass.A));
+		qTo.getStars().add(new Star(5,6, StarClass.A));
 		
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(7,7));
@@ -69,10 +70,10 @@ public class TestQuadrantScannerPresenter {
 		presenter.onEnterpriseWarped(enterprise, qFrom, lFrom, qTo, lTo);
 		verify(view).updateSector(eq(0), eq(0), eq("O=Ξ"), eq("enterprise "));
 		verify(view, times(64)).updateSector(any(int.class), any(int.class), eq(MapCellRenderer.nbsp), eq(""));
-		verify(view).updateSector(5, 6, "*", "star");
-		verify(view).updateSector(6, 5, "*", "star");
-		verify(view).updateSector(1, 7, "<!>", "starbase");
 		verify(view).updateSector(7, 7, "C-D", "klingon cloaked ");
+		verify(view).updateSector(5, 6, StarClass.A.symbol, "star star-class-a");
+		verify(view).updateSector(6, 5, StarClass.A.symbol, "star star-class-a");
+		verify(view).updateSector(1, 7, "<!>", "starbase");
 		
 	}
 }

@@ -4,6 +4,7 @@ import com.google.gwt.user.client.Random;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.model.Star.StarClass;
 
 public class Setup {
 
@@ -23,7 +24,7 @@ public class Setup {
 		int stars = Random.nextInt(Constants.MAX_STARS_IN_QUADRANT);
 		while (stars-->0) {
 			Location loc = map.findFreeSpot(q);
-			Star star = new Star(loc.getX(), loc.getY());
+			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[Random.nextInt(StarClass.values().length)]);
 			star.setQuadrant(q);
 			q.getStars().add(star);
 		}

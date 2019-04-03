@@ -13,6 +13,7 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.model.Star.StarClass;
 @Ignore
 public class TestAStar {
 	
@@ -34,7 +35,7 @@ public class TestAStar {
 				int y = random.nextInt(8);
 				blocksArray[l][0] = y;
 				blocksArray[l][1] = x;
-				q.getStars().add(new Star(x, y, false));
+				q.getStars().add(new Star(x, y, false, StarClass.A));
 			}
 			astar.setBlocks(blocksArray);
 			List<Node> pathAStar = astar.findPath();

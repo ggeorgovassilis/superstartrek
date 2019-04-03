@@ -2,6 +2,7 @@ package superstartrek.client.activities;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -21,7 +22,6 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class PopupView<T extends Activity> extends BaseView<T>{
 
 	protected HTMLPanel htmlPanel;
-	protected Element glassPanel;
 	
 	protected PopupView(Presenter<T> presenter) {
 		super(presenter);
@@ -37,6 +37,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	protected Widget createWidgetImplementation() {
 		htmlPanel = new HTMLPanel(getContentForHtmlPanel());
 		htmlPanel.addStyleName("PopupView");
+		htmlPanel.setVisible(false);
 		htmlPanel.addHandler(new KeyDownHandler() {
 			
 			@Override
@@ -46,8 +47,19 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 				hide();
 			}
 		}, KeyDownEvent.getType());
-		glassPanel = DOM.createDiv();
-		glassPanel.addClassName("glasspanel");
+		FlowPanel fp = new FlowPanel();
+		fp.setVisible(false);
+		return fp;
+	}
+	
+	@Override
+	public void finishUiConstruction() {
+		super.finishUiConstruction();
+		RootPanel.get().add(getHtmlPanel());
+	}
+	
+	protected void showGlassPanel() {
+		Element glassPanel = DOM.getElementById("glasspanel");
 		Event.setEventListener(glassPanel, new EventListener() {
 			
 			@Override
@@ -58,24 +70,35 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 			}
 		});
 		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONTOUCHSTART | Event.ONKEYDOWN | Event.ONKEYPRESS);
-		return new FlowPanel();
+		glassPanel.getStyle().setDisplay(Display.INITIAL);
+	}
+	
+	protected void hideGlassPanel() {
+		Element glassPanel = DOM.getElementById("glasspanel");
+		glassPanel.getStyle().setDisplay(Display.NONE);
+		Event.setEventListener(glassPanel, null);
+		Event.sinkEvents(glassPanel, 0);
+	}
+	
+	@Override
+	public boolean isVisible() {
+		return htmlPanel.isVisible();
 	}
 	
 	@Override
 	public void show() {
-		if (htmlPanel.isAttached())
+		if (isVisible())
 			return;
-		RootPanel.get().add(htmlPanel);
-		RootPanel.get().getElement().appendChild(glassPanel);
-		htmlPanel.getElement().focus();
+		htmlPanel.setVisible(true);
+		showGlassPanel();
 	}
 	
 	@Override
 	public void hide() {
-		if (!htmlPanel.isAttached())
+		if (!htmlPanel.isVisible())
 			return;
-		glassPanel.removeFromParent();
-		RootPanel.get().remove(htmlPanel);
+		hideGlassPanel();
+		htmlPanel.setVisible(false);
 	}
 
 }

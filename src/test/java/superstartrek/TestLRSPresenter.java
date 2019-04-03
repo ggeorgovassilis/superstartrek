@@ -16,6 +16,7 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
+import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 
@@ -53,8 +54,8 @@ public class TestLRSPresenter {
 		sb.setLocation(Location.location(1,7));
 		qTo.setStarBase(sb);
 		
-		qTo.getStars().add(new Star(6,5));
-		qTo.getStars().add(new Star(5,6));
+		qTo.getStars().add(new Star(6,5, StarClass.A));
+		qTo.getStars().add(new Star(5,6, StarClass.A));
 		
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(7,7));

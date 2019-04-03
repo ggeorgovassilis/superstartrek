@@ -4,10 +4,10 @@ import com.google.gwt.core.client.GWT;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.sector.scan.ScanSectorEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 
 public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> implements SectorSelectedHandler{
 
@@ -50,7 +50,7 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 	public void onCommandClicked(String command) {
 		hideMenu();
 		if ("cmd_scanSector".equals(command))
-			application.events.fireEvent(new ScanSectorEvent(sector, quadrant));
+			application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
 		else if ("cmd_navigate".equals(command))
 			application.starMap.enterprise.navigateTo(sector);
 		else if ("cmd_firePhasers".equals(command))

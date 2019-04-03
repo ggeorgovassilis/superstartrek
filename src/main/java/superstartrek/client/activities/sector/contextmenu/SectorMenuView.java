@@ -15,7 +15,7 @@ public class SectorMenuView extends PopupView<SectorMenuActivity> implements ISe
 	
 	@Override
 	public void finishUiConstruction() {
-		presenter.getApplication().page.add(this);
+		super.finishUiConstruction();
 		getHtmlPanel().addStyleName("sectorselectionbar");
 
 		getHtmlPanel().addDomHandler(new ClickHandler() {

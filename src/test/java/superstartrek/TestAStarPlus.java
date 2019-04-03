@@ -19,6 +19,7 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.model.Star.StarClass;
 
 /*
  * A* is a reference implementation used to validate that a*+ works ok
@@ -43,7 +44,7 @@ public class TestAStarPlus {
 				int y = random.nextInt(8);
 				blocksArray[l][0] = y;
 				blocksArray[l][1] = x;
-				q.getStars().add(new Star(x, y, false));
+				q.getStars().add(new Star(x, y, false, StarClass.A));
 			}
 
 			for (int innerTurn = 0; innerTurn < TURNS_WITH_SAME_MAP; innerTurn++) {
@@ -135,7 +136,7 @@ public class TestAStarPlus {
 				int y = random.nextInt(8);
 				blocksArray[l][0] = y;
 				blocksArray[l][1] = x;
-				q.getStars().add(new Star(x, y, false));
+				q.getStars().add(new Star(x, y, false, StarClass.A));
 			}
 			astar.setBlocks(blocksArray);
 
