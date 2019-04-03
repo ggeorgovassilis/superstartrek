@@ -49,6 +49,56 @@
 				<gwt.style>OBFUSCATED</gwt.style>
 				<skip.deploy>false</skip.deploy>
 			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-scm-plugin</artifactId>
+						<version>1.11.2</version>
+						<executions>
+							<execution>
+								<id>add-files</id>
+								<phase>package</phase>
+								<goals>
+									<goal>add</goal>
+								</goals>
+								<configuration>
+									<connectionType>connection</connectionType>
+									<basedir>${project.basedir}</basedir>
+									<includes>/site/**</includes>
+									<skip>${skip.deploy}</skip>
+									<workItem>auto deploy</workItem>
+									<pushChanges>true</pushChanges>
+									<username>g.georgovassilis@gmail.com</username>
+								</configuration>
+							</execution>
+							<execution>
+								<id>push-files</id>
+								<phase>package</phase>
+								<goals>
+									<goal>checkin</goal>
+								</goals>
+								<configuration>
+									<connectionType>connection</connectionType>
+									<basedir>${project.basedir}</basedir>
+									<includes>/site/**</includes>
+									<skip>${skip.deploy}</skip>
+									<message>auto deploy</message>
+									<pushChanges>true</pushChanges>
+									<scmVersion>gh-pages</scmVersion>
+									<scmVersionType>branch</scmVersionType>
+									<username>${sst.git.username}</username>
+									<password>${sst.git.password}</password>
+									<skip>${skip.deploy}</skip>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<skip>${skip.deploy}</skip>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 
@@ -212,54 +262,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-scm-plugin</artifactId>
-				<version>1.11.2</version>
-				<executions>
-					<execution>
-						<id>add-files</id>
-						<phase>package</phase>
-						<goals>
-							<goal>add</goal>
-						</goals>
-						<configuration>
-							<connectionType>connection</connectionType>
-							<basedir>${project.basedir}</basedir>
-							<includes>/site/**</includes>
-							<skip>${skip.deploy}</skip>
-							<workItem>auto deploy</workItem>
-							<pushChanges>true</pushChanges>
-							<username>g.georgovassilis@gmail.com</username>
-						</configuration>
-					</execution>
-					<execution>
-						<id>push-files</id>
-						<phase>package</phase>
-						<goals>
-							<goal>checkin</goal>
-						</goals>
-						<configuration>
-							<connectionType>connection</connectionType>
-							<basedir>${project.basedir}</basedir>
-							<includes>/site/**</includes>
-							<skip>${skip.deploy}</skip>
-							<message>auto deploy</message>
-							<pushChanges>true</pushChanges>
-							<scmVersion>gh-pages</scmVersion>
-							<scmVersionType>branch</scmVersionType>
-							<username>${sst.git.username}</username>
-							<password>${sst.git.password}</password>
-							<skip>${skip.deploy}</skip>
-						</configuration>
-					</execution>
-				</executions>
-				<configuration>
-					<skip>${skip.deploy}</skip>
-				</configuration>
-
 			</plugin>
 
 		</plugins>
