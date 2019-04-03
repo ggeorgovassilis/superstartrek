@@ -58,7 +58,8 @@ public class TestAStarPlus {
 		System.out.println(((double) time / (double) TURNS) + " ms per turn");
 	}
 
-	public static void printMap(int[][] blocksArray, Location from, Location to, List<Location> path) {
+	public static String printMap(int[][] blocksArray, Location from, Location to, List<Location> path) {
+		StringBuffer sb = new StringBuffer();
 		char matrix[][] = new char[8][8];
 		for (int l = 0; l < blocksArray.length; l++) {
 			int y = blocksArray[l][0];
@@ -71,41 +72,43 @@ public class TestAStarPlus {
 		matrix[to.getX()][to.getY()] = 'E';
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++)
-				System.out.print(matrix[x][y] == (char) 0 ? ' ' : matrix[x][y]);
-			System.out.println();
+				sb.append(matrix[x][y] == (char) 0 ? ' ' : matrix[x][y]);
+			sb.append("\n");
 		}
+		return sb.toString();
 	}
 
 	protected void checkPlausibility(Location from, Location to, List<Location> expectedSolution,
-			List<Location> solutionToCheck) {
+			List<Location> solutionToCheck, String log) {
 		Location last = from;
 		//check some corner cases:
 		
 		//1. from == to
 		if (from.equals(to)) {
-			assertTrue(solutionToCheck.isEmpty());
+			assertTrue(log, solutionToCheck.isEmpty());
 			return;
 		}
 		//2. expectedSolution is empty even though there is a path
 		//a* sometimes doesn't find a path even if there is one (which a*+ finds).
 		//this means that sometimes expectedSolution is empty even though it shouldn't
 		if (solutionToCheck.isEmpty()) {
-			assertTrue(expectedSolution.isEmpty());
+			assertTrue(log, expectedSolution.isEmpty());
 			return;
 		}
 		//3. "to" is last step in path
-		assertEquals(to, solutionToCheck.get(solutionToCheck.size()-1));
+		assertEquals(log, to, solutionToCheck.get(solutionToCheck.size()-1));
 		
 		//4. the expected solution is about the same size as the one we found; a*+ walks diagonally, so its solutions are generally better, hence
 		//expectedSolution is an upper bound
 		if (!expectedSolution.isEmpty())
-			assertTrue(expectedSolution.size() >= solutionToCheck.size());
+			assertTrue(log, expectedSolution.size() >= solutionToCheck.size());
 		
 		//5. there are no "leaps"; every square in the path is next to the previous
 		for (Location current:solutionToCheck) {
-			assertTrue(StarMap.distance(current, last)<2);
+			assertTrue(log, StarMap.distance(current, last)<2);
 			last = current;
 		}
+		
 	}
 
 	/* surprisingly, a* reference implementation fails with this map, which a*+ solves: 
@@ -147,14 +150,14 @@ public class TestAStarPlus {
 
 			AStarPlus asp = new AStarPlus();
 			List<Location> pathAsp = asp.findPathBetween(from, to, q, map);
-			System.out.println("--------------");
-			System.out.println(from + " -> " + to);
-			System.out.println("a*  " + expectedSolution);
-			printMap(blocksArray, from, to, expectedSolution);
-			System.out.println("a*+ " + pathAsp);
-			printMap(blocksArray, from, to, pathAsp);
+			String log = "--------------\n";
+			log+=(from + " -> " + to+"\n");
+			log+=("a*  " + expectedSolution+"\n");
+			log+=printMap(blocksArray, from, to, expectedSolution)+"\n";
+			log+=("a*+ " + pathAsp+"\n");
+			log+=printMap(blocksArray, from, to, pathAsp)+"\n";
 
-			checkPlausibility(from, to, expectedSolution, pathAsp);
+			checkPlausibility(from, to, expectedSolution, pathAsp, log);
 		}
 	}
 

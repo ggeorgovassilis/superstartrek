@@ -66,6 +66,8 @@ public class Application
 	public Random random;
 	
 	public static Application get() {
+		if (that == null)
+			that = new Application();
 		return that;
 	}
 	
