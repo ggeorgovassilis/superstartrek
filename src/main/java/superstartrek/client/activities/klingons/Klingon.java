@@ -224,10 +224,11 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		}
 		double impact = evt.damage / (shields.getValue() + 1);
 		shields.decrease(evt.damage);
+		Random random = Application.get().random;
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - evt.damage);
-		if (getImpulse().isEnabled() && Random.nextDouble() < impact)
+		if (getImpulse().isEnabled() && random.nextDouble() < impact)
 			getImpulse().setEnabled(false);
-		if (getDisruptor().isEnabled() && Random.nextDouble() < impact)
+		if (getDisruptor().isEnabled() && random.nextDouble() < impact)
 			getDisruptor().setEnabled(false);
 
 		Application.get().message(evt.weapon + " hit " + evt.target.getName() + " at " + evt.target.getLocation(), "klingon-damaged");

@@ -2,13 +2,20 @@ package superstartrek;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.model.Enterprise;
+import superstartrek.client.utils.Random;
+import superstartrek.client.utils.RandomNumberFactory;
+
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TestRepairProvisionally {
 
@@ -18,9 +25,21 @@ public class TestRepairProvisionally {
 	
 	@Before
 	public void setup() {
-		application = Application.get();
+		application = new Application();
 		application.events = events = new CountingEventBus();
 		enterprise = new Enterprise(application);
+		
+		RandomNumberFactory random = mock(RandomNumberFactory.class);
+		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
+			int counter = 0;
+			double numbers[]= {0.5,0.6,0.1,0.3,0.3};
+			@Override
+			public Double answer(InvocationOnMock invocation) throws Throwable {
+				return numbers[counter++];
+			}
+		});
+		application.random = new Random(random);
+
 	}
 	
 	@Test

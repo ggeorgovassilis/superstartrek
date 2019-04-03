@@ -1,18 +1,26 @@
 package superstartrek.client.utils;
 
-import com.google.gwt.core.shared.GWT;
-
 public class Random {
 	
-	protected static RandomNumberFactory factory = new GWTRandomNumberFactory();
+	protected RandomNumberFactory factory;
 	
-	public static void setFactory(RandomNumberFactory f) {
+	public Random() {
+	}
+	
+	public Random(RandomNumberFactory factory) {
+		this.factory = factory;
+	}
+	
+	public void setFactory(RandomNumberFactory f) {
 		factory = f;
 	}
 
-	public static double nextDouble() {
-		if (GWT.isClient())
-			return com.google.gwt.user.client.Random.nextDouble();
-		else return Math.random();
+	public double nextDouble() {
+		return factory.nextDouble();
 	}
+
+	public int nextInt(int upperBound) {
+		return factory.nextInt(upperBound);
+	}
+
 }

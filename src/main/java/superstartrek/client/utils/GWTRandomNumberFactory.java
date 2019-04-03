@@ -9,4 +9,9 @@ public class GWTRandomNumberFactory implements RandomNumberFactory{
 		return Random.nextDouble();
 	}
 
+	@Override
+	public int nextInt(int upperBound) {
+		return Random.nextInt(upperBound);
+	}
+
 }

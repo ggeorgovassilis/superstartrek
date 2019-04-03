@@ -172,6 +172,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		things.remove(this);
 		getTorpedos().decrease(1);
 		Thing target=null;
+		Random random = Application.get().random;
 		for (Thing thing : things) {
 			boolean hit = false;
 			if (thing instanceof Star) {
@@ -181,7 +182,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			} else if (thing instanceof Klingon) {
 				double distance = StarMap.distance(this, thing);
 				double chance = Math.sqrt(2) / distance;
-				hit = Random.nextDouble() <= chance;
+				hit = random.nextDouble() <= chance;
 			}
 			if (hit) {
 				target = thing;
@@ -253,7 +254,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
-		if (superstartrek.client.utils.Random.nextDouble() < 0.5)
+		if (Application.get().random.nextDouble() < 0.5)
 			return false;
 		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * 0.75)); // boolean settings can be repaired
 																				// fully
@@ -321,15 +322,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public void applyDamage(double damage) {
 		double impact = 0.5 * damage / (shields.getValue() + 1.0);
 		shields.decrease(damage);
-		if (shields.getCurrentUpperBound() > 0 && 0.7 * Random.nextDouble() < impact)
+		Random random = Application.get().random;
+		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < impact)
 			damageShields();
-		if (impulse.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
+		if (impulse.getCurrentUpperBound() > 0 && random.nextDouble() < impact)
 			damageImpulse();
-		if (torpedos.isEnabled() && Random.nextDouble() < impact)
+		if (torpedos.isEnabled() && random.nextDouble() < impact)
 			damageTorpedos();
-		if (phasers.getCurrentUpperBound() > 0 && Random.nextDouble() < impact)
+		if (phasers.getCurrentUpperBound() > 0 && random.nextDouble() < impact)
 			damagePhasers();
-		if (autoAim.isEnabled() && Random.nextDouble() * 1.2 < impact)
+		if (autoAim.isEnabled() && random.nextDouble() * 1.2 < impact)
 			damageAutoaim();
 		if (shields.getValue() <= 0)
 			Application.get().gameOver(GameOverEvent.Outcome.lost, "shields");

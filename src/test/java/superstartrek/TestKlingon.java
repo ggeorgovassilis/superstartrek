@@ -84,13 +84,21 @@ public class TestKlingon {
 		RandomNumberFactory random = mock(RandomNumberFactory.class);
 		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
 			int counter = 0;
-			double numbers[]= {0.5,0.6,0.1};
+			double numbers[]= {0.5,0.6,0.1,0.3,0.3};
 			@Override
 			public Double answer(InvocationOnMock invocation) throws Throwable {
 				return numbers[counter++];
 			}
 		});
-		Random.setFactory(random);
+		when(random.nextInt(anyInt())).thenAnswer(new Answer<Integer>() {
+			int counter = 0;
+			int numbers[]= {1,2,3,4};
+			@Override
+			public Integer answer(InvocationOnMock invocation) throws Throwable {
+				return numbers[counter++];
+			}
+		});
+		app.random = new Random(random);
 		klingon.jumpTo(Location.location(1,3));
 		enterprise.setLocation(Location.location(2,3));
 		events.addHandler(FireEvent.TYPE, new FireHandler() {

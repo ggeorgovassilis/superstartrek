@@ -1,10 +1,9 @@
 package superstartrek.client.model;
 
-import com.google.gwt.user.client.Random;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Star.StarClass;
+import superstartrek.client.utils.Random;
 
 public class Setup {
 
@@ -21,10 +20,11 @@ public class Setup {
 	
 	protected Quadrant makeQuadrant(StarMap map, int x, int y) {
 		Quadrant q = new Quadrant(names[(int)Math.floor((y*8+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
-		int stars = Random.nextInt(Constants.MAX_STARS_IN_QUADRANT);
+		Random random = Application.get().random;
+		int stars = random.nextInt(Constants.MAX_STARS_IN_QUADRANT);
 		while (stars-->0) {
 			Location loc = map.findFreeSpot(q);
-			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[Random.nextInt(StarClass.values().length)]);
+			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[random.nextInt(StarClass.values().length)]);
 			star.setQuadrant(q);
 			q.getStars().add(star);
 		}
@@ -37,10 +37,10 @@ public class Setup {
 			q.setStarBase(starBase);
 		}
 		//don't put klingons in start quadrant
-		if (x+y!=0 && Random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
-			int klingons = 1+Random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT);
+		if (x+y!=0 && random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
+			int klingons = 1+random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT);
 			while (klingons-->0) {
-				int cIndex = Random.nextInt(Klingon.ShipClass.values().length);
+				int cIndex = random.nextInt(Klingon.ShipClass.values().length);
 				Klingon k = new Klingon((Klingon.ShipClass.values()[cIndex]));
 				k.setQuadrant(q);
 				Location loc = map.findFreeSpot(q);

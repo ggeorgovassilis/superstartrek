@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
@@ -21,6 +24,9 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
+import superstartrek.client.utils.Random;
+import superstartrek.client.utils.RandomNumberFactory;
+
 import static org.mockito.Mockito.*;
 
 import org.hamcrest.BaseMatcher;
@@ -34,7 +40,7 @@ public class TestEnterprise {
 
 	@Before
 	public void setup() {
-		application = Application.get();
+		application = new Application();
 		application.events = events = new CountingEventBus();
 		application.starMap = map = new StarMap();
 		map.enterprise = enterprise = new Enterprise(application);
@@ -153,6 +159,16 @@ public class TestEnterprise {
 
 	@Test
 	public void testFirePhasers() {
+		RandomNumberFactory random = mock(RandomNumberFactory.class);
+		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
+			int counter = 0;
+			double numbers[]= {0.5,0.6,0.1,0.3,0.3};
+			@Override
+			public Double answer(InvocationOnMock invocation) throws Throwable {
+				return numbers[counter++];
+			}
+		});
+		application.random = new Random(random);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
@@ -191,6 +207,18 @@ public class TestEnterprise {
 
 	@Test
 	public void testFireTorpedos() {
+		
+		RandomNumberFactory random = mock(RandomNumberFactory.class);
+		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
+			int counter = 0;
+			double numbers[]= {0.5,0.6,0.1,0.3,0.3};
+			@Override
+			public Double answer(InvocationOnMock invocation) throws Throwable {
+				return numbers[counter++];
+			}
+		});
+		application.random = new Random(random);
+		
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);

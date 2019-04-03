@@ -44,6 +44,8 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.pwa.ApplicationUpdateCheckHandler;
 import superstartrek.client.pwa.ApplicationUpdateEvent;
 import superstartrek.client.pwa.PWA;
+import superstartrek.client.utils.GWTRandomNumberFactory;
+import superstartrek.client.utils.Random;
 
 public class Application
 		implements EntryPoint, GamePhaseHandler, MessageHandler, ApplicationUpdateCheckHandler {
@@ -59,6 +61,7 @@ public class Application
 	public GameController gameController;
 	protected Resources resources;
 	protected Set<String> flags;
+	public Random random;
 	
 	public static Application get() {
 		if (that == null)
@@ -68,7 +71,7 @@ public class Application
 	
 	public Application() {
 		if (Application.that!=null)
-			throw new RuntimeException("There already is an application instance");
+			GWT.log("There already is an application instance");
 		Application.that = this;
 	}
 
@@ -250,6 +253,7 @@ public class Application
 	@Override
 	public void onModuleLoad() {
 		GWT.log("onModuleLoad");
+		random = new Random(new GWTRandomNumberFactory());
 		resources = GWT.create(Resources.class);
 		setUncaughtExceptionHandler();
 		page = HTMLPanel.wrap(DOM.getElementById("page"));
