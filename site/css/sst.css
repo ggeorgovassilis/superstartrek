@@ -32,6 +32,11 @@ html{
 	font-size:100%;
 }
 
+.federation-logo{
+	display:block;
+	height:10em;
+}
+
 ul,ol{
 	list-style:none;
 	margin:0;
@@ -50,7 +55,7 @@ a, a:visited, button, .button{
 	border:none transparent 0px;
 	padding:0.5em 0;
 	text-align:center;
-	margin-top:0.5em;
+	margin-bottom:0.5em;
 	cursor:pointer;
 	line-height:2em;
 	font-size:100%;
@@ -58,7 +63,7 @@ a, a:visited, button, .button{
 	background-color:rgb(0, 108, 109);
 	appearance: none;
 	float:left;
-	width:57%;
+	width:100%;
 }
 
 .half-width{
@@ -173,20 +178,9 @@ table a, table a:visited{
 	border-top:solid gray 1px;
 }
 
-#quadrantscan .row{
-	height:1.2em;
-	overflow:hidden;
-	font-size:inherit;
-	margin:0;
-	padding:0;
-	position:absolute;
-	border-bottom:solid gray 1px;
-	left:0;
-	right:0;
-}
-
-#quadrantscan .row div{
+#quadrantscan > div{
 	border-right:solid gray 1px;
+	border-bottom:solid gray 1px;
 	text-align:center;
 	width:12.5%;
 	margin:0;
@@ -194,18 +188,26 @@ table a, table a:visited{
 	cursor:pointer;
 	font-size:inherit;
 	height:1.2em;
+	line-height:1.2em;
 	overflow:hidden;
 	position:absolute;
 }
 
-#quadrantscan .row div.c0{
-	left:0%;
+.star-class-o{
+	color:blue;
 }
 
-#quadrantscan .star{
-	color:lightblue;
+.star-class-b{
+	color:cadetblue;
 }
 
+.star-class-a{
+	color:cyan;
+}
+
+.star-class-a{
+	color:lightgray;
+}
 
 .selected{
 	background-color:midnightblue;
@@ -220,6 +222,7 @@ table a, table a:visited{
 	margin-right:0.5em;
 	background-color:rgba(10,10,10,0.5);
 	width:20em;
+	margin-bottom:0.5em;
 }
 
 #shortrangescan td{
@@ -408,6 +411,7 @@ table a, table a:visited{
 #messages ol{
 	margin:0;
 	padding:0 0 1em 0;
+	overflow:hidden;
 }
 
 #messages .entry:not(:last-child) {
@@ -452,11 +456,18 @@ table a, table a:visited{
 	font-size:120%;
 }
 
+.messages-logo{
+	float:left;
+	background-color:darkcyan;
+	margin-right:1em;
+	height:5em;
+}
+
 a.single{
 	display:block;
 }
 
-.glasspanel{
+#glasspanel{
 	background-color:black;
 	opacity:0.75;
 	z-index:2;
@@ -466,6 +477,7 @@ a.single{
 	left:0;
 	bottom:0;
 	right:0;
+	display:none;
 }
 
 .PopupView{
@@ -585,12 +597,8 @@ a.progress-bar {
 	width:10em;
 }
 
-#screen-manual{
-	position:fixed;
-	top:0;
-	bottom:0;
-	left:0;
-	right:0;
+.manual .toc{
+	float:left;
 }
 
 
@@ -615,6 +623,7 @@ a.progress-bar {
 	background-color:black;
 	color:white;
 	padding-left:0.5em;
+	clear:both;
 }
 
 .manual a{

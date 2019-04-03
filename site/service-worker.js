@@ -8,6 +8,8 @@ let URLS = [
 	"/superstartrek/site/images/icon192x192.png",
 	"/superstartrek/site/images/icon512x512.png",
 	"/superstartrek/site/images/stars-background.gif",
+	"/superstartrek/site/images/communicator.svg",
+	"/superstartrek/site/images/federation_logo.svg",
 	"/superstartrek/site/css/sst.css",
 	"/superstartrek/site/superstartrek.superstartrek.nocache.js",
 	"/superstartrek/site/superstartrek.superstartrek.nocache.js.md5",
