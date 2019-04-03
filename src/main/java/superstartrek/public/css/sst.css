@@ -173,20 +173,9 @@ table a, table a:visited{
 	border-top:solid gray 1px;
 }
 
-#quadrantscan .row{
-	height:1.2em;
-	overflow:hidden;
-	font-size:inherit;
-	margin:0;
-	padding:0;
-	position:absolute;
-	border-bottom:solid gray 1px;
-	left:0;
-	right:0;
-}
-
-#quadrantscan .row div{
+#quadrantscan > div{
 	border-right:solid gray 1px;
+	border-bottom:solid gray 1px;
 	text-align:center;
 	width:12.5%;
 	margin:0;
@@ -196,10 +185,6 @@ table a, table a:visited{
 	height:1.2em;
 	overflow:hidden;
 	position:absolute;
-}
-
-#quadrantscan .row div.c0{
-	left:0%;
 }
 
 #quadrantscan .star{

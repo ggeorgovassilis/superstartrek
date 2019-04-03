@@ -46,19 +46,9 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 				hide();
 			}
 		}, KeyDownEvent.getType());
-		return new FlowPanel();
-	}
-	
-	@Override
-	public void show() {
-		if (htmlPanel.isAttached())
-			return;
-		RootPanel.get().add(htmlPanel);
 		glassPanel = DOM.createDiv();
 		glassPanel.addClassName("glasspanel");
-		RootPanel.get().getElement().appendChild(glassPanel);
-		Element keySink = glassPanel;
-		Event.setEventListener(keySink, new EventListener() {
+		Event.setEventListener(glassPanel, new EventListener() {
 			
 			@Override
 			public void onBrowserEvent(Event event) {
@@ -67,7 +57,16 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 				hide();
 			}
 		});
-		Event.sinkEvents(keySink, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONTOUCHSTART | Event.ONKEYDOWN | Event.ONKEYPRESS);
+		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONTOUCHSTART | Event.ONKEYDOWN | Event.ONKEYPRESS);
+		return new FlowPanel();
+	}
+	
+	@Override
+	public void show() {
+		if (htmlPanel.isAttached())
+			return;
+		RootPanel.get().add(htmlPanel);
+		RootPanel.get().getElement().appendChild(glassPanel);
 		htmlPanel.getElement().focus();
 	}
 	
@@ -76,9 +75,6 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 		if (!htmlPanel.isAttached())
 			return;
 		glassPanel.removeFromParent();
-		//listeners leak
-		Event.setEventListener(glassPanel, null);
-		glassPanel = null;
 		RootPanel.get().remove(htmlPanel);
 	}
 

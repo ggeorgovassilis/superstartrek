@@ -1,5 +1,7 @@
 package superstartrek.client.activities.sector.contextmenu;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorEvent;
