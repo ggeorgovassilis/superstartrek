@@ -21,7 +21,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public final static double PHASER_RANGE = 3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 10;
-	public final static double IMPULSE_CONSUMPTION = 6;
+	public final static double IMPULSE_CONSUMPTION = 5;
 
 	protected Setting phasers = new Setting("phasers", 30, 150);
 	protected Setting torpedos = new Setting("torpedos", 10, 10);

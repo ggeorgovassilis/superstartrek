@@ -108,6 +108,17 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	public Setting getDisruptor() {
 		return disruptor;
 	}
+	
+	public boolean hasClearShotAt(Location target, Enterprise enterprise, StarMap map) {
+		if (StarMap.distance(target, getLocation()) <= DISRUPTOR_RANGE_SECTORS) {
+			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), target);
+			obstacles.remove(enterprise);
+			obstacles.remove(this);
+			if (obstacles.isEmpty())
+				return true;
+		}
+		return false;
+	}
 
 	public void repositionKlingon() {
 		if (!getImpulse().isEnabled())
@@ -118,13 +129,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			return;
 		// no need to move if distance is <=2 and Klingon has a clear shot at the
 		// Enterprise
-		if (StarMap.distance(enterprise, this) <= DISRUPTOR_RANGE_SECTORS) {
-			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), enterprise.getLocation());
-			obstacles.remove(enterprise);
-			obstacles.remove(this);
-			if (obstacles.isEmpty())
-				return;
-		}
+		if (hasClearShotAt(enterprise.getLocation(), enterprise, map))
+			return;
 		PathFinder pathFinder = new PathFinderImpl();
 		// path includes start and end
 		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation(), enterprise.getQuadrant(), map);

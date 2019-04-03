@@ -49,6 +49,7 @@ public class TestAStarPlus {
 			for (int innerTurn = 0; innerTurn < TURNS_WITH_SAME_MAP; innerTurn++) {
 				AStarPlus asp = new AStarPlus();
 				List<Location> pathAsp = asp.findPathBetween(from, to, q, map);
+				assertTrue(pathAsp.size()>=0); // useless check, but mutes Eclipse warning about pathAsp not used
 			}
 
 		}
@@ -76,24 +77,34 @@ public class TestAStarPlus {
 
 	protected void checkPlausibility(Location from, Location to, List<Location> expectedSolution,
 			List<Location> solutionToCheck) {
-		if (expectedSolution.isEmpty()) {
-			//a*+ (incorrectly) returns source square as step; but so does a*, so that's ok
-			//a*+ also (correctly) returns target square as step, which a* doesn't. so we allow that here for 
-			//leniency in the case of a path between two adjacent sectors
-			assertTrue(solutionToCheck.size()<=2);
+		Location last = from;
+		//check some corner cases:
+		
+		//1. from == to
+		if (from.equals(to)) {
+			assertTrue(solutionToCheck.isEmpty());
 			return;
 		}
-		assertTrue(Math.abs(expectedSolution.size() - solutionToCheck.size()) < 3);
-		if (expectedSolution.size() == 1)
+		//2. expectedSolution is empty even though there is a path
+		//a* sometimes doesn't find a path even if there is one (which a*+ finds).
+		//this means that sometimes expectedSolution is empty even though it shouldn't
+		if (solutionToCheck.isEmpty()) {
+			assertTrue(expectedSolution.isEmpty());
 			return;
-		assertEquals(from, solutionToCheck.get(0));
-		Location p = solutionToCheck.get(0);
-		for (Location l : solutionToCheck) {
-			// astarPlus actually sometimes finds a better solution than a*
-			assertTrue(StarMap.distance(p, l) < 2);
-			p = l;
 		}
-		assertTrue(StarMap.distance(to, solutionToCheck.get(solutionToCheck.size() - 1)) < 2);
+		//3. "to" is last step in path
+		assertEquals(to, solutionToCheck.get(solutionToCheck.size()-1));
+		
+		//4. the expected solution is about the same size as the one we found; a*+ walks diagonally, so its solutions are generally better, hence
+		//expectedSolution is an upper bound
+		if (!expectedSolution.isEmpty())
+			assertTrue(expectedSolution.size() >= solutionToCheck.size());
+		
+		//5. there are no "leaps"; every square in the path is next to the previous
+		for (Location current:solutionToCheck) {
+			assertTrue(StarMap.distance(current, last)<2);
+			last = current;
+		}
 	}
 
 	/* surprisingly, a* reference implementation fails with this map, which a*+ solves: 
@@ -109,7 +120,6 @@ public class TestAStarPlus {
 	 
 	 */
 	@Test
-	@Ignore
 	public void testAStarPlus() {
 		final int TURNS = 1000;
 		Random random = new Random(0);

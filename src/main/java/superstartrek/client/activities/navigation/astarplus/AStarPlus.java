@@ -9,6 +9,17 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 
+/**
+ * Short explanation of the implementation: normal a* is based on a graph which models locations as vertices and connections as edges.
+ * The SST map is a 8x8 2D specialisation where vertices are connected only to their NESW neighbors. We use a trick to improve performance:
+ * each square can be addressed by a positive integer (y*8+x+1). A linear "matrix" array notes down whether a square is occupied (-1), has not
+ * been visited yet (0) or has been visited (>0), in which case it contains the ID of the square it was visited from.
+ * The todo list is also a linear array with a sliding head and tail; as "todo" is guaranteed to be smaller than 64 entries, we don't need complex
+ * memory management and can use a fixed size array for that.
+ * 
+ * 
+ *
+ */
 public class AStarPlus {
 
 	final static int OCCUPIED = -1;
