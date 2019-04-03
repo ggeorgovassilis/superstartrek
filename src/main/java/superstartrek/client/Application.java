@@ -2,6 +2,7 @@ package superstartrek.client;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -49,6 +50,7 @@ import superstartrek.client.utils.Random;
 
 public class Application
 		implements EntryPoint, GamePhaseHandler, MessageHandler, ApplicationUpdateCheckHandler {
+	private static Logger log = Logger.getLogger("");
 
 	public EventBus events;
 	public HTMLPanel page;
@@ -64,12 +66,11 @@ public class Application
 	public Random random;
 	
 	public static Application get() {
-		if (that == null)
-			that = new Application();
 		return that;
 	}
 	
 	public Application() {
+		log.info("Application constructor");
 		if (Application.that!=null)
 			GWT.log("There already is an application instance");
 		Application.that = this;
@@ -252,6 +253,7 @@ public class Application
 
 	@Override
 	public void onModuleLoad() {
+		Application.that = this;
 		GWT.log("onModuleLoad");
 		random = new Random(new GWTRandomNumberFactory());
 		resources = GWT.create(Resources.class);

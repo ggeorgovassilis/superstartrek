@@ -69,7 +69,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 				hide();
 			}
 		});
-		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONTOUCHSTART | Event.ONKEYDOWN | Event.ONKEYPRESS);
+		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		glassPanel.getStyle().setDisplay(Display.INITIAL);
 	}
 	

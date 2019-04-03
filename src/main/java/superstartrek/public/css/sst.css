@@ -168,7 +168,7 @@ table a, table a:visited{
 }
 
 #quadrantscan{
-	width:100%;
+	width:99.5%; /* 100% causes window scrolling which slows painting down*/
 	font-size:130%;
 	margin:0;
 	padding:0;
@@ -261,7 +261,7 @@ table a, table a:visited{
 }
 
 #longrangescan{
-	width:100%;
+	width:99.5%;
 }
 
 .computer #computerscreen{

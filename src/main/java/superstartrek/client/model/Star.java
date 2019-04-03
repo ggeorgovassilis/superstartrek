@@ -1,9 +1,11 @@
 package superstartrek.client.model;
 
+import java.util.logging.Logger;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 
-public class Star extends Thing implements FireHandler {
+public class Star extends Thing{
 
 	public enum StarClass {
 
@@ -25,19 +27,11 @@ public class Star extends Thing implements FireHandler {
 		setName(sc.typeName + " star");
 		setSymbol(sc.symbol);
 		setCss("star " + sc.css);
-		if (registerEvents)
-			Application.get().events.addHandler(FireEvent.TYPE, this);
 		setLocation(Location.location(x, y));
 	}
 
 	public Star(int x, int y, StarClass sc) {
 		this(x, y, true, sc);
-	}
-
-	@Override
-	public void onFire(FireEvent evt) {
-		if (evt.target == this)
-			Application.get().message(evt.weapon + " hit " + getName() + " at " + getLocation());
 	}
 
 }

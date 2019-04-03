@@ -35,6 +35,7 @@
 				<gwt.methodNameDisplayMode>FULL</gwt.methodNameDisplayMode>
 				<gwt.saveSource>true</gwt.saveSource>
 				<gwt.style>DETAILED</gwt.style>
+				<skip.deploy>true</skip.deploy>
 				<skip.tests>true</skip.tests>
 			</properties>
 		</profile>
@@ -179,7 +180,7 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<move todir="${project.basedir}/site" >
+								<move todir="${project.basedir}/site">
 									<fileset
 										dir="${project.basedir}/site/superstartrek.superstartrek" />
 								</move>
@@ -211,9 +212,6 @@
 						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<!-- put your configurations here -->
-				</configuration>
 			</plugin>
 
 			<plugin>
@@ -224,7 +222,9 @@
 					<execution>
 						<id>add-files</id>
 						<phase>package</phase>
-						<goals><goal>add</goal></goals>
+						<goals>
+							<goal>add</goal>
+						</goals>
 						<configuration>
 							<connectionType>connection</connectionType>
 							<basedir>${project.basedir}</basedir>
@@ -238,7 +238,9 @@
 					<execution>
 						<id>push-files</id>
 						<phase>package</phase>
-						<goals><goal>checkin</goal></goals>
+						<goals>
+							<goal>checkin</goal>
+						</goals>
 						<configuration>
 							<connectionType>connection</connectionType>
 							<basedir>${project.basedir}</basedir>
@@ -250,9 +252,14 @@
 							<scmVersionType>branch</scmVersionType>
 							<username>${sst.git.username}</username>
 							<password>${sst.git.password}</password>
+							<skip>${skip.deploy}</skip>
 						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<skip>${skip.deploy}</skip>
+				</configuration>
+
 			</plugin>
 
 		</plugins>

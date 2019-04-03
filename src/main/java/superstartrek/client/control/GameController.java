@@ -14,6 +14,7 @@ import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
 
 public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler, KlingonDestroyedHandler{
@@ -37,6 +38,12 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	public void afterFire(FireEvent evt) {
 		if (evt.actor == application.starMap.enterprise && !evt.wasAutoFire)
 			application.endTurnAfterThis();
+		
+		if (evt.target instanceof Star) {
+			Star star = (Star)evt.target;
+			Application.get().message(evt.weapon + " hit " + star.getName() + " at " + star.getLocation());
+		}
+
 	}
 
 	@Override

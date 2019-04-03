@@ -40,7 +40,7 @@ public class TestKlingon {
 
 	@Before
 	public void setup() {
-		app  = Application.get();
+		app  = new Application();
 		app.events = events = new CountingEventBus();
 		
 		quadrant = new Quadrant("test", 1,2);
