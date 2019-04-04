@@ -246,7 +246,7 @@ table a, table a:visited{
 	position:absolute;
 	background-color:rgba(0,0,0,0.5);
 	outline:solid grey 1px;
-	width:100%;
+	width:16em;
 	z-index: 100;
 }
 
