@@ -14,7 +14,15 @@ f53e9fcd602ca6b6be4599cadb9f3f71 *intro.html
 aaf806f7b9338adb65863a00842bd6c4 *sector-scan.html
 99aba5be7529fa74be35997d2b6f2fed *sectorselectionmenu.html
 048bacee0643e164bd44133d69d3924c *service-worker.js
+<<<<<<< HEAD
 d3f353abc6c378a404c90cb13c8517de *sst.css
+=======
+0372088c93c0da451d98904df92902f3 *sst.css
+>>>>>>> branch 'gh-pages' of https://github.com/ggeorgovassilis/superstartrek
 fabc28bd92cbe78c4b666b9762f6b39f *stars-background.gif
 c5dd34e3175838e58fd4c5187c56614b *status-report.html
+<<<<<<< HEAD
 a63c8afb205d340f581f531934f4dfd0 *superstartrek.superstartrek.nocache.js
+=======
+caf69edbdccd593d2f843b5be0383106 *superstartrek.superstartrek.nocache.js
+>>>>>>> branch 'gh-pages' of https://github.com/ggeorgovassilis/superstartrek
