@@ -138,6 +138,10 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	width:100%;
 }
 
+.has-starbase{
+	background:darkcyan;
+}
+
 .has-starbase.has-klingons{
   background: repeating-linear-gradient(
   to right,
