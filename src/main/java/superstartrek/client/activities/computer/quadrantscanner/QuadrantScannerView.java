@@ -5,6 +5,8 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -38,7 +40,6 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	@Override
 	protected HTMLPanel createWidgetImplementation() {
 		HTMLPanel p = new HTMLPanel("<div id=quadrantscan></div>");
-		Event.sinkEvents(p.getElementById("quadrantscan"), Event.ONCLICK);
 		return p;
 	}
 
@@ -59,10 +60,11 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 				e.appendChild(eTd);
 			}
 		}
-		panel.addHandler(new ClickHandler() {
+		Event.sinkEvents(panel.getElementById("quadrantscan"), Event.ONMOUSEDOWN);
+		panel.addHandler(new MouseDownHandler() {
 
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onMouseDown(MouseDownEvent event) {
 				Element e = event.getNativeEvent().getEventTarget().cast();
 				try {
 					int x = Integer.parseInt(e.getAttribute("x"));
@@ -72,7 +74,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 					//can happen when user clicks on the borders between cells, which don't have x/y attributes
 				}
 			}
-		}, ClickEvent.getType());
+		}, MouseDownEvent.getType());
 		eSelectedSector = eSectors[0][0];
 	}
 
