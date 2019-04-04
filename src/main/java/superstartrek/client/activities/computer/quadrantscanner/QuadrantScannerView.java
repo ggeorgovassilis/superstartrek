@@ -1,18 +1,25 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseEvent;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.activities.CSS;
+import superstartrek.client.utils.DomUtils;
+import superstartrek.client.utils.HtmlWidget;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> implements IQuadrantScannerView {
 
@@ -38,15 +45,15 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	}
 
 	@Override
-	protected HTMLPanel createWidgetImplementation() {
-		HTMLPanel p = new HTMLPanel("<div id=quadrantscan></div>");
+	protected HtmlWidget createWidgetImplementation() {
+		HtmlWidget p = new HtmlWidget(DOM.createTable());
+		p.getElement().setId("quadrantscan");
 		return p;
 	}
 
 	public QuadrantScannerView(QuadrantScannerPresenter presenter) {
 		super(presenter);
-		HTMLPanel panel = (HTMLPanel) widgetImpl;
-		Element e = panel.getElementById("quadrantscan");
+		Element eTable = DomUtils.getTbody(widgetImpl.getElement());
 		for (int y = 0; y < 8; y++) {
 			Element eTr = DOM.createDiv();
 			for (int x = 0; x < 8; x++) {
@@ -57,25 +64,39 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 				eTd.getStyle().setLeft(12.5 * (double) x, Unit.PCT);
 				eTd.getStyle().setTop(12.5 * (double) y, Unit.PCT);
 				eSectors[x][y] = eTd;
-				e.appendChild(eTd);
+				eTable.appendChild(eTd);
 			}
 		}
-		Event.sinkEvents(panel.getElementById("quadrantscan"), Event.ONCLICK);
-		panel.addHandler(new ClickHandler() {
-
+		widgetImpl.addDomHandler(new MouseDownHandler() {
+			
 			@Override
-			public void onClick(ClickEvent event) {
-				Element e = event.getNativeEvent().getEventTarget().cast();
-				try {
-					int x = Integer.parseInt(e.getAttribute("x"));
-					int y = Integer.parseInt(e.getAttribute("y"));
-					presenter.onSectorSelected(x, y, event.getClientX(), event.getClientY());
-				} catch (Exception ex) {
-					//can happen when user clicks on the borders between cells, which don't have x/y attributes
-				}
+			public void onMouseDown(MouseDownEvent event) {
+				handleClick(event);
 			}
-		}, ClickEvent.getType());
+		}, MouseDownEvent.getType());
+		widgetImpl.addDomHandler(new TouchStartHandler() {
+			
+			@Override
+			public void onTouchStart(TouchStartEvent event) {
+				handleClick(event);
+			}
+		}, TouchStartEvent.getType());
 		eSelectedSector = eSectors[0][0];
 	}
 
+	protected void handleClick(DomEvent event) {
+		GWT.log(""+event);
+		NativeEvent ne= event.getNativeEvent();
+		Element e = ne.getEventTarget().cast();
+		try {
+			int x = Integer.parseInt(e.getAttribute("x"));
+			int y = Integer.parseInt(e.getAttribute("y"));
+			((QuadrantScannerPresenter)getPresenter()).onSectorSelected(x, y, ne.getClientX(), ne.getClientY());
+			event.stopPropagation();
+			event.preventDefault();
+		} catch (Exception ex) {
+			//can happen when user clicks on the borders between cells, which don't have x/y attributes
+		}
+		
+	}
 }

@@ -5,9 +5,11 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.Presenter;
+import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
 public class SRSView extends BaseView<SRSActivity> implements ISRSView{
@@ -15,10 +17,11 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView{
 	Element[][] eCells;
 	
 	@Override
-	protected HTMLPanel createWidgetImplementation() {
+	protected Widget createWidgetImplementation() {
 		eCells = new Element[3][3];
-		HTMLPanel table = new HTMLPanel("<table id='shortrangescan'><tbody id='xxxyyy'></tbody></table>");
-		Element e = table.getElementById("xxxyyy");
+		HtmlWidget table = new HtmlWidget(DOM.createTable(), "<tbody></tbody>");
+		table.getElement().setId("shortrangescan");
+		Element e = table.getElement().getElementsByTagName("tbody").getItem(0);
 		for (int y = 0; y < 3; y++) {
 			Element eTR = DOM.createTR();
 			for (int x = 0; x < 3; x++) {

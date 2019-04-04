@@ -21,7 +21,7 @@ import superstartrek.client.model.Setting;
 public class ComputerView extends BaseScreen<ComputerActivity> implements IComputerView{
 
 	QuadrantScannerPresenter quadrantScannerPresenter;
-	QuadrantScannerView quadrantScannerActivity;
+	QuadrantScannerView quadrantScannerView;
 	SRSPresenter srsPresenter;
 	
 	Element eDockInStarbase;
@@ -42,6 +42,7 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 	@Override
 	protected void setupCompositeUI() {
 		super.setupCompositeUI();
+		addStyleName("computer-screen");
 		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
 		presenter.getApplication().page.add(this);
 		
@@ -49,9 +50,9 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
 
 		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(), sectorMenuPresenter);
-		quadrantScannerActivity = new QuadrantScannerView(quadrantScannerPresenter);
+		quadrantScannerView = new QuadrantScannerView(quadrantScannerPresenter);
 		HTMLPanel panel = (HTMLPanel)getWidgetImplementation();
-		panel.add(quadrantScannerActivity,"quadrantscancontainer");
+		panel.addAndReplaceElement(quadrantScannerView,"quadrantscancontainer");
 		
 		srsPresenter = new SRSPresenter(presenter.getApplication());
 		SRSView srsView = new SRSView(srsPresenter);

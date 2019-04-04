@@ -95,18 +95,6 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	background-color:rgb(50, 158, 159);	
 }
 
-table a, table a:visited{
-	padding:0;
-	margin:0;
-	border:none transparent 0px;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
 /*
  * Long range scan
  */
@@ -135,9 +123,6 @@ table a, table a:visited{
 
 .has-enterprise{
 	outline: solid darkturquoise 2px;
-}
-
-.has-starbase{
 	background-color:blue;
 }
 
@@ -147,10 +132,6 @@ table a, table a:visited{
 
 .cloaked{
 	color:transparent !important;
-}
-
-.needs-klingon{
-	display:none;
 }
 
 .vessel-scan{
@@ -221,7 +202,7 @@ table a, table a:visited{
 	float:left;
 	margin-right:0.5em;
 	background-color:rgba(10,10,10,0.5);
-	width:20em;
+	width:100%;
 	margin-bottom:0.5em;
 }
 
@@ -233,7 +214,7 @@ table a, table a:visited{
 }
 
 #shortrangescan{
-	min-width:20em;
+	width:100%;
 }
 
 /*
@@ -246,7 +227,7 @@ table a, table a:visited{
 	position:absolute;
 	background-color:rgba(0,0,0,0.5);
 	outline:solid grey 1px;
-	width:16em;
+	width:100%;
 	z-index: 100;
 }
 
@@ -262,10 +243,6 @@ table a, table a:visited{
 
 #longrangescan{
 	width:99.5%;
-}
-
-.computer #computerscreen{
-	display:block;
 }
 
 #quadrantheader{
@@ -351,49 +328,8 @@ table a, table a:visited{
 	text-decoration:underline;
 }
 
-/*
- * Status report
- */
- 
- .overlay{
-	color:turquoise;	
-}
- 
- 
-#screen-statusreport dl{
-	overflow:hidden;
-}
 
-#screen-statusreport dt{
-	clear:left;
-	float:left;
-	width:50%;
-	max-width:20em;
-	padding:5px;
-	font-weight:bold;
-}
-
-#screen-statusreport dd{
-	float:left;
-	padding:5px;
-	color:turquoise;
-}
-
-.damage-light{
-	color:yellow;
-}
-
-.damage-medium{
-	color:orange;
-}
-
-.damage-bad{
-	color:red;
-}
-
-.damage-offline{
-	color:grey;
-}
+/* messages */
 
 
 #messages{
@@ -406,6 +342,10 @@ table a, table a:visited{
 	padding:10px;
 	z-index:100;
 	border:solid grey 1px;
+}
+
+#dismiss-message-button{
+	margin-top:0.5em;
 }
 
 #messages ol{
@@ -468,10 +408,9 @@ a.single{
 }
 
 #glasspanel{
-/*	background-color:black;
+	background-color:black;
 	opacity:0.75;
-	z-index:2;*/
-	visibility:hidden;
+	z-index:2;
 	touch-action: none;
 	position:absolute;
 	top:0;
@@ -486,14 +425,6 @@ a.single{
 	transform: translateZ(0);
 }
 
-.PopupView{
-	position:absolute;
-	z-index:3;
-	top:0;
-	left:0;
-	right:0;
-}
-
 .messages .content{
 	margin-bottom:1em;
 }
@@ -503,6 +434,14 @@ a.single{
 }
 
 #topmarker{
+}
+
+.PopupView{
+	position:absolute;
+	z-index:3;
+	top:0;
+	left:0;
+	right:0;
 }
 
 .progress-bar{
@@ -539,6 +478,9 @@ a.progress-bar {
 	display:block;
 }
 
+#stardate{
+	clear:both;
+}
 /**
  * Commands visibility
  */
@@ -580,18 +522,58 @@ a.progress-bar {
 	top:0;
 }
 
+/*
+ * Status report
+ */
+ 
+.overlay{
+	color:turquoise;	
+}
+ 
+#screen-statusreport dl{
+	overflow:hidden;
+}
+
+#screen-statusreport dt{
+	clear:left;
+	float:left;
+	width:50%;
+	max-width:20em;
+	padding:5px;
+	font-weight:bold;
+}
+
+#screen-statusreport dd{
+	float:left;
+	padding:5px;
+	color:turquoise;
+}
+
+.damage-light{
+	color:yellow;
+}
+
+.damage-medium{
+	color:orange;
+}
+
+.damage-bad{
+	color:red;
+}
+
+.damage-offline{
+	color:grey;
+}
+
 .overlay{
 	position:absolute;
 	cursor:pointer;
+	z-index:1;
 }
 
 .overlay.base{
 	z-index: 0;
 	position:fixed;
-}
-
-.overlay{
-	z-index:1;
 }
 
 .overlay.impulse{

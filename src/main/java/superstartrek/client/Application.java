@@ -15,6 +15,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.ComputerView;
@@ -260,7 +261,7 @@ public class Application
 		random = new Random(new GWTRandomNumberFactory());
 		resources = GWT.create(Resources.class);
 		setUncaughtExceptionHandler();
-		page = HTMLPanel.wrap(DOM.getElementById("page"));
+		page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		events = GWT.create(SimpleEventBus.class);
 		setupScreens();
 		setupStarMap();
