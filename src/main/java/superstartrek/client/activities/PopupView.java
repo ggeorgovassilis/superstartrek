@@ -58,7 +58,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 		RootPanel.get().add(getHtmlPanel());
 	}
 	
-	protected void showGlassPanel() {/*
+	protected void showGlassPanel() {
 		Element glassPanel = DOM.getElementById("glasspanel");
 		Event.setEventListener(glassPanel, new EventListener() {
 			
@@ -70,14 +70,14 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 			}
 		});
 		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONKEYDOWN | Event.ONKEYPRESS);
-		glassPanel.getStyle().setDisplay(Display.INITIAL);*/
+		glassPanel.getStyle().setDisplay(Display.INITIAL);
 	}
 	
-	protected void hideGlassPanel() {/*
+	protected void hideGlassPanel() {
 		Element glassPanel = DOM.getElementById("glasspanel");
 		glassPanel.getStyle().setDisplay(Display.NONE);
 		Event.setEventListener(glassPanel, null);
-		Event.sinkEvents(glassPanel, 0);*/
+		Event.sinkEvents(glassPanel, 0);
 	}
 	
 	@Override

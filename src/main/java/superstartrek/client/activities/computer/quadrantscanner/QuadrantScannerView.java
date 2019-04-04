@@ -60,11 +60,11 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 				e.appendChild(eTd);
 			}
 		}
-		Event.sinkEvents(panel.getElementById("quadrantscan"), Event.ONMOUSEDOWN);
-		panel.addHandler(new MouseDownHandler() {
+		Event.sinkEvents(panel.getElementById("quadrantscan"), Event.ONCLICK);
+		panel.addHandler(new ClickHandler() {
 
 			@Override
-			public void onMouseDown(MouseDownEvent event) {
+			public void onClick(ClickEvent event) {
 				Element e = event.getNativeEvent().getEventTarget().cast();
 				try {
 					int x = Integer.parseInt(e.getAttribute("x"));
@@ -74,7 +74,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 					//can happen when user clicks on the borders between cells, which don't have x/y attributes
 				}
 			}
-		}, MouseDownEvent.getType());
+		}, ClickEvent.getType());
 		eSelectedSector = eSectors[0][0];
 	}
 

@@ -468,10 +468,9 @@ a.single{
 }
 
 #glasspanel{
-/*	background-color:black;
+	background-color:black;
 	opacity:0.75;
-	z-index:2;*/
-	visibility:hidden;
+	z-index:2;
 	touch-action: none;
 	position:absolute;
 	top:0;
