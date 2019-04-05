@@ -5,17 +5,14 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public interface MessageHandler extends EventHandler{
 
-	public class MessageEvent extends GwtEvent<MessageHandler> {
+	public static class MessagePostedEvent extends GwtEvent<MessageHandler> {
 
-		public enum Action{show,hide};
 		public static Type<MessageHandler> TYPE = new Type<MessageHandler>();
 
 		protected final String formattedMessage;
 		protected final String category;
-		protected final Action action;
 		
-		public MessageEvent(Action action, String formattedMessage, String category) {
-			this.action = action;
+		public MessagePostedEvent(String formattedMessage, String category) {
 			this.formattedMessage = formattedMessage;
 			this.category = category;
 		}
@@ -33,19 +30,29 @@ public interface MessageHandler extends EventHandler{
 			return category;
 		}
 
-		public Action getAction() {
-			return action;
+		@Override
+		protected void dispatch(MessageHandler handler) {
+			handler.messagePosted(formattedMessage, category);
+		}
+	}
+
+	public static class MessagesReadEvent extends GwtEvent<MessageHandler> {
+
+		public static Type<MessageHandler> TYPE = new Type<MessageHandler>();
+
+		public MessagesReadEvent() {
+		}
+
+		@Override
+		public Type<MessageHandler> getAssociatedType() {
+			return TYPE;
 		}
 
 		@Override
 		protected void dispatch(MessageHandler handler) {
-			if (action == MessageEvent.Action.show)
-				handler.messagePosted(formattedMessage, category);
-			else if (action == MessageEvent.Action.hide)
-				handler.messagesAcknowledged();
+			handler.messagesAcknowledged();
 		}
 	}
-
 	
 	default void messagePosted(String formattedMessage, String category) {};
 	default void messagesAcknowledged() {};

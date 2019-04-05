@@ -123,7 +123,7 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 
 .has-enterprise{
 	outline: solid darkturquoise 2px;
-	background-color:blue;
+	background-color:darkcyan;
 }
 
 .has-klingons{
@@ -136,10 +136,15 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 
 .vessel-scan{
 	width:100%;
+	margin-bottom:0.5em;
+}
+
+.vessel-scan tr{
+	line-height:1.5em;
 }
 
 .has-starbase{
-	background:darkcyan;
+	background:blue;
 }
 
 .has-starbase.has-klingons{
@@ -643,7 +648,7 @@ a.progress-bar {
 
 #screen-sectorscan{
 	background:rgba(10,10,10,0.5);
-	outline: cyan solid 1px;
+	outline: silver solid 1px;
 	padding:1em;
 	overflow:hidden;
 	margin:0.1em;

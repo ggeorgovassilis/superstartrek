@@ -2,16 +2,15 @@ package superstartrek.client;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.event.shared.UmbrellaException;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -30,17 +29,12 @@ import superstartrek.client.activities.manual.ManualScreen;
 import superstartrek.client.activities.messages.MessagesView;
 import superstartrek.client.activities.report.StatusReportPresenter;
 import superstartrek.client.activities.report.StatusReportView;
-import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameStartedEvent;
-import superstartrek.client.control.KlingonTurnEvent;
-import superstartrek.client.control.TurnEndedEvent;
-import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.pwa.ApplicationUpdateCheckHandler;
@@ -48,17 +42,15 @@ import superstartrek.client.pwa.ApplicationUpdateEvent;
 import superstartrek.client.pwa.PWA;
 import superstartrek.client.utils.GWTRandomNumberFactory;
 import superstartrek.client.utils.Random;
+import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;;
 
 public class Application
-		implements EntryPoint, GamePhaseHandler, MessageHandler, ApplicationUpdateCheckHandler {
+		implements EntryPoint, GamePhaseHandler, ApplicationUpdateCheckHandler {
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus events;
 	public HTMLPanel page;
 	public StarMap starMap;
-	public boolean gameIsRunning = true;
-	protected boolean endTurnPending = false;
-	protected boolean startTurnPending = false;
 
 	private static Application that;
 	public GameController gameController;
@@ -88,21 +80,6 @@ public class Application
 			History.addValueChangeHandler(handler);
 	}
 	
-	public void endTurnAfterThis() {
-		if (endTurnPending)
-			return;
-		endTurnPending = true;
-		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
-			
-			@Override
-			public void execute() {
-				endTurnPending = false;
-				endTurn();
-				startTurnAfterThis();
-			}
-		});
-	}
-
 	protected void setupStarMap() {
 		Setup setup = new Setup(this);
 		starMap = setup.createNewMap();
@@ -122,50 +99,16 @@ public class Application
 	
 	public void registerEventHandlers() {
 		events.addHandler(GameOverEvent.TYPE, this);
-		events.addHandler(MessageEvent.TYPE, this);
 		events.addHandler(ApplicationUpdateEvent.TYPE, this);
 	}
 
-	public void startGame() {
-		History.replaceItem("intro");
-		History.fireCurrentHistoryState();
-		registerEventHandlers();
-		events.fireEvent(new GameStartedEvent());
-	}
-
-	public void endTurn() {
-		events.fireEvent(new TurnEndedEvent());
-		events.fireEvent(new KlingonTurnEvent());
-		//release resources so that it can be (hopefully) garbage collected; at this point, everyone who needs resources should have them
-		resources = null;
-	}
-	
-	public void startTurnAfterThis() {
-		if (startTurnPending)
-			return;
-		startTurnPending = true;
-		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
-			
-			@Override
-			public void execute() {
-				startTurnPending = false;
-				startTurn();
-			}
-		});
-	}
-
-	public void startTurn() {
-		GWT.log("------------------------------ new turn");
-		starMap.advanceStarDate(1);
-		events.fireEvent(new TurnStartedEvent());
-	}
 
 	public void message(String formattedMessage) {
 		message(formattedMessage, "info");
 	}
 
 	public void message(String formattedMessage, String category) {
-		events.fireEvent(new MessageEvent(MessageEvent.Action.show, formattedMessage, category));
+		events.fireEvent(new MessagePostedEvent(formattedMessage, category));
 	}
 
 	/**
@@ -176,9 +119,9 @@ public class Application
 		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 			@Override
 			public void onUncaughtException(Throwable e) {
+				log.log(Level.SEVERE, e.getMessage(), e);
 				Throwable unwrapped = unwrap(e);
-				GWT.log(e.getMessage(), unwrapped);
-//				Logger.getAnonymousLogger().log(Level.SEVERE, "onUncaughtException " + e.getMessage(), unwrapped);
+				log.log(Level.SEVERE, e.getMessage(), unwrapped);
 			}
 
 			public Throwable unwrap(Throwable e) {
@@ -191,30 +134,7 @@ public class Application
 				return e;
 			}
 		});
-
 	}
-
-	public void gameOver(GameOverEvent.Outcome outcome, String reason) {
-		GWT.log(reason);
-		events.fireEvent(new GameOverEvent(outcome, reason));
-	}
-
-	@Override
-	public void gameOver() {
-		message("Game over.");
-		this.gameIsRunning = false;
-	}
-
-	@Override
-	public void gameLost() {
-		message("The Enterprise was destroyed.", "gameover");
-	}
-
-	@Override
-	public void gameWon() {
-		message("Congratulations, all Klingons were destroyed.", "gamewon");
-	}
-
 	
 	public Set<String> getFlags(){
 		if (flags==null) {
@@ -229,11 +149,8 @@ public class Application
 		return flags;
 	}
 
-	@Override
-	public void messagesAcknowledged() {
-		//TODO: this is too implicit. The intention is that, once the game has been lost/won and the user clicks away the informing message, the game should reload.
-		if (!this.gameIsRunning)
-			Window.Location.reload();
+	public void reload() {
+		Window.Location.reload();
 	}
 	
 	@Override
@@ -266,10 +183,10 @@ public class Application
 		setupScreens();
 		setupStarMap();
 		setupGameController();
-		startGame();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
-		startTurnAfterThis();
 		new PWA(this).run();
+		gameController.startGame();
+		resources = null;
 	}
 
 

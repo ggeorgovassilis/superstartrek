@@ -333,8 +333,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			damagePhasers();
 		if (autoAim.isEnabled() && random.nextDouble() * 1.2 < impact)
 			damageAutoaim();
-		if (shields.getValue() <= 0)
-			Application.get().gameOver(GameOverEvent.Outcome.lost, "shields");
 	}
 
 	public boolean consume(String what, double value) {

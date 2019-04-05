@@ -13,7 +13,7 @@ import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.KlingonTurnEvent;
+import superstartrek.client.control.KlingonTurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -73,7 +73,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			return;
 		EventBus events = Application.get().events;
 		fireHandler = events.addHandler(FireEvent.TYPE, this);
-		klingonTurnHandler = events.addHandler(KlingonTurnEvent.TYPE, this);
+		klingonTurnHandler = events.addHandler(KlingonTurnStartedEvent.TYPE, this);
 	}
 
 	public void unregisterActionHandlers() {
@@ -172,7 +172,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	}
 
 	@Override
-	public void executeKlingonMove() {
+	public void onKlingonTurnStarted() {
 		Application app = Application.get();
 		if (app.getFlags().contains("nopc"))
 			return;

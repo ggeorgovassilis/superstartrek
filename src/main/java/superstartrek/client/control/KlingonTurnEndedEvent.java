@@ -2,7 +2,8 @@ package superstartrek.client.control;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public class KlingonTurnEvent extends GwtEvent<GamePhaseHandler> {
+//TODO: nobody is listening to this event currently, but keeping for symmetry.
+public class KlingonTurnEndedEvent extends GwtEvent<GamePhaseHandler> {
 
 	public static Type<GamePhaseHandler> TYPE = new Type<GamePhaseHandler>();
 
@@ -13,7 +14,7 @@ public class KlingonTurnEvent extends GwtEvent<GamePhaseHandler> {
 
 	@Override
 	protected void dispatch(GamePhaseHandler handler) {
-		handler.executeKlingonMove();
+		handler.onKlingonTurnStarted();
 	}
 
 }

@@ -11,6 +11,7 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnStartedEvent;
+import superstartrek.client.control.YieldTurnEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -29,12 +30,11 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	}
 	
 	public void onSkipButtonClicked() {
-		application.endTurnAfterThis();
+		application.events.fireEvent(new YieldTurnEvent());
 	}
 
 	@Override
 	public void showScreen() {
-		GWT.log("show screen");
 		((IComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
 		getView().show();
 	}

@@ -7,6 +7,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
@@ -17,6 +18,7 @@ import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuView;
 import superstartrek.client.model.Setting;
+import superstartrek.client.utils.HtmlWidget;
 
 public class ComputerView extends BaseScreen<ComputerActivity> implements IComputerView{
 

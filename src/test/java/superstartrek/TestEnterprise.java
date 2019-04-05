@@ -50,7 +50,7 @@ public class TestEnterprise {
 	@Test
 	public void testDamageTorpedos() {
 		MessageHandler handler = mock(MessageHandler.class);
-		events.addHandler(MessageHandler.MessageEvent.TYPE, handler);
+		events.addHandler(MessageHandler.MessagePostedEvent.TYPE, handler);
 
 		enterprise.damageTorpedos();
 
@@ -61,7 +61,7 @@ public class TestEnterprise {
 	@Test
 	public void testDamagePhasers() {
 		MessageHandler handler = mock(MessageHandler.class);
-		events.addHandler(MessageHandler.MessageEvent.TYPE, handler);
+		events.addHandler(MessageHandler.MessagePostedEvent.TYPE, handler);
 
 		enterprise.damagePhasers();
 		assertTrue(enterprise.getPhasers().isEnabled());
@@ -81,7 +81,7 @@ public class TestEnterprise {
 	@Test
 	public void testDamageImpulse() {
 		MessageHandler handler = mock(MessageHandler.class);
-		events.addHandler(MessageHandler.MessageEvent.TYPE, handler);
+		events.addHandler(MessageHandler.MessagePostedEvent.TYPE, handler);
 
 		enterprise.damageImpulse();
 		assertTrue(enterprise.getImpulse().isEnabled());

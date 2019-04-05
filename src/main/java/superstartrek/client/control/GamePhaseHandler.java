@@ -8,7 +8,11 @@ public interface GamePhaseHandler extends EventHandler {
 
 	default void onTurnEnded(TurnEndedEvent evt) {};
 
-	default void executeKlingonMove() {};
+	default void onTurnYielded(YieldTurnEvent evt) {};
+
+	default void onKlingonTurnStarted() {};
+
+	default void onKlingonTurnEnded() {};
 
 	default void gameOver() {};
 	
@@ -17,5 +21,5 @@ public interface GamePhaseHandler extends EventHandler {
 	default void gameWon() {};
 	
 	default void onGameStarted(GameStartedEvent evt) {};
-
+	
 }
