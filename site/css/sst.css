@@ -233,33 +233,9 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 .sectorselectionbar{
 	padding:0;
 	margin-top:2em; /* margin is necessary because of positioning to clicked cell*/
-	position:absolute;
 	background-color:rgba(0,0,0,0.5);
 	outline:solid grey 1px;
 	width:100%;
-	z-index: 100;
-}
-
-.slidein{
-	transition:0.3s;
-	left:0% !important;
-}
-
-.slideout{
-	transition:0.3s;
-	left:-100% !important;
-}
-
-.fadein{
-	transition:0.3s;
-	opacity:0.75 !Important;
-	z-index:2;
-}
-
-.fadeout{
-	transition:0.3s;
-	opacity:0;
-	z-index:0;
 }
 
 .sectorselectionbar a,.sectorselectionbar button{
@@ -268,12 +244,9 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	width:50%;
 }
 
-#screen-longrangescan{
-	background:rgba(0,0,0,0.5);
-}
-
 #longrangescan{
 	width:99.5%;
+	background:rgba(0,0,0,0.7);
 }
 
 #quadrantheader{
@@ -364,13 +337,10 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 
 
 #messages{
-	position:absolute;
-	width:auto;
 	background-color:black;
 	color:white;
 	font-family:courier, courier new, typewriter;
 	padding:10px;
-	z-index:100;
 	border:solid grey 1px;
 }
 
@@ -437,24 +407,6 @@ a.single{
 	display:block;
 }
 
-#glasspanel{
-	background-color:black;
-	opacity:0;
-	touch-action: none;
-	position:absolute;
-	top:0;
-	left:0;
-	bottom:0;
-	right:0;
-	display:none;
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
-	z-index:2;
-}
-
 .messages .content{
 	margin-bottom:1em;
 }
@@ -464,20 +416,6 @@ a.single{
 }
 
 #topmarker{
-}
-
-.PopupView{
-	position:absolute;
-	z-index:3;
-	top:0;
-	left:0;
-	right:0;
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
-	left:-100%;
 }
 
 .progress-bar{
@@ -678,7 +616,6 @@ a.progress-bar {
 	outline: silver solid 1px;
 	padding:1em;
 	overflow:hidden;
-	margin:0.1em;
 }
 
 button.disabled{
@@ -700,4 +637,51 @@ button.disabled{
 
 .install-pwa-prompt button{
 	width:49%;
+}
+
+/* popup animations */
+.PopupView{
+	position:absolute;
+	left:-200%;
+	z-index:3;
+	display:hidden;
+	top:0;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	width:100%;
+	box-sizing:border-box;
+	transition:display 0.2s, left 0.2s ease;
+}
+
+.PopupView.slidein{
+	left:0%;
+	display:block;
+	transition: display 0s, left 0.2s ease;
+}
+
+#glasspanel{
+	background-color:black;
+	opacity:0;
+	touch-action: none;
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	display:none;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	z-index:2;
+	transition:opacity 0.2s;
+}
+
+#glasspanel.fadein{
+	transition:opacity 0.2s;
+	opacity:0.75;
 }
