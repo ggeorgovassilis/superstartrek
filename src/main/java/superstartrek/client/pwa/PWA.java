@@ -120,7 +120,7 @@ public class PWA {
 	}
 
 	public void run() {
-		if (!GWT.isClient())
+		if (!GWT.isClient() || GWT.isProdMode())
 			return;
 		if (!supportsServiceWorker())
 			return;

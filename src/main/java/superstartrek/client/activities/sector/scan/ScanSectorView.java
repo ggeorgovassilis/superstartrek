@@ -72,5 +72,4 @@ public class ScanSectorView extends PopupView<ScanSectorActivity> implements ISc
 		return presenter.getApplication().getResources().sectorScanScreen().getText();
 	}
 
-
 }

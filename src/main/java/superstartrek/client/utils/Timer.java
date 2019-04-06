@@ -15,5 +15,6 @@ public class Timer {
 	public static void postpone(RepeatingCommand cmd, int ms) {
 		if (GWT.isClient())
 			Scheduler.get().scheduleFixedDelay(cmd, ms);
-	};
+	}
+
 }

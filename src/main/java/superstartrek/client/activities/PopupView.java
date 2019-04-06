@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import superstartrek.client.model.Constants;
 import superstartrek.client.utils.Timer;
 
 public abstract class PopupView<T extends Activity> extends BaseView<T>{
@@ -35,7 +36,6 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	protected Widget createWidgetImplementation() {
 		htmlPanel = new HTMLPanel(getContentForHtmlPanel());
 		htmlPanel.addStyleName("PopupView");
-		htmlPanel.setVisible(false);
 		htmlPanel.addHandler(new KeyDownHandler() {
 			
 			@Override
@@ -68,7 +68,6 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 			}
 		});
 		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONKEYDOWN | Event.ONKEYPRESS);
-		glassPanel.removeClassName("fadeout");
 		CSS.addClassDeferred(glassPanel, "fadein");
 		glassPanel.getStyle().setDisplay(Display.INITIAL);
 	}
@@ -78,7 +77,6 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 		Event.setEventListener(glassPanel, null);
 		Event.sinkEvents(glassPanel, 0);
 		glassPanel.removeClassName("fadein");
-		glassPanel.addClassName("fadeout");
 		Timer.postpone(new RepeatingCommand() {
 			
 			@Override
@@ -86,48 +84,42 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 				glassPanel.getStyle().setDisplay(Display.NONE);
 				return false;
 			}
-		}, 300);
+		}, Constants.ANIMATION_DURATION_MS);
 	}
 	
 	@Override
 	public boolean isVisible() {
-		return htmlPanel.isVisible();
+		return htmlPanel.getStyleName().contains("slidein");
 	}
 	
 	@Override
 	public void show() {
 		if (isVisible())
 			return;
-		htmlPanel.removeStyleName("slideout");
-		htmlPanel.setVisible(true);
-		CSS.addClassDeferred(htmlPanel.getElement(), "slidein");
+		htmlPanel.addStyleName("slidein");
 		showGlassPanel();
 	}
 	
 	@Override
-	public void hide() {
-		GWT.log("hide");
-		hide(null);
-	}
-	
-	@Override
 	public void hide(ScheduledCommand callback) {
-		if (!htmlPanel.isVisible())
+		if (!isVisible())
 			return;
-		CSS.removeClassDeferred(htmlPanel.getElement(), "slidein");
-		CSS.addClassDeferred(htmlPanel.getElement(), "slideout");
 		hideGlassPanel();
+		htmlPanel.removeStyleName("slidein");
 		Timer.postpone(new RepeatingCommand() {
 			
 			@Override
 			public boolean execute() {
-				htmlPanel.removeStyleName("slidein");
-				htmlPanel.setVisible(false);
 				if (callback!=null)
 					callback.execute();
 				return false;
 			}
-		}, 300);
+		}, Constants.ANIMATION_DURATION_MS);
+	}
+
+	@Override
+	public void hide() {
+		hide(null);
 	}
 
 }
