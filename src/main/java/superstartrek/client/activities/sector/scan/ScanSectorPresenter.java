@@ -19,7 +19,6 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 
 	@Override
 	public void scanSector(ScanSectorEvent event) {
-		getView().show();
 		IScanSectorView v = (IScanSectorView)getView();
 		Quadrant q = event.getQuadrant();
 		Thing thing = application.starMap.findThingAt(q, event.getLocation().getX(), event.getLocation().getY());
@@ -46,6 +45,7 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 			v.setProperty("scan-report-engines", "scan-report-engines-value", "hidden", "");
 			v.setProperty("scan-report-cloak", "scan-report-cloak-value", "hidden", "");
 		}
+		getView().show();
 	}
 	
 	public void doneWithMenu() {

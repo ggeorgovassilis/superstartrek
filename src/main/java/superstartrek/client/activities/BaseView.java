@@ -1,5 +1,6 @@
 package superstartrek.client.activities;
 
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -42,6 +43,12 @@ public abstract class BaseView<A extends Activity> extends Composite implements 
 	@Override
 	public void hide() {
 		setVisible(false);
+	}
+	
+	@Override
+	public void hide(ScheduledCommand callback) {
+		hide();
+		callback.execute();
 	}
 	
 	@Override

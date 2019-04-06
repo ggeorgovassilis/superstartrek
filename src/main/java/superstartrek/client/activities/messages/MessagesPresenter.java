@@ -1,5 +1,7 @@
 package superstartrek.client.activities.messages;
 
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 
@@ -25,9 +27,13 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	public void hideMessages() {
 		if (!getView().isVisible())
 			return;
-		getView().hide();
-		((MessagesView) getView()).clear();
-		application.events.fireEvent(new MessagesReadEvent());
+		getView().hide(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				((MessagesView) getView()).clear();
+				application.events.fireEvent(new MessagesReadEvent());
+			}
+		});
 	}
 	
 

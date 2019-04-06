@@ -18,6 +18,7 @@
 		<skip.tests>false</skip.tests>
 		<skip.deploy>true</skip.deploy>
 		<skip.gwt>false</skip.gwt>
+		<skip.ant-copy>false</skip.ant-copy>
 	</properties>
 
 	<scm>
@@ -27,6 +28,41 @@
 	</scm>
 
 	<profiles>
+		<profile>
+			<id>refresh-resources</id>
+			<properties>
+				<skip.tests>true</skip.tests>
+				<skip.deploy>true</skip.deploy>
+				<skip.gwt>true</skip.gwt>
+				<skip.ant-copy>true</skip.ant-copy>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.8</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<copy todir="${project.build.directory}/sst/superstartrek.superstartrek">
+											<fileset
+												dir="${project.basedir}/src/main/java/superstartrek/public" />
+										</copy>
+									</tasks>
+									<skip>false</skip>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>profile</id>
 			<properties>
@@ -170,20 +206,9 @@
 				<configuration>
 					<skip>${skip.tests}</skip>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			</plugin><!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-source-plugin</artifactId> 
+				<version>3.0.1</version> <executions> <execution> <id>attach-sources</id> 
+				<goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -235,7 +260,7 @@
 										dir="${project.basedir}/site/superstartrek.superstartrek" />
 								</move>
 							</tasks>
-							<skip>false</skip>
+							<skip>${skip.ant-copy}</skip>
 						</configuration>
 					</execution>
 				</executions>
@@ -246,6 +271,7 @@
 				<version>1.8</version>
 				<executions>
 					<execution>
+						<id>checksum-files</id>
 						<goals>
 							<goal>files</goal>
 						</goals>
@@ -254,11 +280,29 @@
 							<fileSets>
 								<fileSet>
 									<directory>${project.basedir}/site</directory>
+									<exclude>*.md5</exclude>
 								</fileSet>
 							</fileSets>
 							<algorithms>MD5</algorithms>
 							<shasumSummary>true</shasumSummary>
 							<shasumSummaryFile>${project.basedir}/site/checksum.sha</shasumSummaryFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>checksum-deployment</id>
+						<goals>
+							<goal>files</goal>
+						</goals>
+						<phase>package</phase>
+						<configuration>
+							<fileSets>
+								<fileSet>
+									<include>${project.basedir}/site/checksum.sha</include>
+								</fileSet>
+							</fileSets>
+							<algorithms>MD5</algorithms>
+							<shasumSummary>true</shasumSummary>
+							<shasumSummaryFile>${project.basedir}/site/package.sha</shasumSummaryFile>
 						</configuration>
 					</execution>
 				</executions>

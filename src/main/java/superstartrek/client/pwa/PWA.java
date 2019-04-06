@@ -71,7 +71,7 @@ public class PWA {
 	}
 	
 	public void getChecksumOfInstalledApplication(RequestCallback callback) {
-		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, "/superstartrek/site/superstartrek.superstartrek.nocache.js.md5");
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5");
 		try {
 			rb.sendRequest("", callback);
 		} catch (RequestException e) {
@@ -80,7 +80,7 @@ public class PWA {
 	}
 
 	public void getChecksumOfNewestVersion(RequestCallback callback) {
-		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, "/superstartrek/site/superstartrek.superstartrek.nocache.js.md5?rnd="+Random.nextInt());
+		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd="+Random.nextInt());
 		try {
 			rb.sendRequest("", callback);
 		} catch (RequestException e) {

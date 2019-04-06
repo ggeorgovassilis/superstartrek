@@ -34,7 +34,7 @@ public class SectorMenuView extends PopupView<SectorMenuActivity> implements ISe
 	@Override
 	public void setLocation(int x, int y) {
 		Element e = getHtmlPanel().getElement();
-		e.getStyle().setLeft(x, Unit.PX);
+		//e.getStyle().setLeft(x, Unit.PX);
 		e.getStyle().setTop(y, Unit.PX);
 	}
 	
