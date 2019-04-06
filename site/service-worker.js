@@ -12,7 +12,7 @@ let URLS = [
 	"/superstartrek/site/images/federation_logo.svg",
 	"/superstartrek/site/css/sst.css",
 	"/superstartrek/site/superstartrek.superstartrek.nocache.js",
-	"/superstartrek/site/superstartrek.superstartrek.nocache.js.md5",
+	"/superstartrek/site/checksum.sha.md5",
 ];
 
 // Respond with cached resources
