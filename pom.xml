@@ -8,7 +8,7 @@
 	<groupId>com.github.ggeorgovassilis</groupId>
 	<artifactId>sst</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<description>Super Star Trek</description>
 
 	<properties>
@@ -205,20 +205,6 @@
 				<version>2.22.1</version>
 				<configuration>
 					<skip>${skip.tests}</skip>
-				</configuration>
-			</plugin><!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-source-plugin</artifactId> 
-				<version>3.0.1</version> <executions> <execution> <id>attach-sources</id> 
-				<goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.2.2</version>
-				<configuration>
-					<warName>sst</warName>
-					<skip>true</skip>
-					<outputDirectory>${project.build.directory}/sst</outputDirectory>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<webappDirectory>${project.build.directory}/sst</webappDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
