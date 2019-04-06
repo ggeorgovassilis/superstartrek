@@ -285,6 +285,7 @@
 							</fileSets>
 							<algorithms>MD5</algorithms>
 							<shasumSummary>true</shasumSummary>
+							<individualFiles>false</individualFiles>
 							<shasumSummaryFile>${project.basedir}/site/checksum.sha</shasumSummaryFile>
 						</configuration>
 					</execution>
@@ -297,7 +298,8 @@
 						<configuration>
 							<fileSets>
 								<fileSet>
-									<include>${project.basedir}/site/checksum.sha</include>
+									<directory>${project.basedir}/site</directory>
+									<include>checksum.sha</include>
 								</fileSet>
 							</fileSets>
 							<algorithms>MD5</algorithms>
