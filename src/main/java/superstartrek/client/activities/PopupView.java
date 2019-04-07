@@ -16,17 +16,18 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.model.Constants;
+import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Timer;
 
 public abstract class PopupView<T extends Activity> extends BaseView<T>{
 
-	protected HTMLPanel htmlPanel;
+	protected HtmlWidget htmlPanel;
 	
 	protected PopupView(Presenter<T> presenter) {
 		super(presenter);
 	}
 	
-	protected HTMLPanel getHtmlPanel() {
+	protected HtmlWidget getHtmlPanel() {
 		return htmlPanel;
 	}
 
@@ -34,7 +35,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	
 	@Override
 	protected Widget createWidgetImplementation() {
-		htmlPanel = new HTMLPanel(getContentForHtmlPanel());
+		htmlPanel = new HtmlWidget(DOM.createDiv(), getContentForHtmlPanel());
 		htmlPanel.addStyleName("PopupView");
 		htmlPanel.addHandler(new KeyDownHandler() {
 			
@@ -45,15 +46,13 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 				hide();
 			}
 		}, KeyDownEvent.getType());
-		FlowPanel fp = new FlowPanel();
-		fp.setVisible(false);
-		return fp;
+		return htmlPanel;
 	}
 	
 	@Override
 	public void finishUiConstruction() {
 		super.finishUiConstruction();
-		RootPanel.get().add(getHtmlPanel());
+		RootPanel.get().add(this);
 	}
 	
 	protected void showGlassPanel() {

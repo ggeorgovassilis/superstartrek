@@ -13,7 +13,7 @@ public abstract class BaseScreen<A extends Activity> extends BaseView<A>{
 	
 	@Override
 	public void finishUiConstruction() {
-		presenter.getApplication().page.add(this);
+		presenter.getApplication()._page.add(this);
 	}
 	
 }

@@ -1,13 +1,18 @@
 package superstartrek.client.utils;
 
+import java.util.Iterator;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class HtmlWidget extends Widget{
+//framework requirement that this implements HasWidgets
+public class HtmlWidget extends Widget {
 
 	public HtmlWidget(Element e) {
+		GWT.log("+++++++++++");
 		setElement(e);
 		if (RootPanel.getBodyElement().isOrHasChild(e))
 			onAttach();
@@ -27,4 +32,5 @@ public class HtmlWidget extends Widget{
 		getElement().removeFromParent();
 		return e;
 	}
+
 }

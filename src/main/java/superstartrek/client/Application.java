@@ -49,7 +49,7 @@ public class Application
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus events;
-	public HTMLPanel page;
+	public HTMLPanel _page;
 	public StarMap starMap;
 
 	private static Application that;
@@ -178,7 +178,7 @@ public class Application
 		random = new Random(new GWTRandomNumberFactory());
 		resources = GWT.create(Resources.class);
 		setUncaughtExceptionHandler();
-		page = HTMLPanel.wrap(RootPanel.getBodyElement());
+		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		events = GWT.create(SimpleEventBus.class);
 		setupScreens();
 		setupStarMap();

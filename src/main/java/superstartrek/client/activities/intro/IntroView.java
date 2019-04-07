@@ -7,7 +7,6 @@ public class IntroView extends BaseScreen<IntroActivity>{
 	public IntroView(IntroPresenter presenter) {
 		super(presenter);
 		getElement().setInnerHTML(presenter.getApplication().getResources().introScreen().getText());
-		presenter.getApplication().page.add(this);
 	}
 
 }

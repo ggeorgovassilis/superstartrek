@@ -19,7 +19,6 @@ public class ScanSectorView extends PopupView<ScanSectorActivity> implements ISc
 	@Override
 	public void finishUiConstruction() {
 		super.finishUiConstruction();
-		getPresenter().getApplication().page.add(this);
 		addDomHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {

@@ -22,10 +22,6 @@ import superstartrek.client.utils.HtmlWidget;
 
 public class ComputerView extends BaseScreen<ComputerActivity> implements IComputerView{
 
-	QuadrantScannerPresenter quadrantScannerPresenter;
-	QuadrantScannerView quadrantScannerView;
-	SRSPresenter srsPresenter;
-	
 	Element eDockInStarbase;
 	Element eRepair;
 	Element eStatusIconImpulse;
@@ -46,17 +42,15 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 		super.setupCompositeUI();
 		addStyleName("computer-screen");
 		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
-		presenter.getApplication().page.add(this);
 		
 		SectorMenuPresenter sectorMenuPresenter = new SectorMenuPresenter(presenter.getApplication());
 		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
 
-		quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(), sectorMenuPresenter);
-		quadrantScannerView = new QuadrantScannerView(quadrantScannerPresenter);
+		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(), sectorMenuPresenter);
 		HTMLPanel panel = (HTMLPanel)getWidgetImplementation();
-		panel.addAndReplaceElement(quadrantScannerView,"quadrantscancontainer");
+		panel.addAndReplaceElement(new QuadrantScannerView(quadrantScannerPresenter),"quadrantscancontainer");
 		
-		srsPresenter = new SRSPresenter(presenter.getApplication());
+		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
 		SRSView srsView = new SRSView(srsPresenter);
 		panel.addAndReplaceElement(srsView, "shortrangescan");
 		eDockInStarbase = DOM.getElementById("cmd_dockInStarbase");
