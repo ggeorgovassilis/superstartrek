@@ -46,7 +46,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 
 	@Override
 	protected HtmlWidget createWidgetImplementation() {
-		HtmlWidget p = new HtmlWidget(DOM.createTable());
+		HtmlWidget p = new HtmlWidget(DOM.createDiv());
 		p.getElement().setId("quadrantscan");
 		return p;
 	}
