@@ -1,17 +1,15 @@
 package superstartrek.client.activities;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -37,13 +35,15 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	protected Widget createWidgetImplementation() {
 		htmlPanel = new HtmlWidget(DOM.createDiv(), getContentForHtmlPanel());
 		htmlPanel.addStyleName("PopupView");
-		htmlPanel.addHandler(new KeyDownHandler() {
+		htmlPanel.addDomHandler(new KeyDownHandler() {
 			
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				event.preventDefault();
-				event.stopPropagation();
-				hide();
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
+					event.preventDefault();
+					event.stopPropagation();
+					hide();
+				}
 			}
 		}, KeyDownEvent.getType());
 		return htmlPanel;

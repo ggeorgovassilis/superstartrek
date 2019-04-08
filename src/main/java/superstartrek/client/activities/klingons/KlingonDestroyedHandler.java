@@ -2,7 +2,6 @@ package superstartrek.client.activities.klingons;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
 
 public interface KlingonDestroyedHandler extends EventHandler{
 

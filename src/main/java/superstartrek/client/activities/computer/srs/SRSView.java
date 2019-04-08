@@ -4,7 +4,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
@@ -12,10 +12,10 @@ import superstartrek.client.activities.Presenter;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
-public class SRSView extends BaseView<SRSActivity> implements ISRSView{
+public class SRSView extends BaseView<SRSActivity> implements ISRSView, ClickHandler {
 
 	Element[][] eCells;
-	
+
 	@Override
 	protected Widget createWidgetImplementation() {
 		eCells = new Element[3][3];
@@ -27,33 +27,21 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView{
 			for (int x = 0; x < 3; x++) {
 				Element eTD = DOM.createTD();
 				eCells[x][y] = eTD;
-				eTD.setAttribute("dx", ""+(x-1));
-				eTD.setAttribute("dy", ""+(y-1));
+				eTD.setAttribute("data-dx", "" + (x - 1));
+				eTD.setAttribute("data-dy", "" + (y - 1));
 				eTR.appendChild(eTD);
 			}
 			e.appendChild(eTR);
 		}
 		return table;
 	}
-	
+
 	@Override
 	public void finishUiConstruction() {
 		super.finishUiConstruction();
-		addDomHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				Element eTd = event.getNativeEvent().getEventTarget().cast();
-				if (!Strings.isEmpty(eTd.getAttribute("dx"))) {
-					int dx = Integer.parseInt(eTd.getAttribute("dx"));
-					int dy = Integer.parseInt(eTd.getAttribute("dy"));
-					((SRSPresenter)getPresenter()).quadrantWasClicked(dx,dy);
-				}
-			}
-		}, ClickEvent.getType());
-
+		addDomHandler(this, ClickEvent.getType());
 	}
-	
+
 	@Override
 	public void updateCell(int x, int y, String symbol, String css) {
 		eCells[x][y].setInnerText(symbol);
@@ -62,6 +50,16 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView{
 
 	public SRSView(Presenter<SRSActivity> presenter) {
 		super(presenter);
+	}
+
+	@Override
+	public void onClick(ClickEvent event) {
+		Element eTd = event.getNativeEvent().getEventTarget().cast();
+		if (!Strings.isEmpty(eTd.getAttribute("data-dx"))) {
+			int dx = Integer.parseInt(eTd.getAttribute("data-dx"));
+			int dy = Integer.parseInt(eTd.getAttribute("data-dy"));
+			((SRSPresenter) getPresenter()).quadrantWasClicked(dx, dy);
+		}
 	}
 
 }

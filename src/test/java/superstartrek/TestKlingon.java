@@ -24,7 +24,6 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.Random;
 import superstartrek.client.utils.RandomNumberFactory;
 

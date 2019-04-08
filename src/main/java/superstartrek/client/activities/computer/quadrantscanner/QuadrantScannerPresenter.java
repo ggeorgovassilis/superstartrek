@@ -3,8 +3,6 @@ package superstartrek.client.activities.computer.quadrantscanner;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -61,10 +59,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		((IQuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
 	}
 
-	protected void updateSector(Thing thing) {
-		// empty table cells need an &nbsp; to keep height stable, otherwise they will
-		// "pump" when content changes
-		// and relayout the entire screen which is slow on mobile devices
+	void updateSector(Thing thing) {
 		String content = thing.getSymbol();
 		String css = thing.getCss();
 		if (thing instanceof Vessel) {
@@ -76,11 +71,11 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 				css);
 	}
 
-	protected void clearSector(int x, int y) {
-		((IQuadrantScannerView) getView()).updateSector(x, y, MapCellRenderer.nbsp, "");
+	void clearSector(int x, int y) {
+		((IQuadrantScannerView) getView()).updateSector(x, y, "", "");
 	}
 
-	protected void updateSector(Quadrant q, int x, int y) {
+	void updateSector(Quadrant q, int x, int y) {
 		StarMap starMap = getApplication().starMap;
 		Thing thing = starMap.findThingAt(q, x, y);
 		if (thing != null)
@@ -88,29 +83,35 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		else
 			clearSector(x, y);
 	}
+	
+	void mark(Thing thing, Thing[][] array) {
+		Location location = thing.getLocation();
+		array[location.getX()][location.getY()] = thing;
+	}
 
-	protected void updateScreen() {
+	void updateScreen() {
 		StarMap starMap = getApplication().starMap;
 		Quadrant q = starMap.enterprise.getQuadrant();
 		if (q == null)
 			throw new RuntimeException("q is null");
-		// since findThingAt is slow it cannot be used for the full screen update
-		// that's why we iterate over the things in the quadrant instead over the
-		// sectors
-
-		for (int y = 0; y < 8; y++)
-			for (int x = 0; x < 8; x++) {
-				((IQuadrantScannerView) view).updateSector(x, y, MapCellRenderer.nbsp, "");
-			}
-		List<Thing> things = new ArrayList<>();
-		things.addAll(q.getKlingons());
-		things.addAll(q.getStars());
+		// we could just erase all sectors first and paint things over it, but that would increase DOM interactions.
+		// this approach (render into an array first, paint each sector only once) minimises DOM interactions.
+		Thing[][] arr = new Thing[8][8];
+		for (Thing t:q.getKlingons())
+			mark(t,arr);
+		for (Thing t:q.getStars())
+			mark(t,arr);
 		if (q.getStarBase() != null)
-			things.add(q.getStarBase());
-		things.add(starMap.enterprise);
-		for (Thing thing : things) {
-			updateSector(thing);
-		}
+			mark(q.getStarBase(), arr);
+		mark(starMap.enterprise, arr);
+		for (int x = 0; x < 8; x++) 
+		for (int y = 0; y < 8; y++) {
+				Thing t = arr[x][y];
+				if (t!=null)
+					updateSector(t);
+				else
+					clearSector(x, y);
+			}
 	}
 
 	@Override

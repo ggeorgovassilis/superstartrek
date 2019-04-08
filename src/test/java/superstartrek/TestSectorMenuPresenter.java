@@ -40,7 +40,7 @@ public class TestSectorMenuPresenter {
 		Enterprise e = new Enterprise(app);
 		e.setQuadrant(q);
 		map.enterprise = e;
-		presenter.showMenu(77, Location.location(1,2), q);
+		presenter.showMenu(66, 77, Location.location(1,2), q);
 		verify(view).enableButton("cmd_navigate", true);
 		verify(view).enableButton("cmd_firePhasers", true);
 		verify(view).enableButton("cmd_fireTorpedos", true);

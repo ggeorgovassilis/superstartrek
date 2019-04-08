@@ -4,19 +4,12 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseEvent;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.ui.HTMLPanel;
-
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.utils.DomUtils;
 import superstartrek.client.utils.HtmlWidget;
@@ -58,8 +51,8 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 			Element eTr = DOM.createDiv();
 			for (int x = 0; x < 8; x++) {
 				Element eTd = DOM.createDiv();
-				eTd.setAttribute("x", "" + x);
-				eTd.setAttribute("y", "" + y);
+				eTd.setAttribute("data-x", "" + x);
+				eTd.setAttribute("data-y", "" + y);
 				eTr.appendChild(eTd);
 				eTd.getStyle().setLeft(12.5 * (double) x, Unit.PCT);
 				eTd.getStyle().setTop(12.5 * (double) y, Unit.PCT);
@@ -89,8 +82,8 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 		NativeEvent ne= event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
 		try {
-			int x = Integer.parseInt(e.getAttribute("x"));
-			int y = Integer.parseInt(e.getAttribute("y"));
+			int x = Integer.parseInt(e.getAttribute("data-x"));
+			int y = Integer.parseInt(e.getAttribute("data-y"));
 			((QuadrantScannerPresenter)getPresenter()).onSectorSelected(x, y, ne.getClientX(), ne.getClientY());
 			event.stopPropagation();
 			event.preventDefault();

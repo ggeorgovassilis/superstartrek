@@ -3,8 +3,6 @@ package superstartrek.client.activities.lrs;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.ui.HTMLPanel;
-
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.Presenter;
@@ -32,8 +30,9 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 		NodeList<Element> tds = CSS.querySelectorAll("#longrangescan .quadrants td");
 		for (int i=tds.getLength()-1;i>=0;i--) {
 			Element eTd = tds.getItem(i);
-			int x = Integer.parseInt(eTd.getAttribute("x"));
-			int y = Integer.parseInt(eTd.getAttribute("y"));
+			int x = Integer.parseInt(eTd.getAttribute("data-x"));
+			int y = Integer.parseInt(eTd.getAttribute("data-y"));
+			eTd.setAttribute("tabindex", ""+i);
 			cells[x][y] = eTd;
 		}
 		Element eLrs = DOM.getElementById("longrangescan");
@@ -43,9 +42,9 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 			@Override
 			public void onBrowserEvent(Event event) {
 				Element eTd = event.getEventTarget().cast();
-				if (!Strings.isEmpty(eTd.getAttribute("x"))) {
-					int x = Integer.parseInt(eTd.getAttribute("x"));
-					int y = Integer.parseInt(eTd.getAttribute("y"));
+				if (!Strings.isEmpty(eTd.getAttribute("data-x"))) {
+					int x = Integer.parseInt(eTd.getAttribute("data-x"));
+					int y = Integer.parseInt(eTd.getAttribute("data-y"));
 					((LRSPresenter)getPresenter()).quadrantWasClicked(x,y);
 				}
 			}
@@ -65,5 +64,10 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 	public void updateCell(int x, int y, String text, String css){
 		cells[x][y].setInnerText(text);
 		cells[x][y].setClassName(css);
+	}
+
+	@Override
+	public void focusCell(int x, int y) {
+		cells[x][y].focus();
 	}
 }

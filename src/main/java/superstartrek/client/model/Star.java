@@ -1,10 +1,5 @@
 package superstartrek.client.model;
 
-import java.util.logging.Logger;
-
-import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireHandler;
-
 public class Star extends Thing{
 
 	public enum StarClass {

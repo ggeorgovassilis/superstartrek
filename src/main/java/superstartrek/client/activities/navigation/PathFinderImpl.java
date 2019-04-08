@@ -1,9 +1,6 @@
 package superstartrek.client.activities.navigation;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import superstartrek.client.activities.navigation.astarplus.AStarPlus;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;

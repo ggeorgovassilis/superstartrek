@@ -1,37 +1,21 @@
 package superstartrek.client.activities.sector.scan;
 
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.Widget;
-
-import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.PopupView;
 
 public class ScanSectorView extends PopupView<ScanSectorActivity> implements IScanSectorView{
 
+	Element backButton;
+	
 	@Override
 	public void finishUiConstruction() {
 		super.finishUiConstruction();
-		addDomHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				Element e = event.getNativeEvent().getEventTarget().cast();
-				String command = e.getAttribute("id");
-				if (command!=null && !command.isEmpty())
-					((ScanSectorPresenter)getPresenter()).onCommandClicked(command);
-				
-			}
-		}, ClickEvent.getType());
-		Element button = getHtmlPanel().getElementById("screen-sectorscan-back");
-		DOM.sinkEvents(button, Event.ONCLICK);
-		DOM.setEventListener(button, new EventListener() {
+		backButton = getHtmlPanel().getElementById("screen-sectorscan-back");
+		DOM.sinkEvents(backButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONMOUSEDOWN | Event.ONTOUCHSTART);
+		DOM.setEventListener(backButton, new EventListener() {
 			
 			@Override
 			public void onBrowserEvent(Event event) {
@@ -71,4 +55,9 @@ public class ScanSectorView extends PopupView<ScanSectorActivity> implements ISc
 		return presenter.getApplication().getResources().sectorScanScreen().getText();
 	}
 
+	@Override
+	public void show() {
+		super.show();
+		backButton.focus();
+	}
 }

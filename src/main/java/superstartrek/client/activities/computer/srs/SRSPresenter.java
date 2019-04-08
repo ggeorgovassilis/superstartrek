@@ -1,7 +1,5 @@
 package superstartrek.client.activities.computer.srs;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.klingons.Klingon;

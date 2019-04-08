@@ -1,6 +1,5 @@
 package superstartrek.client.activities.lrs;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -8,20 +7,16 @@ import com.google.gwt.user.client.History;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.computer.srs.MapCellRenderer;
-import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
-import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Maps;
 
-public class LRSPresenter extends BasePresenter<LRSActivity> implements EnterpriseWarpedHandler, ValueChangeHandler<String> {
+public class LRSPresenter extends BasePresenter<LRSActivity> implements ValueChangeHandler<String> {
 
 	public LRSPresenter(Application application) {
 		super(application);
 		application.addHistoryListener(this);
-		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 	}
 
 	public void quadrantWasClicked(int x, int y) {
@@ -65,15 +60,8 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements Enterpri
 	public void showLrs() {
 		updateLrsView();
 		getView().show();
-	}
-
-	@Override
-	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-//		if (!getView().isVisible())
-//			return;
-		updateQuadrant(qFrom.getX(), qFrom.getY());
-		updateQuadrant(qTo.getX(), qTo.getY());
-		updateEnterpriseLocation();
+		Quadrant loc = application.starMap.enterprise.getQuadrant();
+		((LRSScreen)getView()).focusCell(loc.getX(), loc.getY());
 	}
 
 	@Override
