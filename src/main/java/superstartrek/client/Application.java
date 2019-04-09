@@ -40,7 +40,9 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.pwa.ApplicationUpdateCheckHandler;
 import superstartrek.client.pwa.ApplicationUpdateEvent;
 import superstartrek.client.pwa.PWA;
+import superstartrek.client.utils.Browser;
 import superstartrek.client.utils.GWTRandomNumberFactory;
+import superstartrek.client.utils.GwtBrowserImpl;
 import superstartrek.client.utils.Random;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;;
 
@@ -51,6 +53,7 @@ public class Application
 	public EventBus events;
 	public HTMLPanel _page;
 	public StarMap starMap;
+	public Browser browser;
 
 	private static Application that;
 	public GameController gameController;
@@ -186,6 +189,8 @@ public class Application
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
 		new PWA(this).run();
 		gameController.startGame();
+		if (GWT.isClient())
+			browser = new GwtBrowserImpl();
 		resources = null;
 	}
 

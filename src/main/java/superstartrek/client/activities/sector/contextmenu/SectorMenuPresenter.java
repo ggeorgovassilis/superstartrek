@@ -48,7 +48,7 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 				//that's empirical knowledge from the CSS
 				int menuWidthEm = 12; 
 				int menuHeightEm = 10; 
-				int screen_width_em = Window.getClientWidth() / horizEmToPx;
+				int screen_width_em = application.browser.getWindowWidthPx() / horizEmToPx;
 				
 				int target_x_em = Math.max(screenX/horizEmToPx,menuWidthEm/2);
 				target_x_em = Math.min(target_x_em,screen_width_em-menuWidthEm/2);

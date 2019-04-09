@@ -10,11 +10,13 @@ public class Timer {
 	public static void postpone(ScheduledCommand cmd) {
 		if (GWT.isClient())
 			Scheduler.get().scheduleDeferred(cmd);
+		else cmd.execute();
 	};
 	
 	public static void postpone(RepeatingCommand cmd, int ms) {
 		if (GWT.isClient())
 			Scheduler.get().scheduleFixedDelay(cmd, ms);
+		else cmd.execute();
 	}
 
 }
