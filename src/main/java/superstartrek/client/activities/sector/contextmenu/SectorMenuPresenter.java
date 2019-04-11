@@ -1,6 +1,7 @@
 package superstartrek.client.activities.sector.contextmenu;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Window;
@@ -56,7 +57,10 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 
 				int target_y_em = Math.max(screenY/vertEmToPx,menuHeightEm/2);
 				int target_y_px = target_y_em*vertEmToPx;
-
+				GWT.log("horizEmToPx "+horizEmToPx);
+				GWT.log("screenWidthEm "+screen_width_em);
+				GWT.log("target_x_em "+target_x_em);
+				GWT.log("screenX "+screenX);
 				v.setLocation(target_x_px, target_y_px);
 				
 				v.show();

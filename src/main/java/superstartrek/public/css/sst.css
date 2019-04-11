@@ -675,9 +675,6 @@ button.disabled{
 	margin-left: -2.5em;
 	margin-top: -1.5em;
 }
-.hexagonal-menu{
-	transform: translateZ(0);
-}
 .hexagonal-menu .cell{
 	width: 4em;
 	height: 4em;
@@ -686,11 +683,12 @@ button.disabled{
 	text-align:center;
 	position: absolute;
 	line-height:4em;
+	transform: translateZ(0);
 }
 
 .hexagonal-menu .cell:hover{
 	filter: brightness(2);
-	transition: filter 0.5s ease;
+	transition: margin 0.2s ease, filter 0.5s ease;
 }
 
 .hexagonal-menu .cell.disabled{

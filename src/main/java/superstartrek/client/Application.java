@@ -2,15 +2,19 @@ package superstartrek.client;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.event.shared.UmbrellaException;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -54,6 +58,7 @@ public class Application
 	public HTMLPanel _page;
 	public StarMap starMap;
 	public Browser browser;
+	Element logDiv;
 
 	private static Application that;
 	public GameController gameController;
@@ -174,6 +179,30 @@ public class Application
 		gameController = new GameController(this);
 	}
 
+	void setupLogging() {
+		if (GWT.isClient()) {
+			logDiv = DOM.createDiv();
+			RootPanel.get().getElement().appendChild(logDiv);
+			log.addHandler(new Handler() {
+				
+				@Override
+				public void publish(LogRecord record) {
+					Element entry = DOM.createDiv();
+					entry.setInnerText(record.getMessage());
+					logDiv.appendChild(entry);
+				}
+				
+				@Override
+				public void flush() {
+				}
+				
+				@Override
+				public void close() throws SecurityException {
+				}
+			});
+		}
+	}
+	
 	@Override
 	public void onModuleLoad() {
 		Application.that = this;
@@ -183,6 +212,7 @@ public class Application
 		setUncaughtExceptionHandler();
 		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		events = GWT.create(SimpleEventBus.class);
+		//setupLogging();
 		setupScreens();
 		setupStarMap();
 		setupGameController();

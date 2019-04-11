@@ -1,5 +1,6 @@
 package superstartrek.client.activities.sector.contextmenu;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.shared.GwtEvent;
 
 import superstartrek.client.model.Location;
@@ -18,6 +19,7 @@ public class SectorSelectedEvent extends GwtEvent<SectorSelectedHandler>{
 		this.quadrant = quadrant;
 		this.screenX = screenX;
 		this.screenY = screenY;
+		GWT.log("screenX:screenY "+screenX+":"+screenY);
 	}
 
 	@Override
