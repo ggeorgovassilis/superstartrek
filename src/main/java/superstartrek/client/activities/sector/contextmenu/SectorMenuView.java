@@ -99,6 +99,8 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>
 
 	public void handleButtonInteraction(DomEvent event) {
 		Element e = event.getNativeEvent().getEventTarget().cast();
+		event.preventDefault();
+		event.stopPropagation();
 		String command = e.getAttribute("id");
 		if (command != null && !command.isEmpty())
 			((SectorMenuPresenter) getPresenter()).onCommandClicked(command);

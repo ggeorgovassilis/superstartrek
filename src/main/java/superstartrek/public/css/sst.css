@@ -684,6 +684,7 @@ button.disabled{
 	position: absolute;
 	line-height:4em;
 	transform: translateZ(0);
+	z-index:10;
 }
 
 .hexagonal-menu .cell:hover{
