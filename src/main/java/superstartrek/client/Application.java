@@ -41,26 +41,26 @@ import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
-import superstartrek.client.pwa.ApplicationUpdateCheckHandler;
-import superstartrek.client.pwa.ApplicationUpdateEvent;
-import superstartrek.client.pwa.PWA;
-import superstartrek.client.pwa.UpdateAppPromptPresenter;
-import superstartrek.client.pwa.UpdateAppPromptView;
 import superstartrek.client.utils.Browser;
 import superstartrek.client.utils.GWTRandomNumberFactory;
 import superstartrek.client.utils.GwtBrowserImpl;
 import superstartrek.client.utils.Random;
-import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;;
+import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;
+import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler;
+import superstartrek.client.activities.pwa.ApplicationUpdateEvent;
+import superstartrek.client.activities.pwa.PWA;
+import superstartrek.client.activities.pwa.UpdateAppActivity;
+import superstartrek.client.activities.pwa.UpdateAppPromptPresenter;
+import superstartrek.client.activities.pwa.UpdateAppPromptView;;
 
 public class Application
-		implements EntryPoint, GamePhaseHandler{
+		implements EntryPoint, GamePhaseHandler, ApplicationUpdateCheckHandler{
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus events;
 	public HTMLPanel _page;
 	public StarMap starMap;
 	public Browser browser;
-	public PWA pwa;
 	Element logDiv;
 
 	private static Application that;
@@ -111,6 +111,7 @@ public class Application
 	
 	public void registerEventHandlers() {
 		events.addHandler(GameOverEvent.TYPE, this);
+		events.addHandler(ApplicationUpdateEvent.TYPE, this);
 	}
 
 
@@ -206,12 +207,15 @@ public class Application
 		setupStarMap();
 		setupGameController();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
-		pwa = new PWA(this);
-		pwa.run();
 		gameController.startGame();
 		if (GWT.isClient())
 			browser = new GwtBrowserImpl();
 		resources = null;
+	}
+	
+	@Override
+	public void appMustReload() {
+		reload();
 	}
 
 
