@@ -5,6 +5,9 @@ import com.google.gwt.resources.client.TextResource;
 
 public interface Resources extends ClientBundle {
 
+	@Source("superstartrek/public/screens/updateappscreen.html")
+	public TextResource updateAppScreen();
+
 	@Source("superstartrek/public/screens/intro.html")
 	public TextResource introScreen();
 

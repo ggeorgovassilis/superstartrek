@@ -44,6 +44,8 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.pwa.ApplicationUpdateCheckHandler;
 import superstartrek.client.pwa.ApplicationUpdateEvent;
 import superstartrek.client.pwa.PWA;
+import superstartrek.client.pwa.UpdateAppPromptPresenter;
+import superstartrek.client.pwa.UpdateAppPromptView;
 import superstartrek.client.utils.Browser;
 import superstartrek.client.utils.GWTRandomNumberFactory;
 import superstartrek.client.utils.GwtBrowserImpl;
@@ -51,13 +53,14 @@ import superstartrek.client.utils.Random;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;;
 
 public class Application
-		implements EntryPoint, GamePhaseHandler, ApplicationUpdateCheckHandler {
+		implements EntryPoint, GamePhaseHandler{
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus events;
 	public HTMLPanel _page;
 	public StarMap starMap;
 	public Browser browser;
+	public PWA pwa;
 	Element logDiv;
 
 	private static Application that;
@@ -103,11 +106,11 @@ public class Application
 		new MessagesView(new MessagesPresenter(this));
 		new LRSScreen(new LRSPresenter(this));
 		new StatusReportView(new StatusReportPresenter(this));
+		new UpdateAppPromptView(new UpdateAppPromptPresenter(this));
 	}
 	
 	public void registerEventHandlers() {
 		events.addHandler(GameOverEvent.TYPE, this);
-		events.addHandler(ApplicationUpdateEvent.TYPE, this);
 	}
 
 
@@ -161,20 +164,6 @@ public class Application
 		Window.Location.reload();
 	}
 	
-	@Override
-	public void newVersionAvailable() {
-		message("A new version is available","product-info");
-		message("If you want to update, please uninstall this version first","product-info");
-	}
-
-	@Override
-	public void versionIsCurrent() {
-	}
-
-	@Override
-	public void checkFailed() {
-	}
-	
 	public void setupGameController() {
 		gameController = new GameController(this);
 	}
@@ -217,7 +206,8 @@ public class Application
 		setupStarMap();
 		setupGameController();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
-		new PWA(this).run();
+		pwa = new PWA(this);
+		pwa.run();
 		gameController.startGame();
 		if (GWT.isClient())
 			browser = new GwtBrowserImpl();
