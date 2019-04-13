@@ -54,7 +54,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		
 		if (evt.target instanceof Enterprise) {
 			Enterprise enterprise = (Enterprise)evt.target;
-			if (enterprise.getShields().getValue()<0)
+			if (enterprise.getShields().getValue()<=0)
 				gameOver(GameOverEvent.Outcome.lost, "shields");
 
 		}
@@ -105,6 +105,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		GWT.log("------------------------------ new turn");
 		application.starMap.advanceStarDate(1);
 		application.events.fireEvent(new TurnStartedEvent());
+		application.events.fireEvent(new AfterTurnStartedEvent());
 	}
 	
 	public void startTurnAfterThis() {

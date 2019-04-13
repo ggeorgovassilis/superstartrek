@@ -1,5 +1,7 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import java.util.List;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -16,8 +18,10 @@ import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedEvent;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
+import superstartrek.client.control.AfterTurnStartedEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
+import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -46,6 +50,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		application.events.addHandler(EnterpriseRepairedEvent.TYPE, this);
 		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
 		application.events.addHandler(KlingonUncloakedEvent.TYPE, this);
+		application.events.addHandler(AfterTurnStartedEvent.TYPE, this);
 		this.sectorMenuPresenter = sectorMenuPresenter;
 	}
 
@@ -69,6 +74,10 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	void clearSector(int x, int y) {
 		((IQuadrantScannerView) getView()).updateSector(x, y, "", "");
+	}
+	
+	void markSectorAsNavigationTarget(int x, int y) {
+		((IQuadrantScannerView) view).addCssToCell(x, y, "navigation-target");
 	}
 
 	void updateSector(Quadrant q, int x, int y) {
@@ -151,5 +160,20 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		if (target != null)
 			updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
 	}
-
+	
+	public void clearAllNavigationTargets() {
+		IQuadrantScannerView view = (IQuadrantScannerView)getView();
+		for (int y=0;y<8;y++)
+			for (int x=0;x<8;x++)
+				view.removeCssFromCell(x,y,"navigation-target");
+	}
+	
+	@Override
+	public void afterTurnStarted(AfterTurnStartedEvent evt) {
+		List<Location> sectors = application.starMap.enterprise.getReachableSectors();
+		clearAllNavigationTargets();
+		for (Location l:sectors)
+			markSectorAsNavigationTarget(l.getX(), l.getY());
+	}
+	
 }

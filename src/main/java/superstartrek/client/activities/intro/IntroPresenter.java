@@ -20,7 +20,6 @@ public class IntroPresenter extends BasePresenter<IntroActivity> implements Game
 	
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
-		GWT.log("onGameStarted");
 		getView().show();
 		History.newItem("intro");
 	}

@@ -19,7 +19,6 @@ public class SectorSelectedEvent extends GwtEvent<SectorSelectedHandler>{
 		this.quadrant = quadrant;
 		this.screenX = screenX;
 		this.screenY = screenY;
-		GWT.log("screenX:screenY "+screenX+":"+screenY);
 	}
 
 	@Override

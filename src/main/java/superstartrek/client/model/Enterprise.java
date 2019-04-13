@@ -60,7 +60,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
-		GWT.log("Enterprise warpTo");
 		Location fromLocation = getLocation();
 		Quadrant fromQuadrant = getQuadrant();
 		if (!consume("warp", 20)) {
@@ -116,6 +115,32 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Application.get().events.fireEvent(moveEvent);
 		return true;
 	}
+	
+	public List<Location> getReachableSectors(){
+		List<Location> list = new ArrayList<>();
+		double range = getImpulse().getValue();
+		while (range>0 && computeConsumptionForImpulseNavigation(range)>getReactor().getValue())
+			range = range-1;
+		if (range <=0)
+			return list;
+		Location loc = getLocation();
+		int minX = (int)Math.max(0,loc.getX() - range);
+		int maxX = (int)Math.min(7,loc.getX() + range);
+		int minY = (int)Math.max(0,loc.getY() - range);
+		int maxY = (int)Math.min(7,loc.getY() + range);
+		StarMap map = Application.get().starMap;
+		for (int y=minY;y<=maxY;y++)
+		for (int x=minX;x<=maxX;x++) {
+			Location tmp = Location.location(x, y);
+			if (StarMap.distance(loc, tmp)>getImpulse().getValue())
+				continue;
+			Thing thing = map.findThingAt(getQuadrant(), x, y);
+			if (thing != null && Klingon.isCloakedKlingon(thing))
+				continue; //TODO: cloaked klingons shouldn't count
+			list.add(tmp);
+		}
+		return list;
+	}
 
 	// only for internal use, bypasses checks
 	public void _navigateTo(Location loc) {
@@ -149,13 +174,17 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			}
 		});
 		Location drop = path.get(path.size() - 1);
-		if (!consume("impulse", distance * IMPULSE_CONSUMPTION)) {
+		if (!consume("impulse", computeConsumptionForImpulseNavigation(distance))) {
 			app.message("Insufficient reactor output");
 			return;
 		}
 
 		impulse.decrease(distance);
 		_navigateTo(drop);
+	}
+	
+	public double computeConsumptionForImpulseNavigation(double distance) {
+		return distance*IMPULSE_CONSUMPTION;
 	}
 
 	public void fireTorpedosAt(Location sector) {

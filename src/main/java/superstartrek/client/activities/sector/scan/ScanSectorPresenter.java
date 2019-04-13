@@ -51,7 +51,6 @@ public class ScanSectorPresenter extends BasePresenter<ScanSectorActivity> imple
 	public void doneWithMenu() {
 		if (!getView().isVisible())
 			return;
-		GWT.log("doneWithMenu");
 		getView().hide();
 		application.events.fireEvent(new ComputerEvent(ComputerEvent.Action.showScreen));
 	}

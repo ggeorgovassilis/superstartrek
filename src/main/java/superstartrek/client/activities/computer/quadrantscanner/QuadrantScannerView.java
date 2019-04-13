@@ -81,7 +81,6 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	}
 
 	protected void handleClick(DomEvent<?> event) {
-		GWT.log(""+event);
 		NativeEvent ne= event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
 		try {
@@ -94,5 +93,15 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 			//can happen when user clicks on the borders between cells, which don't have x/y attributes
 		}
 		
+	}
+
+	@Override
+	public void removeCssFromCell(int x, int y, String css) {
+		eSectors[x][y].removeClassName(css);
+	}
+
+	@Override
+	public void addCssToCell(int x, int y, String css) {
+		eSectors[x][y].addClassName(css);
 	}
 }

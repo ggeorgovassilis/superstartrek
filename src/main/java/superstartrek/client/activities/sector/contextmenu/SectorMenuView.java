@@ -22,7 +22,9 @@ import superstartrek.client.utils.Timer;
 
 public class SectorMenuView extends BaseView<SectorMenuActivity>
 		implements ISectorMenuView, MouseDownHandler, TouchStartHandler, ClickHandler {
-
+	
+	boolean viewInTransition=false;
+	
 	public SectorMenuView(SectorMenuPresenter presenter) {
 		super(presenter);
 	}
@@ -46,7 +48,6 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>
 
 	@Override
 	public void setLocation(int x, int y) {
-		GWT.log("setLocation "+x+":"+y);
 		Element e = getElement();
 		e.getStyle().setLeft(x, Unit.PX);
 		e.getStyle().setTop(y, Unit.PX);
@@ -54,12 +55,16 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>
 
 	@Override
 	public void hide(ScheduledCommand cmd) {
+		if (viewInTransition)
+			return;
 		removeStyleName("expanded");
 		if (isVisible()) {
+			viewInTransition = true;
 			Timer.postpone(new RepeatingCommand() {
 
 				@Override
 				public boolean execute() {
+					viewInTransition = false;
 					SectorMenuView.super.hide();
 					if (cmd != null)
 						cmd.execute();

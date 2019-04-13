@@ -1,5 +1,6 @@
 package superstartrek.client.activities.messages;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 
 import superstartrek.client.Application;
@@ -17,7 +18,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 		((MessagesView) getView()).showMessage(formattedMessage, category);
 		// the "if" check sometimes says that msg is visible while it isn't; probably because it's a popup. disabling until further notice
 		//if (!getView().isVisible())
-			getView().show();
+		getView().show();
 	}
 
 	public void dismissButtonClicked() {

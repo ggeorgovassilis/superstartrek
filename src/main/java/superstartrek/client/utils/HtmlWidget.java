@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class HtmlWidget extends Widget {
 
 	public HtmlWidget(Element e) {
-		GWT.log("+++++++++++");
 		setElement(e);
 		if (RootPanel.getBodyElement().isOrHasChild(e))
 			onAttach();

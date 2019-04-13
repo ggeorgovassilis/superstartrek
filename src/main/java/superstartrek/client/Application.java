@@ -193,7 +193,6 @@ public class Application
 	@Override
 	public void onModuleLoad() {
 		Application.that = this;
-		GWT.log("onModuleLoad");
 		random = new Random(new GWTRandomNumberFactory());
 		resources = GWT.create(Resources.class);
 		setUncaughtExceptionHandler();

@@ -156,7 +156,6 @@ public class PWA {
 	}
 
 	public void run() {
-		GWT.log("Installing PWA");
 //		if (!GWT.isClient() || !GWT.isProdMode())
 //			return;
 		if (!supportsServiceWorker())
