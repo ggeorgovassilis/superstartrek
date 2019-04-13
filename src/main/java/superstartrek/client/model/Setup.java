@@ -1,7 +1,5 @@
 package superstartrek.client.model;
 
-import java.util.logging.Logger;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Star.StarClass;
@@ -15,7 +13,6 @@ public class Setup {
 	final String roman[]= {"I","II","III","IV"};
 	
 	final Application application;
-	private static Logger log = Logger.getLogger("");
 
 	public Setup(Application application) {
 		this.application = application;

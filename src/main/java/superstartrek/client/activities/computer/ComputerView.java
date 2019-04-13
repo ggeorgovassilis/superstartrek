@@ -7,6 +7,8 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
+
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
@@ -44,7 +46,7 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
 
 		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(), sectorMenuPresenter);
-		HTMLPanel panel = (HTMLPanel)getWidgetImplementation();
+		HTMLPanel panel = (HTMLPanel)getWidget();
 		panel.addAndReplaceElement(new QuadrantScannerView(quadrantScannerPresenter),"quadrantscancontainer");
 		
 		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
@@ -125,9 +127,14 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 
 	@Override
 	public void setQuadrantName(String name, String css) {
-		Element e = ((HTMLPanel)widgetImpl).getElementById("quadrant_name");
+		Element e = ((HTMLPanel)getWidget()).getElementById("quadrant_name");
 		e.setInnerText(name);
 		e.setClassName(css);
+	}
+
+	@Override
+	protected Widget createWidgetImplementation() {
+		return new HTMLPanel("");
 	}
 	
 }

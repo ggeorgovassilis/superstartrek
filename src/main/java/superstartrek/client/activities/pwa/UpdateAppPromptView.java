@@ -5,8 +5,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.PopupView;
 import superstartrek.client.activities.Presenter;

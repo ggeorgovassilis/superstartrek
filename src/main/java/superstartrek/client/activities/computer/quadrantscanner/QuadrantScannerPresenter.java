@@ -1,13 +1,9 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.klingons.KlingonUncloakedHandler;

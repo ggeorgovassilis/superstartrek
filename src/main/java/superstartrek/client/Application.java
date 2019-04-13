@@ -47,9 +47,6 @@ import superstartrek.client.utils.GwtBrowserImpl;
 import superstartrek.client.utils.Random;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;
 import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler;
-import superstartrek.client.activities.pwa.ApplicationUpdateEvent;
-import superstartrek.client.activities.pwa.PWA;
-import superstartrek.client.activities.pwa.UpdateAppActivity;
 import superstartrek.client.activities.pwa.UpdateAppPromptPresenter;
 import superstartrek.client.activities.pwa.UpdateAppPromptView;;
 

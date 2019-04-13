@@ -10,7 +10,6 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.quadrantscanner.IQuadrantScannerView;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
-import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;

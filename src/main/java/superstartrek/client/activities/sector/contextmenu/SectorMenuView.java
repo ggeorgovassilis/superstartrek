@@ -12,14 +12,12 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
-import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.activities.PopupView;
 import superstartrek.client.utils.Timer;
 
 public class SectorMenuView extends BaseView<SectorMenuActivity>
@@ -97,7 +95,7 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>
 		}, 10);
 	}
 
-	public void handleButtonInteraction(DomEvent event) {
+	public void handleButtonInteraction(DomEvent<?> event) {
 		Element e = event.getNativeEvent().getEventTarget().cast();
 		event.preventDefault();
 		event.stopPropagation();

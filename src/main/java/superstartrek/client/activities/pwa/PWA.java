@@ -12,8 +12,9 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Random;
 import superstartrek.client.Application;
-import superstartrek.client.activities.pwa.ApplicationUpdateEvent.Status;
 import superstartrek.client.utils.Timer;
+import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler.ApplicationUpdateEvent;
+import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler.ApplicationUpdateEvent.Status;
 
 public class PWA {
 

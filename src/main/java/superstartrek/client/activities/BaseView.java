@@ -2,18 +2,15 @@ package superstartrek.client.activities;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class BaseView<A extends Activity> extends Composite implements View<A>, IBaseView<A>{
 
 	protected final Presenter<A> presenter;
-	protected Widget widgetImpl;
 	
-	protected Widget getWidgetImplementation() {
-		return widgetImpl;
-	}
-	
+	protected abstract Widget createWidgetImplementation();
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Presenter<A>> T getPresenter() {
 		return (T)presenter;
@@ -23,16 +20,12 @@ public abstract class BaseView<A extends Activity> extends Composite implements 
 	public void finishUiConstruction() {
 	}
 	
-	protected Widget createWidgetImplementation() {
-		return new HTMLPanel("");
-	}
-	
 	protected BaseView(Presenter<A> presenter) {
 		this.presenter = presenter;
-		widgetImpl = createWidgetImplementation();
+		Widget widgetImpl = createWidgetImplementation();
 		initWidget(widgetImpl);
-		presenter.setView(this);
 		finishUiConstruction();
+		presenter.setView(this);
 	}
 	
 	@Override
@@ -49,11 +42,6 @@ public abstract class BaseView<A extends Activity> extends Composite implements 
 	public void hide(ScheduledCommand callback) {
 		hide();
 		callback.execute();
-	}
-	
-	@Override
-	public boolean isVisible() {
-		return super.isVisible();
 	}
 	
 }

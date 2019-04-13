@@ -10,6 +10,8 @@ import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Widget;
+
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.utils.DomUtils;
 import superstartrek.client.utils.HtmlWidget;
@@ -46,6 +48,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 
 	public QuadrantScannerView(QuadrantScannerPresenter presenter) {
 		super(presenter);
+		Widget widgetImpl = getWidget();
 		Element eTable = DomUtils.getTbody(widgetImpl.getElement());
 		for (int y = 0; y < 8; y++) {
 			Element eTr = DOM.createDiv();
@@ -77,7 +80,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 		eSelectedSector = eSectors[0][0];
 	}
 
-	protected void handleClick(DomEvent event) {
+	protected void handleClick(DomEvent<?> event) {
 		GWT.log(""+event);
 		NativeEvent ne= event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
