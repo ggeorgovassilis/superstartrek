@@ -119,7 +119,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public List<Location> getReachableSectors(){
 		List<Location> list = new ArrayList<>();
 		double range = getImpulse().getValue();
-		while (range>0 && computeConsumptionForImpulseNavigation(range)>getReactor().getValue())
+		while (range>0 && computeConsumptionForImpulseNavigation(range)>=getReactor().getValue())
 			range = range-1;
 		if (range <=0)
 			return list;
@@ -135,9 +135,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			if (StarMap.distance(loc, tmp)>getImpulse().getValue())
 				continue;
 			Thing thing = map.findThingAt(getQuadrant(), x, y);
-			if (thing != null && Klingon.isCloakedKlingon(thing))
+			if (thing != null && !Klingon.isCloakedKlingon(thing))
 				continue; //TODO: cloaked klingons shouldn't count
-			list.add(tmp);
+			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), loc, tmp);
+			int count = obstacles.size();
+			if (count==1) list.add(tmp); else {
+				if (Klingon.isCloakedKlingon(obstacles.get(1)))
+					list.add(tmp);
+			}
 		}
 		return list;
 	}
