@@ -130,6 +130,10 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	background-color:maroon;
 }
 
+.navigation-target{
+	background-color:rgba(100,0,100,0.5);
+}
+
 .cloaked{
 	color:transparent !important;
 }
