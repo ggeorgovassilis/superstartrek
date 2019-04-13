@@ -207,6 +207,7 @@ public class Application
 		gameController.startGame();
 		if (GWT.isClient())
 			browser = new GwtBrowserImpl();
+		//null out so that resources can be garbage collected
 		resources = null;
 	}
 	

@@ -16,7 +16,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 	public void messagePosted(String formattedMessage, String category) {
 		((MessagesView) getView()).showMessage(formattedMessage, category);
 		// the "if" check sometimes says that msg is visible while it isn't; probably because it's a popup. disabling until further notice
-		if (!getView().isVisible())
+		//if (!getView().isVisible())
 			getView().show();
 	}
 

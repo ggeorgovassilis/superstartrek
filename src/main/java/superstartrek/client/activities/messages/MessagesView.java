@@ -17,7 +17,7 @@ public class MessagesView extends PopupView<MessageActivity> {
 		super.finishUiConstruction();
 		eContent = getHtmlPanel().getElementById("messages-content");
 		eButton = getHtmlPanel().getElementById("dismiss-message-button");
-		htmlPanel.getElement().setAttribute("id", "messages");
+		getWidget().getElement().setAttribute("id", "messages");
 		DOM.sinkEvents(eButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		DOM.setEventListener(eButton, new EventListener() {
 

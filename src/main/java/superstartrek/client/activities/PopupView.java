@@ -19,21 +19,19 @@ import superstartrek.client.utils.Timer;
 
 public abstract class PopupView<T extends Activity> extends BaseView<T>{
 
-	protected HtmlWidget htmlPanel;
-	
 	protected PopupView(Presenter<T> presenter) {
 		super(presenter);
 	}
 	
 	protected HtmlWidget getHtmlPanel() {
-		return htmlPanel;
+		return (HtmlWidget)getWidget();
 	}
 
 	protected abstract String getContentForHtmlPanel();
 	
 	@Override
 	protected Widget createWidgetImplementation() {
-		htmlPanel = new HtmlWidget(DOM.createDiv(), getContentForHtmlPanel());
+		HtmlWidget htmlPanel = new HtmlWidget(DOM.createDiv(), getContentForHtmlPanel());
 		htmlPanel.addStyleName("PopupView");
 		htmlPanel.addDomHandler(new KeyDownHandler() {
 			
@@ -88,14 +86,14 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	
 	@Override
 	public boolean isVisible() {
-		return htmlPanel.getStyleName().contains("slidein");
+		return getStyleName().contains("slidein");
 	}
 	
 	@Override
 	public void show() {
 		if (isVisible())
 			return;
-		htmlPanel.addStyleName("slidein");
+		addStyleName("slidein");
 		showGlassPanel();
 	}
 	
@@ -104,7 +102,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 		if (!isVisible())
 			return;
 		hideGlassPanel();
-		htmlPanel.removeStyleName("slidein");
+		removeStyleName("slidein");
 		Timer.postpone(new RepeatingCommand() {
 			
 			@Override
