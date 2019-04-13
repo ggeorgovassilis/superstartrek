@@ -144,6 +144,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
 		updateQuadrantHeader();
+		updateDockInStarbaseButton();
 	}
 
 	@Override
