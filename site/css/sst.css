@@ -631,7 +631,6 @@ button.disabled{
 	position:absolute;
 	left:-200%;
 	z-index:3;
-	display:hidden;
 	top:0;
 	-webkit-transform: translateZ(0);
 	-moz-transform: translateZ(0);
