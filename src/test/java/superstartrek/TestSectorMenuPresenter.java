@@ -12,7 +12,7 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.sector.contextmenu.ISectorMenuView;
-import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
+import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -21,7 +21,7 @@ import superstartrek.client.utils.Browser;
 
 public class TestSectorMenuPresenter {
 
-	SectorMenuPresenter presenter;
+	SectorContextMenuPresenter presenter;
 	Application app;
 	CountingEventBus events;
 	StarMap map;
@@ -34,7 +34,7 @@ public class TestSectorMenuPresenter {
 		app.events = events = new CountingEventBus();
 		app.starMap = new StarMap();
 		app.browser = browser = mock(Browser.class);
-		presenter = new SectorMenuPresenter(app);
+		presenter = new SectorContextMenuPresenter(app);
 		view = mock(ISectorMenuView.class);
 		presenter.setView(view);
 	}

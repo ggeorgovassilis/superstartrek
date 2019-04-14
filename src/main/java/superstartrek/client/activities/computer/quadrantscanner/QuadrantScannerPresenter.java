@@ -15,7 +15,7 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
+import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedEvent;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.control.AfterTurnStartedEvent;
@@ -32,14 +32,14 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
 		EnterpriseRepairedHandler, KlingonUncloakedHandler, KlingonDestroyedHandler {
 
-	SectorMenuPresenter sectorMenuPresenter;
+	SectorContextMenuPresenter sectorMenuPresenter;
 
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		application.events.fireEvent(new SectorSelectedEvent(Location.location(x, y),
 				application.starMap.enterprise.getQuadrant(), screenX, screenY));
 	}
 
-	public QuadrantScannerPresenter(Application application, SectorMenuPresenter sectorMenuPresenter) {
+	public QuadrantScannerPresenter(Application application, SectorContextMenuPresenter sectorMenuPresenter) {
 		super(application);
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
 		application.events.addHandler(GameStartedEvent.TYPE, this);

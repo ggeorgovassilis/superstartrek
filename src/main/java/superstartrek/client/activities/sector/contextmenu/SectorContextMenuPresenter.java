@@ -12,12 +12,12 @@ import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
 
-public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
+public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuActivity> implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
 
 	Location sector;
 	Quadrant quadrant;
 
-	public SectorMenuPresenter(Application application) {
+	public SectorContextMenuPresenter(Application application) {
 		super(application);
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
 		application.events.addHandler(TurnEndedEvent.TYPE, this);
@@ -29,7 +29,7 @@ public class SectorMenuPresenter extends BasePresenter<SectorMenuActivity> imple
 			
 			@Override
 			public void execute() {
-				SectorMenuPresenter.this.quadrant = quadrant;
+				SectorContextMenuPresenter.this.quadrant = quadrant;
 				ISectorMenuView v = (ISectorMenuView) getView();
 				Enterprise e = application.starMap.enterprise;
 				v.enableButton("cmd_navigate", e.getImpulse().isEnabled());

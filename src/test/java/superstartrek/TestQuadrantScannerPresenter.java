@@ -12,7 +12,7 @@ import superstartrek.client.activities.computer.quadrantscanner.IQuadrantScanner
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
-import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
+import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -26,7 +26,7 @@ public class TestQuadrantScannerPresenter {
 	QuadrantScannerPresenter presenter;
 	Application app;
 	CountingEventBus events;
-	SectorMenuPresenter sectorMenuPresenter;
+	SectorContextMenuPresenter sectorMenuPresenter;
 	StarMap map;
 	IQuadrantScannerView view;
 	
@@ -34,7 +34,7 @@ public class TestQuadrantScannerPresenter {
 	public void setup() {
 		app = Application.get();
 		app.events = new CountingEventBus();
-		sectorMenuPresenter = mock(SectorMenuPresenter.class);
+		sectorMenuPresenter = mock(SectorContextMenuPresenter.class);
 		presenter = new QuadrantScannerPresenter(app, sectorMenuPresenter);
 		app.starMap = map = new StarMap();
 		

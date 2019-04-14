@@ -15,8 +15,8 @@ import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerP
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerView;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSView;
-import superstartrek.client.activities.sector.contextmenu.SectorMenuPresenter;
-import superstartrek.client.activities.sector.contextmenu.SectorMenuView;
+import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
+import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
 import superstartrek.client.model.Setting;
 
 public class ComputerView extends BaseScreen<ComputerActivity> implements IComputerView{
@@ -42,8 +42,8 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 		addStyleName("computer-screen");
 		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
 		
-		SectorMenuPresenter sectorMenuPresenter = new SectorMenuPresenter(presenter.getApplication());
-		sectorMenuPresenter.setView(new SectorMenuView(sectorMenuPresenter));
+		SectorContextMenuPresenter sectorMenuPresenter = new SectorContextMenuPresenter(presenter.getApplication());
+		sectorMenuPresenter.setView(new SectorContextMenuView(sectorMenuPresenter));
 
 		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(), sectorMenuPresenter);
 		HTMLPanel panel = (HTMLPanel)getWidget();
@@ -68,16 +68,6 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 			@Override
 			public void onBrowserEvent(Event event) {
 				((ComputerPresenter)getPresenter()).onSkipButtonClicked();
-			}
-		});
-		
-		Element eToggleShields = DOM.getElementById("cmd_toggleShields");
-		DOM.sinkEvents(eToggleShields, Event.ONCLICK);
-		DOM.setEventListener(eToggleShields, new EventListener() {
-			
-			@Override
-			public void onBrowserEvent(Event event) {
-				((ComputerPresenter)getPresenter()).onToggleShieldsButtonClicked();
 			}
 		});
 		

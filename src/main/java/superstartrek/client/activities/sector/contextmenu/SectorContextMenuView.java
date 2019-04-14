@@ -19,18 +19,18 @@ import com.google.gwt.user.client.ui.Widget;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.utils.Timer;
 
-public class SectorMenuView extends BaseView<SectorMenuActivity>
+public class SectorContextMenuView extends BaseView<SectorContextMenuActivity>
 		implements ISectorMenuView, MouseDownHandler, TouchStartHandler, ClickHandler {
 	
 	boolean viewInTransition=false;
 	
-	public SectorMenuView(SectorMenuPresenter presenter) {
+	public SectorContextMenuView(SectorContextMenuPresenter presenter) {
 		super(presenter);
 	}
 
 	@Override
 	protected Widget createWidgetImplementation() {
-		HTMLPanel panel = new HTMLPanel(getPresenter().getApplication().getResources().sectorSelectionMenu().getText());
+		HTMLPanel panel = new HTMLPanel(getPresenter().getApplication().getResources().sectorContextMenu().getText());
 		return panel;
 	}
 
@@ -64,7 +64,7 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>
 				@Override
 				public boolean execute() {
 					viewInTransition = false;
-					SectorMenuView.super.hide();
+					SectorContextMenuView.super.hide();
 					if (cmd != null)
 						cmd.execute();
 					return false;
@@ -105,7 +105,7 @@ public class SectorMenuView extends BaseView<SectorMenuActivity>
 		event.stopPropagation();
 		String command = e.getAttribute("id");
 		if (command != null && !command.isEmpty())
-			((SectorMenuPresenter) getPresenter()).onCommandClicked(command);
+			((SectorContextMenuPresenter) getPresenter()).onCommandClicked(command);
 	}
 
 	@Override

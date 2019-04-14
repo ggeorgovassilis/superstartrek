@@ -117,18 +117,6 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		view.updateShields(shields);
 	}
 
-	public void onToggleShieldsButtonClicked() {
-		Enterprise enterprise = application.starMap.enterprise;
-		Setting shields = enterprise.getShields();
-		double value = enterprise.getShields().getValue();
-		if (value == shields.getCurrentUpperBound())
-			value = 0;
-		else
-			value = Math.min(value+shields.getMaximum()/4, shields.getCurrentUpperBound());
-		shields.setValue(value);
-		updateShieldsView();
-	}
-	
 	public void onRepairButtonClicked() {
 		Enterprise enterprise = application.starMap.enterprise;
 		enterprise.repairProvisionally();
