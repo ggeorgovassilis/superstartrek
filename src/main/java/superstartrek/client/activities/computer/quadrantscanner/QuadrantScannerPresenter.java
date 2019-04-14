@@ -21,7 +21,6 @@ import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.control.AfterTurnStartedEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
-import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;

@@ -47,8 +47,8 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		StarMap map = application.starMap;
 		Enterprise enterprise = map.enterprise;
 		Quadrant q = enterprise.getQuadrant();
-		double distance = StarMap.distance(enterprise, q.getStarBase());
-		if (distance>1) {
+		boolean inRange = StarMap.within_distance(enterprise, q.getStarBase(),1.1);
+		if (!inRange) {
 			Location loc = application.starMap.findFreeSpotAround(q, q.getStarBase().getLocation(),1);
 			if (loc==null) {
 				application.message("No space around starbase");
@@ -63,7 +63,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		Enterprise enterprise = application.starMap.enterprise;
 		Quadrant q = enterprise.getQuadrant();
 		StarBase starBase = q.getStarBase();
-		boolean visible = starBase!=null && (q.getKlingons().isEmpty() || StarMap.distance(enterprise, starBase)<2);
+		boolean visible = starBase!=null && (q.getKlingons().isEmpty() || StarMap.within_distance(enterprise, starBase,2));
 		((IComputerView)getView()).setDockInStarbaseButtonVisibility(visible);
 	}
 	
@@ -97,11 +97,12 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		String alert = "";
 		Quadrant q = application.starMap.enterprise.getQuadrant();
 		Enterprise e = application.starMap.enterprise;
+		Location el = e.getLocation();
 		if (!q.getKlingons().isEmpty()) {
-			double minDistance = 3;
+			double minDistance = 3*3;
 			for (Klingon k:q.getKlingons())
-				minDistance = Math.min(minDistance, StarMap.distance(e, k));
-			alert = minDistance<3?"red-alert":"yellow-alert";
+				minDistance = Math.min(minDistance, StarMap.distance_squared(el.getX(), el.getY(), k.getLocation().getX(), k.getLocation().getY()));
+			alert = minDistance<9?"red-alert":"yellow-alert";
 		}
 		
 		IComputerView view = (IComputerView)getView();

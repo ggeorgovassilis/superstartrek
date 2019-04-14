@@ -1,6 +1,5 @@
 package superstartrek.client.activities.sector.contextmenu;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.shared.GwtEvent;
 
 import superstartrek.client.model.Location;

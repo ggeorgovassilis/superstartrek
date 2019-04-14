@@ -105,7 +105,7 @@ public class TestAStarPlus {
 		
 		//5. there are no "leaps"; every square in the path is next to the previous
 		for (Location current:solutionToCheck) {
-			assertTrue(log, StarMap.distance(current, last)<2);
+			assertTrue(log, StarMap.within_distance(current, last,2));
 			last = current;
 		}
 		

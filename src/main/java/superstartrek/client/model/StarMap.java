@@ -15,10 +15,31 @@ public class StarMap {
 	public Enterprise enterprise;
 	protected long starDate = 0;
 
+	public static boolean within_distance(int x1, int y1, int x2, int y2, double range) {
+		int dx = x1 - x2;
+		int dy = y1 - y2;
+		return dx * dx + dy * dy < range*range;
+	}
+
+	
 	public static double distance(int x1, int y1, int x2, int y2) {
 		int dx = x1 - x2;
 		int dy = y1 - y2;
 		return Math.sqrt(dx * dx + dy * dy);
+	}
+	
+	public static int distance_squared(int x1, int y1, int x2, int y2) {
+		int dx = x1 - x2;
+		int dy = y1 - y2;
+		return dx*dx +dy*dy;
+	}
+
+	public static double distance(Thing a, Thing b) {
+		return distance(a.getLocation(), b.getLocation());
+	}
+
+	public static double distance(Location la, Location lb) {
+		return distance(la.getX(), la.getY(), lb.getX(), lb.getY());
 	}
 
 	public static Set<Location> locations(List<? extends Thing> things) {
@@ -40,18 +61,18 @@ public class StarMap {
 		starDate += value;
 	}
 
-	public static double distance(Location l1, Location l2) {
-		return distance(l1.x, l1.y, l2.x, l2.y);
+	public static boolean within_distance(Location l1, Location l2, double range) {
+		return within_distance(l1.x, l1.y, l2.x, l2.y, range);
 	}
 
-	public static double distance(Thing t1, Thing t2) {
-		return distance(t1.getLocation(), t2.getLocation());
+	public static boolean within_distance(Thing t1, Thing t2, double range) {
+		return within_distance(t1.getLocation(), t2.getLocation(), range);
 	}
 
-	public static double distance(Thing t1, Location l2) {
-		return distance(t1.getLocation(), l2);
+	public static boolean within_distance(Thing t1, Location l2, double range) {
+		return within_distance(t1.getLocation(), l2, range);
 	}
-
+	
 	public boolean isOnMap(int x, int y) {
 		return (x >= 0 && x <= 7 && y >= 0 && y <= 7);
 	}
@@ -122,6 +143,14 @@ public class StarMap {
 		}
 	};
 
+	/**
+	 * Finds the first 2 obstacles in the line connecting from (inclusive) to to (inclusive).
+	 * If from and to are occupied by {@link Thing}s, then those will be the only objects returned.
+	 * @param q
+	 * @param from
+	 * @param to
+	 * @return
+	 */
 	public List<Thing> findObstaclesInLine(final Quadrant q, final Location from, final Location to) {
 		List<Thing> found = new ArrayList<>();
 		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), new Walker() {
@@ -132,7 +161,7 @@ public class StarMap {
 				if (thing != null) {
 					found.add(thing);
 				}
-				return true;
+				return found.size()<2;
 			}
 		});
 		return found;

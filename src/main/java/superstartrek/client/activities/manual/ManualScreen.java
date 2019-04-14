@@ -1,7 +1,6 @@
 package superstartrek.client.activities.manual;
 
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseScreen;

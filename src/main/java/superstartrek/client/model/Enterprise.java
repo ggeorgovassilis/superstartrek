@@ -3,8 +3,6 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.shared.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -120,9 +118,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		List<Location> list = new ArrayList<>();
 		double range = getImpulse().getValue();
 		while (range>0 && computeConsumptionForImpulseNavigation(range)>=getReactor().getValue())
-			range = range-1;
+			range = range-0.25;
 		if (range <=0)
 			return list;
+		double range_squared = range*range;
 		Location loc = getLocation();
 		int minX = (int)Math.max(0,loc.getX() - range);
 		int maxX = (int)Math.min(7,loc.getX() + range);
@@ -131,15 +130,15 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		StarMap map = Application.get().starMap;
 		for (int y=minY;y<=maxY;y++)
 		for (int x=minX;x<=maxX;x++) {
-			Location tmp = Location.location(x, y);
-			if (StarMap.distance(loc, tmp)>getImpulse().getValue())
+			//squared distance check saves one sqrt() call and thus is faster
+			if (StarMap.distance_squared(loc.getX(), loc.getY(), x, y)>range_squared)
 				continue;
 			Thing thing = map.findThingAt(getQuadrant(), x, y);
 			if (thing != null && !Klingon.isCloakedKlingon(thing))
 				continue; //TODO: cloaked klingons shouldn't count
+			Location tmp = Location.location(x, y);
 			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), loc, tmp);
-			int count = obstacles.size();
-			if (count==1) list.add(tmp); else {
+			if (obstacles.size()==1) list.add(tmp); else {
 				if (Klingon.isCloakedKlingon(obstacles.get(1)))
 					list.add(tmp);
 			}
@@ -156,7 +155,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public void navigateTo(Location loc) {
 		Application app = Application.get();
-		double distance = StarMap.distance(this, loc);
+		double distance = StarMap.distance(this.getLocation(), loc);
 		if (distance > getImpulse().getValue()) {
 			app.message("Course " + Math.round(distance) + " exceeds maximum impulse power " + getImpulse().getValue());
 			return;
@@ -382,7 +381,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public void autoAim() {
 		for (Klingon k : getQuadrant().getKlingons())
-			if (!k.isCloaked() && StarMap.distance(this, k) < PHASER_RANGE) {
+			if (!k.isCloaked() && StarMap.within_distance(this, k, PHASER_RANGE)) {
 				firePhasersAt(k.getLocation(), true);
 				return;
 			}
