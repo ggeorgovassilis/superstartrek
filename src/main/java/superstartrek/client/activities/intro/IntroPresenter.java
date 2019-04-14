@@ -6,14 +6,16 @@ import com.google.gwt.user.client.History;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
 
-public class IntroPresenter extends BasePresenter<IntroActivity> implements GamePhaseHandler, ValueChangeHandler<String>{
+public class IntroPresenter extends BasePresenter<IntroActivity> implements ApplicationUpdateCheckHandler, GamePhaseHandler, ValueChangeHandler<String>{
 
 	public IntroPresenter(Application application) {
 		super(application);
 		application.events.addHandler(GameStartedEvent.TYPE, this);
+		application.events.addHandler(ApplicationUpdateEvent.TYPE, this);
 		History.addValueChangeHandler(this);
 	}
 	
@@ -30,6 +32,10 @@ public class IntroPresenter extends BasePresenter<IntroActivity> implements Game
 		} else
 			getView().hide();
 	}
-
+	
+	@Override
+	public void installedAppVersionIs(String version) {
+		((IntroView)getView()).showAppVersion(version);
+	}
 
 }

@@ -18,5 +18,9 @@ public class IntroView extends BaseScreen<IntroActivity>{
 	protected Widget createWidgetImplementation() {
 		return new HtmlWidget(DOM.createDiv());
 	}
+	
+	public void showAppVersion(String version){
+		DOM.getElementById("app-version").setInnerText("app version "+version);
+	}
 
 }
