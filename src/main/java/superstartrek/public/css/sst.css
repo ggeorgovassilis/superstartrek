@@ -550,10 +550,6 @@ a.progress-bar {
 	width:10em;
 }
 
-.manual .toc{
-	float:left;
-}
-
 
 .status-icons{
 	display:block;
@@ -572,6 +568,10 @@ a.progress-bar {
 	line-height:1.5em;
 }
 
+.manual .toc{
+	float:left;
+}
+
 .manual{
 	background-color:black;
 	color:white;
@@ -584,6 +584,11 @@ a.progress-bar {
 	background:transparent;
 	float:none;
 	outline:none;
+}
+
+#cmd_manual{
+	font-size:100%;
+	line-height:2.5em;
 }
 
 .hidden{

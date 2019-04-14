@@ -1,35 +1,5 @@
-var APP_PREFIX = 'sst'     // Identifier for this app (this needs to be consistent across every cache update)
-var VERSION = '1'              // Version of the off-line cache (change this value everytime you want to update cache)
-var CACHE_NAME = APP_PREFIX + VERSION
-
-//Add resources that should be available offline to this list.
-let URLS = [
-	"/superstartrek/site/index.html",
-	"/superstartrek/site/images/cancel.svg",
-	"/superstartrek/site/images/communicator.svg",
-	"/superstartrek/site/images/federation_logo.svg",
-	"/superstartrek/site/images/fire_at_will.svg",
-	"/superstartrek/site/images/hexagon_filled.svg",
-	"/superstartrek/site/images/hexagon.svg",
-	"/superstartrek/site/images/icon192x192.png",
-	"/superstartrek/site/images/icon512x512.png",
-	"/superstartrek/site/images/laser.svg",
-	"/superstartrek/site/images/navigation.svg",
-	"/superstartrek/site/images/radar.svg",
-	"/superstartrek/site/images/stars-background.gif",
-	"/superstartrek/site/images/torpedo.svg",
-	"/superstartrek/site/css/sst.css",
-	"/superstartrek/site/superstartrek.superstartrek.nocache.js",
-	"/superstartrek/site/checksum.sha.md5",
-];
-
 // Respond with cached resources
 self.addEventListener('fetch', function (e) {
-  console.debug('SW_fetch','fetch request : ' + e.request.url)
-  if (e.request.url.indexOf("__purge_cache")!=-1){
-	  clearCache();
-	  return;
-  }
   e.respondWith(
     caches.match(e.request).then(function (request) {
       if (request) { // if cache is available, respond with cache
@@ -49,14 +19,7 @@ self.addEventListener('fetch', function (e) {
 // Cache resources
 self.addEventListener('install', function (e) {
   console.log("listening for SW install");
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      console.log("SW",'installing cache : ' + CACHE_NAME);
-      cache.addAll(URLS);
-      return true;
-    })
-  )
-})
+});
 
 self.addEventListener('activate', function (e) {
 	  console.log("listening for SW activate");
@@ -81,18 +44,3 @@ self.addEventListener('activate', function (e) {
   )
 })
 
-function clearCache(){
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.filter(function(cacheName) {
-          // Return true if you want to remove this cache,
-          // but remember that caches are shared across
-          // the whole origin
-        	console.log("SW","clearing",cacheName);
-        	return true;
-        }).map(function(cacheName) {
-          return caches.delete(cacheName);
-        })
-      );
-    })
-}

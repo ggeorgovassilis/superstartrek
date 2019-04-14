@@ -24,6 +24,52 @@ public class PWA {
 
 	private static Logger log = Logger.getLogger("");
 
+	private String[] URLS = {
+			        	"/superstartrek/site/index.html",
+			        	"/superstartrek/site/images/cancel.svg",
+			        	"/superstartrek/site/images/communicator.svg",
+			        	"/superstartrek/site/images/federation_logo.svg",
+			        	"/superstartrek/site/images/fire_at_will.svg",
+			        	"/superstartrek/site/images/hexagon_filled.svg",
+			        	"/superstartrek/site/images/hexagon.svg",
+			        	"/superstartrek/site/images/icon192x192.png",
+			        	"/superstartrek/site/images/icon512x512.png",
+			        	"/superstartrek/site/images/laser.svg",
+			        	"/superstartrek/site/images/navigation.svg",
+			        	"/superstartrek/site/images/radar.svg",
+			        	"/superstartrek/site/images/stars-background.gif",
+			        	"/superstartrek/site/images/torpedo.svg",
+			        	"/superstartrek/site/css/sst.css",
+			        	"/superstartrek/site/superstartrek.superstartrek.nocache.js",
+			        	"/superstartrek/site/checksum.sha.md5",
+	};
+
+	
+	//caching in the main window is possible according to https://gist.github.com/Rich-Harris/fd6c3c73e6e707e312d7c5d7d0f3b2f9
+	private static native void cacheFiles(String[] files) /*-{
+	$wnd.caches.open( "sst1" )
+    .then( function(cache){cache.addAll( files )} )
+    .then( function(){console.log( 'content is now available offline' );} )
+    ["catch"]( function(){console.log("something went wrong")} );
+	}-*/;
+	
+	public static native void cleareCache()/*-{
+	caches.keys().then(function(cacheNames) {return Promise.all(
+        cacheNames.filter(function(cacheName) {
+        	console.log('SW','clearing',cacheName);
+        	return true;
+        }).map(function(cacheName) {
+          return caches['delete'](cacheName);
+        })
+      );
+    });
+	}-*/;
+	
+	public void cacheFilesForOfflineUse() {
+		GWT.log("Caching files for offline use");
+		cacheFiles(URLS);
+	}
+
 	public static native boolean supportsServiceWorker() /*-{
 															return navigator.serviceWorker!=null;
 															}-*/;
@@ -89,22 +135,10 @@ public class PWA {
 	}
 
 	public void clearCache(ScheduledCommand callback) {
-		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET,
-				"/superstartrek/site/checksum.sha.md5?__purge_cache");
-		try {
-			rb.sendRequest("", new RequestCallback() {
-
-				@Override
-				public void onResponseReceived(Request request, Response response) {
-				}
-
-				@Override
-				public void onError(Request request, Throwable exception) {
-				}
-			});
 			// TODO: super-bad hack: there is currently no callback when the cache has been
 			// cleaned.
-			// this heuristic assumes that the cache has been cleared in 2 seconds
+			// this heuristic assumes that the cache has been cleared in 1 seconds
+			cleareCache();
 			Timer.postpone(new RepeatingCommand() {
 
 				@Override
@@ -112,12 +146,8 @@ public class PWA {
 					callback.execute();
 					return false;
 				}
-			}, 2000);
-		} catch (RequestException e) {
-			GWT.log(e.getMessage(), e);
-		}
-
-	}
+			}, 1000);
+	};
 
 	public void checkForNewVersion() {
 		Application app = application;
@@ -169,6 +199,7 @@ public class PWA {
 //			return;
 		if (!supportsServiceWorker())
 			return;
+		cacheFilesForOfflineUse();
 		registerServiceWorker("service-worker.js");
 		addInstallationListener();
 		checkForNewVersion();
