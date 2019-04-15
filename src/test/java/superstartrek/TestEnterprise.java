@@ -22,12 +22,16 @@ import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.Star;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.utils.Random;
 import superstartrek.client.utils.RandomNumberFactory;
 
 import static org.mockito.Mockito.*;
+
+import java.util.List;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -268,6 +272,31 @@ public class TestEnterprise {
 			}
 	    }));
 
+	}
+	
+	@Test
+	public void test_getReachableSectors() {
+		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
+		map.setQuadrant(quadrant);
+		enterprise.setQuadrant(quadrant);
+		enterprise.setLocation(Location.location(4, 4));
+		quadrant.getStars().add(new Star(1,6,StarClass.A));
+		quadrant.getStars().add(new Star(2,6,StarClass.A));
+		quadrant.getStars().add(new Star(3,6,StarClass.A));
+		quadrant.getStars().add(new Star(5,6,StarClass.A));
+		quadrant.getStars().add(new Star(6,6,StarClass.A));
+		quadrant.getStars().add(new Star(7,6,StarClass.A));
+		quadrant.getStars().add(new Star(4,3,StarClass.A));
+		List<Location> list = enterprise.getReachableSectors();
+		assertTrue(list.contains(Location.location(4, 5)));
+		assertTrue(list.contains(Location.location(4, 6)));
+		assertTrue(list.contains(Location.location(5, 5)));
+		assertTrue(list.contains(Location.location(3, 3)));
+		assertTrue(list.contains(Location.location(3, 4)));
+		assertTrue(list.contains(Location.location(5, 4)));
+		assertFalse(list.contains(Location.location(5, 6)));
+		assertFalse(list.contains(Location.location(3, 6)));
+		assertEquals(19,list.size());
 	}
 
 }
