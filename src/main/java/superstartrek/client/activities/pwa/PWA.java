@@ -53,13 +53,16 @@ public class PWA {
     ["catch"]( function(){console.log("something went wrong")} );
 	}-*/;
 	
-	public static native void cleareCache()/*-{
+	public static native void clearCache(ScheduledCommand callback)/*-{
 	$wnd.caches.keys().then(function(cacheNames) {return Promise.all(
         cacheNames.filter(function(cacheName) {
         	console.log('SW','clearing',cacheName);
         	return true;
         }).map(function(cacheName) {
-          return caches['delete'](cacheName);
+          return caches['delete'](cacheName).then(function(){
+          console.log("Caches are deleted");
+		  callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
+          });
         })
       );
     });
@@ -133,21 +136,6 @@ public class PWA {
 			GWT.log(e.getMessage(), e);
 		}
 	}
-
-	public void clearCache(ScheduledCommand callback) {
-			// TODO: super-bad hack: there is currently no callback when the cache has been
-			// cleaned.
-			// this heuristic assumes that the cache has been cleared in 1 seconds
-			cleareCache();
-			Timer.postpone(new RepeatingCommand() {
-
-				@Override
-				public boolean execute() {
-					callback.execute();
-					return false;
-				}
-			}, 1000);
-	};
 
 	public void checkForNewVersion() {
 		Application app = application;
