@@ -167,12 +167,16 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 				view.removeCssFromCell(x,y,"navigation-target");
 	}
 	
-	@Override
-	public void afterTurnStarted(AfterTurnStartedEvent evt) {
-		List<Location> sectors = application.starMap.enterprise.getReachableSectors();
+	public void updateMapWithReachableSectors() {
+		List<Location> sectors = application.starMap.enterprise.findReachableSectors();
 		clearAllNavigationTargets();
 		for (Location l:sectors)
 			markSectorAsNavigationTarget(l.getX(), l.getY());
+	}
+	
+	@Override
+	public void afterTurnStarted(AfterTurnStartedEvent evt) {
+		updateMapWithReachableSectors();
 	}
 	
 }

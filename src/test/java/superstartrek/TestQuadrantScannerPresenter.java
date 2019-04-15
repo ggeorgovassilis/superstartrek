@@ -1,6 +1,11 @@
 package superstartrek;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -73,6 +78,30 @@ public class TestQuadrantScannerPresenter {
 		verify(view).updateSector(5, 6, StarClass.A.symbol, "star star-class-a");
 		verify(view).updateSector(6, 5, StarClass.A.symbol, "star star-class-a");
 		verify(view).updateSector(1, 7, "<!>", "starbase");
-		
 	}
+	
+	
+	@Test
+	public void test_mark_navigatable_sectors() {
+		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
+		map.setQuadrant(quadrant);
+		Enterprise enterprise = map.enterprise = new Enterprise(app);
+		enterprise.setQuadrant(quadrant);
+		enterprise.setLocation(Location.location(4, 4));
+		quadrant.getStars().add(new Star(1,6,StarClass.A));
+		quadrant.getStars().add(new Star(2,6,StarClass.A));
+		quadrant.getStars().add(new Star(3,6,StarClass.A));
+		quadrant.getStars().add(new Star(5,6,StarClass.A));
+		quadrant.getStars().add(new Star(6,6,StarClass.A));
+		quadrant.getStars().add(new Star(7,6,StarClass.A));
+		quadrant.getStars().add(new Star(4,3,StarClass.A));
+		List<Location> targets = enterprise.findReachableSectors();
+		assertFalse(targets.isEmpty());
+		presenter.updateMapWithReachableSectors();
+		for (Location loc:targets)
+			verify(view).addCssToCell(loc.getX(), loc.getY(), "navigation-target");
+		for (Star star:quadrant.getStars())
+			verify(view, never()).addCssToCell(star.getLocation().getX(), star.getLocation().getY(), "navigation-target");
+	}
+
 }

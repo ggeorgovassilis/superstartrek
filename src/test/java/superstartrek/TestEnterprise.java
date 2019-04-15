@@ -287,7 +287,7 @@ public class TestEnterprise {
 		quadrant.getStars().add(new Star(6,6,StarClass.A));
 		quadrant.getStars().add(new Star(7,6,StarClass.A));
 		quadrant.getStars().add(new Star(4,3,StarClass.A));
-		List<Location> list = enterprise.getReachableSectors();
+		List<Location> list = enterprise.findReachableSectors();
 		assertTrue(list.contains(Location.location(4, 5)));
 		assertTrue(list.contains(Location.location(4, 6)));
 		assertTrue(list.contains(Location.location(5, 5)));

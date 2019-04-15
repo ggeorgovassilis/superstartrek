@@ -145,14 +145,15 @@ public class StarMap {
 	};
 
 	/**
-	 * Finds the first 2 obstacles in the line connecting from (inclusive) to to (inclusive).
+	 * Finds the all obstacles in the line connecting from (inclusive) to to (inclusive).
 	 * If from and to are occupied by {@link Thing}s, then those will be the only objects returned.
 	 * @param q
 	 * @param from
 	 * @param to
+	 * @param cap stop after finding that many obstacles
 	 * @return
 	 */
-	public List<Thing> findObstaclesInLine(final Quadrant q, final Location from, final Location to) {
+	public List<Thing> findObstaclesInLine(Quadrant q, Location from, Location to, int cap) {
 		List<Thing> found = new ArrayList<>();
 		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), new Walker() {
 

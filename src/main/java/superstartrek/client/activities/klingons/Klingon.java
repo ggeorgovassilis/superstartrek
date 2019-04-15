@@ -111,7 +111,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	
 	public boolean hasClearShotAt(Location target, Enterprise enterprise, StarMap map) {
 		if (StarMap.within_distance(target, getLocation(), DISRUPTOR_RANGE_SECTORS)) {
-			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), target);
+			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), target,2);
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
 			if (obstacles.isEmpty())
@@ -158,7 +158,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		boolean inRange = StarMap.within_distance(this, enterprise, DISRUPTOR_RANGE_SECTORS);
 		if (!inRange)
 			return;
-		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), enterprise.getLocation());
+		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), enterprise.getLocation(),2);
 		obstacles.remove(this);
 		obstacles.remove(enterprise);
 		if (!obstacles.isEmpty())

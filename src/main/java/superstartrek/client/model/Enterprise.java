@@ -103,7 +103,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		for (int y = yFrom; y <= yTo; y++)
 			for (int x = xFrom; x <= xTo; x++)
 				map.getQuadrant(x, y).setExplored(true);
-		if (callbackBeforeWarping!=null)
+		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
 		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, fromQuadrant, fromLocation, dropQuadrant,
 				freeSpot);
@@ -113,36 +113,40 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Application.get().events.fireEvent(moveEvent);
 		return true;
 	}
-	
-	public List<Location> getReachableSectors(){
+
+	public List<Location> findReachableSectors() {
 		List<Location> list = new ArrayList<>();
 		double range = getImpulse().getValue();
-		while (range>0 && computeConsumptionForImpulseNavigation(range)>=getReactor().getValue())
-			range = range-0.25;
-		if (range <=0)
+		while (range > 1 && computeConsumptionForImpulseNavigation(range) >= getReactor().getValue())
+			range = range - 0.25;
+		if (range < 1)
 			return list;
-		double range_squared = range*range;
+		double range_squared = range * range;
 		Location loc = getLocation();
-		int minX = (int)Math.max(0,loc.getX() - range);
-		int maxX = (int)Math.min(7,loc.getX() + range);
-		int minY = (int)Math.max(0,loc.getY() - range);
-		int maxY = (int)Math.min(7,loc.getY() + range);
+		int minX = (int) Math.max(0, loc.getX() - range);
+		int maxX = (int) Math.min(7, loc.getX() + range);
+		int minY = (int) Math.max(0, loc.getY() - range);
+		int maxY = (int) Math.min(7, loc.getY() + range);
 		StarMap map = Application.get().starMap;
-		for (int y=minY;y<=maxY;y++)
-		for (int x=minX;x<=maxX;x++) {
-			//squared distance check saves one sqrt() call and thus is faster
-			if (StarMap.distance_squared(loc.getX(), loc.getY(), x, y)>range_squared)
-				continue;
-			Thing thing = map.findThingAt(getQuadrant(), x, y);
-			if (thing != null && !Klingon.isCloakedKlingon(thing))
-				continue; //TODO: cloaked klingons shouldn't count
-			Location tmp = Location.location(x, y);
-			List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), loc, tmp);
-			if (obstacles.size()==1) list.add(tmp); else {
-				if (Klingon.isCloakedKlingon(obstacles.get(1)))
+		for (int y = minY; y <= maxY; y++)
+			for (int x = minX; x <= maxX; x++) {
+				// squared distance check saves one sqrt() call and thus is faster
+				if (StarMap.distance_squared(loc.getX(), loc.getY(), x, y) > range_squared)
+					continue;
+				Thing thing = map.findThingAt(getQuadrant(), x, y);
+				if (thing != null && !Klingon.isCloakedKlingon(thing))
+					continue; // TODO: cloaked klingons shouldn't count
+				Location tmp = Location.location(x, y);
+				List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), loc, tmp,2);
+				// always contains enterprise; any more obstacles mean that the path is blocked...
+				if (obstacles.size() == 1)
 					list.add(tmp);
+				// ... except an invisible klingon
+				else if (Klingon.isCloakedKlingon(obstacles.get(1)))
+					list.add(tmp);
+				//TODO: verify that this doesn't give away cloaked klingons (eg. sectors behind a cloaked klingon
+				//are not reachable)
 			}
-		}
 		return list;
 	}
 
@@ -186,9 +190,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		impulse.decrease(distance);
 		_navigateTo(drop);
 	}
-	
+
 	public double computeConsumptionForImpulseNavigation(double distance) {
-		return distance*IMPULSE_CONSUMPTION;
+		return distance * IMPULSE_CONSUMPTION;
 	}
 
 	public void fireTorpedosAt(Location sector) {
@@ -201,10 +205,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return;
 		}
 
-		List<Thing> things = Application.get().starMap.findObstaclesInLine(quadrant, getLocation(), sector);
+		List<Thing> things = Application.get().starMap.findObstaclesInLine(quadrant, getLocation(), sector,8);
 		things.remove(this);
 		getTorpedos().decrease(1);
-		Thing target=null;
+		Thing target = null;
 		Random random = Application.get().random;
 		for (Thing thing : things) {
 			boolean hit = false;
@@ -261,10 +265,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return;
 		}
 		Klingon klingon = (Klingon) thing;
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", phasers.getValue() / distance, isAutoAim);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", phasers.getValue() / distance,
+				isAutoAim);
 		Application.get().events.fireEvent(event);
 
-		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", phasers.getValue() / distance, isAutoAim);
+		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", phasers.getValue() / distance,
+				isAutoAim);
 		Application.get().events.fireEvent(event);
 
 		phasers.setValue(0);
