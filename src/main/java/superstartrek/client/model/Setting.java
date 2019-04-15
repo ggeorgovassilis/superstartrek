@@ -80,6 +80,11 @@ public class Setting {
 		setValue(Math.min(getValue(), getCurrentUpperBound()));
 	}
 	
+	public void disable() {
+		setCurrentUpperBound(0);
+		setValue(0);
+	}
+	
 	public void reset() {
 		setValue(getDefaultValue());
 	}
@@ -96,5 +101,10 @@ public class Setting {
 	
 	public void setValue(boolean v) {
 		setValue(v?1:0);
+	}
+	
+	@Override
+	public String toString() {
+		return getName()+" : "+getValue()+"/"+getCurrentUpperBound()+"/"+getMaximum();
 	}
 }

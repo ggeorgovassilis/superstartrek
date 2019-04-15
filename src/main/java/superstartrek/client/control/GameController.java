@@ -44,8 +44,6 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	@Override
 	public void afterFire(FireEvent evt) {
-		if (evt.actor == application.starMap.enterprise && !evt.wasAutoFire)
-			endTurnAfterThis();
 		
 		if (evt.target instanceof Star) {
 			Star star = (Star)evt.target;
@@ -57,7 +55,9 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 			if (enterprise.getShields().getValue()<=0)
 				gameOver(GameOverEvent.Outcome.lost, "shields");
 
-		}
+		} else
+		if (evt.actor == application.starMap.enterprise && !evt.wasAutoFire)
+			endTurnAfterThis();
 	}
 
 	@Override
