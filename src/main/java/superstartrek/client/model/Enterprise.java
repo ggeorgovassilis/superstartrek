@@ -319,7 +319,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public boolean isDamaged() {
 		return impulse.getCurrentUpperBound() < impulse.getMaximum()
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
-				|| phasers.getCurrentUpperBound() < phasers.getCurrentUpperBound() || !torpedos.isEnabled()
+				|| phasers.getCurrentUpperBound() < phasers.getMaximum() || !torpedos.isEnabled()
 				|| !autoAim.isEnabled();
 	}
 

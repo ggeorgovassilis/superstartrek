@@ -299,4 +299,10 @@ public class TestEnterprise {
 		assertEquals(19,list.size());
 	}
 
+	@Test
+	public void test_isDamaged() {
+		assertFalse(enterprise.isDamaged());
+		enterprise.damagePhasers();
+		assertTrue(enterprise.isDamaged());
+	}
 }
