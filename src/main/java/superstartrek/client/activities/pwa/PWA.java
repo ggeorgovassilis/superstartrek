@@ -54,7 +54,7 @@ public class PWA {
 	}-*/;
 	
 	public static native void cleareCache()/*-{
-	caches.keys().then(function(cacheNames) {return Promise.all(
+	$wnd.caches.keys().then(function(cacheNames) {return Promise.all(
         cacheNames.filter(function(cacheName) {
         	console.log('SW','clearing',cacheName);
         	return true;
@@ -195,8 +195,8 @@ public class PWA {
 	}
 
 	public void run() {
-//		if (!GWT.isClient() || !GWT.isProdMode())
-//			return;
+		if (!GWT.isClient() || !GWT.isProdMode())
+			return;
 		if (!supportsServiceWorker())
 			return;
 		cacheFilesForOfflineUse();
