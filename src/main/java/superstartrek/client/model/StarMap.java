@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.google.gwt.user.client.Random;
-
+import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.utils.Random;
 
 public class StarMap {
 
@@ -100,9 +100,10 @@ public class StarMap {
 	}
 
 	public Location findFreeSpot(Quadrant q) {
+		Random random = Application.get().random;
 		while (true) {
-			int x = Random.nextInt(8);
-			int y = Random.nextInt(8);
+			int x = random.nextInt(8);
+			int y = random.nextInt(8);
 			Thing thing = findThingAt(q, x, y);
 			if (thing == null)
 				return Location.location(x, y);

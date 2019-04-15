@@ -18,7 +18,7 @@ public class Setup {
 		this.application = application;
 	}
 	
-	protected Quadrant makeQuadrant(StarMap map, int x, int y) {
+	public Quadrant makeQuadrant(StarMap map, int x, int y) {
 		Quadrant q = new Quadrant(names[(int)Math.floor((y*8+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
 		Random random = Application.get().random;
 		int stars = random.nextInt(Constants.MAX_STARS_IN_QUADRANT);
