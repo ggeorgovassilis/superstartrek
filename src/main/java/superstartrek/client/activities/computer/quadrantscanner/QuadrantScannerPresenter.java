@@ -101,15 +101,10 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		// we could just erase all sectors first and paint things over it, but that would increase DOM interactions.
 		// this approach (render into an array first, paint each sector only once) minimises DOM interactions.
 		Thing[][] arr = new Thing[8][8];
-		for (Thing t:q.getKlingons())
+		for (Thing t:starMap.getEverythingIn(q))
 			mark(t,arr);
-		for (Thing t:q.getStars())
-			mark(t,arr);
-		if (q.getStarBase() != null)
-			mark(q.getStarBase(), arr);
-		mark(starMap.enterprise, arr);
-		for (int x = 0; x < 8; x++) 
-		for (int y = 0; y < 8; y++) {
+		for (int y = 0; y < 8; y++)
+		for (int x = 0; x < 8; x++) {
 				Thing t = arr[x][y];
 				if (t!=null)
 					updateSector(t);
@@ -126,7 +121,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	@Override
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		// TODO: this all assumes that qTo is the currently visible quadrant. Validate
-		// respectively.
+		// assumption.
 		clearSector(lFrom.getX(), lFrom.getY());
 		updateSector(thing);
 	}
