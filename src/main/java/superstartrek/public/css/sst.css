@@ -339,49 +339,49 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 	margin-top:0.5em;
 }
 
-#messages ol{
+#messages-content{
 	margin:0;
 	padding:0 0 1em 0;
 	overflow:hidden;
 }
 
-#messages .entry:not(:last-child) {
+#messages-content > li:not(:last-child) {
 	border-bottom:solid grey 1px;
 	padding-bottom:0.5em;
 	margin-bottom:0.5em;
 }
 
-.entry.damage,.damaged{
+#messages-content > li.damage,.damaged{
 	color:orange;
 }
 
-.entry.enterprise-damaged{
+#messages-content > li.enterprise-damaged{
 	color:red;
 }
 
-.entry.fire{
+#messages-content > li.fire{
 	color:yellow;
 }
 
-.entry.gameover{
+#messages-content > li.gameover{
 	color:red;
 	font-size:120%;
 }
 
-.entry.klingon-uncloaked{
+#messages-content > li.klingon-uncloaked{
 	color:yellow;
 }
 
-.entry.klingon-damaged, .entry.klingon-destroyed{
+#messages-content > li.klingon-damaged, .entry.klingon-destroyed{
 	color:cyan;	
 }
 
-.entry.gamewon{
+#messages-content > li.gamewon{
 	color:lightblue;
 	font-size:120%;
 }
 
-.entry.product-info{
+#messages-content > li.product-info{
 	color:lime;
 	font-weight:bold;
 	font-size:120%;

@@ -34,7 +34,7 @@ import superstartrek.client.activities.messages.MessagesView;
 import superstartrek.client.activities.report.StatusReportPresenter;
 import superstartrek.client.activities.report.StatusReportView;
 import superstartrek.client.activities.messages.MessagesPresenter;
-import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
+import superstartrek.client.activities.sector.scan.SectorScanPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
@@ -99,7 +99,7 @@ public class Application
 		new IntroView(new IntroPresenter(this));
 		new ManualScreen(new ManualPresenter(this));
 		new ComputerView(new ComputerPresenter(this));
-		new ScanSectorView(new ScanSectorPresenter(this));
+		new ScanSectorView(new SectorScanPresenter(this));
 		new MessagesView(new MessagesPresenter(this));
 		new LRSScreen(new LRSPresenter(this));
 		new StatusReportView(new StatusReportPresenter(this));

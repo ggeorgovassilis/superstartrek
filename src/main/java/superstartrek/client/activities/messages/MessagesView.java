@@ -14,7 +14,6 @@ public class MessagesView extends PopupView<MessageActivity> {
 
 	@Override
 	public void decorateWidget() {
-		super.decorateWidget();
 		eContent = getHtmlPanel().getElementById("messages-content");
 		eButton = getHtmlPanel().getElementById("dismiss-message-button");
 		getWidget().getElement().setAttribute("id", "messages");
@@ -27,6 +26,7 @@ public class MessagesView extends PopupView<MessageActivity> {
 			}
 		});
 		hide();
+		super.decorateWidget();
 	}
 
 	public MessagesView(Presenter<MessageActivity> presenter) {
@@ -40,7 +40,7 @@ public class MessagesView extends PopupView<MessageActivity> {
 	public void showMessage(String formattedMessage, String category) {
 		Element line = DOM.createElement("li");
 		line.setInnerHTML(formattedMessage);
-		line.addClassName("entry " + category);
+		line.addClassName(category);
 		eContent.appendChild(line);
 	}
 

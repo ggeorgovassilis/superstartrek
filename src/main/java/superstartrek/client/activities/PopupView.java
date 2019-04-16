@@ -86,7 +86,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	
 	@Override
 	public boolean isVisible() {
-		return getStyleName().contains("slidein");
+		return getStyleName().contains("slidein") && super.isVisible();
 	}
 	
 	@Override
