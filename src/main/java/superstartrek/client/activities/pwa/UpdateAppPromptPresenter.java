@@ -31,7 +31,7 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppActivity> i
 	
 	public void acceptUpdateButtonClicked() {
 		((UpdateAppPromptView)getView()).disableButtons();
-		pwa.clearCache(new ScheduledCommand() {
+		PWA.clearCache(new ScheduledCommand() {
 			
 			@Override
 			public void execute() {

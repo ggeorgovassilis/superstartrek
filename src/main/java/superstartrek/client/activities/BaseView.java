@@ -16,15 +16,14 @@ public abstract class BaseView<A extends Activity> extends Composite implements 
 		return (T)presenter;
 	}
 	
-	@Override
-	public void finishUiConstruction() {
+	protected void decorateWidget() {
 	}
 	
 	protected BaseView(Presenter<A> presenter) {
 		this.presenter = presenter;
 		Widget widgetImpl = createWidgetImplementation();
 		initWidget(widgetImpl);
-		finishUiConstruction();
+		decorateWidget();
 		presenter.setView(this);
 	}
 	

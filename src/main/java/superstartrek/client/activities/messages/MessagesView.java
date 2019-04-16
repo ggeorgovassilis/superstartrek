@@ -13,8 +13,8 @@ public class MessagesView extends PopupView<MessageActivity> {
 	Element eButton;
 
 	@Override
-	public void finishUiConstruction() {
-		super.finishUiConstruction();
+	public void decorateWidget() {
+		super.decorateWidget();
 		eContent = getHtmlPanel().getElementById("messages-content");
 		eButton = getHtmlPanel().getElementById("dismiss-message-button");
 		getWidget().getElement().setAttribute("id", "messages");

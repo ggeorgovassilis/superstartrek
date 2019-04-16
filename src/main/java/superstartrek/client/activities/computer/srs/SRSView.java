@@ -36,8 +36,8 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView, ClickHan
 	}
 
 	@Override
-	public void finishUiConstruction() {
-		super.finishUiConstruction();
+	public void decorateWidget() {
+		super.decorateWidget();
 		addDomHandler(this, ClickEvent.getType());
 	}
 

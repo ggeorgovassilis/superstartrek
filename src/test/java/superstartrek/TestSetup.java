@@ -5,18 +5,14 @@ import org.junit.Test;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.web.bindery.event.shared.testing.CountingEventBus;
-
 import superstartrek.client.Application;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
-import superstartrek.client.model.Star;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Random;
 
-import static org.mockito.Mock.*;
 import static org.junit.Assert.*;
 
 public class TestSetup {

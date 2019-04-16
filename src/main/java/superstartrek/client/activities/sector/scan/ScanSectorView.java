@@ -11,8 +11,8 @@ public class ScanSectorView extends PopupView<ScanSectorActivity> implements ISc
 	Element backButton;
 	
 	@Override
-	public void finishUiConstruction() {
-		super.finishUiConstruction();
+	public void decorateWidget() {
+		super.decorateWidget();
 		backButton = getHtmlPanel().getElementById("screen-sectorscan-back");
 		DOM.sinkEvents(backButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONMOUSEDOWN | Event.ONTOUCHSTART);
 		DOM.setEventListener(backButton, new EventListener() {

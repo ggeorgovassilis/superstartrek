@@ -48,8 +48,8 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	}
 	
 	@Override
-	public void finishUiConstruction() {
-		super.finishUiConstruction();
+	public void decorateWidget() {
+		super.decorateWidget();
 		RootPanel.get().add(this);
 	}
 	

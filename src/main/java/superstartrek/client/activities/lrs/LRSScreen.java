@@ -24,8 +24,8 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 	}
 	
 	@Override
-	public void finishUiConstruction() {
-		super.finishUiConstruction();
+	public void decorateScreen() {
+		super.decorateWidget();
 		cells = new Element[8][8];
 		NodeList<Element> tds = CSS.querySelectorAll("#longrangescan .quadrants td");
 		for (int i=tds.getLength()-1;i>=0;i--) {

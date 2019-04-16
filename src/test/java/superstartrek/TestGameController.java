@@ -11,7 +11,6 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler.FireEvent;
 import superstartrek.client.activities.combat.FireHandler.FireEvent.Phase;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;

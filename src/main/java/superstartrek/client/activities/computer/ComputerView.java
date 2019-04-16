@@ -37,8 +37,8 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 	}
 	
 	@Override
-	protected void setupCompositeUI() {
-		super.setupCompositeUI();
+	protected void decorateScreen() {
+		super.decorateScreen();
 		addStyleName("computer-screen");
 		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
 		
