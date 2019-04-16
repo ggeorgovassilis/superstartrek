@@ -28,14 +28,15 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 		SectorContextMenuPresenter.this.quadrant = quadrant;
 		ISectorMenuView v = (ISectorMenuView) getView();
 		Enterprise e = application.starMap.enterprise;
+		//read dimensions before modifying the DOM to avoid re-layout
+		int horizEmToPx = v.getMetricWidthInPx();
+		int vertEmToPx = v.getMetricHeightInPx();
 		v.enableButton("cmd_navigate", e.getImpulse().isEnabled());
 		v.enableButton("cmd_firePhasers", e.getPhasers().isEnabled());
 		v.enableButton("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
 		v.enableButton("cmd_toggleFireAtWill", e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue());
 		//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
 		//this is some heavy heuristics, because the menu has a "fixed" size (in em units)
-		int horizEmToPx = v.getMetricWidthInPx();
-		int vertEmToPx = v.getMetricHeightInPx();
 		//that's empirical knowledge from the CSS
 		int menuWidthEm = 12; 
 		int menuHeightEm = 10; 
