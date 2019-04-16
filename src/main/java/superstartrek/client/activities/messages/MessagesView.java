@@ -25,7 +25,6 @@ public class MessagesView extends PopupView<MessageActivity> {
 				((MessagesPresenter) getPresenter()).dismissButtonClicked();
 			}
 		});
-		hide();
 		super.decorateWidget();
 	}
 
@@ -46,12 +45,10 @@ public class MessagesView extends PopupView<MessageActivity> {
 
 	@Override
 	public void show() {
-		if (isVisible())
-			return;
 		// profiling showed high CPU usage of focus; this check attempts to reduce
 		// invocations of focus
-		// if (popup.isVisible())
-		// return;
+		if (isVisible())
+			return;
 		super.show();
 		eButton.focus();
 	}

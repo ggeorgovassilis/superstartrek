@@ -23,37 +23,40 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 		application.events.addHandler(TurnEndedEvent.TYPE, this);
 		application.addHistoryListener(this);
 	}
+	
+	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
+		SectorContextMenuPresenter.this.quadrant = quadrant;
+		ISectorMenuView v = (ISectorMenuView) getView();
+		Enterprise e = application.starMap.enterprise;
+		v.enableButton("cmd_navigate", e.getImpulse().isEnabled());
+		v.enableButton("cmd_firePhasers", e.getPhasers().isEnabled());
+		v.enableButton("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
+		v.enableButton("cmd_toggleFireAtWill", e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue());
+		//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
+		//this is some heavy heuristics, because the menu has a "fixed" size (in em units)
+		int horizEmToPx = v.getMetricWidthInPx();
+		int vertEmToPx = v.getMetricHeightInPx();
+		//that's empirical knowledge from the CSS
+		int menuWidthEm = 12; 
+		int menuHeightEm = 10; 
+		int screen_width_em = application.browser.getWindowWidthPx() / horizEmToPx;
+		
+		int target_x_em = Math.max(screenX/horizEmToPx,menuWidthEm/2);
+		target_x_em = Math.min(target_x_em,screen_width_em-menuWidthEm/2);
+		int target_x_px = target_x_em*horizEmToPx;
+
+		int target_y_em = Math.max(screenY/vertEmToPx,menuHeightEm/2);
+		int target_y_px = target_y_em*vertEmToPx;
+		v.setLocation(target_x_px, target_y_px);
+		v.show();
+	}
 
 	public void showMenu(int screenX, int screenY, Location sector, Quadrant quadrant) {
 		hideMenu(new ScheduledCommand() {
 			
 			@Override
 			public void execute() {
-				SectorContextMenuPresenter.this.quadrant = quadrant;
-				ISectorMenuView v = (ISectorMenuView) getView();
-				Enterprise e = application.starMap.enterprise;
-				v.enableButton("cmd_navigate", e.getImpulse().isEnabled());
-				v.enableButton("cmd_firePhasers", e.getPhasers().isEnabled());
-				v.enableButton("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
-				v.enableButton("cmd_toggleFireAtWill", e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue());
-				//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
-				//this is some heavy heuristics, because the menu has a "fixed" size (in em units)
-				int horizEmToPx = v.getMetricWidthInPx();
-				int vertEmToPx = v.getMetricHeightInPx();
-				//that's empirical knowledge from the CSS
-				int menuWidthEm = 12; 
-				int menuHeightEm = 10; 
-				int screen_width_em = application.browser.getWindowWidthPx() / horizEmToPx;
-				
-				int target_x_em = Math.max(screenX/horizEmToPx,menuWidthEm/2);
-				target_x_em = Math.min(target_x_em,screen_width_em-menuWidthEm/2);
-				int target_x_px = target_x_em*horizEmToPx;
-
-				int target_y_em = Math.max(screenY/vertEmToPx,menuHeightEm/2);
-				int target_y_px = target_y_em*vertEmToPx;
-				v.setLocation(target_x_px, target_y_px);
-				
-				v.show();
+				showMenuImmediatelly(screenX, screenY, sector, quadrant);
 			}
 		});
 	}

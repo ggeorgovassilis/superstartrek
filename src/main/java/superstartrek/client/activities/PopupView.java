@@ -31,9 +31,14 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 	
 	@Override
 	protected Widget createWidgetImplementation() {
-		HtmlWidget htmlPanel = new HtmlWidget(DOM.createDiv(), getContentForHtmlPanel());
-		htmlPanel.addStyleName("PopupView");
-		htmlPanel.addDomHandler(new KeyDownHandler() {
+		return new HtmlWidget(DOM.createDiv(), getContentForHtmlPanel());
+	}
+	
+	@Override
+	public void decorateWidget() {
+		super.decorateWidget();
+		addStyleName("PopupView");
+		addDomHandler(new KeyDownHandler() {
 			
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
@@ -44,12 +49,7 @@ public abstract class PopupView<T extends Activity> extends BaseView<T>{
 				}
 			}
 		}, KeyDownEvent.getType());
-		return htmlPanel;
-	}
-	
-	@Override
-	public void decorateWidget() {
-		super.decorateWidget();
+		hide();
 		RootPanel.get().add(this);
 	}
 	

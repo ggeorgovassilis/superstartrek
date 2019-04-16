@@ -36,11 +36,11 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuActivity>
 
 	@Override
 	public void decorateWidget() {
-		super.decorateWidget();
 		addDomHandler(this, MouseDownEvent.getType());
 		addDomHandler(this, ClickEvent.getType());
 		addDomHandler(this, TouchStartEvent.getType());
 		addStyleName("sector-context-menu");
+		super.decorateWidget();
 		hide();
 		RootPanel.get().add(this);
 	}
