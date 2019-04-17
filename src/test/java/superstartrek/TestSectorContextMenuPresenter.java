@@ -19,7 +19,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Browser;
 
-public class TestSectorMenuPresenter {
+public class TestSectorContextMenuPresenter {
 
 	SectorContextMenuPresenter presenter;
 	Application app;
@@ -60,7 +60,7 @@ public class TestSectorMenuPresenter {
 		when(view.getMetricHeightInPx()).thenReturn(10);
 		presenter.showMenu(66, 77, Location.location(1,2), q);
 		verify(view).enableButton("cmd_navigate", true);
-		verify(view).enableButton("cmd_firePhasers", true);
+		verify(view).enableButton("cmd_firePhasers", false);
 		verify(view).enableButton("cmd_fireTorpedos", true);
 		verify(view).enableButton("cmd_toggleFireAtWill", true);
 	}

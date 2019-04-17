@@ -131,7 +131,7 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 }
 
 .navigation-target{
-	background-color:rgba(100,0,100,0.5);
+	background-color:rgba(0,140,240,0.3);
 }
 
 .cloaked{
@@ -188,7 +188,7 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover{
 }
 
 .star-class-o{
-	color:blue;
+	color:darkturquoise;
 }
 
 .star-class-b{

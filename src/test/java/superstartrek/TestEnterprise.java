@@ -305,4 +305,29 @@ public class TestEnterprise {
 		enterprise.damagePhasers();
 		assertTrue(enterprise.isDamaged());
 	}
+	
+	@Test
+	public void test_canFirePhaserAt() {
+		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
+		map.setQuadrant(quadrant);
+		enterprise.setQuadrant(quadrant);
+		enterprise.setLocation(Location.location(4, 4));
+		
+		Star star = new Star(3,3, Star.StarClass.A);
+		quadrant.getStars().add(star);
+		
+		Klingon klingon = new Klingon(Klingon.ShipClass.BirdOfPrey);
+		klingon.setLocation(Location.location(5, 5));
+		quadrant.getKlingons().add(klingon);
+		assertEquals("There is nothing at 7:7",enterprise.canFirePhaserAt(Location.location(7, 7)));
+		assertEquals("Phasers can target only enemy vessels",enterprise.canFirePhaserAt(star.getLocation()));
+		
+		klingon.getCloak().setValue(true);
+		assertEquals("There is nothing at 5:5", enterprise.canFirePhaserAt(klingon.getLocation()));
+		
+		klingon.uncloak();
+		assertNull(null, enterprise.canFirePhaserAt(klingon.getLocation()));
+		
+	
+	}
 }

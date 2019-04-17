@@ -89,11 +89,11 @@ public class ComputerView extends BaseScreen<ComputerActivity> implements ICompu
 	}
 	
 	@Override
-	public void updateShields(Setting shields) {
+	public void updateShields(int value, int currentUpperBound, int maximum) {
 		Element eMax = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		Element eValue = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
-		eMax.getStyle().setWidth(100*shields.getCurrentUpperBound()/shields.getMaximum(), Unit.PCT);
-		eValue.getStyle().setWidth(100*shields.getValue()/shields.getMaximum(), Unit.PCT);
+		eMax.getStyle().setWidth(100*currentUpperBound/maximum, Unit.PCT);
+		eValue.getStyle().setWidth(100*value/maximum, Unit.PCT);
 	}
 	
 	public ComputerView(ComputerPresenter presenter) {
