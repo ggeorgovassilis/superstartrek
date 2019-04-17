@@ -86,10 +86,6 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		klingonTurnHandler = null;
 	}
 
-	public boolean isCloaked() {
-		return cloak.getBooleanValue();
-	}
-
 	public boolean canCloak() {
 		return cloak.isEnabled();
 	}
@@ -163,7 +159,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		obstacles.remove(enterprise);
 		if (!obstacles.isEmpty())
 			return;
-		if (isCloaked())
+		if (!isVisible())
 			uncloak();
 		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, enterprise, "disruptor", disruptor.getValue(), true);
 		Application.get().events.fireEvent(event);
@@ -205,7 +201,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		if (qTo == this.getQuadrant()) {
 			registerActionHandlers();
 			cloak.setValue(canCloak());
-			css = "klingon " + (isCloaked() ? "cloaked" : "");
+			css = "klingon " + (isVisible() ? "" : "cloaked");
 			Location newLocation = Application.get().starMap.findFreeSpot(getQuadrant());
 			jumpTo(newLocation);
 			repair();
@@ -217,7 +213,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	public void onFire(FireEvent evt) {
 		if (evt.target != this)
 			return;
-		if (isCloaked()) {
+		if (!isVisible()) {
 			uncloak();
 			destroy();
 			return;
@@ -237,10 +233,15 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		}
 	}
 	
+	@Override
+	public boolean isVisible() {
+		return !cloak.getBooleanValue();
+	}
+	
 	public static boolean isCloakedKlingon(Thing thing){
 		if (thing instanceof Klingon) {
 			Klingon k = (Klingon)thing;
-			return k.isCloaked();
+			return !k.isVisible();
 		}
 		return false;
 	}

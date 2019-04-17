@@ -174,6 +174,7 @@ public class StarMap {
 		return findObstaclesInLine(index, from, to, cap);
 	}
 
+	//TODO: remove the radius parameter and just return the closest free location
 	public Location findFreeSpotAround(Quadrant q, Location loc, int radius) {
 		int minX = Math.max(0, loc.getX() - radius);
 		int minY = Math.max(0, loc.getY() - radius);

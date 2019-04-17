@@ -242,15 +242,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public String canFirePhaserAt(Location sector) {
 		Thing thing = Application.get().starMap.findThingAt(quadrant, sector.getX(), sector.getY());
-		if (thing == null) {
+		if (thing == null || !thing.isVisible()) {
 			return "There is nothing at " + sector;
 		}
 		if (!(thing instanceof Klingon)) {
 			return "Phasers can target only enemy vessels";
-		}
-		Klingon klingon = (Klingon) thing;
-		if (klingon.isCloaked()) {
-			return "There is nothing at " + sector;
 		}
 		double distance = StarMap.distance(this, thing);
 		if (distance > PHASER_RANGE) {
@@ -423,7 +419,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public void autoAim() {
 		for (Klingon k : getQuadrant().getKlingons())
-			if (!k.isCloaked() && StarMap.within_distance(this, k, PHASER_RANGE)) {
+			if (k.isVisible() && StarMap.within_distance(this, k, PHASER_RANGE)) {
 				firePhasersAt(k.getLocation(), true);
 				return;
 			}
