@@ -312,9 +312,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), destination, 2);
 		obstacles.remove(this);
-		if (!obstacles.isEmpty())
-			return false;
-		return true;
+		boolean allObstaclesInvisible = true;
+		for (Thing t:obstacles)
+			allObstaclesInvisible|=!t.isVisible();
+		return allObstaclesInvisible;
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
