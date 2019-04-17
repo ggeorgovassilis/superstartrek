@@ -132,21 +132,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				// squared distance check saves one sqrt() call and thus is faster
 				if (StarMap.distance_squared(loc.getX(), loc.getY(), x, y) > range_squared)
 					continue;
-				Thing thing = index.getThingAt(x, y);
-				if (thing != null && !Klingon.isCloakedKlingon(thing))
-					continue; // TODO: cloaked klingons shouldn't count
 				Location tmp = Location.location(x, y);
-				List<Thing> obstacles = map.findObstaclesInLine(index, loc, tmp, 2);
-				// always contains enterprise; any more obstacles mean that the path is
-				// blocked...
-				if (obstacles.size() == 1)
+				if (canNavigateTo(index, tmp))
 					list.add(tmp);
-				// ... except an invisible klingon
-				else if (Klingon.isCloakedKlingon(obstacles.get(1)))
-					list.add(tmp);
-				// TODO: verify that this doesn't give away cloaked klingons (eg. sectors behind
-				// a cloaked klingon
-				// are not reachable)
 			}
 		return list;
 	}
@@ -159,18 +147,18 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public void navigateTo(Location loc) {
-		if (!canNavigateTo(loc)) {
+		Application app = Application.get();
+		StarMap map = app.starMap;
+		QuadrantIndex index = new QuadrantIndex(quadrant, map);
+		if (!canNavigateTo(index, loc)) {
 			// TODO: this should never be the case; navigation constraints are already
 			// checked
 			Application.get().message("Can't go there");
 			return;
 		}
-		Application app = Application.get();
 		double distance = StarMap.distance(this.getLocation(), loc);
 		List<Location> path = new ArrayList<>();
 		path.add(getLocation());
-		StarMap map = app.starMap;
-		QuadrantIndex index = new QuadrantIndex(quadrant, map);
 		map.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), new Walker() {
 
 			@Override
@@ -298,7 +286,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Application.get().events.fireEvent(new EnterpriseRepairedEvent(this));
 	}
 
-	public boolean canNavigateTo(Location destination) {
+	public boolean canNavigateTo(QuadrantIndex index, Location destination) {
 		StarMap map = Application.get().starMap;
 		if (!getImpulse().isEnabled())
 			return false;
@@ -307,14 +295,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		if (getReactor().getValue() < computeConsumptionForImpulseNavigation(distance))
 			return false;
-		Thing thing = map.findThingAt(getQuadrant(), destination.getX(), destination.getY());
+		Thing thing = index.getThingAt(destination.getX(), destination.getY());
 		if (!Klingon.isEmptyOrCloakedKlingon(thing))
 			return false;
-		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), destination, 2);
+		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, (int)distance);
 		obstacles.remove(this);
 		boolean allObstaclesInvisible = true;
 		for (Thing t:obstacles)
-			allObstaclesInvisible|=!t.isVisible();
+			allObstaclesInvisible&=!t.isVisible();
 		return allObstaclesInvisible;
 	}
 

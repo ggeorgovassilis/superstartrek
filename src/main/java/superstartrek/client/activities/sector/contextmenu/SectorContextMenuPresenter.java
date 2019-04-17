@@ -8,6 +8,7 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
@@ -35,7 +36,7 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 		//read dimensions before modifying the DOM to avoid re-layout
 		int horizEmToPx = v.getMetricWidthInPx();
 		int vertEmToPx = v.getMetricHeightInPx();
-		navigationEnabled = e.canNavigateTo(sector);
+		navigationEnabled = e.canNavigateTo(new QuadrantIndex(quadrant, getApplication().starMap), sector);
 		phasersEnabled = e.canFirePhaserAt(sector)==null;
 		torpedosEngabled = e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0;
 		autoaimEnabled = e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue();
