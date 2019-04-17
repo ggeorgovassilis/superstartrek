@@ -10,6 +10,8 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.IComputerView;
+import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
@@ -20,7 +22,6 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
-
 
 public class TestComputerPresenter {
 
@@ -34,18 +35,18 @@ public class TestComputerPresenter {
 
 	@Before
 	public void setup() {
-		app  = Application.get();
+		app = Application.get();
 		app.events = events = new CountingEventBus();
-		
-		quadrant = new Quadrant("test", 1,2);
+
+		quadrant = new Quadrant("test", 1, 2);
 		map = new StarMap();
 		map.setQuadrant(quadrant);
 		app.starMap = map;
-		
+
 		enterprise = new Enterprise(app);
 		enterprise.setQuadrant(quadrant);
 		map.enterprise = enterprise;
-		
+
 		presenter = new ComputerPresenter(app);
 		view = mock(IComputerView.class);
 		presenter.setView(view);
@@ -55,7 +56,7 @@ public class TestComputerPresenter {
 	public void testOnTurnStarted_1() {
 		TurnStartedEvent evt = new TurnStartedEvent();
 		presenter.onTurnStarted(evt);
-		
+
 		verify(view).setDockInStarbaseButtonVisibility(false);
 		verify(view).setRepairButtonVisibility(false);
 		verify(view).updateShortStatus(eq(""), eq(""), eq(""), eq(""));
@@ -63,47 +64,77 @@ public class TestComputerPresenter {
 
 	@Test
 	public void testOnTurnStarted_2() {
-		enterprise.setLocation(Location.location(1,1));
+		enterprise.setLocation(Location.location(1, 1));
 		enterprise.getPhasers().damage(10);
-		quadrant.setStarBase(new StarBase(Location.location(3,3)));
+		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
 		TurnStartedEvent evt = new TurnStartedEvent();
 		presenter.onTurnStarted(evt);
 
-		
 		verify(view).setDockInStarbaseButtonVisibility(true);
 		verify(view).setRepairButtonVisibility(false);
 		verify(view).updateShortStatus(eq(""), eq(""), eq("damage-light"), eq(""));
 	}
-	
+
 	@Test
 	public void testDockWithStarbase() {
-		enterprise.setLocation(Location.location(1,1));
+		enterprise.setLocation(Location.location(1, 1));
 		enterprise.getPhasers().damage(10);
 		enterprise.getAntimatter().decrease(10);
 		enterprise.getTorpedos().damage(1);
 		enterprise.getImpulse().damage(1);
-		quadrant.setStarBase(new StarBase(Location.location(3,3)));
-		
+		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
+
 		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
-			
+
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 				assertEquals(enterprise, thing);
 				assertEquals(quadrant, qFrom);
-				assertEquals(Location.location(1,1), lFrom);
+				assertEquals(Location.location(1, 1), lFrom);
 				assertEquals(quadrant, qTo);
-				assertEquals(Location.location(2,2), lTo);
+				assertEquals(Location.location(2, 2), lTo);
 			}
 		});
-		
+
 		presenter.onDockInStarbaseButtonClicked();
-		
+
 		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
-		assertEquals(Location.location(2,2), enterprise.getLocation());
-		
+		assertEquals(Location.location(2, 2), enterprise.getLocation());
+
 		assertEquals(1, events.getFiredCount(EnterpriseRepairedEvent.TYPE));
 		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
 	}
 
+	@Test
+	public void test_updateQuadrantHeader_klingon_near() {
+		enterprise.setLocation(Location.location(1, 1));
+		Klingon k = new Klingon(ShipClass.Raider);
+		k.setLocation(Location.location(3, 3));
+		quadrant.getKlingons().add(k);
+		presenter.updateQuadrantHeader();
+		
+		verify(view).setQuadrantName("test", "red-alert");
+	}
+
+	@Test
+	public void test_updateQuadrantHeader_klingon_far() {
+		enterprise.setLocation(Location.location(1, 1));
+		Klingon k = new Klingon(ShipClass.Raider);
+		k.setLocation(Location.location(5, 7));
+		quadrant.getKlingons().add(k);
+		presenter.updateQuadrantHeader();
+		
+		verify(view).setQuadrantName("test", "yellow-alert");
+	}
 	
+	@Test
+	public void test_updateQuadrantHeader() {
+		enterprise.setLocation(Location.location(1, 1));
+		Klingon k = new Klingon(ShipClass.Raider);
+		presenter.updateQuadrantHeader();
+		
+		verify(view).setQuadrantName("test", "");
+	}
+
+
 }
