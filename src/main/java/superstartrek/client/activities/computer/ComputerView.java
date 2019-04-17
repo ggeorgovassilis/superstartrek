@@ -17,7 +17,6 @@ import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
-import superstartrek.client.model.Setting;
 
 public class ComputerView extends BaseScreen<ComputerActivity> implements IComputerView{
 

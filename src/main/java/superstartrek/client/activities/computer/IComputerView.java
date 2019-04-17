@@ -1,7 +1,6 @@
 package superstartrek.client.activities.computer;
 
 import superstartrek.client.activities.IBaseView;
-import superstartrek.client.model.Setting;
 
 public interface IComputerView extends IBaseView<ComputerActivity>{
 
