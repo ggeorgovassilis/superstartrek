@@ -158,12 +158,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public void navigateTo(Location loc) {
-		Application app = Application.get();
-		double distance = StarMap.distance(this.getLocation(), loc);
-		if (distance > getImpulse().getValue()) {
-			app.message("Course " + Math.round(distance) + " exceeds maximum impulse power " + getImpulse().getValue());
+		if (!canNavigateTo(loc)) {
+			//TODO: this should never be the case; navigation constraints are already checked
+			Application.get().message("Can't go there");
 			return;
 		}
+		Application app = Application.get();
+		double distance = StarMap.distance(this.getLocation(), loc);
 		List<Location> path = new ArrayList<>();
 		path.add(getLocation());
 		app.starMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), new Walker() {
@@ -234,29 +235,41 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (target == null)
 			Application.get().message("Torpedo exploded in the void");
 	}
-
-	public void firePhasersAt(Location sector, boolean isAutoAim) {
+	
+	public String canFirePhaserAt(Location sector) {
 		Thing thing = Application.get().starMap.findThingAt(quadrant, sector.getX(), sector.getY());
 		if (thing == null) {
-			Application.get().message("There is nothing at " + sector);
-			return;
+			return "There is nothing at " + sector;
 		}
 		if (!(thing instanceof Klingon)) {
-			Application.get().message("Phasers can target only enemy vessels");
-			return;
+			return "Phasers can target only enemy vessels";
+		}
+		Klingon klingon = (Klingon)thing;
+		if (klingon.isCloaked()) {
+			return "There is nothing at " + sector;
 		}
 		double distance = StarMap.distance(this, thing);
 		if (distance > PHASER_RANGE) {
-			Application.get().message("Target is too far away.");
-			return;
+			return "Target is too far away.";
 		}
 		if (!phasers.isEnabled()) {
-			if (!isAutoAim)
-				Application.get().message("Phaser array is disabled");
-			return;
+			return "Phaser array is disabled";
 		}
 		if (phasers.getValue() == 0) {
-			Application.get().message("Phasers already fired.");
+			return "Phasers already fired.";
+		}
+		if (getReactor().getValue() < phasers.getValue()) {
+			return "Insufficient reactor output";
+		}
+		return null;
+	}
+
+	public void firePhasersAt(Location sector, boolean isAutoAim) {
+		Thing thing = Application.get().starMap.findThingAt(quadrant, sector.getX(), sector.getY());
+		String error = canFirePhaserAt(sector);
+		if (error!=null) {
+			if (!isAutoAim)
+				Application.get().message(error);
 			return;
 		}
 		if (!consume("phasers", phasers.getValue())) {
@@ -265,15 +278,18 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return;
 		}
 		Klingon klingon = (Klingon) thing;
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", phasers.getValue() / distance,
-				isAutoAim);
-		Application.get().events.fireEvent(event);
-
-		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", phasers.getValue() / distance,
-				isAutoAim);
-		Application.get().events.fireEvent(event);
-
+		double distance = StarMap.distance(this, thing);
+		double damage = phasers.getValue() / distance;
 		phasers.setValue(0);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", damage,
+				isAutoAim);
+		Application.get().events.fireEvent(event);
+
+
+		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", damage,
+				isAutoAim);
+		Application.get().events.fireEvent(event);
+
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
@@ -283,6 +299,25 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		shields.repair();
 		autoAim.repair();
 		Application.get().events.fireEvent(new EnterpriseRepairedEvent(this));
+	}
+	
+	public boolean canNavigateTo(Location destination) {
+		StarMap map = Application.get().starMap;
+		if (!getImpulse().isEnabled())
+			return false;
+		double distance = StarMap.distance(getLocation(), destination);
+		if (distance> getImpulse().getValue())
+			return false;
+		if (getReactor().getValue()<computeConsumptionForImpulseNavigation(distance))
+			return false;
+		Thing thing = map.findThingAt(getQuadrant(), destination.getX(), destination.getY());
+		if (!Klingon.isEmptyOrCloakedKlingon(thing))
+			return false;
+		List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), getLocation(), destination, 2);
+		obstacles.remove(this);
+		if (!obstacles.isEmpty())
+			return false;
+		return true;
 	}
 
 	protected boolean canBeRepaired(Setting setting) {

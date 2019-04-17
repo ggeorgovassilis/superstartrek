@@ -114,7 +114,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		Enterprise enterprise = application.starMap.enterprise;
 		Setting shields = enterprise.getShields();
 		IComputerView view = (IComputerView)getView();
-		view.updateShields(shields);
+		view.updateShields((int)shields.getValue(), (int)shields.getCurrentUpperBound(), (int)shields.getMaximum());
 	}
 
 	public void onRepairButtonClicked() {

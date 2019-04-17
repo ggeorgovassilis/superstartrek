@@ -97,7 +97,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	public Setting getCloak() {
 		return cloak;
 	}
-
+	
 	public void uncloak() {
 		cloak.setValue(0);
 		setCss("klingon");
@@ -243,5 +243,9 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			return k.isCloaked();
 		}
 		return false;
+	}
+	
+	public static boolean isEmptyOrCloakedKlingon(Thing thing) {
+		return thing == null || isCloakedKlingon(thing);
 	}
 }

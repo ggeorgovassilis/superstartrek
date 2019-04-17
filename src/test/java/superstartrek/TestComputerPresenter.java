@@ -130,10 +130,16 @@ public class TestComputerPresenter {
 	@Test
 	public void test_updateQuadrantHeader() {
 		enterprise.setLocation(Location.location(1, 1));
-		Klingon k = new Klingon(ShipClass.Raider);
 		presenter.updateQuadrantHeader();
 		
 		verify(view).setQuadrantName("test", "");
+	}
+	
+	@Test
+	public void test_updateShieldsView() {
+		enterprise.getShields().damage(10);
+		presenter.updateShieldsView();
+		verify(view).updateShields(90, 90, 100);
 	}
 
 

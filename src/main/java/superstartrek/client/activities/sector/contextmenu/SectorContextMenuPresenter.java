@@ -5,9 +5,11 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.Thing;
 import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
@@ -16,6 +18,10 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 
 	Location sector;
 	Quadrant quadrant;
+	boolean navigationEnabled = false;
+	boolean phasersEnabled = false;
+	boolean torpedosEngabled = false;
+	boolean autoaimEnabled = false;
 
 	public SectorContextMenuPresenter(Application application) {
 		super(application);
@@ -31,10 +37,15 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 		//read dimensions before modifying the DOM to avoid re-layout
 		int horizEmToPx = v.getMetricWidthInPx();
 		int vertEmToPx = v.getMetricHeightInPx();
-		v.enableButton("cmd_navigate", e.getImpulse().isEnabled());
-		v.enableButton("cmd_firePhasers", e.getPhasers().isEnabled());
-		v.enableButton("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
-		v.enableButton("cmd_toggleFireAtWill", e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue());
+		navigationEnabled = e.canNavigateTo(sector);
+		phasersEnabled = e.canFirePhaserAt(sector)==null;
+		torpedosEngabled = e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0;
+		autoaimEnabled = e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue();
+		
+		v.enableButton("cmd_navigate", navigationEnabled);
+		v.enableButton("cmd_firePhasers", phasersEnabled);
+		v.enableButton("cmd_fireTorpedos", torpedosEngabled);
+		v.enableButton("cmd_toggleFireAtWill", autoaimEnabled);
 		//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
 		//this is some heavy heuristics, because the menu has a "fixed" size (in em units)
 		//that's empirical knowledge from the CSS
@@ -89,13 +100,13 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 			public void execute() {
 				if ("cmd_scanSector".equals(command))
 					application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
-				else if ("cmd_navigate".equals(command))
+				else if ("cmd_navigate".equals(command) && navigationEnabled)
 					application.starMap.enterprise.navigateTo(sector);
-				else if ("cmd_firePhasers".equals(command))
+				else if ("cmd_firePhasers".equals(command) && phasersEnabled)
 					application.starMap.enterprise.firePhasersAt(sector, false);
-				else if ("cmd_fireTorpedos".equals(command))
+				else if ("cmd_fireTorpedos".equals(command) && torpedosEngabled)
 					application.starMap.enterprise.fireTorpedosAt(sector);
-				else if ("cmd_toggleFireAtWill".equals(command))
+				else if ("cmd_toggleFireAtWill".equals(command) && autoaimEnabled)
 					application.starMap.enterprise.toggleAutoAim();
 			}
 		});

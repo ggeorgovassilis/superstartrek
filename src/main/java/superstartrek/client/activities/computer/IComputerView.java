@@ -7,7 +7,7 @@ public interface IComputerView extends IBaseView<ComputerActivity>{
 
 	void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos);
 
-	void updateShields(Setting shields);
+	void updateShields(int value, int currentUpperBound, int maximum);
 
 	void showStarDate(String sd);
 
