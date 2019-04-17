@@ -153,30 +153,36 @@ public class StarMap {
 	 * @param cap stop after finding that many obstacles
 	 * @return
 	 */
-	public List<Thing> findObstaclesInLine(Quadrant q, Location from, Location to, int cap) {
+	public List<Thing> findObstaclesInLine(QuadrantIndex q, Location from, Location to, int cap) {
 		List<Thing> found = new ArrayList<>();
 		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), new Walker() {
 
 			@Override
 			public boolean visit(int x, int y) {
-				Thing thing = findThingAt(q, x, y);
+				Thing thing = q.getThingAt(x, y);
 				if (thing != null) {
 					found.add(thing);
 				}
-				return found.size()<2;
+				return found.size()<cap;
 			}
 		});
 		return found;
 	}
 
+	public List<Thing> findObstaclesInLine(Quadrant q, Location from, Location to, int cap) {
+		QuadrantIndex index = new QuadrantIndex(q, this);
+		return findObstaclesInLine(index, from, to, cap);
+	}
+
 	public Location findFreeSpotAround(Quadrant q, Location loc, int radius) {
-		int minX = Math.max(0, loc.getX() - 1);
-		int minY = Math.max(0, loc.getY() - 1);
-		int maxX = Math.min(7, loc.getX() + 1);
-		int maxY = Math.min(7, loc.getY() + 1);
+		int minX = Math.max(0, loc.getX() - radius);
+		int minY = Math.max(0, loc.getY() - radius);
+		int maxX = Math.min(7, loc.getX() + radius);
+		int maxY = Math.min(7, loc.getY() + radius);
+		QuadrantIndex index = new QuadrantIndex(q, this);
 		for (int x = minX; x <= maxX; x++)
 			for (int y = minY; y <= maxY; y++) {
-				if (null == findThingAt(q, x, y))
+				if (null == index.getThingAt(x, y))
 					return Location.location(x, y);
 			}
 		return null;
@@ -185,6 +191,7 @@ public class StarMap {
 	public boolean hasKlingons() {
 		for (int x = 0; x < quadrants.length; x++)
 			for (int y = 0; y < quadrants[x].length; y++)
+				//quadrant could be null in unit test
 				if (quadrants[x][y]!=null && !quadrants[x][y].getKlingons().isEmpty())
 					return true;
 		return false;

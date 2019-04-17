@@ -60,12 +60,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
 		Location fromLocation = getLocation();
 		Quadrant fromQuadrant = getQuadrant();
-		if (!consume("warp", 20)) {
+		if (!consume("warp", 20) && !getQuadrant().getKlingons().isEmpty()) {
 			// we can let this slide if no enemies in quadrant
-			if (!getQuadrant().getKlingons().isEmpty()) {
-				Application.get().message("Insufficient reactor output");
-				return false;
-			}
+			Application.get().message("Insufficient reactor output");
+			return false;
 		}
 		int destinationX = destinationQuadrant.getX();
 		int destinationY = destinationQuadrant.getY();
@@ -128,24 +126,27 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int minY = (int) Math.max(0, loc.getY() - range);
 		int maxY = (int) Math.min(7, loc.getY() + range);
 		StarMap map = Application.get().starMap;
+		QuadrantIndex index = new QuadrantIndex(getQuadrant(), map);
 		for (int y = minY; y <= maxY; y++)
 			for (int x = minX; x <= maxX; x++) {
 				// squared distance check saves one sqrt() call and thus is faster
 				if (StarMap.distance_squared(loc.getX(), loc.getY(), x, y) > range_squared)
 					continue;
-				Thing thing = map.findThingAt(getQuadrant(), x, y);
+				Thing thing = index.getThingAt(x, y);
 				if (thing != null && !Klingon.isCloakedKlingon(thing))
 					continue; // TODO: cloaked klingons shouldn't count
 				Location tmp = Location.location(x, y);
-				List<Thing> obstacles = map.findObstaclesInLine(getQuadrant(), loc, tmp,2);
-				// always contains enterprise; any more obstacles mean that the path is blocked...
+				List<Thing> obstacles = map.findObstaclesInLine(index, loc, tmp, 2);
+				// always contains enterprise; any more obstacles mean that the path is
+				// blocked...
 				if (obstacles.size() == 1)
 					list.add(tmp);
 				// ... except an invisible klingon
 				else if (Klingon.isCloakedKlingon(obstacles.get(1)))
 					list.add(tmp);
-				//TODO: verify that this doesn't give away cloaked klingons (eg. sectors behind a cloaked klingon
-				//are not reachable)
+				// TODO: verify that this doesn't give away cloaked klingons (eg. sectors behind
+				// a cloaked klingon
+				// are not reachable)
 			}
 		return list;
 	}
@@ -159,7 +160,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public void navigateTo(Location loc) {
 		if (!canNavigateTo(loc)) {
-			//TODO: this should never be the case; navigation constraints are already checked
+			// TODO: this should never be the case; navigation constraints are already
+			// checked
 			Application.get().message("Can't go there");
 			return;
 		}
@@ -167,13 +169,15 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		double distance = StarMap.distance(this.getLocation(), loc);
 		List<Location> path = new ArrayList<>();
 		path.add(getLocation());
-		app.starMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), new Walker() {
+		StarMap map = app.starMap;
+		QuadrantIndex index = new QuadrantIndex(quadrant, map);
+		map.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), new Walker() {
 
 			@Override
 			public boolean visit(int x, int y) {
-				Thing thing = app.starMap.findThingAt(getQuadrant(), x, y);
+				Thing thing = index.getThingAt(x, y);
 				if (thing != null && thing != app.starMap.enterprise) {
-					if (thing instanceof Klingon && ((Klingon) thing).isCloaked()) {
+					if (Klingon.isCloakedKlingon(thing)) {
 						((Klingon) thing).uncloak();
 					}
 					return false;
@@ -206,7 +210,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return;
 		}
 
-		List<Thing> things = Application.get().starMap.findObstaclesInLine(quadrant, getLocation(), sector,8);
+		List<Thing> things = Application.get().starMap.findObstaclesInLine(quadrant, getLocation(), sector, 8);
 		things.remove(this);
 		getTorpedos().decrease(1);
 		Thing target = null;
@@ -235,7 +239,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (target == null)
 			Application.get().message("Torpedo exploded in the void");
 	}
-	
+
 	public String canFirePhaserAt(Location sector) {
 		Thing thing = Application.get().starMap.findThingAt(quadrant, sector.getX(), sector.getY());
 		if (thing == null) {
@@ -244,7 +248,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (!(thing instanceof Klingon)) {
 			return "Phasers can target only enemy vessels";
 		}
-		Klingon klingon = (Klingon)thing;
+		Klingon klingon = (Klingon) thing;
 		if (klingon.isCloaked()) {
 			return "There is nothing at " + sector;
 		}
@@ -267,7 +271,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public void firePhasersAt(Location sector, boolean isAutoAim) {
 		Thing thing = Application.get().starMap.findThingAt(quadrant, sector.getX(), sector.getY());
 		String error = canFirePhaserAt(sector);
-		if (error!=null) {
+		if (error != null) {
 			if (!isAutoAim)
 				Application.get().message(error);
 			return;
@@ -281,13 +285,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		double distance = StarMap.distance(this, thing);
 		double damage = phasers.getValue() / distance;
 		phasers.setValue(0);
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", damage,
-				isAutoAim);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", damage, isAutoAim);
 		Application.get().events.fireEvent(event);
 
-
-		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", damage,
-				isAutoAim);
+		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", damage, isAutoAim);
 		Application.get().events.fireEvent(event);
 
 	}
@@ -300,15 +301,15 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		autoAim.repair();
 		Application.get().events.fireEvent(new EnterpriseRepairedEvent(this));
 	}
-	
+
 	public boolean canNavigateTo(Location destination) {
 		StarMap map = Application.get().starMap;
 		if (!getImpulse().isEnabled())
 			return false;
 		double distance = StarMap.distance(getLocation(), destination);
-		if (distance> getImpulse().getValue())
+		if (distance > getImpulse().getValue())
 			return false;
-		if (getReactor().getValue()<computeConsumptionForImpulseNavigation(distance))
+		if (getReactor().getValue() < computeConsumptionForImpulseNavigation(distance))
 			return false;
 		Thing thing = map.findThingAt(getQuadrant(), destination.getX(), destination.getY());
 		if (!Klingon.isEmptyOrCloakedKlingon(thing))
