@@ -530,6 +530,14 @@ a.progress-bar {
 	color:grey;
 }
 
+.impulse-disabled .vessel .wings{
+	color:grey;
+}
+
+.disruptor-disabled .vessel .bridge{
+	color:grey;
+}
+
 .overlay{
 	position:absolute;
 	cursor:pointer;
