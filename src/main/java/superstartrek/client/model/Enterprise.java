@@ -120,7 +120,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		List<Location> list = new ArrayList<>();
 		double range = getImpulse().getValue();
 		while (range > 1 && computeConsumptionForImpulseNavigation(range) >= getReactor().getValue())
-			range = range - 0.25;
+			range = range - 0.5;
 		if (range < 1)
 			return list;
 		double range_squared = range * range;
@@ -130,7 +130,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int maxX = (int) Math.min(7, lx + range);
 		int minY = (int) Math.max(0, ly - range);
 		int maxY = (int) Math.min(7, ly + range);
-		GWT.log(minX+":"+minY+" - "+maxX+":"+maxY);
 		StarMap map = application.starMap;
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), map);
 		for (int x = minX; x <= maxX; x++)

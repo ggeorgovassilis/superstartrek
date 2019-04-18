@@ -152,8 +152,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void afterFire(FireEvent evt) {
-		// target might have been destroyed (so not on map anymore), that's why we don't
-		// call updateSector(target)
+		// target might have been destroyed (so not on map anymore) and thus null
 		Thing target = evt.target;
 		if (target != null)
 			updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
@@ -168,7 +167,6 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	
 	public void updateMapWithReachableSectors() {
 		List<Location> sectors = application.starMap.enterprise.findReachableSectors();
-		GWT.log(""+sectors);
 		clearAllNavigationTargets();
 		for (Location l:sectors)
 			markSectorAsNavigationTarget(l.getX(), l.getY());
