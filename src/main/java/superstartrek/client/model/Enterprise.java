@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -125,9 +127,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int lx = getLocation().getX();
 		int ly = getLocation().getY();
 		int minX = (int) Math.max(0, lx - range);
-		int maxX = (int) Math.min(7, ly + range);
-		int minY = (int) Math.max(0, lx - range);
+		int maxX = (int) Math.min(7, lx + range);
+		int minY = (int) Math.max(0, ly - range);
 		int maxY = (int) Math.min(7, ly + range);
+		GWT.log(minX+":"+minY+" - "+maxX+":"+maxY);
 		StarMap map = application.starMap;
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), map);
 		for (int x = minX; x <= maxX; x++)

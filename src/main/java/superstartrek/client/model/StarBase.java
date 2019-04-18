@@ -4,7 +4,7 @@ public class StarBase extends Thing{
 
 	public StarBase() {
 		setName("a Federation star base");
-		setSymbol("<!>");
+		setSymbol("&lt;!&gt;");
 		setCss("starbase");
 	}
 	

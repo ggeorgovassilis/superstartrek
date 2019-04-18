@@ -2,6 +2,8 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -166,6 +168,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	
 	public void updateMapWithReachableSectors() {
 		List<Location> sectors = application.starMap.enterprise.findReachableSectors();
+		GWT.log(""+sectors);
 		clearAllNavigationTargets();
 		for (Location l:sectors)
 			markSectorAsNavigationTarget(l.getX(), l.getY());
