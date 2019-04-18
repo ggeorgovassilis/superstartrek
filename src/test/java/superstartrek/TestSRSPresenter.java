@@ -64,7 +64,7 @@ public class TestSRSPresenter {
 		map.setQuadrant(makeQuadrant(1,2, false, 2, 1));
 		map.setQuadrant(makeQuadrant(2,2, true, 1, 2));
 		Quadrant q = map.getQuadrant(1, 1);
-		Enterprise e = map.enterprise = new Enterprise(app);
+		Enterprise e = map.enterprise = new Enterprise(app, map);
 		e.setQuadrant(q);
 		e.setLocation(Location.location(6,7));
 		presenter.updateRadar();

@@ -47,7 +47,7 @@ public class TestEnterprise {
 		application = new Application();
 		application.events = events = new CountingEventBus();
 		application.starMap = map = new StarMap();
-		map.enterprise = enterprise = new Enterprise(application);
+		map.enterprise = enterprise = new Enterprise(application, map);
 
 	}
 

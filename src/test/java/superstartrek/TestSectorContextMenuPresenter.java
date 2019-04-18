@@ -43,7 +43,7 @@ public class TestSectorContextMenuPresenter {
 	public void test() {
 		app.starMap = map = new StarMap();
 		Quadrant q = new Quadrant("test q", 3, 4);
-		Enterprise e = new Enterprise(app);
+		Enterprise e = new Enterprise(app, map);
 		e.setQuadrant(q);
 		map.enterprise = e;
 		doAnswer(new Answer<Void>() {

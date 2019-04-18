@@ -42,7 +42,7 @@ public class TestGameController {
 		application = new Application();
 		application.events = events = new CountingEventBus();
 		application.starMap = map = new StarMap();
-		enterprise = map.enterprise = new Enterprise(application);
+		enterprise = map.enterprise = new Enterprise(application, map);
 		quadrant = new Quadrant("test", 1, 2);
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);

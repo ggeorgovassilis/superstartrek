@@ -32,7 +32,7 @@ public class TestSetup {
 	@Test
 	public void test_makeQuadrant() {
 		StarMap map = new StarMap();
-		map.enterprise = new Enterprise(application);
+		map.enterprise = new Enterprise(application, map);
 		final int NUMBER_OF_STARS = 5;
 		final int NUMBER_OF_KLINGONS = 2;
 		application.random = new Random(new StubRandomNumberFactory(

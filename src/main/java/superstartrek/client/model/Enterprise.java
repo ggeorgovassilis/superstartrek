@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.shared.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -45,10 +47,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		return autoAim;
 	}
 
-	public Enterprise(Application app) {
+	public Enterprise(Application app, StarMap map) {
 		super(new Setting("impulse", 3, 3), new Setting("shields", 100, 100));
 		this.application = app;
-		this.starMap = app.starMap;
+		this.starMap = map;
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");

@@ -53,7 +53,7 @@ public class Setup {
 	
 	public StarMap createNewMap() {
 		StarMap map = new StarMap();
-		map.enterprise = new Enterprise(application);
+		map.enterprise = new Enterprise(application, map);
 		for (int y = 0; y < 8; y++)
 			for (int x = 0; x < 8; x++) {
 				Quadrant q = makeQuadrant(map, x, y);

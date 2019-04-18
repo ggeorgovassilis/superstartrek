@@ -10,6 +10,7 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 import superstartrek.client.Application;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.model.Enterprise;
+import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Random;
 import superstartrek.client.utils.RandomNumberFactory;
 
@@ -22,13 +23,15 @@ public class TestRepairProvisionally {
 	Enterprise enterprise;
 	Application application;
 	CountingEventBus events;
+	StarMap map;
 	
 	@Before
 	public void setup() {
 		application = new Application();
 		application.events = events = new CountingEventBus();
-		enterprise = new Enterprise(application);
+		map = new StarMap();
 		
+		enterprise = new Enterprise(application, map);
 		RandomNumberFactory random = mock(RandomNumberFactory.class);
 		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
 			int counter = 0;

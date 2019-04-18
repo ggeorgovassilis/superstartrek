@@ -40,7 +40,7 @@ public class TestSectorScannerPresenter {
 	public void testScanSector_notthing() {
 		Quadrant q = new Quadrant("test quadrant", 1, 2);
 		map.setQuadrant(q);
-		Enterprise enterprise = new Enterprise(application);
+		Enterprise enterprise = new Enterprise(application, map);
 		map.enterprise = enterprise;
 		enterprise.setLocation(Location.location(0,0));
 		enterprise.setQuadrant(q);
@@ -61,7 +61,7 @@ public class TestSectorScannerPresenter {
 	public void testScanSector_enterprise() {
 		Quadrant q = new Quadrant("test quadrant", 1, 2);
 		map.setQuadrant(q);
-		Enterprise enterprise = new Enterprise(application);
+		Enterprise enterprise = new Enterprise(application, map);
 		map.enterprise = enterprise;
 		enterprise.setLocation(Location.location(0,0));
 		enterprise.setQuadrant(q);

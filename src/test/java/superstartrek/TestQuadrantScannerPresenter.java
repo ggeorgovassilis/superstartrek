@@ -48,7 +48,7 @@ public class TestQuadrantScannerPresenter {
 
 	@Test
 	public void testOnEnterpriseWarped() {
-		Enterprise enterprise = map.enterprise = new Enterprise(app);
+		Enterprise enterprise = map.enterprise = new Enterprise(app, map);
 		Quadrant qFrom = new Quadrant("from 1 2", 1, 2);
 		Quadrant qTo = new Quadrant("to 3 4", 3, 4);
 		Location lFrom = Location.location(4, 5);
@@ -83,7 +83,7 @@ public class TestQuadrantScannerPresenter {
 	public void test_mark_navigatable_sectors() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		map.setQuadrant(quadrant);
-		Enterprise enterprise = map.enterprise = new Enterprise(app);
+		Enterprise enterprise = map.enterprise = new Enterprise(app, map);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
 		quadrant.getStars().add(new Star(1,6,StarClass.A));
