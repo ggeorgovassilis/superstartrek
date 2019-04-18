@@ -120,9 +120,9 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		// TODO: this all assumes that qTo is the currently visible quadrant. Validate
-		// assumption.
-		clearSector(lFrom.getX(), lFrom.getY());
+		//can't just clear sector, because the "from" location may refer to a different
+		//quadrant when eg. Enterprise warps
+		updateSector(qTo, lFrom.getX(), lFrom.getY());
 		updateSector(thing);
 	}
 
