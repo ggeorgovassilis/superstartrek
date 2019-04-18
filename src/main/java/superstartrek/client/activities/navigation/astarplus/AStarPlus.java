@@ -74,15 +74,9 @@ public class AStarPlus {
 	void initialiseMatrix(Quadrant quadrant, StarMap map) {
 		for (int i = 0; i < matrix.length; i++)
 			matrix[i] = FREE;
-		for (Thing obstacle : quadrant.getKlingons())
+		List<Thing> things = map.getEverythingIn(quadrant);
+		for (Thing obstacle : things)
 			markOccupied(obstacle);
-		for (Thing obstacle : quadrant.getStars())
-			markOccupied(obstacle);
-		if (quadrant.getStarBase() != null)
-			markOccupied(quadrant.getStarBase());
-		// null only in some unit tests
-		if (map.enterprise != null)
-			markOccupied(map.enterprise);
 	}
 
 	void addNeighboursToTodo(int fromSectorIndex) {

@@ -2,7 +2,7 @@ package superstartrek.client.activities.sector.scan;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.computer.ComputerEvent;
+import superstartrek.client.activities.computer.ComputerHandler.ComputerEvent;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;

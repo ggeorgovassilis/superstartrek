@@ -9,12 +9,15 @@ import java.util.Random;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.google.gwt.event.shared.SimpleEventBus;
+
 import astar.AStar;
 import astar.Node;
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.astarplus.AStarPlus;
+import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
@@ -130,6 +133,9 @@ public class TestAStarPlus {
 		for (int i = 0; i < TURNS; i++) {
 			Quadrant q = new Quadrant("", 0, 0);
 			StarMap map = new StarMap();
+			Application app = new Application();
+			app.events = new SimpleEventBus();
+			map.enterprise = new Enterprise(app, map);
 			Location from = Location.location(random.nextInt(8), random.nextInt(8));
 			Location to = Location.location(random.nextInt(8), random.nextInt(8));
 			AStar astar = new AStar(8, 8, new Node(from.getY(), from.getX()), new Node(to.getY(), to.getX()));
@@ -167,8 +173,9 @@ public class TestAStarPlus {
 		StarMap map = new StarMap();
 		Location from = Location.location(1, 3);
 		Location to = Location.location(2, 7);
-		Application.get().events = new com.google.gwt.event.shared.testing.CountingEventBus();
-		//Enterprise e = new Enterprise(Application.get());
+		Application app = Application.get();
+		app.events = new com.google.gwt.event.shared.testing.CountingEventBus();
+		map.enterprise = new Enterprise(Application.get(), map);
 		//e.setLocation(to);
 		//map.enterprise = e;
 	//	e.setQuadrant(q);

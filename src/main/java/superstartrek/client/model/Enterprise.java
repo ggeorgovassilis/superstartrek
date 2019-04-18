@@ -122,17 +122,18 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (range < 1)
 			return list;
 		double range_squared = range * range;
-		Location loc = getLocation();
-		int minX = (int) Math.max(0, loc.getX() - range);
-		int maxX = (int) Math.min(7, loc.getX() + range);
-		int minY = (int) Math.max(0, loc.getY() - range);
-		int maxY = (int) Math.min(7, loc.getY() + range);
+		int lx = getLocation().getX();
+		int ly = getLocation().getY();
+		int minX = (int) Math.max(0, lx - range);
+		int maxX = (int) Math.min(7, ly + range);
+		int minY = (int) Math.max(0, lx - range);
+		int maxY = (int) Math.min(7, ly + range);
 		StarMap map = application.starMap;
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), map);
-		for (int y = minY; y <= maxY; y++)
-			for (int x = minX; x <= maxX; x++) {
+		for (int x = minX; x <= maxX; x++)
+			for (int y = minY; y <= maxY; y++) {
 				// squared distance check saves one sqrt() call and thus is faster
-				if (StarMap.distance_squared(loc.getX(), loc.getY(), x, y) > range_squared)
+				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
 				Location tmp = Location.location(x, y);
 				if (canNavigateTo(index, tmp))
@@ -298,11 +299,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Thing thing = index.getThingAt(destination.getX(), destination.getY());
 		if (!Klingon.isEmptyOrCloakedKlingon(thing))
 			return false;
-		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, (int)distance);
+		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, (int) distance);
 		obstacles.remove(this);
 		boolean allObstaclesInvisible = true;
-		for (Thing t:obstacles)
-			allObstaclesInvisible&=!t.isVisible();
+		for (Thing t : obstacles)
+			allObstaclesInvisible &= !t.isVisible();
 		return allObstaclesInvisible;
 	}
 
