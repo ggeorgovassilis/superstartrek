@@ -96,8 +96,6 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	void updateScreen() {
 		StarMap starMap = getApplication().starMap;
 		Quadrant q = starMap.enterprise.getQuadrant();
-		if (q == null)
-			throw new RuntimeException("q is null");
 		// we could just erase all sectors first and paint things over it, but that would increase DOM interactions.
 		// this approach (render into an array first, paint each sector only once) minimises DOM interactions.
 		Thing[][] arr = new Thing[8][8];

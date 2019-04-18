@@ -75,7 +75,13 @@ public class TestSectorScannerPresenter {
 		verify(view).setProperty(eq("scan-report-shields"), eq("scan-report-shields-value"), eq(""), eq("%100"));
 		verify(view).setProperty(eq("scan-report-weapons"), eq("scan-report-weapons-value"), eq(""), eq("online"));
 		verify(view).setProperty(eq("scan-report-engines"), eq("scan-report-engines-value"), eq(""), eq("online"));
-
+	}
+	
+	@Test
+	public void test_doneWithMenu() {
+		when(view.isVisible()).thenReturn(true);
+		presenter.doneWithMenu();
+		verify(view).hide();
 	}
 }
 
