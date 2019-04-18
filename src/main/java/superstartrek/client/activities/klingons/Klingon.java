@@ -37,7 +37,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	public enum ShipClass {
 
-		Raider("a Klingon raider", 50, 10, "c-}"), BirdOfPrey("a Bird-of-prey", 100, 20, "C-D");
+		Raider("a Klingon raider", 50, 10, "<div class=vessel><span class=bridge>c</span><span class=fuselage>-</span><span class=wings>}</span></div>"), BirdOfPrey("a Bird-of-prey", 100, 20, "<div class=vessel><span class=bridge>C</span><span class=fuselage>-</span><span class=wings>D</span></div>");
 
 		ShipClass(String label, int shields, int disruptor, String symbol) {
 			this.label = label;

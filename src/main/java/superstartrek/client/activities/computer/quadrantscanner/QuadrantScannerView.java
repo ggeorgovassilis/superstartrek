@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
@@ -14,6 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.utils.DomUtils;
 import superstartrek.client.utils.HtmlWidget;
+import superstartrek.client.utils.Strings;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> implements IQuadrantScannerView {
 
@@ -34,7 +36,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	@Override
 	public void updateSector(int x, int y, String content, String css) {
 		Element e = eSectors[x][y];
-		e.setInnerText(content);
+		e.setInnerHTML(content);
 		e.setClassName(css);
 	}
 
@@ -82,6 +84,9 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 	protected void handleClick(DomEvent<?> event) {
 		NativeEvent ne= event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
+		// clicks on vessel parts need to bubble up to cell
+		while (Strings.isEmpty(e.getAttribute("data-x")) && !"quadrantscan".equals(e.getId()))
+			e = e.getParentElement();
 		try {
 			int x = Integer.parseInt(e.getAttribute("data-x"));
 			int y = Integer.parseInt(e.getAttribute("data-y"));

@@ -66,6 +66,10 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 			Vessel vessel = (Vessel) thing;
 			double status = vessel.getShields().health();
 			css += " " + CSS.damageClass(status);
+			css += vessel.getImpulse().isEnabled()?" ":" impulse-disabled";
+			if (thing instanceof Klingon) {
+				css+=((Klingon)thing).getDisruptor().isEnabled()?"":" disruptor-disabled";
+			}
 		}
 		((IQuadrantScannerView) view).updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content,
 				css);
