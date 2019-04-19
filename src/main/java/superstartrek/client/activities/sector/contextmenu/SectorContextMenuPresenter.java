@@ -1,6 +1,10 @@
 package superstartrek.client.activities.sector.contextmenu;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -17,16 +21,20 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 
 	Location sector;
 	Quadrant quadrant;
-	boolean navigationEnabled = false;
-	boolean phasersEnabled = false;
-	boolean torpedosEngabled = false;
-	boolean autoaimEnabled = false;
+	Map<String,Boolean> buttonsEnabled = new HashMap<>();
 
 	public SectorContextMenuPresenter(Application application) {
 		super(application);
 		application.events.addHandler(SectorSelectedEvent.TYPE, this);
 		application.events.addHandler(TurnEndedEvent.TYPE, this);
 		application.addHistoryListener(this);
+
+		buttonsEnabled.put("cmd_navigate", false);
+		buttonsEnabled.put("cmd_scanSector", true);
+		buttonsEnabled.put("cmd_firePhasers", false);
+		buttonsEnabled.put("cmd_fireTorpedos", false);
+		buttonsEnabled.put("cmd_toggleFireAtWill", false);
+		buttonsEnabled.put("cmd_computer", true);
 	}
 	
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
@@ -36,15 +44,13 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 		//read dimensions before modifying the DOM to avoid re-layout
 		int horizEmToPx = v.getMetricWidthInPx();
 		int vertEmToPx = v.getMetricHeightInPx();
-		navigationEnabled = e.canNavigateTo(new QuadrantIndex(quadrant, getApplication().starMap), sector);
-		phasersEnabled = e.canFirePhaserAt(sector)==null;
-		torpedosEngabled = e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0;
-		autoaimEnabled = e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue();
 		
-		v.enableButton("cmd_navigate", navigationEnabled);
-		v.enableButton("cmd_firePhasers", phasersEnabled);
-		v.enableButton("cmd_fireTorpedos", torpedosEngabled);
-		v.enableButton("cmd_toggleFireAtWill", autoaimEnabled);
+		buttonsEnabled.put("cmd_navigate", e.canNavigateTo(new QuadrantIndex(quadrant, getApplication().starMap), sector));
+		buttonsEnabled.put("cmd_firePhasers", e.canFirePhaserAt(sector)==null);
+		buttonsEnabled.put("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
+		buttonsEnabled.put("cmd_toggleFireAtWill", e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue());
+		for (String cmd:buttonsEnabled.keySet())
+			v.enableButton(cmd, buttonsEnabled.get(cmd));
 		//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
 		//this is some heavy heuristics, because the menu has a "fixed" size (in em units)
 		//that's empirical knowledge from the CSS
@@ -93,20 +99,27 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 	}
 
 	public void onCommandClicked(String command) {
+		if (buttonsEnabled.get(command) == true)
 		hideMenu(new ScheduledCommand() {
 
 			@Override
 			public void execute() {
-				if ("cmd_scanSector".equals(command))
-					application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
-				else if ("cmd_navigate".equals(command) && navigationEnabled)
-					application.starMap.enterprise.navigateTo(sector);
-				else if ("cmd_firePhasers".equals(command) && phasersEnabled)
-					application.starMap.enterprise.firePhasersAt(sector, false);
-				else if ("cmd_fireTorpedos".equals(command) && torpedosEngabled)
-					application.starMap.enterprise.fireTorpedosAt(sector);
-				else if ("cmd_toggleFireAtWill".equals(command) && autoaimEnabled)
-					application.starMap.enterprise.toggleAutoAim();
+				switch (command) {
+					case "cmd_ScanSector":
+						application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
+						break;
+					case "cmd_navigate":
+						application.starMap.enterprise.navigateTo(sector);
+						break;
+					case "cmd_firePhasers":
+						application.starMap.enterprise.firePhasersAt(sector, false);
+						break;
+					case "cmd_fireTorpedos":
+						application.starMap.enterprise.fireTorpedosAt(sector);
+					case "cmd_toggleFireAtWill":
+						application.starMap.enterprise.toggleAutoAim();
+						break;
+				}
 			}
 		});
 	}
