@@ -36,14 +36,6 @@ public abstract class Thing {
 		this.name = name;
 	}
 
-	public Quadrant getQuadrant() {
-		return quadrant;
-	}
-
-	public void setQuadrant(Quadrant quadrant) {
-		this.quadrant = quadrant;
-	}
-
 	public void setLocation(Location l) {
 		if (location == null)
 			throw new IllegalArgumentException("location is null");

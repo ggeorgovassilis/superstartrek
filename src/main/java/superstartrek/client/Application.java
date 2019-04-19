@@ -39,6 +39,7 @@ import superstartrek.client.activities.sector.scan.ScanSectorView;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Browser;
@@ -67,16 +68,17 @@ public class Application
 	public Random random;
 	
 	public static Application get() {
-		if (that == null)
-			that = new Application();
 		return that;
 	}
 	
 	public Application() {
-		log.info("Application constructor");
 		if (Application.that!=null)
 			GWT.log("There already is an application instance");
 		Application.that = this;
+	}
+	
+	public Quadrant getActiveQuadrant() {
+		return starMap.enterprise.getQuadrant();
 	}
 
 	public Resources getResources() {

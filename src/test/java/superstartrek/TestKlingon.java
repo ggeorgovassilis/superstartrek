@@ -51,7 +51,7 @@ public class TestKlingon {
 		enterprise.setQuadrant(quadrant);
 		map.enterprise = enterprise;
 		klingon = new Klingon(ShipClass.Raider);
-		klingon.setQuadrant(quadrant);
+		quadrant.getKlingons().add(klingon);
 	}
 
 	@Test

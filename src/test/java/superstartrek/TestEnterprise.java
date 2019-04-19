@@ -178,7 +178,6 @@ public class TestEnterprise {
 		enterprise.setQuadrant(quadrant);
 		
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		klingon.setQuadrant(quadrant);
 		quadrant.getKlingons().add(klingon);
 		klingon.setLocation(Location.location(1, 1));
 		klingon.registerActionHandlers();
@@ -228,7 +227,6 @@ public class TestEnterprise {
 		enterprise.setQuadrant(quadrant);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		klingon.setQuadrant(quadrant);
 		quadrant.getKlingons().add(klingon);
 		klingon.setLocation(Location.location(1, 1));
 		klingon.registerActionHandlers();

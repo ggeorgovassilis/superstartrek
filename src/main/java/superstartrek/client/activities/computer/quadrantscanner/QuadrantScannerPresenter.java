@@ -155,7 +155,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		// target might have been destroyed (so not on map anymore) and thus null
 		Thing target = evt.target;
 		if (target != null)
-			updateSector(target.getQuadrant(), target.getLocation().getX(), target.getLocation().getY());
+			updateSector(evt.quadrant, target.getLocation().getX(), target.getLocation().getY());
 	}
 	
 	public void clearAllNavigationTargets() {

@@ -30,6 +30,15 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	Setting antimatter = new Setting("antimatter", 1000, 1000);
 	Setting reactor = new Setting("reactor", 60, 60);
 	Setting autoAim = new Setting("auto aim", 1, 1);
+	Quadrant quadrant;
+	
+	public Quadrant getQuadrant() {
+		return quadrant;
+	}
+	
+	public void setQuadrant(Quadrant quadrant) {
+		this.quadrant = quadrant;
+	}
 
 	public Setting getReactor() {
 		return reactor;
@@ -223,9 +232,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			}
 		}
 
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, target, "torpedos", 50, false);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, target, "torpedos", 50, false);
 		application.events.fireEvent(event);
-		event = new FireEvent(FireEvent.Phase.afterFire, this, target, "torpedos", 50, false);
+		event = new FireEvent(FireEvent.Phase.afterFire, getQuadrant(), this, target, "torpedos", 50, false);
 		application.events.fireEvent(event);
 		if (target == null)
 			application.message("Torpedo exploded in the void");
@@ -272,10 +281,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		double distance = StarMap.distance(this, thing);
 		double damage = phasers.getValue() / distance;
 		phasers.setValue(0);
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, this, klingon, "phasers", damage, isAutoAim);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, klingon, "phasers", damage, isAutoAim);
 		application.events.fireEvent(event);
 
-		event = new FireEvent(FireEvent.Phase.afterFire, this, klingon, "phasers", damage, isAutoAim);
+		event = new FireEvent(FireEvent.Phase.afterFire, getQuadrant(), this, klingon, "phasers", damage, isAutoAim);
 		application.events.fireEvent(event);
 
 	}

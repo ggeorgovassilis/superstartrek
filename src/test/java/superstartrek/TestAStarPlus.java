@@ -180,7 +180,6 @@ public class TestAStarPlus {
 		//map.enterprise = e;
 	//	e.setQuadrant(q);
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
-		k.setQuadrant(q);
 		k.setLocation(from);
 		q.getKlingons().add(k);
 		AStarPlus asp = new AStarPlus();

@@ -25,14 +25,12 @@ public class Setup {
 		while (stars-->0) {
 			Location loc = map.findFreeSpot(q);
 			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[random.nextInt(StarClass.values().length)]);
-			star.setQuadrant(q);
 			q.getStars().add(star);
 		}
 		if ((x+y*8) % (64/Constants.NO_OF_STARBASES_ON_MAP) ==0) {
 			StarBase starBase = new StarBase();
 			Location loc = map.findFreeSpot(q);
 			starBase.setLocation(loc);
-			starBase.setQuadrant(q);
 			q.setExplored(true);
 			q.setStarBase(starBase);
 		}
@@ -42,7 +40,6 @@ public class Setup {
 			while (klingons-->0) {
 				int cIndex = random.nextInt(Klingon.ShipClass.values().length);
 				Klingon k = new Klingon((Klingon.ShipClass.values()[cIndex]));
-				k.setQuadrant(q);
 				Location loc = map.findFreeSpot(q);
 				k.setLocation(loc);
 				q.getKlingons().add(k);

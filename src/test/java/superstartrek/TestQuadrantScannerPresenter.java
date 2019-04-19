@@ -108,7 +108,6 @@ public class TestQuadrantScannerPresenter {
 		Klingon k = new Klingon(Klingon.ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(3, 4));
 		q.getKlingons().add(k);
-		k.setQuadrant(q);
 		map.enterprise = new Enterprise(app, map);
 		presenter.thingMoved(k, q, Location.location(2, 2), q, k.getLocation());
 		verify(view).updateSector(2, 2, "", "");

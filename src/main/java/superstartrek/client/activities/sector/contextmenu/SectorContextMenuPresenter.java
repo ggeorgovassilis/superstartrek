@@ -99,25 +99,28 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 	}
 
 	public void onCommandClicked(String command) {
-		if (buttonsEnabled.get(command) == true)
+		//special handling for autoaim: user can disable that button, but should still be clickable 
+		Enterprise enterprise = application.starMap.enterprise;
+		if (buttonsEnabled.get(command) == true || (command.equals("cmd_toggleFireAtWill") && enterprise.getAutoAim().isEnabled()))
 		hideMenu(new ScheduledCommand() {
 
 			@Override
 			public void execute() {
 				switch (command) {
-					case "cmd_ScanSector":
+					case "cmd_scanSector":
 						application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
 						break;
 					case "cmd_navigate":
-						application.starMap.enterprise.navigateTo(sector);
+						enterprise.navigateTo(sector);
 						break;
 					case "cmd_firePhasers":
-						application.starMap.enterprise.firePhasersAt(sector, false);
+						enterprise.firePhasersAt(sector, false);
 						break;
 					case "cmd_fireTorpedos":
-						application.starMap.enterprise.fireTorpedosAt(sector);
+						enterprise.fireTorpedosAt(sector);
+						break;
 					case "cmd_toggleFireAtWill":
-						application.starMap.enterprise.toggleAutoAim();
+						enterprise.toggleAutoAim();
 						break;
 				}
 			}

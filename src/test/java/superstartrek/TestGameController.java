@@ -51,7 +51,7 @@ public class TestGameController {
 	
 	@Test
 	public void test_that_turn_ends_after_enterprise_fires() {
-		FireEvent evt = new FireEvent(Phase.afterFire, enterprise, new Klingon(ShipClass.BirdOfPrey), "Phaser", 1, false);
+		FireEvent evt = new FireEvent(Phase.afterFire, quadrant, enterprise, new Klingon(ShipClass.BirdOfPrey), "Phaser", 1, false);
 		events.fireEvent(evt);
 		assertEquals(1, events.getFiredCount(TurnEndedEvent.TYPE));
 		assertEquals(1, events.getFiredCount(KlingonTurnStartedEvent.TYPE));
@@ -61,7 +61,7 @@ public class TestGameController {
 
 	@Test
 	public void test_that_message_is_printed_when_star_is_hit() {
-		FireEvent evt = new FireEvent(Phase.afterFire, enterprise, new Star(1,2,StarClass.A), "Phaser", 1, false);
+		FireEvent evt = new FireEvent(Phase.afterFire, quadrant, enterprise, new Star(1,2,StarClass.A), "Phaser", 1, false);
 		events.fireEvent(evt);
 		assertEquals(1, events.getFiredCount(MessagePostedEvent.TYPE));
 	}
@@ -69,7 +69,7 @@ public class TestGameController {
 	@Test
 	public void test_that_game_is_over_if_enterprise_destroyed() {
 		enterprise.getShields().setValue(0);
-		FireEvent evt = new FireEvent(Phase.afterFire, enterprise, enterprise, "disruptor", 1, false);
+		FireEvent evt = new FireEvent(Phase.afterFire, quadrant, enterprise, enterprise, "disruptor", 1, false);
 		events.fireEvent(evt);
 		assertEquals(1, events.getFiredCount(GameOverEvent.TYPE));
 	}
@@ -95,13 +95,11 @@ public class TestGameController {
 		k1.setLocation(Location.location(4, 4));
 		k1.getDisruptor().disable();
 		k1.getImpulse().disable();
-		k1.setQuadrant(quadrant);
 		quadrant.getKlingons().add(k1);
 		Klingon k2 = new Klingon(ShipClass.BirdOfPrey);
 		k2.setLocation(Location.location(6, 4));
 		k2.getDisruptor().disable();
 		k2.getImpulse().disable();
-		k2.setQuadrant(quadrant);
 		quadrant.getKlingons().add(k2);
 
 		k1.destroy();
