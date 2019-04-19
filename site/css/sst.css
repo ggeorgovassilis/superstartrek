@@ -688,9 +688,18 @@ button.disabled{
 /* sector context menu */
 .sector-context-menu{
 	position:absolute;
-	margin-left: -2.5em;
-	margin-top: -1.5em;
+	margin-left: -1em;
+	margin-top: -2em;
+	width:8em;
+	height:8em;
 }
+
+.hexagonal-menu{
+	position:absolute;
+	margin-left:2em;
+	margin-top:2em;
+}
+
 .hexagonal-menu .cell{
 	width: 4em;
 	height: 4em;
