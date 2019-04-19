@@ -1,5 +1,6 @@
 package superstartrek;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class TestSectorScannerPresenter {
 	
 	@Before
 	public void setup() {
-		application = Application.get();
+		application = new Application();
 		application.events = events = new CountingEventBus();
 		application.starMap = map = new StarMap();
 		presenter = new SectorScanPresenter(application);
@@ -35,7 +36,11 @@ public class TestSectorScannerPresenter {
 		presenter.setView(view);
 	}
 	
-	
+	@After
+	public void cleanup() {
+		Application.set(null);
+	}
+
 	@Test
 	public void testScanSector_notthing() {
 		Quadrant q = new Quadrant("test quadrant", 1, 2);

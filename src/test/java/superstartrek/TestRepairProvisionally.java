@@ -1,5 +1,6 @@
 package superstartrek;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -44,6 +45,12 @@ public class TestRepairProvisionally {
 		application.random = new Random(random);
 
 	}
+	
+	@After
+	public void cleanup() {
+		Application.set(null);
+	}
+
 	
 	@Test
 	public void testRepairTorpedos() {

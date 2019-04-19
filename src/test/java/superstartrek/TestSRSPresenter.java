@@ -2,6 +2,7 @@ package superstartrek;
 
 import static org.mockito.Mockito.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,13 +29,19 @@ public class TestSRSPresenter {
 	
 	@Before
 	public void setup() {
-		app = Application.get();
+		app = new Application();
 		app.events = events = new CountingEventBus();
 		app.starMap = new StarMap();
 		presenter = new SRSPresenter(app);
 		view = mock(ISRSView.class);
 		presenter.setView(view);
 	}
+	
+	@After
+	public void cleanup() {
+		Application.set(null);
+	}
+
 
 	Quadrant makeQuadrant(int x, int y, boolean hasStarBase, int stars, int klingons) {
 		Quadrant q = new Quadrant("test quadrant", x, y);

@@ -15,6 +15,8 @@ import superstartrek.client.utils.Random;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+
 public class TestSetup {
 
 	Setup setup;
@@ -28,6 +30,12 @@ public class TestSetup {
 		application.events = bus;
 		setup = new Setup(application);
 	}
+	
+	@After
+	public void cleanup() {
+		Application.set(null);
+	}
+
 
 	@Test
 	public void test_makeQuadrant() {

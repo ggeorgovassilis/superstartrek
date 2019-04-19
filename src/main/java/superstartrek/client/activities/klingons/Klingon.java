@@ -2,6 +2,7 @@ package superstartrek.client.activities.klingons;
 
 import java.util.List;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -170,10 +171,9 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	@Override
 	public void onKlingonTurnStarted() {
+		//Reminder: only klingons in the active sector receive this event
 		Application app = Application.get();
 		if (app.getFlags().contains("nopc"))
-			return;
-		if (!app.starMap.enterprise.getQuadrant().getKlingons().contains(this))
 			return;
 		repositionKlingon();
 		fireOnEnterprise();
@@ -198,12 +198,12 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	@Override
 	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		//TODO: contains() is a slow check
-		if (qTo.getKlingons().contains(this)) {
+		//TODO: contains() is a slow check and all klingons in all quadrants react to this event
+		if (qTo.contains(this)) {
 			registerActionHandlers();
 			cloak.setValue(canCloak());
 			css = "klingon " + (isVisible() ? "" : "cloaked");
-			Location newLocation = Application.get().starMap.findFreeSpot(enterprise.getQuadrant());
+			Location newLocation = Application.get().starMap.findFreeSpot(qTo);
 			jumpTo(newLocation);
 			repair();
 		} else
@@ -240,11 +240,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	}
 	
 	public static boolean isCloakedKlingon(Thing thing){
-		if (thing instanceof Klingon) {
-			Klingon k = (Klingon)thing;
-			return !k.isVisible();
-		}
-		return false;
+		return (thing instanceof Klingon) && !thing.isVisible();
 	}
 	
 	public static boolean isEmptyOrCloakedKlingon(Thing thing) {

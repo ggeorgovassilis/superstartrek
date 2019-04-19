@@ -72,7 +72,7 @@
 				<gwt.saveSource>true</gwt.saveSource>
 				<gwt.style>DETAILED</gwt.style>
 				<skip.deploy>true</skip.deploy>
-				<skip.tests>true</skip.tests>
+				<skip.tests>false</skip.tests>
 			</properties>
 		</profile>
 		<profile>

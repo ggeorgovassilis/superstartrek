@@ -21,6 +21,10 @@ public class Quadrant {
 		this.y = y;
 	}
 	
+	public boolean contains(Klingon klingon) {
+		return klingons.contains(klingon);
+	}
+	
 	public void setStarBase(StarBase starBase) {
 		this.starBase = starBase;
 	}

@@ -67,14 +67,18 @@ public class Application
 	protected Set<String> flags;
 	public Random random;
 	
+	public static void set(Application app) {
+		that = app;
+	}
+	
 	public static Application get() {
 		return that;
 	}
 	
 	public Application() {
-		if (Application.that!=null)
-			GWT.log("There already is an application instance");
-		Application.that = this;
+		if (get()!=null)
+			throw new RuntimeException("Application already instantiated");
+		set(this);
 	}
 	
 	public Quadrant getActiveQuadrant() {

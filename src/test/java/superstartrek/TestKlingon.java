@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -39,7 +40,7 @@ public class TestKlingon {
 
 	@Before
 	public void setup() {
-		app  = new Application();
+		Application.set(app  = new Application());
 		app.events = events = new CountingEventBus();
 		
 		quadrant = new Quadrant("test", 1,2);
@@ -52,6 +53,11 @@ public class TestKlingon {
 		map.enterprise = enterprise;
 		klingon = new Klingon(ShipClass.Raider);
 		quadrant.getKlingons().add(klingon);
+	}
+	
+	@After
+	public void after(){
+		Application.set(null);
 	}
 
 	@Test

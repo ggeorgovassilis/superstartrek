@@ -6,10 +6,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import astar.AStar;
 import astar.Node;
@@ -28,6 +32,12 @@ import superstartrek.client.model.Star.StarClass;
  * A* is a reference implementation used to validate that a*+ works ok
  */
 public class TestAStarPlus {
+	
+	@After
+	public void cleanup() {
+		Application.set(null);
+	}
+
 
 	@Ignore //too slow for regular builds
 	@Test
@@ -164,6 +174,9 @@ public class TestAStarPlus {
 			log+=printMap(blocksArray, from, to, pathAsp)+"\n";
 
 			checkPlausibility(from, to, expectedSolution, pathAsp, log);
+			
+			Application.set(null);
+
 		}
 	}
 
@@ -173,7 +186,7 @@ public class TestAStarPlus {
 		StarMap map = new StarMap();
 		Location from = Location.location(1, 3);
 		Location to = Location.location(2, 7);
-		Application app = Application.get();
+		Application app = new Application();
 		app.events = new com.google.gwt.event.shared.testing.CountingEventBus();
 		map.enterprise = new Enterprise(Application.get(), map);
 		//e.setLocation(to);

@@ -2,6 +2,7 @@ package superstartrek;
 
 import static org.mockito.Mockito.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -30,7 +31,7 @@ public class TestSectorContextMenuPresenter {
 	
 	@Before
 	public void setup() {
-		app = Application.get();
+		app = new Application();
 		app.events = events = new CountingEventBus();
 		app.starMap = new StarMap();
 		app.browser = browser = mock(Browser.class);
@@ -38,6 +39,12 @@ public class TestSectorContextMenuPresenter {
 		view = mock(ISectorMenuView.class);
 		presenter.setView(view);
 	}
+	
+	@After
+	public void cleanup() {
+		Application.set(null);
+	}
+
 
 	@Test
 	public void test() {

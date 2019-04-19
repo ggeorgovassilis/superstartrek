@@ -2,6 +2,7 @@ package superstartrek;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -48,7 +49,11 @@ public class TestEnterprise {
 		application.events = events = new CountingEventBus();
 		application.starMap = map = new StarMap();
 		map.enterprise = enterprise = new Enterprise(application, map);
+	}
 
+	@After
+	public void cleanup() {
+		Application.set(null);
 	}
 
 	@Test

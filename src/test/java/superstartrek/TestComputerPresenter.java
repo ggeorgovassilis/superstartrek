@@ -3,6 +3,7 @@ package superstartrek;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import com.google.gwt.event.shared.testing.CountingEventBus;
@@ -35,7 +36,7 @@ public class TestComputerPresenter {
 
 	@Before
 	public void setup() {
-		app = Application.get();
+		Application.set(app = new Application());
 		app.events = events = new CountingEventBus();
 
 		quadrant = new Quadrant("test", 1, 2);
@@ -50,6 +51,11 @@ public class TestComputerPresenter {
 		presenter = new ComputerPresenter(app);
 		view = mock(IComputerView.class);
 		presenter.setView(view);
+	}
+	
+	@After
+	public void cleanup() {
+		Application.set(null);
 	}
 
 	@Test

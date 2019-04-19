@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,15 +36,18 @@ public class TestQuadrantScannerPresenter {
 	
 	@Before
 	public void setup() {
-		app = Application.get();
+		app = new Application();
 		app.events = new CountingEventBus();
 		sectorMenuPresenter = mock(SectorContextMenuPresenter.class);
 		presenter = new QuadrantScannerPresenter(app, sectorMenuPresenter);
 		app.starMap = map = new StarMap();
-		
 		view = mock(IQuadrantScannerView.class);
 		presenter.setView(view);
-		
+	}
+
+	@After
+	public void cleanup() {
+		Application.set(null);
 	}
 
 	@Test

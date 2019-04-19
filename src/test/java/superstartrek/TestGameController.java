@@ -2,6 +2,7 @@ package superstartrek;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,6 +49,12 @@ public class TestGameController {
 		enterprise.setQuadrant(quadrant);
 		controller = new GameController(application);
 	}
+	
+	@After
+	public void cleanup() {
+		Application.set(null);
+	}
+
 	
 	@Test
 	public void test_that_turn_ends_after_enterprise_fires() {
