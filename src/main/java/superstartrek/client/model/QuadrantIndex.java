@@ -5,7 +5,7 @@ package superstartrek.client.model;
  * @author george
  *
  */
-public class QuadrantIndex {
+public class QuadrantIndex implements GeometricLookup{
 
 	Thing[][] things = new Thing[8][8];
 	
@@ -14,11 +14,13 @@ public class QuadrantIndex {
 			things[t.getLocation().getX()][t.getLocation().getY()] = t;
 	}
 	
-	public Thing getThingAt(Location loc) {
-		return getThingAt(loc.getX(),loc.getY());
+	@Override
+	public Thing findThingAt(Location loc) {
+		return findThingAt(loc.getX(),loc.getY());
 	}
 
-	public Thing getThingAt(int x, int y) {
+	@Override
+	public Thing findThingAt(int x, int y) {
 		return things[x][y];
 	}
 }

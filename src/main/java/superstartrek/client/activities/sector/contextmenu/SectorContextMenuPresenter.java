@@ -48,12 +48,12 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 		//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
 		//this is some heavy heuristics, because the menu has a "fixed" size (in em units)
 		//that's empirical knowledge from the CSS
-		int menuWidthEm = 12; 
-		int menuHeightEm = 10; 
+		int menuWidthEm = 8; 
+		int menuHeightEm = 8; 
 		int screen_width_em = application.browser.getWindowWidthPx() / horizEmToPx;
 		
 		int target_x_em = Math.max(screenX/horizEmToPx,menuWidthEm/2);
-		target_x_em = Math.min(target_x_em,screen_width_em-menuWidthEm/2);
+		target_x_em = Math.min(target_x_em,screen_width_em-menuWidthEm);
 		int target_x_px = target_x_em*horizEmToPx;
 
 		int target_y_em = Math.max(screenY/vertEmToPx,menuHeightEm/2);

@@ -168,7 +168,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 			@Override
 			public boolean visit(int x, int y) {
-				Thing thing = index.getThingAt(x, y);
+				Thing thing = index.findThingAt(x, y);
 				if (thing != null && thing != app.starMap.enterprise) {
 					if (Klingon.isCloakedKlingon(thing)) {
 						((Klingon) thing).uncloak();
@@ -232,7 +232,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public String canFirePhaserAt(Location sector) {
-		Thing thing = application.starMap.findThingAt(quadrant, sector.getX(), sector.getY());
+		Thing thing = application.starMap.findThingAt(quadrant, sector);
 		if (thing == null || !thing.isVisible()) {
 			return "There is nothing at " + sector;
 		}
@@ -256,7 +256,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public void firePhasersAt(Location sector, boolean isAutoAim) {
-		Thing thing = application.starMap.findThingAt(quadrant, sector.getX(), sector.getY());
+		Thing thing = application.starMap.findThingAt(quadrant, sector);
 		String error = canFirePhaserAt(sector);
 		if (error != null) {
 			if (!isAutoAim)
@@ -298,7 +298,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		if (getReactor().getValue() < computeConsumptionForImpulseNavigation(distance))
 			return false;
-		Thing thing = index.getThingAt(destination.getX(), destination.getY());
+		Thing thing = index.findThingAt(destination.getX(), destination.getY());
 		if (!Klingon.isEmptyOrCloakedKlingon(thing))
 			return false;
 		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, (int) distance);

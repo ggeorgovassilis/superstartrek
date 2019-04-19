@@ -20,7 +20,7 @@ public class SectorScanPresenter extends BasePresenter<ScanSectorActivity> imple
 	public void scanSector(ScanSectorEvent event) {
 		IScanSectorView v = (IScanSectorView)getView();
 		Quadrant q = event.getQuadrant();
-		Thing thing = application.starMap.findThingAt(q, event.getLocation().getX(), event.getLocation().getY());
+		Thing thing = application.starMap.findThingAt(q, event.getLocation());
 		String name = thing==null?"Nothing":thing.getName();
 		v.setObjectName(name);
 		v.setObjectLocation(event.getLocation().toString());

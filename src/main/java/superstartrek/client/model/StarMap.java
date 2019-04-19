@@ -84,7 +84,10 @@ public class StarMap {
 	}
 
 	public Thing findThingAt(Quadrant q, int x, int y) {
-		Location loc = Location.location(x, y);
+		return findThingAt(q, Location.location(x, y));
+	}
+
+	public Thing findThingAt(Quadrant q, Location loc) {
 		if (enterprise.getQuadrant() == q && enterprise.getLocation() == loc)
 			return enterprise;
 		for (Star star : q.getStars())
@@ -159,7 +162,7 @@ public class StarMap {
 
 			@Override
 			public boolean visit(int x, int y) {
-				Thing thing = q.getThingAt(x, y);
+				Thing thing = q.findThingAt(x, y);
 				if (thing != null) {
 					found.add(thing);
 				}
@@ -183,7 +186,7 @@ public class StarMap {
 		QuadrantIndex index = new QuadrantIndex(q, this);
 		for (int x = minX; x <= maxX; x++)
 			for (int y = minY; y <= maxY; y++) {
-				if (null == index.getThingAt(x, y))
+				if (null == index.findThingAt(x, y))
 					return Location.location(x, y);
 			}
 		return null;

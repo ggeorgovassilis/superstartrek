@@ -87,8 +87,6 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuActivity>
 	@Override
 	public void show() {
 		super.show();
-		HTMLPanel panel = (HTMLPanel) getWidget();
-		panel.getElementById("cmd_navigate").focus();
 		Timer.postpone(new RepeatingCommand() {
 			
 			@Override
