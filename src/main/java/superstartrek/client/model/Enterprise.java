@@ -7,6 +7,7 @@ import com.google.gwt.core.client.GWT;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.computer.EnergyConsumtionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
@@ -217,6 +218,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		getTorpedos().decrease(1);
 		Thing target = null;
 		Random random = application.random;
+		double damage = 50;
 		for (Thing thing : things) {
 			boolean hit = false;
 			if (thing instanceof Star || thing instanceof StarBase) {
@@ -231,10 +233,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				break;
 			}
 		}
-
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, target, "torpedos", 50, false);
+		if (target instanceof Klingon) {
+			double shields = ((Klingon)target).getShields().getValue();
+			double maxShields = ((Klingon)target).getShields().getMaximum();
+			damage = damage*(1.0-0.5*(shields/maxShields));
+		}
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, target, "torpedos", damage, false);
 		application.events.fireEvent(event);
-		event = new FireEvent(FireEvent.Phase.afterFire, getQuadrant(), this, target, "torpedos", 50, false);
+		event = new FireEvent(FireEvent.Phase.afterFire, getQuadrant(), this, target, "torpedos", damage, false);
 		application.events.fireEvent(event);
 		if (target == null)
 			application.message("Torpedo exploded in the void");
@@ -295,6 +301,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		impulse.repair();
 		shields.repair();
 		autoAim.repair();
+		antimatter.repair();
 		application.events.fireEvent(new EnterpriseRepairedEvent(this));
 	}
 
@@ -411,6 +418,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (getReactor().getValue() < value)
 			return false;
 		getReactor().decrease(value);
+		getAntimatter().decrease(value);
+		application.events.fireEvent(new EnergyConsumtionHandler.EnergyConsumptionEvent(this, value, what));
 		return true;
 	}
 

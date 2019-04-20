@@ -34,10 +34,15 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 
 	@Override
 	public void showScreen() {
-		((IComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
+		updateStarDate();
 		getView().show();
 	}
 
+	
+	public void updateStarDate() {
+		((IComputerView)getView()).showStarDate(""+application.starMap.getStarDate());
+	}
+	
 	@Override
 	public void hideScreen() {
 		getView().hide();
@@ -84,13 +89,19 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
-		IComputerView view = (IComputerView)getView();
-		view.showStarDate(""+application.starMap.getStarDate());
+		updateStarDate();
 		updateDockInStarbaseButton();
 		updateShieldsView();
 		updateStatusButton();
 		updateRepairButton();
 		updateQuadrantHeader();
+		updateAntimatter();
+	}
+	
+	public void updateAntimatter() {
+		IComputerView view = (IComputerView)getView();
+		Setting antimatter = application.starMap.enterprise.getAntimatter();
+		view.updateAntimatter((int)antimatter.getValue(), (int)antimatter.getMaximum());
 	}
 	
 	public void updateQuadrantHeader() {

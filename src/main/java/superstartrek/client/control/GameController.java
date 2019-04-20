@@ -5,6 +5,7 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.History;
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.computer.EnergyConsumtionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.messages.MessageHandler;
@@ -19,7 +20,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
 
-public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler, KlingonDestroyedHandler, MessageHandler{
+public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler, KlingonDestroyedHandler, MessageHandler, EnergyConsumtionHandler{
 
 	Application application;
 	public boolean gameIsRunning = true;
@@ -40,6 +41,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
 		application.events.addHandler(MessagesReadEvent.TYPE, this);
 		application.events.addHandler(YieldTurnEvent.TYPE, this);
+		application.events.addHandler(EnergyConsumptionEvent.TYPE, this);
 	}
 
 	@Override
@@ -158,6 +160,17 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	public void gameOver(Outcome outcome, String reason) {
 		application.events.fireEvent(new GameOverEvent(outcome, reason));
+	}
+	
+	@Override
+	public void handleEnergyConsumption(Thing consumer, double value, String type) {
+		if (consumer instanceof Enterprise) {
+			Enterprise enterprise = (Enterprise)consumer;
+			if (enterprise.getAntimatter().getValue()<=0) {
+				application.message("We run out of anti matter");
+				gameOver(Outcome.lost, "We run out of anti matter");
+			}
+		}
 	}
 
 }

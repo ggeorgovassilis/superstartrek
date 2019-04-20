@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import superstartrek.client.activities.computer.ComputerPresenter;
-import superstartrek.client.activities.computer.ComputerView;
+import superstartrek.client.activities.computer.ComputerScreen;
 import superstartrek.client.activities.intro.IntroPresenter;
 import superstartrek.client.activities.intro.IntroView;
 import superstartrek.client.activities.loading.LoadingPresenter;
@@ -104,7 +104,7 @@ public class Application
 		new LoadingScreen(new LoadingPresenter(this));
 		new IntroView(new IntroPresenter(this));
 		new ManualScreen(new ManualPresenter(this));
-		new ComputerView(new ComputerPresenter(this));
+		new ComputerScreen(new ComputerPresenter(this));
 		new ScanSectorView(new SectorScanPresenter(this));
 		new MessagesView(new MessagesPresenter(this));
 		new LRSScreen(new LRSPresenter(this));
