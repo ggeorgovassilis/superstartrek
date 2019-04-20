@@ -30,8 +30,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuActivity>
 
 	@Override
 	protected Widget createWidgetImplementation() {
-		HTMLPanel panel = new HTMLPanel(getPresenter().getApplication().getResources().sectorContextMenu().getText());
-		return panel;
+		return new HTMLPanel(getPresenter().getApplication().getResources().sectorContextMenu().getText());
 	}
 
 	@Override
