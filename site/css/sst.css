@@ -636,11 +636,12 @@ button.disabled{
 	right:0;
 }
 
-.install-pwa-prompt .label{
+.install-pwa-prompt button{
+	width:50%;
 }
 
-.install-pwa-prompt button{
-	width:49%;
+.install-pwa-prompt h2{
+	padding:0 0.5em;
 }
 
 /* popup animations */

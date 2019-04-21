@@ -6,6 +6,7 @@ import org.junit.Test;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import superstartrek.client.Application;
+import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -14,6 +15,9 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Random;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 
@@ -84,13 +88,15 @@ public class TestSetup {
 		assertEquals("star star-class-f", q.getStars().get(4).getCss());
 		
 		assertEquals(NUMBER_OF_KLINGONS+1,q.getKlingons().size());
-		assertEquals(Location.location(1, 5), q.getKlingons().get(0).getLocation());
-		assertEquals("a Klingon raider",q.getKlingons().get(0).getName());
+		
+		List<Klingon> klingons = new ArrayList<>(q.getKlingons());
+		assertEquals(Location.location(1, 5), klingons.get(0).getLocation());
+		assertEquals("a Klingon raider",klingons.get(0).getName());
 
-		assertEquals(Location.location(2, 2), q.getKlingons().get(1).getLocation());
-		assertEquals("a Bird-of-prey",q.getKlingons().get(1).getName());
+		assertEquals(Location.location(2, 2), klingons.get(1).getLocation());
+		assertEquals("a Bird-of-prey",klingons.get(1).getName());
 
-		assertEquals(Location.location(3, 2), q.getKlingons().get(2).getLocation());
-		assertEquals("a Klingon raider",q.getKlingons().get(2).getName());
+		assertEquals(Location.location(3, 2), klingons.get(2).getLocation());
+		assertEquals("a Klingon raider",klingons.get(2).getName());
 	}
 }
