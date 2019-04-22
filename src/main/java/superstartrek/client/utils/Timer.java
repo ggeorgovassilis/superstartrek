@@ -4,6 +4,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent;
 
 public class Timer {
 
@@ -17,6 +20,16 @@ public class Timer {
 		if (GWT.isClient())
 			Scheduler.get().scheduleFixedDelay(cmd, ms);
 		else cmd.execute();
+	}
+	
+	public static void fireAsync(EventBus bus, GwtEvent<EventHandler> event) {
+		postpone(new ScheduledCommand() {
+			
+			@Override
+			public void execute() {
+				bus.fireEvent(event);
+			}
+		});
 	}
 
 }

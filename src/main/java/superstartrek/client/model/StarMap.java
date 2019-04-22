@@ -18,20 +18,19 @@ public class StarMap {
 	public static boolean within_distance(int x1, int y1, int x2, int y2, double range) {
 		int dx = x1 - x2;
 		int dy = y1 - y2;
-		return dx * dx + dy * dy < range*range;
+		return dx * dx + dy * dy < range * range;
 	}
 
-	
 	public static double distance(int x1, int y1, int x2, int y2) {
 		int dx = x1 - x2;
 		int dy = y1 - y2;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
-	
+
 	public static int distance_squared(int x1, int y1, int x2, int y2) {
 		int dx = x1 - x2;
 		int dy = y1 - y2;
-		return dx*dx +dy*dy;
+		return dx * dx + dy * dy;
 	}
 
 	public static double distance(Thing a, Thing b) {
@@ -72,7 +71,7 @@ public class StarMap {
 	public static boolean within_distance(Thing t1, Location l2, double range) {
 		return within_distance(t1.getLocation(), l2, range);
 	}
-	
+
 	public boolean isOnMap(int x, int y) {
 		return (x >= 0 && x <= 7 && y >= 0 && y <= 7);
 	}
@@ -148,12 +147,14 @@ public class StarMap {
 	};
 
 	/**
-	 * Finds the all obstacles in the line connecting from (inclusive) to to (inclusive).
-	 * If from and to are occupied by {@link Thing}s, then those will be the only objects returned.
+	 * Finds the all obstacles in the line connecting from (inclusive) to to
+	 * (inclusive). If from and to are occupied by {@link Thing}s, then those will
+	 * be the only objects returned.
+	 * 
 	 * @param q
 	 * @param from
 	 * @param to
-	 * @param cap stop after finding that many obstacles
+	 * @param cap  stop after finding that many obstacles
 	 * @return
 	 */
 	public List<Thing> findObstaclesInLine(QuadrantIndex q, Location from, Location to, int cap) {
@@ -166,7 +167,7 @@ public class StarMap {
 				if (thing != null) {
 					found.add(thing);
 				}
-				return found.size()<cap;
+				return found.size() < cap;
 			}
 		});
 		return found;
@@ -177,34 +178,37 @@ public class StarMap {
 		return findObstaclesInLine(index, from, to, cap);
 	}
 
-	//TODO: remove the radius parameter and just return the closest free location
+	// TODO: remove the radius parameter and just return the closest free location
 	public Location findFreeSpotAround(Quadrant q, Location loc, int radius) {
-		int minX = Math.max(0, loc.getX() - radius);
-		int minY = Math.max(0, loc.getY() - radius);
-		int maxX = Math.min(7, loc.getX() + radius);
-		int maxY = Math.min(7, loc.getY() + radius);
 		QuadrantIndex index = new QuadrantIndex(q, this);
-		for (int x = minX; x <= maxX; x++)
-			for (int y = minY; y <= maxY; y++) {
-				if (null == index.findThingAt(x, y))
-					return Location.location(x, y);
-			}
+		for (int r = 0; r <= radius; r++) {
+			int minX = Math.max(0, loc.getX() - r);
+			int minY = Math.max(0, loc.getY() - r);
+			int maxX = Math.min(7, loc.getX() + r);
+			int maxY = Math.min(7, loc.getY() + r);
+			for (int x = minX; x <= maxX; x++)
+				for (int y = minY; y <= maxY; y++) {
+					if (null == index.findThingAt(x, y))
+						return Location.location(x, y);
+				}
+
+		}
 		return null;
 	}
 
 	public boolean hasKlingons() {
 		for (int x = 0; x < quadrants.length; x++)
 			for (int y = 0; y < quadrants[x].length; y++)
-				//quadrant could be null in unit test
-				if (quadrants[x][y]!=null && !quadrants[x][y].getKlingons().isEmpty())
+				// quadrant could be null in unit test
+				if (quadrants[x][y] != null && !quadrants[x][y].getKlingons().isEmpty())
 					return true;
 		return false;
 	}
-	
-	public List<Thing> getEverythingIn(Quadrant quadrant){
+
+	public List<Thing> getEverythingIn(Quadrant quadrant) {
 		List<Thing> things = new ArrayList<>(quadrant.getStars());
 		things.addAll(quadrant.getKlingons());
-		if (quadrant.starBase!=null)
+		if (quadrant.starBase != null)
 			things.add(quadrant.starBase);
 		if (enterprise.getQuadrant() == quadrant)
 			things.add(enterprise);

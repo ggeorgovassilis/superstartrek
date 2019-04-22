@@ -84,7 +84,7 @@ public class TestEnterprise {
 		enterprise.damagePhasers();
 		assertEquals(0, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		assertFalse(enterprise.getPhasers().isEnabled());
-		verify(handler, times(4)).messagePosted(eq("Phaser array damaged"), eq("enterprise-damaged"));
+		verify(handler, times(4)).messagePosted(eq("Phaser banks damaged"), eq("enterprise-damaged"));
 	}
 
 	@Test

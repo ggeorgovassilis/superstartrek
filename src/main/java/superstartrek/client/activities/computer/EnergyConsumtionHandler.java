@@ -2,9 +2,6 @@ package superstartrek.client.activities.computer;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.GwtEvent.Type;
-
-import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.model.Thing;
 
 public interface EnergyConsumtionHandler extends EventHandler{

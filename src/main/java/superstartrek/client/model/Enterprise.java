@@ -3,8 +3,6 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.EnergyConsumtionHandler;
@@ -259,7 +257,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return "Target is too far away.";
 		}
 		if (!phasers.isEnabled()) {
-			return "Phaser array is disabled";
+			return "Phaser banks are disabled";
 		}
 		if (phasers.getValue() == 0) {
 			return "Phasers already fired.";
@@ -390,7 +388,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		phasers.damage(phasers.getMaximum() * 0.3);
 		if (phasers.getCurrentUpperBound() < 1)
 			phasers.setEnabled(false);
-		application.message("Phaser array damaged", "enterprise-damaged");
+		application.message("Phaser banks damaged", "enterprise-damaged");
 	}
 
 	public void damageAutoaim() {

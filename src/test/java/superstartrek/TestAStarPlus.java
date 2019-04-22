@@ -8,13 +8,10 @@ import java.util.List;
 import java.util.Random;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
 import astar.AStar;
 import astar.Node;
 import superstartrek.client.Application;

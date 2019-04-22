@@ -2,8 +2,6 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
