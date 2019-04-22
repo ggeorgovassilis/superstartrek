@@ -23,6 +23,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
+import superstartrek.client.utils.Random;
 
 public class TestComputerPresenter {
 
@@ -98,14 +99,15 @@ public class TestComputerPresenter {
 				assertEquals(quadrant, qFrom);
 				assertEquals(Location.location(1, 1), lFrom);
 				assertEquals(quadrant, qTo);
-				assertEquals(Location.location(2, 2), lTo);
+				assertEquals(Location.location(4, 4), lTo);
 			}
 		});
 
+		app.random = new Random(new StubRandomNumberFactory(new double[] {0}, new int[] {1,1,2,2,5}));
 		presenter.onDockInStarbaseButtonClicked();
 
 		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
-		assertEquals(Location.location(2, 2), enterprise.getLocation());
+		assertEquals(Location.location(4, 4), enterprise.getLocation());
 
 		assertEquals(1, events.getFiredCount(EnterpriseRepairedEvent.TYPE));
 		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);

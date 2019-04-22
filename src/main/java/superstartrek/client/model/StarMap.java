@@ -178,20 +178,20 @@ public class StarMap {
 		return findObstaclesInLine(index, from, to, cap);
 	}
 
-	// TODO: remove the radius parameter and just return the closest free location
-	public Location findFreeSpotAround(Quadrant q, Location loc, int radius) {
-		QuadrantIndex index = new QuadrantIndex(q, this);
-		for (int r = 0; r <= radius; r++) {
-			int minX = Math.max(0, loc.getX() - r);
-			int minY = Math.max(0, loc.getY() - r);
-			int maxX = Math.min(7, loc.getX() + r);
-			int maxY = Math.min(7, loc.getY() + r);
-			for (int x = minX; x <= maxX; x++)
-				for (int y = minY; y <= maxY; y++) {
-					if (null == index.findThingAt(x, y))
-						return Location.location(x, y);
-				}
+	public Location findFreeSpotAround(Quadrant q, Location loc) {
+		return findFreeSpotAround(q, loc, 8);
+	}
 
+	public Location findFreeSpotAround(Quadrant q, Location loc, int maxRadius) {
+		QuadrantIndex index = new QuadrantIndex(q, this);
+		Random random = Application.get().random;
+		for (int radius = 1; radius <= maxRadius; radius++) {
+			for (int tries = 0; tries < radius * radius; tries++) {
+				int x = Math.min(7, Math.max(0, loc.getX() + (random.nextInt(1+radius))-(radius/2)));
+				int y = Math.min(7, Math.max(0, loc.getY() + (random.nextInt(1+radius))-(radius/2)));
+				if (null == index.findThingAt(x, y))
+					return Location.location(x, y);
+			}
 		}
 		return null;
 	}

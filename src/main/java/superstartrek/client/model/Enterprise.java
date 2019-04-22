@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.EnergyConsumtionHandler;
@@ -103,7 +105,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 		Quadrant dropQuadrant = container.get(0);
 		setQuadrant(dropQuadrant);
-		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation(), 3);
+		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation());
+		GWT.log("Found free spot "+freeSpot);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
 		int xFrom = Math.max(0, dropQuadrant.getX() - 1);

@@ -8,7 +8,7 @@ import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
-import superstartrek.client.activities.klingons.KlingonUncloakedHandler;
+import superstartrek.client.activities.klingons.KlingonCloakingHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
@@ -30,7 +30,7 @@ import superstartrek.client.model.Vessel;
 
 public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity>
 		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
-		EnterpriseRepairedHandler, KlingonUncloakedHandler, KlingonDestroyedHandler {
+		EnterpriseRepairedHandler, KlingonCloakingHandler, KlingonDestroyedHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
 
@@ -49,6 +49,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 		application.events.addHandler(EnterpriseRepairedEvent.TYPE, this);
 		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
 		application.events.addHandler(KlingonUncloakedEvent.TYPE, this);
+		application.events.addHandler(KlingonCloakedEvent.TYPE, this);
 		application.events.addHandler(AfterTurnStartedEvent.TYPE, this);
 		this.sectorMenuPresenter = sectorMenuPresenter;
 	}
@@ -62,6 +63,10 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	void updateSector(Thing thing) {
 		String content = thing.getSymbol();
 		String css = thing.getCss();
+		if (!thing.isVisible()) {
+			content = "";
+			css="";
+		} else
 		if (thing instanceof Vessel) {
 			Vessel vessel = (Vessel) thing;
 			double status = vessel.getShields().health();
@@ -140,6 +145,11 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void klingonUncloaked(Klingon klingon) {
+		updateSector(klingon);
+	}
+	
+	@Override
+	public void klingonCloaked(Klingon klingon) {
 		updateSector(klingon);
 	}
 

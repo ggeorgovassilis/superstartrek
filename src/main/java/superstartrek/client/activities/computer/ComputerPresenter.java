@@ -54,7 +54,7 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		Quadrant q = enterprise.getQuadrant();
 		boolean inRange = StarMap.within_distance(enterprise, q.getStarBase(),1.1);
 		if (!inRange) {
-			Location loc = application.starMap.findFreeSpotAround(q, q.getStarBase().getLocation(),1);
+			Location loc = application.starMap.findFreeSpotAround(q, q.getStarBase().getLocation(),2);
 			if (loc==null) {
 				application.message("No space around starbase");
 				return;

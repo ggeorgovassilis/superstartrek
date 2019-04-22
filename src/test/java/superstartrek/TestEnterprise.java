@@ -138,6 +138,7 @@ public class TestEnterprise {
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
+		application.random = new Random(new StubRandomNumberFactory(new double[] {}, new int[] {1,1,1,1,1,1,1,1,1,1,1,1}));
 
 		// path between source and target needs to exist for collision check
 		map.setQuadrant(new Quadrant("_", 2, 3));
@@ -158,7 +159,7 @@ public class TestEnterprise {
 				assertEquals(quadrant, qFrom);
 				assertEquals(targetQuadrant, qTo);
 				assertEquals(Location.location(0, 0), lFrom);
-				assertEquals(Location.location(0, 1), lTo);
+				assertEquals(Location.location(1, 1), lTo);
 			}
 		});
 		enterprise.warpTo(targetQuadrant, null);

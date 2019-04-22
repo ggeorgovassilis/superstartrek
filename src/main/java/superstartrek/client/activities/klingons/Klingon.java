@@ -2,6 +2,7 @@ package superstartrek.client.activities.klingons;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -98,7 +99,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		cloak.setValue(0);
 		setCss("klingon");
 		Application.get().message(getName() + " uncloaked at " + this.getLocation(), "klingon-uncloaked");
-		Application.get().events.fireEvent(new KlingonUncloakedHandler.KlingonUncloakedEvent(this));
+		Application.get().events.fireEvent(new KlingonCloakingHandler.KlingonUncloakedEvent(this));
 	}
 
 	public Setting getDisruptor() {
@@ -167,6 +168,46 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		event = new FireEvent(FireEvent.Phase.afterFire, enterprise.getQuadrant(), this, enterprise, "disruptor", disruptor.getValue(), true);
 		app.events.fireEvent(event);
 	}
+	
+	
+	public void cloak() {
+		getCloak().setValue(true);
+		Application.get().events.fireEvent(new KlingonCloakingHandler.KlingonCloakedEvent(this));
+		Application.get().message(getName() + " cloaked at " + this.getLocation(), "klingon-uncloaked");
+	}
+	
+	public void flee() {
+		GWT.log("Klingon wants to flee");
+		if (canCloak() && isVisible()) {
+			GWT.log("Klingon cloaking");
+			cloak();
+		}
+		if (!getImpulse().isEnabled()) {
+			GWT.log("Impulse disabled, cannot flee");
+			return;
+		}
+		Application app = Application.get();
+		double distance = StarMap.distance(getLocation(), app.starMap.enterprise.getLocation());
+		GWT.log("Current distance from enterprise "+distance);
+		if (getImpulse().isEnabled() && getImpulse().getValue()>=1) {
+			int triesLeft = 5;
+			Location loc = null;
+			do {
+				GWT.log("Looking for safe spot around "+getLocation());
+				loc = app.starMap.findFreeSpotAround(app.getActiveQuadrant(), getLocation(), 1+(int)getImpulse().getValue());
+				GWT.log("Found spot "+loc);
+				if (loc!=null) {
+					double newDistance = StarMap.distance(app.starMap.enterprise.getLocation(), loc);
+					GWT.log("New distance from enterprise would be "+newDistance);
+					if (newDistance<=distance)
+						loc = null;
+				}
+				triesLeft--;
+			} while(triesLeft>0 && loc==null);
+			if (loc!=null)
+				jumpTo(loc);
+		}
+	}
 
 	@Override
 	public void onKlingonTurnStarted() {
@@ -174,7 +215,10 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		Application app = Application.get();
 		if (app.getFlags().contains("nopc"))
 			return;
-		repositionKlingon();
+		if (!getDisruptor().isEnabled())
+			flee();
+		else
+			repositionKlingon();
 		fireOnEnterprise();
 	}
 
@@ -226,6 +270,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			getImpulse().setEnabled(false);
 		if (getDisruptor().isEnabled() && random.nextDouble() < impact)
 			getDisruptor().setEnabled(false);
+		if (getCloak().isEnabled() && random.nextDouble() < impact)
+			getCloak().setEnabled(false);
 
 		Application.get().message(evt.weapon + " hit " + evt.target.getName() + " at " + evt.target.getLocation(), "klingon-damaged");
 		if (shields.getValue() <= 0) {

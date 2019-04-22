@@ -75,11 +75,10 @@ public class TestQuadrantScannerPresenter {
 		
 		presenter.onEnterpriseWarped(enterprise, qFrom, lFrom, qTo, lTo);
 		verify(view).updateSector(eq(0), eq(0), eq("O=Ξ"), eq("enterprise  "));
-		verify(view, times(59)).updateSector(any(int.class), any(int.class), eq(""), eq(""));
+		verify(view, times(60)).updateSector(any(int.class), any(int.class), eq(""), eq(""));
 		verify(view).updateSector(5, 6, StarClass.A.symbol, "star star-class-a");
 		verify(view).updateSector(6, 5, StarClass.A.symbol, "star star-class-a");
 		verify(view).updateSector(1, 7, "&lt;!&gt;", "starbase");
-		verify(view).updateSector(eq(7), eq(7), any(String.class), eq("klingon cloaked  "));
 	}
 	
 	
