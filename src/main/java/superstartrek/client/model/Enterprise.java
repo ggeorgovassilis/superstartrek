@@ -106,7 +106,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Quadrant dropQuadrant = container.get(0);
 		setQuadrant(dropQuadrant);
 		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation());
-		GWT.log("Found free spot "+freeSpot);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
 		int xFrom = Math.max(0, dropQuadrant.getX() - 1);

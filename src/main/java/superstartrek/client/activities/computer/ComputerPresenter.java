@@ -5,6 +5,8 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
+import superstartrek.client.activities.appmenu.AppMenuHandler;
+import superstartrek.client.activities.appmenu.AppMenuHandler.AppMenuEvent.Status;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
@@ -36,6 +38,10 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 	public void showScreen() {
 		updateStarDate();
 		getView().show();
+	}
+	
+	public void onAppMenuButtonClicked() {
+		application.events.fireEvent(new AppMenuHandler.AppMenuEvent(Status.showMenu));
 	}
 
 	

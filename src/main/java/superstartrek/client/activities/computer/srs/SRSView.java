@@ -1,12 +1,9 @@
 package superstartrek.client.activities.computer.srs;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
@@ -42,16 +39,6 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView, ClickHan
 	public void decorateWidget() {
 		super.decorateWidget();
 		addDomHandler(this, ClickEvent.getType());
-		Element button = ((HtmlWidget)getWidget()).getElementById("app-menu-button");
-		DOM.setEventListener(button, new EventListener() {
-			
-			@Override
-			public void onBrowserEvent(Event event) {
-				((SRSPresenter)getPresenter()).onAppMenuButtonClicked();
-			}
-		});
-		DOM.sinkEvents(button, Event.ONCLICK);
-		
 	}
 
 	@Override
@@ -66,10 +53,10 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView, ClickHan
 
 	@Override
 	public void onClick(ClickEvent event) {
-		Element eTd = event.getNativeEvent().getEventTarget().cast();
-		if (!Strings.isEmpty(eTd.getAttribute("data-dx"))) {
-			int dx = Integer.parseInt(eTd.getAttribute("data-dx"));
-			int dy = Integer.parseInt(eTd.getAttribute("data-dy"));
+		Element e = event.getNativeEvent().getEventTarget().cast();
+		if (!Strings.isEmpty(e.getAttribute("data-dx"))) {
+			int dx = Integer.parseInt(e.getAttribute("data-dx"));
+			int dy = Integer.parseInt(e.getAttribute("data-dy"));
 			((SRSPresenter) getPresenter()).quadrantWasClicked(dx, dy);
 		}
 	}
