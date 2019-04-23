@@ -20,6 +20,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import superstartrek.client.activities.appmenu.AppMenuPresenter;
+import superstartrek.client.activities.appmenu.AppMenuView;
 import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.ComputerScreen;
 import superstartrek.client.activities.intro.IntroPresenter;
@@ -110,6 +112,7 @@ public class Application
 		new LRSScreen(new LRSPresenter(this));
 		new StatusReportView(new StatusReportPresenter(this));
 		new UpdateAppPromptView(new UpdateAppPromptPresenter(this));
+		new AppMenuView(new AppMenuPresenter(this));
 	}
 	
 	public void registerEventHandlers() {

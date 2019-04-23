@@ -32,7 +32,6 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 		buttonsEnabled.put("cmd_scanSector", true);
 		buttonsEnabled.put("cmd_firePhasers", false);
 		buttonsEnabled.put("cmd_fireTorpedos", false);
-		buttonsEnabled.put("cmd_toggleFireAtWill", false);
 		buttonsEnabled.put("cmd_computer", true);
 	}
 	
@@ -47,7 +46,6 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 		buttonsEnabled.put("cmd_navigate", e.canNavigateTo(new QuadrantIndex(quadrant, getApplication().starMap), sector));
 		buttonsEnabled.put("cmd_firePhasers", e.canFirePhaserAt(sector)==null);
 		buttonsEnabled.put("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
-		buttonsEnabled.put("cmd_toggleFireAtWill", e.getAutoAim().isEnabled() && e.getAutoAim().getBooleanValue());
 		for (String cmd:buttonsEnabled.keySet())
 			v.enableButton(cmd, buttonsEnabled.get(cmd));
 		//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
@@ -98,9 +96,8 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 	}
 
 	public void onCommandClicked(String command) {
-		//special handling for autoaim: user can disable that button, but should still be clickable 
 		Enterprise enterprise = application.starMap.enterprise;
-		if (buttonsEnabled.get(command) == true || (command.equals("cmd_toggleFireAtWill") && enterprise.getAutoAim().isEnabled()))
+		if (buttonsEnabled.get(command) == true)
 		hideMenu(new ScheduledCommand() {
 
 			@Override
@@ -117,9 +114,6 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuA
 						break;
 					case "cmd_fireTorpedos":
 						enterprise.fireTorpedosAt(sector);
-						break;
-					case "cmd_toggleFireAtWill":
-						enterprise.toggleAutoAim();
 						break;
 				}
 			}

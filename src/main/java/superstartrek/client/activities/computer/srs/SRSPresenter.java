@@ -2,6 +2,8 @@ package superstartrek.client.activities.computer.srs;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.appmenu.AppMenuHandler;
+import superstartrek.client.activities.appmenu.AppMenuHandler.AppMenuEvent.Status;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
@@ -47,6 +49,10 @@ public class SRSPresenter extends BasePresenter<SRSActivity> implements GamePhas
 		int y = q.getY()+dy;
 		if (map.isOnMap(x, y))
 			map.enterprise.warpTo(map.getQuadrant(x, y), null);
+	}
+	
+	public void onAppMenuButtonClicked() {
+		application.events.fireEvent(new AppMenuHandler.AppMenuEvent(Status.showMenu));
 	}
 
 	@Override
