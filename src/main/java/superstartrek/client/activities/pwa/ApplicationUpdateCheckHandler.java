@@ -7,7 +7,7 @@ public interface ApplicationUpdateCheckHandler extends EventHandler{
 
 	public static class ApplicationUpdateEvent extends GwtEvent<ApplicationUpdateCheckHandler>{
 
-		public enum Status{checkFailed,appIsUpToDate,appIsOutdated, appCacheWasJustRefreshed, informingOfInstalledVersion};
+		public enum Status{checkFailed,appIsUpToDate,appIsOutdated, appCacheWasJustRefreshed, informingOfInstalledVersion, filesCached};
 		public final static Type<ApplicationUpdateCheckHandler> TYPE = new Type<>();
 		public final Status status;
 		public final String currentVersion;
@@ -32,6 +32,7 @@ public interface ApplicationUpdateCheckHandler extends EventHandler{
 				case checkFailed:handler.checkFailed();break;
 				case appCacheWasJustRefreshed:handler.appMustReload();break;
 				case informingOfInstalledVersion:handler.installedAppVersionIs(currentVersion);break;
+				case filesCached:handler.filesAreCached();break;
 			}
 		}
 
@@ -41,4 +42,5 @@ public interface ApplicationUpdateCheckHandler extends EventHandler{
 	default void checkFailed(){};
 	default void appMustReload(){};
 	default void installedAppVersionIs(String version) {};
+	default void filesAreCached() {};
 }

@@ -220,6 +220,11 @@ public class Application
 	public void appMustReload() {
 		reload();
 	}
+	
+	@Override
+	public void filesAreCached() {
+		GWT.log("Files are cached");
+	}
 
 
 }
