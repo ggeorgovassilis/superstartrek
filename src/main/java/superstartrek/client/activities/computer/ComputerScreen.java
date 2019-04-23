@@ -124,8 +124,6 @@ public class ComputerScreen extends BaseScreen<ComputerActivity> implements ICom
 			presenter.onRepairButtonClicked();
 		else if ("cmd_skip".equals(target.getId()))
 			presenter.onSkipButtonClicked();
-		else if ("app-menu-button".equals(target.getId()))
-			presenter.onAppMenuButtonClicked();
 	}
 
 }

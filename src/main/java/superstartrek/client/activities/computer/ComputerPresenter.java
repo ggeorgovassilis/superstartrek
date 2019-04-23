@@ -1,7 +1,10 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -39,11 +42,6 @@ public class ComputerPresenter extends BasePresenter<ComputerActivity> implement
 		updateStarDate();
 		getView().show();
 	}
-	
-	public void onAppMenuButtonClicked() {
-		application.events.fireEvent(new AppMenuHandler.AppMenuEvent(Status.showMenu));
-	}
-
 	
 	public void updateStarDate() {
 		((IComputerView)getView()).showStarDate(""+application.starMap.getStarDate());

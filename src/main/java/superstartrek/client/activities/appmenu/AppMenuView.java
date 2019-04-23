@@ -45,5 +45,11 @@ public class AppMenuView extends PopupView<AppMenuActivity> {
 		if (!enabled)
 			e.addClassName("disabled");
 	}
+	
+	@Override
+	public void hide() {
+		super.hide();
+		((AppMenuPresenter)getPresenter()).onMenuHidden();
+	}
 
 }
