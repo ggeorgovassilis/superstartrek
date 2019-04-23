@@ -69,6 +69,6 @@ public class TestSectorContextMenuPresenter {
 		verify(view).enableButton("cmd_navigate", true);
 		verify(view).enableButton("cmd_firePhasers", false);
 		verify(view).enableButton("cmd_fireTorpedos", true);
-		verify(view).enableButton("cmd_toggleFireAtWill", true);
+		verify(view).enableButton("cmd_computer", true);
 	}
 }
