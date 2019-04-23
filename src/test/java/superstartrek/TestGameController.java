@@ -14,7 +14,6 @@ import superstartrek.client.activities.combat.FireHandler.FireEvent.Phase;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;
-import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
@@ -28,6 +27,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Star.StarClass;
+import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
 
 public class TestGameController {
 

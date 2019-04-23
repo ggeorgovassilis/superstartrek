@@ -6,7 +6,6 @@ import superstartrek.client.activities.appmenu.AppMenuHandler;
 import superstartrek.client.activities.appmenu.AppMenuHandler.AppMenuEvent.Status;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
-import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
