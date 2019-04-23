@@ -9,7 +9,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class ScanSectorPresenter extends BasePresenter implements ScanSectorHandler{
+public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implements ScanSectorHandler{
 
 	public ScanSectorPresenter(Application application) {
 		super(application);

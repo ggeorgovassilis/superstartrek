@@ -17,6 +17,7 @@ import superstartrek.client.model.Constants;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Timer;
 
+@SuppressWarnings("rawtypes")
 public abstract class PopupView<P extends Presenter> extends BaseView<P>{
 
 	protected PopupView(P presenter) {

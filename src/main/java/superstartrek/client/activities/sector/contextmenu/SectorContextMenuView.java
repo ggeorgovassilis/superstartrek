@@ -20,7 +20,7 @@ import superstartrek.client.activities.BaseView;
 import superstartrek.client.utils.Timer;
 
 public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
-		implements ISectorMenuView, MouseDownHandler, TouchStartHandler, ClickHandler {
+		implements ISectorContextMenuView, MouseDownHandler, TouchStartHandler, ClickHandler {
 	
 	boolean viewInTransition=false;
 	

@@ -16,7 +16,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Maps;
 
-public class SRSPresenter extends BasePresenter implements GamePhaseHandler, EnterpriseWarpedHandler, KlingonDestroyedHandler {
+public class SRSPresenter extends BasePresenter<ISRSView> implements GamePhaseHandler, EnterpriseWarpedHandler, KlingonDestroyedHandler {
 
 	public SRSPresenter(Application application) {
 		super(application);
@@ -26,7 +26,6 @@ public class SRSPresenter extends BasePresenter implements GamePhaseHandler, Ent
 	}
 
 	public void updateRadar() {
-		ISRSView view = (ISRSView) getView();
 		StarMap map = application.starMap;
 		Quadrant q0 = map.enterprise.getQuadrant();
 		for (int y = 0; y < 3; y++)
@@ -35,10 +34,10 @@ public class SRSPresenter extends BasePresenter implements GamePhaseHandler, Ent
 				int qy = q0.getY() + y-1;
 				if (qx >= 0 && qy >= 0 && qx < 8 && qy < 8) {
 					Quadrant q = map.getQuadrant(qx, qy);
-					Maps.renderCell(x, y, map, q, view);
+					Maps.renderCell(x, y, map, q, getView());
 				}
 				else 
-					Maps.renderCell(x, y, map, null, view);
+					Maps.renderCell(x, y, map, null, getView());
 			}
 	}
 	

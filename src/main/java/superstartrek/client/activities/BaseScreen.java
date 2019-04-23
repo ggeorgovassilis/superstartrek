@@ -1,6 +1,6 @@
 package superstartrek.client.activities;
 
-public abstract class BaseScreen<P extends Presenter> extends BaseView<P>{
+public abstract class BaseScreen<P extends Presenter<?>> extends BaseView<P>{
 
 	public BaseScreen(P p) {
 		super(p);

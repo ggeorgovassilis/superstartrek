@@ -9,14 +9,8 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.model.Enterprise;
 
-public class StatusReportPresenter extends BasePresenter implements ValueChangeHandler<String>{
+public class StatusReportPresenter extends BasePresenter<StatusReportView> implements ValueChangeHandler<String>{
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public StatusReportView getView() {
-		return super.getView();
-	}
-	
 	public void updateView() {
 		StatusReportView view = getView();
 		Enterprise enterprise = application.starMap.enterprise;

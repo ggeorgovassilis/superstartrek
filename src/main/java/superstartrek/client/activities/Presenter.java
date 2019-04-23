@@ -2,8 +2,9 @@ package superstartrek.client.activities;
 
 import superstartrek.client.Application;
 
-public interface Presenter {
+public interface Presenter<V extends View<?>> {
 
 	Application getApplication();
-	void setView(View<? extends Presenter> view);
+	void setView(V view);
+	V getView();
 }

@@ -16,7 +16,7 @@ import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
 
-public class SectorContextMenuPresenter extends BasePresenter implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
+public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView> implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
 
 	Location sector;
 	Quadrant quadrant;
@@ -37,7 +37,7 @@ public class SectorContextMenuPresenter extends BasePresenter implements SectorS
 	
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
 		SectorContextMenuPresenter.this.quadrant = quadrant;
-		ISectorMenuView v = (ISectorMenuView) getView();
+		ISectorContextMenuView v = (ISectorContextMenuView) getView();
 		Enterprise e = application.starMap.enterprise;
 		//read dimensions before modifying the DOM to avoid re-layout
 		int horizEmToPx = v.getMetricWidthInPx();

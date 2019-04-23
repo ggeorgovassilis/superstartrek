@@ -4,6 +4,7 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
+@SuppressWarnings("rawtypes")
 public abstract class BaseView<P extends Presenter> extends Composite implements IBaseView<P>{
 
 	protected final P presenter;
@@ -17,7 +18,8 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 	
 	protected void decorateWidget() {
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	protected BaseView(P presenter) {
 		this.presenter = presenter;
 		Widget widgetImpl = createWidgetImplementation();

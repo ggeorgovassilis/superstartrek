@@ -28,18 +28,12 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class QuadrantScannerPresenter extends BasePresenter
+public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
 		EnterpriseRepairedHandler, KlingonCloakingHandler, KlingonDestroyedHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public IQuadrantScannerView getView() {
-		return super.getView();
-	}
-
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		application.events.fireEvent(new SectorSelectedEvent(Location.location(x, y),
 				application.starMap.enterprise.getQuadrant(), screenX, screenY));

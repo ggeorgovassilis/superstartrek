@@ -9,7 +9,7 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.model.Setting;
 
-public class AppMenuPresenter extends BasePresenter implements AppMenuHandler, ValueChangeHandler<String> {
+public class AppMenuPresenter extends BasePresenter<AppMenuView> implements AppMenuHandler, ValueChangeHandler<String> {
 
 	String gotoStateAfterMenuHidden;
 	

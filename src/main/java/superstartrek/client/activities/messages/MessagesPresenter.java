@@ -5,18 +5,13 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 
-public class MessagesPresenter extends BasePresenter implements MessageHandler {
+public class MessagesPresenter extends BasePresenter<MessagesView> implements MessageHandler {
 
 	public MessagesPresenter(Application application) {
 		super(application);
 		application.events.addHandler(MessagePostedEvent.TYPE, this);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public MessagesView getView() {
-		return super.getView();
-	}
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
 		getView().showMessage(formattedMessage, category);

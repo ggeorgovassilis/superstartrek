@@ -18,7 +18,7 @@ import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 
-public class ComputerPresenter extends BasePresenter
+public class ComputerPresenter extends BasePresenter<IComputerView>
 		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String> {
 
 	public ComputerPresenter(Application application) {
@@ -27,12 +27,6 @@ public class ComputerPresenter extends BasePresenter
 		application.events.addHandler(ComputerEvent.TYPE, this);
 		application.events.addHandler(TurnStartedEvent.TYPE, this);
 		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public IComputerView getView() {
-		return super.getView();
 	}
 
 	public void onSkipButtonClicked() {

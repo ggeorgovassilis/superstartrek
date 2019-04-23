@@ -7,7 +7,7 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
 
-public class LoadingPresenter extends BasePresenter implements GamePhaseHandler{
+public class LoadingPresenter extends BasePresenter<LoadingScreen> implements GamePhaseHandler{
 
 	HandlerRegistration handlerRegistration;
 	

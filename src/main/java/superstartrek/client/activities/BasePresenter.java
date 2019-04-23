@@ -2,17 +2,17 @@ package superstartrek.client.activities;
 
 import superstartrek.client.Application;
 
-public abstract class BasePresenter implements Presenter{
+public abstract class BasePresenter<V extends View<?>> implements Presenter<V>{
 
-	protected View<? extends Presenter> view;
+	protected V view;
 	protected Application application;
 	
 	protected BasePresenter(Application application) {
 		this.application = application;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <V extends View<? extends Presenter>> V  getView() {
+	@Override
+	public V getView() {
 		return (V)view;
 	}
 
@@ -24,7 +24,7 @@ public abstract class BasePresenter implements Presenter{
 	
 	
 	@Override
-	public void setView(View<? extends Presenter> view) {
+	public void setView(V view) {
 		this.view = view;
 	}
 }
