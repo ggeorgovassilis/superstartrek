@@ -851,8 +851,18 @@ button.disabled {
 	width: 100%;
 	font-size:100%;
 }
+.app-menu li a:hover{
+	background-color: rgb(50, 158, 159);
+}
+
 
 .app-menu li a.disabled{
 	color:silver;
 	background-color: darkslategrey;
+}
+
+#app-menu-button{
+	background-image:url('../images/hamburger-menu.svg');
+	background-repeat: no-repeat;
+	background-size: contain;
 }

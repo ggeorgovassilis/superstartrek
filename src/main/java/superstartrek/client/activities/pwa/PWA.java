@@ -28,6 +28,7 @@ public class PWA {
 			"/superstartrek/site/images/icon512x512.png", "/superstartrek/site/images/laser.svg",
 			"/superstartrek/site/images/navigation.svg", "/superstartrek/site/images/radar.svg",
 			"/superstartrek/site/images/stars-background.gif", "/superstartrek/site/images/torpedo.svg",
+			"/superstartrek/site/images/stars-background.gif", "/superstartrek/site/images/hamburger-menu.svg",
 			"/superstartrek/site/css/sst.css", "/superstartrek/site/superstartrek.superstartrek.nocache.js",
 			"/superstartrek/site/checksum.sha.md5", };
 
