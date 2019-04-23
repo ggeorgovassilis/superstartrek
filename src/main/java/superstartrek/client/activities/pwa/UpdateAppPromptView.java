@@ -7,16 +7,15 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import superstartrek.client.Application;
 import superstartrek.client.activities.PopupView;
-import superstartrek.client.activities.Presenter;
 
-public class UpdateAppPromptView extends PopupView<UpdateAppActivity>{
+public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter>{
 	
 	public void disableButtons() {
 		DOM.getElementById("update-yes").setAttribute("disabled", "disabled");
 		DOM.getElementById("update-no").setAttribute("disabled", "disabled");
 	}
 
-	public UpdateAppPromptView(Presenter<UpdateAppActivity> presenter) {
+	public UpdateAppPromptView(UpdateAppPromptPresenter presenter) {
 		super(presenter);
 		addStyleName("install-pwa-prompt");
 		sinkEvents(Event.ONCLICK);

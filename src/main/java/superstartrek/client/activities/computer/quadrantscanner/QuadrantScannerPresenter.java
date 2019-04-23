@@ -28,11 +28,17 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActivity>
+public class QuadrantScannerPresenter extends BasePresenter
 		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
 		EnterpriseRepairedHandler, KlingonCloakingHandler, KlingonDestroyedHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public IQuadrantScannerView getView() {
+		return super.getView();
+	}
 
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		application.events.fireEvent(new SectorSelectedEvent(Location.location(x, y),
@@ -56,8 +62,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
-		((IQuadrantScannerView) getView()).deselectSectors();
-		((IQuadrantScannerView) getView()).selectSector(event.sector.getX(), event.sector.getY());
+		getView().deselectSectors();
+		getView().selectSector(event.sector.getX(), event.sector.getY());
 	}
 
 	void updateSector(Thing thing) {
@@ -76,16 +82,16 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 				css+=((Klingon)thing).getDisruptor().isEnabled()?"":" disruptor-disabled";
 			}
 		}
-		((IQuadrantScannerView) view).updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content,
+		getView().updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content,
 				css);
 	}
 
 	void clearSector(int x, int y) {
-		((IQuadrantScannerView) getView()).updateSector(x, y, "", "");
+		getView().updateSector(x, y, "", "");
 	}
 	
 	void markSectorAsNavigationTarget(int x, int y) {
-		((IQuadrantScannerView) view).addCssToCell(x, y, "navigation-target");
+		getView().addCssToCell(x, y, "navigation-target");
 	}
 
 	void updateSector(Quadrant q, int x, int y) {
@@ -167,7 +173,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerActiv
 	}
 	
 	public void clearAllNavigationTargets() {
-		IQuadrantScannerView view = (IQuadrantScannerView)getView();
+		IQuadrantScannerView view = getView();
 		for (int y=0;y<8;y++)
 			for (int x=0;x<8;x++)
 				view.removeCssFromCell(x,y,"navigation-target");

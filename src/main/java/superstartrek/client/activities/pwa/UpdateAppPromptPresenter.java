@@ -5,7 +5,7 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 
-public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppActivity> implements ApplicationUpdateCheckHandler{
+public class UpdateAppPromptPresenter extends BasePresenter implements ApplicationUpdateCheckHandler{
 
 	PWA pwa;
 	

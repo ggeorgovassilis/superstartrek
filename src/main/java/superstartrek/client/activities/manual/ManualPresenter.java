@@ -7,7 +7,7 @@ import com.google.gwt.user.client.History;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 
-public class ManualPresenter extends BasePresenter<ManualActivity> implements ValueChangeHandler<String>{
+public class ManualPresenter extends BasePresenter implements ValueChangeHandler<String>{
 
 	public ManualPresenter(Application application) {
 		super(application);

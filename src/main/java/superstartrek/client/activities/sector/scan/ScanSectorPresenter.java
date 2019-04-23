@@ -9,16 +9,16 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class SectorScanPresenter extends BasePresenter<ScanSectorActivity> implements ScanSectorHandler{
+public class ScanSectorPresenter extends BasePresenter implements ScanSectorHandler{
 
-	public SectorScanPresenter(Application application) {
+	public ScanSectorPresenter(Application application) {
 		super(application);
 		application.events.addHandler(ScanSectorEvent.TYPE, this);
 	}
 
 	@Override
 	public void scanSector(ScanSectorEvent event) {
-		IScanSectorView v = (IScanSectorView)getView();
+		IScanSectorView v = getView();
 		Quadrant q = event.getQuadrant();
 		Thing thing = application.starMap.findThingAt(q, event.getLocation());
 		String name = thing==null?"Nothing":thing.getName();

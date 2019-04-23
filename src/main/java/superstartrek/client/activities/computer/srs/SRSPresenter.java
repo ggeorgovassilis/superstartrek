@@ -1,7 +1,5 @@
 package superstartrek.client.activities.computer.srs;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.appmenu.AppMenuHandler;
@@ -18,7 +16,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Maps;
 
-public class SRSPresenter extends BasePresenter<SRSActivity> implements GamePhaseHandler, EnterpriseWarpedHandler, KlingonDestroyedHandler {
+public class SRSPresenter extends BasePresenter implements GamePhaseHandler, EnterpriseWarpedHandler, KlingonDestroyedHandler {
 
 	public SRSPresenter(Application application) {
 		super(application);

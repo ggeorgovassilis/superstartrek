@@ -1,15 +1,12 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -22,7 +19,7 @@ import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
 
-public class ComputerScreen extends BaseScreen<ComputerActivity> implements IComputerView, ClickHandler {
+public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerView, ClickHandler {
 
 	Element eDockInStarbase;
 	Element eRepair;
@@ -117,7 +114,7 @@ public class ComputerScreen extends BaseScreen<ComputerActivity> implements ICom
 	@Override
 	public void onClick(ClickEvent event) {
 		Element target = event.getNativeEvent().getEventTarget().cast();
-		ComputerPresenter presenter = (ComputerPresenter)getPresenter();
+		ComputerPresenter presenter = getPresenter();
 		if (target == eDockInStarbase)
 			presenter.onDockInStarbaseButtonClicked();
 		else if (target == eRepair)

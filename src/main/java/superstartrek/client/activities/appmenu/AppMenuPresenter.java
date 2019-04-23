@@ -1,6 +1,5 @@
 package superstartrek.client.activities.appmenu;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -10,7 +9,7 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.model.Setting;
 
-public class AppMenuPresenter extends BasePresenter<AppMenuActivity> implements AppMenuHandler, ValueChangeHandler<String> {
+public class AppMenuPresenter extends BasePresenter implements AppMenuHandler, ValueChangeHandler<String> {
 
 	String gotoStateAfterMenuHidden;
 	
@@ -22,7 +21,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuActivity> implements 
 
 	@Override
 	public void showMenu() {
-		AppMenuView view = (AppMenuView)getView();
+		AppMenuView view = getView();
 		gotoStateAfterMenuHidden = "computer";
 		view.setMenuEntryEnabled("cmd_autoaim", application.starMap.enterprise.getAutoAim().getBooleanValue());
 		view.show();

@@ -1,7 +1,5 @@
 package superstartrek.client.activities;
 
-public interface IBaseView<A extends Activity> extends View<A>{
-
-	<T extends Presenter<A>> T getPresenter();
+public interface IBaseView<P extends Presenter> extends View<P>{
 
 }

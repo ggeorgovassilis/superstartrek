@@ -10,13 +10,19 @@ import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
 
-public class IntroPresenter extends BasePresenter<IntroActivity> implements ApplicationUpdateCheckHandler, GamePhaseHandler, ValueChangeHandler<String>{
+public class IntroPresenter extends BasePresenter implements ApplicationUpdateCheckHandler, GamePhaseHandler, ValueChangeHandler<String>{
 
 	public IntroPresenter(Application application) {
 		super(application);
 		application.events.addHandler(GameStartedEvent.TYPE, this);
 		application.events.addHandler(ApplicationUpdateEvent.TYPE, this);
 		History.addValueChangeHandler(this);
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public IntroView getView() {
+		return super.getView();
 	}
 	
 	@Override
@@ -35,7 +41,7 @@ public class IntroPresenter extends BasePresenter<IntroActivity> implements Appl
 	
 	@Override
 	public void installedAppVersionIs(String version) {
-		((IntroView)getView()).showAppVersion(version);
+		getView().showAppVersion(version);
 	}
 
 }

@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.BaseScreen;
 
-public class LoadingScreen extends BaseScreen<LoadingActivity> {
+public class LoadingScreen extends BaseScreen<LoadingPresenter> {
 
 	@Override
 	protected HTMLPanel createWidgetImplementation() {

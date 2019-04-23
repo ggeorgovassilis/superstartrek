@@ -17,9 +17,9 @@ import superstartrek.client.model.Constants;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Timer;
 
-public abstract class PopupView<T extends Activity> extends BaseView<T>{
+public abstract class PopupView<P extends Presenter> extends BaseView<P>{
 
-	protected PopupView(Presenter<T> presenter) {
+	protected PopupView(P presenter) {
 		super(presenter);
 	}
 	

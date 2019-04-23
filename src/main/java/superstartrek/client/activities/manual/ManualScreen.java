@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.Widget;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.utils.HtmlWidget;
 
-public class ManualScreen extends BaseScreen<ManualActivity>{
+public class ManualScreen extends BaseScreen<ManualPresenter>{
 
 	public ManualScreen(ManualPresenter presenter) {
 		super(presenter);

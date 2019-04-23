@@ -5,9 +5,8 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import superstartrek.client.activities.PopupView;
-import superstartrek.client.activities.Presenter;
 
-public class MessagesView extends PopupView<MessageActivity> {
+public class MessagesView extends PopupView<MessagesPresenter> {
 
 	Element eContent;
 	Element eButton;
@@ -22,13 +21,13 @@ public class MessagesView extends PopupView<MessageActivity> {
 
 			@Override
 			public void onBrowserEvent(Event event) {
-				((MessagesPresenter) getPresenter()).dismissButtonClicked();
+				getPresenter().dismissButtonClicked();
 			}
 		});
 		super.decorateWidget();
 	}
 
-	public MessagesView(Presenter<MessageActivity> presenter) {
+	public MessagesView(MessagesPresenter presenter) {
 		super(presenter);
 	}
 

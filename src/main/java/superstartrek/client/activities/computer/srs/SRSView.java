@@ -7,11 +7,10 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.activities.Presenter;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
-public class SRSView extends BaseView<SRSActivity> implements ISRSView, ClickHandler {
+public class SRSView extends BaseView<SRSPresenter> implements ISRSView, ClickHandler {
 
 	Element[][] eCells;
 
@@ -47,7 +46,7 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView, ClickHan
 		eCells[x][y].setClassName(css);
 	}
 
-	public SRSView(Presenter<SRSActivity> presenter) {
+	public SRSView(SRSPresenter presenter) {
 		super(presenter);
 	}
 

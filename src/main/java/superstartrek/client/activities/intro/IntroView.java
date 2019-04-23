@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.Widget;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.utils.HtmlWidget;
 
-public class IntroView extends BaseScreen<IntroActivity>{
+public class IntroView extends BaseScreen<IntroPresenter>{
 
 	public IntroView(IntroPresenter presenter) {
 		super(presenter);

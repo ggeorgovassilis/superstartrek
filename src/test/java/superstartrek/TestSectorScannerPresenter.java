@@ -9,7 +9,7 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 import superstartrek.client.Application;
 import superstartrek.client.activities.sector.scan.IScanSectorView;
 import superstartrek.client.activities.sector.scan.ScanSectorHandler;
-import superstartrek.client.activities.sector.scan.SectorScanPresenter;
+import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 public class TestSectorScannerPresenter {
 
-	SectorScanPresenter presenter;
+	ScanSectorPresenter presenter;
 	Application application;
 	IScanSectorView view;
 	CountingEventBus events;
@@ -31,7 +31,7 @@ public class TestSectorScannerPresenter {
 		application = new Application();
 		application.events = events = new CountingEventBus();
 		application.starMap = map = new StarMap();
-		presenter = new SectorScanPresenter(application);
+		presenter = new ScanSectorPresenter(application);
 		view = mock(IScanSectorView.class);
 		presenter.setView(view);
 	}

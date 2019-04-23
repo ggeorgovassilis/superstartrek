@@ -6,7 +6,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import superstartrek.client.activities.PopupView;
 
-public class ScanSectorView extends PopupView<ScanSectorActivity> implements IScanSectorView{
+public class ScanSectorView extends PopupView<ScanSectorPresenter> implements IScanSectorView{
 
 	Element backButton;
 	
@@ -19,13 +19,13 @@ public class ScanSectorView extends PopupView<ScanSectorActivity> implements ISc
 			
 			@Override
 			public void onBrowserEvent(Event event) {
-				((SectorScanPresenter)getPresenter()).doneWithMenu();
+				getPresenter().doneWithMenu();
 			}
 		});
 		getHtmlPanel().getElement().setId("screen-sectorscan");
 	}
 	
-	public ScanSectorView(SectorScanPresenter presenter) {
+	public ScanSectorView(ScanSectorPresenter presenter) {
 		super(presenter);
 	}
 

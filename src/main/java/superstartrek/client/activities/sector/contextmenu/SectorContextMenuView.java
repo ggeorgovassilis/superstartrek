@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.utils.Timer;
 
-public class SectorContextMenuView extends BaseView<SectorContextMenuActivity>
+public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 		implements ISectorMenuView, MouseDownHandler, TouchStartHandler, ClickHandler {
 	
 	boolean viewInTransition=false;
@@ -102,7 +102,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuActivity>
 		event.stopPropagation();
 		String command = e.getAttribute("id");
 		if (command != null && !command.isEmpty())
-			((SectorContextMenuPresenter) getPresenter()).onCommandClicked(command);
+			getPresenter().onCommandClicked(command);
 	}
 
 	@Override

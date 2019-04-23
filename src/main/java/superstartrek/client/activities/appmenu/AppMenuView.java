@@ -1,6 +1,5 @@
 package superstartrek.client.activities.appmenu;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -8,12 +7,11 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.activities.PopupView;
-import superstartrek.client.activities.Presenter;
 import superstartrek.client.utils.Strings;
 
-public class AppMenuView extends PopupView<AppMenuActivity> {
+public class AppMenuView extends PopupView<AppMenuPresenter> {
 
-	public AppMenuView(Presenter<AppMenuActivity> presenter) {
+	public AppMenuView(AppMenuPresenter presenter) {
 		super(presenter);
 	}
 
@@ -49,7 +47,7 @@ public class AppMenuView extends PopupView<AppMenuActivity> {
 	@Override
 	public void hide() {
 		super.hide();
-		((AppMenuPresenter)getPresenter()).onMenuHidden();
+		getPresenter().onMenuHidden();
 	}
 
 }

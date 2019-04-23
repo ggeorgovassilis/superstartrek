@@ -12,11 +12,17 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Maps;
 
-public class LRSPresenter extends BasePresenter<LRSActivity> implements ValueChangeHandler<String> {
+public class LRSPresenter extends BasePresenter implements ValueChangeHandler<String> {
 
 	public LRSPresenter(Application application) {
 		super(application);
 		application.addHistoryListener(this);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public ILRSScreen getView() {
+		return super.getView();
 	}
 
 	public void quadrantWasClicked(int x, int y) {
@@ -46,7 +52,7 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements ValueCha
 	protected void updateEnterpriseLocation() {
 		Enterprise enterprise = application.starMap.enterprise;
 		Quadrant q = enterprise.getQuadrant();
-		((ILRSScreen) getView()).addCss(q.getX(), q.getY(), "has-enterprise");
+		getView().addCss(q.getX(), q.getY(), "has-enterprise");
 	}
 
 	public void updateLrsView() {
@@ -61,7 +67,7 @@ public class LRSPresenter extends BasePresenter<LRSActivity> implements ValueCha
 		updateLrsView();
 		getView().show();
 		Quadrant loc = application.starMap.enterprise.getQuadrant();
-		((ILRSScreen)getView()).focusCell(loc.getX(), loc.getY());
+		getView().focusCell(loc.getX(), loc.getY());
 	}
 
 	@Override

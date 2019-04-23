@@ -16,7 +16,7 @@ import superstartrek.client.utils.DomUtils;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
-public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> implements IQuadrantScannerView {
+public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
 
 	Element[][] eSectors = new Element[8][8];
 	Element eSelectedSector;
@@ -89,7 +89,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerActivity> imple
 		try {
 			int x = Integer.parseInt(e.getAttribute("data-x"));
 			int y = Integer.parseInt(e.getAttribute("data-y"));
-			((QuadrantScannerPresenter)getPresenter()).onSectorSelected(x, y, e.getOffsetLeft(), e.getOffsetTop());
+			getPresenter().onSectorSelected(x, y, e.getOffsetLeft(), e.getOffsetTop());
 			event.stopPropagation();
 			event.preventDefault();
 		} catch (Exception ex) {

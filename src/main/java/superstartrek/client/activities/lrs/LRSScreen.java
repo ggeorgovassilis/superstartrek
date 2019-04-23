@@ -5,14 +5,13 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
-import superstartrek.client.activities.Presenter;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 
-public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
+public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	
 	Element[][] cells;
 	
@@ -51,7 +50,7 @@ public class LRSScreen extends BaseScreen<LRSActivity> implements ILRSScreen{
 		});
 	}
 	
-	public LRSScreen(Presenter<LRSActivity> p) {
+	public LRSScreen(LRSPresenter p) {
 		super(p);
 	}
 	

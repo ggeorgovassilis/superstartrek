@@ -16,7 +16,7 @@ import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
 
-public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuActivity> implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
+public class SectorContextMenuPresenter extends BasePresenter implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
 
 	Location sector;
 	Quadrant quadrant;

@@ -5,16 +5,21 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 
-public class MessagesPresenter extends BasePresenter<MessageActivity> implements MessageHandler {
+public class MessagesPresenter extends BasePresenter implements MessageHandler {
 
 	public MessagesPresenter(Application application) {
 		super(application);
 		application.events.addHandler(MessagePostedEvent.TYPE, this);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public MessagesView getView() {
+		return super.getView();
+	}
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
-		((MessagesView) getView()).showMessage(formattedMessage, category);
+		getView().showMessage(formattedMessage, category);
 		// the "if" check sometimes says that msg is visible while it isn't; probably because it's a popup. disabling until further notice
 		//if (!getView().isVisible())
 		getView().show();
@@ -30,7 +35,7 @@ public class MessagesPresenter extends BasePresenter<MessageActivity> implements
 		getView().hide(new ScheduledCommand() {
 			@Override
 			public void execute() {
-				((MessagesView) getView()).clear();
+				getView().clear();
 				application.events.fireEvent(new MessagesReadEvent());
 			}
 		});
