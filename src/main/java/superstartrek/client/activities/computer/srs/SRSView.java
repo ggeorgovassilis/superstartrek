@@ -42,7 +42,7 @@ public class SRSView extends BaseView<SRSActivity> implements ISRSView, ClickHan
 	public void decorateWidget() {
 		super.decorateWidget();
 		addDomHandler(this, ClickEvent.getType());
-		Element button = ((HtmlWidget)createWidgetImplementation()).getElementById("app-menu-button");
+		Element button = ((HtmlWidget)getWidget()).getElementById("app-menu-button");
 		DOM.setEventListener(button, new EventListener() {
 			
 			@Override

@@ -177,28 +177,21 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	}
 	
 	public void flee() {
-		GWT.log("Klingon wants to flee");
 		if (canCloak() && isVisible()) {
-			GWT.log("Klingon cloaking");
 			cloak();
 		}
 		if (!getImpulse().isEnabled()) {
-			GWT.log("Impulse disabled, cannot flee");
 			return;
 		}
 		Application app = Application.get();
 		double distance = StarMap.distance(getLocation(), app.starMap.enterprise.getLocation());
-		GWT.log("Current distance from enterprise "+distance);
 		if (getImpulse().isEnabled() && getImpulse().getValue()>=1) {
 			int triesLeft = 5;
 			Location loc = null;
 			do {
-				GWT.log("Looking for safe spot around "+getLocation());
 				loc = app.starMap.findFreeSpotAround(app.getActiveQuadrant(), getLocation(), 1+(int)getImpulse().getValue());
-				GWT.log("Found spot "+loc);
 				if (loc!=null) {
 					double newDistance = StarMap.distance(app.starMap.enterprise.getLocation(), loc);
-					GWT.log("New distance from enterprise would be "+newDistance);
 					if (newDistance<=distance)
 						loc = null;
 				}

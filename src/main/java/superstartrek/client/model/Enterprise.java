@@ -237,7 +237,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (target instanceof Klingon) {
 			double shields = ((Klingon)target).getShields().getValue();
 			double maxShields = ((Klingon)target).getShields().getMaximum();
-			damage = damage*(1.0-0.5*(shields/maxShields));
+			damage = damage*(1.0-(0.5*(shields/maxShields)*(shields/maxShields)));
 		}
 		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, target, "torpedos", damage, false);
 		application.events.fireEvent(event);
