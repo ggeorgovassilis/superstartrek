@@ -13,7 +13,6 @@ import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
-import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedEvent;
@@ -56,8 +55,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
-		getView().deselectSectors();
-		getView().selectSector(event.sector.getX(), event.sector.getY());
+		view.deselectSectors();
+		view.selectSector(event.sector.getX(), event.sector.getY());
 	}
 
 	void updateSector(Thing thing) {
@@ -167,7 +166,6 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 	
 	public void clearAllNavigationTargets() {
-		IQuadrantScannerView view = getView();
 		for (int y=0;y<8;y++)
 			for (int x=0;x<8;x++)
 				view.removeCssFromCell(x,y,"navigation-target");

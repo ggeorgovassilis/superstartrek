@@ -14,10 +14,10 @@ public class MessagesPresenter extends BasePresenter<MessagesView> implements Me
 
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
-		getView().showMessage(formattedMessage, category);
+		view.showMessage(formattedMessage, category);
 		// the "if" check sometimes says that msg is visible while it isn't; probably because it's a popup. disabling until further notice
-		//if (!getView().isVisible())
-		getView().show();
+		//if (!view.isVisible())
+		view.show();
 	}
 
 	public void dismissButtonClicked() {
@@ -25,12 +25,12 @@ public class MessagesPresenter extends BasePresenter<MessagesView> implements Me
 	}
 	
 	public void hideMessages() {
-		if (!getView().isVisible())
+		if (!view.isVisible())
 			return;
-		getView().hide(new ScheduledCommand() {
+		view.hide(new ScheduledCommand() {
 			@Override
 			public void execute() {
-				getView().clear();
+				view.clear();
 				application.events.fireEvent(new MessagesReadEvent());
 			}
 		});

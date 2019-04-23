@@ -18,35 +18,36 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		super(application);
 		application.addHistoryListener(this);
 	}
-	
+
 	public void quadrantWasClicked(int x, int y) {
 		Quadrant qTo = application.starMap.getQuadrant(x, y);
 		Enterprise enterprise = application.starMap.enterprise;
 		if (enterprise.getQuadrant() == qTo)
 			return;
-		//there's a significant benefit in hiding LRS before going through the CPU intensive
-		//warping event cascade
+		// there's a significant benefit in hiding LRS before going through the CPU
+		// intensive
+		// warping event cascade
 		if (enterprise.warpTo(qTo, new Runnable() {
-			
-			//invoked only before successful warp
+
+			// invoked only before successful warp
 			@Override
 			public void run() {
-				getView().hide();
+				view.hide();
 			}
 		}))
 			History.newItem("computer");
 	}
-	
+
 	protected void updateQuadrant(int x, int y) {
 		StarMap map = application.starMap;
 		Quadrant q = map.getQuadrant(x, y);
-		Maps.renderCell(x, y, map, q, (MapCellRenderer) getView());
+		Maps.renderCell(x, y, map, q, (MapCellRenderer) view);
 	}
-	
+
 	protected void updateEnterpriseLocation() {
 		Enterprise enterprise = application.starMap.enterprise;
 		Quadrant q = enterprise.getQuadrant();
-		getView().addCss(q.getX(), q.getY(), "has-enterprise");
+		view.addCss(q.getX(), q.getY(), "has-enterprise");
 	}
 
 	public void updateLrsView() {
@@ -59,9 +60,9 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 
 	public void showLrs() {
 		updateLrsView();
-		getView().show();
+		view.show();
 		Quadrant loc = application.starMap.enterprise.getQuadrant();
-		getView().focusCell(loc.getX(), loc.getY());
+		view.focusCell(loc.getX(), loc.getY());
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		if ("longrangescan".equals(event.getValue()))
 			showLrs();
 		else
-			getView().hide();
+			view.hide();
 	}
 
 }

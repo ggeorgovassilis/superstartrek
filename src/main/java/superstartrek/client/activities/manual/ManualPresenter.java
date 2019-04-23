@@ -17,9 +17,9 @@ public class ManualPresenter extends BasePresenter<ManualScreen> implements Valu
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		if ("manual".equals(event.getValue())) {
-			getView().show();
+			view.show();
 		} else
-			getView().hide();
+			view.hide();
 	}
 
 }

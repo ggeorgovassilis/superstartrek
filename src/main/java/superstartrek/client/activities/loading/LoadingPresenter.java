@@ -18,7 +18,7 @@ public class LoadingPresenter extends BasePresenter<LoadingScreen> implements Ga
 
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
-		getView().hide();
+		view.hide();
 		//we won't need this presenter or its view after the initial event
 		handlerRegistration.removeHandler();
 		handlerRegistration = null;

@@ -11,7 +11,7 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
-import superstartrek.client.activities.navigation.ThingMovedEvent;
+import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KlingonTurnStartedEvent;
 import superstartrek.client.model.Enterprise;

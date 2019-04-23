@@ -114,7 +114,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	@Override
 	public void onClick(ClickEvent event) {
 		Element target = event.getNativeEvent().getEventTarget().cast();
-		ComputerPresenter presenter = getPresenter();
 		if (target == eDockInStarbase)
 			presenter.onDockInStarbaseButtonClicked();
 		else if (target == eRepair)

@@ -21,7 +21,6 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements AppM
 
 	@Override
 	public void showMenu() {
-		AppMenuView view = getView();
 		gotoStateAfterMenuHidden = "computer";
 		view.setMenuEntryEnabled("cmd_autoaim", application.starMap.enterprise.getAutoAim().getBooleanValue());
 		view.show();
@@ -29,8 +28,8 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements AppM
 
 	@Override
 	public void hideMenu() {
-		if (getView().isVisible())
-			getView().hide();
+		if (view.isVisible())
+			view.hide();
 	}
 	
 	public void onMenuHidden() {

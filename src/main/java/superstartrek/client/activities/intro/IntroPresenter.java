@@ -21,21 +21,21 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 	
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
-		getView().show();
+		view.show();
 		History.newItem("intro");
 	}
 
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		if ("intro".equals(event.getValue())) {
-			getView().show();
+			view.show();
 		} else
-			getView().hide();
+			view.hide();
 	}
 	
 	@Override
 	public void installedAppVersionIs(String version) {
-		getView().showAppVersion(version);
+		view.showAppVersion(version);
 	}
 
 }

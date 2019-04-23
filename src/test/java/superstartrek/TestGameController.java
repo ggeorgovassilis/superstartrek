@@ -15,7 +15,7 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
-import superstartrek.client.activities.navigation.ThingMovedEvent;
+import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.KlingonTurnEndedEvent;

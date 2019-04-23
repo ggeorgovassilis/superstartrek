@@ -9,7 +9,7 @@ import com.google.gwt.user.client.DOM;
 import superstartrek.client.activities.PopupView;
 import superstartrek.client.utils.Strings;
 
-public class AppMenuView extends PopupView<AppMenuPresenter> {
+public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHandler{
 
 	public AppMenuView(AppMenuPresenter presenter) {
 		super(presenter);
@@ -18,18 +18,7 @@ public class AppMenuView extends PopupView<AppMenuPresenter> {
 	@Override
 	public void decorateWidget() {
 		super.decorateWidget();
-		addDomHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				EventTarget target = event.getNativeEvent().getEventTarget();
-				Element e = target.cast();
-				if (Strings.isEmpty(e.getId()))
-					return;
-				String id = e.getId();
-				((AppMenuPresenter)getPresenter()).onMenuItemClicked(id);
-			}
-		}, ClickEvent.getType());
+		addDomHandler(this, ClickEvent.getType());
 	}
 
 	@Override
@@ -48,6 +37,16 @@ public class AppMenuView extends PopupView<AppMenuPresenter> {
 	public void hide() {
 		super.hide();
 		getPresenter().onMenuHidden();
+	}
+
+	@Override
+	public void onClick(ClickEvent event) {
+		EventTarget target = event.getNativeEvent().getEventTarget();
+		Element e = target.cast();
+		if (Strings.isEmpty(e.getId()))
+			return;
+		String id = e.getId();
+		presenter.onMenuItemClicked(id);
 	}
 
 }

@@ -12,7 +12,6 @@ import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
-import superstartrek.client.activities.navigation.ThingMovedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.control.GameOverEvent.Outcome;
 import superstartrek.client.model.Enterprise;

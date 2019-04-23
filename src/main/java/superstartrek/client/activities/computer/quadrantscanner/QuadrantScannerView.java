@@ -89,7 +89,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		try {
 			int x = Integer.parseInt(e.getAttribute("data-x"));
 			int y = Integer.parseInt(e.getAttribute("data-y"));
-			getPresenter().onSectorSelected(x, y, e.getOffsetLeft(), e.getOffsetTop());
+			presenter.onSectorSelected(x, y, e.getOffsetLeft(), e.getOffsetTop());
 			event.stopPropagation();
 			event.preventDefault();
 		} catch (Exception ex) {

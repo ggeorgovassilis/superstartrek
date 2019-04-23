@@ -36,16 +36,16 @@ public class ComputerPresenter extends BasePresenter<IComputerView>
 	@Override
 	public void showScreen() {
 		updateStarDate();
-		getView().show();
+		view.show();
 	}
 
 	public void updateStarDate() {
-		getView().showStarDate("" + application.starMap.getStarDate());
+		view.showStarDate("" + application.starMap.getStarDate());
 	}
 
 	@Override
 	public void hideScreen() {
-		getView().hide();
+		view.hide();
 	}
 
 	public void onDockInStarbaseButtonClicked() {
@@ -70,12 +70,12 @@ public class ComputerPresenter extends BasePresenter<IComputerView>
 		StarBase starBase = q.getStarBase();
 		boolean visible = starBase != null
 				&& (q.getKlingons().isEmpty() || StarMap.within_distance(enterprise, starBase, 2));
-		getView().setDockInStarbaseButtonVisibility(visible);
+		view.setDockInStarbaseButtonVisibility(visible);
 	}
 
 	public void updateRepairButton() {
 		Enterprise enterprise = application.starMap.enterprise;
-		getView().setRepairButtonVisibility(enterprise.canRepairProvisionally());
+		view.setRepairButtonVisibility(enterprise.canRepairProvisionally());
 	}
 
 	public void updateStatusButton() {
@@ -85,7 +85,7 @@ public class ComputerPresenter extends BasePresenter<IComputerView>
 		String cssPhasers = CSS.damageClass(enterprise.getPhasers().health());
 		String cssTorpedos = CSS.damageClass(enterprise.getTorpedos().health());
 
-		getView().updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
+		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class ComputerPresenter extends BasePresenter<IComputerView>
 
 	public void updateAntimatter() {
 		Setting antimatter = application.starMap.enterprise.getAntimatter();
-		getView().updateAntimatter((int) antimatter.getValue(), (int) antimatter.getMaximum());
+		view.updateAntimatter((int) antimatter.getValue(), (int) antimatter.getMaximum());
 	}
 
 	public void updateQuadrantHeader() {
@@ -117,13 +117,13 @@ public class ComputerPresenter extends BasePresenter<IComputerView>
 			alert = minDistance < 9 ? "red-alert" : "yellow-alert";
 		}
 
-		getView().setQuadrantName(q.getName(), alert);
+		view.setQuadrantName(q.getName(), alert);
 	}
 
 	public void updateShieldsView() {
 		Enterprise enterprise = application.starMap.enterprise;
 		Setting shields = enterprise.getShields();
-		getView().updateShields((int) shields.getValue(), (int) shields.getCurrentUpperBound(), (int) shields.getMaximum());
+		view.updateShields((int) shields.getValue(), (int) shields.getCurrentUpperBound(), (int) shields.getMaximum());
 	}
 
 	public void onRepairButtonClicked() {

@@ -56,7 +56,7 @@ public class SRSView extends BaseView<SRSPresenter> implements ISRSView, ClickHa
 		if (!Strings.isEmpty(e.getAttribute("data-dx"))) {
 			int dx = Integer.parseInt(e.getAttribute("data-dx"));
 			int dy = Integer.parseInt(e.getAttribute("data-dy"));
-			((SRSPresenter) getPresenter()).quadrantWasClicked(dx, dy);
+			presenter.quadrantWasClicked(dx, dy);
 		}
 	}
 

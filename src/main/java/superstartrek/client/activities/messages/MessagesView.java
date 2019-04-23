@@ -21,7 +21,7 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 
 			@Override
 			public void onBrowserEvent(Event event) {
-				getPresenter().dismissButtonClicked();
+				presenter.dismissButtonClicked();
 			}
 		});
 		super.decorateWidget();
@@ -53,6 +53,6 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return getPresenter().getApplication().getResources().messages().getText();
+		return presenter.getApplication().getResources().messages().getText();
 	}
 }
