@@ -1,8 +1,8 @@
 package superstartrek.client.activities.sector.scan;
 
-import superstartrek.client.activities.IBaseView;
+import superstartrek.client.activities.View;
 
-public interface IScanSectorView extends IBaseView<ScanSectorPresenter>{
+public interface IScanSectorView extends View<ScanSectorPresenter>{
 
 	void setObjectName(String value);
 

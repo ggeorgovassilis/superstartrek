@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 @SuppressWarnings("rawtypes")
-public abstract class BaseView<P extends Presenter> extends Composite implements IBaseView<P>{
+public abstract class BaseView<P extends Presenter> extends Composite implements View<P>{
 
 	protected final P presenter;
 	

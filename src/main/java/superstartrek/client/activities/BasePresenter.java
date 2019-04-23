@@ -5,7 +5,7 @@ import superstartrek.client.Application;
 public abstract class BasePresenter<V extends View<?>> implements Presenter<V>{
 
 	protected V view;
-	protected Application application;
+	protected final Application application;
 	
 	protected BasePresenter(Application application) {
 		this.application = application;

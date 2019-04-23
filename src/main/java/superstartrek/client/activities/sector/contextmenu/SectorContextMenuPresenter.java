@@ -79,7 +79,6 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	public void onSectorSelected(SectorSelectedEvent event) {
 		this.sector = event.getSector();
 		showMenu(event.screenX, event.screenY, event.getSector(), event.getQuadrant());
-
 	}
 	
 	public void onEscapePressed() {

@@ -1,8 +1,8 @@
 package superstartrek.client.activities.sector.contextmenu;
 
-import superstartrek.client.activities.IBaseView;
+import superstartrek.client.activities.View;
 
-public interface ISectorContextMenuView extends IBaseView<SectorContextMenuPresenter> {
+public interface ISectorContextMenuView extends View<SectorContextMenuPresenter> {
 
 	void setLocation(int x, int y);
 

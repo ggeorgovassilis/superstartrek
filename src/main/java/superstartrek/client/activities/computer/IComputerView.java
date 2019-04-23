@@ -1,8 +1,8 @@
 package superstartrek.client.activities.computer;
 
-import superstartrek.client.activities.IBaseView;
+import superstartrek.client.activities.View;
 
-public interface IComputerView extends IBaseView<ComputerPresenter>{
+public interface IComputerView extends View<ComputerPresenter>{
 
 	void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos);
 
