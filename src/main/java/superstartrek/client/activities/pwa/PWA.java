@@ -34,10 +34,13 @@ public class PWA {
 	// caching in the main window is possible according to
 	// https://gist.github.com/Rich-Harris/fd6c3c73e6e707e312d7c5d7d0f3b2f9
 	//@formatter:off
-	private static native void cacheFiles(String[] files) /*-{
+	private static native void cacheFiles(String[] files, ScheduledCommand callback) /*-{
 		$wnd.caches.open( "sst1" )
     	.then( function(cache){cache.addAll( files )} )
-    	.then( function(){console.log( 'offline cache populated' );} )
+    	.then( function(){
+    		console.log( 'offline cache populated' );
+    		callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
+    	} )
     	["catch"]( function(){console.log('something went wrong')} );
 	}-*/;
 	//@formatter:on
@@ -61,7 +64,13 @@ public class PWA {
 
 	public void cacheFilesForOfflineUse() {
 		GWT.log("Caching files for offline use");
-		cacheFiles(URLS);
+		cacheFiles(URLS, new ScheduledCommand() {
+			
+			@Override
+			public void execute() {
+				application.events.fireEvent(new ApplicationUpdateEvent(Status.filesCached, "", ""));
+			}
+		});
 	}
 
 	//@formatter:off
@@ -175,10 +184,14 @@ public class PWA {
 	}
 
 	public void run() {
-		if (!GWT.isClient() || !GWT.isProdMode())
+		if (!GWT.isClient()) {
+			GWT.log("Not running PWA because not running in browser");
 			return;
-		if (!supportsServiceWorker())
+		}
+		if (!supportsServiceWorker()) {
+			GWT.log("Not running PWA because service workers are not supported");
 			return;
+		}
 		cacheFilesForOfflineUse();
 		registerServiceWorker("service-worker.js");
 		addInstallationListener();
