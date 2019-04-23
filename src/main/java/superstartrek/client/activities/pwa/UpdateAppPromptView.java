@@ -25,7 +25,6 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter>{
 			public void onClick(ClickEvent event) {
 				Element target = event.getNativeEvent().getEventTarget().cast();
 				String id = target.getId();
-				UpdateAppPromptPresenter presenter = getPresenter();
 				if ("update-yes".equals(id)) {
 					presenter.acceptUpdateButtonClicked();
 				}

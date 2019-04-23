@@ -6,5 +6,4 @@ public interface Presenter<V extends View<?>> {
 
 	Application getApplication();
 	void setView(V view);
-	V getView();
 }

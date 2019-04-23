@@ -37,17 +37,16 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
 		SectorContextMenuPresenter.this.quadrant = quadrant;
-		ISectorContextMenuView v = (ISectorContextMenuView) getView();
 		Enterprise e = application.starMap.enterprise;
 		//read dimensions before modifying the DOM to avoid re-layout
-		int horizEmToPx = v.getMetricWidthInPx();
-		int vertEmToPx = v.getMetricHeightInPx();
+		int horizEmToPx = view.getMetricWidthInPx();
+		int vertEmToPx = view.getMetricHeightInPx();
 		
 		buttonsEnabled.put("cmd_navigate", e.canNavigateTo(new QuadrantIndex(quadrant, getApplication().starMap), sector));
 		buttonsEnabled.put("cmd_firePhasers", e.canFirePhaserAt(sector)==null);
 		buttonsEnabled.put("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
 		for (String cmd:buttonsEnabled.keySet())
-			v.enableButton(cmd, buttonsEnabled.get(cmd));
+			view.enableButton(cmd, buttonsEnabled.get(cmd));
 		//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
 		//this is some heavy heuristics, because the menu has a "fixed" size (in em units)
 		//that's empirical knowledge from the CSS
@@ -61,8 +60,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 		int target_y_em = Math.max(screenY/vertEmToPx,menuHeightEm/2);
 		int target_y_px = target_y_em*vertEmToPx;
-		v.setLocation(target_x_px, target_y_px);
-		v.show();
+		view.setLocation(target_x_px, target_y_px);
+		view.show();
 	}
 
 	public void showMenu(int screenX, int screenY, Location sector, Quadrant quadrant) {
@@ -88,7 +87,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	protected void hideMenu(ScheduledCommand callback) {
-		getView().hide(callback);
+		view.hide(callback);
 	}
 
 	public void onMenuClicked() {

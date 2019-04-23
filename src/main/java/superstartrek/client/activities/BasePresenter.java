@@ -12,12 +12,6 @@ public abstract class BasePresenter<V extends View<?>> implements Presenter<V>{
 	}
 	
 	@Override
-	public V getView() {
-		return (V)view;
-	}
-
-	
-	@Override
 	public Application getApplication() {
 		return application;
 	}

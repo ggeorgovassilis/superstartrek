@@ -23,7 +23,7 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return getPresenter().getApplication().getResources().appMenu().getText();
+		return presenter.getApplication().getResources().appMenu().getText();
 	}
 	
 	public void setMenuEntryEnabled(String cmd, boolean enabled) {
@@ -36,7 +36,7 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 	@Override
 	public void hide() {
 		super.hide();
-		getPresenter().onMenuHidden();
+		presenter.onMenuHidden();
 	}
 
 	@Override

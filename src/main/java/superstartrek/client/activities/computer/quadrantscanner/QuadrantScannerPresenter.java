@@ -2,6 +2,8 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
+import com.google.gwt.event.shared.EventBus;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -40,17 +42,18 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	public QuadrantScannerPresenter(Application application, SectorContextMenuPresenter sectorMenuPresenter) {
 		super(application);
-		application.events.addHandler(SectorSelectedEvent.TYPE, this);
-		application.events.addHandler(GameStartedEvent.TYPE, this);
-		application.events.addHandler(ThingMovedEvent.TYPE, this);
-		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
-		application.events.addHandler(FireEvent.TYPE, this);
-		application.events.addHandler(EnterpriseRepairedEvent.TYPE, this);
-		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
-		application.events.addHandler(KlingonUncloakedEvent.TYPE, this);
-		application.events.addHandler(KlingonCloakedEvent.TYPE, this);
-		application.events.addHandler(AfterTurnStartedEvent.TYPE, this);
 		this.sectorMenuPresenter = sectorMenuPresenter;
+		EventBus events = application.events;
+		events.addHandler(SectorSelectedEvent.TYPE, this);
+		events.addHandler(GameStartedEvent.TYPE, this);
+		events.addHandler(ThingMovedEvent.TYPE, this);
+		events.addHandler(EnterpriseWarpedEvent.TYPE, this);
+		events.addHandler(FireEvent.TYPE, this);
+		events.addHandler(EnterpriseRepairedEvent.TYPE, this);
+		events.addHandler(KlingonDestroyedEvent.TYPE, this);
+		events.addHandler(KlingonUncloakedEvent.TYPE, this);
+		events.addHandler(KlingonCloakedEvent.TYPE, this);
+		events.addHandler(AfterTurnStartedEvent.TYPE, this);
 	}
 
 	@Override
@@ -75,16 +78,16 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 				css+=((Klingon)thing).getDisruptor().isEnabled()?"":" disruptor-disabled";
 			}
 		}
-		getView().updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content,
+		view.updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content,
 				css);
 	}
 
 	void clearSector(int x, int y) {
-		getView().updateSector(x, y, "", "");
+		view.updateSector(x, y, "", "");
 	}
 	
 	void markSectorAsNavigationTarget(int x, int y) {
-		getView().addCssToCell(x, y, "navigation-target");
+		view.addCssToCell(x, y, "navigation-target");
 	}
 
 	void updateSector(Quadrant q, int x, int y) {

@@ -19,7 +19,7 @@ public class ScanSectorView extends PopupView<ScanSectorPresenter> implements IS
 			
 			@Override
 			public void onBrowserEvent(Event event) {
-				getPresenter().doneWithMenu();
+				presenter.doneWithMenu();
 			}
 		});
 		getHtmlPanel().getElement().setId("screen-sectorscan");

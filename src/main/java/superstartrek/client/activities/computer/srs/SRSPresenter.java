@@ -34,16 +34,16 @@ public class SRSPresenter extends BasePresenter<ISRSView> implements GamePhaseHa
 				int qy = q0.getY() + y-1;
 				if (qx >= 0 && qy >= 0 && qx < 8 && qy < 8) {
 					Quadrant q = map.getQuadrant(qx, qy);
-					Maps.renderCell(x, y, map, q, getView());
+					Maps.renderCell(x, y, map, q, view);
 				}
 				else 
-					Maps.renderCell(x, y, map, null, getView());
+					Maps.renderCell(x, y, map, null, view);
 			}
 	}
 	
 	public void quadrantWasClicked(int dx, int dy) {
 		StarMap map = application.starMap;
-		Quadrant q = application.starMap.enterprise.getQuadrant();
+		Quadrant q = map.enterprise.getQuadrant();
 		int x = q.getX()+dx;
 		int y = q.getY()+dy;
 		if (map.isOnMap(x, y))

@@ -18,39 +18,38 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 
 	@Override
 	public void scanSector(ScanSectorEvent event) {
-		IScanSectorView v = getView();
 		Quadrant q = event.getQuadrant();
 		Thing thing = application.starMap.findThingAt(q, event.getLocation());
 		String name = thing==null?"Nothing":thing.getName();
-		v.setObjectName(name);
-		v.setObjectLocation(event.getLocation().toString());
-		v.setObjectQuadrant(q.getName());
+		view.setObjectName(name);
+		view.setObjectLocation(event.getLocation().toString());
+		view.setObjectQuadrant(q.getName());
 		if (thing instanceof Vessel) {
 			Vessel vessel = (Vessel)thing;
-			v.setProperty("scan-report-shields", "scan-report-shields-value", "", "%"+vessel.getShields().percentage());
+			view.setProperty("scan-report-shields", "scan-report-shields-value", "", "%"+vessel.getShields().percentage());
 			if (vessel instanceof Klingon) {
 				Klingon k = (Klingon)vessel;
-				v.setProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isEnabled()?"":"damage-offline", k.getDisruptor().isEnabled()?"online":"offline");
-				v.setProperty("scan-report-cloak", "scan-report-cloak-value", k.getCloak().isEnabled()?"":"damage-offline", k.getCloak().isEnabled()?"online":"offline");
+				view.setProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isEnabled()?"":"damage-offline", k.getDisruptor().isEnabled()?"online":"offline");
+				view.setProperty("scan-report-cloak", "scan-report-cloak-value", k.getCloak().isEnabled()?"":"damage-offline", k.getCloak().isEnabled()?"online":"offline");
 			} else
 			if (vessel instanceof Enterprise) {
 				Enterprise e = (Enterprise)vessel;
-				v.setProperty("scan-report-weapons", "scan-report-weapons-value", e.getPhasers().isEnabled()?"":"damage-offline", e.getPhasers().isEnabled()?"online":"offline");
+				view.setProperty("scan-report-weapons", "scan-report-weapons-value", e.getPhasers().isEnabled()?"":"damage-offline", e.getPhasers().isEnabled()?"online":"offline");
 			}
-			v.setProperty("scan-report-engines", "scan-report-engines-value", vessel.getImpulse().isEnabled()?"":"damage-offline", vessel.getImpulse().isEnabled()?"online":"offline");
+			view.setProperty("scan-report-engines", "scan-report-engines-value", vessel.getImpulse().isEnabled()?"":"damage-offline", vessel.getImpulse().isEnabled()?"online":"offline");
 		} else {
-			v.setProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
-			v.setProperty("scan-report-weapons", "scan-report-weapons-value", "hidden", "");
-			v.setProperty("scan-report-engines", "scan-report-engines-value", "hidden", "");
-			v.setProperty("scan-report-cloak", "scan-report-cloak-value", "hidden", "");
+			view.setProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
+			view.setProperty("scan-report-weapons", "scan-report-weapons-value", "hidden", "");
+			view.setProperty("scan-report-engines", "scan-report-engines-value", "hidden", "");
+			view.setProperty("scan-report-cloak", "scan-report-cloak-value", "hidden", "");
 		}
-		getView().show();
+		view.show();
 	}
 	
 	public void doneWithMenu() {
-		if (!getView().isVisible())
+		if (!view.isVisible())
 			return;
-		getView().hide();
+		view.hide();
 		application.events.fireEvent(new ComputerEvent(ComputerEvent.Action.showScreen));
 	}
 	

@@ -44,7 +44,7 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 				if (!Strings.isEmpty(eTd.getAttribute("data-x"))) {
 					int x = Integer.parseInt(eTd.getAttribute("data-x"));
 					int y = Integer.parseInt(eTd.getAttribute("data-y"));
-					((LRSPresenter)getPresenter()).quadrantWasClicked(x,y);
+					presenter.quadrantWasClicked(x,y);
 				}
 			}
 		});

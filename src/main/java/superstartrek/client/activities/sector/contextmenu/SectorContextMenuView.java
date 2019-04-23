@@ -30,7 +30,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	protected Widget createWidgetImplementation() {
-		return new HTMLPanel(getPresenter().getApplication().getResources().sectorContextMenu().getText());
+		return new HTMLPanel(presenter.getApplication().getResources().sectorContextMenu().getText());
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 		event.stopPropagation();
 		String command = e.getAttribute("id");
 		if (command != null && !command.isEmpty())
-			getPresenter().onCommandClicked(command);
+			presenter.onCommandClicked(command);
 	}
 
 	@Override

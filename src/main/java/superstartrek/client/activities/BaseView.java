@@ -11,11 +11,6 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 	
 	protected abstract Widget createWidgetImplementation();
 
-	@Override
-	public P getPresenter() {
-		return presenter;
-	}
-	
 	protected void decorateWidget() {
 	}
 

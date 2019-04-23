@@ -12,7 +12,6 @@ import superstartrek.client.model.Enterprise;
 public class StatusReportPresenter extends BasePresenter<StatusReportView> implements ValueChangeHandler<String>{
 
 	public void updateView() {
-		StatusReportView view = getView();
 		Enterprise enterprise = application.starMap.enterprise;
 		view.setProperty("report_stardate", ""+application.starMap.getStarDate());
 		view.setProperty("report_location", enterprise.getQuadrant().getName());
@@ -39,10 +38,10 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 	public void onValueChange(ValueChangeEvent<String> event) {
 		if ("statusreport".equals(event.getValue())) {
 			updateView();
-			getView().show();
+			view.show();
 		}
 		else
-			getView().hide();
+			view.hide();
 	}
 	
 

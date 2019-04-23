@@ -9,5 +9,4 @@ public interface View<P extends Presenter> {
 	void hide();
 	void hide(ScheduledCommand callback);
 	boolean isVisible();
-	P getPresenter();
 }

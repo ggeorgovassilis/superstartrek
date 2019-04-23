@@ -51,12 +51,10 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		Widget widgetImpl = getWidget();
 		Element eTable = DomUtils.getTbody(widgetImpl.getElement());
 		for (int y = 0; y < 8; y++) {
-			Element eTr = DOM.createDiv();
 			for (int x = 0; x < 8; x++) {
 				Element eTd = DOM.createDiv();
 				eTd.setAttribute("data-x", "" + x);
 				eTd.setAttribute("data-y", "" + y);
-				eTr.appendChild(eTd);
 				eTd.getStyle().setLeft(12.5 * (double) x, Unit.PCT);
 				eTd.getStyle().setTop(12.5 * (double) y, Unit.PCT);
 				eSectors[x][y] = eTd;
@@ -64,14 +62,14 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 			}
 		}
 		widgetImpl.addDomHandler(new MouseDownHandler() {
-			
+
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
 				handleClick(event);
 			}
 		}, MouseDownEvent.getType());
 		widgetImpl.addDomHandler(new TouchStartHandler() {
-			
+
 			@Override
 			public void onTouchStart(TouchStartEvent event) {
 				handleClick(event);
@@ -81,7 +79,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	}
 
 	protected void handleClick(DomEvent<?> event) {
-		NativeEvent ne= event.getNativeEvent();
+		NativeEvent ne = event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
 		// clicks on vessel parts need to bubble up to cell
 		while (Strings.isEmpty(e.getAttribute("data-x")) && !"quadrantscan".equals(e.getId()))
@@ -93,9 +91,10 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 			event.stopPropagation();
 			event.preventDefault();
 		} catch (Exception ex) {
-			//can happen when user clicks on the borders between cells, which don't have x/y attributes
+			// can happen when user clicks on the borders between cells, which don't have
+			// x/y attributes
 		}
-		
+
 	}
 
 	@Override
