@@ -4,9 +4,9 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import superstartrek.client.model.Thing;
 
-public interface EnergyConsumtionHandler extends EventHandler{
+public interface EnergyConsumptionHandler extends EventHandler{
 
-	public static class EnergyConsumptionEvent extends GwtEvent<EnergyConsumtionHandler>{
+	public static class EnergyConsumptionEvent extends GwtEvent<EnergyConsumptionHandler>{
 
 		final Thing consumer;
 		final double value;
@@ -17,15 +17,15 @@ public interface EnergyConsumtionHandler extends EventHandler{
 			this.value = value;
 			this.type = type;
 		}
-		public static Type<EnergyConsumtionHandler> TYPE = new Type<EnergyConsumtionHandler>();
+		public static Type<EnergyConsumptionHandler> TYPE = new Type<EnergyConsumptionHandler>();
 		
 		@Override
-		public Type<EnergyConsumtionHandler> getAssociatedType() {
+		public Type<EnergyConsumptionHandler> getAssociatedType() {
 			return TYPE;
 		}
 
 		@Override
-		protected void dispatch(EnergyConsumtionHandler handler) {
+		protected void dispatch(EnergyConsumptionHandler handler) {
 			handler.handleEnergyConsumption(consumer, value, type);
 		}
 

@@ -6,7 +6,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.History;
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.computer.EnergyConsumtionHandler;
+import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.messages.MessageHandler;
@@ -20,7 +20,7 @@ import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
 
 public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler,
-		KlingonDestroyedHandler, MessageHandler, EnergyConsumtionHandler {
+		KlingonDestroyedHandler, MessageHandler, EnergyConsumptionHandler {
 
 	Application application;
 	EventBus events;

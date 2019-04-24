@@ -5,7 +5,7 @@ import java.util.List;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.computer.EnergyConsumtionHandler;
+import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
@@ -421,7 +421,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		getReactor().decrease(value);
 		getAntimatter().decrease(value);
-		application.events.fireEvent(new EnergyConsumtionHandler.EnergyConsumptionEvent(this, value, what));
+		application.events.fireEvent(new EnergyConsumptionHandler.EnergyConsumptionEvent(this, value, what));
 		return true;
 	}
 
