@@ -9,7 +9,7 @@ public class MessagesPresenter extends BasePresenter<MessagesView> implements Me
 
 	public MessagesPresenter(Application application) {
 		super(application);
-		application.events.addHandler(MessagePostedEvent.TYPE, this);
+		addHandler(MessagePostedEvent.TYPE, this);
 	}
 
 	@Override

@@ -14,9 +14,9 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 
 	public IntroPresenter(Application application) {
 		super(application);
-		application.events.addHandler(GameStartedEvent.TYPE, this);
-		application.events.addHandler(ApplicationUpdateEvent.TYPE, this);
-		History.addValueChangeHandler(this);
+		addHandler(GameStartedEvent.TYPE, this);
+		addHandler(ApplicationUpdateEvent.TYPE, this);
+		application.addHistoryListener(this);
 	}
 	
 	@Override

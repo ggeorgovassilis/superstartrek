@@ -31,7 +31,7 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 	
 	public StatusReportPresenter(Application application) {
 		super(application);
-		History.addValueChangeHandler(this);
+		application.addHistoryListener(this);
 	}
 
 	@Override

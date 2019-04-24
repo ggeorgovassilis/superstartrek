@@ -19,9 +19,9 @@ public class SRSPresenter extends BasePresenter<ISRSView> implements GamePhaseHa
 
 	public SRSPresenter(Application application) {
 		super(application);
-		application.events.addHandler(GameStartedEvent.TYPE, this);
-		application.events.addHandler(EnterpriseWarpedEvent.TYPE, this);
-		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
+		addHandler(GameStartedEvent.TYPE, this);
+		addHandler(EnterpriseWarpedEvent.TYPE, this);
+		addHandler(KlingonDestroyedEvent.TYPE, this);
 	}
 
 	public void updateRadar() {

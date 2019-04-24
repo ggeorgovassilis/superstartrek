@@ -24,9 +24,9 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public ComputerPresenter(Application application) {
 		super(application);
 		application.addHistoryListener(this);
-		application.events.addHandler(ComputerEvent.TYPE, this);
-		application.events.addHandler(TurnStartedEvent.TYPE, this);
-		application.events.addHandler(KlingonDestroyedEvent.TYPE, this);
+		addHandler(ComputerEvent.TYPE, this);
+		addHandler(TurnStartedEvent.TYPE, this);
+		addHandler(KlingonDestroyedEvent.TYPE, this);
 	}
 
 	public void onSkipButtonClicked() {

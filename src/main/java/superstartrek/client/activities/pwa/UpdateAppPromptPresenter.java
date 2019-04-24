@@ -11,7 +11,7 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 	
 	public UpdateAppPromptPresenter(Application application) {
 		super(application);
-		application.events.addHandler(ApplicationUpdateEvent.TYPE, this);
+		addHandler(ApplicationUpdateEvent.TYPE, this);
 		pwa = new PWA(application);
 		pwa.run();
 	}

@@ -13,7 +13,13 @@ public class HtmlWidget extends Widget {
 		if (RootPanel.getBodyElement().isOrHasChild(e))
 			onAttach();
 	}
-	
+
+	public HtmlWidget(Element e, boolean attach) {
+		setElement(e);
+		if (attach)
+			onAttach();
+	}
+
 	public HtmlWidget(Element e, String html) {
 		this(e);
 		e.setInnerHTML(html);

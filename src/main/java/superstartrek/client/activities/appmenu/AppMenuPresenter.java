@@ -15,7 +15,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements AppM
 	
 	public AppMenuPresenter(Application application) {
 		super(application);
-		application.events.addHandler(AppMenuEvent.TYPE, this);
+		addHandler(AppMenuEvent.TYPE, this);
 		application.addHistoryListener(this);
 	}
 

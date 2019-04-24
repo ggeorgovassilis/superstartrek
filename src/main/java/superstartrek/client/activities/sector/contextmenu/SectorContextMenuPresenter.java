@@ -24,8 +24,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 	public SectorContextMenuPresenter(Application application) {
 		super(application);
-		application.events.addHandler(SectorSelectedEvent.TYPE, this);
-		application.events.addHandler(TurnEndedEvent.TYPE, this);
+		addHandler(SectorSelectedEvent.TYPE, this);
+		addHandler(TurnEndedEvent.TYPE, this);
 		application.addHistoryListener(this);
 
 		buttonsEnabled.put("cmd_navigate", false);

@@ -13,7 +13,7 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 
 	public ScanSectorPresenter(Application application) {
 		super(application);
-		application.events.addHandler(ScanSectorEvent.TYPE, this);
+		addHandler(ScanSectorEvent.TYPE, this);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ public class ManualPresenter extends BasePresenter<ManualScreen> implements Valu
 
 	public ManualPresenter(Application application) {
 		super(application);
-		History.addValueChangeHandler(this);
+		application.addHistoryListener(this);
 	}
 
 	@Override

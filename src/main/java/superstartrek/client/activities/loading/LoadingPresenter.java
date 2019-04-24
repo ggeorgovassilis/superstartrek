@@ -13,7 +13,7 @@ public class LoadingPresenter extends BasePresenter<LoadingScreen> implements Ga
 	
 	public LoadingPresenter(Application application) {
 		super(application);
-		handlerRegistration = application.events.addHandler(GameStartedEvent.TYPE, this);
+		handlerRegistration = addHandler(GameStartedEvent.TYPE, this);
 	}
 
 	@Override
