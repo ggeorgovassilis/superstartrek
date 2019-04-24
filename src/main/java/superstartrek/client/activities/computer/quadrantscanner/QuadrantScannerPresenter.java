@@ -31,7 +31,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		EnterpriseRepairedHandler, KlingonCloakingHandler, KlingonDestroyedHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
-	
+
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		application.events.fireEvent(new SectorSelectedEvent(Location.location(x, y),
 				application.starMap.enterprise.getQuadrant(), screenX, screenY));
@@ -60,32 +60,27 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	void updateSector(Thing thing) {
-		String content = null;
-		String css = null;
+		String content = thing.getSymbol();
+		String css = thing.getCss();
 		if (!thing.isVisible()) {
 			content = "";
-			css="";
-		} else
-		if (thing instanceof Vessel) {
+			css = "";
+		} else if (thing instanceof Vessel) {
 			Vessel vessel = thing.as();
 			double status = vessel.getShields().health();
 			css += " " + CSS.damageClass(status);
-			css += vessel.getImpulse().isEnabled()?" ":" impulse-disabled";
+			css += vessel.getImpulse().isEnabled() ? " " : " impulse-disabled";
 			if (thing instanceof Klingon) {
-				css+=((Klingon)thing).getDisruptor().isEnabled()?"":" disruptor-disabled";
+				css += ((Klingon) thing).getDisruptor().isEnabled() ? "" : " disruptor-disabled";
 			}
-		} else {
-			content = thing.getSymbol();
-			css = thing.getCss();
 		}
-		view.updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content,
-				css);
+		view.updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content, css);
 	}
 
 	void clearSector(int x, int y) {
 		view.updateSector(x, y, "", "");
 	}
-	
+
 	void markSectorAsNavigationTarget(int x, int y) {
 		view.addCssToCell(x, y, "navigation-target");
 	}
@@ -98,7 +93,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		else
 			clearSector(x, y);
 	}
-	
+
 	void mark(Thing thing, Thing[][] array) {
 		Location location = thing.getLocation();
 		array[location.getX()][location.getY()] = thing;
@@ -107,15 +102,17 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	void updateScreen() {
 		StarMap starMap = getApplication().starMap;
 		Quadrant q = starMap.enterprise.getQuadrant();
-		// we could just erase all sectors first and paint things over it, but that would increase DOM interactions.
-		// this approach (render into an array first, paint each sector only once) minimises DOM interactions.
+		// we could just erase all sectors first and paint things over it, but that
+		// would increase DOM interactions.
+		// this approach (render into an array first, paint each sector only once)
+		// minimises DOM interactions.
 		Thing[][] arr = new Thing[8][8];
-		for (Thing t:starMap.getEverythingIn(q))
-			mark(t,arr);
+		for (Thing t : starMap.getEverythingIn(q))
+			mark(t, arr);
 		for (int y = 0; y < 8; y++)
-		for (int x = 0; x < 8; x++) {
+			for (int x = 0; x < 8; x++) {
 				Thing t = arr[x][y];
-				if (t!=null)
+				if (t != null)
 					updateSector(t);
 				else
 					clearSector(x, y);
@@ -129,8 +126,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	@Override
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		//can't just clear sector, because the "from" location may refer to a different
-		//quadrant when eg. Enterprise warps
+		// can't just clear sector, because the "from" location may refer to a different
+		// quadrant when eg. Enterprise warps
 		updateSector(qTo, lFrom.getX(), lFrom.getY());
 		updateSector(thing);
 	}
@@ -149,7 +146,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void klingonUncloaked(Klingon klingon) {
 		updateSector(klingon);
 	}
-	
+
 	@Override
 	public void klingonCloaked(Klingon klingon) {
 		updateSector(klingon);
@@ -167,23 +164,23 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		if (target != null)
 			updateSector(evt.quadrant, target.getLocation().getX(), target.getLocation().getY());
 	}
-	
+
 	public void clearAllNavigationTargets() {
-		for (int y=0;y<8;y++)
-			for (int x=0;x<8;x++)
-				view.removeCssFromCell(x,y,"navigation-target");
+		for (int y = 0; y < 8; y++)
+			for (int x = 0; x < 8; x++)
+				view.removeCssFromCell(x, y, "navigation-target");
 	}
-	
+
 	public void updateMapWithReachableSectors() {
 		List<Location> sectors = application.starMap.enterprise.findReachableSectors();
 		clearAllNavigationTargets();
-		for (Location l:sectors)
+		for (Location l : sectors)
 			markSectorAsNavigationTarget(l.getX(), l.getY());
 	}
-	
+
 	@Override
 	public void afterTurnStarted(AfterTurnStartedEvent evt) {
 		updateMapWithReachableSectors();
 	}
-	
+
 }

@@ -124,12 +124,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public List<Location> findReachableSectors() {
-		List<Location> list = new ArrayList<>();
+		List<Location> reachableSectors = new ArrayList<>();
 		double range = getImpulse().getValue();
 		while (range > 1 && computeConsumptionForImpulseNavigation(range) >= getReactor().getValue())
 			range = range - 0.5;
 		if (range < 1)
-			return list;
+			return reachableSectors;
 		double range_squared = range * range;
 		int lx = getLocation().getX();
 		int ly = getLocation().getY();
@@ -145,10 +145,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
 				Location tmp = Location.location(x, y);
-				if (canNavigateTo(index, tmp))
-					list.add(tmp);
+				if (isViewClear(index, tmp))
+					reachableSectors.add(tmp);
 			}
-		return list;
+		return reachableSectors;
 	}
 
 	// only for internal use, bypasses checks
@@ -301,9 +301,19 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		antimatter.repair();
 		application.events.fireEvent(new EnterpriseRepairedEvent(this));
 	}
+	
+	protected boolean isViewClear(QuadrantIndex index, Location destination) {
+		StarMap map = application.starMap;
+		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, 8);
+		obstacles.remove(this);
+		boolean viewIsClear = true;
+		for (Thing t : obstacles)
+			viewIsClear &= !t.isVisible();
+		return viewIsClear;
+		
+	}
 
 	public boolean canNavigateTo(QuadrantIndex index, Location destination) {
-		StarMap map = application.starMap;
 		if (!getImpulse().isEnabled())
 			return false;
 		double distance = StarMap.distance(getLocation(), destination);
@@ -314,12 +324,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Thing thing = index.findThingAt(destination.getX(), destination.getY());
 		if (!Klingon.isEmptyOrCloakedKlingon(thing))
 			return false;
-		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, (int) distance);
-		obstacles.remove(this);
-		boolean allObstaclesInvisible = true;
-		for (Thing t : obstacles)
-			allObstaclesInvisible &= !t.isVisible();
-		return allObstaclesInvisible;
+		return isViewClear(index, destination);
 	}
 
 	protected boolean canBeRepaired(Setting setting) {

@@ -300,7 +300,7 @@ public class TestEnterprise {
 		assertTrue(list.contains(Location.location(5, 4)));
 		assertFalse(list.contains(Location.location(5, 6)));
 		assertFalse(list.contains(Location.location(3, 6)));
-		assertEquals(19,list.size());
+		assertEquals(20,list.size());
 	}
 
 	@Test
