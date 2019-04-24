@@ -225,6 +225,18 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 
 #shortrangescan {
 	width: 100%;
+	height:6em;
+	min-height:6em;
+	max-height:6em;
+	overflow:visible;
+	border-collapse: collapse;
+}
+
+#shortrangescan tr{
+	height:2em;
+	min-height:2em;
+	max-height:2em;
+	overflow:visible;
 }
 
 /*
@@ -521,6 +533,10 @@ a.progress-bar {
 	color: turquoise;
 }
 
+#screen-statusreport{
+	background-color:rgba(0,0,0,0.75);	
+}
+
 #screen-statusreport dl {
 	overflow: hidden;
 }
@@ -647,7 +663,7 @@ a.progress-bar {
 	overflow: hidden;
 }
 
-button.disabled {
+a.disabled,button.disabled {
 	background-color: rgb(20, 40, 60);
 	color: darkgay;
 }
