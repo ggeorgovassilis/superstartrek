@@ -41,13 +41,6 @@ public class StarMap {
 		return distance(la.getX(), la.getY(), lb.getX(), lb.getY());
 	}
 
-	public static Set<Location> locations(List<? extends Thing> things) {
-		Set<Location> locations = new HashSet<>();
-		for (Thing t : things)
-			locations.add(t.getLocation());
-		return locations;
-	}
-
 	public void setQuadrant(Quadrant q) {
 		quadrants[q.getX()][q.getY()] = q;
 	}
@@ -66,10 +59,6 @@ public class StarMap {
 
 	public static boolean within_distance(Thing t1, Thing t2, double range) {
 		return within_distance(t1.getLocation(), t2.getLocation(), range);
-	}
-
-	public static boolean within_distance(Thing t1, Location l2, double range) {
-		return within_distance(t1.getLocation(), l2, range);
 	}
 
 	public boolean isOnMap(int x, int y) {
@@ -103,10 +92,11 @@ public class StarMap {
 
 	public Location findFreeSpot(Quadrant q) {
 		Random random = Application.get().random;
+		QuadrantIndex index = new QuadrantIndex(q, this);
 		while (true) {
 			int x = random.nextInt(8);
 			int y = random.nextInt(8);
-			Thing thing = findThingAt(q, x, y);
+			Thing thing = index.findThingAt(x, y);
 			if (thing == null)
 				return Location.location(x, y);
 		}

@@ -6,12 +6,13 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
+import superstartrek.client.utils.HtmlWidget;
 
 public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 
 	@Override
-	protected HTMLPanel createWidgetImplementation() {
-		return new HTMLPanel(presenter.getApplication().getResources().statusReport().getText());
+	protected HtmlWidget createWidgetImplementation() {
+		return new HtmlWidget(DOM.createDiv(), presenter.getApplication().getResources().statusReport().getText());
 	}
 	
 	public StatusReportView(StatusReportPresenter p) {

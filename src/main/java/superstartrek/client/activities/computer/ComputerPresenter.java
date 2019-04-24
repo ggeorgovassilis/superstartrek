@@ -111,9 +111,12 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		Location el = e.getLocation();
 		if (!q.getKlingons().isEmpty()) {
 			double minDistance = 3 * 3;
-			for (Klingon k : q.getKlingons())
+			for (Klingon k : q.getKlingons()) {
 				minDistance = Math.min(minDistance,
 						StarMap.distance_squared(el.getX(), el.getY(), k.getLocation().getX(), k.getLocation().getY()));
+				if (minDistance<9)
+					break; // 9 is read alert, can't get worse than that so no point in iterating further
+			}
 			alert = minDistance < 9 ? "red-alert" : "yellow-alert";
 		}
 

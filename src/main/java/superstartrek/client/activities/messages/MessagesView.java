@@ -17,7 +17,7 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 		HtmlWidget panel = getWidgetAs();
 		eContent = panel.getElementById("messages-content");
 		eButton = panel.getElementById("dismiss-message-button");
-		panel.getElement().setAttribute("id", "messages");
+		panel.getElement().setId("messages");
 		DOM.sinkEvents(eButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		DOM.setEventListener(eButton, new EventListener() {
 

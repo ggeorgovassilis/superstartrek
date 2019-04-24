@@ -8,6 +8,7 @@ import superstartrek.client.utils.Timer;
 
 public class CSS {
 	
+	final static String[] damageClasses={"damage-offline","damage-bad","damage-medium","damage-light",""};
 	/**
 	 * Return a CSS damage class
 	 * 
@@ -15,15 +16,8 @@ public class CSS {
 	 * @return
 	 */
 	public static String damageClass(double value) {
-		if (value < 0.10)
-			return "damage-offline";
-		if (value < 0.50)
-			return "damage-bad";
-		if (value < 0.75)
-			return "damage-medium";
-		if (value < 1)
-			return "damage-light";
-		return "";
+		int index = (int)Math.floor((damageClasses.length-1)*value);
+		return damageClasses[index];
 	}
 	
 	public static void addClassDeferred(Element e, String css) {

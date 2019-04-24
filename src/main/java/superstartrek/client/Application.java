@@ -96,6 +96,10 @@ public class Application
 			History.addValueChangeHandler(handler);
 	}
 	
+	public void postHistoryChange(String token) {
+		History.newItem(token);
+	}
+	
 	protected void setupStarMap() {
 		Setup setup = new Setup(this);
 		starMap = setup.createNewMap();

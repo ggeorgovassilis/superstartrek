@@ -2,7 +2,6 @@ package superstartrek.client.activities.appmenu;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 
 import superstartrek.client.Application;
@@ -34,7 +33,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements AppM
 	
 	public void onMenuHidden() {
 		if (gotoStateAfterMenuHidden!=null)
-			History.newItem(gotoStateAfterMenuHidden);
+			application.postHistoryChange(gotoStateAfterMenuHidden);
 	}
 	
 	public void toggleAutoAim() {

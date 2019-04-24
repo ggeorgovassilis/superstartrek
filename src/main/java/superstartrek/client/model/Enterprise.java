@@ -145,6 +145,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
 				Location tmp = Location.location(x, y);
+				//TODO: isViewClear traces a trajectory from here to the tmp location. As we do this for every sector
+				//in the disk, most sectors are visited multiple times. we need a different algorithm.
 				if (isViewClear(index, tmp))
 					reachableSectors.add(tmp);
 			}

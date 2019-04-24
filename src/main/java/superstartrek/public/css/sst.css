@@ -533,6 +533,10 @@ a.progress-bar {
 	color: turquoise;
 }
 
+#screen-statusreport{
+	background-color:rgba(0,0,0,0.75);	
+}
+
 #screen-statusreport dl {
 	overflow: hidden;
 }
