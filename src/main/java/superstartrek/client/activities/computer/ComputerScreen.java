@@ -19,7 +19,7 @@ import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
 
-public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerView, ClickHandler {
+public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
 
 	Element eDockInStarbase;
 	Element eRepair;

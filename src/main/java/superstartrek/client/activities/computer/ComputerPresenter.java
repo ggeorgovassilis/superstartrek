@@ -18,7 +18,7 @@ import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 
-public class ComputerPresenter extends BasePresenter<IComputerView>
+public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String> {
 
 	public ComputerPresenter(Application application) {

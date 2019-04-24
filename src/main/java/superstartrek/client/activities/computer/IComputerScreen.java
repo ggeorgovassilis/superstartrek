@@ -2,7 +2,7 @@ package superstartrek.client.activities.computer;
 
 import superstartrek.client.activities.View;
 
-public interface IComputerView extends View<ComputerPresenter>{
+public interface IComputerScreen extends View{
 
 	void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos);
 

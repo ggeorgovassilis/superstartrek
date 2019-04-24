@@ -10,7 +10,7 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.ComputerPresenter;
-import superstartrek.client.activities.computer.IComputerView;
+import superstartrek.client.activities.computer.IComputerScreen;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
@@ -33,7 +33,7 @@ public class TestComputerPresenter {
 	Quadrant quadrant;
 	Enterprise enterprise;
 	ComputerPresenter presenter;
-	IComputerView view;
+	IComputerScreen view;
 
 	@Before
 	public void setup() {
@@ -50,7 +50,7 @@ public class TestComputerPresenter {
 		map.enterprise = enterprise;
 
 		presenter = new ComputerPresenter(app);
-		view = mock(IComputerView.class);
+		view = mock(IComputerScreen.class);
 		presenter.setView(view);
 	}
 	
