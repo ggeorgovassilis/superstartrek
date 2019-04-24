@@ -28,6 +28,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	Element eStatusIconPhasers;
 	Element eStatusIconTorpedos;
 	Element eStarDate;
+	Element eLrsButton;
 
 	@Override
 	public void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos) {
@@ -61,6 +62,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eStatusIconTorpedos = CSS.querySelectorAll("#cmd_showStatusReport .torpedo-bay").getItem(0);
 		eStatusIconPhasers = CSS.querySelectorAll("#cmd_showStatusReport .phasers").getItem(0);
 		eStarDate = DOM.getElementById("stardate");
+		eLrsButton = DOM.getElementById("lrs-button");
 		setRepairButtonVisibility(false);
 		addHandler(this, ClickEvent.getType());
 		DOM.sinkEvents(panel.getElementById("helm"), Event.ONCLICK);
@@ -120,6 +122,18 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 			presenter.onRepairButtonClicked();
 		else if ("cmd_skip".equals(target.getId()))
 			presenter.onSkipButtonClicked();
+	}
+
+	@Override
+	public void enableLlrsButton() {
+		eLrsButton.removeClassName("disabled");
+		eLrsButton.setAttribute("href", "#longrangescan");
+	}
+
+	@Override
+	public void disableLrsButton() {
+		eLrsButton.addClassName("disabled");
+		eLrsButton.setAttribute("href", "#computer");
 	}
 
 }

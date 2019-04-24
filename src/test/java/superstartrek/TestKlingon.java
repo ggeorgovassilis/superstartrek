@@ -89,7 +89,7 @@ public class TestKlingon {
 		RandomNumberFactory random = mock(RandomNumberFactory.class);
 		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
 			int counter = 0;
-			double numbers[]= {0.5,0.6,0.1,0.3,0.3};
+			double numbers[]= {0.5,0.6,0.1,0.3,0.3,0.4};
 			@Override
 			public Double answer(InvocationOnMock invocation) throws Throwable {
 				return numbers[counter++];

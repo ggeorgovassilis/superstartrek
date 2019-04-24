@@ -8,6 +8,8 @@ import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
+import superstartrek.client.activities.navigation.EnterpriseDamagedHandler;
+import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.control.YieldTurnEvent;
@@ -19,7 +21,7 @@ import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
-		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String> {
+		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>, EnterpriseDamagedHandler, EnterpriseRepairedHandler {
 
 	public ComputerPresenter(Application application) {
 		super(application);
@@ -27,6 +29,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		addHandler(ComputerEvent.TYPE, this);
 		addHandler(TurnStartedEvent.TYPE, this);
 		addHandler(KlingonDestroyedEvent.TYPE, this);
+		addHandler(EnterpriseDamagedEvent.TYPE, this);
+		addHandler(EnterpriseRepairedEvent.TYPE, this);
 	}
 
 	public void onSkipButtonClicked() {
@@ -84,8 +88,11 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		String cssTactical = CSS.damageClass(enterprise.getAutoAim().health());
 		String cssPhasers = CSS.damageClass(enterprise.getPhasers().health());
 		String cssTorpedos = CSS.damageClass(enterprise.getTorpedos().health());
-
 		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
+		if (enterprise.getLrs().isEnabled())
+			view.enableLlrsButton();
+		else
+			view.disableLrsButton();
 	}
 
 	@Override
@@ -93,8 +100,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		updateStarDate();
 		updateDockInStarbaseButton();
 		updateShieldsView();
-		updateStatusButton();
-		updateRepairButton();
 		updateQuadrantHeader();
 		updateAntimatter();
 	}
@@ -154,5 +159,17 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 			showScreen();
 		else
 			hideScreen();
+	}
+
+	@Override
+	public void onEnterpriseRepaired(Enterprise enterprise) {
+		updateStatusButton();
+		updateRepairButton();
+	}
+
+	@Override
+	public void onEnterpriseDamaged(Enterprise enterprise) {
+		updateStatusButton();
+		updateRepairButton();
 	}
 }

@@ -663,7 +663,7 @@ a.progress-bar {
 	overflow: hidden;
 }
 
-button.disabled {
+a.disabled,button.disabled {
 	background-color: rgb(20, 40, 60);
 	color: darkgay;
 }

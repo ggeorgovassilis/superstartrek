@@ -59,6 +59,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 	}
 
 	public void showLrs() {
+		//TODO: LRS shouldn't be visible if damaged
 		updateLrsView();
 		view.show();
 		Quadrant loc = application.starMap.enterprise.getQuadrant();

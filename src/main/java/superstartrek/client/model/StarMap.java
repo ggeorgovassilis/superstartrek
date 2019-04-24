@@ -1,10 +1,7 @@
 package superstartrek.client.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.utils.Random;

@@ -2,8 +2,6 @@ package superstartrek.client.activities.report;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.user.client.History;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -23,6 +21,7 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 		view.setProperty("report_reactor", "%"+(enterprise.getReactor().percentageHealth()));
 		view.setProperty("report_reactor_remaining", Math.floor(enterprise.getReactor().getValue())+" / "+Math.floor(enterprise.getReactor().getCurrentUpperBound()));
 		view.setProperty("report_tactical_computer", enterprise.getAutoAim().isEnabled()?"online":"offline");
+		view.setProperty("report_LRS", enterprise.getLrs().isEnabled()?"online":"offline");
 		
 		view.setOverlay("impulse", CSS.damageClass(enterprise.getImpulse().health()));
 		view.setOverlay("phasers", CSS.damageClass(enterprise.getPhasers().health()));

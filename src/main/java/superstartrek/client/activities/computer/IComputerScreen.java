@@ -17,5 +17,9 @@ public interface IComputerScreen extends View{
 	void setRepairButtonVisibility(boolean visible);
 	
 	void setQuadrantName(String name, String css);
+	
+	void enableLlrsButton();
+	
+	void disableLrsButton();
 
 }

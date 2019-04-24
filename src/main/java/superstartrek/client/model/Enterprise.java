@@ -14,7 +14,9 @@ import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.Random;
-import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
+import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;
+import superstartrek.client.activities.navigation.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
+
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
 
 	public final static double PHASER_RANGE = 3;
@@ -28,7 +30,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	Setting antimatter = new Setting("antimatter", 1000, 1000);
 	Setting reactor = new Setting("reactor", 60, 60);
 	Setting autoAim = new Setting("auto aim", 1, 1);
+	Setting lrs = new Setting("LRS",1,1);
 	Quadrant quadrant;
+	
+	public Setting getLrs() {
+		return lrs;
+	}
 	
 	public Quadrant getQuadrant() {
 		return quadrant;
@@ -301,6 +308,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		shields.repair();
 		autoAim.repair();
 		antimatter.repair();
+		lrs.repair();
 		application.events.fireEvent(new EnterpriseRepairedEvent(this));
 	}
 	
@@ -352,7 +360,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		while (i-- > 0) {
 			boolean repaired = maybeRepairProvisionally(impulse) || maybeRepairProvisionally(shields)
 					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos)
-					|| maybeRepairProvisionally(autoAim);
+					|| maybeRepairProvisionally(autoAim) || maybeRepairProvisionally(lrs);
 			if (repaired) {
 				application.events.fireEvent(new EnterpriseRepairedEvent(this));
 				return;
@@ -363,14 +371,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public boolean canRepairProvisionally() {
 		return canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers) || canBeRepaired(torpedos)
-				|| canBeRepaired(autoAim);
+				|| canBeRepaired(autoAim) || canBeRepaired(lrs);
 	}
 
 	public boolean isDamaged() {
 		return impulse.getCurrentUpperBound() < impulse.getMaximum()
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
 				|| phasers.getCurrentUpperBound() < phasers.getMaximum() || !torpedos.isEnabled()
-				|| !autoAim.isEnabled();
+				|| !autoAim.isEnabled() || !lrs.isEnabled();
 	}
 
 	public void damageShields() {
@@ -401,6 +409,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		autoAim.setEnabled(false);
 		application.message("Tactical computer damaged", "enterprise-damaged");
 	}
+	
+	public void damageLRS() {
+		lrs.setEnabled(false);
+		application.message("LRS damaged", "enterprise-damaged");
+	}
 
 	public void applyDamage(double damage) {
 		double impact = 0.5 * damage / (shields.getValue() + 1.0);
@@ -414,8 +427,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			damageTorpedos();
 		if (phasers.getCurrentUpperBound() > 0 && random.nextDouble() < impact)
 			damagePhasers();
-		if (autoAim.isEnabled() && random.nextDouble() * 1.2 < impact)
+		if (autoAim.isEnabled() && random.nextDouble() < impact)
 			damageAutoaim();
+		if (lrs.isEnabled() && random.nextDouble() < impact)
+			damageLRS();
+		application.events.fireEvent(new EnterpriseDamagedEvent(this));
 	}
 
 	public boolean consume(String what, double value) {

@@ -14,6 +14,7 @@ import superstartrek.client.activities.computer.IComputerScreen;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.activities.navigation.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Enterprise;
@@ -65,8 +66,10 @@ public class TestComputerPresenter {
 		presenter.onTurnStarted(evt);
 
 		verify(view).setDockInStarbaseButtonVisibility(false);
-		verify(view).setRepairButtonVisibility(false);
-		verify(view).updateShortStatus(eq(""), eq(""), eq(""), eq(""));
+		verify(view).showStarDate("0");
+		verify(view).setQuadrantName("test", "");
+		verify(view).updateAntimatter(1000,1000);
+
 	}
 
 	@Test
@@ -78,8 +81,10 @@ public class TestComputerPresenter {
 		presenter.onTurnStarted(evt);
 
 		verify(view).setDockInStarbaseButtonVisibility(true);
-		verify(view).setRepairButtonVisibility(false);
-		verify(view).updateShortStatus(eq(""), eq(""), eq("damage-light"), eq(""));
+		verify(view).showStarDate("0");
+		verify(view).setQuadrantName("test", "");
+		verify(view).updateAntimatter(1000,1000);
+		verify(view).updateShields(100, 100, 100);
 	}
 
 	@Test
