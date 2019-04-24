@@ -10,6 +10,11 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 	protected final P presenter;
 	
 	protected abstract Widget createWidgetImplementation();
+	
+	@SuppressWarnings("unchecked")
+	protected <T> T getWidgetAs() {
+		return (T)getWidget();
+	}
 
 	protected void decorateWidget() {
 	}

@@ -67,7 +67,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			css="";
 		} else
 		if (thing instanceof Vessel) {
-			Vessel vessel = (Vessel) thing;
+			Vessel vessel = thing.as();
 			double status = vessel.getShields().health();
 			css += " " + CSS.damageClass(status);
 			css += vessel.getImpulse().isEnabled()?" ":" impulse-disabled";

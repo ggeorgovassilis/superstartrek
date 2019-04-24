@@ -5,6 +5,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import superstartrek.client.activities.PopupView;
+import superstartrek.client.utils.HtmlWidget;
 
 public class ScanSectorView extends PopupView<ScanSectorPresenter> implements IScanSectorView{
 
@@ -13,7 +14,8 @@ public class ScanSectorView extends PopupView<ScanSectorPresenter> implements IS
 	@Override
 	public void decorateWidget() {
 		super.decorateWidget();
-		backButton = getHtmlPanel().getElementById("screen-sectorscan-back");
+		HtmlWidget panel = getWidgetAs();
+		backButton = panel.getElementById("screen-sectorscan-back");
 		DOM.sinkEvents(backButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONMOUSEDOWN | Event.ONTOUCHSTART);
 		DOM.setEventListener(backButton, new EventListener() {
 			
@@ -22,7 +24,7 @@ public class ScanSectorView extends PopupView<ScanSectorPresenter> implements IS
 				presenter.doneWithMenu();
 			}
 		});
-		getHtmlPanel().getElement().setId("screen-sectorscan");
+		panel.getElement().setId("screen-sectorscan");
 	}
 	
 	public ScanSectorView(ScanSectorPresenter presenter) {
@@ -31,17 +33,17 @@ public class ScanSectorView extends PopupView<ScanSectorPresenter> implements IS
 
 	@Override
 	public void setObjectName(String value) {
-		getHtmlPanel().getElementById("object-name").setInnerText(value);
+		((HtmlWidget)getWidget()).getElementById("object-name").setInnerText(value);
 	}
 
 	@Override
 	public void setObjectLocation(String value) {
-		getHtmlPanel().getElementById("object-location").setInnerText(value);
+		((HtmlWidget)getWidget()).getElementById("object-location").setInnerText(value);
 	}
 
 	@Override
 	public void setObjectQuadrant(String value) {
-		getHtmlPanel().getElementById("object-quadrant").setInnerText(value);
+		((HtmlWidget)getWidget()).getElementById("object-quadrant").setInnerText(value);
 	}
 	
 	@Override

@@ -5,6 +5,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import superstartrek.client.activities.PopupView;
+import superstartrek.client.utils.HtmlWidget;
 
 public class MessagesView extends PopupView<MessagesPresenter> {
 
@@ -13,9 +14,10 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 
 	@Override
 	public void decorateWidget() {
-		eContent = getHtmlPanel().getElementById("messages-content");
-		eButton = getHtmlPanel().getElementById("dismiss-message-button");
-		getWidget().getElement().setAttribute("id", "messages");
+		HtmlWidget panel = getWidgetAs();
+		eContent = panel.getElementById("messages-content");
+		eButton = panel.getElementById("dismiss-message-button");
+		panel.getElement().setAttribute("id", "messages");
 		DOM.sinkEvents(eButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		DOM.setEventListener(eButton, new EventListener() {
 

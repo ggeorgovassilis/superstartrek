@@ -24,10 +24,6 @@ public abstract class PopupView<P extends Presenter> extends BaseView<P>{
 		super(presenter);
 	}
 	
-	protected HtmlWidget getHtmlPanel() {
-		return (HtmlWidget)getWidget();
-	}
-
 	protected abstract String getContentForHtmlPanel();
 	
 	@Override

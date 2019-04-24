@@ -8,6 +8,11 @@ public abstract class Thing {
 	protected String css; //TODO: the code often concatenates CSS like thing.css+" "+somthingElse. If css already contained the trailing space, we could cut some GC?
 	protected Location location = Location.location(0,0);
 	
+	@SuppressWarnings("unchecked")
+	public <T> T as() {
+		return (T)this;
+	}
+	
 	public boolean isVisible() {
 		return true;
 	}

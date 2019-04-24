@@ -48,7 +48,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(),
 				sectorMenuPresenter);
-		HTMLPanel panel = (HTMLPanel) getWidget();
+		HTMLPanel panel = getWidgetAs();
 		panel.addAndReplaceElement(new QuadrantScannerView(quadrantScannerPresenter), "quadrantscancontainer");
 
 		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
