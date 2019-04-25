@@ -317,8 +317,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, 8);
 		obstacles.remove(this);
 		boolean viewIsClear = true;
-		for (Thing t : obstacles)
-			viewIsClear &= !t.isVisible();
+		for (int i=0;i<obstacles.size() && viewIsClear;i++)
+			viewIsClear &= !obstacles.get(i).isVisible();
 		return viewIsClear;
 		
 	}

@@ -228,6 +228,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		getImpulse().setEnabled(true);
 		getDisruptor().setEnabled(true);
 		cloak.setEnabled(true);
+		getShields().setCurrentUpperBound(Math.max(getShields().getMaximum()/2, getShields().getCurrentUpperBound()));
+		getShields().setValue(getShields().getCurrentUpperBound());
 	}
 
 	@Override
@@ -235,11 +237,11 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		//TODO: contains() is a slow check and all klingons in all quadrants react to this event
 		if (qTo.contains(this)) {
 			registerActionHandlers();
+			repair();
 			cloak.setValue(canCloak());
 			css = "klingon " + (isVisible() ? "" : "cloaked");
 			Location newLocation = Application.get().starMap.findFreeSpot(qTo);
 			jumpTo(newLocation);
-			repair();
 		} else
 			unregisterActionHandlers();
 	}
