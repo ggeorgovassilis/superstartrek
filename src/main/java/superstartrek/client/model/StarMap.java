@@ -15,7 +15,7 @@ public class StarMap {
 	public static boolean within_distance(int x1, int y1, int x2, int y2, double range) {
 		int dx = x1 - x2;
 		int dy = y1 - y2;
-		return dx * dx + dy * dy < range * range;
+		return dx * dx + dy * dy <= range * range;
 	}
 
 	public static double distance(int x1, int y1, int x2, int y2) {
