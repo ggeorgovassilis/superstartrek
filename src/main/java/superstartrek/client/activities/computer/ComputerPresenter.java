@@ -155,10 +155,11 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
-		if ("computer".equals(event.getValue()))
-			showScreen();
-		else
-			hideScreen();
+		switch (event.getValue()) {
+			case "computer": showScreen(); break;
+			case "appmenu": break;
+			default: hideScreen();
+		}
 	}
 
 	@Override

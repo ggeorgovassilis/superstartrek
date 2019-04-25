@@ -2,6 +2,7 @@ package superstartrek.client.activities.sector.scan;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.activities.computer.ComputerHandler.ComputerEvent;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Enterprise;
@@ -9,7 +10,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implements ScanSectorHandler{
+public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implements ScanSectorHandler, PopupViewPresenter<IScanSectorView>{
 
 	public ScanSectorPresenter(Application application) {
 		super(application);
@@ -57,6 +58,11 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 		if ("screen-sectorscan-back".equals(cmd)) {
 			doneWithMenu();
 		}
+	}
+
+	@Override
+	public void userWantsToDismissView() {
+		doneWithMenu();
 	}
 
 }

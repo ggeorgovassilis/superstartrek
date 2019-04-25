@@ -9,6 +9,8 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -18,7 +20,7 @@ import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Timer;
 
 @SuppressWarnings("rawtypes")
-public abstract class PopupView<P extends Presenter> extends BaseView<P>{
+public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P> implements IPopupView<P> {
 
 	protected PopupView(P presenter) {
 		super(presenter);
@@ -34,6 +36,7 @@ public abstract class PopupView<P extends Presenter> extends BaseView<P>{
 	@Override
 	public void decorateWidget() {
 		super.decorateWidget();
+		getElement().setAttribute("tabindex", "1");
 		addStyleName("PopupView");
 		addDomHandler(new KeyDownHandler() {
 			
@@ -46,6 +49,7 @@ public abstract class PopupView<P extends Presenter> extends BaseView<P>{
 				}
 			}
 		}, KeyDownEvent.getType());
+		Event.sinkEvents(getElement(), Event.ONKEYDOWN);
 		hide();
 		RootPanel.get().add(this);
 	}
@@ -92,6 +96,7 @@ public abstract class PopupView<P extends Presenter> extends BaseView<P>{
 			return;
 		addStyleName("slidein");
 		showGlassPanel();
+		getElement().focus();
 	}
 	
 	@Override
@@ -115,5 +120,6 @@ public abstract class PopupView<P extends Presenter> extends BaseView<P>{
 	public void hide() {
 		hide(null);
 	}
+	
 
 }

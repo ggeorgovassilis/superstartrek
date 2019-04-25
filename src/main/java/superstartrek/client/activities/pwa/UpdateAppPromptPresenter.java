@@ -4,8 +4,9 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.PopupViewPresenter;
 
-public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView> implements ApplicationUpdateCheckHandler{
+public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView> implements PopupViewPresenter<UpdateAppPromptView>, ApplicationUpdateCheckHandler{
 
 	PWA pwa;
 	
@@ -41,6 +42,11 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 	}
 
 	public void dismissButtonClicked() {
+		view.hide();
+	}
+
+	@Override
+	public void userWantsToDismissView() {
 		view.hide();
 	}
 }

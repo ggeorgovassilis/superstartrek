@@ -14,7 +14,6 @@ import superstartrek.client.activities.computer.IComputerScreen;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.activities.navigation.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Enterprise;

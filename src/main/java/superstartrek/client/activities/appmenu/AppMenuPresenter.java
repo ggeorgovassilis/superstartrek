@@ -6,9 +6,10 @@ import com.google.gwt.user.client.Window;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.model.Setting;
 
-public class AppMenuPresenter extends BasePresenter<AppMenuView> implements AppMenuHandler, ValueChangeHandler<String> {
+public class AppMenuPresenter extends BasePresenter<AppMenuView> implements PopupViewPresenter<AppMenuView>, AppMenuHandler, ValueChangeHandler<String> {
 
 	String gotoStateAfterMenuHidden;
 	
@@ -71,5 +72,11 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements AppM
 		if (event.getValue().equals("appmenu"))
 			showMenu();
 		else hideMenu();
+	}
+
+
+	@Override
+	public void userWantsToDismissView() {
+		hideMenu();
 	}
 }

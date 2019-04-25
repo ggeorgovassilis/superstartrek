@@ -1,8 +1,8 @@
 package superstartrek.client.activities.sector.scan;
 
-import superstartrek.client.activities.View;
+import superstartrek.client.activities.IPopupView;
 
-public interface IScanSectorView extends View{
+public interface IScanSectorView extends IPopupView<ScanSectorPresenter>{
 
 	void setObjectName(String value);
 

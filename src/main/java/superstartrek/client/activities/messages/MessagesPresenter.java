@@ -4,8 +4,9 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.PopupViewPresenter;
 
-public class MessagesPresenter extends BasePresenter<MessagesView> implements MessageHandler {
+public class MessagesPresenter extends BasePresenter<MessagesView> implements MessageHandler, PopupViewPresenter<MessagesView> {
 
 	public MessagesPresenter(Application application) {
 		super(application);
@@ -34,6 +35,11 @@ public class MessagesPresenter extends BasePresenter<MessagesView> implements Me
 				application.events.fireEvent(new MessagesReadEvent());
 			}
 		});
+	}
+
+	@Override
+	public void userWantsToDismissView() {
+		hideMessages();
 	}
 	
 
