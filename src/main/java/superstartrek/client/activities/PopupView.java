@@ -9,8 +9,6 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,7 +43,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
 					event.preventDefault();
 					event.stopPropagation();
-					hide();
+					presenter.userWantsToDismissPopup();
 				}
 			}
 		}, KeyDownEvent.getType());
@@ -62,7 +60,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 			public void onBrowserEvent(Event event) {
 				event.preventDefault();
 				event.stopPropagation();
-				hide();
+				presenter.userWantsToDismissPopup();
 			}
 		});
 		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONKEYDOWN | Event.ONKEYPRESS);

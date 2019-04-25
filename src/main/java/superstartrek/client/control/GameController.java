@@ -1,6 +1,5 @@
 package superstartrek.client.control;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.History;
@@ -104,7 +103,6 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	public void startTurn() {
-		GWT.log("------------------------------ new turn");
 		application.starMap.advanceStarDate(1);
 		events.fireEvent(new TurnStartedEvent());
 		events.fireEvent(new AfterTurnStartedEvent());
