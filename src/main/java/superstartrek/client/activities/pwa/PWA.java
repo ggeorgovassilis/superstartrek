@@ -10,6 +10,8 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Random;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler.ApplicationUpdateEvent;
 import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler.ApplicationUpdateEvent.Status;
@@ -21,28 +23,58 @@ public class PWA {
 
 	private static Logger log = Logger.getLogger("");
 
-	private String[] URLS = { "/superstartrek/site/index.html", "/superstartrek/site/images/cancel.svg",
-			"/superstartrek/site/images/communicator.svg", "/superstartrek/site/images/federation_logo.svg",
-			"/superstartrek/site/images/fire_at_will.svg", "/superstartrek/site/images/hexagon_filled.svg",
-			"/superstartrek/site/images/hexagon.svg", "/superstartrek/site/images/icon192x192.png",
-			"/superstartrek/site/images/icon512x512.png", "/superstartrek/site/images/laser.svg",
-			"/superstartrek/site/images/navigation.svg", "/superstartrek/site/images/radar.svg",
-			"/superstartrek/site/images/stars-background.gif", "/superstartrek/site/images/torpedo.svg",
-			"/superstartrek/site/images/stars-background.gif", "/superstartrek/site/images/hamburger-menu.svg",
-			"/superstartrek/site/css/sst.css", "/superstartrek/site/superstartrek.superstartrek.nocache.js",
-			"/superstartrek/site/checksum.sha.md5", };
+	//@formatter:off
+	private String[] URLS = { 
+			"/superstartrek/site/index.html", 
+			"/superstartrek/site/images/cancel.svg",
+			"/superstartrek/site/images/communicator.svg", 
+			"/superstartrek/site/images/federation_logo.svg",
+			"/superstartrek/site/images/fire_at_will.svg", 
+			"/superstartrek/site/images/hexagon_filled.svg",
+			"/superstartrek/site/images/hexagon.svg", 
+			"/superstartrek/site/images/icon192x192.png",
+			"/superstartrek/site/images/icon512x512.png", 
+			"/superstartrek/site/images/laser.svg",
+			"/superstartrek/site/images/navigation.svg", 
+			"/superstartrek/site/images/radar.svg",
+			"/superstartrek/site/images/stars-background.gif", 
+			"/superstartrek/site/images/torpedo.svg",
+			"/superstartrek/site/images/stars-background.gif", 
+			"/superstartrek/site/images/hamburger-menu.svg",
+			"/superstartrek/site/css/sst.css", 
+			"/superstartrek/site/superstartrek.superstartrek.nocache.js",
+			"/superstartrek/site/checksum.sha.md5"
+			};
+	//@formatter:on
+
+	//@formatter:off
+	public static native void checkIfCacheExists(AsyncCallback<Boolean> callback)/*-{
+	$wnd.caches.has('sst1').then(function(hasCache) {
+    	callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(hasCache);
+	});
+	}-*/;
+	//@formatter:on
 
 	// caching in the main window is possible according to
 	// https://gist.github.com/Rich-Harris/fd6c3c73e6e707e312d7c5d7d0f3b2f9
 	//@formatter:off
 	private static native void cacheFiles(String[] files, ScheduledCommand callback) /*-{
-		$wnd.caches.open( "sst1" )
-    	.then( function(cache){cache.addAll( files )} )
-    	.then( function(){
-    		console.log( 'offline cache populated' );
-    		callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
-    	} )
-    	["catch"]( function(){console.log('something went wrong')} );
+	console.log("Caching files for offline use...");
+	$wnd.caches.has('sst1').then(function(hasCache) {
+  		if (!hasCache) {
+  			console.log("Cache not populated yet, loading files...");
+			$wnd.caches.open( "sst1" )
+    			.then( function(cache){cache.addAll( files )} )
+    			.then( function(){
+    			console.log( 'Offline cache populated.' );
+    			callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
+    			})
+    		["catch"]( function(){console.log('something went wrong')} );
+  		} else
+			console.log("Cache already populated.");
+	})["catch"](function(e) {
+		console.error(e);
+	});
 	}-*/;
 	//@formatter:on
 
@@ -65,11 +97,23 @@ public class PWA {
 
 	public void cacheFilesForOfflineUse() {
 		GWT.log("Caching files for offline use");
-		cacheFiles(URLS, new ScheduledCommand() {
-			
+		checkIfCacheExists(new AsyncCallback<Boolean>() {
+
 			@Override
-			public void execute() {
-				application.events.fireEvent(new ApplicationUpdateEvent(Status.filesCached, "", ""));
+			public void onFailure(Throwable caught) {
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if (!result)
+					cacheFiles(URLS, new ScheduledCommand() {
+
+						@Override
+						public void execute() {
+							application.events.fireEvent(new ApplicationUpdateEvent(Status.filesCached, "", ""));
+						}
+					});
+					else application.events.fireEvent(new ApplicationUpdateEvent(Status.filesCached, "", ""));
 			}
 		});
 	}
@@ -189,11 +233,11 @@ public class PWA {
 			GWT.log("Not running PWA because not running in browser");
 			return;
 		}
+		cacheFilesForOfflineUse();
 		if (!supportsServiceWorker()) {
 			GWT.log("Not running PWA because service workers are not supported");
 			return;
 		}
-		cacheFilesForOfflineUse();
 		registerServiceWorker("service-worker.js");
 		addInstallationListener();
 		checkForNewVersion();
