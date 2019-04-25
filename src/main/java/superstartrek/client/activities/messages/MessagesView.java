@@ -23,7 +23,7 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 
 			@Override
 			public void onBrowserEvent(Event event) {
-				presenter.dismissButtonClicked();
+				presenter.userWantsToDismissPopup();
 			}
 		});
 		super.decorateWidget();

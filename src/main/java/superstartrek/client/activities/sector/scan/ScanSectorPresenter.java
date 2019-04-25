@@ -61,7 +61,7 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 	}
 
 	@Override
-	public void userWantsToDismissView() {
+	public void userWantsToDismissPopup() {
 		doneWithMenu();
 	}
 

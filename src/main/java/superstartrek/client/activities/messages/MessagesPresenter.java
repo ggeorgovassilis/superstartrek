@@ -21,10 +21,6 @@ public class MessagesPresenter extends BasePresenter<MessagesView> implements Me
 		view.show();
 	}
 
-	public void dismissButtonClicked() {
-		hideMessages();
-	}
-	
 	public void hideMessages() {
 		if (!view.isVisible())
 			return;
@@ -38,7 +34,7 @@ public class MessagesPresenter extends BasePresenter<MessagesView> implements Me
 	}
 
 	@Override
-	public void userWantsToDismissView() {
+	public void userWantsToDismissPopup() {
 		hideMessages();
 	}
 	

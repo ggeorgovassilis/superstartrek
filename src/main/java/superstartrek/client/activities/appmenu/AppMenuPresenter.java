@@ -76,7 +76,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 
 
 	@Override
-	public void userWantsToDismissView() {
+	public void userWantsToDismissPopup() {
 		hideMenu();
 	}
 }

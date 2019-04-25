@@ -29,7 +29,7 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter>{
 					presenter.acceptUpdateButtonClicked();
 				}
 				if ("update-no".equals(id)) {
-					presenter.dismissButtonClicked();
+					presenter.userWantsToDismissPopup();
 					
 				}
 			}

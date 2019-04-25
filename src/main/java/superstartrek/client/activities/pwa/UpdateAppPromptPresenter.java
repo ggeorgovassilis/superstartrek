@@ -22,14 +22,6 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 		view.show();
 	}
 
-	@Override
-	public void versionIsCurrent() {
-	}
-
-	@Override
-	public void checkFailed() {
-	}
-	
 	public void acceptUpdateButtonClicked() {
 		view.disableButtons();
 		PWA.clearCache(new ScheduledCommand() {
@@ -41,12 +33,8 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 		});
 	}
 
-	public void dismissButtonClicked() {
-		view.hide();
-	}
-
 	@Override
-	public void userWantsToDismissView() {
+	public void userWantsToDismissPopup() {
 		view.hide();
 	}
 }
