@@ -1,6 +1,5 @@
 package superstartrek.client.activities.pwa;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
@@ -96,7 +95,6 @@ public class PWA {
 	//@formatter:on
 
 	public void cacheFilesForOfflineUse() {
-		GWT.log("Caching files for offline use");
 		checkIfCacheExists(new AsyncCallback<Boolean>() {
 
 			@Override
@@ -125,7 +123,7 @@ public class PWA {
 	//@formatter:on
 
 	public static native void log(Throwable t) /*-{
-	console.log(t.message);
+	console.log(t.message, t);
 	}-*/;
 	
 	//@formatter:off
@@ -178,7 +176,7 @@ public class PWA {
 		try {
 			rb.sendRequest("", callback);
 		} catch (RequestException e) {
-			GWT.log(e.getMessage(), e);
+			log(e);
 		}
 	}
 
@@ -188,7 +186,7 @@ public class PWA {
 		try {
 			rb.sendRequest("", callback);
 		} catch (RequestException e) {
-			GWT.log(e.getMessage(), e);
+			log(e);
 		}
 	}
 

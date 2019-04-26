@@ -225,18 +225,18 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 
 #shortrangescan {
 	width: 100%;
-	height:6em;
-	min-height:6em;
-	max-height:6em;
-	overflow:visible;
+	height: 6em;
+	min-height: 6em;
+	max-height: 6em;
+	overflow: visible;
 	border-collapse: collapse;
 }
 
-#shortrangescan tr{
-	height:2em;
-	min-height:2em;
-	max-height:2em;
-	overflow:visible;
+#shortrangescan tr {
+	height: 2em;
+	min-height: 2em;
+	max-height: 2em;
+	overflow: visible;
 }
 
 /*
@@ -308,48 +308,102 @@ keyframes pulse { 0% {
 50%
 {
 background-color
+
+
+
+
 :
+
+
  
+
+
 rgb
+
+
+
+
 (0
 ,
 108,
 109);
 outline
+
+
+
+
 :solid
+
+
  
+
+
 turquoise
+
+
  
+
+
 1
 px
-;
 
-  
+
+
+
+;
 }
 100%
 {
 background-color
+
+
+
+
 :
+
+
  
+
+
 rgba
+
+
+
+
 (0
 ,
 108,
 109,0
 .3
-);
 
-    
+
+
+
+);
 outline
+
+
+
+
 :solid
+
+
  
+
+
 transparent
+
+
  
+
+
 1
 px
-;
 
-  
+
+
+
+;
 }
 }
 .credits {
@@ -384,12 +438,67 @@ px
 	overflow: hidden;
 }
 
-#messages-content>li:not (:last-child ) {
-	border-bottom: solid grey 1px;
-	padding-bottom: 0.5em;
-	margin-bottom: 0.5em;
-}
+#messages-content
+>
+li
 
+
+:not
+
+ 
+
+(
+:last-child
+
+ 
+
+)
+{
+border-bottom
+
+
+:
+
+ 
+
+solid
+
+ 
+
+grey
+
+ 
+
+1
+px
+
+
+;
+padding-bottom
+
+
+:
+
+ 
+
+0
+.5em
+
+
+;
+margin-bottom
+
+
+:
+
+ 
+
+0
+.5em
+
+
+;
+}
 #messages-content>li.damage, .damaged {
 	color: orange;
 }
@@ -533,8 +642,8 @@ a.progress-bar {
 	color: turquoise;
 }
 
-#screen-statusreport{
-	background-color:rgba(0,0,0,0.75);	
+#screen-statusreport {
+	background-color: rgba(0, 0, 0, 0.75);
 }
 
 #screen-statusreport dl {
@@ -663,12 +772,12 @@ a.progress-bar {
 	overflow: hidden;
 }
 
-a.disabled,button.disabled {
+a.disabled, button.disabled {
 	background-color: rgb(20, 40, 60);
 	color: darkgay;
 }
 
-#update-app-prompt button, #install-app-prompt button{
+#update-app-prompt button, #install-app-prompt button {
 	width: 50%;
 }
 
@@ -851,33 +960,45 @@ a.disabled,button.disabled {
 	padding: 0.5em;
 }
 
-.app-menu li a{
+.app-menu li a {
 	background-color: rgb(0, 108, 109);
 	width: 100%;
 	line-height: 2.5em;
 	width: 100%;
-	font-size:100%;
+	font-size: 100%;
 }
-.app-menu li a:hover{
+
+.app-menu li a:hover {
 	background-color: rgb(50, 158, 159);
 }
 
-
-.app-menu li a.disabled{
-	color:silver;
+.app-menu li a.disabled {
+	color: silver;
 	background-color: darkslategrey;
 }
 
-#app-menu-button{
-	background-image:url('../images/hamburger-menu.svg');
+#app-menu-button {
+	background-image: url('../images/hamburger-menu.svg');
 	background-repeat: no-repeat;
 	background-size: contain;
 }
 
-#app-install-prompt{
-	position:absolute;
-	bottom:0;
-	left:0;
-	right:0;
-	background-color:white;
+#app-install-prompt {
+	background-color: white;
+	color: black;
+	padding: 0.2em;
+	top: 50%;
+	margin-top: -6em;
+}
+
+#app-install-prompt button {
+	color: blue;
+	background-color: transparent;
+}
+
+#install-yes {
+	background-image: url('../images/bookmark.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	padding-left: 2em;
 }

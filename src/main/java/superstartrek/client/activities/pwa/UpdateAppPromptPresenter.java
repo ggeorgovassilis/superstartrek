@@ -3,7 +3,6 @@ package superstartrek.client.activities.pwa;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.user.client.Window;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
@@ -36,7 +35,6 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 
 	@Override
 	public void userWantsToDismissPopup() {
-		log.info("user dimissed popup");
 		view.hide();
 	}
 }

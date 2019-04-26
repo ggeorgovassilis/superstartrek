@@ -24,6 +24,7 @@ public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> {
 	@Override
 	public void decorateWidget() {
 		super.decorateWidget();
+		getElement().setId("app-install-prompt");
 		addDomHandler(new ClickHandler() {
 
 			@Override
