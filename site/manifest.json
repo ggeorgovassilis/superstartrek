@@ -1,0 +1,24 @@
+{
+  "short_name": "SST",
+  "name": "Super Star Trek",
+  "description":"A web port of the classic Super Star Trek console game",
+  "icons": [
+    {
+    "src": "/superstartrek/site/images/icon192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+     "src": "/superstartrek/site/images/icon512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/superstartrek/site/index.html",
+  "background_color": "#000000",
+  "display": "standalone",
+  "scope": "/superstartrek/site/index.html",
+  "theme_color": "#000000",
+  "lang":"en-US",
+  "orientation": "portrait-primary"
+}
