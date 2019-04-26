@@ -3,29 +3,29 @@ package superstartrek.client.activities.pwa;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 
-public interface ApplicationUpdateCheckHandler extends EventHandler{
+public interface ApplicationLifecycleHandler extends EventHandler{
 
-	public static class ApplicationUpdateEvent extends GwtEvent<ApplicationUpdateCheckHandler>{
+	public static class ApplicationLifecycleEvent extends GwtEvent<ApplicationLifecycleHandler>{
 
-		public enum Status{checkFailed,appIsUpToDate,appIsOutdated, appCacheWasJustRefreshed, informingOfInstalledVersion, filesCached};
-		public final static Type<ApplicationUpdateCheckHandler> TYPE = new Type<>();
+		public enum Status{showInstallPrompt,checkFailed,appIsUpToDate,appIsOutdated, appCacheWasJustRefreshed, informingOfInstalledVersion, filesCached};
+		public final static Type<ApplicationLifecycleHandler> TYPE = new Type<>();
 		public final Status status;
 		public final String currentVersion;
 		public final String latestAvailableVersion;
 		
-		public ApplicationUpdateEvent(Status status, String curentVersion, String latestAvailableVersion) {
+		public ApplicationLifecycleEvent(Status status, String curentVersion, String latestAvailableVersion) {
 			this.status = status;
 			this.currentVersion = curentVersion;
 			this.latestAvailableVersion = latestAvailableVersion;
 		}
 		
 		@Override
-		public Type<ApplicationUpdateCheckHandler> getAssociatedType() {
+		public Type<ApplicationLifecycleHandler> getAssociatedType() {
 			return TYPE;
 		}
 
 		@Override
-		protected void dispatch(ApplicationUpdateCheckHandler handler) {
+		protected void dispatch(ApplicationLifecycleHandler handler) {
 			switch(status) {
 				case appIsOutdated:handler.newVersionAvailable(); break;
 				case appIsUpToDate:handler.versionIsCurrent();break;
@@ -33,6 +33,7 @@ public interface ApplicationUpdateCheckHandler extends EventHandler{
 				case appCacheWasJustRefreshed:handler.appMustReload();break;
 				case informingOfInstalledVersion:handler.installedAppVersionIs(currentVersion);break;
 				case filesCached:handler.filesAreCached();break;
+				case showInstallPrompt:handler.showInstallPrompt();break;
 			}
 		}
 
@@ -43,4 +44,5 @@ public interface ApplicationUpdateCheckHandler extends EventHandler{
 	default void appMustReload(){};
 	default void installedAppVersionIs(String version) {};
 	default void filesAreCached() {};
+	default void showInstallPrompt() {};
 }

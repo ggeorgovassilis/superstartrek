@@ -1,5 +1,6 @@
 package superstartrek.client.activities.pwa;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
@@ -13,8 +14,8 @@ import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler.ApplicationUpdateEvent;
-import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler.ApplicationUpdateEvent.Status;
+import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent;
+import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent.Status;
 
 public class PWA {
 
@@ -37,7 +38,6 @@ public class PWA {
 			"/superstartrek/site/images/laser.svg",
 			"/superstartrek/site/images/navigation.svg", 
 			"/superstartrek/site/images/radar.svg",
-			"/superstartrek/site/images/stars-background.gif", 
 			"/superstartrek/site/images/torpedo.svg",
 			"/superstartrek/site/images/stars-background.gif", 
 			"/superstartrek/site/images/hamburger-menu.svg",
@@ -110,10 +110,10 @@ public class PWA {
 
 						@Override
 						public void execute() {
-							application.events.fireEvent(new ApplicationUpdateEvent(Status.filesCached, "", ""));
+							application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 						}
 					});
-					else application.events.fireEvent(new ApplicationUpdateEvent(Status.filesCached, "", ""));
+					else application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 			}
 		});
 	}
@@ -124,6 +124,10 @@ public class PWA {
 	}-*/;
 	//@formatter:on
 
+	public static native void log(Throwable t) /*-{
+	console.log(t.message);
+	}-*/;
+	
 	//@formatter:off
 	public static native void registerServiceWorker(String url) /*-{
 		navigator.serviceWorker.register(url, {scope:'.'})
@@ -149,11 +153,14 @@ public class PWA {
 	//@formatter:on
 
 	public void installationEventCallback(AppInstallationEvent e) {
+		log.info("installation event callback");
 		deferredInstallationPrompt = e;
 		deferredInstallationPrompt.preventDefault();
+		application.events.fireEvent(new ApplicationLifecycleEvent(Status.showInstallPrompt, "", ""));
 	}
 
 	public void installApplication() {
+		log.info("invoking deferred installation prompt");
 		deferredInstallationPrompt.prompt();
 		deferredInstallationPrompt = null;
 	}
@@ -192,7 +199,7 @@ public class PWA {
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				String checksumOfInstalledApplication = response.getText();
-				application.events.fireEvent(new ApplicationUpdateEvent(Status.informingOfInstalledVersion,
+				application.events.fireEvent(new ApplicationLifecycleEvent(Status.informingOfInstalledVersion,
 						checksumOfInstalledApplication, ""));
 				getChecksumOfNewestVersion(new RequestCallback() {
 
@@ -203,12 +210,13 @@ public class PWA {
 						log.info("Checksum of latest    package : " + checksumOfNewestVersion);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
 							app.events.fireEvent(
-									new ApplicationUpdateEvent(Status.checkFailed, checksumOfInstalledApplication, ""));
+									new ApplicationLifecycleEvent(Status.checkFailed, checksumOfInstalledApplication, ""));
 							return;
 						}
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
+						log.info("is same: "+isSame);
 						app.events.fireEvent(
-								new ApplicationUpdateEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
+								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
 										checksumOfInstalledApplication, checksumOfNewestVersion));
 
 					}
@@ -216,14 +224,14 @@ public class PWA {
 					@Override
 					public void onError(Request request, Throwable exception) {
 						app.events.fireEvent(
-								new ApplicationUpdateEvent(Status.checkFailed, checksumOfInstalledApplication, ""));
+								new ApplicationLifecycleEvent(Status.checkFailed, checksumOfInstalledApplication, ""));
 					}
 				});
 			}
 
 			@Override
 			public void onError(Request request, Throwable exception) {
-				app.events.fireEvent(new ApplicationUpdateEvent(Status.checkFailed, "", ""));
+				app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed, "", ""));
 			}
 		});
 	}

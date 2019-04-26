@@ -49,18 +49,22 @@ import superstartrek.client.utils.GWTRandomNumberFactory;
 import superstartrek.client.utils.GwtBrowserImpl;
 import superstartrek.client.utils.Random;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;
-import superstartrek.client.activities.pwa.ApplicationUpdateCheckHandler;
+import superstartrek.client.activities.pwa.AppInstallPromptPresenter;
+import superstartrek.client.activities.pwa.AppInstallPromptView;
+import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
+import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.UpdateAppPromptPresenter;
 import superstartrek.client.activities.pwa.UpdateAppPromptView;;
 
 public class Application
-		implements EntryPoint, GamePhaseHandler, ApplicationUpdateCheckHandler{
+		implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler{
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus events;
 	public HTMLPanel _page;
 	public StarMap starMap;
 	public Browser browser;
+	public PWA pwa;
 	Element logDiv;
 
 	private static Application that;
@@ -117,11 +121,12 @@ public class Application
 		new StatusReportView(new StatusReportPresenter(this));
 		new UpdateAppPromptView(new UpdateAppPromptPresenter(this));
 		new AppMenuView(new AppMenuPresenter(this));
+		new AppInstallPromptView(new AppInstallPromptPresenter(this));
 	}
 	
 	public void registerEventHandlers() {
 		events.addHandler(GameOverEvent.TYPE, this);
-		events.addHandler(ApplicationUpdateEvent.TYPE, this);
+		events.addHandler(ApplicationLifecycleEvent.TYPE, this);
 	}
 
 
@@ -221,6 +226,9 @@ public class Application
 			browser = new GwtBrowserImpl();
 		//null out so that resources can be garbage collected
 		resources = null;
+		pwa = new PWA(this);
+		pwa.run();
+
 	}
 	
 	@Override

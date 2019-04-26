@@ -1,20 +1,21 @@
 package superstartrek.client.activities.pwa;
 
+import java.util.logging.Logger;
+
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.user.client.Window;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
 
-public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView> implements PopupViewPresenter<UpdateAppPromptView>, ApplicationUpdateCheckHandler{
+public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView> implements PopupViewPresenter<UpdateAppPromptView>, ApplicationLifecycleHandler{
 
-	PWA pwa;
-	
+	private static Logger log = Logger.getLogger("");
+
 	public UpdateAppPromptPresenter(Application application) {
 		super(application);
-		addHandler(ApplicationUpdateEvent.TYPE, this);
-		pwa = new PWA(application);
-		pwa.run();
+		addHandler(ApplicationLifecycleEvent.TYPE, this);
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 
 	@Override
 	public void userWantsToDismissPopup() {
+		log.info("user dimissed popup");
 		view.hide();
 	}
 }

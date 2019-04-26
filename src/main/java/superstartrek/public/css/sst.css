@@ -668,20 +668,11 @@ a.disabled,button.disabled {
 	color: darkgay;
 }
 
-.install-pwa-prompt {
-	background-color: black;
-	overflow: hidden;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
-
-.install-pwa-prompt button {
+#update-app-prompt button, #install-app-prompt button{
 	width: 50%;
 }
 
-.install-pwa-prompt h2 {
+#update-app-prompt h2 {
 	padding: 0 0.5em;
 }
 
@@ -881,4 +872,12 @@ a.disabled,button.disabled {
 	background-image:url('../images/hamburger-menu.svg');
 	background-repeat: no-repeat;
 	background-size: contain;
+}
+
+#app-install-prompt{
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	background-color:white;
 }

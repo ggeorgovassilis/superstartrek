@@ -47,7 +47,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 				}
 			}
 		}, KeyDownEvent.getType());
-		Event.sinkEvents(getElement(), Event.ONKEYDOWN);
+		Event.sinkEvents(getElement(), Event.ONKEYDOWN | Event.ONCLICK);
 		hide();
 		RootPanel.get().add(this);
 	}
