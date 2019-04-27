@@ -103,7 +103,9 @@ public class PWA {
 
 			@Override
 			public void onSuccess(Boolean result) {
-				if (!result)
+				if (result)
+					application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
+				else
 					cacheFiles(URLS, new ScheduledCommand() {
 
 						@Override
@@ -111,7 +113,6 @@ public class PWA {
 							application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 						}
 					});
-					else application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 			}
 		});
 	}
