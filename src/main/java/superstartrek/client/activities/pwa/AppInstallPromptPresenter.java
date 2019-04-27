@@ -41,6 +41,7 @@ public class AppInstallPromptPresenter extends BasePresenter<AppInstallPromptVie
 	}
 	
 	public void userClickedInstallButton(){
+		view.hide();
 		application.pwa.installApplication();
 	}
 
