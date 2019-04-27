@@ -299,113 +299,19 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	font-size: 100%;
 }
 
-@
-keyframes pulse { 0% {
+@keyframes pulse { 0% {
 	background-color: rgba(0, 108, 109, 0.3);
 	outline: solid transparent 1px;
 }
 
-50%
-{
-background-color
-
-
-
-
-:
-
-
- 
-
-
-rgb
-
-
-
-
-(0
-,
-108,
-109);
-outline
-
-
-
-
-:solid
-
-
- 
-
-
-turquoise
-
-
- 
-
-
-1
-px
-
-
-
-
-;
-}
-100%
-{
-background-color
-
-
-
-
-:
-
-
- 
-
-
-rgba
-
-
-
-
-(0
-,
-108,
-109,0
-.3
-
-
-
-
-);
-outline
-
-
-
-
-:solid
-
-
- 
-
-
-transparent
-
-
- 
-
-
-1
-px
-
-
-
-
-;
+50%{
+background-color:rgb(0,108,109);
+outline:solid turquoise 1px;}
+100%{background-color:rgba(0,108,109,0.3);
+outline:solid transparent 1px;
 }
 }
+
 .credits {
 	clear: both;
 	overflow: hidden;
