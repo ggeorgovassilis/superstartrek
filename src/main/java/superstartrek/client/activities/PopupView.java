@@ -1,5 +1,6 @@
 package superstartrek.client.activities;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
@@ -20,6 +21,8 @@ import superstartrek.client.utils.Timer;
 @SuppressWarnings("rawtypes")
 public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P> implements IPopupView<P> {
 
+	boolean isInTransition = false;
+	
 	protected PopupView(P presenter) {
 		super(presenter);
 	}
@@ -85,20 +88,29 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	
 	@Override
 	public boolean isVisible() {
-		return getStyleName().contains("slidein") && super.isVisible();
+		return super.isVisible();
 	}
 	
 	@Override
 	public void show() {
+		GWT.log("PopupView.show isVisible "+isVisible());
 		if (isVisible())
 			return;
-		addStyleName("slidein");
 		showGlassPanel();
-		getElement().focus();
+		super.show();
+		Timer.postpone(new ScheduledCommand() {
+			
+			@Override
+			public void execute() {
+				addStyleName("slidein");
+				getElement().focus();
+			}
+		});
 	}
 	
 	@Override
 	public void hide(ScheduledCommand callback) {
+		GWT.log("PopupView hide is visible "+isVisible());
 		if (!isVisible())
 			return;
 		hideGlassPanel();
@@ -107,6 +119,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 			
 			@Override
 			public boolean execute() {
+				PopupView.super.hide();
 				if (callback!=null)
 					callback.execute();
 				return false;

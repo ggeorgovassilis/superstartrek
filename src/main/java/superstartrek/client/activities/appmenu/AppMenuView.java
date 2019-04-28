@@ -1,5 +1,6 @@
 package superstartrek.client.activities.appmenu;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -35,6 +36,7 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 	
 	@Override
 	public void hide() {
+		GWT.log("AppMenuView hide");
 		super.hide();
 		presenter.onMenuHidden();
 	}

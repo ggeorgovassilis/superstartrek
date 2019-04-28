@@ -31,17 +31,7 @@ public class CSS {
 		});
 	}
 
-	public static void removeClassDeferred(Element e, String css) {
-		Timer.postpone(new ScheduledCommand() {
-
-			@Override
-			public void execute() {
-				e.removeClassName(css);
-			}
-			
-		});
-	}
-
+	//according to https://caniuse.com/#search=querySelector this is supported in all browsers that are currently around
 	public final static native NodeList<Element> querySelectorAll(String selectors) /*-{
 																					return $doc.querySelectorAll(selectors);
 																					}-*/;
