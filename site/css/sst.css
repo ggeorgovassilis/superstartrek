@@ -333,7 +333,7 @@ outline:solid transparent 1px;
 #messages {
 	background-color: black;
 	color: white;
-	font-family: courier, courier new, typewriter;
+	font-family: monospace, courier, courier new, typewriter, sans-serif;
 	padding: 10px;
 	border: solid grey 1px;
 }
