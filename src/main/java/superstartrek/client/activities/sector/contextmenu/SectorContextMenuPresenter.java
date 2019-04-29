@@ -32,7 +32,6 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		buttonsEnabled.put("cmd_scanSector", true);
 		buttonsEnabled.put("cmd_firePhasers", false);
 		buttonsEnabled.put("cmd_fireTorpedos", false);
-		buttonsEnabled.put("cmd_computer", true);
 	}
 	
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {

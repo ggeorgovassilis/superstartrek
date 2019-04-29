@@ -740,19 +740,9 @@ a.disabled, button.disabled {
 /* sector context menu */
 .sector-context-menu {
 	position: absolute;
-	margin-left: -2.5em;
-	margin-top: -2em;
-	width: 8em;
-	height: 8em;
 }
 
-.hexagonal-menu {
-	position: absolute;
-	margin-left: 2em;
-	margin-top: 2em;
-}
-
-.hexagonal-menu .cell {
+.sector-context-menu .cell {
 	width: 4em;
 	height: 4em;
 	background-image: url('../images/hexagon_filled.svg');
@@ -764,16 +754,16 @@ a.disabled, button.disabled {
 	z-index: 10;
 }
 
-.hexagonal-menu .cell:hover {
+.sector-context-menu .cell:hover {
 	filter: brightness(2);
 	transition: margin 0.2s ease, filter 0.5s ease;
 }
 
-.hexagonal-menu .cell.disabled {
+.sector-context-menu .cell.disabled {
 	filter: grayscale(100%) brightness(100%) contrast(50%);
 }
 
-.hexagonal-menu .cell button {
+.sector-context-menu .cell button {
 	outline: none;
 	border: none;
 	background: transparent;
@@ -788,7 +778,7 @@ a.disabled, button.disabled {
 	vertical-align: middle;
 }
 
-.hexagonal-menu .cell button img {
+.sector-context-menu .cell button img {
 	width: 100%;
 	height: 100%;
 }

@@ -9,6 +9,7 @@ import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
+import superstartrek.client.control.AfterTurnStartedEvent;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
@@ -32,6 +33,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	Setting autoAim = new Setting("auto aim", 1, 1);
 	Setting lrs = new Setting("LRS",1,1);
 	Quadrant quadrant;
+	
+	int turnsSinceWarp = 0;
 	
 	public Setting getLrs() {
 		return lrs;
@@ -127,6 +130,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		application.events.fireEvent(warpEvent);
 		ThingMovedEvent moveEvent = new ThingMovedEvent(this, warpEvent.qFrom, oldLocation, warpEvent.qTo, freeSpot);
 		application.events.fireEvent(moveEvent);
+		turnsSinceWarp = 0;
 		return true;
 	}
 
@@ -417,6 +421,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public void applyDamage(double damage) {
 		double impact = 0.5 * damage / (shields.getValue() + 1.0);
+		//from a game-play POV being damaged right after jumping into a quadrant sucks, that's why the damage is reduced in this case.
+		//the in-world justification is that opponents can't get a reliable target lock
+		if (turnsSinceWarp<2)
+			damage = damage*0.5;
 		shields.decrease(damage);
 		Random random = application.random;
 		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < impact)
@@ -483,6 +491,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return;
 		application.message(evt.actor.getName() + " at " + evt.actor.getLocation() + " fired on us", "damage");
 		applyDamage(evt.damage);
+	}
+	
+	@Override
+	public void onTurnEnded(TurnEndedEvent evt) {
+		turnsSinceWarp++;
 	}
 
 }
