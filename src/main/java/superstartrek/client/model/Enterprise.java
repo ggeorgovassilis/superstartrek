@@ -23,7 +23,7 @@ import superstartrek.client.activities.navigation.EnterpriseDamagedHandler.Enter
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
 
 	public final static double PHASER_RANGE = 3;
-	public final static double ANTIMATTER_CONSUMPTION_WARP = 10;
+	public final static double ANTIMATTER_CONSUMPTION_WARP = 20;
 	public final static double IMPULSE_CONSUMPTION = 5;
 
 	Application application;
@@ -126,6 +126,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				starMap.getQuadrant(x, y).setExplored(true);
 		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
+		consume("Warp", ANTIMATTER_CONSUMPTION_WARP*StarMap.distance(fromQuadrant.x, fromQuadrant.y, dropQuadrant.x, dropQuadrant.y));
 		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, fromQuadrant, fromLocation, dropQuadrant,
 				freeSpot);
 
