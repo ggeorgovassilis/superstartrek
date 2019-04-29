@@ -44,9 +44,9 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 	public void onClick(ClickEvent event) {
 		EventTarget target = event.getNativeEvent().getEventTarget();
 		Element e = target.cast();
-		if (Strings.isEmpty(e.getId()))
-			return;
 		String id = e.getId();
+		if (Strings.isEmpty(id))
+			return;
 		presenter.onMenuItemClicked(id);
 	}
 

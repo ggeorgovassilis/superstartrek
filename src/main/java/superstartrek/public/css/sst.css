@@ -750,14 +750,9 @@ a.disabled, button.disabled {
 	text-align: center;
 	position: absolute;
 	line-height: 4em;
+	will-change: transform;
+	transition: transform 200ms ease;
 }
-
-/*
-.sector-context-menu .cell:hover {
-	filter: brightness(2);
-	transition: margin 0.2s ease, filter 0.5s ease;
-}
-*/
 
 .sector-context-menu .cell.disabled {
 	filter: grayscale(100%) brightness(100%) contrast(50%);
@@ -806,10 +801,6 @@ a.disabled, button.disabled {
 #cmd_computer {
 	background-image: url('../images/cancel.svg')
 }
-
-.c1, .c2, .c3, .c4, .c5, .c6 {
-	transition: transform 200ms ease;
-	}
 
 .expanded .c1 {
 	transform: translate(3.45em,2em);
