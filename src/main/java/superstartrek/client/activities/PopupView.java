@@ -97,14 +97,23 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 			return;
 		showGlassPanel();
 		super.show();
-		Timer.postpone(new ScheduledCommand() {
+		//deferred command (0ms) doesn't work reliably with FF.
+		Timer.postpone(new RepeatingCommand() {
 			
 			@Override
-			public void execute() {
+			public boolean execute() {
 				addStyleName("slidein");
-				getElement().focus();
+				Timer.postpone(new RepeatingCommand() {
+					
+					@Override
+					public boolean execute() {
+						getElement().focus();
+						return false;
+					}
+				}, Constants.ANIMATION_DURATION_MS);
+				return false;
 			}
-		});
+		}, 16);
 	}
 	
 	@Override

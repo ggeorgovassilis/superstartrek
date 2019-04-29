@@ -36,7 +36,6 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 	
 	@Override
 	public void hide() {
-		GWT.log("AppMenuView hide");
 		super.hide();
 		presenter.onMenuHidden();
 	}

@@ -50,13 +50,15 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		super(presenter);
 		Widget widgetImpl = getWidget();
 		Element eTable = DomUtils.getTbody(widgetImpl.getElement());
+		final double RELATIVE_WIDTH = 100.0/8.0;
+		final double RELATIVE_HEIGHT = 100.0/8.0;
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
 				Element eTd = DOM.createDiv();
 				eTd.setAttribute("data-x", "" + x);
 				eTd.setAttribute("data-y", "" + y);
-				eTd.getStyle().setLeft(12.5 * (double) x, Unit.PCT);
-				eTd.getStyle().setTop(12.5 * (double) y, Unit.PCT);
+				eTd.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);
+				eTd.getStyle().setTop(RELATIVE_HEIGHT * (double) y, Unit.PCT);
 				eSectors[x][y] = eTd;
 				eTable.appendChild(eTd);
 			}
