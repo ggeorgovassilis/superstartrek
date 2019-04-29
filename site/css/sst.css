@@ -168,6 +168,8 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	margin: 0;
 	padding: 0;
 	height: 10em;
+	min-height: 10em;
+	max-height: 10em;
 	position: relative;
 	border-left: solid gray 1px;
 	border-top: solid gray 1px;
@@ -698,23 +700,19 @@ a.disabled, button.disabled {
 /* popup animations */
 .PopupView {
 	position: absolute;
-	left: -200%;
 	z-index: 3;
 	top: 0;
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
 	width: 100%;
 	box-sizing: border-box;
-	transition: display 0.2s, left 0.2s ease;
+	transform: translateX(-100%);
+	transition: transform 0.2s ease;
 }
 
 .PopupView.slidein {
 	left: 0%;
 	display: block;
-	transition: display 0s, left 0.2s ease;
+	transform:translateX(0%);
+	transition: transform 0.2s ease;
 }
 
 #glasspanel {
@@ -740,19 +738,11 @@ a.disabled, button.disabled {
 /* sector context menu */
 .sector-context-menu {
 	position: absolute;
-	margin-left: -2.5em;
-	margin-top: -2em;
-	width: 8em;
-	height: 8em;
+	transform: translateZ(0);
+	z-index: 10;
 }
 
-.hexagonal-menu {
-	position: absolute;
-	margin-left: 2em;
-	margin-top: 2em;
-}
-
-.hexagonal-menu .cell {
+.sector-context-menu .cell {
 	width: 4em;
 	height: 4em;
 	background-image: url('../images/hexagon_filled.svg');
@@ -760,20 +750,15 @@ a.disabled, button.disabled {
 	text-align: center;
 	position: absolute;
 	line-height: 4em;
-	transform: translateZ(0);
-	z-index: 10;
+	will-change: transform;
+	transition: transform 200ms ease;
 }
 
-.hexagonal-menu .cell:hover {
-	filter: brightness(2);
-	transition: margin 0.2s ease, filter 0.5s ease;
-}
-
-.hexagonal-menu .cell.disabled {
+.sector-context-menu .cell.disabled {
 	filter: grayscale(100%) brightness(100%) contrast(50%);
 }
 
-.hexagonal-menu .cell button {
+.sector-context-menu .cell button {
 	outline: none;
 	border: none;
 	background: transparent;
@@ -788,7 +773,7 @@ a.disabled, button.disabled {
 	vertical-align: middle;
 }
 
-.hexagonal-menu .cell button img {
+.sector-context-menu .cell button img {
 	width: 100%;
 	height: 100%;
 }
@@ -817,44 +802,28 @@ a.disabled, button.disabled {
 	background-image: url('../images/cancel.svg')
 }
 
-.c1, .c2, .c3, .c4, .c5, .c6 {
-	transition: margin 0.3s ease;
-}
-
 .expanded .c1 {
-	margin-left: 3.45em;
-	margin-top: 2em;
-	transition: margin 0.2s ease;
+	transform: translate(3.45em,2em);
 }
 
 .expanded .c2 {
-	margin-left: 0em;
-	margin-top: 4em;
-	transition: margin 0.2s ease;
+	transform: translate(0em,4em);
 }
 
 .expanded .c3 {
-	margin-left: -3.45em;
-	margin-top: 2em;
-	transition: margin 0.2s ease;
+	transform: translate(-3.45em,2em);
 }
 
 .expanded .c4 {
-	margin-left: -3.45em;
-	margin-top: -2em;
-	transition: margin 0.2s ease;
+	transform: translate(-3.45em,-2em);
 }
 
 .expanded .c5 {
-	margin-left: 0em;
-	margin-top: -4em;
-	transition: margin 0.2s ease;
+	transform: translate(0em,-4em);
 }
 
 .expanded .c6 {
-	margin-left: 3.45em;
-	margin-top: -2em;
-	transition: margin 0.2s ease;
+	transform: translate(3.45em,-2em);
 }
 
 #em-metric {

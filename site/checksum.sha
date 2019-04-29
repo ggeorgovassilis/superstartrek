@@ -6,7 +6,7 @@ b10f37c8bb1803d98c127a01d1a71cc5 *MANIFEST.MF
 eeb646a22fd2d04787c6ea0b4d6d7981 *cancel.svg
 6d22e4f2d2057c6e8d6fab098e76e80f *clear.cache.gif
 b106e2422d959fb50cad36ad897c10c1 *communicator.svg
-58ef825c12a2569bdd70a514cf2e6653 *computer.html
+49c7bf29a22973e91aa8376e5ae0863c *computer.html
 cdac8f2ccd4eebb3a8b3f57a1a11b89a *federation_logo.svg
 8ac202419711e57e6a3c228ccf9edc55 *fire_at_will.svg
 7ab3886f3d4b4a7b1bbf052ac4abda80 *hamburger-menu.svg
@@ -25,12 +25,12 @@ f2859a2bab0b6187db9fd190b19d8cfe *manual.html
 9d7b12f10268adcda667417e70a8ae38 *messages.html
 2439484dfa01b81bd20f7547b573a59f *navigation.svg
 ec8f766738c7378ca9e0097d66f4ec3c *radar.svg
-6e9b01d1c10357f5537e69f023ff0bdf *sector-context-menu.html
+bbaef5f9e242c687e5a2b6246adb6587 *sector-context-menu.html
 aaf806f7b9338adb65863a00842bd6c4 *sector-scan.html
 462c327e3ebeb7c46389a817e589a649 *service-worker.js
-5290061a2aa468e4b115a80b5a38f76d *sst.css
+bda2a1074e67b532c9d71b11f843a5ec *sst.css
 fabc28bd92cbe78c4b666b9762f6b39f *stars-background.gif
 43618ac9f3c37cda94c9742aafeacad5 *status-report.html
-a12ea75d03be06c29e998b3d9c30dff4 *superstartrek.superstartrek.nocache.js
+8fd2837c5a20be8d71e24b83738e05c3 *superstartrek.superstartrek.nocache.js
 3b83f13891b250cbffb66132af201b62 *torpedo.svg
 e7f21fbd818c1bbb3345e10dbb85ec86 *update-app-prompt.html
