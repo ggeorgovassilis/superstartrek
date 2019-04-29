@@ -3,9 +3,10 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 
-public class Quadrant {
+public class Quadrant implements GeometricLookup{
 
 	protected final String name;
 	protected final int x;
@@ -59,6 +60,26 @@ public class Quadrant {
 
 	public int getY() {
 		return y;
+	}
+
+	@Override
+	public Thing findThingAt(int x, int y) {
+		return findThingAt(Location.location(x, y));
+	}
+
+	@Override
+	public Thing findThingAt(Location location) {
+		for (Thing t:stars)
+			if (t.getLocation() == location)
+				return t;
+		for (Thing t:klingons)
+			if (t.getLocation() == location)
+				return t;
+		if (starBase!=null && starBase.getLocation() == location)
+			return starBase;
+		Enterprise enterprise = Application.get().starMap.enterprise;
+		Quadrant eq = enterprise.getQuadrant();
+		return (eq == this && enterprise.getLocation() == location)?enterprise:null;
 	}
 
 }

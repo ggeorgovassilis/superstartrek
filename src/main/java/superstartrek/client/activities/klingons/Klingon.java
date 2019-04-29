@@ -138,7 +138,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		Application app = Application.get();
 		Quadrant quadrant = app.getActiveQuadrant();
 		ThingMovedEvent event = new ThingMovedEvent(this, quadrant, getLocation(), quadrant, dest);
-		Thing obstacle = app.starMap.findThingAt(quadrant, dest);
+		Thing obstacle = quadrant.findThingAt(dest);
 		if (null != obstacle)
 			throw new RuntimeException("There is " + obstacle.getName() + " at " + dest);
 		setLocation(dest);

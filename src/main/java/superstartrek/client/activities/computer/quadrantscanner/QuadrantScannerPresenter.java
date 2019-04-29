@@ -86,8 +86,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	void updateSector(Quadrant q, int x, int y) {
-		StarMap starMap = getApplication().starMap;
-		Thing thing = starMap.findThingAt(q, x, y);
+		Thing thing = q.findThingAt(x, y);
 		if (thing != null)
 			updateSector(thing);
 		else

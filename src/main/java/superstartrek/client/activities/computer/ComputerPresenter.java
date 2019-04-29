@@ -157,7 +157,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public void onValueChange(ValueChangeEvent<String> event) {
 		switch (event.getValue()) {
 			case "computer": showScreen(); break;
-			case "appmenu": break;
+			case "appmenu": break; //appmenu uses history tokens to allow hiding with "back" button, but isn't really a screen - so don't hide
 			default: hideScreen();
 		}
 	}

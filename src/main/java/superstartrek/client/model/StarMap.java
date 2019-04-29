@@ -29,6 +29,16 @@ public class StarMap {
 		int dy = y1 - y2;
 		return dx * dx + dy * dy;
 	}
+	
+	public void markAsExploredAround(Quadrant q) {
+		int xFrom = Math.max(0, q.getX() - 1);
+		int xTo = Math.min(7, q.getX() + 1);
+		int yFrom = Math.max(0, q.getY() - 1);
+		int yTo = Math.min(7, q.getY() + 1);
+		for (int y = yFrom; y <= yTo; y++)
+			for (int x = xFrom; x <= xTo; x++)
+				getQuadrant(x, y).setExplored(true);
+	}
 
 	public static double distance(Thing a, Thing b) {
 		return distance(a.getLocation(), b.getLocation());
@@ -66,25 +76,6 @@ public class StarMap {
 		if (!isOnMap(x, y))
 			throw new IllegalArgumentException(x + ":" + y);
 		return quadrants[x][y];
-	}
-
-	public Thing findThingAt(Quadrant q, int x, int y) {
-		return findThingAt(q, Location.location(x, y));
-	}
-
-	public Thing findThingAt(Quadrant q, Location loc) {
-		if (enterprise.getQuadrant() == q && enterprise.getLocation() == loc)
-			return enterprise;
-		for (Star star : q.getStars())
-			if (star.getLocation() == loc)
-				return star;
-		if (q.getStarBase() != null)
-			if (q.getStarBase().getLocation() == loc)
-				return q.getStarBase();
-		for (Klingon klingon : q.getKlingons())
-			if (klingon.getLocation() == loc)
-				return klingon;
-		return null;
 	}
 
 	public Location findFreeSpot(Quadrant q) {

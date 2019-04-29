@@ -85,13 +85,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
 		Location fromLocation = getLocation();
 		Quadrant fromQuadrant = getQuadrant();
-		if (!consume("warp", 20) && !getQuadrant().getKlingons().isEmpty()) {
+		int destinationX = destinationQuadrant.getX();
+		int destinationY = destinationQuadrant.getY();
+		double necessaryEnergy = ANTIMATTER_CONSUMPTION_WARP*StarMap.distance(fromQuadrant.x, fromQuadrant.y, destinationX, destinationY);
+		if (!consume("warp", necessaryEnergy) && !getQuadrant().getKlingons().isEmpty()) {
 			// we can let this slide if no enemies in quadrant
 			application.message("Insufficient reactor output");
 			return false;
 		}
-		int destinationX = destinationQuadrant.getX();
-		int destinationY = destinationQuadrant.getY();
 
 		List<Quadrant> container = new ArrayList<Quadrant>();
 
@@ -100,9 +101,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			@Override
 			public boolean visit(int x, int y) {
 				Quadrant q = starMap.getQuadrant(x, y);
-				List<Klingon> klingons = q.getKlingons();
 				container.clear();
 				container.add(q);
+				List<Klingon> klingons = q.getKlingons();
 				// TODO for now, allow warping out of the departure quadrant
 				if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
 					application.message("We were intercepted by " + klingons.get(0).getName(), "intercepted");
@@ -117,16 +118,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation());
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
-		int xFrom = Math.max(0, dropQuadrant.getX() - 1);
-		int xTo = Math.min(7, dropQuadrant.getX() + 1);
-		int yFrom = Math.max(0, dropQuadrant.getY() - 1);
-		int yTo = Math.min(7, dropQuadrant.getY() + 1);
-		for (int y = yFrom; y <= yTo; y++)
-			for (int x = xFrom; x <= xTo; x++)
-				starMap.getQuadrant(x, y).setExplored(true);
+		starMap.markAsExploredAround(dropQuadrant);
 		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
-		consume("Warp", ANTIMATTER_CONSUMPTION_WARP*StarMap.distance(fromQuadrant.x, fromQuadrant.y, dropQuadrant.x, dropQuadrant.y));
 		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, fromQuadrant, fromLocation, dropQuadrant,
 				freeSpot);
 
@@ -215,6 +209,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public double computeConsumptionForImpulseNavigation(double distance) {
 		return distance * IMPULSE_CONSUMPTION;
 	}
+	
+	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {
+		return ANTIMATTER_CONSUMPTION_WARP * StarMap.distance(from.x, from.y, to.x, to.y);
+	}
 
 	public void fireTorpedosAt(Location sector) {
 		if (!torpedos.isEnabled()) {
@@ -260,7 +258,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public String canFirePhaserAt(Location sector) {
-		Thing thing = application.starMap.findThingAt(quadrant, sector);
+		Thing thing = quadrant.findThingAt(sector);
 		if (thing == null || !thing.isVisible()) {
 			return "There is nothing at " + sector;
 		}
@@ -284,7 +282,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public void firePhasersAt(Location sector, boolean isAutoAim) {
-		Thing thing = application.starMap.findThingAt(quadrant, sector);
+		Thing thing = quadrant.findThingAt(sector);
 		String error = canFirePhaserAt(sector);
 		if (error != null) {
 			if (!isAutoAim)
