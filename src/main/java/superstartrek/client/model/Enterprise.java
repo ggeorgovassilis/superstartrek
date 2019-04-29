@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
@@ -423,8 +425,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		double impact = 0.5 * damage / (shields.getValue() + 1.0);
 		//from a game-play POV being damaged right after jumping into a quadrant sucks, that's why the damage is reduced in this case.
 		//the in-world justification is that opponents can't get a reliable target lock
-		if (turnsSinceWarp<2)
+		if (turnsSinceWarp<2) {
 			damage = damage*0.5;
+			GWT.log("Warp damage protection applies");
+		}
 		shields.decrease(damage);
 		Random random = application.random;
 		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < impact)

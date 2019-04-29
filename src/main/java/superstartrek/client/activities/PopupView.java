@@ -93,7 +93,6 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	
 	@Override
 	public void show() {
-		GWT.log("PopupView.show isVisible "+isVisible());
 		if (isVisible())
 			return;
 		showGlassPanel();
@@ -110,7 +109,6 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	
 	@Override
 	public void hide(ScheduledCommand callback) {
-		GWT.log("PopupView hide is visible "+isVisible());
 		if (!isVisible())
 			return;
 		hideGlassPanel();
