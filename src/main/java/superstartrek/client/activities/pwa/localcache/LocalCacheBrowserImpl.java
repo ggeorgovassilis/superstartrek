@@ -37,6 +37,7 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 		return this.open(name);
 	}-*/;
 
+	@Override
 	public final Void cacheFiles(String cacheName, String[] files, Callback<Void> callback) {
 		GWT.log("cacheFiles");
 		has(cacheName).then(new Callback<Boolean>() {
@@ -65,6 +66,7 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 		return null;
 	}
 	
+	@Override
 	//TODO: rewrite in java
 	public final native Void clearCache(String cacheNameToDelete, ScheduledCommand callback)/*-{
 	this.keys().then(function(cacheNames) {return Promise.all(

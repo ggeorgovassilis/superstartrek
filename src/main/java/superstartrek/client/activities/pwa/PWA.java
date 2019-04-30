@@ -140,7 +140,9 @@ public class PWA {
 	}
 
 	public void getChecksumOfInstalledApplication(RequestCallback callback) {
+		GWT.log("1");
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
+		GWT.log("2");
 		try {
 			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5", callback);
 		} catch (Exception e) {
@@ -160,12 +162,14 @@ public class PWA {
 	}
 
 	public void checkForNewVersion() {
+		GWT.log("Checking for new version");
 		Application app = application;
 		getChecksumOfInstalledApplication(new RequestCallback() {
 
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				String checksumOfInstalledApplication = response.getText();
+				GWT.log("Installed app version "+checksumOfInstalledApplication);
 				application.events.fireEvent(new ApplicationLifecycleEvent(Status.informingOfInstalledVersion,
 						checksumOfInstalledApplication, ""));
 				getChecksumOfNewestVersion(new RequestCallback() {
