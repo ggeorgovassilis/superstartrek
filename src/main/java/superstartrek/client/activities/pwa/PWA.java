@@ -15,11 +15,17 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import superstartrek.client.Application;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent.Status;
+import superstartrek.client.activities.pwa.http.RequestFactory;
+import superstartrek.client.activities.pwa.localcache.LocalCache;
+import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
 
 public class PWA {
 
+	final static String CACHE_NAME = "sst1";
 	AppInstallationEvent deferredInstallationPrompt;
 	Application application;
+	LocalCache cache;
+	RequestFactory requestFactory;
 
 	private static Logger log = Logger.getLogger("");
 
@@ -44,58 +50,26 @@ public class PWA {
 			"/superstartrek/site/superstartrek.superstartrek.nocache.js",
 			"/superstartrek/site/checksum.sha.md5"
 			};
-	//@formatter:on
-
-	//@formatter:off
-	public static native void checkIfCacheExists(AsyncCallback<Boolean> callback)/*-{
-	$wnd.caches.has('sst1').then(function(hasCache) {
-    	callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(hasCache);
-	});
-	}-*/;
-	//@formatter:on
-
-	// caching in the main window is possible according to
-	// https://gist.github.com/Rich-Harris/fd6c3c73e6e707e312d7c5d7d0f3b2f9
-	//@formatter:off
-	private static native void cacheFiles(String[] files, ScheduledCommand callback) /*-{
-	console.log("Caching files for offline use...");
-	$wnd.caches.has('sst1').then(function(hasCache) {
-  		if (!hasCache) {
-  			console.log("Cache not populated yet, loading files...");
-			$wnd.caches.open( "sst1" )
-    			.then( function(cache){cache.addAll( files )} )
-    			.then( function(){
-    			console.log( 'Offline cache populated.' );
-    			callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
-    			})
-    		["catch"]( function(){console.log('something went wrong')} );
-  		} else
-			console.log("Cache already populated.");
-	})["catch"](function(e) {
-		console.error(e);
-	});
-	}-*/;
-	//@formatter:on
-
-	//@formatter:off
-	public static native void clearCache(ScheduledCommand callback)/*-{
-	$wnd.caches.keys().then(function(cacheNames) {return Promise.all(
-        cacheNames.filter(function(cacheName) {
-        	console.log('SW','clearing',cacheName);
-        	return true;
-        }).map(function(cacheName) {
-          return caches['delete'](cacheName).then(function(){
-          console.log("Caches are deleted");
-		  callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
-          });
-        })
-      );
-    });
-	}-*/;
-	//@formatter:on
+	
+	public void setRequestFactory(RequestFactory rf) {
+		this.requestFactory = rf;
+	}
+	
+	public void setCacheImplementation(LocalCache cache) {
+		this.cache = cache;
+	}
+	
+	public void clearCache(ScheduledCommand callback) {
+		cache.clearCache(CACHE_NAME, callback);
+	}
 
 	public void cacheFilesForOfflineUse() {
-		checkIfCacheExists(new AsyncCallback<Boolean>() {
+		if (cache == null) {
+			log.info("Cache not supported");
+			return;
+		}
+		GWT.log("Checking for existence of cache");
+		cache.queryCacheExistence(CACHE_NAME, new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -103,10 +77,11 @@ public class PWA {
 
 			@Override
 			public void onSuccess(Boolean result) {
+				GWT.log("Cache exists : "+result);
 				if (result)
 					application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 				else
-					cacheFiles(URLS, new ScheduledCommand() {
+					cache.cacheFiles(CACHE_NAME,URLS, new ScheduledCommand() {
 
 						@Override
 						public void execute() {
@@ -124,9 +99,9 @@ public class PWA {
 	//@formatter:on
 
 	public static native void log(Throwable t) /*-{
-	console.log(t.message, t);
-	}-*/;
-	
+												console.log(t.message, t);
+												}-*/;
+
 	//@formatter:off
 	public static native void registerServiceWorker(String url) /*-{
 		navigator.serviceWorker.register(url, {scope:'.'})
@@ -173,22 +148,23 @@ public class PWA {
 	}
 
 	public void getChecksumOfInstalledApplication(RequestCallback callback) {
-		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5");
+		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
 		try {
-			rb.sendRequest("", callback);
-		} catch (RequestException e) {
-			log(e);
+			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5", callback);
+		} catch (Exception e) {
+			GWT.log(e.getMessage());
 		}
 	}
 
 	public void getChecksumOfNewestVersion(RequestCallback callback) {
-		RequestBuilder rb = new RequestBuilder(RequestBuilder.GET,
-				"/superstartrek/site/checksum.sha.md5?rnd=" + Random.nextInt());
+		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
+		int rnd = application.random.nextInt(100000);
 		try {
-			rb.sendRequest("", callback);
-		} catch (RequestException e) {
-			log(e);
+			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd="+rnd, callback);
+		} catch (Exception e) {
+			GWT.log(e.getMessage());
 		}
+
 	}
 
 	public void checkForNewVersion() {
@@ -208,12 +184,12 @@ public class PWA {
 						String checksumOfNewestVersion = response.getText();
 						log.info("Checksum of latest    package : " + checksumOfNewestVersion);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
-							app.events.fireEvent(
-									new ApplicationLifecycleEvent(Status.checkFailed, checksumOfInstalledApplication, ""));
+							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
+									checksumOfInstalledApplication, ""));
 							return;
 						}
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
-						log.info("is same: "+isSame);
+						log.info("is same: " + isSame);
 						app.events.fireEvent(
 								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
 										checksumOfInstalledApplication, checksumOfNewestVersion));
@@ -240,13 +216,17 @@ public class PWA {
 			GWT.log("Not running PWA because not running in browser");
 			return;
 		}
-		cacheFilesForOfflineUse();
+		if (cache == null)
+			cache = LocalCacheBrowserImpl.getInstance();
+		if (cache != null) {
+			cacheFilesForOfflineUse();
+			checkForNewVersion();
+		}
 		if (!supportsServiceWorker()) {
 			GWT.log("Not running PWA because service workers are not supported");
 			return;
 		}
 		registerServiceWorker("service-worker.js");
 		addInstallationListener();
-		checkForNewVersion();
 	}
 }

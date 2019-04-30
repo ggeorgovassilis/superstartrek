@@ -54,7 +54,9 @@ import superstartrek.client.activities.pwa.AppInstallPromptView;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.UpdateAppPromptPresenter;
-import superstartrek.client.activities.pwa.UpdateAppPromptView;;
+import superstartrek.client.activities.pwa.UpdateAppPromptView;
+import superstartrek.client.activities.pwa.http.RequestFactory;
+import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;;
 
 public class Application
 		implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler{
@@ -64,6 +66,7 @@ public class Application
 	public HTMLPanel _page;
 	public StarMap starMap;
 	public Browser browser;
+	public RequestFactory requestFactory;
 	public PWA pwa;
 	Element logDiv;
 
@@ -208,6 +211,18 @@ public class Application
 		}
 	}
 	
+	public void setupHttp() {
+		if (GWT.isClient()) {
+			requestFactory = new RequestFactoryBrowserImpl();
+		}
+	}
+	
+	public void setupPwa() {
+		pwa = new PWA(this);
+		pwa.setRequestFactory(requestFactory);
+		pwa.run();
+	}
+	
 	@Override
 	public void onModuleLoad() {
 		Application.that = this;
@@ -220,13 +235,13 @@ public class Application
 		setupScreens();
 		setupStarMap();
 		setupGameController();
+		setupHttp();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
 		gameController.startGame();
 		if (GWT.isClient())
 			browser = new GwtBrowserImpl();
-		pwa = new PWA(this);
-		pwa.run();
 		//null out so that resources can be garbage collected
+		setupPwa();
 		resources = null;
 	}
 	
@@ -237,7 +252,7 @@ public class Application
 	
 	@Override
 	public void filesAreCached() {
-		GWT.log("Files are cached");
+		GWT.log("Files are now cached for offline use");
 	}
 
 
