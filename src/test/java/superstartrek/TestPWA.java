@@ -65,7 +65,7 @@ public class TestPWA {
 	@Test
 	public void test_cacheFilesForOfflineUse() {
 		Promise<Boolean> queryPromise = mock(Promise.class);
-		when(queryPromise.then(any(AsyncCallback.class))).thenAnswer(new Answer<Void>() {
+		when(queryPromise.then(any(Callback.class))).thenAnswer(new Answer<Void>() {
 
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {

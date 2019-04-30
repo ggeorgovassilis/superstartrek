@@ -3,6 +3,8 @@ package superstartrek.client.activities.pwa.promise;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import superstartrek.client.activities.pwa.Callback;
+
 public class PromiseBrowserImpl<T> extends JavaScriptObject implements Promise<T>{
 
 	protected PromiseBrowserImpl() {
@@ -10,11 +12,11 @@ public class PromiseBrowserImpl<T> extends JavaScriptObject implements Promise<T
 	
 	//@formatter:off
 	@Override
-	public final native Promise then(AsyncCallback<T> callback)/*-{
+	public final native Promise<T> then(Callback<T> callback)/*-{
 		return this.then(function(arg){
-		    	callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(arg);
+		    	callback.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(arg);
 		})["catch"](function(e){
-		    	callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(e);
+		    	callback.@superstartrek.client.activities.pwa.Callback::onFailure(Ljava/lang/Throwable;)(e);
 		});
 	}-*/;
 	//@formatter:on

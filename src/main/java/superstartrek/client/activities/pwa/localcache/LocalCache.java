@@ -1,8 +1,6 @@
 package superstartrek.client.activities.pwa.localcache;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.pwa.promise.Promise;
 
