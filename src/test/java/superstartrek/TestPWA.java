@@ -15,6 +15,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.http.Request;
@@ -59,6 +60,8 @@ public class TestPWA {
 		pwa.clearCache(callback);
 		verify(cache).clearCache("sst1", callback);
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void test_cacheFilesForOfflineUse() {
 		Promise<Boolean> queryPromise = mock(Promise.class);
@@ -72,8 +75,17 @@ public class TestPWA {
 			}
 		});
 		when(cache.queryCacheExistence("sst1")).thenReturn(queryPromise);
+		when(cache.cacheFiles(eq("sst1"), any(String[].class), any(Callback.class))).thenAnswer(new Answer<Void>() {
+
+			@Override
+			public Void answer(InvocationOnMock invocation) throws Throwable {
+				Callback<?> c = invocation.getArgumentAt(2, Callback.class);
+				c.onSuccess(null);
+				return null;
+			}
+		});
 		pwa.cacheFilesForOfflineUse();
-		verify(cache).cacheFiles(eq("sst1"), any(String[].class), any(ScheduledCommand.class));
+		verify(cache).cacheFiles(eq("sst1"), any(String[].class), any(Callback.class));
 	}
 	
 	@Test

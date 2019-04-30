@@ -79,10 +79,10 @@ public class PWA {
 				if (result)
 					application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 				else
-					cache.cacheFiles(CACHE_NAME,URLS, new ScheduledCommand() {
+					cache.cacheFiles(CACHE_NAME,URLS, new Callback<Void>() {
 
 						@Override
-						public void execute() {
+						public void onSuccess(Void v) {
 							application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 						}
 					});
