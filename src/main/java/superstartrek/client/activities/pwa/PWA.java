@@ -7,9 +7,7 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import superstartrek.client.Application;
@@ -69,7 +67,7 @@ public class PWA {
 			return;
 		}
 		GWT.log("Checking for existence of cache");
-		cache.queryCacheExistence(CACHE_NAME, new AsyncCallback<Boolean>() {
+		cache.queryCacheExistence(CACHE_NAME).then(new AsyncCallback<Boolean>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

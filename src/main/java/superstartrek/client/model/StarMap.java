@@ -3,7 +3,6 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 import superstartrek.client.Application;
-import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.utils.Random;
 
 public class StarMap {

@@ -20,6 +20,7 @@ import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.http.Request;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
+import superstartrek.client.activities.pwa.promise.Promise;
 import superstartrek.client.utils.Random;
 
 import static org.mockito.Mockito.*;
@@ -58,20 +59,20 @@ public class TestPWA {
 		pwa.clearCache(callback);
 		verify(cache).clearCache("sst1", callback);
 	}
-
 	@Test
 	public void test_cacheFilesForOfflineUse() {
-		when(cache.queryCacheExistence(eq("sst1"), any(AsyncCallback.class))).then(new Answer<Void>() {
+		Promise<Boolean> queryPromise = mock(Promise.class);
+		when(queryPromise.then(any(AsyncCallback.class))).thenAnswer(new Answer<Void>() {
 
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {
-				AsyncCallback<Boolean> callback = invocation.getArgumentAt(1, AsyncCallback.class);
+				AsyncCallback<Boolean> callback = invocation.getArgumentAt(0, AsyncCallback.class);
 				callback.onSuccess(false);
 				return null;
 			}
 		});
+		when(cache.queryCacheExistence("sst1")).thenReturn(queryPromise);
 		pwa.cacheFilesForOfflineUse();
-		ScheduledCommand callback = mock(ScheduledCommand.class);
 		verify(cache).cacheFiles(eq("sst1"), any(String[].class), any(ScheduledCommand.class));
 	}
 	

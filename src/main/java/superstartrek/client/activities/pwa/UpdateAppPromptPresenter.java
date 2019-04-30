@@ -1,7 +1,5 @@
 package superstartrek.client.activities.pwa;
 
-import java.util.logging.Logger;
-
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 
 import superstartrek.client.Application;
@@ -9,8 +7,6 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
 
 public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView> implements PopupViewPresenter<UpdateAppPromptView>, ApplicationLifecycleHandler{
-
-	private static Logger log = Logger.getLogger("");
 
 	public UpdateAppPromptPresenter(Application application) {
 		super(application);

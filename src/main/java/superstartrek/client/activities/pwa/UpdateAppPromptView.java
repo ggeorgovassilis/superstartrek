@@ -1,7 +1,5 @@
 package superstartrek.client.activities.pwa;
 
-import java.util.logging.Logger;
-
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -11,7 +9,6 @@ import superstartrek.client.activities.PopupView;
 
 public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter>{
 	
-	private static Logger log = Logger.getLogger("");
 	public void disableButtons() {
 		DOM.getElementById("update-yes").setAttribute("disabled", "disabled");
 		DOM.getElementById("update-no").setAttribute("disabled", "disabled");

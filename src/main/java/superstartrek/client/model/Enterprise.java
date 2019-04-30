@@ -11,7 +11,6 @@ import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
-import superstartrek.client.control.AfterTurnStartedEvent;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;

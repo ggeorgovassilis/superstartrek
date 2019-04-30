@@ -3,12 +3,7 @@ package superstartrek.client.activities.pwa;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Widget;
-
-import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.PopupView;
-import superstartrek.client.utils.HtmlWidget;
 
 public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> {
 

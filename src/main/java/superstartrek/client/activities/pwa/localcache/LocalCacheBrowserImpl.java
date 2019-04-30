@@ -4,6 +4,9 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import superstartrek.client.activities.pwa.promise.Promise;
+import superstartrek.client.activities.pwa.promise.PromiseBrowserImpl;
+
 public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCache {
 
 	protected LocalCacheBrowserImpl() {
@@ -14,11 +17,14 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 		return $wnd.caches;
 	}-*/;
 
-	
-	public final native Void queryCacheExistence(String name, AsyncCallback<Boolean> callback)/*-{
-	this.has(name).then(function(hasCache) {
-    	callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(hasCache);
-	});
+
+	@Override
+	public final Promise<Boolean> queryCacheExistence(String name){
+		return _queryCacheExistence(name);
+	}
+
+	private final native PromiseBrowserImpl<Boolean> _queryCacheExistence(String name)/*-{
+	return this.has(name);
 	}-*/;
 
 	// caching in the main window is possible according to
