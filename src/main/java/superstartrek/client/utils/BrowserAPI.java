@@ -9,6 +9,7 @@ public interface BrowserAPI {
 
 	int getWindowWidthPx();
 	int getWindowHeightPx();
+	boolean hasKeyboard();
 	
 	int nextInt(int upperBound);
 	double nextDouble();

@@ -29,6 +29,10 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	Element eStatusIconTorpedos;
 	Element eStarDate;
 	Element eLrsButton;
+	Element eMaxAntimatter;
+	Element eMaxShields;
+	Element eValueShields;
+	Element eQuadrantName;
 
 	@Override
 	public void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos) {
@@ -61,6 +65,11 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eStatusIconTactical = CSS.querySelectorAll("#cmd_showStatusReport .tactical-computer").getItem(0);
 		eStatusIconTorpedos = CSS.querySelectorAll("#cmd_showStatusReport .torpedo-bay").getItem(0);
 		eStatusIconPhasers = CSS.querySelectorAll("#cmd_showStatusReport .phasers").getItem(0);
+		eMaxAntimatter = CSS.querySelectorAll("#cmd_showStatusReport .progress-indicator").getItem(0);
+		eMaxShields = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
+		eValueShields = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
+		eQuadrantName = ((HTMLPanel) getWidget()).getElementById("quadrant_name");
+
 		eStarDate = DOM.getElementById("stardate");
 		eLrsButton = DOM.getElementById("lrs-button");
 		setRepairButtonVisibility(false);
@@ -70,10 +79,8 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void updateShields(int value, int currentUpperBound, int maximum) {
-		Element eMax = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
-		Element eValue = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
-		eMax.getStyle().setWidth(100 * currentUpperBound / maximum, Unit.PCT);
-		eValue.getStyle().setWidth(100 * value / maximum, Unit.PCT);
+		eMaxShields.getStyle().setWidth(100 * currentUpperBound / maximum, Unit.PCT);
+		eValueShields.getStyle().setWidth(100 * value / maximum, Unit.PCT);
 	}
 
 	public ComputerScreen(ComputerPresenter presenter) {
@@ -97,9 +104,8 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void setQuadrantName(String name, String css) {
-		Element e = ((HTMLPanel) getWidget()).getElementById("quadrant_name");
-		e.setInnerText(name);
-		e.setClassName(css);
+		eQuadrantName.setInnerText(name);
+		eQuadrantName.setClassName(css);
 	}
 
 	@Override
@@ -109,8 +115,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void updateAntimatter(int value, int maximum) {
-		Element eMax = CSS.querySelectorAll("#cmd_showStatusReport .progress-indicator").getItem(0);
-		eMax.getStyle().setWidth(100 * value / maximum, Unit.PCT);
+		eMaxAntimatter.getStyle().setWidth(100 * value / maximum, Unit.PCT);
 	}
 
 	@Override

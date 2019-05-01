@@ -60,19 +60,24 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	void updateSector(Thing thing) {
-		String content = thing.getSymbol();
-		String css = thing.getCss();
-		if (!thing.isVisible()) {
+		String content = null;
+		String css = null;
+		if (thing.isVisible()) {
+			content = thing.getSymbol();
+			css = thing.getCss();
+			if (thing instanceof Vessel) {
+				Vessel vessel = thing.as();
+				double status = vessel.getShields().health();
+				css += " " + CSS.damageClass(status);
+				if (!vessel.getImpulse().isEnabled())
+					css += " impulse-disabled";
+				if (thing instanceof Klingon && (!((Klingon) thing).getDisruptor().isEnabled())) {
+					css += " disruptor-disabled";
+				}
+			}
+		} else {
 			content = "";
 			css = "";
-		} else if (thing instanceof Vessel) {
-			Vessel vessel = thing.as();
-			double status = vessel.getShields().health();
-			css += " " + CSS.damageClass(status);
-			css += vessel.getImpulse().isEnabled() ? " " : " impulse-disabled";
-			if (thing instanceof Klingon) {
-				css += ((Klingon) thing).getDisruptor().isEnabled() ? "" : " disruptor-disabled";
-			}
 		}
 		view.updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content, css);
 	}
@@ -87,10 +92,10 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	void updateSector(Quadrant q, int x, int y) {
 		Thing thing = q.findThingAt(x, y);
-		if (thing != null)
-			updateSector(thing);
-		else
+		if (thing == null)
 			clearSector(x, y);
+		else
+			updateSector(thing);
 	}
 
 	void mark(Thing thing, Thing[][] array) {
@@ -108,8 +113,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		Thing[][] arr = new Thing[8][8];
 		for (Thing t : starMap.getEverythingIn(q))
 			mark(t, arr);
-		for (int y = 0; y < 8; y++)
-			for (int x = 0; x < 8; x++) {
+		for (int x = 0; x < 8; x++)
+			for (int y = 0; y < 8; y++) {
 				Thing t = arr[x][y];
 				if (t != null)
 					updateSector(t);

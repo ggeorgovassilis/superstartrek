@@ -102,14 +102,18 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 			@Override
 			public boolean execute() {
 				addStyleName("slidein");
-//				Timer.postpone(new RepeatingCommand() {
-//					
-//					@Override
-//					public boolean execute() {
-//						getElement().focus();
-//						return false;
-//					}
-//				}, Constants.ANIMATION_DURATION_MS);
+				//focus popup so that ESC key can hide it (otherwise key handler won't fire).
+				//focus needs to be delayed to after animation is done to avoid animation lag
+				//focus makes no sense if keyboard not present
+				if (presenter.getApplication().browserAPI.hasKeyboard())
+				Timer.postpone(new RepeatingCommand() {
+					
+					@Override
+					public boolean execute() {
+						getElement().focus();
+						return false;
+					}
+				}, Constants.ANIMATION_DURATION_MS);
 				return false;
 			}
 		}, 16);
