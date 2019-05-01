@@ -7,5 +7,5 @@ public interface ILRSScreen extends View, MapCellRenderer{
 
 	void addCss(int x, int y, String css);
 	void focusCell(int x, int y);
-
+	void removeCss(int x, int y, String css);
 }

@@ -56,6 +56,19 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 				updateQuadrant(x, y);
 			}
 		updateEnterpriseLocation();
+		markReachableQuadrants();
+	}
+	
+	public void markReachableQuadrants() {
+		StarMap map = application.starMap;
+		Enterprise enterprise = map.enterprise;
+		Quadrant qEnterprise = enterprise.getQuadrant();
+		for (int y = 0; y < 8; y++)
+			for (int x = 0; x < 8; x++) {
+				double requiredEnergy = application.starMap.enterprise.computeConsumptionForWarp(qEnterprise, map.getQuadrant(x, y));
+				if (requiredEnergy <= enterprise.getReactor().getValue())
+					view.addCss(x, y, "navigation-target");
+			}
 	}
 
 	public void showLrs() {
