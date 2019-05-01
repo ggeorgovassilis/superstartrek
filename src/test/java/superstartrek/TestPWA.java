@@ -30,28 +30,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
 
-public class TestPWA {
+public class TestPWA extends BaseTest{
 	
 	PWA pwa;
 	LocalCache cache;
-	Application application;
 	RequestFactory requestFactory;
-	CountingEventBus events;
 
 	@Before
 	public void setup() {
-		application = new Application();
 		pwa = new PWA(application);
 		cache = mock(LocalCache.class);
 		requestFactory = mock(RequestFactory.class);
-		application.events = events = new CountingEventBus();
 		pwa.setCacheImplementation(cache);
 		pwa.setRequestFactory(requestFactory);
-	}
-	
-	@After
-	public void cleanup() {
-		Application.set(null);
 	}
 	
 	@Test

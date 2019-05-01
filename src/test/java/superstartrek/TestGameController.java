@@ -29,32 +29,14 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
 
-public class TestGameController {
+public class TestGameController extends BaseTest{
 
 	GameController controller;
-	CountingEventBus events;
-	Application application;
-	Enterprise enterprise;
-	StarMap map;
-	Quadrant quadrant;
 	
 	@Before
 	public void setup() {
-		application = new Application();
-		application.events = events = new CountingEventBus();
-		application.starMap = map = new StarMap();
-		enterprise = map.enterprise = new Enterprise(application, map);
-		quadrant = new Quadrant("test", 1, 2);
-		map.setQuadrant(quadrant);
-		enterprise.setQuadrant(quadrant);
 		controller = new GameController(application);
 	}
-	
-	@After
-	public void cleanup() {
-		Application.set(null);
-	}
-
 	
 	@Test
 	public void test_that_turn_ends_after_enterprise_fires() {

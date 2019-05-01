@@ -16,29 +16,12 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TestRepairProvisionally {
+public class TestRepairProvisionally extends BaseTest{
 
-	Enterprise enterprise;
-	Application application;
-	CountingEventBus events;
-	StarMap map;
-	
 	@Before
 	public void setup() {
-		application = new Application();
-		application.events = events = new CountingEventBus();
-		map = new StarMap();
-		
-		enterprise = new Enterprise(application, map);
-		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
+		when(browser.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
 	}
-	
-	@After
-	public void cleanup() {
-		Application.set(null);
-	}
-
 	
 	@Test
 	public void testRepairTorpedos() {

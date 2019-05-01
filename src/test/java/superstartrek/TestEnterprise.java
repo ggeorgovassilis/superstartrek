@@ -37,24 +37,7 @@ import java.util.List;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
-public class TestEnterprise {
-	Enterprise enterprise;
-	Application application;
-	CountingEventBus events;
-	StarMap map;
-
-	@Before
-	public void setup() {
-		application = new Application();
-		application.events = events = new CountingEventBus();
-		application.starMap = map = new StarMap();
-		map.enterprise = enterprise = new Enterprise(application, map);
-	}
-
-	@After
-	public void cleanup() {
-		Application.set(null);
-	}
+public class TestEnterprise extends BaseTest{
 
 	@Test
 	public void testDamageTorpedos() {
@@ -111,7 +94,7 @@ public class TestEnterprise {
 	@Test
 	public void testNavigateTo() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
-		map.setQuadrant(quadrant);
+		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
 		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
@@ -135,22 +118,22 @@ public class TestEnterprise {
 	@Test
 	public void testWarpTo() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
-		map.setQuadrant(quadrant);
+		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
 		application.browserAPI = mock(BrowserAPI.class);
 		when(application.browserAPI.nextInt(any(int.class))).thenReturn(1,1,1,1,1,1,1,1,1,1,1,1);
 
 		// path between source and target needs to exist for collision check
-		map.setQuadrant(new Quadrant("_", 2, 3));
+		starMap.setQuadrant(new Quadrant("_", 2, 3));
 
 		// quadrants around target need to exist because exploration flag is set
 		for (int x = 3 - 1; x <= 3 + 1; x++)
 			for (int y = 4 - 1; y <= 4 + 1; y++)
-				map.setQuadrant(new Quadrant("_", x, y));
+				starMap.setQuadrant(new Quadrant("_", x, y));
 
-		Quadrant targetQuadrant = map.getQuadrant(3, 4);
-		map.setQuadrant(targetQuadrant);
+		Quadrant targetQuadrant = starMap.getQuadrant(3, 4);
+		starMap.setQuadrant(targetQuadrant);
 
 		events.addHandler(EnterpriseWarpedEvent.TYPE, new EnterpriseWarpedHandler() {
 
@@ -173,7 +156,7 @@ public class TestEnterprise {
 		application.browserAPI = mock(BrowserAPI.class);
 		when(application.browserAPI.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
-		map.setQuadrant(quadrant);
+		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
@@ -214,7 +197,7 @@ public class TestEnterprise {
 		when(application.browserAPI.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
 
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
-		map.setQuadrant(quadrant);
+		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
@@ -266,7 +249,7 @@ public class TestEnterprise {
 	@Test
 	public void test_getReachableSectors() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
-		map.setQuadrant(quadrant);
+		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
 		quadrant.getStars().add(new Star(1,6,StarClass.A));
@@ -298,7 +281,7 @@ public class TestEnterprise {
 	@Test
 	public void test_canFirePhaserAt() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
-		map.setQuadrant(quadrant);
+		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
 		

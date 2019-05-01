@@ -1,4 +1,4 @@
-package superstartrek;
+package astar;
 
 import java.util.List;
 import java.util.Random;
@@ -6,8 +6,6 @@ import java.util.Random;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import astar.AStar;
-import astar.Node;
 import superstartrek.client.activities.navigation.astarplus.AStarPlus;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -16,8 +14,6 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Star.StarClass;
 @Ignore
 public class TestAStar {
-	
-	
 
 	@Test
 	public void testAStar() {

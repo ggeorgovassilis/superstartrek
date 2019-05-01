@@ -19,23 +19,14 @@ import superstartrek.client.model.StarMap;
 
 import static org.mockito.Mockito.*;
 
-public class TestLRSPresenter {
+public class TestLRSPresenter extends BaseTest{
 
 	LRSPresenter presenter;
 	ILRSScreen view;
-	Application app;
-	StarMap map;
-	CountingEventBus events;
-	BrowserAPI browser;
 	
 	@Before
 	public void setup() {
-		app = new Application();
-		map = new StarMap();
-		app.browserAPI = browser = mock(BrowserAPI.class);
-		app.events = events = new CountingEventBus();
-		app.starMap = map;
-		presenter = new LRSPresenter(app);
+		presenter = new LRSPresenter(application);
 		view = mock(ILRSScreen.class);
 		presenter.setView(view);
 	}
@@ -48,8 +39,6 @@ public class TestLRSPresenter {
 	@Test
 	public void test_showLrs() {
 		
-		Enterprise enterprise = new Enterprise(app, map);
-		map.enterprise = enterprise;
 		for (int x=0;x<8;x++)
 		for (int y=0;y<8;y++) {
 			Quadrant q = new Quadrant("q"+x+""+y, x, y);
@@ -65,15 +54,15 @@ public class TestLRSPresenter {
 			}
 			if (x<3&&y<3)
 				q.setExplored(true);
-			map.setQuadrant(q);
+			starMap.setQuadrant(q);
 			
 		}
-		enterprise.setQuadrant(map.getQuadrant(0, 0));
+		enterprise.setQuadrant(starMap.getQuadrant(0, 0));
 		presenter.showLrs();
 		verify(view).show();
 		for (int x=0;x<8;x++)
 		for (int y=0;y<8;y++) {
-			Quadrant q = map.getQuadrant(x, y);
+			Quadrant q = starMap.getQuadrant(x, y);
 			System.out.println(x+":"+y+" "+q.getKlingons().size()+" "+q.getStars().size());
 			if (enterprise.getQuadrant() == q)
 				verify(view).updateCell(0, 0, " 0", "has-enterprise explored");

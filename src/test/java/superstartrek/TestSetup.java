@@ -24,35 +24,21 @@ import java.util.List;
 
 import org.junit.After;
 
-public class TestSetup {
+public class TestSetup extends BaseTest{
 
 	Setup setup;
-	Application application;
-	EventBus bus;
 
 	@Before
 	public void setup() {
-		application = new Application();
-		bus = new SimpleEventBus();
-		application.events = bus;
 		setup = new Setup(application);
 	}
 	
-	@After
-	public void cleanup() {
-		Application.set(null);
-	}
-
-
 	@Test
 	public void test_makeQuadrant() {
-		StarMap map = new StarMap();
-		map.enterprise = new Enterprise(application, map);
 		final int NUMBER_OF_STARS = 5;
 		final int NUMBER_OF_KLINGONS = 2;
-		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextDouble()).thenReturn(0.1);
-		when(application.browserAPI.nextInt(any(int.class))).thenReturn(
+		when(browser.nextDouble()).thenReturn(0.1);
+		when(browser.nextInt(any(int.class))).thenReturn(
 				//@formatter:off
 				// stars
 										NUMBER_OF_STARS,
@@ -69,32 +55,32 @@ public class TestSetup {
 );
 		//@formatter:on
 
-		Quadrant q = setup.makeQuadrant(map, 1, 2);
-		assertEquals(5, q.getStars().size());
+		quadrant = setup.makeQuadrant(starMap, 1, 2);
+		assertEquals(5, quadrant.getStars().size());
 
-		assertEquals(Location.location(2, 3), q.getStars().get(0).getLocation());
-		assertEquals("Class B star", q.getStars().get(0).getName());
-		assertEquals("star star-class-b", q.getStars().get(0).getCss());
+		assertEquals(Location.location(2, 3), quadrant.getStars().get(0).getLocation());
+		assertEquals("Class B star", quadrant.getStars().get(0).getName());
+		assertEquals("star star-class-b", quadrant.getStars().get(0).getCss());
 
-		assertEquals(Location.location(1, 1), q.getStars().get(1).getLocation());
-		assertEquals("Class A star", q.getStars().get(1).getName());
-		assertEquals("star star-class-a", q.getStars().get(1).getCss());
+		assertEquals(Location.location(1, 1), quadrant.getStars().get(1).getLocation());
+		assertEquals("Class A star", quadrant.getStars().get(1).getName());
+		assertEquals("star star-class-a", quadrant.getStars().get(1).getCss());
 
-		assertEquals(Location.location(3, 1), q.getStars().get(2).getLocation());
-		assertEquals("Class O star", q.getStars().get(2).getName());
-		assertEquals("star star-class-o", q.getStars().get(2).getCss());
+		assertEquals(Location.location(3, 1), quadrant.getStars().get(2).getLocation());
+		assertEquals("Class O star", quadrant.getStars().get(2).getName());
+		assertEquals("star star-class-o", quadrant.getStars().get(2).getCss());
 
-		assertEquals(Location.location(0, 1),q.getStars().get(3).getLocation());
-		assertEquals("Class A star",q.getStars().get(3).getName());
-		assertEquals("star star-class-a", q.getStars().get(3).getCss());
+		assertEquals(Location.location(0, 1),quadrant.getStars().get(3).getLocation());
+		assertEquals("Class A star",quadrant.getStars().get(3).getName());
+		assertEquals("star star-class-a", quadrant.getStars().get(3).getCss());
 
-		assertEquals(Location.location(7, 0),q.getStars().get(4).getLocation());
-		assertEquals("Class F star",q.getStars().get(4).getName());
-		assertEquals("star star-class-f", q.getStars().get(4).getCss());
+		assertEquals(Location.location(7, 0),quadrant.getStars().get(4).getLocation());
+		assertEquals("Class F star",quadrant.getStars().get(4).getName());
+		assertEquals("star star-class-f", quadrant.getStars().get(4).getCss());
 		
-		assertEquals(NUMBER_OF_KLINGONS+1,q.getKlingons().size());
+		assertEquals(NUMBER_OF_KLINGONS+1,quadrant.getKlingons().size());
 		
-		List<Klingon> klingons = new ArrayList<>(q.getKlingons());
+		List<Klingon> klingons = new ArrayList<>(quadrant.getKlingons());
 		assertEquals(Location.location(1, 5), klingons.get(0).getLocation());
 		assertEquals("a Klingon raider",klingons.get(0).getName());
 

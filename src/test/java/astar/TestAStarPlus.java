@@ -1,4 +1,4 @@
-package superstartrek;
+package astar;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,8 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.gwt.event.shared.SimpleEventBus;
-import astar.AStar;
-import astar.Node;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;

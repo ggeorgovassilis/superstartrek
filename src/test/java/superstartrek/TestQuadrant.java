@@ -20,50 +20,27 @@ import org.junit.Test;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 
-public class TestQuadrant {
-
-	Quadrant q;
-	Application app;
-	EventBus events;
-	StarMap map;
-
-	@Before
-	public void setup() {
-		q = new Quadrant("test quadrat", 1, 2);
-		app = new Application();
-		events = app.events = new SimpleEventBus();
-		map = new StarMap();
-	}
-
-	@After
-	public void cleanup() {
-		Application.set(null);
-	}
+public class TestQuadrant extends BaseTest{
 
 	@Test
 	public void test_findThingAt_1() {
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(1, 1));
-		q.getKlingons().add(k);
+		quadrant.getKlingons().add(k);
 
 		k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(2, 3));
-		q.getKlingons().add(k);
+		quadrant.getKlingons().add(k);
 
 		Star star = new Star(4, 4, StarClass.A);
-		q.getStars().add(star);
+		quadrant.getStars().add(star);
 
 		StarBase starBase = new StarBase(Location.location(5, 6));
-		q.setStarBase(starBase);
-		map.setQuadrant(q);
-		Enterprise enterprise = new Enterprise(app, map);
-		enterprise.setQuadrant(q);
-		map.enterprise = enterprise;
-		app.starMap = map;
+		quadrant.setStarBase(starBase);
 
-		assertTrue(q.findThingAt(2, 3) instanceof Klingon);
-		assertTrue(q.findThingAt(1, 1) instanceof Klingon);
-		assertEquals(enterprise, q.findThingAt(0, 0));
+		assertTrue(quadrant.findThingAt(2, 3) instanceof Klingon);
+		assertTrue(quadrant.findThingAt(1, 1) instanceof Klingon);
+		assertEquals(enterprise, quadrant.findThingAt(0, 0));
 
 	}
 
@@ -71,43 +48,36 @@ public class TestQuadrant {
 	public void test_findThingAt_2() {
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(1, 1));
-		q.getKlingons().add(k);
+		quadrant.getKlingons().add(k);
 
 		k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(2, 3));
-		q.getKlingons().add(k);
+		quadrant.getKlingons().add(k);
 
 		Star star = new Star(4, 4, StarClass.A);
-		q.getStars().add(star);
+		quadrant.getStars().add(star);
 
 		StarBase starBase = new StarBase(Location.location(5, 6));
-		q.setStarBase(starBase);
-		map.setQuadrant(q);
-		Enterprise enterprise = new Enterprise(app, map);
+		quadrant.setStarBase(starBase);
 
 		Quadrant q2 = new Quadrant("test2", 7, 7);
-		map.setQuadrant(q2);
+		starMap.setQuadrant(q2);
 		enterprise.setQuadrant(q2);
 
-		map.enterprise = enterprise;
-		app.starMap = map;
-
-		assertTrue(q.findThingAt(2, 3) instanceof Klingon);
-		assertTrue(q.findThingAt(1, 1) instanceof Klingon);
-		assertNull(q.findThingAt(0, 0));
+		assertTrue(quadrant.findThingAt(2, 3) instanceof Klingon);
+		assertTrue(quadrant.findThingAt(1, 1) instanceof Klingon);
+		assertNull(quadrant.findThingAt(0, 0));
 
 	}
 
 	@Test
 	public void test_findThingAt_3() {
-		Enterprise enterprise = new Enterprise(app, map);
 		enterprise.setQuadrant(new Quadrant("asdasd",2,2));
-		map.enterprise = enterprise;
-		app.starMap = map;
+		starMap.enterprise = enterprise;
 
 		for (int x = 0; x < 8; x++)
 			for (int y = 0; y < 8; y++)
-				assertNull(q.findThingAt(x, y));
+				assertNull(quadrant.findThingAt(x, y));
 
 	}
 }

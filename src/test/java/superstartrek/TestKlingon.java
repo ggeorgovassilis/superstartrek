@@ -29,28 +29,12 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.utils.BrowserAPI;
 
-public class TestKlingon {
+public class TestKlingon extends BaseTest{
 
-	Application app;
 	Klingon klingon;
-	CountingEventBus events;
-	StarMap map;
-	Quadrant quadrant;
-	Enterprise enterprise;
 
 	@Before
 	public void setup() {
-		Application.set(app = new Application());
-		app.events = events = new CountingEventBus();
-
-		quadrant = new Quadrant("test", 1, 2);
-		map = new StarMap();
-		map.setQuadrant(quadrant);
-		app.starMap = map;
-
-		enterprise = new Enterprise(app, map);
-		enterprise.setQuadrant(quadrant);
-		map.enterprise = enterprise;
 		klingon = new Klingon(ShipClass.Raider);
 		quadrant.getKlingons().add(klingon);
 	}
@@ -87,9 +71,8 @@ public class TestKlingon {
 
 	@Test
 	public void testFireOnEnterprise() {
-		app.browserAPI = mock(BrowserAPI.class);
-		when(app.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3, 0.4);
-		when(app.browserAPI.nextInt(any(int.class))).thenReturn(1,2,3,4);
+		when(browser.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3, 0.4);
+		when(browser.nextInt(any(int.class))).thenReturn(1,2,3,4);
 		klingon.jumpTo(Location.location(1, 3));
 		enterprise.setLocation(Location.location(2, 3));
 		events.addHandler(FireEvent.TYPE, new FireHandler() {
@@ -117,8 +100,7 @@ public class TestKlingon {
 
 	@Test
 	public void test_flee() {
-		app.browserAPI = mock(BrowserAPI.class);
-		when(app.browserAPI.nextInt(any(int.class))).thenReturn(1,1);
+		when(browser.nextInt(any(int.class))).thenReturn(1,1);
 		klingon.setLocation(Location.location(3, 2));
 		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
 
@@ -140,7 +122,7 @@ public class TestKlingon {
 	public void test_hasClearShotAt() {
 		klingon.setLocation(Location.location(3, 3));
 		enterprise.setLocation(Location.location(3, 5));
-		assertTrue(klingon.hasClearShotAt(enterprise.getLocation(), enterprise, map));
+		assertTrue(klingon.hasClearShotAt(enterprise.getLocation(), enterprise, starMap));
 	}
 	
 	@Test
@@ -149,6 +131,6 @@ public class TestKlingon {
 		enterprise.setLocation(Location.location(3, 5));
 		Star star = new Star(3, 4, StarClass.A);
 		quadrant.getStars().add(star);
-		assertFalse(klingon.hasClearShotAt(enterprise.getLocation(), enterprise, map));
+		assertFalse(klingon.hasClearShotAt(enterprise.getLocation(), enterprise, starMap));
 	}
 }

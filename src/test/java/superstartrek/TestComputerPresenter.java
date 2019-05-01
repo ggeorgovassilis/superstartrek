@@ -25,42 +25,18 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
 
-public class TestComputerPresenter {
+public class TestComputerPresenter extends BaseTest{
 
-	Application app;
-	CountingEventBus events;
-	StarMap map;
-	Quadrant quadrant;
-	Enterprise enterprise;
 	ComputerPresenter presenter;
 	IComputerScreen view;
-	BrowserAPI browser;
 
 	@Before
 	public void setup() {
-		Application.set(app = new Application());
-		app.events = events = new CountingEventBus();
-		app.browserAPI = browser = mock(BrowserAPI.class);
-
-		quadrant = new Quadrant("test", 1, 2);
-		map = new StarMap();
-		map.setQuadrant(quadrant);
-		app.starMap = map;
-
-		enterprise = new Enterprise(app, map);
-		enterprise.setQuadrant(quadrant);
-		map.enterprise = enterprise;
-
-		presenter = new ComputerPresenter(app);
+		presenter = new ComputerPresenter(application);
 		view = mock(IComputerScreen.class);
 		presenter.setView(view);
 	}
 	
-	@After
-	public void cleanup() {
-		Application.set(null);
-	}
-
 	@Test
 	public void testOnTurnStarted_1() {
 		TurnStartedEvent evt = new TurnStartedEvent();
@@ -68,7 +44,7 @@ public class TestComputerPresenter {
 
 		verify(view).setDockInStarbaseButtonVisibility(false);
 		verify(view).showStarDate("0");
-		verify(view).setQuadrantName("test", "");
+		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
 
 	}
@@ -83,7 +59,7 @@ public class TestComputerPresenter {
 
 		verify(view).setDockInStarbaseButtonVisibility(true);
 		verify(view).showStarDate("0");
-		verify(view).setQuadrantName("test", "");
+		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
 		verify(view).updateShields(100, 100, 100);
 	}
@@ -108,9 +84,8 @@ public class TestComputerPresenter {
 				assertEquals(Location.location(4, 4), lTo);
 			}
 		});
-		app.browserAPI = mock(BrowserAPI.class);
-		when(app.browserAPI.nextDouble()).thenReturn(0.0);
-		when(app.browserAPI.nextInt(any(int.class))).thenReturn(1,1,2,2,5);
+		when(browser.nextDouble()).thenReturn(0.0);
+		when(browser.nextInt(any(int.class))).thenReturn(1,1,2,2,5);
 		presenter.onDockInStarbaseButtonClicked();
 
 		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
@@ -128,7 +103,7 @@ public class TestComputerPresenter {
 		quadrant.getKlingons().add(k);
 		presenter.updateQuadrantHeader();
 		
-		verify(view).setQuadrantName("test", "red-alert");
+		verify(view).setQuadrantName("test quadrant 1:2", "red-alert");
 	}
 
 	@Test
@@ -139,7 +114,7 @@ public class TestComputerPresenter {
 		quadrant.getKlingons().add(k);
 		presenter.updateQuadrantHeader();
 		
-		verify(view).setQuadrantName("test", "yellow-alert");
+		verify(view).setQuadrantName("test quadrant 1:2", "yellow-alert");
 	}
 	
 	@Test
@@ -147,7 +122,7 @@ public class TestComputerPresenter {
 		enterprise.setLocation(Location.location(1, 1));
 		presenter.updateQuadrantHeader();
 		
-		verify(view).setQuadrantName("test", "");
+		verify(view).setQuadrantName("test quadrant 1:2", "");
 	}
 	
 	@Test

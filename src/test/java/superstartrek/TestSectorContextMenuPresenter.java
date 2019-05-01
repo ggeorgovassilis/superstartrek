@@ -20,39 +20,22 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.BrowserAPI;
 
-public class TestSectorContextMenuPresenter {
+public class TestSectorContextMenuPresenter extends BaseTest{
 
 	SectorContextMenuPresenter presenter;
-	Application app;
-	CountingEventBus events;
-	StarMap map;
 	ISectorContextMenuView view;
-	BrowserAPI browserAPI;
 	
 	@Before
 	public void setup() {
-		app = new Application();
-		app.events = events = new CountingEventBus();
-		app.starMap = new StarMap();
-		app.browserAPI = browserAPI = mock(BrowserAPI.class);
-		presenter = new SectorContextMenuPresenter(app);
+		presenter = new SectorContextMenuPresenter(application);
 		view = mock(ISectorContextMenuView.class);
 		presenter.setView(view);
 	}
 	
-	@After
-	public void cleanup() {
-		Application.set(null);
-	}
-
-
 	@Test
 	public void test() {
-		app.starMap = map = new StarMap();
 		Quadrant q = new Quadrant("test q", 3, 4);
-		Enterprise e = new Enterprise(app, map);
-		e.setQuadrant(q);
-		map.enterprise = e;
+		enterprise.setQuadrant(q);
 		doAnswer(new Answer<Void>() {
 
 			@Override
@@ -62,7 +45,7 @@ public class TestSectorContextMenuPresenter {
 				return null;
 			}
 		}).when(view).hide(any(ScheduledCommand.class));
-		when(browserAPI.getWindowWidthPx()).thenReturn(400);
+		when(browser.getWindowWidthPx()).thenReturn(400);
 		when(view.getMetricWidthInPx()).thenReturn(10);
 		when(view.getMetricHeightInPx()).thenReturn(10);
 		presenter.showMenu(66, 77, Location.location(1,2), q);
