@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.2//EN" "http://www.gwtproject.org/doctype/2.8.0/gwt-module.dtd">
 <module rename-to="superstartrek.superstartrek">
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.google.gwt.http.HTTP" />
 	<inherits name="com.google.gwt.resources.Resources" />
 	<inherits name="com.google.gwt.logging.Logging"/>
 	<source path="client" />
-	<resource path="public/screens" />
 	<entry-point class="superstartrek.client.Application" />
 	<set-property name="compiler.useSourceMaps" value="true" />
 	<collapse-all-properties value="true" /> <!-- produces only one JS output, makes service worker offline manifest generation 

@@ -1,19 +1,10 @@
 package superstartrek;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
-import superstartrek.client.Application;
 import superstartrek.client.activities.messages.MessageHandler;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.StarMap;
-import superstartrek.client.utils.BrowserAPI;
-
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TestRepairProvisionally extends BaseTest{

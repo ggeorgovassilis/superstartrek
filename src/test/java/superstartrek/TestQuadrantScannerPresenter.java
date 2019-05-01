@@ -9,20 +9,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.quadrantscanner.IQuadrantScannerView;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
-import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.StarBase;
-import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Star.StarClass;
 
 public class TestQuadrantScannerPresenter extends BaseTest{

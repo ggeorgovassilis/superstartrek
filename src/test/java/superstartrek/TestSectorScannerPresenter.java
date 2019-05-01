@@ -1,20 +1,12 @@
 package superstartrek;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
-import superstartrek.client.Application;
 import superstartrek.client.activities.sector.scan.IScanSectorView;
 import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
-import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
-
 import static org.mockito.Mockito.*;
 
 public class TestSectorScannerPresenter extends BaseTest{

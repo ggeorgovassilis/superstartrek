@@ -3,20 +3,14 @@ package superstartrek;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.lrs.ILRSScreen;
 import superstartrek.client.activities.lrs.LRSPresenter;
-import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Star.StarClass;
-import superstartrek.client.utils.BrowserAPI;
-import superstartrek.client.model.StarMap;
-
 import static org.mockito.Mockito.*;
 
 public class TestLRSPresenter extends BaseTest{

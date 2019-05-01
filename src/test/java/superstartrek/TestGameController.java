@@ -2,13 +2,9 @@ package superstartrek;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
-import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler.FireEvent;
 import superstartrek.client.activities.combat.FireHandler.FireEvent.Phase;
 import superstartrek.client.activities.klingons.Klingon;
@@ -21,11 +17,8 @@ import superstartrek.client.control.KlingonTurnEndedEvent;
 import superstartrek.client.control.KlingonTurnStartedEvent;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
-import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
-import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
 

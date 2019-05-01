@@ -2,14 +2,7 @@ package superstartrek;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler.*;
 import superstartrek.client.activities.combat.FireHandler;
@@ -24,7 +17,6 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
-import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.utils.BrowserAPI;

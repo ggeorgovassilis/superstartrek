@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.pwa.promise.Promise;
 import superstartrek.client.activities.pwa.promise.PromiseBrowserImpl;

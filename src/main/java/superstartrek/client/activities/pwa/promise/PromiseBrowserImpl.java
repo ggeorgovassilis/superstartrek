@@ -1,8 +1,6 @@
 package superstartrek.client.activities.pwa.promise;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import superstartrek.client.activities.pwa.Callback;
 
 public class PromiseBrowserImpl<T> extends JavaScriptObject implements Promise<T>{

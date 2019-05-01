@@ -3,12 +3,8 @@ package superstartrek;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
-import superstartrek.client.Application;
 import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.IComputerScreen;
 import superstartrek.client.activities.klingons.Klingon;
@@ -16,13 +12,10 @@ import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.control.TurnStartedEvent;
-import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarBase;
-import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
-import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
 
 public class TestComputerPresenter extends BaseTest{

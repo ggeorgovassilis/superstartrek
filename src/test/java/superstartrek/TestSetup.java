@@ -3,26 +3,15 @@ package superstartrek;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.SimpleEventBus;
-import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
-import superstartrek.client.model.StarMap;
-import superstartrek.client.utils.BrowserAPI;
-
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.After;
 
 public class TestSetup extends BaseTest{
 
