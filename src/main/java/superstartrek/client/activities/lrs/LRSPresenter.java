@@ -16,7 +16,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 
 	public LRSPresenter(Application application) {
 		super(application);
-		application.addHistoryListener(this);
+		application.browserAPI.addHistoryListener(this);
 	}
 
 	public void quadrantWasClicked(int x, int y) {
@@ -34,8 +34,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 			public void run() {
 				view.hide();
 			}
-		}))
-			History.newItem("computer");
+		})) application.browserAPI.postHistoryChange("computer");
 	}
 
 	protected void updateQuadrant(int x, int y) {

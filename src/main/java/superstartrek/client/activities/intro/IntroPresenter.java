@@ -16,13 +16,13 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 		super(application);
 		addHandler(GameStartedEvent.TYPE, this);
 		addHandler(ApplicationLifecycleEvent.TYPE, this);
-		application.addHistoryListener(this);
+		application.browserAPI.addHistoryListener(this);
 	}
 	
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
 		view.show();
-		History.newItem("intro");
+		application.browserAPI.postHistoryChange("intro");
 	}
 
 	@Override

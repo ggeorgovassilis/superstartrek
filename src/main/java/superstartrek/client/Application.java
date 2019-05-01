@@ -95,15 +95,6 @@ public class Application
 		return resources;
 	}
 	
-	public void addHistoryListener(ValueChangeHandler<String> handler) {
-		if (GWT.isClient()) // ignore in unit tests
-			History.addValueChangeHandler(handler);
-	}
-	
-	public void postHistoryChange(String token) {
-		History.newItem(token);
-	}
-	
 	protected void setupStarMap() {
 		Setup setup = new Setup(this);
 		starMap = setup.createNewMap();
@@ -177,7 +168,7 @@ public class Application
 	}
 
 	public void reload() {
-		Window.Location.reload();
+		browserAPI.reloadApplication();
 	}
 	
 	public void setupGameController() {

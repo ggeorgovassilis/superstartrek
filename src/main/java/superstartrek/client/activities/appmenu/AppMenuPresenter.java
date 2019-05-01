@@ -7,6 +7,7 @@ import com.google.gwt.user.client.Window;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.model.Setting;
 
 public class AppMenuPresenter extends BasePresenter<AppMenuView> implements PopupViewPresenter<AppMenuView>, AppMenuHandler, ValueChangeHandler<String> {
@@ -16,7 +17,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 	public AppMenuPresenter(Application application) {
 		super(application);
 		addHandler(AppMenuEvent.TYPE, this);
-		application.addHistoryListener(this);
+		application.browserAPI.addHistoryListener(this);
 	}
 	
 	public void updateCommands() {
@@ -38,7 +39,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 	
 	public void onMenuHidden() {
 		if (gotoStateAfterMenuHidden!=null)
-			application.postHistoryChange(gotoStateAfterMenuHidden);
+			application.browserAPI.postHistoryChange(gotoStateAfterMenuHidden);
 	}
 	
 	public void toggleAutoAim() {
@@ -47,10 +48,14 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 	}
 	
 	public void restart() {
-		//TODO: break API dependency
-		boolean v = Window.confirm("All progress will be lost. Continue?");
-		if (v)
-			application.reload();
+		application.browserAPI.confirm("All progress will be lost. Continue?", new Callback<Boolean>() {
+			
+			@Override
+			public void onSuccess(Boolean result) {
+				if (result)
+					application.reload();
+			}
+		});
 	}
 
 	public void onMenuItemClicked(String id) {

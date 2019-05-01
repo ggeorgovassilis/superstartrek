@@ -123,7 +123,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	public void startGame() {
-		History.newItem("intro", true);
+		application.browserAPI.postHistoryChange("intro", true);
 		application.registerEventHandlers();
 		events.fireEvent(new GameStartedEvent());
 	}

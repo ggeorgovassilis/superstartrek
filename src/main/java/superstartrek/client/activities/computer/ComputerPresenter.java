@@ -25,7 +25,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	public ComputerPresenter(Application application) {
 		super(application);
-		application.addHistoryListener(this);
+		application.browserAPI.addHistoryListener(this);
 		addHandler(ComputerEvent.TYPE, this);
 		addHandler(TurnStartedEvent.TYPE, this);
 		addHandler(KlingonDestroyedEvent.TYPE, this);

@@ -14,6 +14,7 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Star.StarClass;
+import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.model.StarMap;
 
 import static org.mockito.Mockito.*;
@@ -25,11 +26,13 @@ public class TestLRSPresenter {
 	Application app;
 	StarMap map;
 	CountingEventBus events;
+	BrowserAPI browser;
 	
 	@Before
 	public void setup() {
 		app = new Application();
 		map = new StarMap();
+		app.browserAPI = browser = mock(BrowserAPI.class);
 		app.events = events = new CountingEventBus();
 		app.starMap = map;
 		presenter = new LRSPresenter(app);

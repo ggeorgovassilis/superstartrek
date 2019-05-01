@@ -9,7 +9,7 @@ public class ManualPresenter extends BasePresenter<ManualScreen> implements Valu
 
 	public ManualPresenter(Application application) {
 		super(application);
-		application.addHistoryListener(this);
+		application.browserAPI.addHistoryListener(this);
 	}
 
 	@Override
