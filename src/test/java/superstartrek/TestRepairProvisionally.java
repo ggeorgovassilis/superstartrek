@@ -3,8 +3,6 @@ package superstartrek;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
@@ -12,8 +10,7 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.StarMap;
-import superstartrek.client.utils.Random;
-import superstartrek.client.utils.RandomNumberFactory;
+import superstartrek.client.utils.BrowserAPI;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -33,17 +30,8 @@ public class TestRepairProvisionally {
 		map = new StarMap();
 		
 		enterprise = new Enterprise(application, map);
-		RandomNumberFactory random = mock(RandomNumberFactory.class);
-		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
-			int counter = 0;
-			double numbers[]= {0.5,0.6,0.1,0.3,0.3};
-			@Override
-			public Double answer(InvocationOnMock invocation) throws Throwable {
-				return numbers[counter++];
-			}
-		});
-		application.random = new Random(random);
-
+		application.browserAPI = mock(BrowserAPI.class);
+		when(application.browserAPI.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
 	}
 	
 	@After

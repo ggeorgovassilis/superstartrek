@@ -12,9 +12,12 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
-import superstartrek.client.utils.Random;
+import superstartrek.client.utils.BrowserAPI;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,23 +50,25 @@ public class TestSetup {
 		map.enterprise = new Enterprise(application, map);
 		final int NUMBER_OF_STARS = 5;
 		final int NUMBER_OF_KLINGONS = 2;
-		application.random = new Random(new StubRandomNumberFactory(
-				new double[] { 0.1 },
-		//@formatter:off
-				new int[]{NUMBER_OF_STARS,
-// stars
-						2,3,1,
-						1,1,2,
-						3,1,0,
-						0,1,2,
-						7,0,3,
-// klingons
-						NUMBER_OF_KLINGONS,
-						0,1,5,
-						1,2,2,
-						0,3,2
-				}));
+		application.browserAPI = mock(BrowserAPI.class);
+		when(application.browserAPI.nextDouble()).thenReturn(0.1);
+		when(application.browserAPI.nextInt(any(int.class))).thenReturn(
+				//@formatter:off
+				// stars
+										NUMBER_OF_STARS,
+										2,3,1,
+										1,1,2,
+										3,1,0,
+										0,1,2,
+										7,0,3,
+				// klingons
+										NUMBER_OF_KLINGONS,
+										0,1,5,
+										1,2,2,
+										0,3,2
+);
 		//@formatter:on
+
 		Quadrant q = setup.makeQuadrant(map, 1, 2);
 		assertEquals(5, q.getStars().size());
 

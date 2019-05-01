@@ -27,8 +27,7 @@ import superstartrek.client.model.Star;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Star.StarClass;
-import superstartrek.client.utils.Random;
-import superstartrek.client.utils.RandomNumberFactory;
+import superstartrek.client.utils.BrowserAPI;
 
 public class TestKlingon {
 
@@ -88,26 +87,9 @@ public class TestKlingon {
 
 	@Test
 	public void testFireOnEnterprise() {
-		RandomNumberFactory random = mock(RandomNumberFactory.class);
-		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
-			int counter = 0;
-			double numbers[] = { 0.5, 0.6, 0.1, 0.3, 0.3, 0.4 };
-
-			@Override
-			public Double answer(InvocationOnMock invocation) throws Throwable {
-				return numbers[counter++];
-			}
-		});
-		when(random.nextInt(anyInt())).thenAnswer(new Answer<Integer>() {
-			int counter = 0;
-			int numbers[] = { 1, 2, 3, 4 };
-
-			@Override
-			public Integer answer(InvocationOnMock invocation) throws Throwable {
-				return numbers[counter++];
-			}
-		});
-		app.random = new Random(random);
+		app.browserAPI = mock(BrowserAPI.class);
+		when(app.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3, 0.4);
+		when(app.browserAPI.nextInt(any(int.class))).thenReturn(1,2,3,4);
 		klingon.jumpTo(Location.location(1, 3));
 		enterprise.setLocation(Location.location(2, 3));
 		events.addHandler(FireEvent.TYPE, new FireHandler() {
@@ -135,7 +117,8 @@ public class TestKlingon {
 
 	@Test
 	public void test_flee() {
-		app.random = new Random(new StubRandomNumberFactory(new double[] {}, new int[] { 1, 1 }));
+		app.browserAPI = mock(BrowserAPI.class);
+		when(app.browserAPI.nextInt(any(int.class))).thenReturn(1,1);
 		klingon.setLocation(Location.location(3, 2));
 		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
 

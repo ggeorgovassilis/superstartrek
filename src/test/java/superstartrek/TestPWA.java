@@ -22,7 +22,7 @@ import superstartrek.client.activities.pwa.http.Request;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.promise.Promise;
-import superstartrek.client.utils.Random;
+import superstartrek.client.utils.BrowserAPI;
 
 import static org.mockito.Mockito.*;
 
@@ -92,7 +92,8 @@ public class TestPWA {
 	public void test_checkForNewVersion() {
 		Request request = mock(Request.class);
 		when(requestFactory.create()).thenReturn(request);
-		application.random = new Random(new StubRandomNumberFactory(new double[] {}, new int[] {222}));
+		application.browserAPI = mock(BrowserAPI.class);
+		when(application.browserAPI.nextInt(any(int.class))).thenReturn(222);
 		when(request.request(eq(RequestBuilder.GET), eq("/superstartrek/site/checksum.sha.md5"), any(RequestCallback.class))).then(new Answer<Void>() {
 
 			@Override

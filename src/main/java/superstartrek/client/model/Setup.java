@@ -3,7 +3,7 @@ package superstartrek.client.model;
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Star.StarClass;
-import superstartrek.client.utils.Random;
+import superstartrek.client.utils.BrowserAPI;
 
 public class Setup {
 
@@ -20,7 +20,7 @@ public class Setup {
 	
 	public Quadrant makeQuadrant(StarMap map, int x, int y) {
 		Quadrant q = new Quadrant(names[(int)Math.floor((y*8+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
-		Random random = Application.get().random;
+		BrowserAPI random = Application.get().browserAPI;
 		int stars = random.nextInt(Constants.MAX_STARS_IN_QUADRANT);
 		while (stars-->0) {
 			Location loc = map.findFreeSpot(q);

@@ -152,7 +152,7 @@ public class PWA {
 
 	public void getChecksumOfNewestVersion(RequestCallback callback) {
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
-		int rnd = application.random.nextInt(100000);
+		int rnd = application.browserAPI.nextInt(100000);
 		try {
 			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd="+rnd, callback);
 		} catch (Exception e) {

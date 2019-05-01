@@ -27,9 +27,9 @@ import superstartrek.client.model.Star;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Star.StarClass;
-import superstartrek.client.utils.Random;
-import superstartrek.client.utils.RandomNumberFactory;
+import superstartrek.client.utils.BrowserAPI;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -138,7 +138,8 @@ public class TestEnterprise {
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
-		application.random = new Random(new StubRandomNumberFactory(new double[] {}, new int[] {1,1,1,1,1,1,1,1,1,1,1,1}));
+		application.browserAPI = mock(BrowserAPI.class);
+		when(application.browserAPI.nextInt(any(int.class))).thenReturn(1,1,1,1,1,1,1,1,1,1,1,1);
 
 		// path between source and target needs to exist for collision check
 		map.setQuadrant(new Quadrant("_", 2, 3));
@@ -169,16 +170,8 @@ public class TestEnterprise {
 
 	@Test
 	public void testFirePhasers() {
-		RandomNumberFactory random = mock(RandomNumberFactory.class);
-		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
-			int counter = 0;
-			double numbers[]= {0.5,0.6,0.1,0.3,0.3};
-			@Override
-			public Double answer(InvocationOnMock invocation) throws Throwable {
-				return numbers[counter++];
-			}
-		});
-		application.random = new Random(random);
+		application.browserAPI = mock(BrowserAPI.class);
+		when(application.browserAPI.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
@@ -217,17 +210,9 @@ public class TestEnterprise {
 	@Test
 	public void testFireTorpedos() {
 		
-		RandomNumberFactory random = mock(RandomNumberFactory.class);
-		when(random.nextDouble()).thenAnswer(new Answer<Double>() {
-			int counter = 0;
-			double numbers[]= {0.5,0.6,0.1,0.3,0.3};
-			@Override
-			public Double answer(InvocationOnMock invocation) throws Throwable {
-				return numbers[counter++];
-			}
-		});
-		application.random = new Random(random);
-		
+		application.browserAPI = mock(BrowserAPI.class);
+		when(application.browserAPI.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
+
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		map.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);

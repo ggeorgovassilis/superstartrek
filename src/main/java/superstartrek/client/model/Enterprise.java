@@ -15,7 +15,7 @@ import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
-import superstartrek.client.utils.Random;
+import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
 
@@ -230,8 +230,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		things.remove(this);
 		getTorpedos().decrease(1);
 		Thing target = null;
-		Random random = application.random;
 		double damage = 50;
+		BrowserAPI browser = application.browserAPI;
 		for (Thing thing : things) {
 			boolean hit = false;
 			if (thing instanceof Star || thing instanceof StarBase) {
@@ -239,7 +239,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			} else if (thing instanceof Klingon) {
 				double distance = StarMap.distance(this, thing);
 				double chance = Math.sqrt(2) / distance;
-				hit = random.nextDouble() <= chance;
+				hit = browser.nextDouble() <= chance;
 			}
 			if (hit) {
 				target = thing;
@@ -352,7 +352,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
-		if (application.random.nextDouble() < 0.5)
+		if (application.browserAPI.nextDouble() < 0.5)
 			return false;
 		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * 0.75)); // boolean settings can be repaired
 																				// fully
@@ -431,7 +431,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			GWT.log("Warp damage protection applies");
 		}
 		shields.decrease(damage);
-		Random random = application.random;
+		BrowserAPI random = application.browserAPI;
 		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < impact)
 			damageShields();
 		if (impulse.getCurrentUpperBound() > 0 && random.nextDouble() < impact)

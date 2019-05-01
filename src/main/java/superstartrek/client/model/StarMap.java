@@ -3,7 +3,7 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 import superstartrek.client.Application;
-import superstartrek.client.utils.Random;
+import superstartrek.client.utils.BrowserAPI;
 
 public class StarMap {
 
@@ -78,7 +78,7 @@ public class StarMap {
 	}
 
 	public Location findFreeSpot(Quadrant q) {
-		Random random = Application.get().random;
+		BrowserAPI random = Application.get().browserAPI;
 		QuadrantIndex index = new QuadrantIndex(q, this);
 		while (true) {
 			int x = random.nextInt(8);
@@ -161,7 +161,7 @@ public class StarMap {
 
 	public Location findFreeSpotAround(Quadrant q, Location loc, int maxRadius) {
 		QuadrantIndex index = new QuadrantIndex(q, this);
-		Random random = Application.get().random;
+		BrowserAPI random = Application.get().browserAPI;
 		for (int radius = 1; radius <= maxRadius; radius++) {
 			for (int tries = 0; tries < radius * radius; tries++) {
 				int x = Math.min(7, Math.max(0, loc.getX() + (random.nextInt(1+radius))-(radius/2)));

@@ -44,10 +44,8 @@ import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
-import superstartrek.client.utils.Browser;
-import superstartrek.client.utils.GWTRandomNumberFactory;
-import superstartrek.client.utils.GwtBrowserImpl;
-import superstartrek.client.utils.Random;
+import superstartrek.client.utils.BrowserAPI;
+import superstartrek.client.utils.GwtBrowserAPIImpl;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;
 import superstartrek.client.activities.pwa.AppInstallPromptPresenter;
 import superstartrek.client.activities.pwa.AppInstallPromptView;
@@ -65,7 +63,7 @@ public class Application
 	public EventBus events;
 	public HTMLPanel _page;
 	public StarMap starMap;
-	public Browser browser;
+	public BrowserAPI browserAPI;
 	public RequestFactory requestFactory;
 	public PWA pwa;
 	Element logDiv;
@@ -74,7 +72,6 @@ public class Application
 	public GameController gameController;
 	protected Resources resources;
 	protected Set<String> flags;
-	public Random random;
 	
 	public static void set(Application app) {
 		that = app;
@@ -226,9 +223,10 @@ public class Application
 	@Override
 	public void onModuleLoad() {
 		Application.that = this;
-		random = new Random(new GWTRandomNumberFactory());
-		resources = GWT.create(Resources.class);
 		setUncaughtExceptionHandler();
+		resources = GWT.create(Resources.class);
+		if (GWT.isClient())
+			browserAPI = new GwtBrowserAPIImpl();
 		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		events = GWT.create(SimpleEventBus.class);
 		//setupLogging();
@@ -238,8 +236,6 @@ public class Application
 		setupHttp();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
 		gameController.startGame();
-		if (GWT.isClient())
-			browser = new GwtBrowserImpl();
 		//null out so that resources can be garbage collected
 		setupPwa();
 		resources = null;

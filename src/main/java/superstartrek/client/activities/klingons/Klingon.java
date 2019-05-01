@@ -20,7 +20,7 @@ import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
-import superstartrek.client.utils.Random;
+import superstartrek.client.utils.BrowserAPI;
 
 public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, EnterpriseWarpedHandler {
 
@@ -257,7 +257,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		}
 		double impact = evt.damage / (shields.getValue() + 1);
 		shields.decrease(evt.damage);
-		Random random = Application.get().random;
+		BrowserAPI random = Application.get().browserAPI;
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - evt.damage);
 		if (getImpulse().isEnabled() && random.nextDouble() < impact)
 			getImpulse().setEnabled(false);

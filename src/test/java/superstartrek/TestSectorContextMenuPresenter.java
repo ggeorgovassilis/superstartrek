@@ -18,7 +18,7 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
-import superstartrek.client.utils.Browser;
+import superstartrek.client.utils.BrowserAPI;
 
 public class TestSectorContextMenuPresenter {
 
@@ -27,14 +27,14 @@ public class TestSectorContextMenuPresenter {
 	CountingEventBus events;
 	StarMap map;
 	ISectorContextMenuView view;
-	Browser browser;
+	BrowserAPI browserAPI;
 	
 	@Before
 	public void setup() {
 		app = new Application();
 		app.events = events = new CountingEventBus();
 		app.starMap = new StarMap();
-		app.browser = browser = mock(Browser.class);
+		app.browserAPI = browserAPI = mock(BrowserAPI.class);
 		presenter = new SectorContextMenuPresenter(app);
 		view = mock(ISectorContextMenuView.class);
 		presenter.setView(view);
@@ -62,7 +62,7 @@ public class TestSectorContextMenuPresenter {
 				return null;
 			}
 		}).when(view).hide(any(ScheduledCommand.class));
-		when(browser.getWindowWidthPx()).thenReturn(400);
+		when(browserAPI.getWindowWidthPx()).thenReturn(400);
 		when(view.getMetricWidthInPx()).thenReturn(10);
 		when(view.getMetricHeightInPx()).thenReturn(10);
 		presenter.showMenu(66, 77, Location.location(1,2), q);

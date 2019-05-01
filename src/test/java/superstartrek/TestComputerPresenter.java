@@ -22,7 +22,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
-import superstartrek.client.utils.Random;
+import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
 
 public class TestComputerPresenter {
@@ -106,8 +106,9 @@ public class TestComputerPresenter {
 				assertEquals(Location.location(4, 4), lTo);
 			}
 		});
-
-		app.random = new Random(new StubRandomNumberFactory(new double[] {0}, new int[] {1,1,2,2,5}));
+		app.browserAPI = mock(BrowserAPI.class);
+		when(app.browserAPI.nextDouble()).thenReturn(0.0);
+		when(app.browserAPI.nextInt(any(int.class))).thenReturn(1,1,2,2,5);
 		presenter.onDockInStarbaseButtonClicked();
 
 		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
