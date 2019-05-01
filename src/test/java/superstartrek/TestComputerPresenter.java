@@ -34,11 +34,13 @@ public class TestComputerPresenter {
 	Enterprise enterprise;
 	ComputerPresenter presenter;
 	IComputerScreen view;
+	BrowserAPI browser;
 
 	@Before
 	public void setup() {
 		Application.set(app = new Application());
 		app.events = events = new CountingEventBus();
+		app.browserAPI = browser = mock(BrowserAPI.class);
 
 		quadrant = new Quadrant("test", 1, 2);
 		map = new StarMap();
