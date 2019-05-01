@@ -18,11 +18,15 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 		addHandler(AppMenuEvent.TYPE, this);
 		application.addHistoryListener(this);
 	}
+	
+	public void updateCommands() {
+		view.setMenuEntryEnabled("cmd_autoaim", application.starMap.enterprise.getAutoAim().getBooleanValue());
+	}
 
 	@Override
 	public void showMenu() {
 		gotoStateAfterMenuHidden = "computer";
-		view.setMenuEntryEnabled("cmd_autoaim", application.starMap.enterprise.getAutoAim().getBooleanValue());
+		updateCommands();
 		view.show();
 	}
 
@@ -53,6 +57,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 		switch (id) {
 		case "cmd_autoaim":
 			toggleAutoAim();
+			updateCommands();
 			hideMenu();
 			break;
 		case "cmd_restart":

@@ -102,14 +102,14 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 			@Override
 			public boolean execute() {
 				addStyleName("slidein");
-				Timer.postpone(new RepeatingCommand() {
-					
-					@Override
-					public boolean execute() {
-						getElement().focus();
-						return false;
-					}
-				}, Constants.ANIMATION_DURATION_MS);
+//				Timer.postpone(new RepeatingCommand() {
+//					
+//					@Override
+//					public boolean execute() {
+//						getElement().focus();
+//						return false;
+//					}
+//				}, Constants.ANIMATION_DURATION_MS);
 				return false;
 			}
 		}, 16);
