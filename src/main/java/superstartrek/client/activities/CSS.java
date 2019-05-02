@@ -7,8 +7,9 @@ import com.google.gwt.dom.client.NodeList;
 import superstartrek.client.utils.Timer;
 
 public class CSS {
-	
-	final static String[] damageClasses={"damage-offline","damage-bad","damage-medium","damage-light",""};
+
+	final static String[] damageClasses = { "damage-offline", "damage-bad", "damage-medium", "damage-light", "" };
+
 	/**
 	 * Return a CSS damage class
 	 * 
@@ -16,22 +17,16 @@ public class CSS {
 	 * @return
 	 */
 	public static String damageClass(double value) {
-		int index = (int)Math.floor((damageClasses.length-1)*value);
+		int index = (int) Math.floor((damageClasses.length - 1) * value);
 		return damageClasses[index];
 	}
-	
-	public static void addClassDeferred(Element e, String css) {
-		Timer.postpone(new ScheduledCommand() {
 
-			@Override
-			public void execute() {
-				e.addClassName(css);
-			}
-			
-		});
+	public static void addClassDeferred(Element e, String css) {
+		Timer.postpone(() -> e.addClassName(css));
 	}
 
-	//according to https://caniuse.com/#search=querySelector this is supported in all browsers that are currently around
+	// according to https://caniuse.com/#search=querySelector this is supported in
+	// all browsers that are currently around
 	public final static native NodeList<Element> querySelectorAll(String selectors) /*-{
 																					return $doc.querySelectorAll(selectors);
 																					}-*/;

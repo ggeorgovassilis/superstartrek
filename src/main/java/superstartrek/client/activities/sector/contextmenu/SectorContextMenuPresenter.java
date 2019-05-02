@@ -16,11 +16,12 @@ import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
 
-public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView> implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
+public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView>
+		implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
 
 	Location sector;
 	Quadrant quadrant;
-	Map<String,Boolean> buttonsEnabled = new HashMap<>();
+	Map<String, Boolean> buttonsEnabled = new HashMap<>();
 
 	public SectorContextMenuPresenter(Application application) {
 		super(application);
@@ -33,53 +34,49 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		buttonsEnabled.put("cmd_firePhasers", false);
 		buttonsEnabled.put("cmd_fireTorpedos", false);
 	}
-	
+
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
 		SectorContextMenuPresenter.this.quadrant = quadrant;
 		Enterprise e = application.starMap.enterprise;
-		//read dimensions before modifying the DOM to avoid re-layout
+		// read dimensions before modifying the DOM to avoid re-layout
 		int horizEmToPx = view.getMetricWidthInPx();
 		int vertEmToPx = view.getMetricHeightInPx();
-		
-		buttonsEnabled.put("cmd_navigate", e.canNavigateTo(new QuadrantIndex(quadrant, getApplication().starMap), sector));
-		buttonsEnabled.put("cmd_firePhasers", e.canFirePhaserAt(sector)==null);
-		buttonsEnabled.put("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
-		for (String cmd:buttonsEnabled.keySet())
-			view.enableButton(cmd, buttonsEnabled.get(cmd));
-		//if the menu is too close to the screen borders it might be cut off and not all buttons are visible
-		//this is some heavy heuristics, because the menu has a "fixed" size (in em units)
-		//that's empirical knowledge from the CSS
-		int menuWidthEm = 8; 
-		int menuHeightEm = 5; 
-		int screen_width_em = application.browserAPI.getWindowWidthPx() / horizEmToPx;
-		
-		int target_x_em = Math.max(screenX/horizEmToPx,menuWidthEm/2);
-		target_x_em = Math.min(target_x_em,screen_width_em-menuWidthEm);
-		int target_x_px = target_x_em*horizEmToPx;
 
-		int target_y_em = Math.max(screenY/vertEmToPx,menuHeightEm/2);
-		int target_y_px = target_y_em*vertEmToPx;
+		buttonsEnabled.put("cmd_navigate",
+				e.canNavigateTo(new QuadrantIndex(quadrant, getApplication().starMap), sector));
+		buttonsEnabled.put("cmd_firePhasers", e.canFirePhaserAt(sector) == null);
+		buttonsEnabled.put("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
+		for (String cmd : buttonsEnabled.keySet())
+			view.enableButton(cmd, buttonsEnabled.get(cmd));
+		// if the menu is too close to the screen borders it might be cut off and not
+		// all buttons are visible
+		// this is some heavy heuristics, because the menu has a "fixed" size (in em
+		// units)
+		// that's empirical knowledge from the CSS
+		int menuWidthEm = 8;
+		int menuHeightEm = 5;
+		int screen_width_em = application.browserAPI.getWindowWidthPx() / horizEmToPx;
+
+		int target_x_em = Math.max(screenX / horizEmToPx, menuWidthEm / 2);
+		target_x_em = Math.min(target_x_em, screen_width_em - menuWidthEm);
+		int target_x_px = target_x_em * horizEmToPx;
+
+		int target_y_em = Math.max(screenY / vertEmToPx, menuHeightEm / 2);
+		int target_y_px = target_y_em * vertEmToPx;
 		view.setLocation(target_x_px, target_y_px);
 		view.show();
 	}
 
 	public void showMenu(int screenX, int screenY, Location sector, Quadrant quadrant) {
-		hideMenu(new ScheduledCommand() {
-			
-			@Override
-			public void execute() {
-				showMenuImmediatelly(screenX, screenY, sector, quadrant);
-			}
-		});
+		hideMenu(() -> showMenuImmediatelly(screenX, screenY, sector, quadrant));
 	}
-	
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
 		this.sector = event.getSector();
 		showMenu(event.screenX, event.screenY, event.getSector(), event.getQuadrant());
 	}
-	
+
 	public void onEscapePressed() {
 		hideMenu(null);
 	}
@@ -95,26 +92,22 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	public void onCommandClicked(String command) {
 		Enterprise enterprise = application.starMap.enterprise;
 		if (buttonsEnabled.get(command) == true)
-		hideMenu(new ScheduledCommand() {
-
-			@Override
-			public void execute() {
+			hideMenu(() -> {
 				switch (command) {
-					case "cmd_scanSector":
-						application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
-						break;
-					case "cmd_navigate":
-						enterprise.navigateTo(sector);
-						break;
-					case "cmd_firePhasers":
-						enterprise.firePhasersAt(sector, false);
-						break;
-					case "cmd_fireTorpedos":
-						enterprise.fireTorpedosAt(sector);
-						break;
+				case "cmd_scanSector":
+					application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
+					break;
+				case "cmd_navigate":
+					enterprise.navigateTo(sector);
+					break;
+				case "cmd_firePhasers":
+					enterprise.firePhasersAt(sector, false);
+					break;
+				case "cmd_fireTorpedos":
+					enterprise.fireTorpedosAt(sector);
+					break;
 				}
-			}
-		});
+			});
 	}
 
 	@Override

@@ -36,17 +36,13 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 		}
 		Element eLrs = DOM.getElementById("longrangescan");
 		DOM.sinkEvents(eLrs, Event.ONCLICK);
-		DOM.setEventListener(eLrs, new EventListener() {
-			
-			@Override
-			public void onBrowserEvent(Event event) {
+		DOM.setEventListener(eLrs, (Event event)-> {
 				Element eTd = event.getEventTarget().cast();
 				if (!Strings.isEmpty(eTd.getAttribute("data-x"))) {
 					int x = Integer.parseInt(eTd.getAttribute("data-x"));
 					int y = Integer.parseInt(eTd.getAttribute("data-y"));
 					presenter.quadrantWasClicked(x,y);
 				}
-			}
 		});
 	}
 	

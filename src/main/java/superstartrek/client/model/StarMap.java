@@ -28,7 +28,7 @@ public class StarMap {
 		int dy = y1 - y2;
 		return dx * dx + dy * dy;
 	}
-	
+
 	public void markAsExploredAround(Quadrant q) {
 		int xFrom = Math.max(0, q.getX() - 1);
 		int xTo = Math.min(7, q.getX() + 1);
@@ -136,16 +136,12 @@ public class StarMap {
 	 */
 	public List<Thing> findObstaclesInLine(QuadrantIndex q, Location from, Location to, int cap) {
 		List<Thing> found = new ArrayList<>();
-		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), new Walker() {
-
-			@Override
-			public boolean visit(int x, int y) {
-				Thing thing = q.findThingAt(x, y);
-				if (thing != null) {
-					found.add(thing);
-				}
-				return found.size() < cap;
+		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), (x, y) -> {
+			Thing thing = q.findThingAt(x, y);
+			if (thing != null) {
+				found.add(thing);
 			}
+			return found.size() < cap;
 		});
 		return found;
 	}
@@ -164,8 +160,8 @@ public class StarMap {
 		BrowserAPI random = Application.get().browserAPI;
 		for (int radius = 1; radius <= maxRadius; radius++) {
 			for (int tries = 0; tries < radius * radius; tries++) {
-				int x = Math.min(7, Math.max(0, loc.getX() + (random.nextInt(1+radius))-(radius/2)));
-				int y = Math.min(7, Math.max(0, loc.getY() + (random.nextInt(1+radius))-(radius/2)));
+				int x = Math.min(7, Math.max(0, loc.getX() + (random.nextInt(1 + radius)) - (radius / 2)));
+				int y = Math.min(7, Math.max(0, loc.getY() + (random.nextInt(1 + radius)) - (radius / 2)));
 				if (null == index.findThingAt(x, y))
 					return Location.location(x, y);
 			}

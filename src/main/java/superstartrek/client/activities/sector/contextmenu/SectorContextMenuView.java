@@ -21,9 +21,9 @@ import superstartrek.client.utils.Timer;
 
 public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 		implements ISectorContextMenuView, MouseDownHandler, TouchStartHandler, ClickHandler {
-	
-	boolean viewInTransition=false;
-	
+
+	boolean viewInTransition = false;
+
 	public SectorContextMenuView(SectorContextMenuPresenter presenter) {
 		super(presenter);
 	}
@@ -58,16 +58,11 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 		removeStyleName("expanded");
 		if (isVisible()) {
 			viewInTransition = true;
-			Timer.postpone(new RepeatingCommand() {
-
-				@Override
-				public boolean execute() {
+			Timer.postpone(()-> {
 					viewInTransition = false;
 					SectorContextMenuView.super.hide();
 					if (cmd != null)
 						cmd.execute();
-					return false;
-				}
 			}, 250);
 		} else if (cmd != null)
 			cmd.execute();
@@ -79,21 +74,17 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 		Element e = panel.getElementById(id).getParentElement();
 		if (status)
 			e.removeClassName("disabled");
-		else e.addClassName("disabled");
+		else
+			e.addClassName("disabled");
 
 	}
 
 	@Override
 	public void show() {
 		super.show();
-		Timer.postpone(new RepeatingCommand() {
-			
-			@Override
-			public boolean execute() {
-				addStyleName("expanded");
-				return false;
-			}
-		}, 10);
+		Timer.postpone(()-> 
+				addStyleName("expanded")
+		, 10);
 	}
 
 	public void handleButtonInteraction(DomEvent<?> event) {

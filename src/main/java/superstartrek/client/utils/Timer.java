@@ -13,23 +13,22 @@ public class Timer {
 	public static void postpone(ScheduledCommand cmd) {
 		if (GWT.isClient())
 			Scheduler.get().scheduleDeferred(cmd);
-		else cmd.execute();
+		else
+			cmd.execute();
 	};
-	
-	public static void postpone(RepeatingCommand cmd, int ms) {
+
+	public static void postpone(final ScheduledCommand cmd, int ms) {
 		if (GWT.isClient())
-			Scheduler.get().scheduleFixedDelay(cmd, ms);
-		else cmd.execute();
+			Scheduler.get().scheduleFixedDelay(() -> {
+				cmd.execute();
+				return false;
+			}, ms);
+		else
+			cmd.execute();
 	}
-	
+
 	public static void fireAsync(EventBus bus, GwtEvent<EventHandler> event) {
-		postpone(new ScheduledCommand() {
-			
-			@Override
-			public void execute() {
-				bus.fireEvent(event);
-			}
-		});
+		postpone(() -> bus.fireEvent(event));
 	}
 
 }

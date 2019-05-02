@@ -111,13 +111,9 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		if (startTurnPending)
 			return;
 		startTurnPending = true;
-		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
-
-			@Override
-			public void execute() {
-				startTurnPending = false;
-				startTurn();
-			}
+		superstartrek.client.utils.Timer.postpone(() -> {
+			startTurnPending = false;
+			startTurn();
 		});
 	}
 
@@ -144,14 +140,10 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		if (endTurnPending)
 			return;
 		endTurnPending = true;
-		superstartrek.client.utils.Timer.postpone(new Scheduler.ScheduledCommand() {
-
-			@Override
-			public void execute() {
-				endTurnPending = false;
-				endTurn();
-				startTurnAfterThis();
-			}
+		superstartrek.client.utils.Timer.postpone(() -> {
+			endTurnPending = false;
+			endTurn();
+			startTurnAfterThis();
 		});
 	}
 

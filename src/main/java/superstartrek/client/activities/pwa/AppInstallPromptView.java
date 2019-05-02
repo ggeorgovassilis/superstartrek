@@ -20,22 +20,18 @@ public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> {
 	public void decorateWidget() {
 		super.decorateWidget();
 		getElement().setId("app-install-prompt");
-		addDomHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Element e = event.getNativeEvent().getEventTarget().cast();
-				switch (e.getId()) {
-				case "install-yes":
-					presenter.userClickedInstallButton();
-					break;
-				case "install-no":
-					presenter.userWantsToDismissPopup();
-					break;
-				case "install-never":
-					presenter.userDoesntWantToInstallAppEver();
-					break;
-				}
+		addDomHandler((event) -> {
+			Element e = event.getNativeEvent().getEventTarget().cast();
+			switch (e.getId()) {
+			case "install-yes":
+				presenter.userClickedInstallButton();
+				break;
+			case "install-no":
+				presenter.userWantsToDismissPopup();
+				break;
+			case "install-never":
+				presenter.userDoesntWantToInstallAppEver();
+				break;
 			}
 		}, ClickEvent.getType());
 	}

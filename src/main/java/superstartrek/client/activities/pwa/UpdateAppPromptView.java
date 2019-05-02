@@ -22,10 +22,7 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter>{
 	public void decorateWidget() {
 		super.decorateWidget();
 		getElement().setId("update-app-prompt");
-		addHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
+		addHandler((event) -> {
 				Element target = event.getNativeEvent().getEventTarget().cast();
 				String id = target.getId();
 				if ("update-yes".equals(id)) {
@@ -35,7 +32,6 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter>{
 					presenter.userWantsToDismissPopup();
 					
 				}
-			}
 		}, ClickEvent.getType());
 	}
 

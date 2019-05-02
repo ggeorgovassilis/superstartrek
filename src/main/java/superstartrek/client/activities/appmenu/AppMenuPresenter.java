@@ -8,16 +8,17 @@ import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.model.Setting;
 
-public class AppMenuPresenter extends BasePresenter<AppMenuView> implements PopupViewPresenter<AppMenuView>, AppMenuHandler, ValueChangeHandler<String> {
+public class AppMenuPresenter extends BasePresenter<AppMenuView>
+		implements PopupViewPresenter<AppMenuView>, AppMenuHandler, ValueChangeHandler<String> {
 
 	String gotoStateAfterMenuHidden;
-	
+
 	public AppMenuPresenter(Application application) {
 		super(application);
 		addHandler(AppMenuEvent.TYPE, this);
 		application.browserAPI.addHistoryListener(this);
 	}
-	
+
 	public void updateCommands() {
 		view.setMenuEntryEnabled("cmd_autoaim", application.starMap.enterprise.getAutoAim().getBooleanValue());
 	}
@@ -34,25 +35,21 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 		if (view.isVisible())
 			view.hide();
 	}
-	
+
 	public void onMenuHidden() {
-		if (gotoStateAfterMenuHidden!=null)
+		if (gotoStateAfterMenuHidden != null)
 			application.browserAPI.postHistoryChange(gotoStateAfterMenuHidden);
 	}
-	
+
 	public void toggleAutoAim() {
 		Setting autoaim = application.starMap.enterprise.getAutoAim();
 		autoaim.setValue(!autoaim.getBooleanValue() && autoaim.isEnabled());
 	}
-	
+
 	public void restart() {
-		application.browserAPI.confirm("All progress will be lost. Continue?", new Callback<Boolean>() {
-			
-			@Override
-			public void onSuccess(Boolean result) {
-				if (result)
-					application.reload();
-			}
+		application.browserAPI.confirm("All progress will be lost. Continue?", (result) -> {
+			if (result)
+				application.reload();
 		});
 	}
 
@@ -68,7 +65,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 			restart();
 			break;
 		case "cmd_manual":
-			//hideMenu called implicitly through history change event
+			// hideMenu called implicitly through history change event
 			gotoStateAfterMenuHidden = "manual";
 			break;
 		}
@@ -79,9 +76,9 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView> implements Popu
 	public void onValueChange(ValueChangeEvent<String> event) {
 		if (event.getValue().equals("appmenu"))
 			showMenu();
-		else hideMenu();
+		else
+			hideMenu();
 	}
-
 
 	@Override
 	public void userWantsToDismissPopup() {

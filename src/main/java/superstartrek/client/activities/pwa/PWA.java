@@ -46,7 +46,8 @@ public class PWA {
 			"/superstartrek/site/superstartrek.superstartrek.nocache.js",
 			"/superstartrek/site/checksum.sha.md5"
 			};
-	
+	//@formatter:on
+
 	public void setRequestFactory(RequestFactory rf) {
 		this.requestFactory = rf;
 	}
@@ -65,22 +66,13 @@ public class PWA {
 			return;
 		}
 		GWT.log("Checking for existence of cache");
-		cache.queryCacheExistence(CACHE_NAME).then(new Callback<Boolean>() {
-
-			@Override
-			public void onSuccess(Boolean result) {
+		cache.queryCacheExistence(CACHE_NAME).then((result)->{
 				GWT.log("Cache exists : "+result);
 				if (result)
 					application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 				else
-					cache.cacheFiles(CACHE_NAME,URLS, new Callback<Void>() {
-
-						@Override
-						public void onSuccess(Void v) {
-							application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
-						}
-					});
-			}
+					cache.cacheFiles(CACHE_NAME,URLS, (v)->
+							application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", "")));
 		});
 	}
 
@@ -88,13 +80,11 @@ public class PWA {
 	public static native boolean supportsServiceWorker() /*-{
 		return navigator.serviceWorker!=null;
 	}-*/;
-	//@formatter:on
 
 	public static native void log(Throwable t) /*-{
-												console.log(t.message, t);
-												}-*/;
+		console.log(t.message, t);
+	}-*/;
 
-	//@formatter:off
 	public static native void registerServiceWorker(String url) /*-{
 		navigator.serviceWorker.register(url, {scope:'.'})
 		.then(function(arg){
@@ -102,13 +92,11 @@ public class PWA {
 			return null;
 		})['catch'](function(e){console.error(e.message)});
 	}-*/;
-	//@formatter:on
 
 	/*
 	 * Tricky thing to remember: if the user dismisses the native installation
 	 * prompt, the "beforeinstallprompt" event fires again!
 	 */
-	//@formatter:off
 	public native void addInstallationListener() /*-{
 		var that = this;
 		$wnd.addEventListener('beforeinstallprompt', function (e){
@@ -154,7 +142,7 @@ public class PWA {
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
 		int rnd = application.browserAPI.nextInt(100000);
 		try {
-			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd="+rnd, callback);
+			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd=" + rnd, callback);
 		} catch (Exception e) {
 			GWT.log(e.getMessage());
 		}
@@ -169,7 +157,7 @@ public class PWA {
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				String checksumOfInstalledApplication = response.getText();
-				GWT.log("Installed app version "+checksumOfInstalledApplication);
+				GWT.log("Installed app version " + checksumOfInstalledApplication);
 				application.events.fireEvent(new ApplicationLifecycleEvent(Status.informingOfInstalledVersion,
 						checksumOfInstalledApplication, ""));
 				getChecksumOfNewestVersion(new RequestCallback() {

@@ -19,12 +19,8 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 		eButton = panel.getElementById("dismiss-message-button");
 		panel.getElement().setId("messages");
 		DOM.sinkEvents(eButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONKEYPRESS);
-		DOM.setEventListener(eButton, new EventListener() {
-
-			@Override
-			public void onBrowserEvent(Event event) {
-				presenter.userWantsToDismissPopup();
-			}
+		DOM.setEventListener(eButton, (Event event) -> {
+			presenter.userWantsToDismissPopup();
 		});
 		super.decorateWidget();
 	}
@@ -51,7 +47,6 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 		super.show();
 		eButton.focus();
 	}
-
 
 	@Override
 	protected String getContentForHtmlPanel() {

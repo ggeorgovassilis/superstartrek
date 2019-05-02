@@ -15,7 +15,7 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 
 	protected LocalCacheBrowserImpl() {
 	}
-	
+
 	//@formatter:off
 	public static native LocalCacheBrowserImpl getInstance()/*-{
 		return $wnd.caches;
@@ -35,49 +35,33 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 		return this.open(name);
 	}-*/;
 
+	//@formatter:on
 	@Override
 	public final Void cacheFiles(String cacheName, String[] files, Callback<Void> callback) {
 		GWT.log("cacheFiles");
-		has(cacheName).then(new Callback<Boolean>() {
-
-			@Override
-			public void onSuccess(Boolean hasCache) {
-				if (hasCache)
-					return;
-				GWT.log("Proceeding to cache files");
-				open(cacheName).then(new Callback<JsCache>() {
-
-					@Override
-					public void onSuccess(JsCache jsCache) {
-						jsCache.addAll(files);
-					}
-				}).then(new Callback<JsCache>() {
-
-					@Override
-					public void onSuccess(JsCache result) {
-						GWT.log("Success!");
-						callback.onSuccess(null);
-					}
+		has(cacheName).then((hasCache) -> {
+					if (hasCache)
+						return;
+					GWT.log("Proceeding to cache files");
+					open(cacheName).then((jsCache) -> jsCache.addAll(files)).then((result) -> callback.onSuccess(null));
 				});
-			}
-		});
 		return null;
 	}
-	
+
 	@Override
-	//TODO: rewrite in java
+	// TODO: rewrite in java
+	//@formatter:off
 	public final native Void clearCache(String cacheNameToDelete, ScheduledCommand callback)/*-{
-	this.keys().then(function(cacheNames) {return Promise.all(
-        cacheNames.filter(function(cacheName) {
-        	return cacheName == cacheNameToDelete;
-        }).map(function(cacheName) {
-          return caches['delete'](cacheName).then(function(){
-          console.log("Caches are deleted");
-		  callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
-          });
-        })
-      );
-    });
+		this.keys().then(function(cacheNames) {
+			return Promise.all(cacheNames.filter(function(cacheName) {
+				return cacheName == cacheNameToDelete;
+				}).map(function(cacheName) {
+				return caches['delete'](cacheName).then(function(){
+					console.log("Caches are deleted");
+					callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
+				});
+			}));
+		});
 	}-*/;
 	//@formatter:on
 

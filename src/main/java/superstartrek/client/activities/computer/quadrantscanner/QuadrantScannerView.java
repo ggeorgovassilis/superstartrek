@@ -50,8 +50,8 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		super(presenter);
 		Widget widgetImpl = getWidget();
 		Element eTable = DomUtils.getTbody(widgetImpl.getElement());
-		final double RELATIVE_WIDTH = 100.0/8.0;
-		final double RELATIVE_HEIGHT = 100.0/8.0;
+		final double RELATIVE_WIDTH = 100.0 / 8.0;
+		final double RELATIVE_HEIGHT = 100.0 / 8.0;
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
 				Element eTd = DOM.createDiv();
@@ -63,21 +63,10 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 				eTable.appendChild(eTd);
 			}
 		}
-		widgetImpl.addDomHandler(new MouseDownHandler() {
-
-			@Override
-			public void onMouseDown(MouseDownEvent event) {
-				handleClick(event);
-			}
-		}, MouseDownEvent.getType());
-		widgetImpl.addDomHandler(new TouchStartHandler() {
-
-			@Override
-			public void onTouchStart(TouchStartEvent event) {
-				handleClick(event);
-			}
-		}, TouchStartEvent.getType());
+		widgetImpl.addDomHandler((event) -> handleClick(event), MouseDownEvent.getType());
+		widgetImpl.addDomHandler((event) -> handleClick(event), TouchStartEvent.getType());
 		eSelectedSector = eSectors[0][0];
+
 	}
 
 	protected void handleClick(DomEvent<?> event) {

@@ -17,13 +17,7 @@ public class ScanSectorView extends PopupView<ScanSectorPresenter> implements IS
 		HtmlWidget panel = getWidgetAs();
 		backButton = panel.getElementById("screen-sectorscan-back");
 		DOM.sinkEvents(backButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONMOUSEDOWN | Event.ONTOUCHSTART);
-		DOM.setEventListener(backButton, new EventListener() {
-			
-			@Override
-			public void onBrowserEvent(Event event) {
-				presenter.doneWithMenu();
-			}
-		});
+		DOM.setEventListener(backButton, (event) -> presenter.doneWithMenu());
 		panel.getElement().setId("screen-sectorscan");
 	}
 	

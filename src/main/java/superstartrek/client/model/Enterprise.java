@@ -32,19 +32,19 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	Setting antimatter = new Setting("antimatter", 1000, 1000);
 	Setting reactor = new Setting("reactor", 60, 60);
 	Setting autoAim = new Setting("auto aim", 1, 1);
-	Setting lrs = new Setting("LRS",1,1);
+	Setting lrs = new Setting("LRS", 1, 1);
 	Quadrant quadrant;
-	
+
 	int turnsSinceWarp = 0;
-	
+
 	public Setting getLrs() {
 		return lrs;
 	}
-	
+
 	public Quadrant getQuadrant() {
 		return quadrant;
 	}
-	
+
 	public void setQuadrant(Quadrant quadrant) {
 		this.quadrant = quadrant;
 	}
@@ -87,8 +87,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int destinationX = destinationQuadrant.getX();
 		int destinationY = destinationQuadrant.getY();
 		double necessaryEnergy = computeConsumptionForWarp(fromQuadrant, destinationQuadrant);
-		GWT.log("necessary energy "+necessaryEnergy);
-		GWT.log("available energy "+getReactor().getValue());
+		GWT.log("necessary energy " + necessaryEnergy);
+		GWT.log("available energy " + getReactor().getValue());
 		if (!consume("warp", necessaryEnergy) && getQuadrant().getKlingons().isEmpty()) {
 			GWT.log("no");
 			// we can let this slide if no enemies in quadrant
@@ -98,21 +98,17 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 		List<Quadrant> container = new ArrayList<Quadrant>();
 
-		starMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationX, destinationY, new Walker() {
-
-			@Override
-			public boolean visit(int x, int y) {
-				Quadrant q = starMap.getQuadrant(x, y);
-				container.clear();
-				container.add(q);
-				List<Klingon> klingons = q.getKlingons();
-				// TODO for now, allow warping out of the departure quadrant
-				if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
-					application.message("We were intercepted by " + klingons.get(0).getName(), "intercepted");
-					return false;
-				}
-				return true;
+		starMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationX, destinationY, (x, y) -> {
+			Quadrant q = starMap.getQuadrant(x, y);
+			container.clear();
+			container.add(q);
+			List<Klingon> klingons = q.getKlingons();
+			// TODO for now, allow warping out of the departure quadrant
+			if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
+				application.message("We were intercepted by " + klingons.get(0).getName(), "intercepted");
+				return false;
 			}
+			return true;
 		});
 
 		Quadrant dropQuadrant = container.get(0);
@@ -155,8 +151,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
 				Location tmp = Location.location(x, y);
-				//TODO: isViewClear traces a trajectory from here to the tmp location. As we do this for every sector
-				//in the disk, most sectors are visited multiple times. we need a different algorithm.
+				// TODO: isViewClear traces a trajectory from here to the tmp location. As we do
+				// this for every sector
+				// in the disk, most sectors are visited multiple times. we need a different
+				// algorithm.
 				if (isViewClear(index, tmp))
 					reachableSectors.add(tmp);
 			}
@@ -183,20 +181,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		double distance = StarMap.distance(this.getLocation(), loc);
 		List<Location> path = new ArrayList<>();
 		path.add(getLocation());
-		map.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), new Walker() {
-
-			@Override
-			public boolean visit(int x, int y) {
-				Thing thing = index.findThingAt(x, y);
-				if (thing != null && thing != app.starMap.enterprise) {
-					if (Klingon.isCloakedKlingon(thing)) {
-						((Klingon) thing).uncloak();
-					}
-					return false;
+		map.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
+			Thing thing = index.findThingAt(x, y);
+			if (thing != null && thing != app.starMap.enterprise) {
+				if (Klingon.isCloakedKlingon(thing)) {
+					((Klingon) thing).uncloak();
 				}
-				path.add(Location.location(x, y));
-				return true;
+				return false;
 			}
+			path.add(Location.location(x, y));
+			return true;
 		});
 		Location drop = path.get(path.size() - 1);
 		if (!consume("impulse", computeConsumptionForImpulseNavigation(distance))) {
@@ -211,7 +205,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public double computeConsumptionForImpulseNavigation(double distance) {
 		return distance * IMPULSE_CONSUMPTION;
 	}
-	
+
 	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {
 		return ANTIMATTER_CONSUMPTION_WARP * StarMap.distance_squared(from.x, from.y, to.x, to.y);
 	}
@@ -247,9 +241,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			}
 		}
 		if (target instanceof Klingon) {
-			double shields = ((Klingon)target).getShields().getValue();
-			double maxShields = ((Klingon)target).getShields().getMaximum();
-			damage = damage*(1.0-(0.5*(shields/maxShields)*(shields/maxShields)));
+			double shields = ((Klingon) target).getShields().getValue();
+			double maxShields = ((Klingon) target).getShields().getMaximum();
+			damage = damage * (1.0 - (0.5 * (shields / maxShields) * (shields / maxShields)));
 		}
 		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, target, "torpedos", damage, false);
 		application.events.fireEvent(event);
@@ -300,7 +294,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		double distance = StarMap.distance(this, thing);
 		double damage = phasers.getValue() / distance;
 		phasers.setValue(0);
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, klingon, "phasers", damage, isAutoAim);
+		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, klingon, "phasers", damage,
+				isAutoAim);
 		application.events.fireEvent(event);
 
 		event = new FireEvent(FireEvent.Phase.afterFire, getQuadrant(), this, klingon, "phasers", damage, isAutoAim);
@@ -318,16 +313,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		lrs.repair();
 		application.events.fireEvent(new EnterpriseRepairedEvent(this));
 	}
-	
+
 	protected boolean isViewClear(QuadrantIndex index, Location destination) {
 		StarMap map = application.starMap;
 		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, 8);
 		obstacles.remove(this);
 		boolean viewIsClear = true;
-		for (int i=0;i<obstacles.size() && viewIsClear;i++)
+		for (int i = 0; i < obstacles.size() && viewIsClear; i++)
 			viewIsClear &= !obstacles.get(i).isVisible();
 		return viewIsClear;
-		
+
 	}
 
 	public boolean canNavigateTo(QuadrantIndex index, Location destination) {
@@ -416,7 +411,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		autoAim.setEnabled(false);
 		application.message("Tactical computer damaged", "enterprise-damaged");
 	}
-	
+
 	public void damageLRS() {
 		lrs.setEnabled(false);
 		application.message("LRS damaged", "enterprise-damaged");
@@ -424,10 +419,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public void applyDamage(double damage) {
 		double impact = 0.5 * damage / (shields.getValue() + 1.0);
-		//from a game-play POV being damaged right after jumping into a quadrant sucks, that's why the damage is reduced in this case.
-		//the in-world justification is that opponents can't get a reliable target lock
-		if (turnsSinceWarp<2) {
-			damage = damage*0.5;
+		// from a game-play POV being damaged right after jumping into a quadrant sucks,
+		// that's why the damage is reduced in this case.
+		// the in-world justification is that opponents can't get a reliable target lock
+		if (turnsSinceWarp < 2) {
+			damage = damage * 0.5;
 			GWT.log("Warp damage protection applies");
 		}
 		shields.decrease(damage);
@@ -497,7 +493,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		application.message(evt.actor.getName() + " at " + evt.actor.getLocation() + " fired on us", "damage");
 		applyDamage(evt.damage);
 	}
-	
+
 	@Override
 	public void onTurnEnded(TurnEndedEvent evt) {
 		turnsSinceWarp++;
