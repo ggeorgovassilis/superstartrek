@@ -25,20 +25,15 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		// there's a significant benefit in hiding LRS before going through the CPU
 		// intensive
 		// warping event cascade
-		if (enterprise.warpTo(qTo, new Runnable() {
-
-			// invoked only before successful warp
-			@Override
-			public void run() {
-				view.hide();
-			}
-		})) application.browserAPI.postHistoryChange("computer");
+		// invoked only before successful warp
+		if (enterprise.warpTo(qTo, ()->	view.hide()))
+			application.browserAPI.postHistoryChange("computer");
 	}
 
 	protected void updateQuadrant(int x, int y) {
 		StarMap map = application.starMap;
 		Quadrant q = map.getQuadrant(x, y);
-		Maps.renderCell(x, y, map, q, (MapCellRenderer) view);
+		Maps.renderCell(x, y, map, q, view);
 	}
 
 	protected void updateEnterpriseLocation() {
@@ -49,9 +44,8 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 
 	public void updateLrsView() {
 		for (int y = 0; y < 8; y++)
-			for (int x = 0; x < 8; x++) {
+			for (int x = 0; x < 8; x++)
 				updateQuadrant(x, y);
-			}
 		updateEnterpriseLocation();
 		markReachableQuadrants();
 	}

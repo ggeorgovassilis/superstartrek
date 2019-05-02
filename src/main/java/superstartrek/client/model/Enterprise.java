@@ -94,12 +94,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		}
 
-		List<Quadrant> container = new ArrayList<Quadrant>();
-
+		Quadrant[] container = new Quadrant[1];
 		starMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationX, destinationY, (x, y) -> {
 			Quadrant q = starMap.getQuadrant(x, y);
-			container.clear();
-			container.add(q);
+			container[0] = q;
 			List<Klingon> klingons = q.getKlingons();
 			// TODO for now, allow warping out of the departure quadrant
 			if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
@@ -109,7 +107,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return true;
 		});
 
-		Quadrant dropQuadrant = container.get(0);
+		Quadrant dropQuadrant = container[0];
 		setQuadrant(dropQuadrant);
 		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation());
 		Location oldLocation = getLocation();
@@ -150,8 +148,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 					continue;
 				Location tmp = Location.location(x, y);
 				// TODO: isViewClear traces a trajectory from here to the tmp location. As we do
-				// this for every sector
-				// in the disk, most sectors are visited multiple times. Can we do better?
+				// this for every sector on the disk, many sectors are visited multiple times. 
+				// since each outer ring is (much) larger than the previous one, the number of double visits is moderate.
+				// Sill, Can we do better?
 				if (isViewClear(index, tmp))
 					reachableSectors.add(tmp);
 			}
@@ -176,8 +175,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return;
 		}
 		double distance = StarMap.distance(this.getLocation(), loc);
-		List<Location> path = new ArrayList<>();
-		path.add(getLocation());
+		Location[] trace = new Location[] {getLocation()};
 		map.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
 			Thing thing = index.findThingAt(x, y);
 			if (thing != null && thing != app.starMap.enterprise) {
@@ -186,10 +184,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				}
 				return false;
 			}
-			path.add(Location.location(x, y));
+			trace[0] = Location.location(x, y);
 			return true;
 		});
-		Location drop = path.get(path.size() - 1);
+		Location drop = trace[0];
 		if (!consume("impulse", computeConsumptionForImpulseNavigation(distance))) {
 			app.message("Insufficient reactor output");
 			return;
@@ -313,13 +311,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	protected boolean isViewClear(QuadrantIndex index, Location destination) {
 		StarMap map = application.starMap;
-		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), destination, 8);
-		obstacles.remove(this);
-		boolean viewIsClear = true;
-		for (int i = 0; i < obstacles.size() && viewIsClear; i++)
-			viewIsClear &= !obstacles.get(i).isVisible();
-		return viewIsClear;
-
+		boolean[] isClear = new boolean[] {true};
+		map.walkLine(getLocation().getX(), getLocation().getY(), destination.getX(), destination.getY(), (x,y)->{
+			Thing obstacle = index.findThingAt(Location.location(x, y));
+			return isClear[0] = obstacle==null || obstacle==Enterprise.this || !obstacle.isVisible();
+		});
+		return isClear[0];
 	}
 
 	public boolean canNavigateTo(QuadrantIndex index, Location destination) {
