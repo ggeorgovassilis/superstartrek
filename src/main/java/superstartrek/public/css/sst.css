@@ -705,15 +705,16 @@ a.disabled, button.disabled {
 	width: 100%;
 	box-sizing: border-box;
 	transform: translateX(-100%);
-	transition: transform 0.2s ease;
+	transition: transform 0.2s ease, visibility 0.2s;
 	will-change:transform;
+	visibility:hidden;
 }
 
 .PopupView.slidein {
 	left: 0%;
-	display: block;
+	visibility: visible;
 	transform:translateX(0%);
-	transition: transform 0.2s ease;
+	transition: transform 0.2s ease, visibility 0.2s;
 }
 
 #glasspanel {
@@ -725,16 +726,18 @@ a.disabled, button.disabled {
 	left: 0;
 	bottom: 0;
 	right: 0;
-	display: none;
+	/* display doesn't work with FF transitions, have to use visibility*/
+	visibility: hidden;
 	transform: translateZ(0);
 	z-index: 2;
-	transition: opacity 0.2s;
+	transition: opacity 0.2s, visibility 0.2s;
 	will-change:opacity;
 }
 
 #glasspanel.fadein {
-	transition: opacity 0.2s;
+	transition: opacity 0.2s, visibility 0s;
 	opacity: 0.75;
+	visibility: visible;
 }
 
 /* sector context menu */

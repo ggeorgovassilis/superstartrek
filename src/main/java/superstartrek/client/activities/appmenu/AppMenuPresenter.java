@@ -1,5 +1,6 @@
 package superstartrek.client.activities.appmenu;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -24,6 +25,8 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 
 	@Override
 	public void showMenu() {
+		if (view.isVisible())
+			return;
 		gotoStateAfterMenuHidden = "computer";
 		updateCommands();
 		view.show();
@@ -36,6 +39,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	}
 
 	public void onMenuHidden() {
+		GWT.log("on menu hidden");
 		if (gotoStateAfterMenuHidden != null)
 			application.browserAPI.postHistoryChange(gotoStateAfterMenuHidden);
 	}

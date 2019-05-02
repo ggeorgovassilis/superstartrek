@@ -1,5 +1,6 @@
 package superstartrek.client.activities;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
@@ -17,8 +18,10 @@ import superstartrek.client.utils.Timer;
 @SuppressWarnings("rawtypes")
 public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P> implements IPopupView<P> {
 
-	boolean isInTransition = false;
-
+	//overriding default visibility handling because we implemented it with CSS transitions which are not reflected
+	//in DOM properties
+	boolean visible = false;
+	
 	protected PopupView(P presenter) {
 		super(presenter);
 	}
@@ -55,8 +58,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 			presenter.userWantsToDismissPopup();
 		});
 		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONKEYDOWN | Event.ONKEYPRESS);
-		CSS.addClassDeferred(glassPanel, "fadein");
-		glassPanel.getStyle().setDisplay(Display.INITIAL);
+		glassPanel.addClassName("fadein");
 	}
 
 	protected void hideGlassPanel() {
@@ -64,47 +66,41 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		Event.setEventListener(glassPanel, null);
 		Event.sinkEvents(glassPanel, 0);
 		glassPanel.removeClassName("fadein");
-		Timer.postpone(() -> glassPanel.getStyle().setDisplay(Display.NONE), Constants.ANIMATION_DURATION_MS);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return super.isVisible();
 	}
 
 	@Override
 	public void show() {
-		if (isVisible())
-			return;
 		showGlassPanel();
-		super.show();
+		//super.show();
 		// deferred command (0ms) doesn't work reliably with FF.
+		addStyleName("slidein");
 		Timer.postpone(() -> {
-			addStyleName("slidein");
 			// focus popup so that ESC key can hide it (otherwise key handler won't fire).
 			// focus needs to be delayed to after animation is done to avoid animation lag
 			// focus makes no sense if keyboard not present
 			if (presenter.getApplication().browserAPI.hasKeyboard())
 				Timer.postpone(() -> getElement().focus(), Constants.ANIMATION_DURATION_MS);
 		}, 16);
+		visible = true;
 	}
 
 	@Override
 	public void hide(ScheduledCommand callback) {
-		if (!isVisible())
-			return;
 		hideGlassPanel();
 		removeStyleName("slidein");
-		Timer.postpone(() -> {
-			PopupView.super.hide();
-			if (callback != null)
-				callback.execute();
-		}, Constants.ANIMATION_DURATION_MS);
+		visible = false;
+		if (callback != null)
+			Timer.postpone(() -> callback.execute(), Constants.ANIMATION_DURATION_MS);
 	}
 
 	@Override
 	public void hide() {
 		hide(null);
+	}
+	
+	@Override
+	public boolean isVisible() {
+		return visible;
 	}
 
 }

@@ -78,7 +78,7 @@ public class PWA {
 
 	//@formatter:off
 	public static native boolean supportsServiceWorker() /*-{
-		return navigator.serviceWorker!=null;
+		return $wnd.navigator.serviceWorker!=null;
 	}-*/;
 
 	public static native void log(Throwable t) /*-{

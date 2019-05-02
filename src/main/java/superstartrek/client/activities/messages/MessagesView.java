@@ -13,6 +13,7 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 
 	@Override
 	public void decorateWidget() {
+		super.decorateWidget();
 		HtmlWidget panel = getWidgetAs();
 		eContent = panel.getElementById("messages-content");
 		eButton = panel.getElementById("dismiss-message-button");
@@ -21,7 +22,6 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 		DOM.setEventListener(eButton, (Event event) -> {
 			presenter.userWantsToDismissPopup();
 		});
-		super.decorateWidget();
 	}
 
 	public MessagesView(MessagesPresenter presenter) {

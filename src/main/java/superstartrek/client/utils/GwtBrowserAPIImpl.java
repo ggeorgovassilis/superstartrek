@@ -1,5 +1,6 @@
 package superstartrek.client.utils;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.History;
@@ -37,7 +38,15 @@ public class GwtBrowserAPIImpl implements BrowserAPI{
 
 	@Override
 	public Void postHistoryChange(String token) {
+		GWT.log("Posting token "+token);
 		History.newItem(token);
+		return null;
+	}
+
+	@Override
+	public Void postHistoryChange(String token, boolean issueEvent) {
+		GWT.log("Posting token "+token+ " "+issueEvent);
+		History.newItem(token, issueEvent);
 		return null;
 	}
 
@@ -48,11 +57,6 @@ public class GwtBrowserAPIImpl implements BrowserAPI{
 		return null;
 	}
 
-	@Override
-	public Void postHistoryChange(String token, boolean issueEvent) {
-		History.newItem(token, issueEvent);
-		return null;
-	}
 
 	@Override
 	public Void reloadApplication() {
