@@ -1,6 +1,5 @@
 package superstartrek.client.control;
 
-import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.EventBus;
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;

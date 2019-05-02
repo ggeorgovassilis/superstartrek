@@ -1,7 +1,5 @@
 package superstartrek.client.activities.messages;
 
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;

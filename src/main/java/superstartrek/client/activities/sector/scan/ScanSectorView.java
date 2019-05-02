@@ -3,7 +3,6 @@ package superstartrek.client.activities.sector.scan;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventListener;
 import superstartrek.client.activities.PopupView;
 import superstartrek.client.utils.HtmlWidget;
 

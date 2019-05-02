@@ -2,7 +2,6 @@ package superstartrek.client.activities.lrs;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.EventListener;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.utils.HtmlWidget;
