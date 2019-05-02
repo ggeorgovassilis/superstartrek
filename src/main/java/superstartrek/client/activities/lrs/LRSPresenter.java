@@ -4,7 +4,6 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.computer.srs.MapCellRenderer;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
@@ -56,6 +55,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		Quadrant qEnterprise = enterprise.getQuadrant();
 		for (int y = 0; y < 8; y++)
 			for (int x = 0; x < 8; x++) {
+				//TODO: reuse symmetry?
 				double requiredEnergy = application.starMap.enterprise.computeConsumptionForWarp(qEnterprise, map.getQuadrant(x, y));
 				if (requiredEnergy <= enterprise.getReactor().getValue())
 					view.addCss(x, y, "navigation-target");
