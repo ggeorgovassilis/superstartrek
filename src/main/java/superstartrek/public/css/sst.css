@@ -869,16 +869,16 @@ a.disabled, button.disabled {
 }
 
 #app-install-prompt {
-	background-color: white;
 	color: black;
 	padding: 0.2em;
 	top: 50%;
 	margin-top: -6em;
+	background-color:darkgray;
 }
 
 #app-install-prompt button {
 	color: blue;
-	background-color: transparent;
+	background-color: white;
 }
 
 #install-yes {

@@ -38,14 +38,12 @@ public class GwtBrowserAPIImpl implements BrowserAPI{
 
 	@Override
 	public Void postHistoryChange(String token) {
-		GWT.log("Posting token "+token);
 		History.newItem(token);
 		return null;
 	}
 
 	@Override
 	public Void postHistoryChange(String token, boolean issueEvent) {
-		GWT.log("Posting token "+token+ " "+issueEvent);
 		History.newItem(token, issueEvent);
 		return null;
 	}

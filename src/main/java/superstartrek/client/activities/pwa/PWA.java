@@ -28,7 +28,9 @@ public class PWA {
 	//@formatter:off
 	private String[] URLS = { 
 			"/superstartrek/site/index.html", 
+			"/superstartrek/site/service-worker.js", 
 			"/superstartrek/site/images/cancel.svg",
+			"/superstartrek/site/images/bookmark.svg",
 			"/superstartrek/site/images/communicator.svg", 
 			"/superstartrek/site/images/federation_logo.svg",
 			"/superstartrek/site/images/fire_at_will.svg", 
