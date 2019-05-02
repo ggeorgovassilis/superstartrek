@@ -65,9 +65,9 @@ public class PWA {
 			log.info("Cache not supported");
 			return;
 		}
-		GWT.log("Checking for existence of cache");
+		log.info("Checking for existence of cache");
 		cache.queryCacheExistence(CACHE_NAME).then((result)->{
-				GWT.log("Cache exists : "+result);
+			log.info("Cache exists : "+result);
 				if (result)
 					application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 				else
@@ -128,13 +128,11 @@ public class PWA {
 	}
 
 	public void getChecksumOfInstalledApplication(RequestCallback callback) {
-		GWT.log("1");
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
-		GWT.log("2");
 		try {
 			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5", callback);
 		} catch (Exception e) {
-			GWT.log(e.getMessage());
+			log.info(e.getMessage());
 		}
 	}
 
@@ -144,20 +142,20 @@ public class PWA {
 		try {
 			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd=" + rnd, callback);
 		} catch (Exception e) {
-			GWT.log(e.getMessage());
+			log.info(e.getMessage());
 		}
 
 	}
 
 	public void checkForNewVersion() {
-		GWT.log("Checking for new version");
+		log.info("Checking for new version");
 		Application app = application;
 		getChecksumOfInstalledApplication(new RequestCallback() {
 
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				String checksumOfInstalledApplication = response.getText();
-				GWT.log("Installed app version " + checksumOfInstalledApplication);
+				log.info("Installed app version " + checksumOfInstalledApplication);
 				application.events.fireEvent(new ApplicationLifecycleEvent(Status.informingOfInstalledVersion,
 						checksumOfInstalledApplication, ""));
 				getChecksumOfNewestVersion(new RequestCallback() {
@@ -197,7 +195,7 @@ public class PWA {
 
 	public void run() {
 		if (!GWT.isClient()) {
-			GWT.log("Not running PWA because not running in browser");
+			log.info("Not running PWA because not running in browser");
 			return;
 		}
 		if (cache == null)
@@ -207,7 +205,7 @@ public class PWA {
 			checkForNewVersion();
 		}
 		if (!supportsServiceWorker()) {
-			GWT.log("Not running PWA because service workers are not supported");
+			log.info("Not running PWA because service workers are not supported");
 			return;
 		}
 		registerServiceWorker("service-worker.js");

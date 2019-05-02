@@ -87,8 +87,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int destinationX = destinationQuadrant.getX();
 		int destinationY = destinationQuadrant.getY();
 		double necessaryEnergy = computeConsumptionForWarp(fromQuadrant, destinationQuadrant);
-		GWT.log("necessary energy " + necessaryEnergy);
-		GWT.log("available energy " + getReactor().getValue());
 		if (!consume("warp", necessaryEnergy) && getQuadrant().getKlingons().isEmpty()) {
 			GWT.log("no");
 			// we can let this slide if no enemies in quadrant
