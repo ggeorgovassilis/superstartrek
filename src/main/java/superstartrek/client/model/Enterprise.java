@@ -151,8 +151,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 				Location tmp = Location.location(x, y);
 				// TODO: isViewClear traces a trajectory from here to the tmp location. As we do
 				// this for every sector
-				// in the disk, most sectors are visited multiple times. we need a different
-				// algorithm.
+				// in the disk, most sectors are visited multiple times. Can we do better?
 				if (isViewClear(index, tmp))
 					reachableSectors.add(tmp);
 			}
