@@ -223,19 +223,19 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		BrowserAPI browser = application.browserAPI;
 		for (Thing thing : things) {
 			boolean hit = false;
-			if (thing instanceof Star || thing instanceof StarBase) {
-				hit = true;
-			} else if (thing instanceof Klingon) {
+			if (Klingon.is(thing)) {
 				double distance = StarMap.distance(this, thing);
 				double chance = Math.sqrt(2) / distance;
 				hit = browser.nextDouble() <= chance;
+			} else {
+				hit = true;
 			}
 			if (hit) {
 				target = thing;
 				break;
 			}
 		}
-		if (target instanceof Klingon) {
+		if (Klingon.is(target)) {
 			double shields = ((Klingon) target).getShields().getValue();
 			double maxShields = ((Klingon) target).getShields().getMaximum();
 			damage = damage * (1.0 - (0.5 * (shields / maxShields) * (shields / maxShields)));
@@ -253,7 +253,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (thing == null || !thing.isVisible()) {
 			return "There is nothing at " + sector;
 		}
-		if (!(thing instanceof Klingon)) {
+		if (!Klingon.is(thing)) {
 			return "Phasers can target only enemy vessels";
 		}
 		double distance = StarMap.distance(this, thing);
@@ -491,6 +491,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	@Override
 	public void onTurnEnded(TurnEndedEvent evt) {
 		turnsSinceWarp++;
+	}
+	
+	public static boolean is(Thing thing) {
+		return thing instanceof Enterprise;
 	}
 
 }

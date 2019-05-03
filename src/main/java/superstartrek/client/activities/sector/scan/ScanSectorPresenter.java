@@ -25,16 +25,16 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 		view.setObjectName(name);
 		view.setObjectLocation(event.getLocation().toString());
 		view.setObjectQuadrant(q.getName());
-		if (thing instanceof Vessel) {
-			Vessel vessel = (Vessel)thing;
+		if (Vessel.is(thing)) {
+			Vessel vessel = thing.as();
 			view.setProperty("scan-report-shields", "scan-report-shields-value", "", "%"+vessel.getShields().percentage());
-			if (vessel instanceof Klingon) {
-				Klingon k = (Klingon)vessel;
+			if (Klingon.is(thing)) {
+				Klingon k = vessel.as();
 				view.setProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isEnabled()?"":"damage-offline", k.getDisruptor().isEnabled()?"online":"offline");
 				view.setProperty("scan-report-cloak", "scan-report-cloak-value", k.getCloak().isEnabled()?"":"damage-offline", k.getCloak().isEnabled()?"online":"offline");
 			} else
-			if (vessel instanceof Enterprise) {
-				Enterprise e = (Enterprise)vessel;
+			if (Enterprise.is(thing)) {
+				Enterprise e = vessel.as();
 				view.setProperty("scan-report-weapons", "scan-report-weapons-value", e.getPhasers().isEnabled()?"":"damage-offline", e.getPhasers().isEnabled()?"online":"offline");
 			}
 			view.setProperty("scan-report-engines", "scan-report-engines-value", vessel.getImpulse().isEnabled()?"":"damage-offline", vessel.getImpulse().isEnabled()?"online":"offline");

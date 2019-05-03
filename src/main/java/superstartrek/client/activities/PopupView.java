@@ -72,13 +72,11 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		//super.show();
 		// deferred command (0ms) doesn't work reliably with FF.
 		addStyleName("slidein");
-		Timer.postpone(() -> {
-			// focus popup so that ESC key can hide it (otherwise key handler won't fire).
-			// focus needs to be delayed to after animation is done to avoid animation lag
-			// focus makes no sense if keyboard not present
-			if (presenter.getApplication().browserAPI.hasKeyboard())
-				Timer.postpone(() -> getElement().focus(), Constants.ANIMATION_DURATION_MS);
-		}, 16);
+		// focus popup so that ESC key can hide it (otherwise key handler won't fire).
+		// focus needs to be delayed to after animation is done to avoid animation lag
+		// focus makes no sense if keyboard not present
+		if (presenter.getApplication().browserAPI.hasKeyboard())
+			Timer.postpone(() -> getElement().focus(), Constants.ANIMATION_DURATION_MS);
 		visible = true;
 	}
 

@@ -44,12 +44,12 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	@Override
 	public void afterFire(FireEvent evt) {
-		if (evt.target instanceof Enterprise) {
+		if (Enterprise.is(evt.target)) {
 			Enterprise enterprise = evt.target.as();
 			if (enterprise.getShields().getValue() <= 0)
 				gameOver(GameOverEvent.Outcome.lost, "shields");
 
-		} else if (evt.target instanceof Star) {
+		} else if (Star.is(evt.target)) {
 			Star star = evt.target.as();
 			application.message(evt.weapon + " hit " + star.getName() + " at " + star.getLocation());
 		}
@@ -152,8 +152,8 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	@Override
 	public void handleEnergyConsumption(Thing consumer, double value, String type) {
-		if (consumer instanceof Enterprise) {
-			Enterprise enterprise = (Enterprise) consumer;
+		if (Enterprise.is(consumer)) {
+			Enterprise enterprise = consumer.as();
 			if (enterprise.getAntimatter().getValue() <= 0) {
 				application.message("We run out of anti matter");
 				gameOver(Outcome.lost, "We run out of anti matter");

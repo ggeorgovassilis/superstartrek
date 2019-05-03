@@ -28,5 +28,9 @@ public class Star extends Thing{
 	public Star(int x, int y, StarClass sc) {
 		this(x, y, true, sc);
 	}
+	
+	public static boolean is(Thing thing) {
+		return thing instanceof Star;
+	}
 
 }

@@ -22,4 +22,8 @@ public abstract class Vessel extends Thing{
 	public void destroy() {
 	}
 	
+	public static boolean is(Thing thing) {
+		return thing instanceof Vessel;
+	}
+	
 }

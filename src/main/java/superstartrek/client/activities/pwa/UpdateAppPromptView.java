@@ -26,22 +26,15 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter>{
 				String id = target.getId();
 				if ("update-yes".equals(id)) {
 					presenter.acceptUpdateButtonClicked();
-				}
+				} else
 				if ("update-no".equals(id)) {
 					presenter.userWantsToDismissPopup();
-					
 				}
 		}, ClickEvent.getType());
 	}
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return Application.get().getResources().updateAppPrompt().getText();
+		return presenter.getApplication().getResources().updateAppPrompt().getText();
 	}
-	
-	@Override
-	public void show() {
-		super.show();
-	}
-
 }

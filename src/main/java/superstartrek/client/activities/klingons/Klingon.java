@@ -278,10 +278,18 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	}
 	
 	public static boolean isCloakedKlingon(Thing thing){
-		return (thing instanceof Klingon) && !thing.isVisible();
+		return (Klingon.is(thing)) && !thing.isVisible();
 	}
 	
 	public static boolean isEmptyOrCloakedKlingon(Thing thing) {
 		return thing == null || isCloakedKlingon(thing);
+	}
+	
+	public static boolean is(Thing thing) {
+		return thing instanceof Klingon;
+	}
+
+	public static Klingon as(Thing thing) {
+		return (Klingon)thing;
 	}
 }
