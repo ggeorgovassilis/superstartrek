@@ -17,6 +17,7 @@ import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Star.StarClass;
@@ -114,7 +115,8 @@ public class TestKlingon extends BaseTest{
 	public void test_hasClearShotAt() {
 		klingon.setLocation(Location.location(3, 3));
 		enterprise.setLocation(Location.location(3, 5));
-		assertTrue(klingon.hasClearShotAt(enterprise.getLocation(), enterprise, starMap));
+		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), starMap);
+		assertTrue(klingon.hasClearShotAt(index, enterprise.getLocation(), enterprise, starMap));
 	}
 	
 	@Test
@@ -123,6 +125,7 @@ public class TestKlingon extends BaseTest{
 		enterprise.setLocation(Location.location(3, 5));
 		Star star = new Star(3, 4, StarClass.A);
 		quadrant.getStars().add(star);
-		assertFalse(klingon.hasClearShotAt(enterprise.getLocation(), enterprise, starMap));
+		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), starMap);
+		assertFalse(klingon.hasClearShotAt(index, enterprise.getLocation(), enterprise, starMap));
 	}
 }

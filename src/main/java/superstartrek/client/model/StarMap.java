@@ -146,11 +146,6 @@ public class StarMap {
 		return found;
 	}
 
-	public List<Thing> findObstaclesInLine(Quadrant q, Location from, Location to, int cap) {
-		QuadrantIndex index = new QuadrantIndex(q, this);
-		return findObstaclesInLine(index, from, to, cap);
-	}
-
 	public Location findFreeSpotAround(Quadrant q, Location loc) {
 		return findFreeSpotAround(q, loc, 8);
 	}

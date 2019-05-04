@@ -12,6 +12,10 @@ public abstract class Thing {
 		return (T)this;
 	}
 	
+	public static boolean isVisible(Thing thing) {
+		return thing!=null && thing.isVisible();
+	}
+	
 	public boolean isVisible() {
 		return true;
 	}

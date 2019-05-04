@@ -29,6 +29,8 @@ public class TestSectorContextMenuPresenter extends BaseTest{
 	public void test() {
 		Quadrant q = new Quadrant("test q", 3, 4);
 		enterprise.setQuadrant(q);
+		//populate reachibility list
+		enterprise.findReachableSectors();
 		doAnswer(new Answer<Void>() {
 
 			@Override

@@ -24,6 +24,7 @@ import superstartrek.client.utils.BrowserAPI;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.hamcrest.BaseMatcher;
@@ -99,7 +100,8 @@ public class TestEnterprise extends BaseTest{
 				assertEquals(Location.location(2, 2), lTo);
 			}
 		});
-
+		//necessary call to findReachableSectors in order to populate reachability map
+		enterprise.findReachableSectors();
 		enterprise.navigateTo(Location.location(2, 2));
 
 		assertEquals(0, enterprise.getImpulse().getValue(), 0.5);
@@ -244,6 +246,7 @@ public class TestEnterprise extends BaseTest{
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
+		starMap.enterprise = enterprise;
 		quadrant.getStars().add(new Star(1,6,StarClass.A));
 		quadrant.getStars().add(new Star(2,6,StarClass.A));
 		quadrant.getStars().add(new Star(3,6,StarClass.A));
@@ -260,7 +263,9 @@ public class TestEnterprise extends BaseTest{
 		assertTrue(list.contains(Location.location(5, 4)));
 		assertFalse(list.contains(Location.location(5, 6)));
 		assertFalse(list.contains(Location.location(3, 6)));
-		assertEquals(20,list.size());
+		//check for duplicates
+		assertEquals(new HashSet<>(list).size(), list.size());
+		assertEquals(19,list.size());
 	}
 
 	@Test

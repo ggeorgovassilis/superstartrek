@@ -16,6 +16,7 @@ import superstartrek.client.control.KlingonTurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
@@ -104,9 +105,9 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		return disruptor;
 	}
 	
-	public boolean hasClearShotAt(Location target, Enterprise enterprise, StarMap map) {
+	public boolean hasClearShotAt(QuadrantIndex index, Location target, Enterprise enterprise, StarMap map) {
 		if (StarMap.within_distance(target, getLocation(), DISRUPTOR_RANGE_SECTORS)) {
-			List<Thing> obstacles = map.findObstaclesInLine(enterprise.getQuadrant(), getLocation(), target,2);
+			List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), target,2);
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
 			if (obstacles.isEmpty())
@@ -122,7 +123,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		Enterprise enterprise = map.enterprise;
 		// no need to move if distance is <=2 and Klingon has a clear shot at the
 		// Enterprise
-		if (hasClearShotAt(enterprise.getLocation(), enterprise, map))
+		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), map);
+		if (hasClearShotAt(index, enterprise.getLocation(), enterprise, map))
 			return;
 		PathFinder pathFinder = new PathFinderImpl();
 		// path includes start and end
@@ -154,7 +156,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		boolean inRange = StarMap.within_distance(this, enterprise, DISRUPTOR_RANGE_SECTORS);
 		if (!inRange)
 			return;
-		List<Thing> obstacles = map.findObstaclesInLine(enterprise.getQuadrant(), getLocation(), enterprise.getLocation(),2);
+		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), map);
+		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), enterprise.getLocation(),2);
 		obstacles.remove(this);
 		obstacles.remove(enterprise);
 		if (!obstacles.isEmpty())
@@ -240,6 +243,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			repair();
 			cloak.setValue(canCloak());
 			css = "klingon " + (isVisible() ? "" : "cloaked");
+			//TODO: this method is called for every klingon in the quadrant. findFreeSpot builds an index each time, which
+			//might be slow.
 			Location newLocation = Application.get().starMap.findFreeSpot(qTo);
 			jumpTo(newLocation);
 		} else

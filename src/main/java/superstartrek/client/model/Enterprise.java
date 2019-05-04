@@ -34,6 +34,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	Setting autoAim = new Setting("auto aim", 1, 1);
 	Setting lrs = new Setting("LRS", 1, 1);
 	Quadrant quadrant;
+	List<Location> reachableSectors = new ArrayList<>();
 
 	int turnsSinceWarp = 0;
 
@@ -126,7 +127,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public List<Location> findReachableSectors() {
-		List<Location> reachableSectors = new ArrayList<>();
+		reachableSectors.clear();
 		double range = getImpulse().getValue();
 		while (range > 1 && computeConsumptionForImpulseNavigation(range) >= getReactor().getValue())
 			range = range - 0.5;
@@ -141,18 +142,27 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int maxY = (int) Math.min(7, ly + range);
 		StarMap map = application.starMap;
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), map);
+		int[][] visitLog = new int[8][8]; // -1= not reachable, 0 = not visited yet, 1 = reachable
+		visitLog[lx][ly] = 1;
 		for (int x = minX; x <= maxX; x++)
 			for (int y = minY; y <= maxY; y++) {
+				if (visitLog[x][y] != 0)
+					continue;
 				// squared distance check saves one sqrt() call and thus is faster
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
-				Location tmp = Location.location(x, y);
-				// TODO: isViewClear traces a trajectory from here to the tmp location. As we do
-				// this for every sector on the disk, many sectors are visited multiple times. 
-				// since each outer ring is (much) larger than the previous one, the number of double visits is moderate.
-				// Sill, Can we do better?
-				if (isViewClear(index, tmp))
-					reachableSectors.add(tmp);
+				starMap.walkLine(lx, ly, x, y, (x1, y1) -> {
+					if (visitLog[x1][y1] != 0)
+						return visitLog[x1][y1] == 1;
+					// from here on, visitLog is known to be 0
+					if (Thing.isVisible(index.findThingAt(x1, y1))) {
+						visitLog[x1][y1] = -1;
+						return false;
+					}
+					visitLog[x1][y1] = 1;
+					reachableSectors.add(Location.location(x1, y1));
+					return true;
+				});
 			}
 		return reachableSectors;
 	}
@@ -167,15 +177,15 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public void navigateTo(Location loc) {
 		Application app = application;
 		StarMap map = app.starMap;
-		QuadrantIndex index = new QuadrantIndex(quadrant, map);
-		if (!canNavigateTo(index, loc)) {
+		if (!canNavigateTo(loc)) {
 			// TODO: this should never be the case; navigation constraints are already
-			// checked
+			// checked. This assumes that cloaked klingons are "reachable"
 			application.message("Can't go there");
 			return;
 		}
 		double distance = StarMap.distance(this.getLocation(), loc);
-		Location[] trace = new Location[] {getLocation()};
+		Location[] trace = new Location[] { getLocation() };
+		QuadrantIndex index = new QuadrantIndex(quadrant, map);
 		map.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
 			Thing thing = index.findThingAt(x, y);
 			if (thing != null && thing != app.starMap.enterprise) {
@@ -214,8 +224,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			application.message("Torpedo bay is empty");
 			return;
 		}
-
-		List<Thing> things = application.starMap.findObstaclesInLine(quadrant, getLocation(), sector, 8);
+		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
+		List<Thing> things = application.starMap.findObstaclesInLine(index, getLocation(), sector, 8);
 		things.remove(this);
 		getTorpedos().decrease(1);
 		Thing target = null;
@@ -307,30 +317,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		antimatter.repair();
 		lrs.repair();
 		application.events.fireEvent(new EnterpriseRepairedEvent(this));
-	}
-
-	protected boolean isViewClear(QuadrantIndex index, Location destination) {
-		StarMap map = application.starMap;
-		boolean[] isClear = new boolean[] {true};
-		map.walkLine(getLocation().getX(), getLocation().getY(), destination.getX(), destination.getY(), (x,y)->{
-			Thing obstacle = index.findThingAt(Location.location(x, y));
-			return isClear[0] = obstacle==null || obstacle==Enterprise.this || !obstacle.isVisible();
-		});
-		return isClear[0];
-	}
-
-	public boolean canNavigateTo(QuadrantIndex index, Location destination) {
-		if (!getImpulse().isEnabled())
-			return false;
-		double distance = StarMap.distance(getLocation(), destination);
-		if (distance > getImpulse().getValue())
-			return false;
-		if (getReactor().getValue() < computeConsumptionForImpulseNavigation(distance))
-			return false;
-		Thing thing = index.findThingAt(destination.getX(), destination.getY());
-		if (!Klingon.isEmptyOrCloakedKlingon(thing))
-			return false;
-		return isViewClear(index, destination);
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -492,9 +478,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public void onTurnEnded(TurnEndedEvent evt) {
 		turnsSinceWarp++;
 	}
-	
+
 	public static boolean is(Thing thing) {
 		return thing instanceof Enterprise;
+	}
+
+	public boolean canNavigateTo(Location location) {
+		return reachableSectors.contains(location);
 	}
 
 }

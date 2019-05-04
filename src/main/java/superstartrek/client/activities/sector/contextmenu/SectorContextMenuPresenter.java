@@ -43,7 +43,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		int vertEmToPx = view.getMetricHeightInPx();
 
 		buttonsEnabled.put("cmd_navigate",
-				e.canNavigateTo(new QuadrantIndex(quadrant, getApplication().starMap), sector));
+				e.canNavigateTo(sector));
 		buttonsEnabled.put("cmd_firePhasers", e.canFirePhaserAt(sector) == null);
 		buttonsEnabled.put("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
 		for (String cmd : buttonsEnabled.keySet())
