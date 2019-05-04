@@ -209,10 +209,10 @@ public class PWA {
 	}
 
 	public void run() {
-		log.info("2");
+		log("2");
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
-		log.info("3");
+		log("3");
 		if (cache != null) {
 			cacheFilesForOfflineUse();
 			checkForNewVersion();
