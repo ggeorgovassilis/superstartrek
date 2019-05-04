@@ -52,6 +52,7 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	// TODO: rewrite in java
 	//@formatter:off
 	public final native Void clearCache(String cacheNameToDelete, ScheduledCommand callback)/*-{
+		console.log("asked to empty cache");
 		this.keys().then(function(cacheNames) {
 			return Promise.all(cacheNames.filter(function(cacheName) {
 				return cacheName == cacheNameToDelete;
