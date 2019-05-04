@@ -65,12 +65,12 @@ public class PWA {
 
 	public void cacheFilesForOfflineUse() {
 		if (cache == null) {
-			log.info("Cache not supported");
+			log("Cache not supported");
 			return;
 		}
-		log.info("Checking for existence of cache");
+		log("Checking for existence of cache");
 		cache.queryCacheExistence(CACHE_NAME).then((result)->{
-			log.info("Cache exists : "+result);
+			log("Cache exists : "+result);
 				if (result)
 					application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
 				else
@@ -83,14 +83,20 @@ public class PWA {
 	public static native boolean supportsServiceWorker() /*-{
 		return !(!($wnd.navigator.serviceWorker));
 	}-*/;
-
-	public static native void log(Throwable t) /*-{
-		console.log(t.message, t);
+	
+	public static native void nativeLog(Object o) /*-{
+		console.log(o);
 	}-*/;
 
-	public static native void log(String s) /*-{
-	console.log(s);
-	}-*/;
+	public static void log(Throwable t) {
+		if (GWT.isClient())
+			nativeLog(t);
+	}
+
+	public static void log(String s){
+		if (GWT.isClient())
+			nativeLog(s);
+	}
 
 	private static native Promise<Boolean> _registerServiceWorker(String url) /*-{
 		return $wnd.navigator.serviceWorker.register(url, {scope:'.'});
@@ -109,14 +115,14 @@ public class PWA {
 	//@formatter:on
 
 	public void installationEventCallback(AppInstallationEvent e) {
-		log.info("installation event callback");
+		log("installation event callback");
 		deferredInstallationPrompt = e;
 		deferredInstallationPrompt.preventDefault();
 		application.events.fireEvent(new ApplicationLifecycleEvent(Status.showInstallPrompt, "", ""));
 	}
 
 	public void installApplication() {
-		log.info("invoking deferred installation prompt");
+		log("invoking deferred installation prompt");
 		deferredInstallationPrompt.prompt();
 		deferredInstallationPrompt = null;
 	}
@@ -134,7 +140,7 @@ public class PWA {
 		try {
 			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5", callback);
 		} catch (Exception e) {
-			log.info(e.getMessage());
+			log(e.getMessage());
 		}
 	}
 
@@ -144,35 +150,35 @@ public class PWA {
 		try {
 			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd=" + rnd, callback);
 		} catch (Exception e) {
-			log.info(e.getMessage());
+			log(e.getMessage());
 		}
 	}
 
 	public void checkForNewVersion() {
-		log.info("Checking for new version");
+		log("Checking for new version");
 		Application app = application;
 		getChecksumOfInstalledApplication(new RequestCallback() {
 
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				String checksumOfInstalledApplication = response.getText();
-				log.info("Installed app version " + checksumOfInstalledApplication);
+				log("Installed app version " + checksumOfInstalledApplication);
 				application.events.fireEvent(new ApplicationLifecycleEvent(Status.informingOfInstalledVersion,
 						checksumOfInstalledApplication, ""));
 				getChecksumOfNewestVersion(new RequestCallback() {
 
 					@Override
 					public void onResponseReceived(Request request, Response response) {
-						log.info("Checksum of installed package : " + checksumOfInstalledApplication);
+						log("Checksum of installed package : " + checksumOfInstalledApplication);
 						String checksumOfNewestVersion = response.getText();
-						log.info("Checksum of latest    package : " + checksumOfNewestVersion);
+						log("Checksum of latest    package : " + checksumOfNewestVersion);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
 							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
 									checksumOfInstalledApplication, ""));
 							return;
 						}
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
-						log.info("is same: " + isSame);
+						log("is same: " + isSame);
 						app.events.fireEvent(
 								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
 										checksumOfInstalledApplication, checksumOfNewestVersion));
@@ -198,7 +204,7 @@ public class PWA {
 			
 			@Override
 			public void onSuccess(Boolean result) {
-				log.info("Service worker registered :"+result);
+				log("Service worker registered :"+result);
 			}
 			
 			@Override
@@ -217,15 +223,15 @@ public class PWA {
 			cacheFilesForOfflineUse();
 			checkForNewVersion();
 		}
-		log.info("4");
+		log("4");
 		addInstallationListener();
-		log.info("5");
+		log("5");
 		if (!supportsServiceWorker()) {
 			log.info("Not running PWA because service workers are not supported");
 			return;
 		}
-		log.info("6");
+		log("6");
 		registerServiceWorker("service-worker.js");
-		log.info("7");
+		log("7");
 	}
 }
