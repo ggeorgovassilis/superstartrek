@@ -89,7 +89,7 @@ public class PWA {
 	}-*/;
 
 	private static native Promise<Boolean> _registerServiceWorker(String url) /*-{
-		return navigator.serviceWorker.register(url, {scope:'.'});
+		return $wnd.navigator.serviceWorker.register(url, {scope:'.'});
 	}-*/;
 
 	/*
@@ -209,7 +209,6 @@ public class PWA {
 			log.info("Not running PWA because not running in browser");
 			return;
 		}
-		registerServiceWorker("service-worker.js");
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
 		if (cache != null) {
@@ -220,6 +219,7 @@ public class PWA {
 			log.info("Not running PWA because service workers are not supported");
 			return;
 		}
+		registerServiceWorker("service-worker.js");
 		addInstallationListener();
 	}
 }
