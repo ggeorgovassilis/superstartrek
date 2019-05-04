@@ -81,7 +81,7 @@ public class PWA {
 
 	//@formatter:off
 	public static native boolean supportsServiceWorker() /*-{
-		return $wnd.navigator.serviceWorker!=null;
+		return !(!($wnd.navigator.serviceWorker));
 	}-*/;
 
 	public static native void log(Throwable t) /*-{
@@ -205,21 +205,28 @@ public class PWA {
 	}
 
 	public void run() {
+		log.info("1");
 		if (!GWT.isClient()) {
 			log.info("Not running PWA because not running in browser");
 			return;
 		}
+		log.info("2");
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
+		log.info("3");
 		if (cache != null) {
 			cacheFilesForOfflineUse();
 			checkForNewVersion();
 		}
+		log.info("4");
+		addInstallationListener();
+		log.info("5");
 		if (!supportsServiceWorker()) {
 			log.info("Not running PWA because service workers are not supported");
 			return;
 		}
+		log.info("6");
 		registerServiceWorker("service-worker.js");
-		addInstallationListener();
+		log.info("7");
 	}
 }
