@@ -7,7 +7,6 @@ self.addEventListener('fetch', function (e) {
   e.respondWith(
     caches.match(e.request).then(function (request) {
       if (request) { // if cache is available, respond with cache
-        console.debug('SW','responding with cache : ' + e.request.url)
         return request
       } else {       // if there are no cache, try fetching request
         console.debug('SW','file is not cached, fetching : ' + e.request.url)
@@ -46,5 +45,4 @@ self.addEventListener('activate', function (e) {
       }))
     })
   )
-})
-
+});
