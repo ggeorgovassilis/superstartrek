@@ -12,11 +12,13 @@ public interface ApplicationLifecycleHandler extends EventHandler{
 		public final Status status;
 		public final String currentVersion;
 		public final String latestAvailableVersion;
+		public final String versionTimestamp;
 		
-		public ApplicationLifecycleEvent(Status status, String curentVersion, String latestAvailableVersion) {
+		public ApplicationLifecycleEvent(Status status, String curentVersion, String versionTimestamp, String latestAvailableVersion) {
 			this.status = status;
 			this.currentVersion = curentVersion;
 			this.latestAvailableVersion = latestAvailableVersion;
+			this.versionTimestamp = versionTimestamp;
 		}
 		
 		@Override
@@ -31,7 +33,7 @@ public interface ApplicationLifecycleHandler extends EventHandler{
 				case appIsUpToDate:handler.versionIsCurrent();break;
 				case checkFailed:handler.checkFailed();break;
 				case appCacheWasJustRefreshed:handler.appMustReload();break;
-				case informingOfInstalledVersion:handler.installedAppVersionIs(currentVersion);break;
+				case informingOfInstalledVersion:handler.installedAppVersionIs(currentVersion, versionTimestamp);break;
 				case filesCached:handler.filesAreCached();break;
 				case showInstallPrompt:handler.showInstallPrompt();break;
 			}
@@ -42,7 +44,7 @@ public interface ApplicationLifecycleHandler extends EventHandler{
 	default void versionIsCurrent(){};
 	default void checkFailed(){};
 	default void appMustReload(){};
-	default void installedAppVersionIs(String version) {};
+	default void installedAppVersionIs(String version, String timestamp) {};
 	default void filesAreCached() {};
 	default void showInstallPrompt() {};
 }

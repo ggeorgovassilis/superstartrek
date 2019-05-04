@@ -82,7 +82,7 @@ public class PWA {
 	}
 	
 	protected void cacheIsNowUsable() {
-		application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
+		application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", "", ""));
 		registerServiceWorker("service-worker.js");
 		checkForNewVersion();
 	}
@@ -116,7 +116,7 @@ public class PWA {
 		log.info("installation event callback");
 		deferredInstallationPrompt = e;
 		deferredInstallationPrompt.preventDefault();
-		application.events.fireEvent(new ApplicationLifecycleEvent(Status.showInstallPrompt, "", ""));
+		application.events.fireEvent(new ApplicationLifecycleEvent(Status.showInstallPrompt, "", "", ""));
 	}
 
 	public void installApplication() {
@@ -160,9 +160,10 @@ public class PWA {
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				String checksumOfInstalledApplication = response.getText();
+				String dateOfInstalledApplication = response.getHeader("last-modified");
 				log.info("Installed app version " + checksumOfInstalledApplication);
 				application.events.fireEvent(new ApplicationLifecycleEvent(Status.informingOfInstalledVersion,
-						checksumOfInstalledApplication, ""));
+						checksumOfInstalledApplication, dateOfInstalledApplication, ""));
 				getChecksumOfNewestVersion(new RequestCallback() {
 
 					@Override
@@ -172,27 +173,27 @@ public class PWA {
 						log.info("Checksum of latest    package : " + checksumOfNewestVersion);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
 							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
-									checksumOfInstalledApplication, ""));
+									checksumOfInstalledApplication, dateOfInstalledApplication, ""));
 							return;
 						}
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
 						log.info("is same: " + isSame);
 						app.events.fireEvent(
 								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
-										checksumOfInstalledApplication, checksumOfNewestVersion));
+										checksumOfInstalledApplication, dateOfInstalledApplication, checksumOfNewestVersion));
 					}
 
 					@Override
 					public void onError(Request request, Throwable exception) {
 						app.events.fireEvent(
-								new ApplicationLifecycleEvent(Status.checkFailed, checksumOfInstalledApplication, ""));
+								new ApplicationLifecycleEvent(Status.checkFailed, dateOfInstalledApplication, checksumOfInstalledApplication, ""));
 					}
 				});
 			}
 
 			@Override
 			public void onError(Request request, Throwable exception) {
-				app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed, "", ""));
+				app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed, "", "", ""));
 			}
 		});
 	}

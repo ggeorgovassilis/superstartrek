@@ -112,7 +112,7 @@ public class TestPWA extends BaseTest{
 		AtomicBoolean newVersionAvailable = new AtomicBoolean(false);
 		events.addHandler(ApplicationLifecycleEvent.TYPE, new ApplicationLifecycleHandler() {
 			@Override
-			public void installedAppVersionIs(String version) {
+			public void installedAppVersionIs(String version, String timestamp) {
 				assertEquals("12345", version);
 			}
 			

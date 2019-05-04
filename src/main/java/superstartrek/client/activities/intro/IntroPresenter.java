@@ -32,8 +32,8 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 	}
 	
 	@Override
-	public void installedAppVersionIs(String version) {
-		view.showAppVersion(version);
+	public void installedAppVersionIs(String version, String timestamp) {
+		view.showAppVersion(version +" "+timestamp);
 	}
 
 }
