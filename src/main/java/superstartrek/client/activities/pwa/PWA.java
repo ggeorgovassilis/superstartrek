@@ -88,6 +88,10 @@ public class PWA {
 		console.log(t.message, t);
 	}-*/;
 
+	public static native void log(String s) /*-{
+	console.log(s);
+	}-*/;
+
 	private static native Promise<Boolean> _registerServiceWorker(String url) /*-{
 		return $wnd.navigator.serviceWorker.register(url, {scope:'.'});
 	}-*/;
@@ -205,7 +209,7 @@ public class PWA {
 	}
 
 	public void run() {
-		log.info("1");
+		log("1");
 		if (!GWT.isClient()) {
 			log.info("Not running PWA because not running in browser");
 			return;

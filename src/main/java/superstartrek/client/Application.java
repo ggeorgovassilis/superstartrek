@@ -211,6 +211,7 @@ public class Application
 	
 	@Override
 	public void onModuleLoad() {
+		log.info("onModuleLoad");
 		Application.that = this;
 		setUncaughtExceptionHandler();
 		resources = GWT.create(Resources.class);
