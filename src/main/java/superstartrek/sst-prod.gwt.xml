@@ -4,10 +4,15 @@
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.google.gwt.http.HTTP" />
 	<inherits name="com.google.gwt.resources.Resources" />
+	<inherits name="com.google.gwt.logging.Logging" />
+
+	<!-- Enable log -->
+	<set-property name="gwt.logging.logLevel" value="INFO" />
+	<set-property name="gwt.logging.enabled" value="TRUE" />
 	<source path="client" />
 	<entry-point class="superstartrek.client.Application" />
 	<set-property name="compiler.useSourceMaps" value="false" />
-	<collapse-all-properties value="true"/> <!-- produces only one JS output, makes service worker offline manifest
-	generation much easier at the expense of a bit increased size -->
-	<add-linker name="sso"/> <!-- JS output names not random anymore -->
+	<collapse-all-properties value="true" /> <!-- produces only one JS output, makes service worker offline manifest generation 
+		much easier at the expense of a bit increased size -->
+	<add-linker name="sso" /> <!-- JS output names not random anymore -->
 </module>

@@ -11,8 +11,8 @@ public class PromiseBrowserImpl<T> extends JavaScriptObject implements Promise<T
 	//@formatter:off
 	@Override
 	public final native Promise<T> then(Callback<T> callback)/*-{
-		return this.then(function(arg){
-		    	callback.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(true);
+		return this.then(function(value){
+		    	callback.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(value);
 		})["catch"](function(e){
 				console.error(e);
 		    	callback.@superstartrek.client.activities.pwa.Callback::onFailure(Ljava/lang/Throwable;)(e);

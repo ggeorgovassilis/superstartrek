@@ -142,24 +142,27 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int maxY = (int) Math.min(7, ly + range);
 		StarMap map = application.starMap;
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), map);
+		final int NOT_REACHABLE = -1;
+		final int REACHABLE = 1;
+		final int UNKNOWN = 0;
 		int[][] visitLog = new int[8][8]; // -1= not reachable, 0 = not visited yet, 1 = reachable
 		visitLog[lx][ly] = 1;
 		for (int x = minX; x <= maxX; x++)
 			for (int y = minY; y <= maxY; y++) {
-				if (visitLog[x][y] != 0)
+				if (visitLog[x][y] != UNKNOWN)
 					continue;
 				// squared distance check saves one sqrt() call and thus is faster
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
 				starMap.walkLine(lx, ly, x, y, (x1, y1) -> {
-					if (visitLog[x1][y1] != 0)
-						return visitLog[x1][y1] == 1;
+					if (visitLog[x1][y1] != UNKNOWN)
+						return visitLog[x1][y1] == REACHABLE;
 					// from here on, visitLog is known to be 0
 					if (Thing.isVisible(index.findThingAt(x1, y1))) {
-						visitLog[x1][y1] = -1;
+						visitLog[x1][y1] = NOT_REACHABLE;
 						return false;
 					}
-					visitLog[x1][y1] = 1;
+					visitLog[x1][y1] = REACHABLE;
 					reachableSectors.add(Location.location(x1, y1));
 					return true;
 				});

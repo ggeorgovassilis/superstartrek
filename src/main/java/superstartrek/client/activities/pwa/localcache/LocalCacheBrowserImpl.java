@@ -38,13 +38,8 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	//@formatter:on
 	@Override
 	public final Void cacheFiles(String cacheName, String[] files, Callback<Void> callback) {
-		GWT.log("cacheFiles");
-		has(cacheName).then((hasCache) -> {
-					if (hasCache)
-						return;
-					GWT.log("Proceeding to cache files");
-					open(cacheName).then((jsCache) -> jsCache.addAll(files)).then((result) -> callback.onSuccess(null));
-				});
+		log.info("Proceeding to cache files");
+		open(cacheName).then((jsCache) -> jsCache.addAll(files)).then((result) -> callback.onSuccess(null));
 		return null;
 	}
 
@@ -52,9 +47,12 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	// TODO: rewrite in java
 	//@formatter:off
 	public final native Void clearCache(String cacheNameToDelete, ScheduledCommand callback)/*-{
+		console.log("clearCache1",cacheNameToDelete);
 		this.keys().then(function(cacheNames) {
+			console.log("clearCache2",cacheNames);
 			return Promise.all(cacheNames.filter(function(cacheName) {
-				return cacheName == cacheNameToDelete;
+					console.log("clearCache3",cacheName);
+					return cacheName == cacheNameToDelete;
 				}).map(function(cacheName) {
 				return caches['delete'](cacheName).then(function(){
 					console.log("Caches are deleted");

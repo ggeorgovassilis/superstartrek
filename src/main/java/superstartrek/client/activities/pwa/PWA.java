@@ -54,29 +54,37 @@ public class PWA {
 	public void setRequestFactory(RequestFactory rf) {
 		this.requestFactory = rf;
 	}
-	
+
 	public void setCacheImplementation(LocalCache cache) {
 		this.cache = cache;
 	}
-	
+
 	public void clearCache(ScheduledCommand callback) {
 		cache.clearCache(CACHE_NAME, callback);
 	}
 
 	public void cacheFilesForOfflineUse() {
+		log.info("cacheFilesForOfflineUse");
 		if (cache == null) {
 			log.info("Cache not supported");
 			return;
 		}
 		log.info("Checking for existence of cache");
-		cache.queryCacheExistence(CACHE_NAME).then((result)->{
-			log.info("Cache exists : "+result);
-				if (result)
-					application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
-				else
-					cache.cacheFiles(CACHE_NAME,URLS, (v)->
-							application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", "")));
+		cache.queryCacheExistence(CACHE_NAME).then((result) -> {
+			log.info("Cache exists : " + result);
+			if (result) cacheIsNowUsable();
+			else
+				cache.cacheFiles(CACHE_NAME, URLS, (v) -> {
+					log.info("Cache now populated");
+					cacheIsNowUsable();
+				});
 		});
+	}
+	
+	protected void cacheIsNowUsable() {
+		application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
+		registerServiceWorker("service-worker.js");
+		checkForNewVersion();
 	}
 
 	//@formatter:off
@@ -88,7 +96,7 @@ public class PWA {
 		console.log(t.message, t);
 	}-*/;
 
-	private static native Promise<Boolean> _registerServiceWorker(String url) /*-{
+	private static native Promise<Object> _registerServiceWorker(String url) /*-{
 		return $wnd.navigator.serviceWorker.register(url, {scope:'.'});
 	}-*/;
 
@@ -188,18 +196,19 @@ public class PWA {
 			}
 		});
 	}
-	
+
 	public void registerServiceWorker(String file) {
-		_registerServiceWorker(file).then(new Callback<Boolean>() {
-			
+		if (GWT.isClient())
+		_registerServiceWorker(file).then(new Callback<Object>() {
+
 			@Override
-			public void onSuccess(Boolean result) {
-				log.info("Service worker registered :"+result);
+			public void onSuccess(Object result) {
+				log.info("Service worker registered :" + result);
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
-				application.message("Failed to install offline: "+caught,"error");
+				application.message("Failed to install offline: " + caught, "error");
 			}
 		});
 	}
@@ -213,13 +222,7 @@ public class PWA {
 			cache = LocalCacheBrowserImpl.getInstance();
 		if (cache != null) {
 			cacheFilesForOfflineUse();
-			checkForNewVersion();
 		}
-		if (!supportsServiceWorker()) {
-			log.info("Not running PWA because service workers are not supported");
-			return;
-		}
-		registerServiceWorker("service-worker.js");
 		addInstallationListener();
 	}
 }
