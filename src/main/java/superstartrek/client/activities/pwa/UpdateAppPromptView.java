@@ -9,12 +9,8 @@ import superstartrek.client.activities.PopupView;
 public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter>{
 	
 	public void disableButtons() {
-		Element e = DOM.getElementById("update-yes");
-		e.setAttribute("disabled", "disabled");
-		e.addClassName("disabled");
-		e = DOM.getElementById("update-no");
-		e.setAttribute("disabled", "disabled");
-		e.addClassName("disabled");
+		DOM.getElementById("update-yes").setAttribute("disabled", "disabled");
+		DOM.getElementById("update-no").setAttribute("disabled", "disabled");
 	}
 
 	public UpdateAppPromptView(UpdateAppPromptPresenter presenter) {

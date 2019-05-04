@@ -54,52 +54,39 @@ public class PWA {
 	public void setRequestFactory(RequestFactory rf) {
 		this.requestFactory = rf;
 	}
-
+	
 	public void setCacheImplementation(LocalCache cache) {
 		this.cache = cache;
 	}
-
+	
 	public void clearCache(ScheduledCommand callback) {
 		cache.clearCache(CACHE_NAME, callback);
 	}
 
-	public void cacheFilesForOfflineUse(Callback<Void> callback) {
+	public void cacheFilesForOfflineUse() {
 		if (cache == null) {
-			log("Cache not supported");
+			log.info("Cache not supported");
 			return;
 		}
-		log("Checking for existence of cache");
-		cache.queryCacheExistence(CACHE_NAME).then((result) -> {
-			log("Cache exists : " + result);
-			if (result) {
-				application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
-				callback.onSuccess(null);
-			} else
-				cache.cacheFiles(CACHE_NAME, URLS, (v) -> {
+		log.info("Checking for existence of cache");
+		cache.queryCacheExistence(CACHE_NAME).then((result)->{
+			log.info("Cache exists : "+result);
+				if (result)
 					application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", ""));
-					callback.onSuccess(null);
-				});
+				else
+					cache.cacheFiles(CACHE_NAME,URLS, (v)->
+							application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", "")));
 		});
 	}
 
 	//@formatter:off
 	public static native boolean supportsServiceWorker() /*-{
-		return !(!($wnd.navigator.serviceWorker));
-	}-*/;
-	
-	public static native void nativeLog(Object o) /*-{
-		console.log(o);
+		return $wnd.navigator.serviceWorker!=null;
 	}-*/;
 
-	public static void log(Throwable t) {
-		if (GWT.isClient())
-			nativeLog(t);
-	}
-
-	public static void log(String s){
-		if (GWT.isClient())
-			nativeLog(s);
-	}
+	public static native void log(Throwable t) /*-{
+		console.log(t.message, t);
+	}-*/;
 
 	private static native Promise<Boolean> _registerServiceWorker(String url) /*-{
 		return $wnd.navigator.serviceWorker.register(url, {scope:'.'});
@@ -118,14 +105,14 @@ public class PWA {
 	//@formatter:on
 
 	public void installationEventCallback(AppInstallationEvent e) {
-		log("installation event callback");
+		log.info("installation event callback");
 		deferredInstallationPrompt = e;
 		deferredInstallationPrompt.preventDefault();
 		application.events.fireEvent(new ApplicationLifecycleEvent(Status.showInstallPrompt, "", ""));
 	}
 
 	public void installApplication() {
-		log("invoking deferred installation prompt");
+		log.info("invoking deferred installation prompt");
 		deferredInstallationPrompt.prompt();
 		deferredInstallationPrompt = null;
 	}
@@ -143,7 +130,7 @@ public class PWA {
 		try {
 			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5", callback);
 		} catch (Exception e) {
-			log(e.getMessage());
+			log.info(e.getMessage());
 		}
 	}
 
@@ -153,35 +140,35 @@ public class PWA {
 		try {
 			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd=" + rnd, callback);
 		} catch (Exception e) {
-			log(e.getMessage());
+			log.info(e.getMessage());
 		}
 	}
 
 	public void checkForNewVersion() {
-		log("Checking for new version");
+		log.info("Checking for new version");
 		Application app = application;
 		getChecksumOfInstalledApplication(new RequestCallback() {
 
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				String checksumOfInstalledApplication = response.getText();
-				log("Installed app version " + checksumOfInstalledApplication);
+				log.info("Installed app version " + checksumOfInstalledApplication);
 				application.events.fireEvent(new ApplicationLifecycleEvent(Status.informingOfInstalledVersion,
 						checksumOfInstalledApplication, ""));
 				getChecksumOfNewestVersion(new RequestCallback() {
 
 					@Override
 					public void onResponseReceived(Request request, Response response) {
-						log("Checksum of installed package : " + checksumOfInstalledApplication);
+						log.info("Checksum of installed package : " + checksumOfInstalledApplication);
 						String checksumOfNewestVersion = response.getText();
-						log("Checksum of latest    package : " + checksumOfNewestVersion);
+						log.info("Checksum of latest    package : " + checksumOfNewestVersion);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
 							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
 									checksumOfInstalledApplication, ""));
 							return;
 						}
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
-						log("is same: " + isSame);
+						log.info("is same: " + isSame);
 						app.events.fireEvent(
 								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
 										checksumOfInstalledApplication, checksumOfNewestVersion));
@@ -201,27 +188,38 @@ public class PWA {
 			}
 		});
 	}
-
-	public void registerServiceWorker(String file, Callback<Boolean> callback) {
-		_registerServiceWorker(file).then(callback);
+	
+	public void registerServiceWorker(String file) {
+		_registerServiceWorker(file).then(new Callback<Boolean>() {
+			
+			@Override
+			public void onSuccess(Boolean result) {
+				log.info("Service worker registered :"+result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				application.message("Failed to install offline: "+caught,"error");
+			}
+		});
 	}
 
 	public void run() {
-		log("2");
-		addInstallationListener();
-		log("3");
+		if (!GWT.isClient()) {
+			log.info("Not running PWA because not running in browser");
+			return;
+		}
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
-		log("4");
 		if (cache != null) {
-			cacheFilesForOfflineUse((v) -> {
-				log("Cache is ready "+v);
-				registerServiceWorker("service-worker.js", (success) -> {
-					log("service worker registered");
-					checkForNewVersion();
-				});
-			});
+			cacheFilesForOfflineUse();
+			checkForNewVersion();
 		}
-		log("5");
+		if (!supportsServiceWorker()) {
+			log.info("Not running PWA because service workers are not supported");
+			return;
+		}
+		registerServiceWorker("service-worker.js");
+		addInstallationListener();
 	}
 }

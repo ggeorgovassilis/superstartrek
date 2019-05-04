@@ -28,42 +28,23 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	}
 
 	private final native PromiseBrowserImpl<Boolean> has(String name)/*-{
-		console.log("has cache ",name);
 		return this.has(name);
 	}-*/;
 
 	private final native PromiseBrowserImpl<JsCache> open(String name)/*-{
-		console.log("opening cache ",name);
 		return this.open(name);
-	}-*/;
-
-	
-	public final void log(String name) {
-		if (GWT.isClient())
-			log(name);
-	}
-	
-	private final native void _log(String name)/*-{
-	console.log(name);
 	}-*/;
 
 	//@formatter:on
 	@Override
 	public final Void cacheFiles(String cacheName, String[] files, Callback<Void> callback) {
-		log("cacheFiles");
+		GWT.log("cacheFiles");
 		has(cacheName).then((hasCache) -> {
-			log("hasCache " + hasCache);
-			if (hasCache)
-				return;
-			log("Proceeding to cache files");
-			open(cacheName).then((jsCache) -> {
-				log("openend cache, adding files");
-				jsCache.addAll(files);
-			}).then((result) -> {
-				log("added files, doing callback");
-				callback.onSuccess(null);
-			});
-		});
+					if (hasCache)
+						return;
+					GWT.log("Proceeding to cache files");
+					open(cacheName).then((jsCache) -> jsCache.addAll(files)).then((result) -> callback.onSuccess(null));
+				});
 		return null;
 	}
 
@@ -71,14 +52,10 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	// TODO: rewrite in java
 	//@formatter:off
 	public final native Void clearCache(String cacheNameToDelete, ScheduledCommand callback)/*-{
-		console.log("asked to empty cache "+cacheNameToDelete);
 		this.keys().then(function(cacheNames) {
-		console.log("looking at ",cacheNames);
 			return Promise.all(cacheNames.filter(function(cacheName) {
-				console.log("looking at ",cacheName);
-					return cacheName == cacheNameToDelete;
+				return cacheName == cacheNameToDelete;
 				}).map(function(cacheName) {
-				console.log("deleting ",cacheName);
 				return caches['delete'](cacheName).then(function(){
 					console.log("Caches are deleted");
 					callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();

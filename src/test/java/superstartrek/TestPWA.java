@@ -72,7 +72,7 @@ public class TestPWA extends BaseTest{
 				return null;
 			}
 		});
-		pwa.cacheFilesForOfflineUse((v)->{});
+		pwa.cacheFilesForOfflineUse();
 		verify(cache).cacheFiles(eq("sst1"), any(String[].class), any(Callback.class));
 	}
 	
