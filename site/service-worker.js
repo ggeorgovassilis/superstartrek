@@ -4,21 +4,19 @@ var CACHE_NAME = APP_PREFIX + VERSION;
 
 // Respond with cached resources
 self.addEventListener('fetch', function (e) {
-  e.respondWith(
-    caches.match(e.request).then(function (request) {
+  e.respondWith(caches.match(e.request).then(function (request) {
       if (request) { // if cache is available, respond with cache
-        console.debug('SW','file found in cache');
+        console.debug('HIT',e.request.url);
         return request;
       } else {       // if there are no cache, try fetching request
-        console.debug('SW','file is not cached, fetching : ' + e.request.url);
+        console.debug('MISS',e.request.url);
         return fetch(e.request)
       }
 
       // You can omit if/else for console.debug & put one line below like this too.
       // return request || fetch(e.request)
-    })
-  )
-})
+    }))
+});
 
 // Cache resources
 self.addEventListener('install', function (e) {
