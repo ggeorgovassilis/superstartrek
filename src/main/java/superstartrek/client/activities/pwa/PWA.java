@@ -14,6 +14,7 @@ import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.Applicati
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
+import superstartrek.client.activities.pwa.promise.Promise;
 
 public class PWA {
 
@@ -87,12 +88,8 @@ public class PWA {
 		console.log(t.message, t);
 	}-*/;
 
-	public static native void registerServiceWorker(String url) /*-{
-		navigator.serviceWorker.register(url, {scope:'.'})
-		.then(function(arg){
-			console.log("REGISTERED SW");
-			return null;
-		})['catch'](function(e){console.error(e.message)});
+	private static native Promise<Boolean> _registerServiceWorker(String url) /*-{
+		return navigator.serviceWorker.register(url, {scope:'.'});
 	}-*/;
 
 	/*
@@ -102,7 +99,6 @@ public class PWA {
 	public native void addInstallationListener() /*-{
 		var that = this;
 		$wnd.addEventListener('beforeinstallprompt', function (e){
-			console.log("beforeinstallprompt");
 			that.@superstartrek.client.activities.pwa.PWA::installationEventCallback(Lsuperstartrek/client/activities/pwa/AppInstallationEvent;)(e);
 		});
 	}-*/;
@@ -146,7 +142,6 @@ public class PWA {
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
-
 	}
 
 	public void checkForNewVersion() {
@@ -177,7 +172,6 @@ public class PWA {
 						app.events.fireEvent(
 								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
 										checksumOfInstalledApplication, checksumOfNewestVersion));
-
 					}
 
 					@Override
@@ -194,12 +188,28 @@ public class PWA {
 			}
 		});
 	}
+	
+	public void registerServiceWorker(String file) {
+		_registerServiceWorker(file).then(new Callback<Boolean>() {
+			
+			@Override
+			public void onSuccess(Boolean result) {
+				log.info("Service worker registered :"+result);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				application.message("Failed to install offline: "+caught,"error");
+			}
+		});
+	}
 
 	public void run() {
 		if (!GWT.isClient()) {
 			log.info("Not running PWA because not running in browser");
 			return;
 		}
+		registerServiceWorker("service-worker.js");
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
 		if (cache != null) {
@@ -210,7 +220,6 @@ public class PWA {
 			log.info("Not running PWA because service workers are not supported");
 			return;
 		}
-		registerServiceWorker("service-worker.js");
 		addInstallationListener();
 	}
 }
