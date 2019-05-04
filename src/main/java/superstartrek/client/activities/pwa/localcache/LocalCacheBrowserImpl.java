@@ -52,11 +52,14 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	// TODO: rewrite in java
 	//@formatter:off
 	public final native Void clearCache(String cacheNameToDelete, ScheduledCommand callback)/*-{
-		console.log("asked to empty cache");
+		console.log("asked to empty cache "+cacheNameToDelete);
 		this.keys().then(function(cacheNames) {
+		console.log("looking at ",cacheNames);
 			return Promise.all(cacheNames.filter(function(cacheName) {
-				return cacheName == cacheNameToDelete;
+				console.log("looking at ",cacheName);
+					return cacheName == cacheNameToDelete;
 				}).map(function(cacheName) {
+				console.log("deleting ",cacheName);
 				return caches['delete'](cacheName).then(function(){
 					console.log("Caches are deleted");
 					callback.@com.google.gwt.core.client.Scheduler.ScheduledCommand::execute()();
