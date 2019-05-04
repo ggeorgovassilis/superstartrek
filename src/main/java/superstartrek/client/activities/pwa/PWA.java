@@ -208,13 +208,14 @@ public class PWA {
 
 	public void run() {
 		log("2");
+		addInstallationListener();
+		log("3");
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
-		log("3");
-		addInstallationListener();
 		log("4");
 		if (cache != null) {
 			cacheFilesForOfflineUse((v) -> {
+				log("Cache is ready "+v);
 				registerServiceWorker("service-worker.js", (success) -> {
 					log("service worker registered");
 					checkForNewVersion();
