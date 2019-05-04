@@ -20,10 +20,6 @@ public class CSS {
 		return damageClasses[index];
 	}
 
-	public static void addClassDeferred(Element e, String css) {
-		Timer.postpone(() -> e.addClassName(css));
-	}
-
 	// according to https://caniuse.com/#search=querySelector this is supported in
 	// all browsers that are currently around
 	public final static native NodeList<Element> querySelectorAll(String selectors) /*-{
