@@ -209,7 +209,7 @@ public class PWA {
 	}
 
 	public void run() {
-		log("1");
+		log("1.1");
 		if (!GWT.isClient()) {
 			log("Not running PWA because not running in browser");
 			return;
