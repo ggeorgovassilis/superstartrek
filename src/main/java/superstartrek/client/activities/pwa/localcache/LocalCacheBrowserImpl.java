@@ -38,7 +38,7 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	}-*/;
 
 	
-	public void log(String name) {
+	public final void log(String name) {
 		if (GWT.isClient())
 			log(name);
 	}
