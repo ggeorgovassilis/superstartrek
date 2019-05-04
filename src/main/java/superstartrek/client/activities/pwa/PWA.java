@@ -216,7 +216,7 @@ public class PWA {
 		if (cache != null) {
 			cacheFilesForOfflineUse((v) -> {
 				registerServiceWorker("service-worker.js", (success) -> {
-					log("service worker registered")
+					log("service worker registered");
 					checkForNewVersion();
 				});
 			});
