@@ -28,23 +28,42 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	}
 
 	private final native PromiseBrowserImpl<Boolean> has(String name)/*-{
+		console.log("has cache ",name);
 		return this.has(name);
 	}-*/;
 
 	private final native PromiseBrowserImpl<JsCache> open(String name)/*-{
+		console.log("opening cache ",name);
 		return this.open(name);
+	}-*/;
+
+	
+	public void log(String name) {
+		if (GWT.isClient())
+			log(name);
+	}
+	
+	private final native void _log(String name)/*-{
+	console.log(name);
 	}-*/;
 
 	//@formatter:on
 	@Override
 	public final Void cacheFiles(String cacheName, String[] files, Callback<Void> callback) {
-		GWT.log("cacheFiles");
+		log("cacheFiles");
 		has(cacheName).then((hasCache) -> {
-					if (hasCache)
-						return;
-					GWT.log("Proceeding to cache files");
-					open(cacheName).then((jsCache) -> jsCache.addAll(files)).then((result) -> callback.onSuccess(null));
-				});
+			log("hasCache " + hasCache);
+			if (hasCache)
+				return;
+			log("Proceeding to cache files");
+			open(cacheName).then((jsCache) -> {
+				log("openend cache, adding files");
+				jsCache.addAll(files);
+			}).then((result) -> {
+				log("added files, doing callback");
+				callback.onSuccess(null);
+			});
+		});
 		return null;
 	}
 
