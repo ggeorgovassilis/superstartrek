@@ -207,7 +207,6 @@ public class Application
 		setupScreens();
 		setupStarMap();
 		setupGameController();
-		setupHttp();
 		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
 		gameController.startGame();
 		//null out so that resources can be garbage collected
@@ -232,7 +231,7 @@ public class Application
 			browserAPI = new GwtBrowserAPIImpl();
 		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		events = GWT.create(SimpleEventBus.class);
-		//setupLogging();
+		setupHttp();
 		setupPwa();
 	}
 	
