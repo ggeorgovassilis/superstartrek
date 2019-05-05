@@ -25,10 +25,12 @@ self.addEventListener('fetch', function (e) {
 // Cache resources
 self.addEventListener('install', function (e) {
   console.log("listening for SW install");
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', function (e) {
 	  console.log("listening for SW activate");
+  e.waitUntil(clients.claim());
   e.waitUntil(
     caches.keys().then(function (keyList) {
     	console.log("SW activated");
@@ -47,5 +49,5 @@ self.addEventListener('activate', function (e) {
         }
       }))
     })
-  )
+  );
 });
