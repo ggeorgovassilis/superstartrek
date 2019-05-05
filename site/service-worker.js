@@ -2,7 +2,11 @@ var APP_PREFIX = 'sst'     // Identifier for this app (this needs to be consiste
 var VERSION = '1'              // Version of the off-line cache (change this value everytime you want to update cache)
 var CACHE_NAME = APP_PREFIX + VERSION;
 
-// Respond with cached resources
+//inside service worker script
+self.addEventListener('error', function(e) {
+  console.log(e.filename, e.lineno, e.colno, e.message);
+});
+
 self.addEventListener('fetch', function (e) {
   e.respondWith(caches.match(e.request).then(function (response) {
       if (response) { // if cache is available, respond with cache
