@@ -34,7 +34,6 @@ public class PWA implements ApplicationLifecycleHandler{
 			"/superstartrek/site/", 
 			"/superstartrek/site/index.html",
 			"/superstartrek/site/sst.webmanifest",
-			"/superstartrek/site/service-worker.js", 
 			"/superstartrek/site/images/cancel.svg",
 			"/superstartrek/site/images/bookmark.svg",
 			"/superstartrek/site/images/communicator.svg", 
