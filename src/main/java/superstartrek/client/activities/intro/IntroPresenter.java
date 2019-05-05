@@ -1,5 +1,6 @@
 package superstartrek.client.activities.intro;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -19,6 +20,7 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 	
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
+		GWT.log("intro view");
 		view.show();
 		application.browserAPI.postHistoryChange("intro");
 	}

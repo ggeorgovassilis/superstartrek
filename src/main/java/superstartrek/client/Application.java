@@ -44,6 +44,7 @@ import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.utils.GwtBrowserAPIImpl;
+import superstartrek.client.utils.Timer;
 import superstartrek.client.activities.messages.MessageHandler.MessagePostedEvent;
 import superstartrek.client.activities.pwa.AppInstallPromptPresenter;
 import superstartrek.client.activities.pwa.AppInstallPromptView;
@@ -207,10 +208,14 @@ public class Application
 		setupScreens();
 		setupStarMap();
 		setupGameController();
-		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
-		gameController.startGame();
-		//null out so that resources can be garbage collected
-		resources = null;
+		//strangely doesn't work without postponing
+		Timer.postpone(()->{
+			starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
+			gameController.startGame();
+			//null out so that resources can be garbage collected
+			resources = null;
+			GWT.log("Setup done");
+		});
 	}
 	
 	public void setupPwa() {
