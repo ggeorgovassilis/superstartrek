@@ -7,7 +7,7 @@ public interface ApplicationLifecycleHandler extends EventHandler{
 
 	public static class ApplicationLifecycleEvent extends GwtEvent<ApplicationLifecycleHandler>{
 
-		public enum Status{showInstallPrompt,checkFailed,appIsUpToDate,appIsOutdated, appCacheWasJustRefreshed, informingOfInstalledVersion, filesCached};
+		public enum Status{showInstallPrompt,checkFailed,appIsUpToDate,appIsOutdated, appCacheWasJustRefreshed, informingOfInstalledVersion, filesCached, serviceWorkerInitialisedOrNotSupported};
 		public final static Type<ApplicationLifecycleHandler> TYPE = new Type<>();
 		public final Status status;
 		public final String currentVersion;
@@ -19,6 +19,10 @@ public interface ApplicationLifecycleHandler extends EventHandler{
 			this.currentVersion = curentVersion;
 			this.latestAvailableVersion = latestAvailableVersion;
 			this.versionTimestamp = versionTimestamp;
+		}
+		
+		public ApplicationLifecycleEvent(Status status) {
+			this(status, "", "", "");
 		}
 		
 		@Override
@@ -36,6 +40,7 @@ public interface ApplicationLifecycleHandler extends EventHandler{
 				case informingOfInstalledVersion:handler.installedAppVersionIs(currentVersion, versionTimestamp);break;
 				case filesCached:handler.filesAreCached();break;
 				case showInstallPrompt:handler.showInstallPrompt();break;
+				case serviceWorkerInitialisedOrNotSupported: handler.serviceWorkerInitialisedOrNotSupported(); break;
 			}
 		}
 
@@ -47,4 +52,5 @@ public interface ApplicationLifecycleHandler extends EventHandler{
 	default void installedAppVersionIs(String version, String timestamp) {};
 	default void filesAreCached() {};
 	default void showInstallPrompt() {};
+	default void serviceWorkerInitialisedOrNotSupported() {};
 }

@@ -206,7 +206,13 @@ public class Application
 	public void setupPwa() {
 		pwa = new PWA(this);
 		pwa.setRequestFactory(requestFactory);
-		pwa.run();
+		pwa.run((v)->{
+			log.info("PWA initialised, game can start");
+			starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
+			gameController.startGame();
+			//null out so that resources can be garbage collected
+			resources = null;
+		});
 	}
 	
 	@Override
@@ -223,11 +229,7 @@ public class Application
 		setupStarMap();
 		setupGameController();
 		setupHttp();
-		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
-		gameController.startGame();
-		//null out so that resources can be garbage collected
 		setupPwa();
-		resources = null;
 	}
 	
 	@Override

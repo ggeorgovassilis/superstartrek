@@ -16,13 +16,14 @@ import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
 import superstartrek.client.activities.pwa.promise.Promise;
 
-public class PWA {
+public class PWA implements ApplicationLifecycleHandler{
 
 	final static String CACHE_NAME = "sst1";
 	AppInstallationEvent deferredInstallationPrompt;
 	Application application;
 	LocalCache cache;
 	RequestFactory requestFactory;
+	Callback<Void> runAfterInitialisation;
 
 	private static Logger log = Logger.getLogger("");
 
@@ -85,7 +86,6 @@ public class PWA {
 	
 	protected void cacheIsNowUsable() {
 		application.events.fireEvent(new ApplicationLifecycleEvent(Status.filesCached, "", "", ""));
-		registerServiceWorker("service-worker.js");
 		checkForNewVersion();
 	}
 
@@ -201,31 +201,49 @@ public class PWA {
 	}
 
 	public void registerServiceWorker(String file) {
+		if (!supportsServiceWorker()) {
+			application.events.fireEvent(new ApplicationLifecycleEvent(Status.serviceWorkerInitialisedOrNotSupported));
+			return;
+		}
 		if (GWT.isClient())
 		_registerServiceWorker(file).then(new Callback<Object>() {
 
 			@Override
 			public void onSuccess(Object result) {
 				log.info("Service worker registered :" + result);
+				application.events.fireEvent(new ApplicationLifecycleEvent(Status.serviceWorkerInitialisedOrNotSupported));
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
 				application.message("Failed to install offline: " + caught, "error");
+				application.events.fireEvent(new ApplicationLifecycleEvent(Status.serviceWorkerInitialisedOrNotSupported));
 			}
 		});
 	}
 
-	public void run() {
-		if (!GWT.isClient()) {
-			log.info("Not running PWA because not running in browser");
-			return;
-		}
+	@Override
+	public void serviceWorkerInitialisedOrNotSupported() {
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
 		if (cache != null) {
 			cacheFilesForOfflineUse();
+		} else cacheIsNowUsable();
+	}
+	
+	@Override
+	public void filesAreCached() {
+		runAfterInitialisation.onSuccess(null);
+	}
+
+	public void run(Callback<Void> callback) {
+		if (!GWT.isClient()) {
+			log.info("Not running PWA because not running in browser");
+			return;
 		}
+		runAfterInitialisation = callback;
+		application.events.addHandler(ApplicationLifecycleEvent.TYPE, this);
 		addInstallationListener();
+		registerServiceWorker("service-worker.js");
 	}
 }
