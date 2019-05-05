@@ -39,7 +39,7 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	@Override
 	public final Void cacheFiles(String cacheName, String[] files, Callback<Void> callback) {
 		log.info("Proceeding to cache files");
-		open(cacheName).then((jsCache) -> jsCache.addAll(files)).then((result) -> callback.onSuccess(null));
+		open(cacheName).then((jsCache) -> jsCache.addAll(files).then((result) -> callback.onSuccess(null)));
 		return null;
 	}
 

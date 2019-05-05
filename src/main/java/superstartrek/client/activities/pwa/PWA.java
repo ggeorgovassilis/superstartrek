@@ -235,6 +235,7 @@ public class PWA implements ApplicationLifecycleHandler{
 	@Override
 	public void filesAreCached() {
 		runAfterInitialisation.onSuccess(null);
+		runAfterInitialisation = null;
 	}
 
 	public void run(Callback<Void> callback) {
