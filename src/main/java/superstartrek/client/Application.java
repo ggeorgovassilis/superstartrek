@@ -203,15 +203,23 @@ public class Application
 		}
 	}
 	
+	public void setupTheRest() {
+		setupScreens();
+		setupStarMap();
+		setupGameController();
+		setupHttp();
+		starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
+		gameController.startGame();
+		//null out so that resources can be garbage collected
+		resources = null;
+	}
+	
 	public void setupPwa() {
 		pwa = new PWA(this);
 		pwa.setRequestFactory(requestFactory);
 		pwa.run((v)->{
-			log.info("PWA initialised, game can start");
-			starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
-			gameController.startGame();
-			//null out so that resources can be garbage collected
-			resources = null;
+			log.info("PWA initialised, setting up the rest of the game");
+			setupTheRest();
 		});
 	}
 	
@@ -225,10 +233,6 @@ public class Application
 		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		events = GWT.create(SimpleEventBus.class);
 		//setupLogging();
-		setupScreens();
-		setupStarMap();
-		setupGameController();
-		setupHttp();
 		setupPwa();
 	}
 	
