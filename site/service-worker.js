@@ -4,10 +4,10 @@ var CACHE_NAME = APP_PREFIX + VERSION;
 
 // Respond with cached resources
 self.addEventListener('fetch', function (e) {
-  e.respondWith(caches.match(e.request).then(function (request) {
-      if (request) { // if cache is available, respond with cache
+  e.respondWith(caches.match(e.request).then(function (response) {
+      if (response) { // if cache is available, respond with cache
         console.debug('HIT',e.request.url);
-        return request;
+        return response;
       } else {       // if there are no cache, try fetching request
         console.debug('MISS',e.request.url);
         return fetch(e.request)
