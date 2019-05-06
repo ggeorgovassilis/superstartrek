@@ -28,7 +28,7 @@ self.addEventListener('fetch', function (e) {
 // Cache resources
 self.addEventListener('install', function (e) {
   self.skipWaiting();
-  e.waitUntil(caches.open(cacheName).then(function(cache) {
+  e.waitUntil(caches.open(CACHE_NAME).then(function(cache) {
 		      return cache.addAll(
 		        [
 					"/superstartrek/site/", 
