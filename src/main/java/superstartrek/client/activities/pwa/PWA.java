@@ -160,5 +160,6 @@ public class PWA {
 		}
 		addInstallationListener();
 		setupCache();
+		checkForNewVersion();
 	}
 }
