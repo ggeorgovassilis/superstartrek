@@ -67,21 +67,22 @@ public class PWA {
 	}
 
 	public void cacheFilesForOfflineUse() {
-		log.info("cacheFilesForOfflineUse");
-		if (cache == null) {
-			log.info("Cache not supported");
-			return;
-		}
-		log.info("Checking for existence of cache");
-		cache.queryCacheExistence(CACHE_NAME).then((result) -> {
-			log.info("Cache exists : " + result);
-			if (result) cacheIsNowUsable();
-			else
-				cache.cacheFiles(CACHE_NAME, URLS, (v) -> {
-					log.info("Cache now populated");
-					cacheIsNowUsable();
-				});
-		});
+		cacheIsNowUsable();
+//		log.info("cacheFilesForOfflineUse");
+//		if (cache == null) {
+//			log.info("Cache not supported");
+//			return;
+//		}
+//		log.info("Checking for existence of cache");
+//		cache.queryCacheExistence(CACHE_NAME).then((result) -> {
+//			log.info("Cache exists : " + result);
+//			if (result) cacheIsNowUsable();
+//			else
+//				cache.cacheFiles(CACHE_NAME, URLS, (v) -> {
+//					log.info("Cache now populated");
+//					cacheIsNowUsable();
+//				});
+//		});
 	}
 	
 	protected void cacheIsNowUsable() {
