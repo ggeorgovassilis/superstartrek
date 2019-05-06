@@ -27,7 +27,7 @@ self.addEventListener('fetch', function (e) {
 
 // Cache resources
 self.addEventListener('install', function (e) {
-  self.skipWaiting();
+// self.skipWaiting();
   e.waitUntil(caches.open(CACHE_NAME).then(function(cache) {
 		      return cache.addAll(
 		        [
@@ -57,26 +57,6 @@ self.addEventListener('install', function (e) {
 		    }));
 });
 
-self.addEventListener('activate', function (e) {
-	  console.log("listening for SW activate");
-  e.waitUntil(clients.claim());
-  e.waitUntil(
-    caches.keys().then(function (keyList) {
-    	console.log("SW activated");
-      // `keyList` contains all cache names under your username.github.io
-      // filter out ones that has this app prefix to create white list
-      var cacheWhitelist = keyList.filter(function (key) {
-        return key.indexOf(APP_PREFIX)
-      })
-      // add current cache name to white list
-      cacheWhitelist.push(CACHE_NAME)
-
-      return Promise.all(keyList.map(function (key, i) {
-        if (cacheWhitelist.indexOf(key) === -1) {
-          console.debug('deleting cache : ' + keyList[i] )
-          return caches.delete(keyList[i])
-        }
-      }))
-    })
-  );
+self.addEventListener('activate', function (event) {
+	  console.log("SW activated");
 });
