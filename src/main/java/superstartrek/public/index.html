@@ -9,6 +9,10 @@
 <link rel="shortcut icon" href="/superstartrek/site/images/icon192x192.png">
 <link rel=manifest href="sst.webmanifest">
 <link rel="stylesheet" type="text/css" href="css/sst.css"></link>
+<script>//<![CDATA[
+if (window.navigator.serviceWorker)
+	window.navigator.serviceWorker.register("service-worker.js", {scope:'.'})
+//]]></script>
 </head>
 <body class="disable-dbl-tap-zoom">
 <h1 id="screen-loading">Loading...</h1>

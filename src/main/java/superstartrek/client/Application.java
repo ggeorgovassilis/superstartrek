@@ -114,12 +114,6 @@ public class Application
 		new AppInstallPromptView(new AppInstallPromptPresenter(this));
 	}
 	
-	public void registerEventHandlers() {
-		events.addHandler(GameOverEvent.TYPE, this);
-		events.addHandler(ApplicationLifecycleEvent.TYPE, this);
-	}
-
-
 	public void message(String formattedMessage) {
 		message(formattedMessage, "info");
 	}
@@ -221,12 +215,14 @@ public class Application
 	public void setupPwa() {
 		pwa = new PWA(this);
 		pwa.setRequestFactory(requestFactory);
-		pwa.run((v)->{
-			log.info("PWA initialised, setting up the rest of the game");
-			setupTheRest();
-		});
+		pwa.run();
 	}
-	
+
+	public void registerEventHandlers() {
+		events.addHandler(GameOverEvent.TYPE, this);
+		events.addHandler(ApplicationLifecycleEvent.TYPE, this);
+	}
+
 	@Override
 	public void onModuleLoad() {
 		Application.that = this;
@@ -237,6 +233,7 @@ public class Application
 		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		events = GWT.create(SimpleEventBus.class);
 		setupHttp();
+		registerEventHandlers();
 		setupPwa();
 	}
 	
@@ -247,7 +244,8 @@ public class Application
 	
 	@Override
 	public void filesAreCached() {
-		GWT.log("Files are now cached for offline use");
+		log.info("PWA initialised, setting up the rest of the game");
+		setupTheRest();
 	}
 
 

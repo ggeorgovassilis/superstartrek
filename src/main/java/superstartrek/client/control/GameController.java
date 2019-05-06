@@ -118,7 +118,6 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	public void startGame() {
 		application.browserAPI.postHistoryChange("intro", true);
-		application.registerEventHandlers();
 		events.fireEvent(new GameStartedEvent());
 	}
 
