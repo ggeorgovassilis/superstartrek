@@ -235,6 +235,7 @@ public class Application
 		setupHttp();
 		registerEventHandlers();
 		setupPwa();
+		setupTheRest();
 	}
 	
 	@Override
@@ -242,11 +243,4 @@ public class Application
 		reload();
 	}
 	
-	@Override
-	public void filesAreCached() {
-		log.info("PWA initialised, setting up the rest of the game");
-		setupTheRest();
-	}
-
-
 }

@@ -50,34 +50,6 @@ public class TestPWA extends BaseTest{
 		verify(cache).clearCache("sst1", callback);
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Ignore
-	@Test
-	public void test_cacheFilesForOfflineUse() {
-		Promise<Boolean> queryPromise = mock(Promise.class);
-		when(queryPromise.then(any(Callback.class))).thenAnswer(new Answer<Void>() {
-
-			@Override
-			public Void answer(InvocationOnMock invocation) throws Throwable {
-				AsyncCallback<Boolean> callback = invocation.getArgumentAt(0, AsyncCallback.class);
-				callback.onSuccess(false);
-				return null;
-			}
-		});
-		when(cache.queryCacheExistence("sst1")).thenReturn(queryPromise);
-		when(cache.cacheFiles(eq("sst1"), any(String[].class), any(Callback.class))).thenAnswer(new Answer<Void>() {
-
-			@Override
-			public Void answer(InvocationOnMock invocation) throws Throwable {
-				Callback<?> c = invocation.getArgumentAt(2, Callback.class);
-				c.onSuccess(null);
-				return null;
-			}
-		});
-		pwa.cacheFilesForOfflineUse();
-		verify(cache).cacheFiles(eq("sst1"), any(String[].class), any(Callback.class));
-	}
-	
 	@Test
 	public void test_checkForNewVersion() {
 		Request request = mock(Request.class);
