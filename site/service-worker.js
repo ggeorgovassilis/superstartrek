@@ -16,6 +16,9 @@ self.addEventListener('fetch', function (e) {
         return response;
       } else {       // if there are no cache, try fetching request
         console.debug('MISS',e.request.url);
+        if ((""+e.request.url).indexOf("refresh_cache")!=-1){
+        	populateCache();
+        }
         return fetch(e.request)
       }
 
@@ -25,36 +28,40 @@ self.addEventListener('fetch', function (e) {
     }))
 });
 
+function populateCache(){
+	return caches.open(CACHE_NAME).then(function(cache) {
+	      return cache.addAll(
+	        [
+				"/superstartrek/site/", 
+				"/superstartrek/site/index.html",
+				"/superstartrek/site/sst.webmanifest",
+				"/superstartrek/site/images/cancel.svg",
+				"/superstartrek/site/images/bookmark.svg",
+				"/superstartrek/site/images/communicator.svg", 
+				"/superstartrek/site/images/federation_logo.svg",
+				"/superstartrek/site/images/fire_at_will.svg", 
+				"/superstartrek/site/images/hexagon_filled.svg",
+				"/superstartrek/site/images/hexagon.svg", 
+				"/superstartrek/site/images/icon192x192.png",
+				"/superstartrek/site/images/icon512x512.png", 
+				"/superstartrek/site/images/laser.svg",
+				"/superstartrek/site/images/navigation.svg", 
+				"/superstartrek/site/images/radar.svg",
+				"/superstartrek/site/images/torpedo.svg",
+				"/superstartrek/site/images/stars-background.gif", 
+				"/superstartrek/site/images/hamburger-menu.svg",
+				"/superstartrek/site/css/sst.css", 
+				"/superstartrek/site/superstartrek.superstartrek.nocache.js",
+				"/superstartrek/site/checksum.sha.md5"
+	        ]
+	      );
+	    });
+}
+
 // Cache resources
 self.addEventListener('install', function (e) {
 // self.skipWaiting();
-  e.waitUntil(caches.open(CACHE_NAME).then(function(cache) {
-		      return cache.addAll(
-		        [
-					"/superstartrek/site/", 
-					"/superstartrek/site/index.html",
-					"/superstartrek/site/sst.webmanifest",
-					"/superstartrek/site/images/cancel.svg",
-					"/superstartrek/site/images/bookmark.svg",
-					"/superstartrek/site/images/communicator.svg", 
-					"/superstartrek/site/images/federation_logo.svg",
-					"/superstartrek/site/images/fire_at_will.svg", 
-					"/superstartrek/site/images/hexagon_filled.svg",
-					"/superstartrek/site/images/hexagon.svg", 
-					"/superstartrek/site/images/icon192x192.png",
-					"/superstartrek/site/images/icon512x512.png", 
-					"/superstartrek/site/images/laser.svg",
-					"/superstartrek/site/images/navigation.svg", 
-					"/superstartrek/site/images/radar.svg",
-					"/superstartrek/site/images/torpedo.svg",
-					"/superstartrek/site/images/stars-background.gif", 
-					"/superstartrek/site/images/hamburger-menu.svg",
-					"/superstartrek/site/css/sst.css", 
-					"/superstartrek/site/superstartrek.superstartrek.nocache.js",
-					"/superstartrek/site/checksum.sha.md5"
-		        ]
-		      );
-		    }));
+  e.waitUntil(populateCache());
 });
 
 self.addEventListener('activate', function (event) {
