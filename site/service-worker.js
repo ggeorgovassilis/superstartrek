@@ -33,8 +33,11 @@ function populateCache(){
 	      return cache.addAll(
 	        [
 				"/superstartrek/site/", 
-				"/superstartrek/site/index.html",
+				"/superstartrek/site/css/sst.css", 
 				"/superstartrek/site/sst.webmanifest",
+				"/superstartrek/site/images/stars-background.gif", 
+				"/superstartrek/site/superstartrek.superstartrek.nocache.js",
+				"/superstartrek/site/checksum.sha.md5",
 				"/superstartrek/site/images/cancel.svg",
 				"/superstartrek/site/images/bookmark.svg",
 				"/superstartrek/site/images/communicator.svg", 
@@ -48,11 +51,7 @@ function populateCache(){
 				"/superstartrek/site/images/navigation.svg", 
 				"/superstartrek/site/images/radar.svg",
 				"/superstartrek/site/images/torpedo.svg",
-				"/superstartrek/site/images/stars-background.gif", 
-				"/superstartrek/site/images/hamburger-menu.svg",
-				"/superstartrek/site/css/sst.css", 
-				"/superstartrek/site/superstartrek.superstartrek.nocache.js",
-				"/superstartrek/site/checksum.sha.md5"
+				"/superstartrek/site/images/hamburger-menu.svg"
 	        ]
 	      );
 	    });
