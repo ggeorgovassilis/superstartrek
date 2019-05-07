@@ -47,7 +47,7 @@ public class TestPWA extends BaseTest{
 	public void test_clearCache() {
 		ScheduledCommand callback = mock(ScheduledCommand.class);
 		pwa.clearCache(callback);
-		verify(cache).clearCache("sst1", callback);
+		verify(cache).clearCache(eq("sst1"), any(RequestFactory.class), eq(callback));
 	}
 	
 	@Test

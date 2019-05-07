@@ -37,9 +37,8 @@ public class PWA {
 	}
 
 	public void clearCache(ScheduledCommand callback) {
-		cache.clearCache(CACHE_NAME, callback);
+		cache.clearCache(CACHE_NAME, application.requestFactory, callback);
 	}
-
 
 	//@formatter:off
 	public static native boolean supportsServiceWorker() /*-{
@@ -121,13 +120,15 @@ public class PWA {
 						log.info("Checksum of installed package : " + checksumOfInstalledApplication);
 						String checksumOfNewestVersion = response.getText();
 						log.info("Checksum of latest    package : " + checksumOfNewestVersion);
-						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
-							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
-									checksumOfInstalledApplication, dateOfInstalledApplication, ""));
-							return;
-						}
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
 						log.info("is same: " + isSame);
+//						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
+//							GWT.log("update check failed");
+//							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
+//									checksumOfInstalledApplication, dateOfInstalledApplication, ""));
+//							return;
+//						}
+						isSame = false;
 						app.events.fireEvent(
 								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
 										checksumOfInstalledApplication, dateOfInstalledApplication, checksumOfNewestVersion));
@@ -152,7 +153,7 @@ public class PWA {
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
 	}
-	
+
 	public void run() {
 		if (!GWT.isClient()) {
 			log.info("Not running PWA because not running in browser");
