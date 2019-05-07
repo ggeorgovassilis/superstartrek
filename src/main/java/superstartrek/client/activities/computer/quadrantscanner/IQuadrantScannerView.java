@@ -12,5 +12,6 @@ public interface IQuadrantScannerView extends View{
 	
 	void removeCssFromCell(int x, int y, String css);
 	void addCssToCell(int x, int y, String css);
+	void moveCellContents(int xFrom, int yFrom, int xTo, int yTo);
 
 }

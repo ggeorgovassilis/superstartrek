@@ -2,6 +2,7 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -94,5 +95,18 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	@Override
 	public void addCssToCell(int x, int y, String css) {
 		eSectors[x][y].addClassName(css);
+	}
+
+	@Override
+	public void moveCellContents(int xFrom, int yFrom, int xTo, int yTo) {
+		Element eFrom = eSectors[xFrom][yFrom];
+		Element eTo = eSectors[xTo][yTo];
+		eTo.setClassName(eFrom.getClassName());
+		while (eFrom.hasChildNodes()) {
+			Node node = eFrom.getFirstChild();
+			node.removeFromParent();
+			eTo.appendChild(node);
+		}
+		eFrom.setClassName("");
 	}
 }

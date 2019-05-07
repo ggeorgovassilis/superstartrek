@@ -100,7 +100,7 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		k.setLocation(Location.location(3, 4));
 		q.getKlingons().add(k);
 		presenter.thingMoved(k, q, Location.location(2, 2), q, k.getLocation());
-		verify(view).updateSector(2, 2, "", "");
+		verify(view).moveCellContents(2, 2, 3, 4);
 	}
 	
 
