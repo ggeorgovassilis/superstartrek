@@ -19,7 +19,7 @@ self.addEventListener('fetch', function (e) {
         if ((""+e.request.url).indexOf("refresh_cache")!=-1){
         	return new Promise(function(resolve, reject){
         		var r = new Response("",{"headers":{'Content-Type': 'application/json'}});
-            	populateCache().then(resolve())["catch"](reject());
+            	populateCache().then(resolve(r))["catch"](reject(r));
         	});
         }
         return fetch(e.request);
