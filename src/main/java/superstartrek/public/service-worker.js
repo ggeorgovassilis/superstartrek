@@ -60,7 +60,7 @@ function populateCache(){
 
 // Cache resources
 self.addEventListener('install', function (e) {
-// self.skipWaiting();
+  self.skipWaiting();
   e.waitUntil(populateCache());
 });
 

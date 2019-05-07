@@ -117,9 +117,8 @@ public class PWA {
 
 					@Override
 					public void onResponseReceived(Request request, Response response) {
-						log.info("Checksum of installed package : " + checksumOfInstalledApplication);
 						String checksumOfNewestVersion = response.getText();
-						log.info("Checksum of latest    package : " + checksumOfNewestVersion);
+						log.info("Checksum of latest package : " + checksumOfNewestVersion);
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
 						log.info("is same: " + isSame);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
