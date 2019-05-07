@@ -17,7 +17,7 @@ self.addEventListener('fetch', function (e) {
       } else {       // if there are no cache, try fetching request
         console.debug('MISS',e.request.url);
         if ((""+e.request.url).indexOf("refresh_cache")!=-1){
-        	populateCache();
+        	return populateCache();
         }
         return fetch(e.request)
       }
