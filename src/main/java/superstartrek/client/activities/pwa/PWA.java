@@ -122,13 +122,12 @@ public class PWA {
 						log.info("Checksum of latest    package : " + checksumOfNewestVersion);
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
 						log.info("is same: " + isSame);
-//						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
-//							GWT.log("update check failed");
-//							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
-//									checksumOfInstalledApplication, dateOfInstalledApplication, ""));
-//							return;
-//						}
-						isSame = false;
+						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
+							GWT.log("update check failed");
+							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
+									checksumOfInstalledApplication, dateOfInstalledApplication, ""));
+							return;
+						}
 						app.events.fireEvent(
 								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
 										checksumOfInstalledApplication, dateOfInstalledApplication, checksumOfNewestVersion));
