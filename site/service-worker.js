@@ -17,9 +17,12 @@ self.addEventListener('fetch', function (e) {
       } else {       // if there are no cache, try fetching request
         console.debug('MISS',e.request.url);
         if ((""+e.request.url).indexOf("refresh_cache")!=-1){
-        	return populateCache();
+        	return new Promise(function(resolve, reject){
+        		var r = new Response("",{"headers":{'Content-Type': 'application/json'}});
+            	populateCache().then(resolve())["catch"](reject());
+        	});
         }
-        return fetch(e.request)
+        return fetch(e.request);
       }
 
       // You can omit if/else for console.debug & put one line below like this
