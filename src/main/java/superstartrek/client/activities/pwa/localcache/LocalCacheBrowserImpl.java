@@ -56,7 +56,7 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 	public final Void clearCache(String cacheNameToDelete, RequestFactory rf, ScheduledCommand callback) {
 		log.info("2222");
 		_clearCache(cacheNameToDelete, ()->{
-			log.info("3333");
+			log.info("333");
 			rf.create().request(RequestBuilder.GET, "/refresh_cache", new RequestCallback() {
 				
 				@Override
