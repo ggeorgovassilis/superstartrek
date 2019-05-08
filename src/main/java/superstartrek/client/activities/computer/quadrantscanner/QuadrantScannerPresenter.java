@@ -132,7 +132,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		// can't just clear sector, because the "from" location may refer to a different
 		// quadrant when eg. Enterprise warps
-		if (qFrom == qTo) {
+		if (qFrom == qTo && lFrom!=lTo) {
 			view.moveCellContents(lFrom.getX(), lFrom.getY(), lTo.getX(), lTo.getY());
 		} else {
 			updateSector(qTo, lFrom.getX(), lFrom.getY());
