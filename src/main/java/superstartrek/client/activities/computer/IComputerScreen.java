@@ -12,6 +12,8 @@ public interface IComputerScreen extends View{
 
 	void showStarDate(String sd);
 
+	void showScore(String score);
+
 	void setDockInStarbaseButtonVisibility(boolean visible);
 
 	void setRepairButtonVisibility(boolean visible);

@@ -28,6 +28,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	Element eStatusIconPhasers;
 	Element eStatusIconTorpedos;
 	Element eStarDate;
+	Element eScore;
 	Element eLrsButton;
 	Element eMaxAntimatter;
 	Element eMaxShields;
@@ -71,6 +72,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eQuadrantName = ((HTMLPanel) getWidget()).getElementById("quadrant_name");
 
 		eStarDate = DOM.getElementById("stardate");
+		eScore = DOM.getElementById("score");
 		eLrsButton = DOM.getElementById("lrs-button");
 		setRepairButtonVisibility(false);
 		addHandler(this, ClickEvent.getType());
@@ -139,6 +141,11 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	public void disableLrsButton() {
 		eLrsButton.addClassName("disabled");
 		eLrsButton.setAttribute("href", "#computer");
+	}
+
+	@Override
+	public void showScore(String score) {
+		eScore.setInnerText(score);
 	}
 
 }

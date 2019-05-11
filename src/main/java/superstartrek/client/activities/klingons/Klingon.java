@@ -34,6 +34,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	
 	public final static int MAX_SECTOR_SPEED = 1;
 	public final static int DISRUPTOR_RANGE_SECTORS = 2;
+	
+	public final ShipClass shipClass;
 
 	public enum ShipClass {
 
@@ -54,6 +56,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	public Klingon(ShipClass c) {
 		super(new Setting("impulse", 1, 1), new Setting("shields", c.shields, c.shields));
+		this.shipClass = c;
 		cloak = new Setting("cloak", 1, 1);
 		setName(c.label);
 		setSymbol(c.symbol);

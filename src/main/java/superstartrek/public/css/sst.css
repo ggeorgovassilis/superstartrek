@@ -505,7 +505,14 @@ a.progress-bar {
 }
 
 #stardate {
-	clear: both;
+	position:absolute;
+	left:0;
+	bottom:0;
+}
+#score {
+	position:absolute;
+	right:0;
+	bottom:0;
 }
 /**
  * Commands visibility

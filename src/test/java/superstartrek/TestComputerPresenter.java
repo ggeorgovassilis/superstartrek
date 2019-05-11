@@ -11,6 +11,7 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
+import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -22,10 +23,12 @@ public class TestComputerPresenter extends BaseTest{
 
 	ComputerPresenter presenter;
 	IComputerScreen view;
+	ScoreKeeper scoreKeeper;
 
 	@Before
 	public void setup() {
-		presenter = new ComputerPresenter(application);
+		scoreKeeper = mock(ScoreKeeper.class);
+		presenter = new ComputerPresenter(application, scoreKeeper);
 		view = mock(IComputerScreen.class);
 		presenter.setView(view);
 	}

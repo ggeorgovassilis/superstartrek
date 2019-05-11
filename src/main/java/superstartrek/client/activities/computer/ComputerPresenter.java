@@ -11,6 +11,7 @@ import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseDamagedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.control.YieldTurnEvent;
 import superstartrek.client.model.Enterprise;
@@ -23,8 +24,11 @@ import superstartrek.client.model.StarMap;
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>, EnterpriseDamagedHandler, EnterpriseRepairedHandler {
 
-	public ComputerPresenter(Application application) {
+	ScoreKeeper scoreKeeper;
+	
+	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super(application);
+		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
 		addHandler(ComputerEvent.TYPE, this);
 		addHandler(TurnStartedEvent.TYPE, this);
@@ -45,6 +49,10 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	public void updateStarDate() {
 		view.showStarDate("" + application.starMap.getStarDate());
+	}
+
+	public void updateScore() {
+		view.showScore("" + scoreKeeper.getScore());
 	}
 
 	@Override
@@ -102,6 +110,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		updateShieldsView();
 		updateQuadrantHeader();
 		updateAntimatter();
+		updateScore();
 	}
 
 	public void updateAntimatter() {

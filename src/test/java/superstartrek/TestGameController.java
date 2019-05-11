@@ -15,6 +15,8 @@ import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.KlingonTurnEndedEvent;
 import superstartrek.client.control.KlingonTurnStartedEvent;
+import superstartrek.client.control.ScoreKeeper;
+import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Location;
@@ -25,10 +27,11 @@ import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.Ente
 public class TestGameController extends BaseTest{
 
 	GameController controller;
+	ScoreKeeper scoreKeeper = new ScoreKeeperImpl();
 	
 	@Before
 	public void setup() {
-		controller = new GameController(application);
+		controller = new GameController(application, scoreKeeper);
 	}
 	
 	@Test

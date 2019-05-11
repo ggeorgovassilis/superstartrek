@@ -6,7 +6,9 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
+import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler;
+import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.control.GameOverEvent.Outcome;
@@ -14,20 +16,23 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
+import superstartrek.client.model.StarBase;
 import superstartrek.client.model.Thing;
 
 public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler,
-		KlingonDestroyedHandler, MessageHandler, EnergyConsumptionHandler {
+		KlingonDestroyedHandler, MessageHandler, EnergyConsumptionHandler, EnterpriseDockedHandler {
 
 	Application application;
 	EventBus events;
-	public boolean gameIsRunning = true;
-	protected boolean startTurnPending = false;
-	protected boolean endTurnPending = false;
+	boolean gameIsRunning = true;
+	boolean startTurnPending = false;
+	boolean endTurnPending = false;
+	ScoreKeeper scoreKeeper;
 
-	public GameController(Application application) {
+	public GameController(Application application, ScoreKeeper scoreKeeper) {
 		this.application = application;
 		events = application.events;
+		this.scoreKeeper = scoreKeeper;
 		events.addHandler(GameStartedEvent.TYPE, this);
 		events.addHandler(GameOverEvent.TYPE, this);
 		events.addHandler(TurnStartedEvent.TYPE, this);
@@ -40,6 +45,11 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		events.addHandler(MessagesReadEvent.TYPE, this);
 		events.addHandler(YieldTurnEvent.TYPE, this);
 		events.addHandler(EnergyConsumptionEvent.TYPE, this);
+		events.addHandler(EnterpriseDockedEvent.TYPE, this);
+	}
+
+	public ScoreKeeper getScoreKeeper() {
+		return scoreKeeper;
 	}
 
 	@Override
@@ -55,12 +65,12 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		}
 		if (evt.actor == application.starMap.enterprise && !evt.wasAutoFire)
 			endTurnAfterThis();
-
 	}
 
 	@Override
 	public void onEnterpriseRepaired(Enterprise enterprise) {
 		endTurnAfterThis();
+		getScoreKeeper().addScore(ScoreKeeper.POINTS_ENTERPRISE_REPAIR);
 	}
 
 	@Override
@@ -71,6 +81,9 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
+
+		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
+				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
 		if (!application.starMap.hasKlingons())
 			events.fireEvent(new GameOverEvent(GameOverEvent.Outcome.won, "All Klingons were destroyed"));
 	}
@@ -83,11 +96,13 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	@Override
 	public void gameWon() {
+		getScoreKeeper().addScore(ScoreKeeper.POINTS_GAME_WON);
 		application.message("Congratulations, all Klingons were destroyed.", "gamewon");
 	}
 
 	@Override
 	public void gameLost() {
+		getScoreKeeper().addScore(ScoreKeeper.POINTS_ENTERPRISE_DESTROYED);
 		application.message("The Enterprise was destroyed.", "gameover");
 	}
 
@@ -101,6 +116,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	public void startTurn() {
+		getScoreKeeper().addScore(ScoreKeeper.POINTS_DAY);
 		application.starMap.advanceStarDate(1);
 		events.fireEvent(new TurnStartedEvent());
 		events.fireEvent(new AfterTurnStartedEvent());
@@ -158,6 +174,11 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 				gameOver(Outcome.lost, "We run out of anti matter");
 			}
 		}
+	}
+
+	@Override
+	public void onEnterpriseDocked(Enterprise enterprise, StarBase starBase) {
+		getScoreKeeper().addScore(ScoreKeeper.POINTS_DOCK_STARBASE);
 	}
 
 }

@@ -18,6 +18,7 @@ import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
+import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
 
@@ -312,6 +313,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
+		application.events.fireEvent(new EnterpriseDockedHandler.EnterpriseDockedEvent(this, starBase));
 		phasers.repair();
 		torpedos.repair();
 		impulse.repair();

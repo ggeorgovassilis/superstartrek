@@ -39,6 +39,8 @@ import superstartrek.client.activities.sector.scan.ScanSectorView;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.ScoreKeeper;
+import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
@@ -66,6 +68,7 @@ public class Application
 	public BrowserAPI browserAPI;
 	public RequestFactory requestFactory;
 	public PWA pwa;
+	public ScoreKeeper scoreKeeper = new ScoreKeeperImpl();
 	Element logDiv;
 
 	private static Application that;
@@ -105,7 +108,7 @@ public class Application
 		new LoadingScreen(new LoadingPresenter(this));
 		new IntroView(new IntroPresenter(this));
 		new ManualScreen(new ManualPresenter(this));
-		new ComputerScreen(new ComputerPresenter(this));
+		new ComputerScreen(new ComputerPresenter(this, scoreKeeper));
 		new ScanSectorView(new ScanSectorPresenter(this));
 		new MessagesView(new MessagesPresenter(this));
 		new LRSScreen(new LRSPresenter(this));
@@ -166,7 +169,7 @@ public class Application
 	}
 	
 	public void setupGameController() {
-		gameController = new GameController(this);
+		gameController = new GameController(this, scoreKeeper);
 	}
 
 	void setupLogging() {
