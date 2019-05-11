@@ -56,7 +56,7 @@ public class TestPWA extends BaseTest{
 		when(requestFactory.create()).thenReturn(request);
 		application.browserAPI = mock(BrowserAPI.class);
 		when(application.browserAPI.nextInt(any(int.class))).thenReturn(222);
-		when(request.request(eq(RequestBuilder.GET), eq("/superstartrek/site/checksum.sha.md5"), any(RequestCallback.class))).then(new Answer<Void>() {
+		when(request.request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt"), any(RequestCallback.class))).then(new Answer<Void>() {
 
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {
@@ -69,7 +69,7 @@ public class TestPWA extends BaseTest{
 				return null;
 			}
 		});
-		when(request.request(eq(RequestBuilder.GET), eq("/superstartrek/site/checksum.sha.md5?rnd=222"), any(RequestCallback.class))).then(new Answer<Void>() {
+		when(request.request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt?rnd=222"), any(RequestCallback.class))).then(new Answer<Void>() {
 
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {
@@ -96,8 +96,8 @@ public class TestPWA extends BaseTest{
 			}
 		});
 		pwa.checkForNewVersion();
-		verify(request).request(eq(RequestBuilder.GET), eq("/superstartrek/site/checksum.sha.md5"), any(RequestCallback.class));
-		verify(request).request(eq(RequestBuilder.GET), eq("/superstartrek/site/checksum.sha.md5?rnd=222"), any(RequestCallback.class));
+		verify(request).request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt"), any(RequestCallback.class));
+		verify(request).request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt?rnd=222"), any(RequestCallback.class));
 		//expect 2 events: one with current version, one with newest
 		assertEquals(2, events.getFiredCount(ApplicationLifecycleEvent.TYPE));
 		assertTrue(newVersionAvailable.get());

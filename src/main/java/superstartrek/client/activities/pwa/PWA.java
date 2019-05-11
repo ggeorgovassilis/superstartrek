@@ -110,7 +110,7 @@ public class PWA {
 	public void getChecksumOfInstalledApplication(RequestCallback callback) {
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
 		try {
-			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5", callback);
+			r.request(RequestBuilder.GET, "/superstartrek/site/package.txt", callback);
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
