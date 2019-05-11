@@ -27,7 +27,7 @@ public class PWA {
 	        				"sst.webmanifest",
 	        				"images/stars-background.gif", 
 	        				"superstartrek.superstartrek.nocache.js",
-	        				"checksum.sha.md5",
+	        				"package.txt",
 	        				"images/cancel.svg",
 	        				"images/bookmark.svg",
 	        				"images/communicator.svg", 
@@ -120,7 +120,7 @@ public class PWA {
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
 		int rnd = application.browserAPI.nextInt(100000);
 		try {
-			r.request(RequestBuilder.GET, "/superstartrek/site/checksum.sha.md5?rnd=" + rnd, callback);
+			r.request(RequestBuilder.GET, "/superstartrek/site/package.txt?rnd=" + rnd, callback);
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}

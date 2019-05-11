@@ -289,8 +289,9 @@
 								</fileSet>
 							</fileSets>
 							<algorithms>MD5</algorithms>
+							<individualFiles>false</individualFiles>
 							<shasumSummary>true</shasumSummary>
-							<shasumSummaryFile>${project.basedir}/site/package.sha</shasumSummaryFile>
+							<shasumSummaryFile>${project.basedir}/site/package.txt</shasumSummaryFile>
 						</configuration>
 					</execution>
 				</executions>
