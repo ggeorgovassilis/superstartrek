@@ -20,6 +20,31 @@ import superstartrek.client.activities.pwa.promise.Promise;
 
 public class PWA {
 
+	static String[] fileNames = new String[] {//@formatter:off
+	           				".", 
+	           				"index.html", 
+	        				"css/sst.css", 
+	        				"sst.webmanifest",
+	        				"images/stars-background.gif", 
+	        				"superstartrek.superstartrek.nocache.js",
+	        				"checksum.sha.md5",
+	        				"images/cancel.svg",
+	        				"images/bookmark.svg",
+	        				"images/communicator.svg", 
+	        				"images/federation_logo.svg",
+	        				"images/fire_at_will.svg", 
+	        				"images/hexagon_filled.svg",
+	        				"images/hexagon.svg", 
+	        				"images/icon192x192.png",
+	        				"images/icon512x512.png", 
+	        				"images/laser.svg",
+	        				"images/navigation.svg", 
+	        				"images/radar.svg",
+	        				"images/torpedo.svg",
+	        				"images/hamburger-menu.svg"
+	        				//@formatter:on
+	};
+
 	final static String CACHE_NAME = "sst1";
 	AppInstallationEvent deferredInstallationPrompt;
 	Application application;
@@ -60,7 +85,7 @@ public class PWA {
 		});
 	}-*/;
 	//@formatter:on
-
+	
 	public void installationEventCallback(AppInstallationEvent e) {
 		log.info("installation event callback");
 		deferredInstallationPrompt = e;
@@ -127,15 +152,15 @@ public class PWA {
 									checksumOfInstalledApplication, dateOfInstalledApplication, ""));
 							return;
 						}
-						app.events.fireEvent(
-								new ApplicationLifecycleEvent(isSame ? Status.appIsUpToDate : Status.appIsOutdated,
-										checksumOfInstalledApplication, dateOfInstalledApplication, checksumOfNewestVersion));
+						app.events.fireEvent(new ApplicationLifecycleEvent(
+								isSame ? Status.appIsUpToDate : Status.appIsOutdated, checksumOfInstalledApplication,
+								dateOfInstalledApplication, checksumOfNewestVersion));
 					}
 
 					@Override
 					public void onError(Request request, Throwable exception) {
-						app.events.fireEvent(
-								new ApplicationLifecycleEvent(Status.checkFailed, dateOfInstalledApplication, checksumOfInstalledApplication, ""));
+						app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
+								dateOfInstalledApplication, checksumOfInstalledApplication, ""));
 					}
 				});
 			}
@@ -147,18 +172,29 @@ public class PWA {
 		});
 	}
 
-	public void setupCache() {
+	public void setupCache(Callback<Void> callback) {
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
+		log.info("Querying cache existence");
+		cache.queryCacheExistence(CACHE_NAME).then((exists)->{
+			
+			if (!exists) {
+				log.info("Cache does not exist");
+				cache.cacheFiles(CACHE_NAME, fileNames, callback);
+			} else {
+				log.info("Cache exists");
+				callback.onSuccess(null);	
+				checkForNewVersion();
+			}
+		});
 	}
 
-	public void run() {
+	public void run(Callback<Void> callback) {
 		if (!GWT.isClient()) {
 			log.info("Not running PWA because not running in browser");
 			return;
 		}
 		addInstallationListener();
-		setupCache();
-		checkForNewVersion();
+		setupCache(callback);
 	}
 }

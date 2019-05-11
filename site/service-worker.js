@@ -6,7 +6,7 @@ var CACHE_NAME = APP_PREFIX + VERSION;
 
 // inside service worker script
 self.addEventListener('error', function(e) {
-  console.log(e.filename, e.lineno, e.colno, e.message);
+  console.error(e.filename, e.lineno, e.colno, e.message);
 });
 
 self.addEventListener('fetch', function (e) {
@@ -16,12 +16,6 @@ self.addEventListener('fetch', function (e) {
         return response;
       } else {       // if there are no cache, try fetching request
         console.debug('MISS',e.request.url);
-        if ((""+e.request.url).indexOf("refresh_cache")!=-1){
-        	return new Promise(function(resolve, reject){
-        		var r = new Response("",{"headers":{'Content-Type': 'application/json'}});
-            	populateCache().then(resolve(r))["catch"](reject(r));
-        	});
-        }
         return fetch(e.request);
       }
 
@@ -31,41 +25,16 @@ self.addEventListener('fetch', function (e) {
     }))
 });
 
-function populateCache(){
-	return caches.open(CACHE_NAME).then(function(cache) {
-	      return cache.addAll(
-	        [
-				"/superstartrek/site/", 
-				"/superstartrek/site/css/sst.css", 
-				"/superstartrek/site/sst.webmanifest",
-				"/superstartrek/site/images/stars-background.gif", 
-				"/superstartrek/site/superstartrek.superstartrek.nocache.js",
-				"/superstartrek/site/checksum.sha.md5",
-				"/superstartrek/site/images/cancel.svg",
-				"/superstartrek/site/images/bookmark.svg",
-				"/superstartrek/site/images/communicator.svg", 
-				"/superstartrek/site/images/federation_logo.svg",
-				"/superstartrek/site/images/fire_at_will.svg", 
-				"/superstartrek/site/images/hexagon_filled.svg",
-				"/superstartrek/site/images/hexagon.svg", 
-				"/superstartrek/site/images/icon192x192.png",
-				"/superstartrek/site/images/icon512x512.png", 
-				"/superstartrek/site/images/laser.svg",
-				"/superstartrek/site/images/navigation.svg", 
-				"/superstartrek/site/images/radar.svg",
-				"/superstartrek/site/images/torpedo.svg",
-				"/superstartrek/site/images/hamburger-menu.svg"
-	        ]
-	      );
-	    });
-}
-
 // Cache resources
 self.addEventListener('install', function (e) {
+	  console.log("SW install");
   self.skipWaiting();
-  e.waitUntil(populateCache());
 });
 
 self.addEventListener('activate', function (event) {
 	  console.log("SW activated");
+});
+
+self.addEventListener('message', function(event){
+    console.log("SW Received Message: " + event.data);
 });

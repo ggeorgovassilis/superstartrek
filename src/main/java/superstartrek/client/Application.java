@@ -49,6 +49,7 @@ import superstartrek.client.activities.messages.MessageHandler.MessagePostedEven
 import superstartrek.client.activities.pwa.AppInstallPromptPresenter;
 import superstartrek.client.activities.pwa.AppInstallPromptView;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.UpdateAppPromptPresenter;
 import superstartrek.client.activities.pwa.UpdateAppPromptView;
@@ -212,10 +213,10 @@ public class Application
 		});
 	}
 	
-	public void setupPwa() {
+	public void setupPwa(Callback<Void> callback) {
 		pwa = new PWA(this);
 		pwa.setRequestFactory(requestFactory);
-		pwa.run();
+		pwa.run(callback);
 	}
 
 	public void registerEventHandlers() {
@@ -234,8 +235,7 @@ public class Application
 		events = GWT.create(SimpleEventBus.class);
 		setupHttp();
 		registerEventHandlers();
-		setupPwa();
-		setupTheRest();
+		setupPwa((v)->setupTheRest());
 	}
 	
 	@Override

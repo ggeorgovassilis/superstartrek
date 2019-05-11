@@ -13,5 +13,9 @@ public class JsCache extends JavaScriptObject{
 		return this.addAll(files);
 	}-*/;
 	
+	public final native Promise<Void> add(String file)/*-{
+		return this.add(file);
+	}-*/;
+
 	
 }

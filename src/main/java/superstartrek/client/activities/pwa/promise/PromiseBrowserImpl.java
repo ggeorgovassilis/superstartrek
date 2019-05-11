@@ -18,8 +18,15 @@ public class PromiseBrowserImpl<T> extends JavaScriptObject implements Promise<T
 		    	callback.@superstartrek.client.activities.pwa.Callback::onFailure(Ljava/lang/Throwable;)(e);
 		});
 	}-*/;
-	//@formatter:on
-	
 
+	@Override
+	public final native Promise<JavaScriptObject[]> all(Promise<?>[] promises)/*-{
+		function reflect(promise){
+    		return promise.then(function(v){ return {v:v, status: "resolved" }},
+                   function(e){ return {e:e, status: "rejected" }});
+		}
+		return Promise.all(promises.map(reflect));
+	}-*/;
+	//@formatter:on
 
 }
