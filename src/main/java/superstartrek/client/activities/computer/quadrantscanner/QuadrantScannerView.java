@@ -97,16 +97,4 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		eSectors[x][y].addClassName(css);
 	}
 
-	@Override
-	public void moveCellContents(int xFrom, int yFrom, int xTo, int yTo) {
-		Element eFrom = eSectors[xFrom][yFrom];
-		Element eTo = eSectors[xTo][yTo];
-		eTo.setClassName(eFrom.getClassName());
-		while (eFrom.hasChildNodes()) {
-			Node node = eFrom.getFirstChild();
-			node.removeFromParent();
-			eTo.appendChild(node);
-		}
-		eFrom.setClassName("");
-	}
 }
