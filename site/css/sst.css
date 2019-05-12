@@ -875,15 +875,18 @@ a.disabled, button.disabled {
 	background-position-x: 0.1em;
 }
 
-#app-install-prompt {
+#app-install-prompt, #update-app-prompt {
 	color: black;
 	padding: 0.2em;
-	top: 50%;
-	margin-top: -6em;
 	background-color:darkgray;
 }
 
-#app-install-prompt button {
+#app-install-prompt{
+	top: 50%;
+	margin-top: -6em;
+}
+
+#app-install-prompt button, #update-app-prompt button{
 	color: blue;
 	background-color: white;
 }
