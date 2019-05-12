@@ -12,6 +12,7 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 	public void updateView() {
 		Enterprise enterprise = application.starMap.enterprise;
 		view.setProperty("report_stardate", ""+application.starMap.getStarDate());
+		view.setProperty("report_score", ""+application.scoreKeeper.getScore());
 		view.setProperty("report_location", enterprise.getQuadrant().getName());
 		view.setProperty("report_max_impulse", "%"+enterprise.getImpulse().percentageHealth());
 		view.setProperty("report_shields", "%"+(enterprise.getShields().percentageHealth()));
