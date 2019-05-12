@@ -12,4 +12,5 @@ public interface ScoreKeeper {
 
 	int addScore(int score);
 	int getScore();
+	Void reset();
 }

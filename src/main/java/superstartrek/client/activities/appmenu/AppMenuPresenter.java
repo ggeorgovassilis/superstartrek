@@ -39,7 +39,6 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	}
 
 	public void onMenuHidden() {
-		GWT.log("on menu hidden");
 		if (gotoStateAfterMenuHidden != null)
 			application.browserAPI.postHistoryChange(gotoStateAfterMenuHidden);
 	}
@@ -52,7 +51,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	public void restart() {
 		application.browserAPI.confirm("All progress will be lost. Continue?", (result) -> {
 			if (result)
-				application.reload();
+				application.restart();
 		});
 	}
 

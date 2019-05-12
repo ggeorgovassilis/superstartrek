@@ -46,6 +46,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		events.addHandler(YieldTurnEvent.TYPE, this);
 		events.addHandler(EnergyConsumptionEvent.TYPE, this);
 		events.addHandler(EnterpriseDockedEvent.TYPE, this);
+		events.addHandler(GameRestartEvent.TYPE, this);
 	}
 
 	public ScoreKeeper getScoreKeeper() {
@@ -112,7 +113,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		// lost/won and the user clicks away the informing message, the game should
 		// reload.
 		if (!this.gameIsRunning)
-			application.reload();
+			application.restart();
 	}
 
 	public void startTurn() {
@@ -179,6 +180,11 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	@Override
 	public void onEnterpriseDocked(Enterprise enterprise, StarBase starBase) {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_DOCK_STARBASE);
+	}
+	
+	@Override
+	public void beforeGameRestart() {
+		scoreKeeper.reset();
 	}
 
 }

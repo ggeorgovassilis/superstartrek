@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
@@ -13,6 +16,7 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler.Enterp
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.BrowserAPI;
@@ -25,6 +29,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public final static double PHASER_RANGE = 3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 3;
 	public final static double IMPULSE_CONSUMPTION = 5;
+	
+	List<HandlerRegistration> handlers = new ArrayList<>();
 
 	Application application;
 	StarMap starMap;
@@ -74,9 +80,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");
-		application.events.addHandler(TurnStartedEvent.TYPE, this);
-		application.events.addHandler(FireEvent.TYPE, this);
-		application.events.addHandler(TurnEndedEvent.TYPE, this);
+		EventBus events = application.events;
+		handlers.add(events.addHandler(TurnStartedEvent.TYPE, this));
+		handlers.add(events.addHandler(FireEvent.TYPE, this));
+		handlers.add(events.addHandler(TurnEndedEvent.TYPE, this));
+		handlers.add(application.events.addHandler(GameRestartEvent.TYPE, this));
 	}
 
 	public Setting getAntimatter() {
@@ -490,6 +498,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	public boolean canNavigateTo(Location location) {
 		return reachableSectors.contains(location);
+	}
+	
+	@Override
+	public void beforeGameRestart() {
+		for (HandlerRegistration hr:handlers)
+			hr.removeHandler();
+		handlers.clear();
 	}
 
 }

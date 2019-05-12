@@ -12,6 +12,7 @@ import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.KlingonTurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -31,6 +32,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	private HandlerRegistration enterpriseWarpedHandler;
 	private HandlerRegistration fireHandler;
 	private HandlerRegistration klingonTurnHandler;
+	private HandlerRegistration gameRestartHandler;
 	
 	public final static int MAX_SECTOR_SPEED = 1;
 	public final static int DISRUPTOR_RANGE_SECTORS = 2;
@@ -63,6 +65,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		setCss("klingon cloaked");
 		this.disruptor = new Setting("disruptor", c.disruptor, c.disruptor);
 		enterpriseWarpedHandler = Application.get().events.addHandler(EnterpriseWarpedEvent.TYPE, this);
+		gameRestartHandler = Application.get().events.addHandler(GameRestartEvent.TYPE, this);
 	}
 
 	/*
@@ -87,6 +90,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		fireHandler = null;
 		klingonTurnHandler.removeHandler();
 		klingonTurnHandler = null;
+		gameRestartHandler.removeHandler();
+		gameRestartHandler = null;
 	}
 
 	public boolean canCloak() {
@@ -299,5 +304,10 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	public static Klingon as(Thing thing) {
 		return (Klingon)thing;
+	}
+	
+	@Override
+	public void beforeGameRestart() {
+		unregisterActionHandlers();
 	}
 }

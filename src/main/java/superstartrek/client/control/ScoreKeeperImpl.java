@@ -15,4 +15,10 @@ public class ScoreKeeperImpl implements ScoreKeeper{
 		return score;
 	}
 
+	@Override
+	public Void reset() {
+		score = 0;
+		return null;
+	}
+
 }

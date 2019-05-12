@@ -24,4 +24,6 @@ public interface GamePhaseHandler extends EventHandler {
 	
 	default void onGameStarted(GameStartedEvent evt) {};
 	
+	default void beforeGameRestart() {};
+	
 }

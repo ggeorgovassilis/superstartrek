@@ -67,4 +67,9 @@ public class GwtBrowserAPIImpl implements BrowserAPI{
 		return getWindowWidthPx()>1000;
 	}
 
+	@Override
+	public String getParameter(String param) {
+		return Window.Location.getParameter(param);
+	}
+
 }

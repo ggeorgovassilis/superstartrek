@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -11,6 +12,8 @@ import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseDamagedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.GameRestartEvent;
+import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.control.YieldTurnEvent;
@@ -35,6 +38,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		addHandler(KlingonDestroyedEvent.TYPE, this);
 		addHandler(EnterpriseDamagedEvent.TYPE, this);
 		addHandler(EnterpriseRepairedEvent.TYPE, this);
+		addHandler(GameStartedEvent.TYPE, this);
 	}
 
 	public void onSkipButtonClicked() {
@@ -183,5 +187,11 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public void onEnterpriseDamaged(Enterprise enterprise) {
 		updateStatusButton();
 		updateRepairButton();
+	}
+	
+	@Override
+	public void onGameStarted(GameStartedEvent evt) {
+		updateRepairButton();
+		updateStatusButton();
 	}
 }
