@@ -75,19 +75,22 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		}
 		enterprise.dockAtStarbase(q.getStarBase());
 	}
-
-	public void updateDockInStarbaseButton() {
+	
+	public boolean canShowDockButton() {
 		Enterprise enterprise = application.starMap.enterprise;
 		Quadrant q = enterprise.getQuadrant();
 		StarBase starBase = q.getStarBase();
 		boolean visible = starBase != null
 				&& (q.getKlingons().isEmpty() || StarMap.within_distance(enterprise, starBase, 2));
-		view.setDockInStarbaseButtonVisibility(visible);
+		return visible;
 	}
 
 	public void updateRepairButton() {
 		Enterprise enterprise = application.starMap.enterprise;
-		view.setRepairButtonVisibility(enterprise.canRepairProvisionally());
+		boolean canShowDockButton = canShowDockButton();
+		boolean canShowRepairButton = !canShowDockButton && enterprise.canRepairProvisionally();
+		view.setDockInStarbaseButtonVisibility(canShowDockButton);
+		view.setRepairButtonVisibility(canShowRepairButton);
 	}
 
 	public void updateStatusButton() {
@@ -106,11 +109,11 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
 		updateStarDate();
-		updateDockInStarbaseButton();
 		updateShieldsView();
 		updateQuadrantHeader();
 		updateAntimatter();
 		updateScore();
+		updateRepairButton();
 	}
 
 	public void updateAntimatter() {
@@ -159,7 +162,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	@Override
 	public void klingonDestroyed(Klingon klingon) {
 		updateQuadrantHeader();
-		updateDockInStarbaseButton();
 	}
 
 	@Override

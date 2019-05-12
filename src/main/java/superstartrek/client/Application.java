@@ -229,7 +229,7 @@ public class Application
 
 	@Override
 	public void onModuleLoad() {
-		Application.that = this;
+ 		Application.that = this;
 		setUncaughtExceptionHandler();
 		resources = GWT.create(Resources.class);
 		if (GWT.isClient())
