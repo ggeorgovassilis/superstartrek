@@ -271,10 +271,6 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	font-family: monospace;
 }
 
-#commandbar>a, #commandbar>button {
-	width: 100%;
-}
-
 .logo {
 	font-size: 100%;
 	font-weight: bold;
@@ -550,16 +546,14 @@ a.progress-bar {
 	background-image: url('../images/report.svg');
 	background-color: darkslategray;
 	background-size:contain;
-	position:absolute;
 	display:block;
-	z-index:1;
 	width:3em;
 	height:3em;
+	float:left;
 }
 
 .has-dock{
 	background-image: url('../images/anchor.svg');
-	background-size:contain;
 	background-repeat:no-repeat;
 }
 
@@ -691,15 +685,23 @@ a.progress-bar {
 	width: 10em;
 }
 
-.status-icons {
-	margin-left:5em;
+.status-icons-container{
 	display: block;
-	width: 100%;
+	position: relative;
+	margin-left: 0em;
+	overflow: hidden;
+}
+
+.status-icons {
+	display: block;
 	overflow: hidden;
 	font-size: 0.6em;
-	background-color: rgba(10, 10, 10, 0.5);
-	position: absolute;
+	position: relative;
 	z-index: 1;
+}
+
+.status-icons-container .progress-text{
+	margin-top:-0.5em;
 }
 
 .status-icons span {
