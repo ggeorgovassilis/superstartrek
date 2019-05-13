@@ -185,6 +185,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	@Override
 	public void beforeGameRestart() {
 		scoreKeeper.reset();
+		gameIsRunning = true;
 	}
 
 }

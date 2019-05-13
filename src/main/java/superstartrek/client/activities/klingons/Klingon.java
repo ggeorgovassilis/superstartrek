@@ -2,6 +2,7 @@ package superstartrek.client.activities.klingons;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -90,8 +91,6 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		fireHandler = null;
 		klingonTurnHandler.removeHandler();
 		klingonTurnHandler = null;
-		gameRestartHandler.removeHandler();
-		gameRestartHandler = null;
 	}
 
 	public boolean canCloak() {
@@ -228,6 +227,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	public void destroy() {
 		unregisterActionHandlers();
 		enterpriseWarpedHandler.removeHandler();
+		gameRestartHandler.removeHandler();
 		Application app = Application.get();
 		app.getActiveQuadrant().getKlingons().remove(this);
 		app.message(getName()+" was destroyed", "klingon-destroyed");
