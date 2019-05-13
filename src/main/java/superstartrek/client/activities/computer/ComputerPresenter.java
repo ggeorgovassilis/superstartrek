@@ -115,7 +115,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
-		GWT.log("tesk");
+		GWT.log("as");
 		updateStarDate();
 		updateShieldsView();
 		updateQuadrantHeader();

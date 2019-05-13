@@ -557,25 +557,24 @@ a.progress-bar {
 	height:3em;
 }
 
-.dock-icon{
+.has-dock{
 	background-image: url('../images/anchor.svg');
 	background-size:contain;
 	background-repeat:no-repeat;
-	display:block;
-	height:2.4em;
-	margin-left:0.2em;
-	line-height:2.5em;
 }
 
-.repair-icon{
+.has-repair{
 	background-image: url('../images/repair.svg');
 	background-size:contain;
 	background-repeat:no-repeat;
-	display:block;
-	margin-left:0.2em;
-	height:2.5em;
-	line-height:2.5em;
 }
+
+@media ( max-width : 400px) {
+	#cmd_repair {
+		padding-left: 2em;
+	}
+}
+
 
 .visible-with-repair,.visible-with-dock{
 	display:none;
