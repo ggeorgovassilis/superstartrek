@@ -25,14 +25,15 @@ public class PWA {
 	           				"index.html", 
 	        				"css/sst.css", 
 	        				"sst.webmanifest",
-	        				"images/stars-background.gif", 
 	        				"superstartrek.superstartrek.nocache.js",
 	        				"package.txt",
-	        				"images/cancel.svg",
+	        				"images/anchor.svg",
 	        				"images/bookmark.svg",
+	        				"images/cancel.svg",
 	        				"images/communicator.svg", 
 	        				"images/federation_logo.svg",
 	        				"images/fire_at_will.svg", 
+	        				"images/hamburger-menu.svg",
 	        				"images/hexagon_filled.svg",
 	        				"images/hexagon.svg", 
 	        				"images/icon192x192.png",
@@ -40,8 +41,11 @@ public class PWA {
 	        				"images/laser.svg",
 	        				"images/navigation.svg", 
 	        				"images/radar.svg",
-	        				"images/torpedo.svg",
-	        				"images/hamburger-menu.svg"
+	        				"images/repair.svg",
+	        				"images/report.svg",
+	        				"images/shield.svg",
+	        				"images/stars-background.gif", 
+	        				"images/torpedo.svg"
 	        				//@formatter:on
 	};
 
