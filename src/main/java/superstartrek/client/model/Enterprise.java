@@ -247,7 +247,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			boolean hit = false;
 			if (Klingon.is(thing)) {
 				double distance = StarMap.distance(this, thing);
-				double chance = Math.sqrt(2) / distance;
+				double chance = 1.8 / distance;
 				hit = browser.nextDouble() <= chance;
 			} else {
 				hit = true;
