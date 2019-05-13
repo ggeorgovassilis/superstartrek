@@ -28,6 +28,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>, EnterpriseDamagedHandler, EnterpriseRepairedHandler {
 
 	ScoreKeeper scoreKeeper;
+	boolean repairButtonDocksAtStarbase = false;
 	
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super(application);
@@ -64,7 +65,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		view.hide();
 	}
 
-	public void onDockInStarbaseButtonClicked() {
+	public void dockInStarbase() {
 		StarMap map = application.starMap;
 		Enterprise enterprise = map.enterprise;
 		Quadrant q = enterprise.getQuadrant();
@@ -93,8 +94,9 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		Enterprise enterprise = application.starMap.enterprise;
 		boolean canShowDockButton = canShowDockButton();
 		boolean canShowRepairButton = !canShowDockButton && enterprise.canRepairProvisionally();
-		view.setDockInStarbaseButtonVisibility(canShowDockButton);
-		view.setRepairButtonVisibility(canShowRepairButton);
+		repairButtonDocksAtStarbase = canShowDockButton;
+		view.setRepairButtonEnabled(canShowDockButton || canShowRepairButton);
+		view.setRepairButtonLabel(canShowDockButton?"Dock in starbase":"Repair");
 	}
 
 	public void updateStatusButton() {
@@ -151,6 +153,12 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	public void onRepairButtonClicked() {
+		if (repairButtonDocksAtStarbase)
+			dockInStarbase();
+		else repairProvisionally();
+	}
+	
+	public void repairProvisionally() {
 		Enterprise enterprise = application.starMap.enterprise;
 		enterprise.repairProvisionally();
 		updateStatusButton();

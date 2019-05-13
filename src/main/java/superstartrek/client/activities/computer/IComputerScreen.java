@@ -14,9 +14,9 @@ public interface IComputerScreen extends View{
 
 	void showScore(String score);
 
-	void setDockInStarbaseButtonVisibility(boolean visible);
-
-	void setRepairButtonVisibility(boolean visible);
+	void setRepairButtonLabel(String label);
+	
+	void setRepairButtonEnabled(boolean enabled);
 	
 	void setQuadrantName(String name, String css);
 	

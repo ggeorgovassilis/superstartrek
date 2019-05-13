@@ -9,7 +9,6 @@
 	<set-property name="compiler.useSourceMaps" value="true" />
 	<set-configuration-property
 		name="compiler.emulatedStack.recordLineNumbers" value="true" />
-	
 	<!-- doesn't work with lambdas
 	<set-property name="compiler.stackMode" value="emulated" />
 		 -->

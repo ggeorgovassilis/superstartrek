@@ -693,7 +693,7 @@ a.progress-bar {
 
 a.disabled, button.disabled {
 	background-color: rgb(20, 40, 60);
-	color: darkgay !important;
+	color: silver !important;
 }
 
 #update-app-prompt button, #install-app-prompt button {

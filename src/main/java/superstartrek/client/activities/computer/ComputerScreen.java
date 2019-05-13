@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -21,7 +22,6 @@ import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
 
 public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
 
-	Element eDockInStarbase;
 	Element eRepair;
 	Element eStatusIconImpulse;
 	Element eStatusIconTactical;
@@ -60,8 +60,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
 		SRSView srsView = new SRSView(srsPresenter);
 		panel.addAndReplaceElement(srsView, "shortrangescan");
-		eDockInStarbase = DOM.getElementById("cmd_dockInStarbase");
-		eRepair = panel.getElementById("cmd_repairProvisionally");
+		eRepair = panel.getElementById("cmd_repair");
 		eStatusIconImpulse = CSS.querySelectorAll("#cmd_showStatusReport .impulse").getItem(0);
 		eStatusIconTactical = CSS.querySelectorAll("#cmd_showStatusReport .tactical-computer").getItem(0);
 		eStatusIconTorpedos = CSS.querySelectorAll("#cmd_showStatusReport .torpedo-bay").getItem(0);
@@ -74,7 +73,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eStarDate = DOM.getElementById("stardate");
 		eScore = DOM.getElementById("score");
 		eLrsButton = DOM.getElementById("lrs-button");
-		setRepairButtonVisibility(false);
+		setRepairButtonEnabled(false);
 		addHandler(this, ClickEvent.getType());
 		DOM.sinkEvents(panel.getElementById("helm"), Event.ONCLICK);
 	}
@@ -92,16 +91,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	@Override
 	public void showStarDate(String sd) {
 		eStarDate.setInnerText(sd);
-	}
-
-	@Override
-	public void setDockInStarbaseButtonVisibility(boolean visible) {
-		eDockInStarbase.getStyle().setDisplay(visible ? Display.INITIAL : Display.NONE);
-	}
-
-	@Override
-	public void setRepairButtonVisibility(boolean visible) {
-		eRepair.getStyle().setDisplay(visible ? Display.INITIAL : Display.NONE);
 	}
 
 	@Override
@@ -123,9 +112,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	@Override
 	public void onClick(ClickEvent event) {
 		Element target = event.getNativeEvent().getEventTarget().cast();
-		if (target == eDockInStarbase)
-			presenter.onDockInStarbaseButtonClicked();
-		else if (target == eRepair)
+		if (target == eRepair)
 			presenter.onRepairButtonClicked();
 		else if ("cmd_skip".equals(target.getId()))
 			presenter.onSkipButtonClicked();
@@ -146,6 +133,22 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	@Override
 	public void showScore(String score) {
 		eScore.setInnerText(score);
+	}
+
+	@Override
+	public void setRepairButtonLabel(String label) {
+		eRepair.setInnerText(label);
+	}
+
+	@Override
+	public void setRepairButtonEnabled(boolean enabled) {
+		eRepair.removeAttribute("disabled");
+		eRepair.removeClassName("disabled");
+		if (!enabled) {
+			eRepair.setAttribute("disabled", "disabled");
+			eRepair.addClassName("disabled");
+		}
+			
 	}
 
 }

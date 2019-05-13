@@ -38,7 +38,8 @@ public class TestComputerPresenter extends BaseTest{
 		TurnStartedEvent evt = new TurnStartedEvent();
 		presenter.onTurnStarted(evt);
 
-		verify(view).setDockInStarbaseButtonVisibility(false);
+		verify(view).setRepairButtonEnabled(false);
+		verify(view).setRepairButtonLabel("Repair");
 		verify(view).showStarDate("0");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
@@ -53,7 +54,8 @@ public class TestComputerPresenter extends BaseTest{
 		TurnStartedEvent evt = new TurnStartedEvent();
 		presenter.onTurnStarted(evt);
 
-		verify(view).setDockInStarbaseButtonVisibility(true);
+		verify(view).setRepairButtonEnabled(true);
+		verify(view).setRepairButtonLabel("Dock in starbase");
 		verify(view).showStarDate("0");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
@@ -82,7 +84,7 @@ public class TestComputerPresenter extends BaseTest{
 		});
 		when(browser.nextDouble()).thenReturn(0.0);
 		when(browser.nextInt(any(int.class))).thenReturn(1,1,2,2,5);
-		presenter.onDockInStarbaseButtonClicked();
+		presenter.dockInStarbase();
 
 		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
 		assertEquals(Location.location(4, 4), enterprise.getLocation());
