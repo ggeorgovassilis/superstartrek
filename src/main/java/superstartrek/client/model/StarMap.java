@@ -9,7 +9,7 @@ public class StarMap {
 
 	protected Quadrant[][] quadrants = new Quadrant[8][8];
 	public Enterprise enterprise;
-	protected long starDate = 0;
+	protected long starDate = 2100;
 
 	public static boolean within_distance(int x1, int y1, int x2, int y2, double range) {
 		int dx = x1 - x2;

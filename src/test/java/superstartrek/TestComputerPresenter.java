@@ -40,7 +40,7 @@ public class TestComputerPresenter extends BaseTest{
 
 		verify(view).setRepairButtonEnabled(false);
 		verify(view).setRepairButtonCss("has-repair");
-		verify(view).showStarDate("0");
+		verify(view).showStarDate("2100");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
 
@@ -56,7 +56,7 @@ public class TestComputerPresenter extends BaseTest{
 
 		verify(view).setRepairButtonEnabled(true);
 		verify(view).setRepairButtonCss("has-dock");
-		verify(view).showStarDate("0");
+		verify(view).showStarDate("2100");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
 		verify(view).updateShields(100, 100, 100);
