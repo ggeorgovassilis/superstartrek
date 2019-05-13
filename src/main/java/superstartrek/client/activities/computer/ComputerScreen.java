@@ -24,6 +24,7 @@ import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
 public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
 
 	Element eRepair;
+	Element eSkip;
 	Element eStatusIconImpulse;
 	Element eStatusIconTactical;
 	Element eStatusIconPhasers;
@@ -70,7 +71,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eMaxShields = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		eValueShields = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
 		eQuadrantName = ((HTMLPanel) getWidget()).getElementById("quadrant_name");
-
+		eSkip = panel.getElementById("cmd_skip");
 		eStarDate = DOM.getElementById("stardate");
 		eScore = DOM.getElementById("score");
 		eLrsButton = DOM.getElementById("lrs-button");
@@ -112,10 +113,11 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void onClick(ClickEvent event) {
+		GWT.log("as");
 		Element target = event.getNativeEvent().getEventTarget().cast();
-		if (target == eRepair)
+		if (eRepair.isOrHasChild(target))
 			presenter.onRepairButtonClicked();
-		else if ("cmd_skip".equals(target.getId()))
+		else if (eSkip.isOrHasChild(target))
 			presenter.onSkipButtonClicked();
 	}
 
