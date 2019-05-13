@@ -95,8 +95,9 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		boolean canShowDockButton = canShowDockButton();
 		boolean canShowRepairButton = !canShowDockButton && enterprise.canRepairProvisionally();
 		repairButtonDocksAtStarbase = canShowDockButton;
+		view.setRepairButtonCss(canShowDockButton?"has-dock":"has-repair");
+		//this has to go after setting the CSS or CSS will be overwritten
 		view.setRepairButtonEnabled(canShowDockButton || canShowRepairButton);
-		view.setRepairButtonLabel(canShowDockButton?"Dock in starbase":"Repair");
 	}
 
 	public void updateStatusButton() {
@@ -114,6 +115,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent evt) {
+		GWT.log("tesk");
 		updateStarDate();
 		updateShieldsView();
 		updateQuadrantHeader();

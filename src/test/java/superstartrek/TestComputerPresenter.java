@@ -39,7 +39,7 @@ public class TestComputerPresenter extends BaseTest{
 		presenter.onTurnStarted(evt);
 
 		verify(view).setRepairButtonEnabled(false);
-		verify(view).setRepairButtonLabel("Repair");
+		verify(view).setRepairButtonCss("has-repair");
 		verify(view).showStarDate("0");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
@@ -55,7 +55,7 @@ public class TestComputerPresenter extends BaseTest{
 		presenter.onTurnStarted(evt);
 
 		verify(view).setRepairButtonEnabled(true);
-		verify(view).setRepairButtonLabel("Dock in starbase");
+		verify(view).setRepairButtonCss("has-dock");
 		verify(view).showStarDate("0");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);

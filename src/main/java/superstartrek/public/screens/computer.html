@@ -10,15 +10,17 @@
 </div>
 <div id="commandbar" class="command-bar">
 <div>
-<button id="cmd_repair" class="half-width">Repair</button>
+<button id="cmd_repair" class="half-width"><span class="repair-icon visible-with-repair">Repair</span><span class="dock-icon visible-with-dock">Dock with star base</span></button>
 <button accesskey="w" id="cmd_skip" class="half-width">Skip</button>
 </div>
 <button accesskey="s" id="cmd_toggleShields" class="progress-bar">
+	<span class="shields-icon"></span>
 	<span class="max-indicator"></span>
 	<span class="progress-indicator"></span>
 	<span class="progress-text">Shields</span>
 </button>
 <a accesskey="r" id="cmd_showStatusReport" href="#statusreport" class="progress-bar">
+<span class="report-icon"></span>
 <span class=status-icons><span class=impulse>Impulse</span><span class="tactical-computer">Tactical</span><span class="phasers">Phasers</span><span class="torpedo-bay">Torpedos</span></span>
 <span class="progress-indicator"></span><span class=progress-text>Status report</span>
 </a>

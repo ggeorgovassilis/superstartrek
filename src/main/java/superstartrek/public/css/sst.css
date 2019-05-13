@@ -54,7 +54,7 @@ li {
 a, a:visited, button, .button {
 	text-decoration: none;
 	color: white;
-	outline: solid darkslategray 1px;
+	outline: solid #111111 1px;
 	border: none transparent 0px;
 	padding: 0.5em 0;
 	text-align: center;
@@ -62,8 +62,7 @@ a, a:visited, button, .button {
 	cursor: pointer;
 	line-height: 2em;
 	font-size: 100%;
-	background: rgb(0, 108, 109);
-	background-color: rgb(0, 108, 109);
+	background-color: darkslategray;
 	appearance: none;
 	float: left;
 	width: 100%;
@@ -188,6 +187,13 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	line-height: 1.2em;
 	overflow: hidden;
 	position: absolute;
+}
+
+#lrs-button{
+	background-image: url('../images/radar.svg');
+	background-repeat: no-repeat;
+	background-size: 2.5em;
+	background-position: 0.2em 0.2em;
 }
 
 .star-class-o {
@@ -525,6 +531,56 @@ a.progress-bar {
 	padding: 0;
 }
 
+.shields-icon{
+	background-image: url('../images/shield.svg');
+	background-size:contain;
+	width:2.5em;
+	height:2.5em;
+	position:absolute;
+	display:block;
+	z-index:1;
+	margin-top:0.2em;
+}
+
+.report-icon{
+	background-image: url('../images/report.svg');
+	background-size:contain;
+	width:2.5em;
+	height:2.5em;
+	position:absolute;
+	display:block;
+	z-index:1;
+	margin-top:0.2em;
+}
+
+.dock-icon{
+	background-image: url('../images/anchor.svg');
+	background-size:contain;
+	background-repeat:no-repeat;
+	display:block;
+	margin-left:0.2em;
+}
+
+.repair-icon{
+	background-image: url('../images/repair.svg');
+	background-size:contain;
+	background-repeat:no-repeat;
+	display:block;
+	margin-left:0.2em;
+}
+
+.visible-with-repair,.visible-with-dock{
+	display:none;
+}
+
+.has-dock .visible-with-dock{
+	display:block;
+}
+
+.has-repair .visible-with-repair{
+	display:block;
+}
+
 .red-alert, .red-alert * {
 	color: red;
 	font-weight: bold;
@@ -691,9 +747,10 @@ a.progress-bar {
 	overflow: hidden;
 }
 
-a.disabled, button.disabled {
+a.disabled,button.disabled {
 	background-color: rgb(20, 40, 60);
-	color: silver !important;
+	color: darkgray !important;
+	filter:grayscale(0.5) blur(0.8px);
 }
 
 #update-app-prompt button, #install-app-prompt button {

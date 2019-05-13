@@ -14,7 +14,7 @@ public interface IComputerScreen extends View{
 
 	void showScore(String score);
 
-	void setRepairButtonLabel(String label);
+	void setRepairButtonCss(String css);
 	
 	void setRepairButtonEnabled(boolean enabled);
 	

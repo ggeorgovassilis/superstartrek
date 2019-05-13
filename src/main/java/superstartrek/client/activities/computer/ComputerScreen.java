@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
@@ -136,11 +137,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	}
 
 	@Override
-	public void setRepairButtonLabel(String label) {
-		eRepair.setInnerText(label);
-	}
-
-	@Override
 	public void setRepairButtonEnabled(boolean enabled) {
 		eRepair.removeAttribute("disabled");
 		eRepair.removeClassName("disabled");
@@ -149,6 +145,12 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 			eRepair.addClassName("disabled");
 		}
 			
+	}
+
+	@Override
+	public void setRepairButtonCss(String css) {
+		GWT.log("");
+		eRepair.setClassName("half-width "+css);
 	}
 
 }
