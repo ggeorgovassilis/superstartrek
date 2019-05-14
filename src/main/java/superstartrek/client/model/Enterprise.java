@@ -27,7 +27,7 @@ import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
 
 	public final static double PHASER_RANGE = 3;
-	public final static double ANTIMATTER_CONSUMPTION_WARP = 3;
+	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
 	public final static double IMPULSE_CONSUMPTION = 5;
 	
 	List<HandlerRegistration> handlers = new ArrayList<>();
@@ -97,7 +97,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int destinationX = destinationQuadrant.getX();
 		int destinationY = destinationQuadrant.getY();
 		double necessaryEnergy = computeConsumptionForWarp(fromQuadrant, destinationQuadrant);
-		if (!consume("warp", necessaryEnergy) && getQuadrant().getKlingons().isEmpty()) {
+		GWT.log("About to warp. Required energy is "+necessaryEnergy+", available is "+reactor.getValue());
+		//we always can warp out even if low on energy provided our sector is clean
+		if (!consume("warp", necessaryEnergy) && !getQuadrant().getKlingons().isEmpty()) {
 			GWT.log("no");
 			// we can let this slide if no enemies in quadrant
 			application.message("Insufficient reactor output");
@@ -224,7 +226,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {
-		return ANTIMATTER_CONSUMPTION_WARP * StarMap.distance_squared(from.x, from.y, to.x, to.y);
+		return ANTIMATTER_CONSUMPTION_WARP * (5.0+StarMap.distance_squared(from.x, from.y, to.x, to.y));
 	}
 
 	public void fireTorpedosAt(Location sector) {

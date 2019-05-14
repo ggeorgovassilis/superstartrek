@@ -700,6 +700,10 @@ a.progress-bar {
 	z-index: 1;
 }
 
+#cmd_toggleShields .progress-text{
+	margin-left:3em;
+}
+
 .status-icons-container .progress-text{
 	margin-top:-0.5em;
 }

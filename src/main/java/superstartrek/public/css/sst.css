@@ -532,35 +532,42 @@ a.progress-bar {
 }
 
 .shields-icon{
-	background-image: url('../images/shield.svg');
-	background-color:darkslategray;
-	background-size:contain;
-	width:3em;
-	height:3em;
-	position:absolute;
-	display:block;
-	z-index:1;
+    background-image: url(../images/shield.svg);
+    background-color: darkslategray;
+    background-size: 2.5em;
+    background-repeat: no-repeat;
+    background-position: 0.1em;
+    width: 3em;
+    height: 3em;
+    position: absolute;
+    display: block;
+    z-index: 1;
 }
 
 .report-icon{
 	background-image: url('../images/report.svg');
 	background-color: darkslategray;
-	background-size:contain;
-	display:block;
-	width:3em;
-	height:3em;
-	float:left;
+    background-size: 2.5em;
+    background-repeat: no-repeat;
+    background-position: 0.1em;
+    width: 3em;
+    height: 3em;
+    display: block;
+    float:left;
 }
 
 .has-dock{
 	background-image: url('../images/anchor.svg');
-	background-repeat:no-repeat;
+	background-repeat: no-repeat;
+	background-size: 2.5em;
+	background-position: 0.2em;
 }
 
 .has-repair{
 	background-image: url('../images/repair.svg');
-	background-size:contain;
-	background-repeat:no-repeat;
+	background-size: 2.5em;
+	background-position: 0.2em;
+	background-repeat: no-repeat;
 }
 
 @media ( max-width : 400px) {
@@ -698,6 +705,10 @@ a.progress-bar {
 	font-size: 0.6em;
 	position: relative;
 	z-index: 1;
+}
+
+#cmd_toggleShields .progress-text{
+	margin-left:3em;
 }
 
 .status-icons-container .progress-text{
