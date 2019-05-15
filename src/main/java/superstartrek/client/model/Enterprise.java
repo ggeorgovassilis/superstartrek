@@ -96,10 +96,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		int destinationX = destinationQuadrant.getX();
 		int destinationY = destinationQuadrant.getY();
 		double necessaryEnergy = computeConsumptionForWarp(fromQuadrant, destinationQuadrant);
-		GWT.log("About to warp. Required energy is "+necessaryEnergy+", available is "+reactor.getValue());
 		//we always can warp out even if low on energy provided our sector is clean
 		if (!consume("warp", necessaryEnergy) && !getQuadrant().getKlingons().isEmpty()) {
-			GWT.log("no");
 			// we can let this slide if no enemies in quadrant
 			application.message("Insufficient reactor output");
 			return false;
@@ -418,7 +416,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		// the in-world justification is that opponents can't get a reliable target lock
 		if (turnsSinceWarp < 2) {
 			damage = damage * 0.5;
-			GWT.log("Warp damage protection applies");
 		}
 		shields.decrease(damage);
 		BrowserAPI random = application.browserAPI;

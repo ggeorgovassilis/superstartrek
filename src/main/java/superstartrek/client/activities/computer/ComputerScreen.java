@@ -111,7 +111,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void onClick(ClickEvent event) {
-		GWT.log("as");
 		Element target = event.getNativeEvent().getEventTarget().cast();
 		if (eRepair.isOrHasChild(target))
 			presenter.onRepairButtonClicked();
@@ -149,7 +148,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void setRepairButtonCss(String css) {
-		GWT.log("");
 		eRepair.setClassName("half-width "+css);
 	}
 

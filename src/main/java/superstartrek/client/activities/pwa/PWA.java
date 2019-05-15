@@ -79,21 +79,14 @@ public class PWA {
 	 * Tricky thing to remember: if the user dismisses the native installation
 	 * prompt, the "beforeinstallprompt" event fires again!
 	 */
-	public native void addInstallationListener() /*-{
+	public native void addInstallationListener(Callback<AppInstallationEvent> callback) /*-{
 		var that = this;
 		$wnd.addEventListener('beforeinstallprompt', function (e){
-			that.@superstartrek.client.activities.pwa.PWA::installationEventCallback(Lsuperstartrek/client/activities/pwa/AppInstallationEvent;)(e);
+			that.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(e);
 		});
 	}-*/;
 	//@formatter:on
 	
-	public void installationEventCallback(AppInstallationEvent e) {
-		log.info("installation event callback");
-		deferredInstallationPrompt = e;
-		deferredInstallationPrompt.preventDefault();
-		application.events.fireEvent(new ApplicationLifecycleEvent(Status.showInstallPrompt, "", "", ""));
-	}
-
 	public void installApplication() {
 		log.info("invoking deferred installation prompt");
 		deferredInstallationPrompt.prompt();
@@ -148,7 +141,6 @@ public class PWA {
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
 						log.info("is same: " + isSame);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
-							GWT.log("update check failed");
 							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
 									checksumOfInstalledApplication, dateOfInstalledApplication, ""));
 							return;
@@ -195,7 +187,13 @@ public class PWA {
 			log.info("Not running PWA because not running in browser");
 			return;
 		}
-		addInstallationListener();
+		addInstallationListener((event)->{
+			log.info("installation event callback");
+			deferredInstallationPrompt = event;
+			deferredInstallationPrompt.preventDefault();
+			application.events.fireEvent(new ApplicationLifecycleEvent(Status.showInstallPrompt, "", "", ""));
+
+		});
 		setupCache(callback);
 	}
 }
