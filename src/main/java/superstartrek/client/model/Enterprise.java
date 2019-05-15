@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.combat.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler.EnterpriseWarpedEvent;
@@ -21,7 +21,6 @@ import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;
-import superstartrek.client.activities.navigation.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
 import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
@@ -182,7 +181,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	// only for internal use, bypasses checks
-	public void _navigateTo(Location loc) {
+	public void moveToIgnoringConstraints(Location loc) {
 		Location oldLoc = getLocation();
 		this.setLocation(loc);
 		application.events.fireEvent(new ThingMovedEvent(this, getQuadrant(), oldLoc, getQuadrant(), loc));
@@ -218,7 +217,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		}
 
 		impulse.decrease(distance);
-		_navigateTo(drop);
+		moveToIgnoringConstraints(drop);
 	}
 
 	public double computeConsumptionForImpulseNavigation(double distance) {

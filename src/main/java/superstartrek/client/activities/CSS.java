@@ -3,8 +3,6 @@ package superstartrek.client.activities;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 
-import superstartrek.client.utils.Timer;
-
 public class CSS {
 
 	final static String[] damageClasses = { "damage-offline", "damage-bad", "damage-medium", "damage-light", "" };

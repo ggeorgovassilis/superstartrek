@@ -31,6 +31,8 @@ public class TestComputerPresenter extends BaseTest{
 		presenter = new ComputerPresenter(application, scoreKeeper);
 		view = mock(IComputerScreen.class);
 		presenter.setView(view);
+		presenter.setEnterprise(enterprise);
+		presenter.setStarMap(starMap);
 	}
 	
 	@Test
@@ -99,7 +101,8 @@ public class TestComputerPresenter extends BaseTest{
 		Klingon k = new Klingon(ShipClass.Raider);
 		k.setLocation(Location.location(3, 3));
 		quadrant.getKlingons().add(k);
-		presenter.updateQuadrantHeader();
+		
+		presenter.updateQuadrantHeaderView();
 		
 		verify(view).setQuadrantName("test quadrant 1:2", "red-alert");
 	}
@@ -110,7 +113,7 @@ public class TestComputerPresenter extends BaseTest{
 		Klingon k = new Klingon(ShipClass.Raider);
 		k.setLocation(Location.location(5, 7));
 		quadrant.getKlingons().add(k);
-		presenter.updateQuadrantHeader();
+		presenter.updateQuadrantHeaderView();
 		
 		verify(view).setQuadrantName("test quadrant 1:2", "yellow-alert");
 	}
@@ -118,7 +121,7 @@ public class TestComputerPresenter extends BaseTest{
 	@Test
 	public void test_updateQuadrantHeader() {
 		enterprise.setLocation(Location.location(1, 1));
-		presenter.updateQuadrantHeader();
+		presenter.updateQuadrantHeaderView();
 		
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 	}

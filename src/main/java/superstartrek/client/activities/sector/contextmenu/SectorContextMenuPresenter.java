@@ -11,7 +11,6 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;

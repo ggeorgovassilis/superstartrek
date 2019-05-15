@@ -81,7 +81,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	@Override
-	public void klingonDestroyed(Klingon klingon) {
+	public void onKlingonDestroyed(Klingon klingon) {
 
 		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
 				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
@@ -135,7 +135,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	public void startGame() {
 		application.browserAPI.postHistoryChange("intro", true);
-		events.fireEvent(new GameStartedEvent());
+		events.fireEvent(new GameStartedEvent(application.starMap));
 	}
 
 	public void endTurn() {

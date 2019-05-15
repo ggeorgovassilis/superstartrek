@@ -8,15 +8,12 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.Window;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent.Status;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
-import superstartrek.client.activities.pwa.promise.Promise;
 
 public class PWA {
 

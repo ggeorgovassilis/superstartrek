@@ -6,13 +6,12 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
+import superstartrek.client.activities.combat.EnterpriseDamagedHandler;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
-import superstartrek.client.activities.navigation.EnterpriseDamagedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.TurnStartedEvent;
@@ -29,6 +28,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	ScoreKeeper scoreKeeper;
 	boolean repairButtonDocksAtStarbase = false;
+	Enterprise enterprise;
+	StarMap starMap;
 	
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super(application);
@@ -41,22 +42,26 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		addHandler(EnterpriseRepairedEvent.TYPE, this);
 		addHandler(GameStartedEvent.TYPE, this);
 	}
-
-	public void onSkipButtonClicked() {
-		application.events.fireEvent(new YieldTurnEvent());
+	
+	public void setEnterprise(Enterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+	
+	public void setStarMap(StarMap starMap) {
+		this.starMap = starMap;
 	}
 
 	@Override
 	public void showScreen() {
-		updateStarDate();
+		updateStarDateView();
 		view.show();
 	}
 
-	public void updateStarDate() {
-		view.showStarDate("" + application.starMap.getStarDate());
+	public void updateStarDateView() {
+		view.showStarDate("" + starMap.getStarDate());
 	}
 
-	public void updateScore() {
+	public void updateScoreView() {
 		view.showScore("" + scoreKeeper.getScore());
 	}
 
@@ -64,34 +69,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public void hideScreen() {
 		view.hide();
 	}
-
-	public void dockInStarbase() {
-		StarMap map = application.starMap;
-		Enterprise enterprise = map.enterprise;
-		Quadrant q = enterprise.getQuadrant();
-		boolean inRange = StarMap.within_distance(enterprise, q.getStarBase(), 1.1);
-		if (!inRange) {
-			Location loc = application.starMap.findFreeSpotAround(q, q.getStarBase().getLocation(), 2);
-			if (loc == null) {
-				application.message("No space around starbase");
-				return;
-			}
-			enterprise._navigateTo(loc);
-		}
-		enterprise.dockAtStarbase(q.getStarBase());
-	}
 	
-	public boolean canShowDockButton() {
-		Enterprise enterprise = application.starMap.enterprise;
-		Quadrant q = enterprise.getQuadrant();
-		StarBase starBase = q.getStarBase();
-		boolean visible = starBase != null
-				&& (q.getKlingons().isEmpty() || StarMap.within_distance(enterprise, starBase, 2));
-		return visible;
-	}
-
-	public void updateRepairButton() {
-		Enterprise enterprise = application.starMap.enterprise;
+	public void updateRepairButtonView() {
 		boolean canShowDockButton = canShowDockButton();
 		boolean canShowRepairButton = !canShowDockButton && enterprise.canRepairProvisionally();
 		repairButtonDocksAtStarbase = canShowDockButton;
@@ -100,8 +79,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		view.setRepairButtonEnabled(canShowDockButton || canShowRepairButton);
 	}
 
-	public void updateStatusButton() {
-		Enterprise enterprise = application.starMap.enterprise;
+	public void updateStatusButtonView() {
 		String cssImpulse = CSS.damageClass(enterprise.getImpulse().health());
 		String cssTactical = CSS.damageClass(enterprise.getAutoAim().health());
 		String cssPhasers = CSS.damageClass(enterprise.getPhasers().health());
@@ -113,45 +91,75 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 			view.disableLrsButton();
 	}
 
-	@Override
-	public void onTurnStarted(TurnStartedEvent evt) {
-		GWT.log("1s");
-		updateStarDate();
-		updateShieldsView();
-		updateQuadrantHeader();
-		updateAntimatter();
-		updateScore();
-		updateRepairButton();
-	}
 
-	public void updateAntimatter() {
-		Setting antimatter = application.starMap.enterprise.getAntimatter();
+	public void updateAntimatterView() {
+		Setting antimatter = enterprise.getAntimatter();
 		view.updateAntimatter((int) antimatter.getValue(), (int) antimatter.getMaximum());
 	}
 
-	public void updateQuadrantHeader() {
+	public void updateQuadrantHeaderView() {
 		String alert = "";
-		Quadrant q = application.starMap.enterprise.getQuadrant();
-		Enterprise e = application.starMap.enterprise;
-		Location el = e.getLocation();
-		if (!q.getKlingons().isEmpty()) {
-			double minDistance = 3 * 3;
-			for (Klingon k : q.getKlingons()) {
-				minDistance = Math.min(minDistance,
-						StarMap.distance_squared(el.getX(), el.getY(), k.getLocation().getX(), k.getLocation().getY()));
-				if (minDistance<9)
+		Quadrant quadrant = enterprise.getQuadrant();
+		Location enterprisePosition = enterprise.getLocation();
+		final double distanceOfRedAlertSquared = 3*3;
+		if (!quadrant.getKlingons().isEmpty()) {
+			double minDistanceSquared = distanceOfRedAlertSquared;
+			for (Klingon k : quadrant.getKlingons()) {
+				minDistanceSquared = Math.min(minDistanceSquared,
+						StarMap.distance_squared(enterprisePosition.getX(), enterprisePosition.getY(), k.getLocation().getX(), k.getLocation().getY()));
+				if (minDistanceSquared<distanceOfRedAlertSquared)
 					break; // 9 is read alert, can't get worse than that so no point in iterating further
 			}
-			alert = minDistance < 9 ? "red-alert" : "yellow-alert";
+			alert = minDistanceSquared < distanceOfRedAlertSquared ? "red-alert" : "yellow-alert";
 		}
 
-		view.setQuadrantName(q.getName(), alert);
+		view.setQuadrantName(quadrant.getName(), alert);
 	}
 
 	public void updateShieldsView() {
-		Enterprise enterprise = application.starMap.enterprise;
 		Setting shields = enterprise.getShields();
 		view.updateShields((int) shields.getValue(), (int) shields.getCurrentUpperBound(), (int) shields.getMaximum());
+	}
+
+	public void dockInStarbase() {
+		Quadrant q = enterprise.getQuadrant();
+		boolean inRange = StarMap.within_distance(enterprise, q.getStarBase(), 1.1);
+		if (!inRange) {
+			Location loc = starMap.findFreeSpotAround(q, q.getStarBase().getLocation(), 2);
+			if (loc == null) {
+				application.message("No space around starbase");
+				return;
+			}
+			enterprise.moveToIgnoringConstraints(loc);
+		}
+		enterprise.dockAtStarbase(q.getStarBase());
+	}
+	
+	public boolean canShowDockButton() {
+		Quadrant q = enterprise.getQuadrant();
+		StarBase starBase = q.getStarBase();
+		boolean visible = starBase != null
+				&& (q.getKlingons().isEmpty() || StarMap.within_distance(enterprise, starBase, 2));
+		return visible;
+	}
+
+	public void repairProvisionally() {
+		starMap.enterprise.repairProvisionally();
+	}
+
+	public void onSkipButtonClicked() {
+		application.events.fireEvent(new YieldTurnEvent());
+	}
+
+	@Override
+	public void onTurnStarted(TurnStartedEvent evt) {
+		GWT.log("1s");
+		updateStarDateView();
+		updateShieldsView();
+		updateQuadrantHeaderView();
+		updateAntimatterView();
+		updateScoreView();
+		updateRepairButtonView();
 	}
 
 	public void onRepairButtonClicked() {
@@ -160,22 +168,16 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		else repairProvisionally();
 	}
 	
-	public void repairProvisionally() {
-		Enterprise enterprise = application.starMap.enterprise;
-		enterprise.repairProvisionally();
-		updateStatusButton();
-	}
-
 	@Override
 	public void afterFire(FireEvent evt) {
-		if (evt.target == application.starMap.enterprise) {
+		if (evt.target == starMap.enterprise) {
 			updateShieldsView();
 		}
 	}
 
 	@Override
-	public void klingonDestroyed(Klingon klingon) {
-		updateQuadrantHeader();
+	public void onKlingonDestroyed(Klingon klingon) {
+		updateQuadrantHeaderView();
 	}
 
 	@Override
@@ -189,19 +191,21 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	@Override
 	public void onEnterpriseRepaired(Enterprise enterprise) {
-		updateStatusButton();
-		updateRepairButton();
+		updateStatusButtonView();
+		updateRepairButtonView();
 	}
 
 	@Override
 	public void onEnterpriseDamaged(Enterprise enterprise) {
-		updateStatusButton();
-		updateRepairButton();
+		updateStatusButtonView();
+		updateRepairButtonView();
 	}
 	
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
-		updateRepairButton();
-		updateStatusButton();
+		this.enterprise = evt.starMap.enterprise;
+		this.starMap = evt.starMap;
+		updateStatusButtonView();
+		updateRepairButtonView();
 	}
 }

@@ -59,7 +59,7 @@ public class SRSPresenter extends BasePresenter<ISRSView> implements GamePhaseHa
 	}
 
 	@Override
-	public void klingonDestroyed(Klingon klingon) {
+	public void onKlingonDestroyed(Klingon klingon) {
 		//actually only the center cell on the SRS map needs to be updated, but this event is rare and drawing the radar not expensive
 		updateRadar();
 	}

@@ -1,4 +1,4 @@
-package superstartrek.client.activities.navigation;
+package superstartrek.client.activities.combat;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;

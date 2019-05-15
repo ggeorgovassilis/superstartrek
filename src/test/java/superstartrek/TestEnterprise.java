@@ -296,7 +296,26 @@ public class TestEnterprise extends BaseTest{
 		
 		klingon.uncloak();
 		assertNull(null, enterprise.canFirePhaserAt(klingon.getLocation()));
-		
+	}
 	
+	@Test
+	public void test_autoAim() {
+		
+		Klingon klingon = new Klingon(Klingon.ShipClass.BirdOfPrey);
+		klingon.setLocation(Location.location(5, 5));
+		klingon.uncloak();
+		enterprise.setLocation(Location.location(4, 4));
+		quadrant.getKlingons().add(klingon);
+		events.addHandler(FireEvent.TYPE, new FireHandler() {
+			@Override
+			public void afterFire(FireEvent evt) {
+				assertEquals(klingon, evt.target);
+				assertEquals(enterprise, evt.actor);
+				assertEquals(21, evt.damage, 1);
+			}
+		});
+		enterprise.autoAim();
+		//2 events: 1 before fire 1 + after fire
+		assertEquals(2, events.getFiredCount(FireEvent.TYPE));
 	}
 }

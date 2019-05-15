@@ -2,8 +2,6 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -40,17 +38,16 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public QuadrantScannerPresenter(Application application, SectorContextMenuPresenter sectorMenuPresenter) {
 		super(application);
 		this.sectorMenuPresenter = sectorMenuPresenter;
-		EventBus events = application.events;
-		events.addHandler(SectorSelectedEvent.TYPE, this);
-		events.addHandler(GameStartedEvent.TYPE, this);
-		events.addHandler(ThingMovedEvent.TYPE, this);
-		events.addHandler(EnterpriseWarpedEvent.TYPE, this);
-		events.addHandler(FireEvent.TYPE, this);
-		events.addHandler(EnterpriseRepairedEvent.TYPE, this);
-		events.addHandler(KlingonDestroyedEvent.TYPE, this);
-		events.addHandler(KlingonUncloakedEvent.TYPE, this);
-		events.addHandler(KlingonCloakedEvent.TYPE, this);
-		events.addHandler(AfterTurnStartedEvent.TYPE, this);
+		addHandler(SectorSelectedEvent.TYPE, this);
+		addHandler(GameStartedEvent.TYPE, this);
+		addHandler(ThingMovedEvent.TYPE, this);
+		addHandler(EnterpriseWarpedEvent.TYPE, this);
+		addHandler(FireEvent.TYPE, this);
+		addHandler(EnterpriseRepairedEvent.TYPE, this);
+		addHandler(KlingonDestroyedEvent.TYPE, this);
+		addHandler(KlingonUncloakedEvent.TYPE, this);
+		addHandler(KlingonCloakedEvent.TYPE, this);
+		addHandler(AfterTurnStartedEvent.TYPE, this);
 	}
 
 	@Override
@@ -157,7 +154,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void klingonDestroyed(Klingon klingon) {
+	public void onKlingonDestroyed(Klingon klingon) {
 		clearSector(klingon.getLocation().getX(), klingon.getLocation().getY());
 	}
 

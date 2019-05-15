@@ -39,7 +39,6 @@ import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameRestartEvent;
-import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.model.Quadrant;
@@ -56,7 +55,6 @@ import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.UpdateAppPromptPresenter;
 import superstartrek.client.activities.pwa.UpdateAppPromptView;
-import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent.Status;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;;
 

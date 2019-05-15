@@ -21,9 +21,9 @@ public interface KlingonDestroyedHandler extends EventHandler{
 
 		@Override
 		protected void dispatch(KlingonDestroyedHandler handler) {
-			handler.klingonDestroyed(klingon);
+			handler.onKlingonDestroyed(klingon);
 		}
 	}
 
-	void klingonDestroyed(Klingon klingon);
+	void onKlingonDestroyed(Klingon klingon);
 }
