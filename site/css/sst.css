@@ -16,10 +16,6 @@ body, html, div, table, tr, td, span, header, section {
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-.disable-dbl-tap-zoom {
-  touch-action: manipulation;
-}
-
 header {
 	display: block;
 	overflow: hidden;
@@ -34,11 +30,6 @@ html {
 	font-family: sans-serif;
 	color: white;
 	font-size: 100%;
-}
-
-.federation-logo {
-	display: block;
-	height: 10em;
 }
 
 ul, ol {
@@ -259,13 +250,15 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	background: rgba(0, 0, 0, 0.7);
 }
 
-#quadrantheader {
-	padding: 0.1em;
-}
-
 /*
  * Intro screen
  */
+ 
+.federation-logo {
+	display: block;
+	height: 10em;
+}
+
 #screen-intro {
 	display: block;
 	font-family: monospace;
@@ -351,67 +344,12 @@ outline:solid transparent 1px;
 	overflow: hidden;
 }
 
-#messages-content
->
-li
-
-
-:not
-
- 
-
-(
-:last-child
-
- 
-
-)
-{
-border-bottom
-
-
-:
-
- 
-
-solid
-
- 
-
-grey
-
- 
-
-1
-px
-
-
-;
-padding-bottom
-
-
-:
-
- 
-
-0
-.5em
-
-
-;
-margin-bottom
-
-
-:
-
- 
-
-0
-.5em
-
-
-;
+#messages-content > li:not(:last-child){
+border-bottom:solid grey 1px;
+padding-bottom:0.5em;
+margin-bottom:0.5em;
 }
+
 #messages-content>li.damage, .damaged {
 	color: orange;
 }
@@ -518,10 +456,6 @@ a.progress-bar {
 /**
  * Commands visibility
  */
-.fireAtWill .highlight-when-fireatwill {
-	background-color: darkturquoise;
-}
-
 #cmd_toggleShields {
 	padding: 0;
 	line-height:2em;
