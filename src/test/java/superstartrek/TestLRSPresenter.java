@@ -54,17 +54,10 @@ public class TestLRSPresenter extends BaseTest{
 		enterprise.setQuadrant(starMap.getQuadrant(0, 0));
 		presenter.showLrs();
 		verify(view).show();
-		for (int x=0;x<8;x++)
-		for (int y=0;y<8;y++) {
-			Quadrant q = starMap.getQuadrant(x, y);
-			System.out.println(x+":"+y+" "+q.getKlingons().size()+" "+q.getStars().size());
-			if (enterprise.getQuadrant() == q)
-				verify(view).updateCell(0, 0, " 0", "has-enterprise explored");
-			else
-			if (x<3&&y<3)
-			verify(view).updateCell(x, y, " "+q.getStars().size(), " explored");
-			else 
-				verify(view).updateCell(x, y, " "+q.getStars().size(), "");
-		}
+		verify(view).updateCell(0, 0, " 0", "navigation-target has-enterprise explored");
+		verify(view).updateCell(1, 0, " 1", "navigation-target  explored");
+		verify(view).updateCell(0, 1, " 1", "navigation-target  explored");
+		verify(view).updateCell(2, 0, " 2", "navigation-target  explored");
+		verify(view).updateCell(eq(3), eq(4), eq(" 0"), eq("navigation-target "));
 	}
 }

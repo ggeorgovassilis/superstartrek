@@ -25,14 +25,14 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		// intensive
 		// warping event cascade
 		// invoked only before successful warp
-		if (enterprise.warpTo(qTo, ()->	view.hide()))
+		if (enterprise.warpTo(qTo, () -> view.hide()))
 			application.browserAPI.postHistoryChange("computer");
 	}
 
-	protected void updateQuadrant(int x, int y) {
+	protected void updateQuadrant(int x, int y, boolean isReachable) {
 		StarMap map = application.starMap;
 		Quadrant q = map.getQuadrant(x, y);
-		Maps.renderCell(x, y, map, q, view);
+		Maps.renderCell(x, y, map, q, isReachable ? "navigation-target " : "", view);
 	}
 
 	protected void updateEnterpriseLocation() {
@@ -42,28 +42,21 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 	}
 
 	public void updateLrsView() {
-		for (int y = 0; y < 8; y++)
-			for (int x = 0; x < 8; x++)
-				updateQuadrant(x, y);
-		updateEnterpriseLocation();
-		markReachableQuadrants();
-	}
-	
-	public void markReachableQuadrants() {
-		StarMap map = application.starMap;
-		Enterprise enterprise = map.enterprise;
+
+		StarMap starMap = application.starMap;
+		Enterprise enterprise = starMap.enterprise;
 		Quadrant qEnterprise = enterprise.getQuadrant();
 		for (int y = 0; y < 8; y++)
 			for (int x = 0; x < 8; x++) {
-				//TODO: reuse symmetry?
-				double requiredEnergy = application.starMap.enterprise.computeConsumptionForWarp(qEnterprise, map.getQuadrant(x, y));
-				if (requiredEnergy <= enterprise.getReactor().getValue())
-					view.addCss(x, y, "navigation-target");
+				double requiredEnergy = enterprise.computeConsumptionForWarp(qEnterprise, starMap.getQuadrant(x, y));
+				boolean isReachable = requiredEnergy <= enterprise.getReactor().getValue();
+				updateQuadrant(x, y, isReachable);
 			}
+		updateEnterpriseLocation();
 	}
 
 	public void showLrs() {
-		//TODO: LRS shouldn't be visible if damaged
+		// TODO: LRS shouldn't be visible if damaged
 		updateLrsView();
 		view.show();
 		Quadrant loc = application.starMap.enterprise.getQuadrant();

@@ -6,9 +6,9 @@ import superstartrek.client.model.StarMap;
 
 public class Maps {
 
-	public static void renderCell(int cellX, int cellY, StarMap map, Quadrant q, MapCellRenderer renderer) {
+	public static void renderCell(int cellX, int cellY, StarMap map, Quadrant q, String extraCss, MapCellRenderer renderer) {
 		String symbol = "";
-		String css = map.enterprise.getQuadrant() == q ?"has-enterprise":"";
+		String css = extraCss+(map.enterprise.getQuadrant() == q ?"has-enterprise":"");
 		if (q != null) {
 			if (q.isExplored()) {
 				css+=" explored";	
