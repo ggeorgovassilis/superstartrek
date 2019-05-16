@@ -96,4 +96,14 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		eSectors[x][y].addClassName(css);
 	}
 
+	@Override
+	public int getHorizontalOffsetOfSector(int x, int y) {
+		return eSectors[x][y].getAbsoluteLeft();
+	}
+
+	@Override
+	public int getVerticalOffsetOfSector(int x, int y) {
+		return eSectors[x][y].getAbsoluteTop();
+	}
+
 }

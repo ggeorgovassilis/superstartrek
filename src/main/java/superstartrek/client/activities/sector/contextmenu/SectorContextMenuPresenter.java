@@ -16,7 +16,7 @@ import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.TurnEndedEvent;
 
 public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView>
-		implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String> {
+		implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String>, ContextMenuHideHandler {
 
 	Location sector;
 	Quadrant quadrant;
@@ -26,6 +26,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		super(application);
 		addHandler(SectorSelectedEvent.TYPE, this);
 		addHandler(TurnEndedEvent.TYPE, this);
+		addHandler(ContextMenuHideEvent.TYPE, this);
 		application.browserAPI.addHistoryListener(this);
 
 		buttonsEnabled.put("cmd_navigate", false);
@@ -117,6 +118,12 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		hideMenu(null);
+	}
+
+	@Override
+	public void onMenuHide() {
+		if (view.isVisible())
+			hideMenu(null);
 	}
 
 }

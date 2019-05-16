@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.event.shared.UmbrellaException;
@@ -56,9 +58,10 @@ import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.UpdateAppPromptPresenter;
 import superstartrek.client.activities.pwa.UpdateAppPromptView;
 import superstartrek.client.activities.pwa.http.RequestFactory;
-import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;;
+import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;
+import superstartrek.client.control.KeyPressedEventHandler.KeyPressedEvent;
 
-public class Application implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler {
+public class Application implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler, KeyPressHandler {
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus events;
@@ -246,11 +249,17 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		setupHttp();
 		registerEventHandlers();
 		setupPwa((v) -> setupTheRest());
+		RootPanel.get().addDomHandler(this, KeyPressEvent.getType());
 	}
 
 	@Override
 	public void appMustReload() {
 		reload();
+	}
+
+	@Override
+	public void onKeyPress(KeyPressEvent event) {
+		events.fireEvent(new KeyPressedEvent(event.getNativeEvent().getKeyCode(), event.getCharCode()));
 	}
 
 }

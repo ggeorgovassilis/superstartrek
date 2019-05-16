@@ -2,6 +2,10 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -17,18 +21,21 @@ import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.control.AfterTurnStartedEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
+import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler.ContextMenuHideEvent;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
-		EnterpriseRepairedHandler, KlingonCloakingHandler, KlingonDestroyedHandler {
+		EnterpriseRepairedHandler, KlingonCloakingHandler, KlingonDestroyedHandler, KeyPressedEventHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
+	Location selectedSector = Location.location(0, 0);
 
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		application.events.fireEvent(new SectorSelectedEvent(Location.location(x, y),
@@ -48,12 +55,14 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		addHandler(KlingonUncloakedEvent.TYPE, this);
 		addHandler(KlingonCloakedEvent.TYPE, this);
 		addHandler(AfterTurnStartedEvent.TYPE, this);
+		addHandler(KeyPressedEvent.TYPE, this);
 	}
 
 	@Override
 	public void onSectorSelected(SectorSelectedEvent event) {
 		view.deselectSectors();
-		view.selectSector(event.sector.getX(), event.sector.getY());
+		selectedSector = Location.location(event.sector.getX(), event.sector.getY());
+		view.selectSector(selectedSector.getX(), selectedSector.getY());
 	}
 
 	void updateSector(Thing thing) {
@@ -182,6 +191,43 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	@Override
 	public void afterTurnStarted(AfterTurnStartedEvent evt) {
 		updateMapWithReachableSectors();
+	}
+
+	@Override
+	public void onKeyPressed(KeyPressedEvent event) {
+		Location newSector = null;
+		GWT.log(event.charCode + " " + event.code);
+		switch (event.code) {
+		case KeyCodes.KEY_LEFT:
+			newSector = Location.location(Math.max(0, selectedSector.getX() - 1), selectedSector.getY());
+			break;
+		case KeyCodes.KEY_RIGHT:
+			newSector = Location.location(Math.min(7, selectedSector.getX() + 1), selectedSector.getY());
+			break;
+		case KeyCodes.KEY_UP:
+			newSector = Location.location(selectedSector.getX(), Math.max(0, selectedSector.getY() - 1));
+			break;
+		case KeyCodes.KEY_DOWN:
+			newSector = Location.location(selectedSector.getX(), Math.min(7, selectedSector.getY() + 1));
+			break;
+		}
+
+		if (event.code == 0)
+			switch (event.charCode) {
+			case 'M':
+			case 'm':
+				int dx = view.getHorizontalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
+				int dy = view.getVerticalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
+				application.events
+						.fireEvent(new SectorSelectedEvent(selectedSector, application.starMap.enterprise.getQuadrant(), dx, dy));
+				break;
+			}
+		if (newSector != null) {
+			selectedSector = newSector;
+			view.deselectSectors();
+			view.selectSector(selectedSector.getX(), selectedSector.getY());
+			application.events.fireEvent(new ContextMenuHideEvent());
+		}
 	}
 
 }

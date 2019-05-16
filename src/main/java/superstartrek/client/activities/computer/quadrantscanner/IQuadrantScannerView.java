@@ -1,6 +1,8 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
 import superstartrek.client.activities.View;
+import superstartrek.client.control.KeyPressedEventHandler;
+import superstartrek.client.model.Location;
 
 public interface IQuadrantScannerView extends View{
 
@@ -12,5 +14,7 @@ public interface IQuadrantScannerView extends View{
 	
 	void removeCssFromCell(int x, int y, String css);
 	void addCssToCell(int x, int y, String css);
-
+	int getHorizontalOffsetOfSector(int x, int y);
+	int getVerticalOffsetOfSector(int x, int y);
+	
 }
