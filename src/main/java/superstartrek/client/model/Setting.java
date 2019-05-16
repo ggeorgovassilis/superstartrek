@@ -3,18 +3,16 @@ package superstartrek.client.model;
 public class Setting {
 
 	protected final double maximum;
-	protected final double defaultValue;
 	protected double currentUpperBound;
 	protected double value;
 	protected final String name;
 	protected boolean enabled=true;
 	
-	public Setting(String name, double defaultValue, double maximum) {
+	public Setting(String name, double maximum) {
 		this.name = name;
 		this.maximum = maximum;
-		this.defaultValue = defaultValue;
 		this.currentUpperBound = maximum;
-		this.value = defaultValue;
+		this.value = maximum;
 	}
 
 	public boolean isEnabled() {
@@ -23,10 +21,6 @@ public class Setting {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	public double getDefaultValue() {
-		return defaultValue;
 	}
 
 	public double ratio() {
@@ -86,7 +80,7 @@ public class Setting {
 	}
 	
 	public void reset() {
-		setValue(getDefaultValue());
+		setValue(getMaximum());
 	}
 
 	public void repair() {

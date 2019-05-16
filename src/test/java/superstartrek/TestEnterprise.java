@@ -50,13 +50,13 @@ public class TestEnterprise extends BaseTest{
 
 		enterprise.damagePhasers();
 		assertTrue(enterprise.getPhasers().isEnabled());
-		assertEquals(105, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
+		assertEquals(21, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
 		assertTrue(enterprise.getPhasers().isEnabled());
-		assertEquals(60, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
+		assertEquals(12, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
 		assertTrue(enterprise.getPhasers().isEnabled());
-		assertEquals(15, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
+		assertEquals(3, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
 		assertEquals(0, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		assertFalse(enterprise.getPhasers().isEnabled());

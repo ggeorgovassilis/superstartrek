@@ -32,12 +32,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	Application application;
 	StarMap starMap;
-	Setting phasers = new Setting("phasers", 30, 150);
-	Setting torpedos = new Setting("torpedos", 10, 10);
-	Setting antimatter = new Setting("antimatter", 1000, 1000);
-	Setting reactor = new Setting("reactor", 60, 60);
-	Setting autoAim = new Setting("auto aim", 1, 1);
-	Setting lrs = new Setting("LRS", 1, 1);
+	Setting phasers = new Setting("phasers", 30);
+	Setting torpedos = new Setting("torpedos", 10);
+	Setting antimatter = new Setting("antimatter", 1000);
+	Setting reactor = new Setting("reactor", 60);
+	Setting autoAim = new Setting("auto aim", 1);
+	Setting lrs = new Setting("LRS", 1);
 	Quadrant quadrant;
 	List<Location> reachableSectors = new ArrayList<>();
 
@@ -72,7 +72,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public Enterprise(Application app, StarMap map) {
-		super(new Setting("impulse", 3, 3), new Setting("shields", 100, 100));
+		super(new Setting("impulse", 3), new Setting("shields", 100));
 		this.application = app;
 		this.starMap = map;
 		setName("NCC 1701 USS Enterprise");
@@ -241,11 +241,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Thing target = null;
 		double damage = 50;
 		BrowserAPI browser = application.browserAPI;
+		double precision = 1.8;
 		for (Thing thing : things) {
 			boolean hit = false;
 			if (Klingon.is(thing)) {
 				double distance = StarMap.distance(this, thing);
-				double chance = 1.8 / distance;
+				double chance = precision / distance;
 				hit = browser.nextDouble() <= chance;
 			} else {
 				hit = true;
@@ -342,7 +343,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * 0.75)); // boolean settings can be repaired
 																				// fully
-		setting.setValue(setting.getDefaultValue());
+		setting.setValue(setting.getCurrentUpperBound());
 		setting.setEnabled(true);
 		application.message("Repaired " + setting.getName());
 		return true;

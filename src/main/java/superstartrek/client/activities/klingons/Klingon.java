@@ -57,13 +57,13 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	}
 
 	public Klingon(ShipClass c) {
-		super(new Setting("impulse", 1, 1), new Setting("shields", c.shields, c.shields));
+		super(new Setting("impulse", 1), new Setting("shields", c.shields));
 		this.shipClass = c;
-		cloak = new Setting("cloak", 1, 1);
+		cloak = new Setting("cloak", 1);
 		setName(c.label);
 		setSymbol(c.symbol);
 		setCss("klingon cloaked");
-		this.disruptor = new Setting("disruptor", c.disruptor, c.disruptor);
+		this.disruptor = new Setting("disruptor", c.disruptor);
 		enterpriseWarpedHandler = Application.get().events.addHandler(EnterpriseWarpedEvent.TYPE, this);
 		gameRestartHandler = Application.get().events.addHandler(GameRestartEvent.TYPE, this);
 	}
