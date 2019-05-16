@@ -18,6 +18,7 @@ import superstartrek.client.control.YieldTurnEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
@@ -124,7 +125,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		Quadrant q = enterprise.getQuadrant();
 		boolean inRange = StarMap.within_distance(enterprise, q.getStarBase(), 1.1);
 		if (!inRange) {
-			Location loc = starMap.findFreeSpotAround(q, q.getStarBase().getLocation(), 2);
+			Location loc = starMap.findFreeSpotAround(new QuadrantIndex(q, starMap), q.getStarBase().getLocation(), 2);
 			if (loc == null) {
 				application.message("No space around starbase");
 				return;

@@ -117,7 +117,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 		Quadrant dropQuadrant = container[0];
 		setQuadrant(dropQuadrant);
-		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation());
+		Location freeSpot = starMap.findFreeSpotAround(new QuadrantIndex(getQuadrant(), starMap), getLocation(), 8);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
 		starMap.markAsExploredAround(dropQuadrant);
@@ -241,7 +241,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		Thing target = null;
 		double damage = 50;
 		BrowserAPI browser = application.browserAPI;
-		double precision = 1.8;
+		double precision = 2*(autoAim.getBooleanValue()?1:0.7);
 		for (Thing thing : things) {
 			boolean hit = false;
 			if (Klingon.is(thing)) {

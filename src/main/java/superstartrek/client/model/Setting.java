@@ -2,10 +2,10 @@ package superstartrek.client.model;
 
 public class Setting {
 
+	protected final String name;
 	protected final double maximum;
 	protected double currentUpperBound;
 	protected double value;
-	protected final String name;
 	protected boolean enabled=true;
 	
 	public Setting(String name, double maximum) {

@@ -122,14 +122,13 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		return false;
 	}
 
-	public void repositionKlingon() {
+	public void repositionKlingon(QuadrantIndex index) {
 		if (!getImpulse().isEnabled())
 			return;
 		StarMap map = Application.get().starMap;
 		Enterprise enterprise = map.enterprise;
 		// no need to move if distance is <=2 and Klingon has a clear shot at the
 		// Enterprise
-		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), map);
 		if (hasClearShotAt(index, enterprise.getLocation(), enterprise, map))
 			return;
 		PathFinder pathFinder = new PathFinderImpl();
@@ -146,14 +145,11 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		Application app = Application.get();
 		Quadrant quadrant = app.getActiveQuadrant();
 		ThingMovedEvent event = new ThingMovedEvent(this, quadrant, getLocation(), quadrant, dest);
-		Thing obstacle = quadrant.findThingAt(dest);
-		if (null != obstacle)
-			throw new RuntimeException("There is " + obstacle.getName() + " at " + dest);
 		setLocation(dest);
 		app.events.fireEvent(event);
 	}
 
-	public void fireOnEnterprise() {
+	public void fireOnEnterprise(QuadrantIndex index) {
 		if (!getDisruptor().isEnabled())
 			return;
 		Application app = Application.get();
@@ -162,11 +158,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		boolean inRange = StarMap.within_distance(this, enterprise, DISRUPTOR_RANGE_SECTORS);
 		if (!inRange)
 			return;
-		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), map);
-		List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), enterprise.getLocation(),2);
-		obstacles.remove(this);
-		obstacles.remove(enterprise);
-		if (!obstacles.isEmpty())
+		if (!hasClearShotAt(index, enterprise.getLocation(), enterprise, map))
 			return;
 		if (!isVisible())
 			uncloak();
@@ -183,7 +175,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		Application.get().message(getName() + " cloaked at " + this.getLocation(), "klingon-uncloaked");
 	}
 	
-	public void flee() {
+	public void flee(QuadrantIndex index) {
 		if (canCloak() && isVisible()) {
 			cloak();
 		}
@@ -196,7 +188,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			int triesLeft = 5;
 			Location loc = null;
 			do {
-				loc = app.starMap.findFreeSpotAround(app.getActiveQuadrant(), getLocation(), 1+(int)getImpulse().getValue());
+				loc = app.starMap.findFreeSpotAround(index, getLocation(), 1+(int)getImpulse().getValue());
 				if (loc!=null) {
 					double newDistance = StarMap.distance(app.starMap.enterprise.getLocation(), loc);
 					if (newDistance<=distance)
@@ -215,11 +207,15 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		Application app = Application.get();
 		if (app.getFlags().contains("nopc"))
 			return;
+		StarMap map = app.starMap;
+		//klingon quadrant is same as with enterprise
+		Quadrant quadrant = map.enterprise.getQuadrant();
+		QuadrantIndex index = new QuadrantIndex(quadrant, map);
 		if (!getDisruptor().isEnabled())
-			flee();
+			flee(index);
 		else
-			repositionKlingon();
-		fireOnEnterprise();
+			repositionKlingon(index);
+		fireOnEnterprise(index);
 	}
 
 	@Override

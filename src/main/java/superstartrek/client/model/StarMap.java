@@ -146,12 +146,7 @@ public class StarMap {
 		return found;
 	}
 
-	public Location findFreeSpotAround(Quadrant q, Location loc) {
-		return findFreeSpotAround(q, loc, 8);
-	}
-
-	public Location findFreeSpotAround(Quadrant q, Location loc, int maxRadius) {
-		QuadrantIndex index = new QuadrantIndex(q, this);
+	public Location findFreeSpotAround(QuadrantIndex index, Location loc, int maxRadius) {
 		BrowserAPI random = Application.get().browserAPI;
 		for (int radius = 1; radius <= maxRadius; radius++) {
 			for (int tries = 0; tries < radius * radius; tries++) {
