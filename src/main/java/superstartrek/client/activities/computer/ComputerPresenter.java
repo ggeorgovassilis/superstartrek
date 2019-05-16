@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -84,10 +83,10 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	public void updateStatusButtonView() {
-		String cssImpulse = CSS.damageClass(enterprise.getImpulse().health());
-		String cssTactical = CSS.damageClass(enterprise.getAutoAim().health());
-		String cssPhasers = CSS.damageClass(enterprise.getPhasers().health());
-		String cssTorpedos = CSS.damageClass(enterprise.getTorpedos().health());
+		String cssImpulse = CSS.damageClass(enterprise.getImpulse());
+		String cssTactical = CSS.damageClass(enterprise.getAutoAim());
+		String cssPhasers = CSS.damageClass(enterprise.getPhasers());
+		String cssTorpedos = CSS.damageClass(enterprise.getTorpedos());
 		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
 		if (enterprise.getLrs().isEnabled())
 			view.enableLlrsButton();
@@ -161,7 +160,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		updateQuadrantHeaderView();
 		updateAntimatterView();
 		updateScoreView();
-		updateRepairButtonView();
+		updateButtonViews();
 	}
 
 	public void onRepairButtonClicked() {
@@ -196,25 +195,27 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 			hideScreen();
 		}
 	}
-
-	@Override
-	public void onEnterpriseRepaired(Enterprise enterprise) {
+	
+	protected void updateButtonViews() {
 		updateStatusButtonView();
 		updateRepairButtonView();
 	}
 
 	@Override
+	public void onEnterpriseRepaired(Enterprise enterprise) {
+		updateButtonViews();
+	}
+
+	@Override
 	public void onEnterpriseDamaged(Enterprise enterprise) {
-		updateStatusButtonView();
-		updateRepairButtonView();
+		updateButtonViews();
 	}
 
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
 		this.enterprise = evt.starMap.enterprise;
 		this.starMap = evt.starMap;
-		updateStatusButtonView();
-		updateRepairButtonView();
+		updateButtonViews();
 	}
 
 	@Override

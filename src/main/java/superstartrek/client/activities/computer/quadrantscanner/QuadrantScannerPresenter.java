@@ -2,10 +2,7 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -73,8 +70,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			css = thing.getCss();
 			if (Vessel.is(thing)) {
 				Vessel vessel = thing.as();
-				double status = vessel.getShields().health();
-				css += " " + CSS.damageClass(status);
+				css += " " + CSS.damageClass(vessel.getShields());
 				if (!vessel.getImpulse().isEnabled())
 					css += " impulse-disabled";
 				if (Klingon.is(thing) && (!Klingon.as(thing).getDisruptor().isEnabled())) {

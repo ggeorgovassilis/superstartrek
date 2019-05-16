@@ -1,8 +1,6 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
 import superstartrek.client.activities.View;
-import superstartrek.client.control.KeyPressedEventHandler;
-import superstartrek.client.model.Location;
 
 public interface IQuadrantScannerView extends View{
 

@@ -130,6 +130,13 @@ public class AStarPlus {
 		}
 	}
 
+	//TODO: idea how to speed up path construction a bit:
+	//we actually never need the full path; all we need is:
+	//1. knowing whether there is a path or not
+	//2. the first 2 sectors of the path (because klingons can travel only that far in a turn)
+	//The path is reversible: path(a,b) = path(b,a). The "reconstructPath" method jumps from "b" to "a", constructing the list of steps to walk from "a" to "b".
+	//If we asked astarplus to construct the path from "b" to "a", the "reconstructPath" method would start reconstructing the path from "a" to "b"; so we could
+	//abort the path reconstruction once the first two steps are found.
 	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, StarMap map) {
 		if (from == to)
 			return new ArrayList<Location>();

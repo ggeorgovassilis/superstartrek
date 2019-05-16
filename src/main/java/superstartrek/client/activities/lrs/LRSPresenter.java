@@ -4,8 +4,6 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.computer.ComputerHandler;
-import superstartrek.client.activities.computer.ComputerHandler.ComputerEvent.Action;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
