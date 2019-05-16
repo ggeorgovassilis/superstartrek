@@ -196,7 +196,6 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	@Override
 	public void onKeyPressed(KeyPressedEvent event) {
 		Location newSector = null;
-		GWT.log(event.charCode + " " + event.code);
 		switch (event.code) {
 		case KeyCodes.KEY_LEFT:
 			newSector = Location.location(Math.max(0, selectedSector.getX() - 1), selectedSector.getY());

@@ -63,7 +63,7 @@ public class GwtBrowserAPIImpl implements BrowserAPI{
 
 	@Override
 	public boolean hasKeyboard() {
-		return getWindowWidthPx()>1000;
+		return getWindowWidthPx()>400;
 	}
 
 	@Override

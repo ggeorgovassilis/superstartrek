@@ -3,6 +3,7 @@ package superstartrek.client.activities.sector.contextmenu;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -13,10 +14,11 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.TurnEndedEvent;
 
 public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView>
-		implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String>, ContextMenuHideHandler {
+		implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String>, ContextMenuHideHandler, KeyPressedEventHandler {
 
 	Location sector;
 	Quadrant quadrant;
@@ -27,6 +29,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		addHandler(SectorSelectedEvent.TYPE, this);
 		addHandler(TurnEndedEvent.TYPE, this);
 		addHandler(ContextMenuHideEvent.TYPE, this);
+		addHandler(KeyPressedEvent.TYPE, this);
 		application.browserAPI.addHistoryListener(this);
 
 		buttonsEnabled.put("cmd_navigate", false);
@@ -124,6 +127,30 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	public void onMenuHide() {
 		if (view.isVisible())
 			hideMenu(null);
+	}
+
+	@Override
+	public void onKeyPressed(KeyPressedEvent event) {
+		if (!view.isVisible())
+			return;
+		if (event.code == 0) switch (event.charCode) {
+		case 'n':
+		case 'N':
+			onCommandClicked("cmd_navigate");
+			break;
+		case 'p':
+		case 'P':
+			onCommandClicked("cmd_firePhasers");
+			break;
+		case 't':
+		case 'T':
+			onCommandClicked("cmd_fireTorpedos");
+			break;
+		case '-':
+		case '_':
+			onCommandClicked("cmd_scanSector");
+			break;
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -12,6 +13,7 @@ import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
+import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.control.YieldTurnEvent;
@@ -24,13 +26,14 @@ import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
-		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>, EnterpriseDamagedHandler, EnterpriseRepairedHandler {
+		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>,
+		EnterpriseDamagedHandler, EnterpriseRepairedHandler, KeyPressedEventHandler {
 
 	ScoreKeeper scoreKeeper;
 	boolean repairButtonDocksAtStarbase = false;
 	Enterprise enterprise;
 	StarMap starMap;
-	
+
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super(application);
 		this.scoreKeeper = scoreKeeper;
@@ -41,12 +44,13 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		addHandler(EnterpriseDamagedEvent.TYPE, this);
 		addHandler(EnterpriseRepairedEvent.TYPE, this);
 		addHandler(GameStartedEvent.TYPE, this);
+		addHandler(KeyPressedEvent.TYPE, this);
 	}
-	
+
 	public void setEnterprise(Enterprise enterprise) {
 		this.enterprise = enterprise;
 	}
-	
+
 	public void setStarMap(StarMap starMap) {
 		this.starMap = starMap;
 	}
@@ -69,13 +73,13 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public void hideScreen() {
 		view.hide();
 	}
-	
+
 	public void updateRepairButtonView() {
 		boolean canShowDockButton = canShowDockButton();
 		boolean canShowRepairButton = !canShowDockButton && enterprise.canRepairProvisionally();
 		repairButtonDocksAtStarbase = canShowDockButton;
-		view.setRepairButtonCss(canShowDockButton?"has-dock":"has-repair");
-		//this has to go after setting the CSS or CSS will be overwritten
+		view.setRepairButtonCss(canShowDockButton ? "has-dock" : "has-repair");
+		// this has to go after setting the CSS or CSS will be overwritten
 		view.setRepairButtonEnabled(canShowDockButton || canShowRepairButton);
 	}
 
@@ -91,7 +95,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 			view.disableLrsButton();
 	}
 
-
 	public void updateAntimatterView() {
 		Setting antimatter = enterprise.getAntimatter();
 		view.updateAntimatter((int) antimatter.getValue(), (int) antimatter.getMaximum());
@@ -101,13 +104,13 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		String alert = "";
 		Quadrant quadrant = enterprise.getQuadrant();
 		Location enterprisePosition = enterprise.getLocation();
-		final double distanceOfRedAlertSquared = 3*3;
+		final double distanceOfRedAlertSquared = 3 * 3;
 		if (!quadrant.getKlingons().isEmpty()) {
 			double minDistanceSquared = distanceOfRedAlertSquared;
 			for (Klingon k : quadrant.getKlingons()) {
-				minDistanceSquared = Math.min(minDistanceSquared,
-						StarMap.distance_squared(enterprisePosition.getX(), enterprisePosition.getY(), k.getLocation().getX(), k.getLocation().getY()));
-				if (minDistanceSquared<distanceOfRedAlertSquared)
+				minDistanceSquared = Math.min(minDistanceSquared, StarMap.distance_squared(enterprisePosition.getX(),
+						enterprisePosition.getY(), k.getLocation().getX(), k.getLocation().getY()));
+				if (minDistanceSquared < distanceOfRedAlertSquared)
 					break; // 9 is read alert, can't get worse than that so no point in iterating further
 			}
 			alert = minDistanceSquared < distanceOfRedAlertSquared ? "red-alert" : "yellow-alert";
@@ -134,7 +137,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		}
 		enterprise.dockAtStarbase(q.getStarBase());
 	}
-	
+
 	public boolean canShowDockButton() {
 		Quadrant q = enterprise.getQuadrant();
 		StarBase starBase = q.getStarBase();
@@ -164,9 +167,10 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public void onRepairButtonClicked() {
 		if (repairButtonDocksAtStarbase)
 			dockInStarbase();
-		else repairProvisionally();
+		else
+			repairProvisionally();
 	}
-	
+
 	@Override
 	public void afterFire(FireEvent evt) {
 		if (evt.target == starMap.enterprise) {
@@ -182,9 +186,14 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		switch (event.getValue()) {
-			case "computer": showScreen(); break;
-			case "appmenu": break; //appmenu uses history tokens to allow hiding with "back" button, but isn't really a screen - so don't hide
-			default: hideScreen();
+		case "computer":
+			showScreen();
+			break;
+		case "appmenu":
+			break; // appmenu uses history tokens to allow hiding with "back" button, but isn't
+					// really a screen - so don't hide
+		default:
+			hideScreen();
 		}
 	}
 
@@ -199,12 +208,31 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		updateStatusButtonView();
 		updateRepairButtonView();
 	}
-	
+
 	@Override
 	public void onGameStarted(GameStartedEvent evt) {
 		this.enterprise = evt.starMap.enterprise;
 		this.starMap = evt.starMap;
 		updateStatusButtonView();
 		updateRepairButtonView();
+	}
+
+	@Override
+	public void onKeyPressed(KeyPressedEvent event) {
+		if (event.code == 0) switch(event.charCode) {
+		case 'l':
+		case 'L':
+			if (application.starMap.enterprise.getLrs().isEnabled())
+				application.browserAPI.postHistoryChange("longrangescan");
+			break;
+		case 's':
+		case 'S':
+			onSkipButtonClicked();
+			break;
+		case 'r':
+		case 'R':
+			onRepairButtonClicked();
+			break;
+		}
 	}
 }
