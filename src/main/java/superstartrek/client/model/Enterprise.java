@@ -11,8 +11,9 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.combat.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.navigation.EnterpriseWarpedHandler.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
+import superstartrek.client.activities.pwa.Callback;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameRestartEvent;
@@ -20,6 +21,7 @@ import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;
+import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
@@ -123,11 +125,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		starMap.markAsExploredAround(dropQuadrant);
 		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
-		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, fromQuadrant, fromLocation, dropQuadrant,
-				freeSpot);
+		Quadrant qFrom = getQuadrant();
+		application.bus.invoke(Events.AFTER_ENTERPRISE_WARPED, (Callback<EnterpriseWarpedHandler>)(h)->h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant,
+				freeSpot));
 
-		application.events.fireEvent(warpEvent);
-		ThingMovedEvent moveEvent = new ThingMovedEvent(this, warpEvent.qFrom, oldLocation, warpEvent.qTo, freeSpot);
+		ThingMovedEvent moveEvent = new ThingMovedEvent(this, qFrom, oldLocation, dropQuadrant, freeSpot);
 		application.events.fireEvent(moveEvent);
 		turnsSinceWarp = 0;
 		return true;

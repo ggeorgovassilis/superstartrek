@@ -11,6 +11,7 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.KlingonTurnStartedEvent;
@@ -29,7 +30,6 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	protected final Setting disruptor;
 	protected final Setting cloak;
 	
-	private HandlerRegistration enterpriseWarpedHandler;
 	private HandlerRegistration fireHandler;
 	private HandlerRegistration klingonTurnHandler;
 	private HandlerRegistration gameRestartHandler;
@@ -64,7 +64,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		setSymbol(c.symbol);
 		setCss("klingon cloaked");
 		this.disruptor = new Setting("disruptor", c.disruptor);
-		enterpriseWarpedHandler = Application.get().events.addHandler(EnterpriseWarpedEvent.TYPE, this);
+		Application.get().bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
 		gameRestartHandler = Application.get().events.addHandler(GameRestartEvent.TYPE, this);
 	}
 
@@ -221,9 +221,9 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	@Override
 	public void destroy() {
 		unregisterActionHandlers();
-		enterpriseWarpedHandler.removeHandler();
 		gameRestartHandler.removeHandler();
 		Application app = Application.get();
+		app.bus.unregister(this);
 		app.getActiveQuadrant().getKlingons().remove(this);
 		app.message(getName()+" was destroyed", "klingon-destroyed");
 		super.destroy();

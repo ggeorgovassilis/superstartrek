@@ -15,6 +15,7 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.AfterTurnStartedEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
@@ -45,7 +46,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		addHandler(SectorSelectedEvent.TYPE, this);
 		addHandler(GameStartedEvent.TYPE, this);
 		addHandler(ThingMovedEvent.TYPE, this);
-		addHandler(EnterpriseWarpedEvent.TYPE, this);
+		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
 		addHandler(FireEvent.TYPE, this);
 		addHandler(EnterpriseRepairedEvent.TYPE, this);
 		addHandler(KlingonDestroyedEvent.TYPE, this);
@@ -191,6 +192,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	@Override
 	public void onKeyPressed(KeyPressedEvent event) {
+		if (!view.isVisible())
+			return;
 		Location newSector = null;
 		switch (event.code) {
 		case KeyCodes.KEY_LEFT:

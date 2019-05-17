@@ -37,6 +37,7 @@ import superstartrek.client.activities.report.StatusReportView;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
+import superstartrek.client.bus.Bus;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
@@ -65,6 +66,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus events;
+	public Bus bus = new Bus();
 	public HTMLPanel _page;
 	public StarMap starMap;
 	public BrowserAPI browserAPI;

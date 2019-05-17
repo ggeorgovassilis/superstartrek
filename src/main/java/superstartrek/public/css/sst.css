@@ -117,7 +117,7 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 }
 
 .has-enterprise {
-	outline: solid darkturquoise 2px;
+	outline: solid cadetblue 2px;
 	background-color: darkcyan;
 }
 
@@ -422,7 +422,7 @@ a.progress-bar {
 .progress-indicator {
 	height: 100%;
 	position: absolute;
-	background-color: darkturquoise;
+	background-color: cadetblue;
 	display: block;
 }
 
@@ -704,7 +704,7 @@ a.progress-bar {
 a.disabled,button.disabled {
 	background-color: rgb(20, 40, 60);
 	color: darkgray !important;
-	filter:grayscale(0.5) blur(0.8px);
+	filter:grayscale(0.5) blur(0.7px);
 }
 
 #update-app-prompt button, #install-app-prompt button {

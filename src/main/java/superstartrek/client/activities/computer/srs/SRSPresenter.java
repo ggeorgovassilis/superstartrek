@@ -7,6 +7,7 @@ import superstartrek.client.activities.appmenu.AppMenuHandler.AppMenuEvent.Statu
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.model.Enterprise;
@@ -21,7 +22,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	public SRSPresenter(Application application) {
 		super(application);
 		addHandler(GameStartedEvent.TYPE, this);
-		addHandler(EnterpriseWarpedEvent.TYPE, this);
+		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
 		addHandler(KlingonDestroyedEvent.TYPE, this);
 	}
 
