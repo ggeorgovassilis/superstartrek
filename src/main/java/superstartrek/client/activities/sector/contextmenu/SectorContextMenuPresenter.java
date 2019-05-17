@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -134,7 +135,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	public void onKeyPressed(KeyPressedEvent event) {
 		if (!view.isVisible())
 			return;
-		if (event.code == 0) switch (event.charCode) {
+		switch (event.code) {
 		case 'n':
 		case 'N':
 			onCommandClicked("cmd_navigate");

@@ -2,6 +2,7 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
@@ -37,7 +38,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
 		Quadrant quadrant = application.starMap.enterprise.getQuadrant();
-		application.bus.invoke(Events.SECTOR_SELECTED, (Callback<SectorSelectedHandler>)(h)->h.onSectorSelected(location, quadrant, screenX, screenY));
+		application.bus.invoke(Events.SECTOR_SELECTED,
+				(Callback<SectorSelectedHandler>) (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
 	public QuadrantScannerPresenter(Application application, SectorContextMenuPresenter sectorMenuPresenter) {
@@ -165,7 +167,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
+			boolean wasAutoFire) {
 		// target might have been destroyed (so not on map anymore) and thus null
 		if (target != null)
 			updateSector(quadrant, target.getLocation().getX(), target.getLocation().getY());
@@ -207,23 +210,21 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		case KeyCodes.KEY_DOWN:
 			newSector = Location.location(selectedSector.getX(), Math.min(7, selectedSector.getY() + 1));
 			break;
+		case 'M':
+		case 'm':
+			int dx = view.getHorizontalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
+			int dy = view.getVerticalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
+			Quadrant quadrant = application.starMap.enterprise.getQuadrant();
+			application.bus.invoke(Events.SECTOR_SELECTED,
+					(Callback<SectorSelectedHandler>) (h) -> h.onSectorSelected(selectedSector, quadrant, dx, dy));
+			break;
 		}
 
-		if (event.code == 0)
-			switch (event.charCode) {
-			case 'M':
-			case 'm':
-				int dx = view.getHorizontalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
-				int dy = view.getVerticalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
-				Quadrant quadrant = application.starMap.enterprise.getQuadrant();
-				application.bus.invoke(Events.SECTOR_SELECTED, (Callback<SectorSelectedHandler>)(h)->h.onSectorSelected(selectedSector, quadrant, dx, dy));
-				break;
-			}
 		if (newSector != null) {
 			selectedSector = newSector;
 			view.deselectSectors();
 			view.selectSector(selectedSector.getX(), selectedSector.getY());
-			application.bus.invoke(Events.CONTEXT_MENU_HIDE, (Callback<ContextMenuHideHandler>)(h)->h.onMenuHide());
+			application.bus.invoke(Events.CONTEXT_MENU_HIDE, (Callback<ContextMenuHideHandler>) (h) -> h.onMenuHide());
 		}
 	}
 

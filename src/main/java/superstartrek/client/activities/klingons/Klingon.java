@@ -208,7 +208,6 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	@Override
 	public void onKlingonTurnStarted() {
-		GWT.log("Playing klingon at " + getLocation());
 		// Reminder: only klingons in the active sector receive this event
 		Application app = Application.get();
 		if (app.getFlags().contains("nopc"))

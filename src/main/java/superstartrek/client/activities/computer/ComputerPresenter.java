@@ -1,5 +1,7 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -222,7 +224,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	@Override
 	public void onKeyPressed(KeyPressedEvent event) {
-		if (event.code == 0) switch(event.charCode) {
+		GWT.log("computerpresenter.okp");
+		switch(event.code) {
 		case 'l':
 		case 'L':
 			if (application.starMap.enterprise.getLrs().isEnabled())
@@ -235,6 +238,11 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		case 'r':
 		case 'R':
 			onRepairButtonClicked();
+			break;
+		case KeyCodes.KEY_BACKSPACE:
+		case 'b':
+		case 'B':
+			application.browserAPI.postHistoryChange("computer");
 			break;
 		}
 	}

@@ -9,11 +9,9 @@ public interface KeyPressedEventHandler extends EventHandler{
 
 		public final static Type<KeyPressedEventHandler> TYPE = new Type<KeyPressedEventHandler>();
 		public final int code;
-		public final char charCode;
 		
-		public KeyPressedEvent(int code, char charCode) {
+		public KeyPressedEvent(int code) {
 			this.code = code;
-			this.charCode = charCode;
 		}
 		
 		@Override
