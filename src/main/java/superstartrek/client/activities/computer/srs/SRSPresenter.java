@@ -23,7 +23,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 		super(application);
 		addHandler(GameStartedEvent.TYPE, this);
 		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
-		addHandler(KlingonDestroyedEvent.TYPE, this);
+		addHandler(Events.KLINGON_DESTROYED, this);
 	}
 
 	public void updateRadar() {

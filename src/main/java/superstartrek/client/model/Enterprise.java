@@ -20,9 +20,9 @@ import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.BrowserAPI;
-import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
+import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
 
@@ -317,7 +317,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
-		application.events.fireEvent(new EnterpriseDockedHandler.EnterpriseDockedEvent(this, starBase));
+		application.bus.invoke(Events.ENTERPRISE_DOCKED, (Callback<EnterpriseDockedHandler>)(h)->h.onEnterpriseDocked(Enterprise.this, starBase));
 		phasers.repair();
 		torpedos.repair();
 		impulse.repair();
@@ -325,7 +325,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		autoAim.repair();
 		antimatter.repair();
 		lrs.repair();
-		application.events.fireEvent(new EnterpriseRepairedEvent(this));
+		application.bus.invoke(Events.ENTERPRISE_REPAIRED, (Callback<EnterpriseRepairedHandler>)(h)->h.onEnterpriseRepaired(Enterprise.this));
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -353,7 +353,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos)
 					|| maybeRepairProvisionally(autoAim) || maybeRepairProvisionally(lrs);
 			if (repaired) {
-				application.events.fireEvent(new EnterpriseRepairedEvent(this));
+				application.bus.invoke(Events.ENTERPRISE_REPAIRED, (Callback<EnterpriseRepairedHandler>)(h)->h.onEnterpriseRepaired(Enterprise.this));
 				return;
 			}
 		}
@@ -436,7 +436,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		getReactor().decrease(value);
 		getAntimatter().decrease(value);
-		application.events.fireEvent(new EnergyConsumptionHandler.EnergyConsumptionEvent(this, value, what));
+		application.bus.invoke(Events.CONSUME_ENERGY, (Callback<EnergyConsumptionHandler>)(h)->h.handleEnergyConsumption(this, value, what));
 		return true;
 	}
 

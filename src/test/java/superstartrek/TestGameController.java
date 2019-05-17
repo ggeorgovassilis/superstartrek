@@ -23,7 +23,7 @@ import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Star.StarClass;
-import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
+import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 
 public class TestGameController extends BaseTest{
 
@@ -60,8 +60,7 @@ public class TestGameController extends BaseTest{
 	@Test
 	public void test_that_turn_ends_after_enterprise_repairs() {
 		enterprise.getShields().setValue(0);
-		EnterpriseRepairedEvent evt = new EnterpriseRepairedEvent(enterprise);
-		events.fireEvent(evt);
+		bus.invoke(Events.ENTERPRISE_REPAIRED, (Callback<EnterpriseRepairedHandler>)(h)->h.onEnterpriseRepaired(enterprise));
 		assertEquals(1, events.getFiredCount(TurnEndedEvent.TYPE));
 	}
 

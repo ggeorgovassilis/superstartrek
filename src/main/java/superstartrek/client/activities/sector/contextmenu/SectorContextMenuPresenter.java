@@ -12,6 +12,7 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.activities.sector.scan.ScanSectorHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.TurnEndedEvent;
@@ -25,7 +26,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 	public SectorContextMenuPresenter(Application application) {
 		super(application);
-		addHandler(SectorSelectedEvent.TYPE, this);
+		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(TurnEndedEvent.TYPE, this);
 		addHandler(ContextMenuHideEvent.TYPE, this);
 		addHandler(KeyPressedEvent.TYPE, this);
@@ -74,9 +75,9 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	@Override
-	public void onSectorSelected(SectorSelectedEvent event) {
-		this.sector = event.getSector();
-		showMenu(event.screenX, event.screenY, event.getSector(), event.getQuadrant());
+	public void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screenY) {
+		this.sector = sector;
+		showMenu(screenX, screenY, sector, quadrant);
 	}
 
 	public void onEscapePressed() {

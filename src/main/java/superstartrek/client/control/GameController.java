@@ -41,13 +41,13 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		events.addHandler(TurnEndedEvent.TYPE, this);
 		events.addHandler(KlingonTurnStartedEvent.TYPE, this);
 		application.bus.register(Events.AFTER_FIRE, this);
-		events.addHandler(EnterpriseRepairedEvent.TYPE, this);
+		application.bus.register(Events.ENTERPRISE_REPAIRED, this);
 		events.addHandler(ThingMovedEvent.TYPE, this);
-		events.addHandler(KlingonDestroyedEvent.TYPE, this);
+		application.bus.register(Events.KLINGON_DESTROYED, this);
 		events.addHandler(MessagesReadEvent.TYPE, this);
 		events.addHandler(YieldTurnEvent.TYPE, this);
-		events.addHandler(EnergyConsumptionEvent.TYPE, this);
-		events.addHandler(EnterpriseDockedEvent.TYPE, this);
+		application.bus.register(Events.CONSUME_ENERGY, this);
+		application.bus.register(Events.ENTERPRISE_DOCKED, this);
 		events.addHandler(GameRestartEvent.TYPE, this);
 	}
 

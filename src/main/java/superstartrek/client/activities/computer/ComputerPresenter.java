@@ -40,11 +40,11 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		super(application);
 		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
-		addHandler(ComputerEvent.TYPE, this);
+		application.bus.register(Events.SHOW_COMPUTER, this);
 		addHandler(TurnStartedEvent.TYPE, this);
-		addHandler(KlingonDestroyedEvent.TYPE, this);
+		addHandler(Events.KLINGON_DESTROYED, this);
 		application.bus.register(Events.ENTERPRISE_DAMAGED, this);
-		addHandler(EnterpriseRepairedEvent.TYPE, this);
+		application.bus.register(Events.ENTERPRISE_REPAIRED, this);
 		addHandler(GameStartedEvent.TYPE, this);
 		addHandler(KeyPressedEvent.TYPE, this);
 	}
