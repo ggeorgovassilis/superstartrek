@@ -18,7 +18,6 @@ import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPrese
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -45,7 +44,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		super(application);
 		this.sectorMenuPresenter = sectorMenuPresenter;
 		addHandler(Events.SECTOR_SELECTED, this);
-		addHandler(GameStartedEvent.TYPE, this);
+		addHandler(Events.GAME_STARTED, this);
 		addHandler(Events.THING_MOVED, this);
 		addHandler(Events.AFTER_ENTERPRISE_WARPED, this);
 		addHandler(Events.AFTER_FIRE, this);
@@ -128,7 +127,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void onGameStarted(GameStartedEvent evt) {
+	public void onGameStarted(StarMap map) {
 		updateScreen();
 	}
 

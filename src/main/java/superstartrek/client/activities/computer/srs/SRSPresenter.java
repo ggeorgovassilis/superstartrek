@@ -9,7 +9,6 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -21,7 +20,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 
 	public SRSPresenter(Application application) {
 		super(application);
-		addHandler(GameStartedEvent.TYPE, this);
+		addHandler(Events.GAME_STARTED, this);
 		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
 	}
@@ -68,7 +67,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	}
 
 	@Override
-	public void onGameStarted(GameStartedEvent evt) {
+	public void onGameStarted(StarMap map) {
 		updateRadar();
 	}
 

@@ -14,7 +14,6 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.BrowserAPI;
@@ -82,7 +81,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		EventBus events = application.events;
 		handlers.add(events.addHandler(TurnStartedEvent.TYPE, this));
 		handlers.add(events.addHandler(TurnEndedEvent.TYPE, this));
-		handlers.add(application.events.addHandler(GameRestartEvent.TYPE, this));
+		application.bus.register(Events.GAME_RESTART, this);
 		application.bus.register(Events.BEFORE_FIRE, this);
 	}
 

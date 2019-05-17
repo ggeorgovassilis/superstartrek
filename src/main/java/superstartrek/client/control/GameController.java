@@ -38,7 +38,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		events = application.events;
 		bus = application.bus;
 		this.scoreKeeper = scoreKeeper;
-		events.addHandler(GameStartedEvent.TYPE, this);
+		bus.register(Events.GAME_STARTED, this);
 		bus.register(Events.GAME_OVER, this);
 		events.addHandler(TurnStartedEvent.TYPE, this);
 		events.addHandler(TurnEndedEvent.TYPE, this);
@@ -48,10 +48,10 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		bus.register(Events.THING_MOVED, this);
 		bus.register(Events.KLINGON_DESTROYED, this);
 		bus.register(Events.MESSAGE_READ, this);
-		events.addHandler(YieldTurnEvent.TYPE, this);
+		bus.register(Events.TURN_YIELDED, this);
 		bus.register(Events.CONSUME_ENERGY, this);
 		bus.register(Events.ENTERPRISE_DOCKED, this);
-		events.addHandler(GameRestartEvent.TYPE, this);
+		bus.register(Events.GAME_RESTART, this);
 	}
 
 	public ScoreKeeper getScoreKeeper() {
@@ -140,7 +140,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	public void startGame() {
 		application.browserAPI.postHistoryChange("intro", true);
-		events.fireEvent(new GameStartedEvent(application.starMap));
+		application.bus.invoke(Events.GAME_STARTED, (Callback<GamePhaseHandler>)(h)->h.onGameStarted(application.starMap));
 	}
 
 	public void endTurn() {
@@ -152,7 +152,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	@Override
-	public void onTurnYielded(YieldTurnEvent evt) {
+	public void onTurnYielded() {
 		endTurnAfterThis();
 	}
 

@@ -4,24 +4,20 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameStartedEvent;
+import superstartrek.client.model.StarMap;
 
 public class LoadingPresenter extends BasePresenter<LoadingScreen> implements GamePhaseHandler{
 
-	HandlerRegistration handlerRegistration;
-	
 	public LoadingPresenter(Application application) {
 		super(application);
-		handlerRegistration = addHandler(GameStartedEvent.TYPE, this);
+		addHandler(Events.GAME_STARTED, this);
 	}
 
 	@Override
-	public void onGameStarted(GameStartedEvent evt) {
+	public void onGameStarted(StarMap map) {
 		view.hide();
-		//we won't need this presenter or its view after the initial event
-		handlerRegistration.removeHandler();
-		handlerRegistration = null;
 	}
 
 }

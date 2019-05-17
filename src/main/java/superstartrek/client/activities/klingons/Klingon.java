@@ -15,7 +15,6 @@ import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.KlingonTurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -33,7 +32,6 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	protected final Setting cloak;
 	
 	private HandlerRegistration klingonTurnHandler;
-	private HandlerRegistration gameRestartHandler;
 	
 	public final static int MAX_SECTOR_SPEED = 1;
 	public final static int DISRUPTOR_RANGE_SECTORS = 2;
@@ -66,7 +64,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		setCss("klingon cloaked");
 		this.disruptor = new Setting("disruptor", c.disruptor);
 		Application.get().bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
-		gameRestartHandler = Application.get().events.addHandler(GameRestartEvent.TYPE, this);
+		Application.get().bus.register(Events.GAME_RESTART, this);
 	}
 
 	/*
@@ -219,7 +217,6 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	@Override
 	public void destroy() {
 		unregisterActionHandlers();
-		gameRestartHandler.removeHandler();
 		Application app = Application.get();
 		app.bus.unregister(this);
 		app.getActiveQuadrant().getKlingons().remove(this);

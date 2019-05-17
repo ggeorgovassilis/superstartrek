@@ -5,20 +5,21 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameStartedEvent;
+import superstartrek.client.model.StarMap;
 
 public class IntroPresenter extends BasePresenter<IntroView> implements ApplicationLifecycleHandler, GamePhaseHandler, ValueChangeHandler<String>{
 
 	public IntroPresenter(Application application) {
 		super(application);
-		addHandler(GameStartedEvent.TYPE, this);
+		addHandler(Events.GAME_STARTED, this);
 		addHandler(ApplicationLifecycleEvent.TYPE, this);
 		application.browserAPI.addHistoryListener(this);
 	}
 	
 	@Override
-	public void onGameStarted(GameStartedEvent evt) {
+	public void onGameStarted(StarMap map) {
 		view.show();
 		application.browserAPI.postHistoryChange("intro");
 	}

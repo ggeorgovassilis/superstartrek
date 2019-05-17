@@ -41,7 +41,6 @@ import superstartrek.client.bus.Bus;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.model.Quadrant;
@@ -174,7 +173,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void restart() {
-		events.fireEvent(new GameRestartEvent());
+		bus.invoke(Events.GAME_RESTART, (Callback<GamePhaseHandler>)(h)->h.beforeGameRestart());
 		startGame();
 	}
 

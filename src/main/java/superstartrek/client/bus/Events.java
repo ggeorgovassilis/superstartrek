@@ -25,4 +25,7 @@ public class Events {
 	public final static String GAME_OVER = "GAME_OVER";
 	public final static String AFTER_TURN_STARTED = "AFTER_TURN_STARTED";
 	public final static String THING_MOVED = "THING_MOVED";
+	public final static String GAME_RESTART = "GAME_RESTART";
+	public final static String TURN_YIELDED = "TURN_YIELDED";
+	public final static String GAME_STARTED = "GAME_STARTED";
 }

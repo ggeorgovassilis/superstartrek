@@ -10,13 +10,12 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.TurnStartedEvent;
-import superstartrek.client.control.YieldTurnEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -45,7 +44,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		addHandler(Events.KLINGON_DESTROYED, this);
 		application.bus.register(Events.ENTERPRISE_DAMAGED, this);
 		application.bus.register(Events.ENTERPRISE_REPAIRED, this);
-		addHandler(GameStartedEvent.TYPE, this);
+		addHandler(Events.GAME_STARTED, this);
 		addHandler(KeyPressedEvent.TYPE, this);
 	}
 
@@ -153,7 +152,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	public void onSkipButtonClicked() {
-		application.events.fireEvent(new YieldTurnEvent());
+		application.bus.invoke(Events.TURN_YIELDED, (Callback<GamePhaseHandler>)(h)->h.onTurnYielded());
 	}
 
 	@Override
@@ -215,9 +214,9 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void onGameStarted(GameStartedEvent evt) {
-		this.enterprise = evt.starMap.enterprise;
-		this.starMap = evt.starMap;
+	public void onGameStarted(StarMap starMap) {
+		this.enterprise = starMap.enterprise;
+		this.starMap = starMap;
 		updateButtonViews();
 	}
 
