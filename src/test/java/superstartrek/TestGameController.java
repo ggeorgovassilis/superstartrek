@@ -8,7 +8,6 @@ import org.junit.Test;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
-import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameController;
@@ -21,20 +20,22 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
+import superstartrek.client.activities.navigation.ThingMovedHandler;
 
-public class TestGameController extends BaseTest{
+public class TestGameController extends BaseTest {
 
 	GameController controller;
 	ScoreKeeper scoreKeeper = new ScoreKeeperImpl();
-	
+
 	@Before
 	public void setup() {
 		controller = new GameController(application, scoreKeeper);
 	}
-	
+
 	@Test
 	public void test_that_turn_ends_after_enterprise_fires() {
-		bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>)(h)->h.afterFire(quadrant, enterprise, new Klingon(ShipClass.BirdOfPrey), "Phaser", 1, false));
+		bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise,
+				new Klingon(ShipClass.BirdOfPrey), "Phaser", 1, false));
 		assertEquals(1, events.getFiredCount(TurnEndedEvent.TYPE));
 		assertEquals(1, events.getFiredCount(KlingonTurnStartedEvent.TYPE));
 		assertEquals(1, bus.getFiredCount(Events.KLINGON_TURN_ENDED));
@@ -43,28 +44,30 @@ public class TestGameController extends BaseTest{
 
 	@Test
 	public void test_that_message_is_printed_when_star_is_hit() {
-		bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>)(h)->h.afterFire(quadrant, enterprise, new Star(1,2,StarClass.A), "Phaser", 1, false));
+		bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise,
+				new Star(1, 2, StarClass.A), "Phaser", 1, false));
 		assertEquals(1, bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 
 	@Test
 	public void test_that_game_is_over_if_enterprise_destroyed() {
 		enterprise.getShields().setValue(0);
-		bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>)(h)->h.afterFire(quadrant, enterprise, enterprise, "disruptor", 1, false));
+		bus.invoke(Events.AFTER_FIRE,
+				(Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise, enterprise, "disruptor", 1, false));
 		assertEquals(1, bus.getFiredCount(Events.GAME_OVER));
 	}
 
 	@Test
 	public void test_that_turn_ends_after_enterprise_repairs() {
 		enterprise.getShields().setValue(0);
-		bus.invoke(Events.ENTERPRISE_REPAIRED, (Callback<EnterpriseRepairedHandler>)(h)->h.onEnterpriseRepaired(enterprise));
+		bus.invoke(Events.ENTERPRISE_REPAIRED,
+				(Callback<EnterpriseRepairedHandler>) (h) -> h.onEnterpriseRepaired(enterprise));
 		assertEquals(1, events.getFiredCount(TurnEndedEvent.TYPE));
 	}
 
 	@Test
 	public void test_that_turn_ends_after_enterprise_moves() {
-		ThingMovedEvent evt = new ThingMovedEvent(enterprise, quadrant, enterprise.getLocation(), quadrant, Location.location(4, 4));
-		events.fireEvent(evt);
+		bus.invoke(Events.THING_MOVED, (Callback<ThingMovedHandler>) (h) -> h.thingMoved(enterprise, quadrant, enterprise.getLocation(), quadrant, Location.location(4, 4)));
 		assertEquals(1, events.getFiredCount(TurnEndedEvent.TYPE));
 	}
 

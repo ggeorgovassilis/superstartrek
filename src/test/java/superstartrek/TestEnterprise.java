@@ -11,7 +11,6 @@ import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -88,7 +87,7 @@ public class TestEnterprise extends BaseTest {
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
-		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
+		bus.register(Events.THING_MOVED, new ThingMovedHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
@@ -104,7 +103,7 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(0, enterprise.getImpulse().getValue(), 0.5);
 		assertEquals(Location.location(2, 2), enterprise.getLocation());
-		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.THING_MOVED));
 	}
 
 	@Test

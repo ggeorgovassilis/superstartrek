@@ -45,7 +45,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		events.addHandler(KlingonTurnStartedEvent.TYPE, this);
 		bus.register(Events.AFTER_FIRE, this);
 		bus.register(Events.ENTERPRISE_REPAIRED, this);
-		events.addHandler(ThingMovedEvent.TYPE, this);
+		bus.register(Events.THING_MOVED, this);
 		bus.register(Events.KLINGON_DESTROYED, this);
 		bus.register(Events.MESSAGE_READ, this);
 		events.addHandler(YieldTurnEvent.TYPE, this);
@@ -125,7 +125,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_DAY);
 		application.starMap.advanceStarDate(1);
 		events.fireEvent(new TurnStartedEvent());
-		events.fireEvent(new AfterTurnStartedEvent());
+		bus.invoke(Events.AFTER_TURN_STARTED, (Callback<GamePhaseHandler>)(h)->h.afterTurnStarted());
 	}
 
 	public void startTurnAfterThis() {

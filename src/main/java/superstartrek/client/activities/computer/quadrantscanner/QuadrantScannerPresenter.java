@@ -17,7 +17,6 @@ import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.bus.Events;
-import superstartrek.client.control.AfterTurnStartedEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.control.KeyPressedEventHandler;
@@ -47,14 +46,14 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		this.sectorMenuPresenter = sectorMenuPresenter;
 		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(GameStartedEvent.TYPE, this);
-		addHandler(ThingMovedEvent.TYPE, this);
-		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
-		application.bus.register(Events.AFTER_FIRE, this);
+		addHandler(Events.THING_MOVED, this);
+		addHandler(Events.AFTER_ENTERPRISE_WARPED, this);
+		addHandler(Events.AFTER_FIRE, this);
 		addHandler(Events.ENTERPRISE_REPAIRED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
-		application.bus.register(Events.KLINGON_CLOAKED, this);
-		application.bus.register(Events.KLINGON_UNCLOAKED, this);
-		addHandler(AfterTurnStartedEvent.TYPE, this);
+		addHandler(Events.KLINGON_CLOAKED, this);
+		addHandler(Events.KLINGON_UNCLOAKED, this);
+		addHandler(Events.AFTER_TURN_STARTED, this);
 		addHandler(KeyPressedEvent.TYPE, this);
 	}
 
@@ -187,7 +186,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void afterTurnStarted(AfterTurnStartedEvent evt) {
+	public void afterTurnStarted() {
 		updateMapWithReachableSectors();
 	}
 

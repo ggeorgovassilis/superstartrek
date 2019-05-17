@@ -3,7 +3,6 @@ package superstartrek;
 import org.junit.Before;
 import org.junit.Test;
 
-import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.bus.Events;
 
 import static org.junit.Assert.*;

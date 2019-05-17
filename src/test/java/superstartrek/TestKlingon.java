@@ -3,8 +3,6 @@ package superstartrek;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +11,6 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -42,25 +39,23 @@ public class TestKlingon extends BaseTest{
 	public void testReppositionKlingon() {
 		klingon.jumpTo(Location.location(1, 3));
 		enterprise.setLocation(Location.location(2, 7));
-		AtomicReference<ThingMovedEvent> evt = new AtomicReference<ThingMovedEvent>();
-		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
+		bus.register(Events.THING_MOVED, new ThingMovedHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-				evt.set(new ThingMovedEvent(thing, qFrom, lFrom, qTo, lTo));
+				assertEquals(quadrant, qFrom);
+				assertEquals(quadrant, qTo);
+				assertEquals(klingon, thing);
+				assertEquals(Location.location(1, 3), lFrom);
+				assertEquals(Location.location(0, 4), lTo);
 			}
 		});
 		klingon.repositionKlingon(new QuadrantIndex(quadrant, starMap));
+		assertEquals(2, bus.getFiredCount(Events.THING_MOVED));
 
 		// a*+ moves a bit strangely; it can move temporarily away from a target (even
 		// if that is not necessary)
 		// as long as the path is optimal
-		assertEquals(2, events.getFiredCount(ThingMovedEvent.TYPE));
-		assertEquals(quadrant, evt.get().qFrom);
-		assertEquals(quadrant, evt.get().qTo);
-		assertEquals(klingon, evt.get().thing);
-		assertEquals(Location.location(1, 3), evt.get().lFrom);
-		assertEquals(Location.location(0, 4), evt.get().lTo);
 	}
 
 	@Test
@@ -88,7 +83,7 @@ public class TestKlingon extends BaseTest{
 	public void test_flee() {
 		when(browser.nextInt(any(int.class))).thenReturn(1,1);
 		klingon.setLocation(Location.location(3, 2));
-		events.addHandler(ThingMovedEvent.TYPE, new ThingMovedHandler() {
+		bus.register(Events.THING_MOVED, new ThingMovedHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
@@ -101,7 +96,7 @@ public class TestKlingon extends BaseTest{
 
 		});
 		klingon.flee(new QuadrantIndex(quadrant, starMap));
-		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.THING_MOVED));
 	}
 	
 	@Test

@@ -11,7 +11,7 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
-import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
+import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
@@ -144,9 +144,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	public void jumpTo(Location dest) {
 		Application app = Application.get();
 		Quadrant quadrant = app.getActiveQuadrant();
-		ThingMovedEvent event = new ThingMovedEvent(this, quadrant, getLocation(), quadrant, dest);
+		app.bus.invoke(Events.THING_MOVED, (Callback<ThingMovedHandler>)(h)->h.thingMoved(Klingon.this, quadrant, getLocation(), quadrant, dest));
 		setLocation(dest);
-		app.events.fireEvent(event);
 	}
 
 	public void fireOnEnterprise(QuadrantIndex index) {

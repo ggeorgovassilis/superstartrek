@@ -23,4 +23,6 @@ public class Events {
 	public final static String SCAN_SECTOR = "SCAN_SECTOR";
 	public final static String KLINGON_TURN_ENDED = "KLINGON_TURN_ENDED";
 	public final static String GAME_OVER = "GAME_OVER";
+	public final static String AFTER_TURN_STARTED = "AFTER_TURN_STARTED";
+	public final static String THING_MOVED = "THING_MOVED";
 }
