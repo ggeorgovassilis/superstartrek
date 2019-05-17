@@ -13,8 +13,10 @@ import superstartrek.client.activities.klingons.KlingonCloakingHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.AfterTurnStartedEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
@@ -25,7 +27,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
-import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler.ContextMenuHideEvent;
+import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
@@ -35,30 +37,31 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	Location selectedSector = Location.location(0, 0);
 
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
-		application.events.fireEvent(new SectorSelectedEvent(Location.location(x, y),
-				application.starMap.enterprise.getQuadrant(), screenX, screenY));
+		Location location = Location.location(x, y);
+		Quadrant quadrant = application.starMap.enterprise.getQuadrant();
+		application.bus.invoke(Events.SECTOR_SELECTED, (Callback<SectorSelectedHandler>)(h)->h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
 	public QuadrantScannerPresenter(Application application, SectorContextMenuPresenter sectorMenuPresenter) {
 		super(application);
 		this.sectorMenuPresenter = sectorMenuPresenter;
-		addHandler(SectorSelectedEvent.TYPE, this);
+		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(GameStartedEvent.TYPE, this);
 		addHandler(ThingMovedEvent.TYPE, this);
-		addHandler(EnterpriseWarpedEvent.TYPE, this);
-		addHandler(FireEvent.TYPE, this);
-		addHandler(EnterpriseRepairedEvent.TYPE, this);
-		addHandler(KlingonDestroyedEvent.TYPE, this);
-		addHandler(KlingonUncloakedEvent.TYPE, this);
-		addHandler(KlingonCloakedEvent.TYPE, this);
+		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
+		application.bus.register(Events.AFTER_FIRE, this);
+		addHandler(Events.ENTERPRISE_REPAIRED, this);
+		addHandler(Events.KLINGON_DESTROYED, this);
+		application.bus.register(Events.KLINGON_CLOAKED, this);
+		application.bus.register(Events.KLINGON_UNCLOAKED, this);
 		addHandler(AfterTurnStartedEvent.TYPE, this);
 		addHandler(KeyPressedEvent.TYPE, this);
 	}
 
 	@Override
-	public void onSectorSelected(SectorSelectedEvent event) {
+	public void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screen) {
 		view.deselectSectors();
-		selectedSector = Location.location(event.sector.getX(), event.sector.getY());
+		selectedSector = sector;
 		view.selectSector(selectedSector.getX(), selectedSector.getY());
 	}
 
@@ -164,11 +167,10 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void afterFire(FireEvent evt) {
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
 		// target might have been destroyed (so not on map anymore) and thus null
-		Thing target = evt.target;
 		if (target != null)
-			updateSector(evt.quadrant, target.getLocation().getX(), target.getLocation().getY());
+			updateSector(quadrant, target.getLocation().getX(), target.getLocation().getY());
 	}
 
 	public void clearAllNavigationTargets() {
@@ -191,6 +193,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	@Override
 	public void onKeyPressed(KeyPressedEvent event) {
+		if (!view.isVisible())
+			return;
 		Location newSector = null;
 		switch (event.code) {
 		case KeyCodes.KEY_LEFT:
@@ -213,15 +217,15 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			case 'm':
 				int dx = view.getHorizontalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
 				int dy = view.getVerticalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
-				application.events
-						.fireEvent(new SectorSelectedEvent(selectedSector, application.starMap.enterprise.getQuadrant(), dx, dy));
+				Quadrant quadrant = application.starMap.enterprise.getQuadrant();
+				application.bus.invoke(Events.SECTOR_SELECTED, (Callback<SectorSelectedHandler>)(h)->h.onSectorSelected(selectedSector, quadrant, dx, dy));
 				break;
 			}
 		if (newSector != null) {
 			selectedSector = newSector;
 			view.deselectSectors();
 			view.selectSector(selectedSector.getX(), selectedSector.getY());
-			application.events.fireEvent(new ContextMenuHideEvent());
+			application.bus.invoke(Events.CONTEXT_MENU_HIDE, (Callback<ContextMenuHideHandler>)(h)->h.onMenuHide());
 		}
 	}
 

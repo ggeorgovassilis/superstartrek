@@ -10,6 +10,7 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.control.KeyPressedEventHandler;
@@ -23,6 +24,8 @@ import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>,
@@ -37,11 +40,11 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		super(application);
 		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
-		addHandler(ComputerEvent.TYPE, this);
+		application.bus.register(Events.SHOW_COMPUTER, this);
 		addHandler(TurnStartedEvent.TYPE, this);
-		addHandler(KlingonDestroyedEvent.TYPE, this);
-		addHandler(EnterpriseDamagedEvent.TYPE, this);
-		addHandler(EnterpriseRepairedEvent.TYPE, this);
+		addHandler(Events.KLINGON_DESTROYED, this);
+		application.bus.register(Events.ENTERPRISE_DAMAGED, this);
+		application.bus.register(Events.ENTERPRISE_REPAIRED, this);
 		addHandler(GameStartedEvent.TYPE, this);
 		addHandler(KeyPressedEvent.TYPE, this);
 	}
@@ -171,8 +174,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void afterFire(FireEvent evt) {
-		if (evt.target == starMap.enterprise) {
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+		if (target == starMap.enterprise) {
 			updateShieldsView();
 		}
 	}

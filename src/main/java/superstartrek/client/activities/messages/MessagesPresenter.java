@@ -3,13 +3,15 @@ package superstartrek.client.activities.messages;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.activities.pwa.Callback;
+import superstartrek.client.bus.Events;
 
 public class MessagesPresenter extends BasePresenter<MessagesView>
 		implements MessageHandler, PopupViewPresenter<MessagesView> {
 
 	public MessagesPresenter(Application application) {
 		super(application);
-		addHandler(MessagePostedEvent.TYPE, this);
+		addHandler(Events.MESSAGE_POSTED, this);
 	}
 
 	@Override
@@ -26,7 +28,7 @@ public class MessagesPresenter extends BasePresenter<MessagesView>
 			return;
 		view.hide(() -> {
 			view.clear();
-			application.events.fireEvent(new MessagesReadEvent());
+			application.bus.invoke(Events.MESSAGE_READ, (Callback<MessageHandler>)(h)->h.messagesAcknowledged());
 		});
 	}
 

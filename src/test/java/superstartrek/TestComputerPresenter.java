@@ -11,13 +11,13 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.Thing;
-import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;;
 
 public class TestComputerPresenter extends BaseTest{
 
@@ -91,7 +91,7 @@ public class TestComputerPresenter extends BaseTest{
 		assertEquals(1, events.getFiredCount(ThingMovedEvent.TYPE));
 		assertEquals(Location.location(4, 4), enterprise.getLocation());
 
-		assertEquals(1, events.getFiredCount(EnterpriseRepairedEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.ENTERPRISE_REPAIRED));
 		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
 	}
 

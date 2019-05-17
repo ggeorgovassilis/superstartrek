@@ -11,19 +11,23 @@ import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.control.GameOverEvent.Outcome;
+import superstartrek.client.activities.pwa.Callback;
+import superstartrek.client.bus.Bus;
+import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 
 public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler,
 		KlingonDestroyedHandler, MessageHandler, EnergyConsumptionHandler, EnterpriseDockedHandler {
 
 	Application application;
 	EventBus events;
+	Bus bus;
 	boolean gameIsRunning = true;
 	boolean startTurnPending = false;
 	boolean endTurnPending = false;
@@ -32,20 +36,21 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	public GameController(Application application, ScoreKeeper scoreKeeper) {
 		this.application = application;
 		events = application.events;
+		bus = application.bus;
 		this.scoreKeeper = scoreKeeper;
 		events.addHandler(GameStartedEvent.TYPE, this);
-		events.addHandler(GameOverEvent.TYPE, this);
+		bus.register(Events.GAME_OVER, this);
 		events.addHandler(TurnStartedEvent.TYPE, this);
 		events.addHandler(TurnEndedEvent.TYPE, this);
 		events.addHandler(KlingonTurnStartedEvent.TYPE, this);
-		events.addHandler(FireEvent.TYPE, this);
-		events.addHandler(EnterpriseRepairedEvent.TYPE, this);
+		bus.register(Events.AFTER_FIRE, this);
+		bus.register(Events.ENTERPRISE_REPAIRED, this);
 		events.addHandler(ThingMovedEvent.TYPE, this);
-		events.addHandler(KlingonDestroyedEvent.TYPE, this);
-		events.addHandler(MessagesReadEvent.TYPE, this);
+		bus.register(Events.KLINGON_DESTROYED, this);
+		bus.register(Events.MESSAGE_READ, this);
 		events.addHandler(YieldTurnEvent.TYPE, this);
-		events.addHandler(EnergyConsumptionEvent.TYPE, this);
-		events.addHandler(EnterpriseDockedEvent.TYPE, this);
+		bus.register(Events.CONSUME_ENERGY, this);
+		bus.register(Events.ENTERPRISE_DOCKED, this);
 		events.addHandler(GameRestartEvent.TYPE, this);
 	}
 
@@ -54,17 +59,17 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	@Override
-	public void afterFire(FireEvent evt) {
-		if (Enterprise.is(evt.target)) {
-			Enterprise enterprise = evt.target.as();
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+		if (Enterprise.is(target)) {
+			Enterprise enterprise = target.as();
 			if (enterprise.getShields().getValue() <= 0)
-				gameOver(GameOverEvent.Outcome.lost, "shields");
+				gameOver(GameOutcome.lost, "shields");
 
-		} else if (Star.is(evt.target)) {
-			Star star = evt.target.as();
-			application.message(evt.weapon + " hit " + star.getName() + " at " + star.getLocation());
+		} else if (Star.is(target)) {
+			Star star = target.as();
+			application.message(weapon + " hit " + star.getName() + " at " + star.getLocation());
 		}
-		if (evt.actor == application.starMap.enterprise && !evt.wasAutoFire)
+		if (actor == application.starMap.enterprise && !wasAutoFire)
 			endTurnAfterThis();
 	}
 
@@ -86,7 +91,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
 				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
 		if (!application.starMap.hasKlingons())
-			events.fireEvent(new GameOverEvent(GameOverEvent.Outcome.won, "All Klingons were destroyed"));
+			bus.invoke(Events.GAME_OVER, (Callback<GamePhaseHandler>)(h)->h.gameWon());
 	}
 
 	@Override
@@ -141,7 +146,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	public void endTurn() {
 		events.fireEvent(new TurnEndedEvent());
 		events.fireEvent(new KlingonTurnStartedEvent());
-		events.fireEvent(new KlingonTurnEndedEvent());
+		bus.invoke(Events.KLINGON_TURN_ENDED, (Callback<GamePhaseHandler>)(h)->h.onKlingonTurnEnded());
 		// release resources so that it can be (hopefully) garbage collected; at this
 		// point, everyone who needs resources should have them
 	}
@@ -162,8 +167,11 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		});
 	}
 
-	public void gameOver(Outcome outcome, String reason) {
-		events.fireEvent(new GameOverEvent(outcome, reason));
+	public void gameOver(GameOutcome outcome, String reason) {
+		if (outcome == GameOutcome.won)
+			bus.invoke(Events.GAME_OVER, (Callback<GamePhaseHandler>)(h)->h.gameWon());
+		if (outcome == GameOutcome.lost)
+			bus.invoke(Events.GAME_OVER, (Callback<GamePhaseHandler>)(h)->h.gameLost());
 	}
 
 	@Override
@@ -172,7 +180,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 			Enterprise enterprise = consumer.as();
 			if (enterprise.getAntimatter().getValue() <= 0) {
 				application.message("We run out of anti matter");
-				gameOver(Outcome.lost, "We run out of anti matter");
+				gameOver(GameOutcome.lost, "We run out of anti matter");
 			}
 		}
 	}

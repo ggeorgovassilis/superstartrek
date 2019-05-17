@@ -3,10 +3,11 @@ package superstartrek.client.activities.computer.srs;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.appmenu.AppMenuHandler;
-import superstartrek.client.activities.appmenu.AppMenuHandler.AppMenuEvent.Status;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
+import superstartrek.client.activities.pwa.Callback;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameStartedEvent;
 import superstartrek.client.model.Enterprise;
@@ -21,8 +22,8 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	public SRSPresenter(Application application) {
 		super(application);
 		addHandler(GameStartedEvent.TYPE, this);
-		addHandler(EnterpriseWarpedEvent.TYPE, this);
-		addHandler(KlingonDestroyedEvent.TYPE, this);
+		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
+		addHandler(Events.KLINGON_DESTROYED, this);
 	}
 
 	public void updateRadar() {
@@ -51,7 +52,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	}
 
 	public void onAppMenuButtonClicked() {
-		application.events.fireEvent(new AppMenuHandler.AppMenuEvent(Status.showMenu));
+		application.bus.invoke(Events.APP_MENU_SHOW, (Callback<AppMenuHandler>)(h)->h.showMenu());
 	}
 
 	@Override

@@ -8,19 +8,20 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.combat.EnterpriseDamagedHandler.EnterpriseDamagedEvent;
+import superstartrek.client.activities.combat.EnterpriseDamagedHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.navigation.EnterpriseWarpedHandler.EnterpriseWarpedEvent;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
-import superstartrek.client.control.GameOverEvent;
+import superstartrek.client.activities.pwa.Callback;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.TurnEndedEvent;
 import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.BrowserAPI;
-import superstartrek.client.activities.navigation.EnterpriseRepairedHandler.EnterpriseRepairedEvent;
+import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
+import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
 
@@ -80,9 +81,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		setCss("enterprise");
 		EventBus events = application.events;
 		handlers.add(events.addHandler(TurnStartedEvent.TYPE, this));
-		handlers.add(events.addHandler(FireEvent.TYPE, this));
 		handlers.add(events.addHandler(TurnEndedEvent.TYPE, this));
 		handlers.add(application.events.addHandler(GameRestartEvent.TYPE, this));
+		application.bus.register(Events.BEFORE_FIRE, this);
 	}
 
 	public Setting getAntimatter() {
@@ -123,11 +124,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		starMap.markAsExploredAround(dropQuadrant);
 		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
-		EnterpriseWarpedEvent warpEvent = new EnterpriseWarpedEvent(this, fromQuadrant, fromLocation, dropQuadrant,
-				freeSpot);
+		Quadrant qFrom = getQuadrant();
+		application.bus.invoke(Events.AFTER_ENTERPRISE_WARPED, (Callback<EnterpriseWarpedHandler>)(h)->h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant,
+				freeSpot));
 
-		application.events.fireEvent(warpEvent);
-		ThingMovedEvent moveEvent = new ThingMovedEvent(this, warpEvent.qFrom, oldLocation, warpEvent.qTo, freeSpot);
+		ThingMovedEvent moveEvent = new ThingMovedEvent(this, qFrom, oldLocation, dropQuadrant, freeSpot);
 		application.events.fireEvent(moveEvent);
 		turnsSinceWarp = 0;
 		return true;
@@ -261,10 +262,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			double maxShields = ((Klingon) target).getShields().getMaximum();
 			damage = damage * (1.0 - (0.5 * (shields / maxShields) * (shields / maxShields)));
 		}
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, target, "torpedos", damage, false);
-		application.events.fireEvent(event);
-		event = new FireEvent(FireEvent.Phase.afterFire, getQuadrant(), this, target, "torpedos", damage, false);
-		application.events.fireEvent(event);
+		Thing eventTarget = target;
+		double eventDamage = damage;
+		application.bus.invoke(Events.BEFORE_FIRE, (Callback<FireHandler>)(h)->h.onFire(quadrant, Enterprise.this, eventTarget, "torpedos", eventDamage, false));
+		application.bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>)(h)->h.afterFire(quadrant, Enterprise.this, eventTarget, "torpedos", eventDamage, false));
 		if (target == null)
 			application.message("Torpedo exploded in the void");
 	}
@@ -310,17 +311,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		double distance = StarMap.distance(this, thing);
 		double damage = phasers.getValue() / distance;
 		phasers.setValue(0);
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, getQuadrant(), this, klingon, "phasers", damage,
-				isAutoAim);
-		application.events.fireEvent(event);
-
-		event = new FireEvent(FireEvent.Phase.afterFire, getQuadrant(), this, klingon, "phasers", damage, isAutoAim);
-		application.events.fireEvent(event);
-
+		application.bus.invoke(Events.BEFORE_FIRE, (Callback<FireHandler>)(h)->h.onFire(getQuadrant(), Enterprise.this, klingon, "phasers", damage, isAutoAim));
+		application.bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>)(h)->h.afterFire(getQuadrant(), Enterprise.this, klingon, "phasers", damage, isAutoAim));
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
-		application.events.fireEvent(new EnterpriseDockedHandler.EnterpriseDockedEvent(this, starBase));
+		application.bus.invoke(Events.ENTERPRISE_DOCKED, (Callback<EnterpriseDockedHandler>)(h)->h.onEnterpriseDocked(Enterprise.this, starBase));
 		phasers.repair();
 		torpedos.repair();
 		impulse.repair();
@@ -328,7 +324,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		autoAim.repair();
 		antimatter.repair();
 		lrs.repair();
-		application.events.fireEvent(new EnterpriseRepairedEvent(this));
+		application.bus.invoke(Events.ENTERPRISE_REPAIRED, (Callback<EnterpriseRepairedHandler>)(h)->h.onEnterpriseRepaired(Enterprise.this));
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -356,7 +352,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos)
 					|| maybeRepairProvisionally(autoAim) || maybeRepairProvisionally(lrs);
 			if (repaired) {
-				application.events.fireEvent(new EnterpriseRepairedEvent(this));
+				application.bus.invoke(Events.ENTERPRISE_REPAIRED, (Callback<EnterpriseRepairedHandler>)(h)->h.onEnterpriseRepaired(Enterprise.this));
 				return;
 			}
 		}
@@ -431,7 +427,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			damageAutoaim();
 		if (lrs.isEnabled() && random.nextDouble() < impact)
 			damageLRS();
-		application.events.fireEvent(new EnterpriseDamagedEvent(this));
+		application.bus.invoke(Events.ENTERPRISE_DAMAGED, (Callback<EnterpriseDamagedHandler>)(h)->h.onEnterpriseDamaged(Enterprise.this));
 	}
 
 	public boolean consume(String what, double value) {
@@ -439,7 +435,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		getReactor().decrease(value);
 		getAntimatter().decrease(value);
-		application.events.fireEvent(new EnergyConsumptionHandler.EnergyConsumptionEvent(this, value, what));
+		application.bus.invoke(Events.CONSUME_ENERGY, (Callback<EnergyConsumptionHandler>)(h)->h.handleEnergyConsumption(this, value, what));
 		return true;
 	}
 
@@ -467,7 +463,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		shields.reset();
 		impulse.reset();
 		if (!consume("energy", computeEnergyConsumption())) {
-			application.events.fireEvent(new GameOverEvent(GameOverEvent.Outcome.lost, "Out of energy"));
+			application.bus.invoke(Events.GAME_OVER, (Callback<GamePhaseHandler>)(h)->h.gameLost());
 			return;
 		}
 		playComputerTurn();
@@ -478,11 +474,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	@Override
-	public void onFire(FireEvent evt) {
-		if (evt.target != this)
+	public void onFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+		if (target != this)
 			return;
-		application.message(evt.actor.getName() + " at " + evt.actor.getLocation() + " fired on us", "damage");
-		applyDamage(evt.damage);
+		application.message(actor.getName() + " at " + actor.getLocation() + " fired on us", "damage");
+		applyDamage(damage);
 	}
 
 	@Override
@@ -503,6 +499,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		for (HandlerRegistration hr:handlers)
 			hr.removeHandler();
 		handlers.clear();
+		application.bus.unregister(this);
 	}
 
 }

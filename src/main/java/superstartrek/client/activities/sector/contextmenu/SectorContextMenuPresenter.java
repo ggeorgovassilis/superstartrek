@@ -8,10 +8,12 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.activities.sector.scan.ScanSectorHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.TurnEndedEvent;
@@ -25,9 +27,9 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 	public SectorContextMenuPresenter(Application application) {
 		super(application);
-		addHandler(SectorSelectedEvent.TYPE, this);
+		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(TurnEndedEvent.TYPE, this);
-		addHandler(ContextMenuHideEvent.TYPE, this);
+		addHandler(Events.CONTEXT_MENU_HIDE, this);
 		addHandler(KeyPressedEvent.TYPE, this);
 		application.browserAPI.addHistoryListener(this);
 
@@ -74,9 +76,9 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	@Override
-	public void onSectorSelected(SectorSelectedEvent event) {
-		this.sector = event.getSector();
-		showMenu(event.screenX, event.screenY, event.getSector(), event.getQuadrant());
+	public void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screenY) {
+		this.sector = sector;
+		showMenu(screenX, screenY, sector, quadrant);
 	}
 
 	public void onEscapePressed() {
@@ -97,7 +99,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 			hideMenu(() -> {
 				switch (command) {
 				case "cmd_scanSector":
-					application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
+					application.bus.invoke(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(sector, quadrant));
 					break;
 				case "cmd_navigate":
 					enterprise.navigateTo(sector);
