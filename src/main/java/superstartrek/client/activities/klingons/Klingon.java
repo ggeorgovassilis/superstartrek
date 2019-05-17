@@ -2,6 +2,7 @@ package superstartrek.client.activities.klingons;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -11,6 +12,7 @@ import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameRestartEvent;
@@ -30,7 +32,6 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	protected final Setting disruptor;
 	protected final Setting cloak;
 	
-	private HandlerRegistration fireHandler;
 	private HandlerRegistration klingonTurnHandler;
 	private HandlerRegistration gameRestartHandler;
 	
@@ -75,19 +76,18 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	 */
 	public void registerActionHandlers() {
 		//already registered?
-		if (fireHandler!=null)
+		if (klingonTurnHandler!=null)
 			return;
 		EventBus events = Application.get().events;
-		fireHandler = events.addHandler(FireEvent.TYPE, this);
+		Application.get().bus.register(Events.BEFORE_FIRE, this);
 		klingonTurnHandler = events.addHandler(KlingonTurnStartedEvent.TYPE, this);
 	}
 
 	public void unregisterActionHandlers() {
 		//not registered?
-		if (fireHandler==null)
+		if (klingonTurnHandler==null)
 			return;
-		fireHandler.removeHandler();
-		fireHandler = null;
+		Application.get().bus.unregister(Events.BEFORE_FIRE, this);
 		klingonTurnHandler.removeHandler();
 		klingonTurnHandler = null;
 	}
@@ -162,10 +162,8 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 			return;
 		if (!isVisible())
 			uncloak();
-		FireEvent event = new FireEvent(FireEvent.Phase.fire, enterprise.getQuadrant(), this, enterprise, "disruptor", disruptor.getValue(), true);
-		app.events.fireEvent(event);
-		event = new FireEvent(FireEvent.Phase.afterFire, enterprise.getQuadrant(), this, enterprise, "disruptor", disruptor.getValue(), true);
-		app.events.fireEvent(event);
+		app.bus.invoke(Events.BEFORE_FIRE, (Callback<FireHandler>)(h)->h.onFire(enterprise.getQuadrant(), Klingon.this, enterprise, "disruptor", disruptor.getValue(), true));
+		app.bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>)(h)->h.afterFire(enterprise.getQuadrant(), Klingon.this, enterprise, "disruptor", disruptor.getValue(), true));
 	}
 	
 	
@@ -203,6 +201,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	@Override
 	public void onKlingonTurnStarted() {
+		GWT.log("Playing klingon at "+getLocation());
 		//Reminder: only klingons in the active sector receive this event
 		Application app = Application.get();
 		if (app.getFlags().contains("nopc"))
@@ -255,18 +254,18 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	}
 
 	@Override
-	public void onFire(FireEvent evt) {
-		if (evt.target != this)
+	public void onFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+		if (target != this)
 			return;
 		if (!isVisible()) {
 			uncloak();
 			destroy();
 			return;
 		}
-		double impact = evt.damage / (shields.getValue() + 1);
-		shields.decrease(evt.damage);
+		double impact = damage / (shields.getValue() + 1);
+		shields.decrease(damage);
 		BrowserAPI random = Application.get().browserAPI;
-		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - evt.damage);
+		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
 		if (getImpulse().isEnabled() && random.nextDouble() < impact)
 			getImpulse().setEnabled(false);
 		if (getDisruptor().isEnabled() && random.nextDouble() < impact)
@@ -274,7 +273,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		if (getCloak().isEnabled() && random.nextDouble() < impact)
 			getCloak().setEnabled(false);
 
-		Application.get().message(evt.weapon + " hit " + evt.target.getName() + " at " + evt.target.getLocation(), "klingon-damaged");
+		Application.get().message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
 		if (shields.getValue() <= 0) {
 			destroy();
 		}

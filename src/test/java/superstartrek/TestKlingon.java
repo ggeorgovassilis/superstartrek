@@ -9,17 +9,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireHandler.*;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
+import superstartrek.client.bus.Events;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Star.StarClass;
 
 public class TestKlingon extends BaseTest{
@@ -68,27 +69,19 @@ public class TestKlingon extends BaseTest{
 		when(browser.nextInt(any(int.class))).thenReturn(1,2,3,4);
 		klingon.jumpTo(Location.location(1, 3));
 		enterprise.setLocation(Location.location(2, 3));
-		events.addHandler(FireEvent.TYPE, new FireHandler() {
+		bus.register(Events.AFTER_FIRE, new FireHandler() {
 
 			@Override
-			public void onFire(FireEvent evt) {
-				assertEquals(klingon, evt.actor);
-				assertEquals(enterprise, evt.target);
-				assertEquals("disruptor", evt.weapon);
-				assertEquals(10, evt.damage, 0.1);
-			}
-
-			@Override
-			public void afterFire(FireEvent evt) {
-				assertEquals(klingon, evt.actor);
-				assertEquals(enterprise, evt.target);
-				assertEquals("disruptor", evt.weapon);
-				assertEquals(10, evt.damage, 0.1);
+			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+				assertEquals(klingon, actor);
+				assertEquals(enterprise, target);
+				assertEquals("disruptor", weapon);
+				assertEquals(10, damage, 0.1);
 			}
 		});
 
 		klingon.fireOnEnterprise(new QuadrantIndex(quadrant, starMap));
-		assertEquals(2, events.getFiredCount(FireEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 	}
 
 	@Test

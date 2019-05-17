@@ -1,7 +1,5 @@
 package genericsbus;
 
-import static org.mockito.Mockito.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +17,7 @@ public class TestGenericsBus {
 		StringBuffer sb = new StringBuffer();
 		Handler1 handler1 = new Handler1() {
 			@Override
-			public void method1(int p1, String p2, List p3) {
+			public void method1(int p1, String p2, List<String> p3) {
 				sb.append("handler1.method1 "+p1+" "+p2+" "+p3.size()).append("\n");
 			}
 		};
@@ -35,7 +33,7 @@ public class TestGenericsBus {
 		Bus bus = new Bus();
 		bus.register(Events.EVENT1, handler1);
 		bus.register(Events.EVENT2, handler2);
-		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<Object>())));
+		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<String>())));
 		bus.invoke(Events.EVENT2, (Callback<Handler2>) ((h) -> h.method2("p1","p2")));
 		assertTrue(sb.toString().contains("handler1.method1 1 2 0"));
 		assertTrue(sb.toString().contains("handler2.method2 p1 p2"));
@@ -46,14 +44,14 @@ public class TestGenericsBus {
 		StringBuffer sb = new StringBuffer();
 		Handler1 handlerA = new Handler1() {
 			@Override
-			public void method1(int p1, String p2, List p3) {
+			public void method1(int p1, String p2, List<String> p3) {
 				sb.append("call 1\n");
 			}
 		};
 		
 		Handler1 handlerB = new Handler1() {
 			@Override
-			public void method1(int p1, String p2, List p3) {
+			public void method1(int p1, String p2, List<String> p3) {
 				sb.append("call 2\n");
 			}
 
@@ -62,8 +60,8 @@ public class TestGenericsBus {
 		Bus bus = new Bus();
 		bus.register(Events.EVENT1, handlerA);
 		bus.register(Events.EVENT1, handlerB);
-		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<Object>())));
-		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<Object>())));
+		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<String>())));
+		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<String>())));
 		assertTrue(sb.toString().contains("call 1"));
 		assertTrue(sb.toString().contains("call 2"));
 	}
@@ -77,7 +75,7 @@ public class TestGenericsBus {
 		Bus bus = new Bus();
 		bus.register(Events.EVENT1, cb);
 		bus.register(Events.EVENT2, cb);
-		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<Object>())));
+		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<String>())));
 		bus.invoke(Events.EVENT2, (Callback<Handler2>) ((h) -> h.method2("p1","p2")));
 		assertTrue(sb.toString().contains("CombinedHandler.method1 1 2 0"));
 		assertTrue(sb.toString().contains("CombinedHandler.method2 p1 p2"));

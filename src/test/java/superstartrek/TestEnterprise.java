@@ -3,8 +3,8 @@ package superstartrek;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireHandler.*;
+import org.mockito.AdditionalMatchers;
+
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
@@ -18,6 +18,7 @@ import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.utils.BrowserAPI;
 
@@ -27,10 +28,7 @@ import static org.mockito.Mockito.*;
 import java.util.HashSet;
 import java.util.List;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-
-public class TestEnterprise extends BaseTest{
+public class TestEnterprise extends BaseTest {
 
 	@Test
 	public void testDamageTorpedos() {
@@ -100,7 +98,7 @@ public class TestEnterprise extends BaseTest{
 				assertEquals(Location.location(2, 2), lTo);
 			}
 		});
-		//necessary call to findReachableSectors in order to populate reachability map
+		// necessary call to findReachableSectors in order to populate reachability map
 		enterprise.findReachableSectors();
 		enterprise.navigateTo(Location.location(2, 2));
 
@@ -116,7 +114,7 @@ public class TestEnterprise extends BaseTest{
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextInt(any(int.class))).thenReturn(1,1,1,1,1,1,1,1,1,1,1,1);
+		when(application.browserAPI.nextInt(any(int.class))).thenReturn(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 		// path between source and target needs to exist for collision check
 		starMap.setQuadrant(new Quadrant("_", 2, 3));
@@ -129,7 +127,7 @@ public class TestEnterprise extends BaseTest{
 		Quadrant targetQuadrant = starMap.getQuadrant(3, 4);
 		starMap.setQuadrant(targetQuadrant);
 
-		bus.register(Events.AFTER_ENTERPRISE_WARPED,  new EnterpriseWarpedHandler() {
+		bus.register(Events.AFTER_ENTERPRISE_WARPED, new EnterpriseWarpedHandler() {
 
 			@Override
 			public void onEnterpriseWarped(Enterprise e, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
@@ -148,47 +146,35 @@ public class TestEnterprise extends BaseTest{
 	@Test
 	public void testFirePhasers() {
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
+		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
-		
+
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
 		quadrant.getKlingons().add(klingon);
 		klingon.setLocation(Location.location(1, 1));
 		klingon.registerActionHandlers();
 		klingon.uncloak();
-		
+
 		FireHandler handler = mock(FireHandler.class);
-		
-		Application.get().events.addHandler(FireEvent.TYPE, handler);
 
-		assertEquals(100, klingon.getShields().getValue(), 0.1 );
+		bus.register(Events.BEFORE_FIRE, handler);
+
+		assertEquals(100, klingon.getShields().getValue(), 0.1);
 		enterprise.firePhasersAt(klingon.getLocation(), false);
-		assertEquals(78, klingon.getShields().getValue(), 10 );
-		
-		//once for before phase + once after phase
-		assertEquals(2, events.getFiredCount(FireEvent.TYPE));
-		verify(handler, times(1)).afterFire(argThat(new BaseMatcher<FireEvent>() {
+		assertEquals(78, klingon.getShields().getValue(), 10);
 
-			@Override
-			public boolean matches(Object o) {
-				FireEvent evt = (FireEvent)o;
-				return evt.wasAutoFire == false && evt.actor == enterprise && evt.target == klingon && Math.abs(evt.damage -20)<2;
-			}
-
-			@Override
-			public void describeTo(Description desc) {
-				desc.appendText("FireEvent");
-			}
-	    }));
+		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
+		// TODO: damage probably wrong
+		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq("phasers"), AdditionalMatchers.eq(21, 1), eq(false));
 	}
 
 	@Test
 	public void testFireTorpedos() {
-		
+
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
+		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
 
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
@@ -202,44 +188,20 @@ public class TestEnterprise extends BaseTest{
 
 		FireHandler handler = mock(FireHandler.class);
 
-		Application.get().events.addHandler(FireEvent.TYPE, handler);
+		bus.register(Events.BEFORE_FIRE, handler);
+		bus.register(Events.AFTER_FIRE, handler);
 
 		assertEquals(100, klingon.getShields().getValue(), 0.1);
 		enterprise.fireTorpedosAt(klingon.getLocation());
 		assertEquals(50, klingon.getShields().getValue(), 75);
 
-		// once for before phase + once after phase
-		assertEquals(2, events.getFiredCount(FireEvent.TYPE));
-		
-		verify(handler, times(1)).onFire(argThat(new BaseMatcher<FireEvent>() {
+		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 
-			@Override
-			public boolean matches(Object o) {
-				FireEvent evt = (FireEvent)o;
-				return evt.wasAutoFire == false && evt.actor == enterprise && evt.target == klingon && evt.weapon.equals("torpedos" )&& Math.abs(evt.damage -25)<2;
-			}
-
-			@Override
-			public void describeTo(Description desc) {
-				desc.appendText("FireEvent");
-			}
-	    }));
-		verify(handler, times(1)).afterFire(argThat(new BaseMatcher<FireEvent>() {
-
-			@Override
-			public boolean matches(Object o) {
-				FireEvent evt = (FireEvent)o;
-				return evt.wasAutoFire == false && evt.actor == enterprise && evt.target == klingon && evt.weapon.equals("torpedos" )&& Math.abs(evt.damage -25)<2;
-			}
-
-			@Override
-			public void describeTo(Description desc) {
-				desc.appendText("FireEvent");
-			}
-	    }));
+		verify(handler, times(1)).onFire(quadrant, enterprise, klingon, "torpedos", 25, false);
+		verify(handler, times(1)).afterFire(quadrant, enterprise, klingon, "torpedos", 25, false);
 
 	}
-	
+
 	@Test
 	public void test_getReachableSectors() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
@@ -247,13 +209,13 @@ public class TestEnterprise extends BaseTest{
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
 		starMap.enterprise = enterprise;
-		quadrant.getStars().add(new Star(1,6,StarClass.A));
-		quadrant.getStars().add(new Star(2,6,StarClass.A));
-		quadrant.getStars().add(new Star(3,6,StarClass.A));
-		quadrant.getStars().add(new Star(5,6,StarClass.A));
-		quadrant.getStars().add(new Star(6,6,StarClass.A));
-		quadrant.getStars().add(new Star(7,6,StarClass.A));
-		quadrant.getStars().add(new Star(4,3,StarClass.A));
+		quadrant.getStars().add(new Star(1, 6, StarClass.A));
+		quadrant.getStars().add(new Star(2, 6, StarClass.A));
+		quadrant.getStars().add(new Star(3, 6, StarClass.A));
+		quadrant.getStars().add(new Star(5, 6, StarClass.A));
+		quadrant.getStars().add(new Star(6, 6, StarClass.A));
+		quadrant.getStars().add(new Star(7, 6, StarClass.A));
+		quadrant.getStars().add(new Star(4, 3, StarClass.A));
 		List<Location> list = enterprise.findReachableSectors();
 		assertTrue(list.contains(Location.location(4, 5)));
 		assertTrue(list.contains(Location.location(4, 6)));
@@ -263,9 +225,9 @@ public class TestEnterprise extends BaseTest{
 		assertTrue(list.contains(Location.location(5, 4)));
 		assertFalse(list.contains(Location.location(5, 6)));
 		assertFalse(list.contains(Location.location(3, 6)));
-		//check for duplicates
+		// check for duplicates
 		assertEquals(new HashSet<>(list).size(), list.size());
-		assertEquals(19,list.size());
+		assertEquals(19, list.size());
 	}
 
 	@Test
@@ -274,48 +236,60 @@ public class TestEnterprise extends BaseTest{
 		enterprise.damagePhasers();
 		assertTrue(enterprise.isDamaged());
 	}
-	
+
 	@Test
 	public void test_canFirePhaserAt() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
-		
-		Star star = new Star(3,3, Star.StarClass.A);
+
+		Star star = new Star(3, 3, Star.StarClass.A);
 		quadrant.getStars().add(star);
-		
+
 		Klingon klingon = new Klingon(Klingon.ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(5, 5));
 		quadrant.getKlingons().add(klingon);
-		assertEquals("There is nothing at 7:7",enterprise.canFirePhaserAt(Location.location(7, 7)));
-		assertEquals("Phasers can target only enemy vessels",enterprise.canFirePhaserAt(star.getLocation()));
-		
+		assertEquals("There is nothing at 7:7", enterprise.canFirePhaserAt(Location.location(7, 7)));
+		assertEquals("Phasers can target only enemy vessels", enterprise.canFirePhaserAt(star.getLocation()));
+
 		klingon.getCloak().setValue(true);
 		assertEquals("There is nothing at 5:5", enterprise.canFirePhaserAt(klingon.getLocation()));
-		
+
 		klingon.uncloak();
 		assertNull(null, enterprise.canFirePhaserAt(klingon.getLocation()));
 	}
-	
+
 	@Test
 	public void test_autoAim() {
-		
+
 		Klingon klingon = new Klingon(Klingon.ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(5, 5));
 		klingon.uncloak();
 		enterprise.setLocation(Location.location(4, 4));
 		quadrant.getKlingons().add(klingon);
-		events.addHandler(FireEvent.TYPE, new FireHandler() {
+		bus.register(Events.BEFORE_FIRE, new FireHandler() {
+
 			@Override
-			public void afterFire(FireEvent evt) {
-				assertEquals(klingon, evt.target);
-				assertEquals(enterprise, evt.actor);
-				assertEquals(21, evt.damage, 1);
+			public void onFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
+					boolean wasAutoFire) {
+				assertEquals(klingon, target);
+				assertEquals(enterprise, actor);
+				assertEquals(21, damage, 1);
+			}
+		});
+		bus.register(Events.AFTER_FIRE, new FireHandler() {
+
+			@Override
+			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
+					boolean wasAutoFire) {
+				assertEquals(klingon, target);
+				assertEquals(enterprise, actor);
+				assertEquals(21, damage, 1);
 			}
 		});
 		enterprise.autoAim();
-		//2 events: 1 before fire 1 + after fire
-		assertEquals(2, events.getFiredCount(FireEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
+		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 	}
 }

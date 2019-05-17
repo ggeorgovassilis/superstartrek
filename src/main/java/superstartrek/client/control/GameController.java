@@ -11,6 +11,7 @@ import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameOverEvent.Outcome;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -18,6 +19,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.Thing;
+import superstartrek.client.model.Vessel;
 
 public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler,
 		KlingonDestroyedHandler, MessageHandler, EnergyConsumptionHandler, EnterpriseDockedHandler {
@@ -38,7 +40,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		events.addHandler(TurnStartedEvent.TYPE, this);
 		events.addHandler(TurnEndedEvent.TYPE, this);
 		events.addHandler(KlingonTurnStartedEvent.TYPE, this);
-		events.addHandler(FireEvent.TYPE, this);
+		application.bus.register(Events.AFTER_FIRE, this);
 		events.addHandler(EnterpriseRepairedEvent.TYPE, this);
 		events.addHandler(ThingMovedEvent.TYPE, this);
 		events.addHandler(KlingonDestroyedEvent.TYPE, this);
@@ -54,17 +56,17 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	@Override
-	public void afterFire(FireEvent evt) {
-		if (Enterprise.is(evt.target)) {
-			Enterprise enterprise = evt.target.as();
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+		if (Enterprise.is(target)) {
+			Enterprise enterprise = target.as();
 			if (enterprise.getShields().getValue() <= 0)
 				gameOver(GameOverEvent.Outcome.lost, "shields");
 
-		} else if (Star.is(evt.target)) {
-			Star star = evt.target.as();
-			application.message(evt.weapon + " hit " + star.getName() + " at " + star.getLocation());
+		} else if (Star.is(target)) {
+			Star star = target.as();
+			application.message(weapon + " hit " + star.getName() + " at " + star.getLocation());
 		}
-		if (evt.actor == application.starMap.enterprise && !evt.wasAutoFire)
+		if (actor == application.starMap.enterprise && !wasAutoFire)
 			endTurnAfterThis();
 	}
 

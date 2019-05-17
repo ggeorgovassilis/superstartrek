@@ -47,7 +47,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		addHandler(GameStartedEvent.TYPE, this);
 		addHandler(ThingMovedEvent.TYPE, this);
 		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
-		addHandler(FireEvent.TYPE, this);
+		application.bus.register(Events.AFTER_FIRE, this);
 		addHandler(EnterpriseRepairedEvent.TYPE, this);
 		addHandler(KlingonDestroyedEvent.TYPE, this);
 		addHandler(KlingonUncloakedEvent.TYPE, this);
@@ -165,11 +165,10 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void afterFire(FireEvent evt) {
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
 		// target might have been destroyed (so not on map anymore) and thus null
-		Thing target = evt.target;
 		if (target != null)
-			updateSector(evt.quadrant, target.getLocation().getX(), target.getLocation().getY());
+			updateSector(quadrant, target.getLocation().getX(), target.getLocation().getY());
 	}
 
 	public void clearAllNavigationTargets() {

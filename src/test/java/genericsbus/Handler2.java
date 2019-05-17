@@ -1,8 +1,5 @@
 package genericsbus;
 
-import java.util.Arrays;
-import java.util.List;
-
 import superstartrek.client.bus.BaseHandler;
 
 public interface Handler2 extends BaseHandler{

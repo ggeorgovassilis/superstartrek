@@ -28,6 +28,7 @@ public class Bus {
 	}
 
 	public <T extends BaseHandler> void unregister(String type, T handler) {
+		@SuppressWarnings("unchecked")
 		List<T> list = (List<T>) handlers.get(type);
 		if (list != null)
 			list.remove(handler);
@@ -52,9 +53,9 @@ public class Bus {
 		List<T> protoList = (List<T>) handlers.get(type);
 		if (protoList == null)
 			return;
-		List<T> list = new ArrayList<T>(protoList);
+		List<T> copy = new ArrayList<T>(protoList);
 		Set<Throwable> errors = null;
-		for (T h : list)
+		for (T h : copy)
 			try {
 				callback.onSuccess(h);
 			} catch (Throwable e) {
