@@ -104,7 +104,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		cloak.setValue(0);
 		setCss("klingon");
 		Application.get().message(getName() + " uncloaked at " + this.getLocation(), "klingon-uncloaked");
-		Application.get().events.fireEvent(new KlingonCloakingHandler.KlingonUncloakedEvent(this));
+		Application.get().bus.invoke(Events.KLINGON_UNCLOAKED, (Callback<KlingonCloakingHandler>)(h)->h.klingonUncloaked(Klingon.this));
 	}
 
 	public Setting getDisruptor() {
@@ -169,7 +169,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	
 	public void cloak() {
 		getCloak().setValue(true);
-		Application.get().events.fireEvent(new KlingonCloakingHandler.KlingonCloakedEvent(this));
+		Application.get().bus.invoke(Events.KLINGON_CLOAKED, (Callback<KlingonCloakingHandler>)(h)->h.klingonCloaked(Klingon.this));
 		Application.get().message(getName() + " cloaked at " + this.getLocation(), "klingon-uncloaked");
 	}
 	

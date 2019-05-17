@@ -50,8 +50,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		application.bus.register(Events.AFTER_FIRE, this);
 		addHandler(EnterpriseRepairedEvent.TYPE, this);
 		addHandler(KlingonDestroyedEvent.TYPE, this);
-		addHandler(KlingonUncloakedEvent.TYPE, this);
-		addHandler(KlingonCloakedEvent.TYPE, this);
+		application.bus.register(Events.KLINGON_CLOAKED, this);
+		application.bus.register(Events.KLINGON_UNCLOAKED, this);
 		addHandler(AfterTurnStartedEvent.TYPE, this);
 		addHandler(KeyPressedEvent.TYPE, this);
 	}
