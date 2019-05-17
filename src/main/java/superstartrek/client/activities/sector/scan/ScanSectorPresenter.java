@@ -8,6 +8,7 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
+import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
@@ -16,16 +17,16 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 
 	public ScanSectorPresenter(Application application) {
 		super(application);
-		addHandler(ScanSectorEvent.TYPE, this);
+		addHandler(Events.SCAN_SECTOR, this);
 	}
 
 	@Override
-	public void scanSector(ScanSectorEvent event) {
-		Quadrant q = event.getQuadrant();
-		Thing thing = q.findThingAt(event.getLocation());
+	public void scanSector(Location location, Quadrant quadrant) {
+		Quadrant q = quadrant;
+		Thing thing = q.findThingAt(location);
 		String name = thing==null?"Nothing":thing.getName();
 		view.setObjectName(name);
-		view.setObjectLocation(event.getLocation().toString());
+		view.setObjectLocation(location.toString());
 		view.setObjectQuadrant(q.getName());
 		if (Vessel.is(thing)) {
 			Vessel vessel = thing.as();

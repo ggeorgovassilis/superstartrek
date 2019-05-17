@@ -3,22 +3,8 @@ package superstartrek.client.activities.sector.contextmenu;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 
-public interface ContextMenuHideHandler extends EventHandler{
-	public static class ContextMenuHideEvent extends GwtEvent<ContextMenuHideHandler>{
+import superstartrek.client.bus.BaseHandler;
 
-		public static Type<ContextMenuHideHandler> TYPE = new Type<ContextMenuHideHandler>();
-
-		@Override
-		public Type<ContextMenuHideHandler> getAssociatedType() {
-			return TYPE;
-		}
-
-		@Override
-		protected void dispatch(ContextMenuHideHandler handler) {
-			handler.onMenuHide();
-		}
-		
-	}
-	
+public interface ContextMenuHideHandler extends BaseHandler{
 	void onMenuHide();
 }

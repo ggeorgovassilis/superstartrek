@@ -3,42 +3,11 @@ package superstartrek.client.activities.sector.scan;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 
+import superstartrek.client.bus.BaseHandler;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 
-public interface ScanSectorHandler extends EventHandler{
+public interface ScanSectorHandler extends BaseHandler{
 
-	public static class ScanSectorEvent extends GwtEvent<ScanSectorHandler> {
-
-		public static Type<ScanSectorHandler> TYPE = new Type<ScanSectorHandler>();
-
-		protected final Location location;
-		protected final Quadrant quadrant;
-		
-		public ScanSectorEvent(Location location, Quadrant quadrant) {
-			this.location = location;
-			this.quadrant = quadrant;
-		}
-		
-		@Override
-		public Type<ScanSectorHandler> getAssociatedType() {
-			return TYPE;
-		}
-
-		@Override
-		protected void dispatch(ScanSectorHandler handler) {
-			handler.scanSector(this);
-		}
-		
-		public Location getLocation() {
-			return location;
-		}
-		
-		public Quadrant getQuadrant() {
-			return quadrant;
-		}
-
-	}
-	
-	void scanSector(ScanSectorEvent event);
+	void scanSector(Location location, Quadrant quadrant);
 }

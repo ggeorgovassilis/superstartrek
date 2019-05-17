@@ -17,4 +17,10 @@ public class Events {
 	public final static String ENTERPRISE_REPAIRED = "ENTERPRISE_REPAIRED";
 	public final static String SECTOR_SELECTED = "SECTOR_SELECTED";
 	public final static String KLINGON_DESTROYED = "KLINGON_DESTROYED";
+	public final static String MESSAGE_POSTED = "MESSAGE_POSTED";
+	public final static String MESSAGE_READ = "MESSAGE_READ";
+	public final static String CONTEXT_MENU_HIDE = "CONTEXT_MENU_HIDE";
+	public final static String SCAN_SECTOR = "SCAN_SECTOR";
+	public final static String KLINGON_TURN_ENDED = "KLINGON_TURN_ENDED";
+	public final static String GAME_OVER = "GAME_OVER";
 }

@@ -27,7 +27,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
-import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler.ContextMenuHideEvent;
+import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
@@ -225,7 +225,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			selectedSector = newSector;
 			view.deselectSectors();
 			view.selectSector(selectedSector.getX(), selectedSector.getY());
-			application.events.fireEvent(new ContextMenuHideEvent());
+			application.bus.invoke(Events.CONTEXT_MENU_HIDE, (Callback<ContextMenuHideHandler>)(h)->h.onMenuHide());
 		}
 	}
 

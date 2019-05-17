@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import superstartrek.client.activities.messages.MessageHandler;
+import superstartrek.client.bus.Events;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +24,7 @@ public class TestRepairProvisionally extends BaseTest{
 		enterprise.repairProvisionally();
 		
 		assertTrue(enterprise.getTorpedos().isEnabled());
-		assertEquals(3,events.getFiredCount(MessageHandler.MessagePostedEvent.TYPE));
+		assertEquals(3,bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 
 	@Test
@@ -35,6 +37,6 @@ public class TestRepairProvisionally extends BaseTest{
 		
 		assertTrue(enterprise.getPhasers().isEnabled());
 		assertTrue(enterprise.getPhasers().getValue()>10);
-		assertEquals(3,events.getFiredCount(MessageHandler.MessagePostedEvent.TYPE));
+		assertEquals(3,bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 }

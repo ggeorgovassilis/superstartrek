@@ -14,7 +14,6 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.ThingMovedHandler.ThingMovedEvent;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
-import superstartrek.client.control.GameOverEvent;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.GameRestartEvent;
 import superstartrek.client.control.TurnEndedEvent;
@@ -464,7 +463,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		shields.reset();
 		impulse.reset();
 		if (!consume("energy", computeEnergyConsumption())) {
-			application.events.fireEvent(new GameOverEvent(GameOverEvent.Outcome.lost, "Out of energy"));
+			application.bus.invoke(Events.GAME_OVER, (Callback<GamePhaseHandler>)(h)->h.gameLost());
 			return;
 		}
 		playComputerTurn();

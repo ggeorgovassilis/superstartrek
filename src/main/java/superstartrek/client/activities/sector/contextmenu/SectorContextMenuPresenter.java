@@ -8,6 +8,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -28,7 +29,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		super(application);
 		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(TurnEndedEvent.TYPE, this);
-		addHandler(ContextMenuHideEvent.TYPE, this);
+		addHandler(Events.CONTEXT_MENU_HIDE, this);
 		addHandler(KeyPressedEvent.TYPE, this);
 		application.browserAPI.addHistoryListener(this);
 
@@ -98,7 +99,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 			hideMenu(() -> {
 				switch (command) {
 				case "cmd_scanSector":
-					application.events.fireEvent(new ScanSectorHandler.ScanSectorEvent(sector, quadrant));
+					application.bus.invoke(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(sector, quadrant));
 					break;
 				case "cmd_navigate":
 					enterprise.navigateTo(sector);
