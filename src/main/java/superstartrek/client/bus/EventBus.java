@@ -9,8 +9,6 @@ import java.util.Set;
 
 import com.google.gwt.event.shared.UmbrellaException;
 
-import superstartrek.client.activities.pwa.Callback;
-
 public class EventBus {
 
 	Map<Event<? extends BaseHandler>, List<? extends BaseHandler>> handlers = new HashMap<Event<? extends BaseHandler>, List<? extends BaseHandler>>();
@@ -18,12 +16,13 @@ public class EventBus {
 	public <T extends BaseHandler> void addHandler(Event<T> type, T handler) {
 		@SuppressWarnings("unchecked")
 		List<T> list = (List<T>) handlers.get(type);
-		if (list == null)
+		if (list == null) {
 			list = new ArrayList<T>();
+			handlers.put(type, list);
+		}
 		if (list.contains(handler))
 			return;
 		list.add(handler);
-		handlers.put(type, list);
 	}
 
 	public <T extends BaseHandler> void removeHandler(Event<T> type, T handler) {
@@ -42,7 +41,7 @@ public class EventBus {
 		}
 	}
 
-	public <T extends BaseHandler> void fireEvent(Event<T> type, Callback<T> callback) {
+	public <T extends BaseHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
 		@SuppressWarnings("unchecked")
 		List<T> protoList = (List<T>) handlers.get(type);
 		if (protoList == null)
@@ -51,7 +50,7 @@ public class EventBus {
 		Set<Throwable> errors = null;
 		for (T h : copy)
 			try {
-				callback.onSuccess(h);
+				callback.call(h);
 			} catch (Throwable e) {
 				if (errors == null)
 					errors = new HashSet<Throwable>();

@@ -12,7 +12,6 @@ import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
@@ -153,7 +152,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	public void onSkipButtonClicked() {
-		application.eventBus.fireEvent(Events.TURN_YIELDED, (Callback<GamePhaseHandler>)(h)->h.onTurnYielded());
+		application.eventBus.fireEvent(Events.TURN_YIELDED, (h)->h.onTurnYielded());
 	}
 
 	@Override

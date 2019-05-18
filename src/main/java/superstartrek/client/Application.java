@@ -39,7 +39,6 @@ import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.model.Quadrant;
@@ -48,7 +47,6 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.utils.GwtBrowserAPIImpl;
 import superstartrek.client.utils.Timer;
-import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.pwa.AppInstallPromptPresenter;
 import superstartrek.client.activities.pwa.AppInstallPromptView;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
@@ -124,7 +122,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void message(String formattedMessage, String category) {
-		eventBus.fireEvent(Events.MESSAGE_POSTED, (Callback<MessageHandler>)(h)->h.messagePosted(formattedMessage, category));
+		eventBus.fireEvent(Events.MESSAGE_POSTED, (h)->h.messagePosted(formattedMessage, category));
 	}
 
 	/**
@@ -170,7 +168,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void restart() {
-		eventBus.fireEvent(Events.GAME_RESTART, (Callback<GamePhaseHandler>)(h)->h.beforeGameRestart());
+		eventBus.fireEvent(Events.GAME_RESTART, (h)->h.beforeGameRestart());
 		startGame();
 	}
 
@@ -257,7 +255,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	@Override
 	public void onKeyDown(KeyDownEvent event) {
-		eventBus.fireEvent(Events.KEY_PRESSED, (Callback<KeyPressedEventHandler>)(h)->h.onKeyPressed(event.getNativeKeyCode()));
+		eventBus.fireEvent(Events.KEY_PRESSED, (h)->h.onKeyPressed(event.getNativeKeyCode()));
 	}
 
 }

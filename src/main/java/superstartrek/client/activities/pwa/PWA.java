@@ -130,7 +130,7 @@ public class PWA {
 				String dateOfInstalledApplication = response.getHeader("last-modified");
 				log.info("Installed app version " + checksumOfInstalledApplication);
 				application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
-						(Callback<ApplicationLifecycleHandler>) (h) -> h
+						 (h) -> h
 								.installedAppVersionIs(checksumOfInstalledApplication, dateOfInstalledApplication));
 				getChecksumOfNewestVersion(new RequestCallback() {
 
@@ -142,21 +142,21 @@ public class PWA {
 						log.info("is same: " + isSame);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
 							app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
-									(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
+									(h) -> h.checkFailed());
 							return;
 						}
 						if (isSame)
 							app.eventBus.fireEvent(Events.VERSION_IS_CURRENT,
-									(Callback<ApplicationLifecycleHandler>) (h) -> h.versionIsCurrent());
+									(h) -> h.versionIsCurrent());
 						else
 							app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE,
-									(Callback<ApplicationLifecycleHandler>) (h) -> h.newVersionAvailable());
+									(h) -> h.newVersionAvailable());
 					}
 
 					@Override
 					public void onError(Request request, Throwable exception) {
 						app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
-								(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
+								(h) -> h.checkFailed());
 					}
 				});
 			}
@@ -164,7 +164,7 @@ public class PWA {
 			@Override
 			public void onError(Request request, Throwable exception) {
 				app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
-						(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
+						(h) -> h.checkFailed());
 			}
 		});
 	}
@@ -196,7 +196,7 @@ public class PWA {
 			deferredInstallationPrompt = event;
 			deferredInstallationPrompt.preventDefault();
 			application.eventBus.fireEvent(Events.SHOW_APP_INSTALL_PROMPT,
-					(Callback<ApplicationLifecycleHandler>) (h) -> h.showInstallPrompt());
+					(h) -> h.showInstallPrompt());
 		});
 		setupCache(callback);
 	}

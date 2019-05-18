@@ -3,9 +3,7 @@ package superstartrek.client.activities.sector.scan;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
-import superstartrek.client.activities.computer.ComputerHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -54,7 +52,7 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 		if (!view.isVisible())
 			return;
 		view.hide();
-		application.eventBus.fireEvent(Events.SHOW_COMPUTER, (Callback<ComputerHandler>)(h)->h.showScreen());
+		fireEvent(Events.SHOW_COMPUTER, (h)->h.showScreen());
 	}
 	
 	public void onCommandClicked(String cmd) {

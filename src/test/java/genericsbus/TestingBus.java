@@ -3,9 +3,9 @@ package genericsbus;
 import java.util.HashMap;
 import java.util.Map;
 
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.BaseHandler;
 import superstartrek.client.bus.EventBus;
+import superstartrek.client.bus.EventCallback;
 import superstartrek.client.bus.Event;
 
 public class TestingBus extends EventBus{
@@ -13,7 +13,7 @@ public class TestingBus extends EventBus{
 	Map<Event<?>, Integer> fireCount = new HashMap<Event<?>, Integer>();
 
 	@Override
-	public <T extends BaseHandler> void fireEvent(Event<T> type, Callback<T> callback) {
+	public <T extends BaseHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
 		Integer count = fireCount.get(type);
 		if (count == null)
 			count = 1;

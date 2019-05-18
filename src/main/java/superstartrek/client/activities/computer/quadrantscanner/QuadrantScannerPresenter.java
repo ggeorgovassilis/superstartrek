@@ -13,7 +13,6 @@ import superstartrek.client.activities.klingons.KlingonCloakingHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.bus.Events;
@@ -25,7 +24,6 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
-import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
@@ -37,8 +35,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
 		Quadrant quadrant = application.starMap.enterprise.getQuadrant();
-		application.eventBus.fireEvent(Events.SECTOR_SELECTED,
-				(Callback<SectorSelectedHandler>) (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
+		fireEvent(Events.SECTOR_SELECTED,
+				(h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
 	public QuadrantScannerPresenter(Application application, SectorContextMenuPresenter sectorMenuPresenter) {
@@ -214,8 +212,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			int dx = view.getHorizontalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
 			int dy = view.getVerticalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
 			Quadrant quadrant = application.starMap.enterprise.getQuadrant();
-			application.eventBus.fireEvent(Events.SECTOR_SELECTED,
-					(Callback<SectorSelectedHandler>) (h) -> h.onSectorSelected(selectedSector, quadrant, dx, dy));
+			fireEvent(Events.SECTOR_SELECTED, (h) -> h.onSectorSelected(selectedSector, quadrant, dx, dy));
 			break;
 		}
 
@@ -223,7 +220,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			selectedSector = newSector;
 			view.deselectSectors();
 			view.selectSector(selectedSector.getX(), selectedSector.getY());
-			application.eventBus.fireEvent(Events.CONTEXT_MENU_HIDE, (Callback<ContextMenuHideHandler>) (h) -> h.onMenuHide());
+			fireEvent(Events.CONTEXT_MENU_HIDE, (h) -> h.onMenuHide());
 		}
 	}
 

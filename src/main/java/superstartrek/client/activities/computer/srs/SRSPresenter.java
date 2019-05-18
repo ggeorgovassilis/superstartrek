@@ -2,11 +2,9 @@ package superstartrek.client.activities.computer.srs;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.appmenu.AppMenuHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.model.Enterprise;
@@ -21,7 +19,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	public SRSPresenter(Application application) {
 		super(application);
 		addHandler(Events.GAME_STARTED, this);
-		application.eventBus.addHandler(Events.AFTER_ENTERPRISE_WARPED, this);
+		addHandler(Events.AFTER_ENTERPRISE_WARPED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
 	}
 
@@ -51,7 +49,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	}
 
 	public void onAppMenuButtonClicked() {
-		application.eventBus.fireEvent(Events.APP_MENU_SHOW, (Callback<AppMenuHandler>)(h)->h.showMenu());
+		fireEvent(Events.APP_MENU_SHOW, (h)->h.showMenu());
 	}
 
 	@Override

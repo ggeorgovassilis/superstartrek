@@ -3,9 +3,7 @@ package superstartrek;
 import org.junit.Before;
 import org.junit.Test;
 
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.sector.scan.IScanSectorView;
-import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Location;
@@ -27,7 +25,7 @@ public class TestSectorScannerPresenter extends BaseTest{
 	public void testScanSector_notthing() {
 		enterprise.setLocation(Location.location(0,0));
 		Location l = Location.location(4,5);
-		bus.fireEvent(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(l, quadrant));
+		bus.fireEvent(Events.SCAN_SECTOR, (h)->h.scanSector(l, quadrant));
 		
 		verify(view).setObjectLocation(eq("4:5"));
 		verify(view).setObjectName(eq("Nothing"));
@@ -42,7 +40,7 @@ public class TestSectorScannerPresenter extends BaseTest{
 	public void testScanSector_enterprise() {
 		enterprise.setLocation(Location.location(0,0));
 		Location l = Location.location(0,0);
-		bus.fireEvent(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(l, quadrant));
+		bus.fireEvent(Events.SCAN_SECTOR, (h)->h.scanSector(l, quadrant));
 		
 		verify(view).setObjectLocation(eq("0:0"));
 		verify(view).setObjectName(eq("NCC 1701 USS Enterprise"));

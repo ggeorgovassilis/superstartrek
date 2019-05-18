@@ -3,21 +3,12 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.combat.EnterpriseDamagedHandler;
-import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.utils.BrowserAPI;
-import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
-import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
-import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
 
@@ -25,9 +16,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
 	public final static double IMPULSE_CONSUMPTION = 5;
 
-	List<HandlerRegistration> handlers = new ArrayList<>();
-
 	Application application;
+	superstartrek.client.bus.EventBus eventBus;
 	StarMap starMap;
 	Setting phasers = new Setting("phasers", 30);
 	Setting torpedos = new Setting("torpedos", 10);
@@ -75,10 +65,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");
-		application.eventBus.addHandler(Events.TURN_STARTED, this);
-		application.eventBus.addHandler(Events.TURN_ENDED, this);
-		application.eventBus.addHandler(Events.GAME_RESTART, this);
-		application.eventBus.addHandler(Events.BEFORE_FIRE, this);
+		eventBus = application.eventBus;
+		eventBus.addHandler(Events.TURN_STARTED, this);
+		eventBus.addHandler(Events.TURN_ENDED, this);
+		eventBus.addHandler(Events.GAME_RESTART, this);
+		eventBus.addHandler(Events.BEFORE_FIRE, this);
 	}
 
 	public Setting getAntimatter() {
@@ -120,11 +111,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
 		Quadrant qFrom = getQuadrant();
-		application.eventBus.fireEvent(Events.AFTER_ENTERPRISE_WARPED, (Callback<EnterpriseWarpedHandler>) (h) -> h
+		eventBus.fireEvent(Events.AFTER_ENTERPRISE_WARPED, (h) -> h
 				.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
 
-		application.eventBus.fireEvent(Events.THING_MOVED,
-				(Callback<ThingMovedHandler>) (h) -> h.thingMoved(Enterprise.this, qFrom, oldLocation, dropQuadrant, freeSpot));
+		eventBus.fireEvent(Events.THING_MOVED,
+				(h) -> h.thingMoved(Enterprise.this, qFrom, oldLocation, dropQuadrant, freeSpot));
 		turnsSinceWarp = 0;
 		return true;
 	}
@@ -177,7 +168,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	public void moveToIgnoringConstraints(Location loc) {
 		Location oldLoc = getLocation();
 		setLocation(loc);
-		application.eventBus.fireEvent(Events.THING_MOVED, (Callback<ThingMovedHandler>)(h)->h.thingMoved(Enterprise.this, getQuadrant(), oldLoc, getQuadrant(), loc));
+		eventBus.fireEvent(Events.THING_MOVED, (h)->h.thingMoved(Enterprise.this, getQuadrant(), oldLoc, getQuadrant(), loc));
 	}
 
 	public void navigateTo(Location loc) {
@@ -259,9 +250,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		}
 		Thing eventTarget = target;
 		double eventDamage = damage;
-		application.eventBus.fireEvent(Events.BEFORE_FIRE, (Callback<FireHandler>) (h) -> h.onFire(quadrant, Enterprise.this,
+		eventBus.fireEvent(Events.BEFORE_FIRE, (h) -> h.onFire(quadrant, Enterprise.this,
 				eventTarget, "torpedos", eventDamage, false));
-		application.eventBus.fireEvent(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(quadrant, Enterprise.this,
+		eventBus.fireEvent(Events.AFTER_FIRE, (h) -> h.afterFire(quadrant, Enterprise.this,
 				eventTarget, "torpedos", eventDamage, false));
 		if (target == null)
 			application.message("Torpedo exploded in the void");
@@ -308,15 +299,15 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		double distance = StarMap.distance(this, thing);
 		double damage = phasers.getValue() / distance;
 		phasers.setValue(0);
-		application.eventBus.fireEvent(Events.BEFORE_FIRE, (Callback<FireHandler>) (h) -> h.onFire(getQuadrant(),
+		eventBus.fireEvent(Events.BEFORE_FIRE, (h) -> h.onFire(getQuadrant(),
 				Enterprise.this, klingon, "phasers", damage, isAutoAim));
-		application.eventBus.fireEvent(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(getQuadrant(),
+		eventBus.fireEvent(Events.AFTER_FIRE, (h) -> h.afterFire(getQuadrant(),
 				Enterprise.this, klingon, "phasers", damage, isAutoAim));
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
-		application.eventBus.fireEvent(Events.ENTERPRISE_DOCKED,
-				(Callback<EnterpriseDockedHandler>) (h) -> h.onEnterpriseDocked(Enterprise.this, starBase));
+		eventBus.fireEvent(Events.ENTERPRISE_DOCKED,
+				(h) -> h.onEnterpriseDocked(Enterprise.this, starBase));
 		phasers.repair();
 		torpedos.repair();
 		impulse.repair();
@@ -324,8 +315,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		autoAim.repair();
 		antimatter.repair();
 		lrs.repair();
-		application.eventBus.fireEvent(Events.ENTERPRISE_REPAIRED,
-				(Callback<EnterpriseRepairedHandler>) (h) -> h.onEnterpriseRepaired(Enterprise.this));
+		eventBus.fireEvent(Events.ENTERPRISE_REPAIRED,
+				(h) -> h.onEnterpriseRepaired(Enterprise.this));
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -353,8 +344,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos)
 					|| maybeRepairProvisionally(autoAim) || maybeRepairProvisionally(lrs);
 			if (repaired) {
-				application.eventBus.fireEvent(Events.ENTERPRISE_REPAIRED,
-						(Callback<EnterpriseRepairedHandler>) (h) -> h.onEnterpriseRepaired(Enterprise.this));
+				eventBus.fireEvent(Events.ENTERPRISE_REPAIRED,
+						(h) -> h.onEnterpriseRepaired(Enterprise.this));
 				return;
 			}
 		}
@@ -429,8 +420,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			damageAutoaim();
 		if (lrs.isEnabled() && random.nextDouble() < impact)
 			damageLRS();
-		application.eventBus.fireEvent(Events.ENTERPRISE_DAMAGED,
-				(Callback<EnterpriseDamagedHandler>) (h) -> h.onEnterpriseDamaged(Enterprise.this));
+		eventBus.fireEvent(Events.ENTERPRISE_DAMAGED,
+				(h) -> h.onEnterpriseDamaged(Enterprise.this));
 	}
 
 	public boolean consume(String what, double value) {
@@ -438,8 +429,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 			return false;
 		getReactor().decrease(value);
 		getAntimatter().decrease(value);
-		application.eventBus.fireEvent(Events.CONSUME_ENERGY,
-				(Callback<EnergyConsumptionHandler>) (h) -> h.handleEnergyConsumption(this, value, what));
+		eventBus.fireEvent(Events.CONSUME_ENERGY,
+				(h) -> h.handleEnergyConsumption(this, value, what));
 		return true;
 	}
 
@@ -467,7 +458,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		shields.reset();
 		impulse.reset();
 		if (!consume("energy", computeEnergyConsumption())) {
-			application.eventBus.fireEvent(Events.GAME_OVER, (Callback<GamePhaseHandler>) (h) -> h.gameLost());
+			eventBus.fireEvent(Events.GAME_OVER, (h) -> h.gameLost());
 			return;
 		}
 		playComputerTurn();
@@ -501,10 +492,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 
 	@Override
 	public void beforeGameRestart() {
-		for (HandlerRegistration hr : handlers)
-			hr.removeHandler();
-		handlers.clear();
-		application.eventBus.removeHandler(this);
+		eventBus.removeHandler(this);
 	}
 
 }

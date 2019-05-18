@@ -10,7 +10,6 @@ import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
@@ -89,7 +88,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
 				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
 		if (!application.starMap.hasKlingons())
-			eventBus.fireEvent(Events.GAME_OVER, (Callback<GamePhaseHandler>)(h)->h.gameWon());
+			eventBus.fireEvent(Events.GAME_OVER, (h)->h.gameWon());
 	}
 
 	@Override
@@ -122,8 +121,8 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	public void startTurn() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_DAY);
 		application.starMap.advanceStarDate(1);
-		eventBus.fireEvent(Events.TURN_STARTED, (Callback<GamePhaseHandler>)(h)->h.onTurnStarted());
-		eventBus.fireEvent(Events.AFTER_TURN_STARTED, (Callback<GamePhaseHandler>)(h)->h.afterTurnStarted());
+		eventBus.fireEvent(Events.TURN_STARTED, (h)->h.onTurnStarted());
+		eventBus.fireEvent(Events.AFTER_TURN_STARTED, (h)->h.afterTurnStarted());
 	}
 
 	public void startTurnAfterThis() {
@@ -138,13 +137,13 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	public void startGame() {
 		application.browserAPI.postHistoryChange("intro", true);
-		application.eventBus.fireEvent(Events.GAME_STARTED, (Callback<GamePhaseHandler>)(h)->h.onGameStarted(application.starMap));
+		eventBus.fireEvent(Events.GAME_STARTED, (h)->h.onGameStarted(application.starMap));
 	}
 
 	public void endTurn() {
-		eventBus.fireEvent(Events.TURN_ENDED, (Callback<GamePhaseHandler>)(h)->h.onTurnEnded());
-		eventBus.fireEvent(Events.KLINGON_TURN_STARTED, (Callback<GamePhaseHandler>)(h)->h.onKlingonTurnStarted());
-		eventBus.fireEvent(Events.KLINGON_TURN_ENDED, (Callback<GamePhaseHandler>)(h)->h.onKlingonTurnEnded());
+		eventBus.fireEvent(Events.TURN_ENDED, (h)->h.onTurnEnded());
+		eventBus.fireEvent(Events.KLINGON_TURN_STARTED, (h)->h.onKlingonTurnStarted());
+		eventBus.fireEvent(Events.KLINGON_TURN_ENDED, (h)->h.onKlingonTurnEnded());
 		// release resources so that it can be (hopefully) garbage collected; at this
 		// point, everyone who needs resources should have them
 	}
@@ -167,9 +166,9 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	public void gameOver(GameOutcome outcome, String reason) {
 		if (outcome == GameOutcome.won)
-			eventBus.fireEvent(Events.GAME_OVER, (Callback<GamePhaseHandler>)(h)->h.gameWon());
+			eventBus.fireEvent(Events.GAME_OVER, (h)->h.gameWon());
 		if (outcome == GameOutcome.lost)
-			eventBus.fireEvent(Events.GAME_OVER, (Callback<GamePhaseHandler>)(h)->h.gameLost());
+			eventBus.fireEvent(Events.GAME_OVER, (h)->h.gameLost());
 	}
 
 	@Override

@@ -8,11 +8,9 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
@@ -98,7 +96,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 			hideMenu(() -> {
 				switch (command) {
 				case "cmd_scanSector":
-					application.eventBus.fireEvent(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(sector, quadrant));
+					fireEvent(Events.SCAN_SECTOR, (h)->h.scanSector(sector, quadrant));
 					break;
 				case "cmd_navigate":
 					enterprise.navigateTo(sector);
