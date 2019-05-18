@@ -14,7 +14,6 @@ import superstartrek.client.activities.pwa.Callback;
 public class Bus {
 
 	Map<String, List<? extends BaseHandler>> handlers = new HashMap<String, List<? extends BaseHandler>>();
-	Map<String, Integer> fireCount = new HashMap<String, Integer>();
 	
 	public <T extends BaseHandler> void register(String type, T handler) {
 		@SuppressWarnings("unchecked")
@@ -44,11 +43,6 @@ public class Bus {
 	}
 
 	public <T extends BaseHandler> void invoke(String type, Callback<T> callback) {
-		Integer count = fireCount.get(type);
-		if (count == null)
-			count = 1;
-		else count = count + 1;
-		fireCount.put(type, count);
 		@SuppressWarnings("unchecked")
 		List<T> protoList = (List<T>) handlers.get(type);
 		if (protoList == null)
@@ -67,9 +61,4 @@ public class Bus {
 			throw new UmbrellaException(errors);
 	}
 	
-	public int getFiredCount(String type) {
-		Integer count = fireCount.get(type);
-		return count==null?0:count;
-	}
-
 }

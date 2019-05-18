@@ -35,7 +35,6 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 
 	public GameController(Application application, ScoreKeeper scoreKeeper) {
 		this.application = application;
-		events = application.events;
 		bus = application.bus;
 		this.scoreKeeper = scoreKeeper;
 		bus.register(Events.GAME_STARTED, this);

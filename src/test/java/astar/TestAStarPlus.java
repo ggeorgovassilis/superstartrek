@@ -11,8 +11,7 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.google.gwt.event.shared.SimpleEventBus;
-
+import superstartrek.BaseTest;
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
@@ -27,13 +26,8 @@ import superstartrek.client.model.Star.StarClass;
 /*
  * A* is a reference implementation used to validate that a*+ works ok
  */
-public class TestAStarPlus {
+public class TestAStarPlus extends BaseTest{
 	
-	@After
-	public void cleanup() {
-		Application.set(null);
-	}
-
 
 	@Ignore //too slow for regular builds
 	@Test
@@ -139,8 +133,8 @@ public class TestAStarPlus {
 		for (int i = 0; i < TURNS; i++) {
 			Quadrant q = new Quadrant("", 0, 0);
 			StarMap map = new StarMap();
+			Application.set(null);
 			Application app = new Application();
-			app.events = new SimpleEventBus();
 			map.enterprise = new Enterprise(app, map);
 			Location from = Location.location(random.nextInt(8), random.nextInt(8));
 			Location to = Location.location(random.nextInt(8), random.nextInt(8));
@@ -175,6 +169,7 @@ public class TestAStarPlus {
 
 		}
 	}
+	
 
 	@Test
 	public void testAStarPlus_2() {
@@ -182,8 +177,6 @@ public class TestAStarPlus {
 		StarMap map = new StarMap();
 		Location from = Location.location(1, 3);
 		Location to = Location.location(2, 7);
-		Application app = new Application();
-		app.events = new com.google.gwt.event.shared.testing.CountingEventBus();
 		map.enterprise = new Enterprise(Application.get(), map);
 		//e.setLocation(to);
 		//map.enterprise = e;

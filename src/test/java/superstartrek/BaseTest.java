@@ -7,8 +7,8 @@ import org.junit.Before;
 
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
+import genericsbus.TestingBus;
 import superstartrek.client.Application;
-import superstartrek.client.bus.Bus;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
@@ -22,15 +22,14 @@ public abstract class BaseTest {
 	BrowserAPI browser;
 	Enterprise enterprise;
 	Quadrant quadrant;
-	Bus bus;
+	TestingBus bus;
 	
 	@Before
 	public void setupCommonObjects() {
 		application = new Application();
-		bus = application.bus;
+		application.bus = bus = new TestingBus();
 		starMap = new StarMap();
 		application.browserAPI = browser = mock(BrowserAPI.class);
-		application.events = events = new CountingEventBus();
 		application.starMap = starMap;
 		starMap.enterprise = enterprise = new Enterprise(application, starMap);
 		quadrant = new Quadrant("test quadrant 1:2", 1, 2);

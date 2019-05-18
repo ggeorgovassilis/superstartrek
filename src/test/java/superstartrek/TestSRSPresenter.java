@@ -30,7 +30,6 @@ public class TestSRSPresenter {
 	@Before
 	public void setup() {
 		app = new Application();
-		app.events = events = new CountingEventBus();
 		app.starMap = new StarMap();
 		presenter = new SRSPresenter(app);
 		view = mock(ISRSView.class);

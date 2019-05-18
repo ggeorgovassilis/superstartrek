@@ -12,8 +12,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -64,7 +62,6 @@ import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;
 public class Application implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler, KeyDownHandler {
 	private static Logger log = Logger.getLogger("");
 
-	public EventBus events;
 	public Bus bus = new Bus();
 	public HTMLPanel _page;
 	public StarMap starMap;
@@ -246,7 +243,6 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 			browserAPI = new GwtBrowserAPIImpl();
 		resources = GWT.create(Resources.class);
 		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
-		events = GWT.create(SimpleEventBus.class);
 		setupHttp();
 		registerEventHandlers();
 		setupPwa((v) -> setupTheRest());
