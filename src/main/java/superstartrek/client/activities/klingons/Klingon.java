@@ -2,9 +2,6 @@ package superstartrek.client.activities.klingons;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.HandlerRegistration;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.FireHandler;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;

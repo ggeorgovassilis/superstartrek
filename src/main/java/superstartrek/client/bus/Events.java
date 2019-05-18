@@ -32,4 +32,10 @@ public class Events {
 	public final static String KEY_PRESSED = "KEY_PRESSED";
 	public final static String TURN_ENDED = "TURN_ENDED";
 	public final static String TURN_STARTED = "TURN_STARTED";
+	public final static String INFORMING_OF_INSTALLED_VERSION = "INFORMING_OF_INSTALLED_VERSION";
+	public final static String VERSION_CHECK_FAILED = "VERSION_CHECK_FAILED";
+	public final static String NEW_VERSION_AVAILABLE = "NEW_VERSION_AVAILABLE";
+	public final static String VERSION_IS_CURRENT = "VERSION_IS_CURRENT";
+	public final static String SHOW_APP_INSTALL_PROMPT = "SHOW_APP_INSTALL_PROMPT";
+	public final static String RELOAD_APP = "RELOAD_APP";
 }

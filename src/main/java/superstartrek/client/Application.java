@@ -235,7 +235,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	public void registerEventHandlers() {
 		bus.register(Events.GAME_OVER, this);
-		events.addHandler(ApplicationLifecycleEvent.TYPE, this);
+		bus.register(Events.RELOAD_APP, this);
 	}
 	
 	@Override

@@ -14,7 +14,7 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 	public IntroPresenter(Application application) {
 		super(application);
 		addHandler(Events.GAME_STARTED, this);
-		addHandler(ApplicationLifecycleEvent.TYPE, this);
+		addHandler(Events.INFORMING_OF_INSTALLED_VERSION, this);
 		application.browserAPI.addHistoryListener(this);
 	}
 	

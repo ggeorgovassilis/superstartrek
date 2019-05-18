@@ -3,7 +3,6 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.Application;

@@ -9,12 +9,12 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.http.Request;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
+import superstartrek.client.bus.Events;
 import superstartrek.client.utils.BrowserAPI;
 
 import static org.mockito.Mockito.*;
@@ -79,11 +79,13 @@ public class TestPWA extends BaseTest{
 		});
 
 		AtomicBoolean newVersionAvailable = new AtomicBoolean(false);
-		events.addHandler(ApplicationLifecycleEvent.TYPE, new ApplicationLifecycleHandler() {
+		bus.register(Events.INFORMING_OF_INSTALLED_VERSION, new ApplicationLifecycleHandler() {
 			@Override
 			public void installedAppVersionIs(String version, String timestamp) {
 				assertEquals("12345", version);
 			}
+		});
+		bus.register(Events.NEW_VERSION_AVAILABLE, new ApplicationLifecycleHandler() {
 			
 			@Override
 			public void newVersionAvailable() {
@@ -93,8 +95,8 @@ public class TestPWA extends BaseTest{
 		pwa.checkForNewVersion();
 		verify(request).request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt"), any(RequestCallback.class));
 		verify(request).request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt?rnd=222"), any(RequestCallback.class));
-		//expect 2 events: one with current version, one with newest
-		assertEquals(2, events.getFiredCount(ApplicationLifecycleEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.INFORMING_OF_INSTALLED_VERSION));
+		assertEquals(1, bus.getFiredCount(Events.NEW_VERSION_AVAILABLE));
 		assertTrue(newVersionAvailable.get());
 	}
 	

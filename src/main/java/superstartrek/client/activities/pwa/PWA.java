@@ -9,11 +9,10 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import superstartrek.client.Application;
-import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent;
-import superstartrek.client.activities.pwa.ApplicationLifecycleHandler.ApplicationLifecycleEvent.Status;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
+import superstartrek.client.bus.Events;
 
 public class PWA {
 
@@ -86,7 +85,7 @@ public class PWA {
 		});
 	}-*/;
 	//@formatter:on
-	
+
 	public void installApplication() {
 		log.info("invoking deferred installation prompt");
 		deferredInstallationPrompt.prompt();
@@ -130,8 +129,9 @@ public class PWA {
 				String checksumOfInstalledApplication = response.getText();
 				String dateOfInstalledApplication = response.getHeader("last-modified");
 				log.info("Installed app version " + checksumOfInstalledApplication);
-				application.events.fireEvent(new ApplicationLifecycleEvent(Status.informingOfInstalledVersion,
-						checksumOfInstalledApplication, dateOfInstalledApplication, ""));
+				application.bus.invoke(Events.INFORMING_OF_INSTALLED_VERSION,
+						(Callback<ApplicationLifecycleHandler>) (h) -> h
+								.installedAppVersionIs(checksumOfInstalledApplication, dateOfInstalledApplication));
 				getChecksumOfNewestVersion(new RequestCallback() {
 
 					@Override
@@ -141,26 +141,30 @@ public class PWA {
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
 						log.info("is same: " + isSame);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
-							app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
-									checksumOfInstalledApplication, dateOfInstalledApplication, ""));
+							app.bus.invoke(Events.VERSION_CHECK_FAILED,
+									(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
 							return;
 						}
-						app.events.fireEvent(new ApplicationLifecycleEvent(
-								isSame ? Status.appIsUpToDate : Status.appIsOutdated, checksumOfInstalledApplication,
-								dateOfInstalledApplication, checksumOfNewestVersion));
+						if (isSame)
+							app.bus.invoke(Events.VERSION_IS_CURRENT,
+									(Callback<ApplicationLifecycleHandler>) (h) -> h.versionIsCurrent());
+						else
+							app.bus.invoke(Events.NEW_VERSION_AVAILABLE,
+									(Callback<ApplicationLifecycleHandler>) (h) -> h.newVersionAvailable());
 					}
 
 					@Override
 					public void onError(Request request, Throwable exception) {
-						app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed,
-								dateOfInstalledApplication, checksumOfInstalledApplication, ""));
+						app.bus.invoke(Events.VERSION_CHECK_FAILED,
+								(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
 					}
 				});
 			}
 
 			@Override
 			public void onError(Request request, Throwable exception) {
-				app.events.fireEvent(new ApplicationLifecycleEvent(Status.checkFailed, "", "", ""));
+				app.bus.invoke(Events.VERSION_CHECK_FAILED,
+						(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
 			}
 		});
 	}
@@ -169,14 +173,14 @@ public class PWA {
 		if (cache == null)
 			cache = LocalCacheBrowserImpl.getInstance();
 		log.info("Querying cache existence");
-		cache.queryCacheExistence(CACHE_NAME).then((exists)->{
-			
+		cache.queryCacheExistence(CACHE_NAME).then((exists) -> {
+
 			if (!exists) {
 				log.info("Cache does not exist");
 				cache.cacheFiles(CACHE_NAME, fileNames, callback);
 			} else {
 				log.info("Cache exists");
-				callback.onSuccess(null);	
+				callback.onSuccess(null);
 				checkForNewVersion();
 			}
 		});
@@ -187,12 +191,12 @@ public class PWA {
 			log.info("Not running PWA because not running in browser");
 			return;
 		}
-		addInstallationListener((event)->{
+		addInstallationListener((event) -> {
 			log.info("installation event callback");
 			deferredInstallationPrompt = event;
 			deferredInstallationPrompt.preventDefault();
-			application.events.fireEvent(new ApplicationLifecycleEvent(Status.showInstallPrompt, "", "", ""));
-
+			application.bus.invoke(Events.SHOW_APP_INSTALL_PROMPT,
+					(Callback<ApplicationLifecycleHandler>) (h) -> h.showInstallPrompt());
 		});
 		setupCache(callback);
 	}
