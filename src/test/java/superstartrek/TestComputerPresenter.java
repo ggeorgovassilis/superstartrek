@@ -69,7 +69,7 @@ public class TestComputerPresenter extends BaseTest{
 		enterprise.getImpulse().damage(1);
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
 
-		bus.register(Events.THING_MOVED, new ThingMovedHandler() {
+		bus.addHandler(Events.THING_MOVED, new ThingMovedHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {

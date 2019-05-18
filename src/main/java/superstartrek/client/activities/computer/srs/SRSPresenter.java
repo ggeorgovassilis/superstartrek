@@ -21,7 +21,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	public SRSPresenter(Application application) {
 		super(application);
 		addHandler(Events.GAME_STARTED, this);
-		application.bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
+		application.eventBus.addHandler(Events.AFTER_ENTERPRISE_WARPED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
 	}
 
@@ -51,7 +51,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	}
 
 	public void onAppMenuButtonClicked() {
-		application.bus.invoke(Events.APP_MENU_SHOW, (Callback<AppMenuHandler>)(h)->h.showMenu());
+		application.eventBus.fireEvent(Events.APP_MENU_SHOW, (Callback<AppMenuHandler>)(h)->h.showMenu());
 	}
 
 	@Override

@@ -35,7 +35,7 @@ import superstartrek.client.activities.report.StatusReportView;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
-import superstartrek.client.bus.Bus;
+import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.GamePhaseHandler;
@@ -62,7 +62,7 @@ import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;
 public class Application implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler, KeyDownHandler {
 	private static Logger log = Logger.getLogger("");
 
-	public Bus bus = new Bus();
+	public EventBus eventBus = new EventBus();
 	public HTMLPanel _page;
 	public StarMap starMap;
 	public BrowserAPI browserAPI;
@@ -124,7 +124,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void message(String formattedMessage, String category) {
-		bus.invoke(Events.MESSAGE_POSTED, (Callback<MessageHandler>)(h)->h.messagePosted(formattedMessage, category));
+		eventBus.fireEvent(Events.MESSAGE_POSTED, (Callback<MessageHandler>)(h)->h.messagePosted(formattedMessage, category));
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void restart() {
-		bus.invoke(Events.GAME_RESTART, (Callback<GamePhaseHandler>)(h)->h.beforeGameRestart());
+		eventBus.fireEvent(Events.GAME_RESTART, (Callback<GamePhaseHandler>)(h)->h.beforeGameRestart());
 		startGame();
 	}
 
@@ -231,8 +231,8 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void registerEventHandlers() {
-		bus.register(Events.GAME_OVER, this);
-		bus.register(Events.RELOAD_APP, this);
+		eventBus.addHandler(Events.GAME_OVER, this);
+		eventBus.addHandler(Events.RELOAD_APP, this);
 	}
 	
 	@Override
@@ -257,7 +257,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	@Override
 	public void onKeyDown(KeyDownEvent event) {
-		bus.invoke(Events.KEY_PRESSED, (Callback<KeyPressedEventHandler>)(h)->h.onKeyPressed(event.getNativeKeyCode()));
+		eventBus.fireEvent(Events.KEY_PRESSED, (Callback<KeyPressedEventHandler>)(h)->h.onKeyPressed(event.getNativeKeyCode()));
 	}
 
 }

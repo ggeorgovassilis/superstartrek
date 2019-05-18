@@ -2,6 +2,7 @@ package superstartrek.client.activities;
 
 import superstartrek.client.Application;
 import superstartrek.client.bus.BaseHandler;
+import superstartrek.client.bus.Event;
 
 public abstract class BasePresenter<V extends View> implements Presenter<V>{
 
@@ -22,7 +23,7 @@ public abstract class BasePresenter<V extends View> implements Presenter<V>{
 		this.view = view;
 	}
 	
-	protected <H extends BaseHandler> void addHandler(String type, H handler) {
-		application.bus.register(type, handler);
+	protected <H extends BaseHandler> void addHandler(Event<H> type, H handler) {
+		application.eventBus.addHandler(type, handler);
 	}
 }

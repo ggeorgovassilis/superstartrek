@@ -12,7 +12,7 @@ public class AppInstallPromptPresenter extends BasePresenter<AppInstallPromptVie
 
 	public AppInstallPromptPresenter(Application application) {
 		super(application);
-		application.bus.register(Events.SHOW_APP_INSTALL_PROMPT, this);
+		application.eventBus.addHandler(Events.SHOW_APP_INSTALL_PROMPT, this);
 	}
 	
 	public boolean didUserForbidInstallation() {

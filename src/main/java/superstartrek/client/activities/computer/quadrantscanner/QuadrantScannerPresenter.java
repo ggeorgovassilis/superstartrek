@@ -37,7 +37,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
 		Quadrant quadrant = application.starMap.enterprise.getQuadrant();
-		application.bus.invoke(Events.SECTOR_SELECTED,
+		application.eventBus.fireEvent(Events.SECTOR_SELECTED,
 				(Callback<SectorSelectedHandler>) (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
@@ -214,7 +214,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			int dx = view.getHorizontalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
 			int dy = view.getVerticalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
 			Quadrant quadrant = application.starMap.enterprise.getQuadrant();
-			application.bus.invoke(Events.SECTOR_SELECTED,
+			application.eventBus.fireEvent(Events.SECTOR_SELECTED,
 					(Callback<SectorSelectedHandler>) (h) -> h.onSectorSelected(selectedSector, quadrant, dx, dy));
 			break;
 		}
@@ -223,7 +223,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			selectedSector = newSector;
 			view.deselectSectors();
 			view.selectSector(selectedSector.getX(), selectedSector.getY());
-			application.bus.invoke(Events.CONTEXT_MENU_HIDE, (Callback<ContextMenuHideHandler>) (h) -> h.onMenuHide());
+			application.eventBus.fireEvent(Events.CONTEXT_MENU_HIDE, (Callback<ContextMenuHideHandler>) (h) -> h.onMenuHide());
 		}
 	}
 

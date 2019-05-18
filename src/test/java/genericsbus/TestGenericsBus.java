@@ -5,11 +5,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import superstartrek.client.activities.pwa.Callback;
-import superstartrek.client.bus.Bus;
+import superstartrek.client.bus.EventBus;
 
 import static org.junit.Assert.*;
-
+import static org.mockito.Mockito.*;
 public class TestGenericsBus {
 
 	@Test
@@ -30,11 +29,11 @@ public class TestGenericsBus {
 			}
 		};
 
-		Bus bus = new Bus();
-		bus.register(Events.EVENT1, handler1);
-		bus.register(Events.EVENT2, handler2);
-		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<String>())));
-		bus.invoke(Events.EVENT2, (Callback<Handler2>) ((h) -> h.method2("p1","p2")));
+		EventBus eventBus = new EventBus();
+		eventBus.addHandler(Events.E1, handler1);
+		eventBus.addHandler(Events.E2, handler2);
+		eventBus.fireEvent(Events.E1, (h) -> h.method1(1, "2", new ArrayList<String>()));
+		eventBus.fireEvent(Events.E2, (h) -> h.method2("p1","p2"));
 		assertTrue(sb.toString().contains("handler1.method1 1 2 0"));
 		assertTrue(sb.toString().contains("handler2.method2 p1 p2"));
 	}
@@ -57,11 +56,11 @@ public class TestGenericsBus {
 
 		};
 
-		Bus bus = new Bus();
-		bus.register(Events.EVENT1, handlerA);
-		bus.register(Events.EVENT1, handlerB);
-		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<String>())));
-		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<String>())));
+		EventBus eventBus = new EventBus();
+		eventBus.addHandler(Events.E1, handlerA);
+		eventBus.addHandler(Events.E1, handlerB);
+		eventBus.fireEvent(Events.E1, (h) -> h.method1(1, "2", new ArrayList<String>()));
+		eventBus.fireEvent(Events.E1, (h) -> h.method1(1, "2", new ArrayList<String>()));
 		assertTrue(sb.toString().contains("call 1"));
 		assertTrue(sb.toString().contains("call 2"));
 	}
@@ -72,12 +71,24 @@ public class TestGenericsBus {
 		StringBuffer sb = new StringBuffer();
 		CombinedHandler cb = new CombinedHandler(sb);
 
-		Bus bus = new Bus();
-		bus.register(Events.EVENT1, cb);
-		bus.register(Events.EVENT2, cb);
-		bus.invoke(Events.EVENT1, (Callback<Handler1>) ((h) -> h.method1(1, "2", new ArrayList<String>())));
-		bus.invoke(Events.EVENT2, (Callback<Handler2>) ((h) -> h.method2("p1","p2")));
+		EventBus eventBus = new EventBus();
+		eventBus.addHandler(Events.E1, cb);
+		eventBus.addHandler(Events.E2, cb);
+		eventBus.fireEvent(Events.E1, (h) -> h.method1(1, "2", new ArrayList<String>()));
+		eventBus.fireEvent(Events.E2, (h) -> h.method2("p1","p2"));
 		assertTrue(sb.toString().contains("CombinedHandler.method1 1 2 0"));
 		assertTrue(sb.toString().contains("CombinedHandler.method2 p1 p2"));
+	}
+
+	@Test
+	public void test_multi_handler() {
+		MultiHandler mh = mock(MultiHandler.class);
+
+		EventBus eventBus = new EventBus();
+		eventBus.addHandler(Events.E3, mh);
+		eventBus.fireEvent(Events.E3, (h) -> h.method1("s1", "s2"));
+		eventBus.fireEvent(Events.E3, (h) -> h.method2(1,2));
+		verify(mh).method1("s1", "s2");
+		verify(mh).method2(1,2);
 	}
 }

@@ -27,7 +27,7 @@ public abstract class BaseTest {
 	@Before
 	public void setupCommonObjects() {
 		application = new Application();
-		application.bus = bus = new TestingBus();
+		application.eventBus = bus = new TestingBus();
 		starMap = new StarMap();
 		application.browserAPI = browser = mock(BrowserAPI.class);
 		application.starMap = starMap;

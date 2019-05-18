@@ -28,7 +28,7 @@ public class MessagesPresenter extends BasePresenter<MessagesView>
 			return;
 		view.hide(() -> {
 			view.clear();
-			application.bus.invoke(Events.MESSAGE_READ, (Callback<MessageHandler>)(h)->h.messagesAcknowledged());
+			application.eventBus.fireEvent(Events.MESSAGE_READ, (Callback<MessageHandler>)(h)->h.messagesAcknowledged());
 		});
 	}
 

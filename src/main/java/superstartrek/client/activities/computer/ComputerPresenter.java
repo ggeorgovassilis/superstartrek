@@ -153,7 +153,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	public void onSkipButtonClicked() {
-		application.bus.invoke(Events.TURN_YIELDED, (Callback<GamePhaseHandler>)(h)->h.onTurnYielded());
+		application.eventBus.fireEvent(Events.TURN_YIELDED, (Callback<GamePhaseHandler>)(h)->h.onTurnYielded());
 	}
 
 	@Override

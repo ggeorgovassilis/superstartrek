@@ -15,7 +15,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 
 	public AppMenuPresenter(Application application) {
 		super(application);
-		application.bus.register(Events.APP_MENU_SHOW, this);
+		application.eventBus.addHandler(Events.APP_MENU_SHOW, this);
 		application.browserAPI.addHistoryListener(this);
 	}
 

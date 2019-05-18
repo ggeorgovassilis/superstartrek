@@ -27,7 +27,7 @@ public class TestSectorScannerPresenter extends BaseTest{
 	public void testScanSector_notthing() {
 		enterprise.setLocation(Location.location(0,0));
 		Location l = Location.location(4,5);
-		bus.invoke(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(l, quadrant));
+		bus.fireEvent(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(l, quadrant));
 		
 		verify(view).setObjectLocation(eq("4:5"));
 		verify(view).setObjectName(eq("Nothing"));
@@ -42,7 +42,7 @@ public class TestSectorScannerPresenter extends BaseTest{
 	public void testScanSector_enterprise() {
 		enterprise.setLocation(Location.location(0,0));
 		Location l = Location.location(0,0);
-		bus.invoke(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(l, quadrant));
+		bus.fireEvent(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(l, quadrant));
 		
 		verify(view).setObjectLocation(eq("0:0"));
 		verify(view).setObjectName(eq("NCC 1701 USS Enterprise"));

@@ -31,7 +31,7 @@ public class TestGameController extends BaseTest {
 
 	@Test
 	public void test_that_turn_ends_after_enterprise_fires() {
-		bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise,
+		bus.fireEvent(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise,
 				new Klingon(ShipClass.BirdOfPrey), "Phaser", 1, false));
 		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
 		assertEquals(1, bus.getFiredCount(Events.KLINGON_TURN_STARTED));
@@ -41,7 +41,7 @@ public class TestGameController extends BaseTest {
 
 	@Test
 	public void test_that_message_is_printed_when_star_is_hit() {
-		bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise,
+		bus.fireEvent(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise,
 				new Star(1, 2, StarClass.A), "Phaser", 1, false));
 		assertEquals(1, bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
@@ -49,7 +49,7 @@ public class TestGameController extends BaseTest {
 	@Test
 	public void test_that_game_is_over_if_enterprise_destroyed() {
 		enterprise.getShields().setValue(0);
-		bus.invoke(Events.AFTER_FIRE,
+		bus.fireEvent(Events.AFTER_FIRE,
 				(Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise, enterprise, "disruptor", 1, false));
 		assertEquals(1, bus.getFiredCount(Events.GAME_OVER));
 	}
@@ -57,14 +57,14 @@ public class TestGameController extends BaseTest {
 	@Test
 	public void test_that_turn_ends_after_enterprise_repairs() {
 		enterprise.getShields().setValue(0);
-		bus.invoke(Events.ENTERPRISE_REPAIRED,
+		bus.fireEvent(Events.ENTERPRISE_REPAIRED,
 				(Callback<EnterpriseRepairedHandler>) (h) -> h.onEnterpriseRepaired(enterprise));
 		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
 	}
 
 	@Test
 	public void test_that_turn_ends_after_enterprise_moves() {
-		bus.invoke(Events.THING_MOVED, (Callback<ThingMovedHandler>) (h) -> h.thingMoved(enterprise, quadrant, enterprise.getLocation(), quadrant, Location.location(4, 4)));
+		bus.fireEvent(Events.THING_MOVED, (Callback<ThingMovedHandler>) (h) -> h.thingMoved(enterprise, quadrant, enterprise.getLocation(), quadrant, Location.location(4, 4)));
 		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
 	}
 

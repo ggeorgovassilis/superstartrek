@@ -54,7 +54,7 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 		if (!view.isVisible())
 			return;
 		view.hide();
-		application.bus.invoke(Events.SHOW_COMPUTER, (Callback<ComputerHandler>)(h)->h.showScreen());
+		application.eventBus.fireEvent(Events.SHOW_COMPUTER, (Callback<ComputerHandler>)(h)->h.showScreen());
 	}
 	
 	public void onCommandClicked(String cmd) {

@@ -39,7 +39,7 @@ public class TestKlingon extends BaseTest{
 	public void testReppositionKlingon() {
 		klingon.jumpTo(Location.location(1, 3));
 		enterprise.setLocation(Location.location(2, 7));
-		bus.register(Events.THING_MOVED, new ThingMovedHandler() {
+		bus.addHandler(Events.THING_MOVED, new ThingMovedHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
@@ -64,7 +64,7 @@ public class TestKlingon extends BaseTest{
 		when(browser.nextInt(any(int.class))).thenReturn(1,2,3,4);
 		klingon.jumpTo(Location.location(1, 3));
 		enterprise.setLocation(Location.location(2, 3));
-		bus.register(Events.AFTER_FIRE, new FireHandler() {
+		bus.addHandler(Events.AFTER_FIRE, new FireHandler() {
 
 			@Override
 			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
@@ -83,7 +83,7 @@ public class TestKlingon extends BaseTest{
 	public void test_flee() {
 		when(browser.nextInt(any(int.class))).thenReturn(1,1);
 		klingon.setLocation(Location.location(3, 2));
-		bus.register(Events.THING_MOVED, new ThingMovedHandler() {
+		bus.addHandler(Events.THING_MOVED, new ThingMovedHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {

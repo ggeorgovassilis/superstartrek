@@ -129,7 +129,7 @@ public class PWA {
 				String checksumOfInstalledApplication = response.getText();
 				String dateOfInstalledApplication = response.getHeader("last-modified");
 				log.info("Installed app version " + checksumOfInstalledApplication);
-				application.bus.invoke(Events.INFORMING_OF_INSTALLED_VERSION,
+				application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
 						(Callback<ApplicationLifecycleHandler>) (h) -> h
 								.installedAppVersionIs(checksumOfInstalledApplication, dateOfInstalledApplication));
 				getChecksumOfNewestVersion(new RequestCallback() {
@@ -141,21 +141,21 @@ public class PWA {
 						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
 						log.info("is same: " + isSame);
 						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
-							app.bus.invoke(Events.VERSION_CHECK_FAILED,
+							app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
 									(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
 							return;
 						}
 						if (isSame)
-							app.bus.invoke(Events.VERSION_IS_CURRENT,
+							app.eventBus.fireEvent(Events.VERSION_IS_CURRENT,
 									(Callback<ApplicationLifecycleHandler>) (h) -> h.versionIsCurrent());
 						else
-							app.bus.invoke(Events.NEW_VERSION_AVAILABLE,
+							app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE,
 									(Callback<ApplicationLifecycleHandler>) (h) -> h.newVersionAvailable());
 					}
 
 					@Override
 					public void onError(Request request, Throwable exception) {
-						app.bus.invoke(Events.VERSION_CHECK_FAILED,
+						app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
 								(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
 					}
 				});
@@ -163,7 +163,7 @@ public class PWA {
 
 			@Override
 			public void onError(Request request, Throwable exception) {
-				app.bus.invoke(Events.VERSION_CHECK_FAILED,
+				app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
 						(Callback<ApplicationLifecycleHandler>) (h) -> h.checkFailed());
 			}
 		});
@@ -195,7 +195,7 @@ public class PWA {
 			log.info("installation event callback");
 			deferredInstallationPrompt = event;
 			deferredInstallationPrompt.preventDefault();
-			application.bus.invoke(Events.SHOW_APP_INSTALL_PROMPT,
+			application.eventBus.fireEvent(Events.SHOW_APP_INSTALL_PROMPT,
 					(Callback<ApplicationLifecycleHandler>) (h) -> h.showInstallPrompt());
 		});
 		setupCache(callback);

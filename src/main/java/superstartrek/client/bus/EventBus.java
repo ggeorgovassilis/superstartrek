@@ -11,11 +11,11 @@ import com.google.gwt.event.shared.UmbrellaException;
 
 import superstartrek.client.activities.pwa.Callback;
 
-public class Bus {
+public class EventBus {
 
-	Map<String, List<? extends BaseHandler>> handlers = new HashMap<String, List<? extends BaseHandler>>();
+	Map<Event<? extends BaseHandler>, List<? extends BaseHandler>> handlers = new HashMap<Event<? extends BaseHandler>, List<? extends BaseHandler>>();
 	
-	public <T extends BaseHandler> void register(String type, T handler) {
+	public <T extends BaseHandler> void addHandler(Event<T> type, T handler) {
 		@SuppressWarnings("unchecked")
 		List<T> list = (List<T>) handlers.get(type);
 		if (list == null)
@@ -26,15 +26,15 @@ public class Bus {
 		handlers.put(type, list);
 	}
 
-	public <T extends BaseHandler> void unregister(String type, T handler) {
+	public <T extends BaseHandler> void removeHandler(Event<T> type, T handler) {
 		@SuppressWarnings("unchecked")
 		List<T> list = (List<T>) handlers.get(type);
 		if (list != null)
 			list.remove(handler);
 	}
 
-	public <T extends BaseHandler> void unregister(T handler) {
-		for (String type : handlers.keySet()) {
+	public <T extends BaseHandler> void removeHandler(T handler) {
+		for (Event<?> type : handlers.keySet()) {
 			@SuppressWarnings("unchecked")
 			List<T> list = (List<T>) handlers.get(type);
 			if (list != null)
@@ -42,7 +42,7 @@ public class Bus {
 		}
 	}
 
-	public <T extends BaseHandler> void invoke(String type, Callback<T> callback) {
+	public <T extends BaseHandler> void fireEvent(Event<T> type, Callback<T> callback) {
 		@SuppressWarnings("unchecked")
 		List<T> protoList = (List<T>) handlers.get(type);
 		if (protoList == null)

@@ -98,7 +98,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 			hideMenu(() -> {
 				switch (command) {
 				case "cmd_scanSector":
-					application.bus.invoke(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(sector, quadrant));
+					application.eventBus.fireEvent(Events.SCAN_SECTOR, (Callback<ScanSectorHandler>)(h)->h.scanSector(sector, quadrant));
 					break;
 				case "cmd_navigate":
 					enterprise.navigateTo(sector);

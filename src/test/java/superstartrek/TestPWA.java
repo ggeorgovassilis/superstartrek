@@ -79,13 +79,13 @@ public class TestPWA extends BaseTest{
 		});
 
 		AtomicBoolean newVersionAvailable = new AtomicBoolean(false);
-		bus.register(Events.INFORMING_OF_INSTALLED_VERSION, new ApplicationLifecycleHandler() {
+		bus.addHandler(Events.INFORMING_OF_INSTALLED_VERSION, new ApplicationLifecycleHandler() {
 			@Override
 			public void installedAppVersionIs(String version, String timestamp) {
 				assertEquals("12345", version);
 			}
 		});
-		bus.register(Events.NEW_VERSION_AVAILABLE, new ApplicationLifecycleHandler() {
+		bus.addHandler(Events.NEW_VERSION_AVAILABLE, new ApplicationLifecycleHandler() {
 			
 			@Override
 			public void newVersionAvailable() {

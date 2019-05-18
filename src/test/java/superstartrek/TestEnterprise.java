@@ -32,7 +32,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void testDamageTorpedos() {
 		MessageHandler handler = mock(MessageHandler.class);
-		bus.register(Events.MESSAGE_POSTED, handler);
+		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
 		enterprise.damageTorpedos();
 
@@ -43,7 +43,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void testDamagePhasers() {
 		MessageHandler handler = mock(MessageHandler.class);
-		bus.register(Events.MESSAGE_POSTED, handler);
+		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
 		enterprise.damagePhasers();
 		assertTrue(enterprise.getPhasers().isEnabled());
@@ -63,7 +63,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void testDamageImpulse() {
 		MessageHandler handler = mock(MessageHandler.class);
-		bus.register(Events.MESSAGE_POSTED, handler);
+		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
 		enterprise.damageImpulse();
 		assertTrue(enterprise.getImpulse().isEnabled());
@@ -87,7 +87,7 @@ public class TestEnterprise extends BaseTest {
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
-		bus.register(Events.THING_MOVED, new ThingMovedHandler() {
+		bus.addHandler(Events.THING_MOVED, new ThingMovedHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
@@ -126,7 +126,7 @@ public class TestEnterprise extends BaseTest {
 		Quadrant targetQuadrant = starMap.getQuadrant(3, 4);
 		starMap.setQuadrant(targetQuadrant);
 
-		bus.register(Events.AFTER_ENTERPRISE_WARPED, new EnterpriseWarpedHandler() {
+		bus.addHandler(Events.AFTER_ENTERPRISE_WARPED, new EnterpriseWarpedHandler() {
 
 			@Override
 			public void onEnterpriseWarped(Enterprise e, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
@@ -158,7 +158,7 @@ public class TestEnterprise extends BaseTest {
 
 		FireHandler handler = mock(FireHandler.class);
 
-		bus.register(Events.BEFORE_FIRE, handler);
+		bus.addHandler(Events.BEFORE_FIRE, handler);
 
 		assertEquals(100, klingon.getShields().getValue(), 0.1);
 		enterprise.firePhasersAt(klingon.getLocation(), false);
@@ -187,8 +187,8 @@ public class TestEnterprise extends BaseTest {
 
 		FireHandler handler = mock(FireHandler.class);
 
-		bus.register(Events.BEFORE_FIRE, handler);
-		bus.register(Events.AFTER_FIRE, handler);
+		bus.addHandler(Events.BEFORE_FIRE, handler);
+		bus.addHandler(Events.AFTER_FIRE, handler);
 
 		assertEquals(100, klingon.getShields().getValue(), 0.1);
 		enterprise.fireTorpedosAt(klingon.getLocation());
@@ -267,7 +267,7 @@ public class TestEnterprise extends BaseTest {
 		klingon.uncloak();
 		enterprise.setLocation(Location.location(4, 4));
 		quadrant.getKlingons().add(klingon);
-		bus.register(Events.BEFORE_FIRE, new FireHandler() {
+		bus.addHandler(Events.BEFORE_FIRE, new FireHandler() {
 
 			@Override
 			public void onFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
@@ -277,7 +277,7 @@ public class TestEnterprise extends BaseTest {
 				assertEquals(21, damage, 1);
 			}
 		});
-		bus.register(Events.AFTER_FIRE, new FireHandler() {
+		bus.addHandler(Events.AFTER_FIRE, new FireHandler() {
 
 			@Override
 			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
