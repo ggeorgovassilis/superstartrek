@@ -40,9 +40,9 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		this.scoreKeeper = scoreKeeper;
 		bus.register(Events.GAME_STARTED, this);
 		bus.register(Events.GAME_OVER, this);
-		events.addHandler(TurnStartedEvent.TYPE, this);
-		events.addHandler(TurnEndedEvent.TYPE, this);
-		events.addHandler(KlingonTurnStartedEvent.TYPE, this);
+		bus.register(Events.TURN_STARTED, this);
+		bus.register(Events.TURN_ENDED, this);
+		bus.register(Events.KLINGON_TURN_STARTED, this);
 		bus.register(Events.AFTER_FIRE, this);
 		bus.register(Events.ENTERPRISE_REPAIRED, this);
 		bus.register(Events.THING_MOVED, this);
@@ -124,7 +124,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	public void startTurn() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_DAY);
 		application.starMap.advanceStarDate(1);
-		events.fireEvent(new TurnStartedEvent());
+		bus.invoke(Events.TURN_STARTED, (Callback<GamePhaseHandler>)(h)->h.onTurnStarted());
 		bus.invoke(Events.AFTER_TURN_STARTED, (Callback<GamePhaseHandler>)(h)->h.afterTurnStarted());
 	}
 
@@ -144,8 +144,8 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	public void endTurn() {
-		events.fireEvent(new TurnEndedEvent());
-		events.fireEvent(new KlingonTurnStartedEvent());
+		bus.invoke(Events.TURN_ENDED, (Callback<GamePhaseHandler>)(h)->h.onTurnEnded());
+		bus.invoke(Events.KLINGON_TURN_STARTED, (Callback<GamePhaseHandler>)(h)->h.onKlingonTurnStarted());
 		bus.invoke(Events.KLINGON_TURN_ENDED, (Callback<GamePhaseHandler>)(h)->h.onKlingonTurnEnded());
 		// release resources so that it can be (hopefully) garbage collected; at this
 		// point, everyone who needs resources should have them

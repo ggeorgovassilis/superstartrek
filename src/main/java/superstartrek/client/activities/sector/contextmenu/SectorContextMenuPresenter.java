@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -17,7 +16,6 @@ import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
-import superstartrek.client.control.TurnEndedEvent;
 
 public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView>
 		implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String>, ContextMenuHideHandler, KeyPressedEventHandler {
@@ -29,9 +27,9 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	public SectorContextMenuPresenter(Application application) {
 		super(application);
 		addHandler(Events.SECTOR_SELECTED, this);
-		addHandler(TurnEndedEvent.TYPE, this);
+		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.CONTEXT_MENU_HIDE, this);
-		addHandler(KeyPressedEvent.TYPE, this);
+		addHandler(Events.KEY_PRESSED, this);
 		application.browserAPI.addHistoryListener(this);
 
 		buttonsEnabled.put("cmd_navigate", false);
@@ -116,7 +114,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	@Override
-	public void onTurnEnded(TurnEndedEvent evt) {
+	public void onTurnEnded() {
 		hideMenu(null);
 	}
 
@@ -132,10 +130,10 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	@Override
-	public void onKeyPressed(KeyPressedEvent event) {
+	public void onKeyPressed(int code) {
 		if (!view.isVisible())
 			return;
-		switch (event.code) {
+		switch (code) {
 		case 'n':
 		case 'N':
 			onCommandClicked("cmd_navigate");

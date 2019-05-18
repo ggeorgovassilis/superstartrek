@@ -11,11 +11,8 @@ import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameController;
-import superstartrek.client.control.KlingonTurnStartedEvent;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
-import superstartrek.client.control.TurnEndedEvent;
-import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Star.StarClass;
@@ -36,10 +33,10 @@ public class TestGameController extends BaseTest {
 	public void test_that_turn_ends_after_enterprise_fires() {
 		bus.invoke(Events.AFTER_FIRE, (Callback<FireHandler>) (h) -> h.afterFire(quadrant, enterprise,
 				new Klingon(ShipClass.BirdOfPrey), "Phaser", 1, false));
-		assertEquals(1, events.getFiredCount(TurnEndedEvent.TYPE));
-		assertEquals(1, events.getFiredCount(KlingonTurnStartedEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
+		assertEquals(1, bus.getFiredCount(Events.KLINGON_TURN_STARTED));
 		assertEquals(1, bus.getFiredCount(Events.KLINGON_TURN_ENDED));
-		assertEquals(1, events.getFiredCount(TurnStartedEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.TURN_STARTED));
 	}
 
 	@Test
@@ -62,13 +59,13 @@ public class TestGameController extends BaseTest {
 		enterprise.getShields().setValue(0);
 		bus.invoke(Events.ENTERPRISE_REPAIRED,
 				(Callback<EnterpriseRepairedHandler>) (h) -> h.onEnterpriseRepaired(enterprise));
-		assertEquals(1, events.getFiredCount(TurnEndedEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
 	}
 
 	@Test
 	public void test_that_turn_ends_after_enterprise_moves() {
 		bus.invoke(Events.THING_MOVED, (Callback<ThingMovedHandler>) (h) -> h.thingMoved(enterprise, quadrant, enterprise.getLocation(), quadrant, Location.location(4, 4)));
-		assertEquals(1, events.getFiredCount(TurnEndedEvent.TYPE));
+		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
 	}
 
 	@Test

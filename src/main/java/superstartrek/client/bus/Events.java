@@ -8,6 +8,7 @@ public class Events {
 	public final static String ENTERPRISE_DAMAGED = "ENTERPRISE_DAMAGED";
 	public final static String BEFORE_FIRE = "BEFORE_FIRE";
 	public final static String AFTER_FIRE = "AFTER_FIRE";
+	public final static String KLINGON_TURN_STARTED = "KLINGON_TURN_STARTED";
 	public final static String KLINGON_CLOAKED = "KLINGON_CLOAKED";
 	public final static String KLINGON_UNCLOAKED = "KLINGON_UNCLOAKED";
 	public final static String SHOW_COMPUTER = "SHOW_COMPUTER";
@@ -28,4 +29,7 @@ public class Events {
 	public final static String GAME_RESTART = "GAME_RESTART";
 	public final static String TURN_YIELDED = "TURN_YIELDED";
 	public final static String GAME_STARTED = "GAME_STARTED";
+	public final static String KEY_PRESSED = "KEY_PRESSED";
+	public final static String TURN_ENDED = "TURN_ENDED";
+	public final static String TURN_STARTED = "TURN_STARTED";
 }

@@ -1,7 +1,5 @@
 package superstartrek.client.activities.loading;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.bus.Events;

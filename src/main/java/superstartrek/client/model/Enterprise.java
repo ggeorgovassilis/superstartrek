@@ -14,8 +14,6 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.TurnEndedEvent;
-import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
@@ -78,9 +76,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");
-		EventBus events = application.events;
-		handlers.add(events.addHandler(TurnStartedEvent.TYPE, this));
-		handlers.add(events.addHandler(TurnEndedEvent.TYPE, this));
+		application.bus.register(Events.TURN_STARTED, this);
+		application.bus.register(Events.TURN_ENDED, this);
 		application.bus.register(Events.GAME_RESTART, this);
 		application.bus.register(Events.BEFORE_FIRE, this);
 	}
@@ -465,7 +462,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	@Override
-	public void onTurnStarted(TurnStartedEvent evt) {
+	public void onTurnStarted() {
 		phasers.reset();
 		reactor.reset();
 		shields.reset();
@@ -491,7 +488,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler 
 	}
 
 	@Override
-	public void onTurnEnded(TurnEndedEvent evt) {
+	public void onTurnEnded() {
 		turnsSinceWarp++;
 	}
 

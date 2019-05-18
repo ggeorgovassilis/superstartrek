@@ -2,7 +2,6 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
@@ -55,7 +54,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		addHandler(Events.KLINGON_CLOAKED, this);
 		addHandler(Events.KLINGON_UNCLOAKED, this);
 		addHandler(Events.AFTER_TURN_STARTED, this);
-		addHandler(KeyPressedEvent.TYPE, this);
+		addHandler(Events.KEY_PRESSED, this);
 	}
 
 	@Override
@@ -193,11 +192,11 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void onKeyPressed(KeyPressedEvent event) {
+	public void onKeyPressed(int code) {
 		if (!view.isVisible())
 			return;
 		Location newSector = null;
-		switch (event.code) {
+		switch (code) {
 		case KeyCodes.KEY_LEFT:
 			newSector = Location.location(Math.max(0, selectedSector.getX() - 1), selectedSector.getY());
 			break;

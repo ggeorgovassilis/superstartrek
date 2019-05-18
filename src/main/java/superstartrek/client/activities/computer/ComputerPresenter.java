@@ -17,7 +17,6 @@ import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.ScoreKeeper;
-import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -41,13 +40,13 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		super(application);
 		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
-		application.bus.register(Events.SHOW_COMPUTER, this);
-		addHandler(TurnStartedEvent.TYPE, this);
+		addHandler(Events.SHOW_COMPUTER, this);
+		addHandler(Events.TURN_STARTED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
-		application.bus.register(Events.ENTERPRISE_DAMAGED, this);
-		application.bus.register(Events.ENTERPRISE_REPAIRED, this);
+		addHandler(Events.ENTERPRISE_DAMAGED, this);
+		addHandler(Events.ENTERPRISE_REPAIRED, this);
 		addHandler(Events.GAME_STARTED, this);
-		addHandler(KeyPressedEvent.TYPE, this);
+		addHandler(Events.KEY_PRESSED, this);
 	}
 
 	public void setEnterprise(Enterprise enterprise) {
@@ -158,7 +157,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void onTurnStarted(TurnStartedEvent evt) {
+	public void onTurnStarted() {
 		updateStarDateView();
 		updateShieldsView();
 		updateQuadrantHeaderView();
@@ -223,9 +222,9 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void onKeyPressed(KeyPressedEvent event) {
+	public void onKeyPressed(int code) {
 		GWT.log("computerpresenter.okp");
-		switch(event.code) {
+		switch(code) {
 		case 'l':
 		case 'L':
 			if (application.starMap.enterprise.getLrs().isEnabled())

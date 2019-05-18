@@ -2,7 +2,6 @@ package superstartrek.client.activities.klingons;
 
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -13,9 +12,9 @@ import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.activities.pwa.Callback;
+import superstartrek.client.bus.Bus;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.KlingonTurnStartedEvent;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -30,9 +29,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 
 	protected final Setting disruptor;
 	protected final Setting cloak;
-
-	private HandlerRegistration klingonTurnHandler;
-
+	protected boolean eventsRegistered = false; 
 	public final static int MAX_SECTOR_SPEED = 1;
 	public final static int DISRUPTOR_RANGE_SECTORS = 2;
 
@@ -66,8 +63,9 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		setSymbol(c.symbol);
 		setCss("klingon cloaked");
 		this.disruptor = new Setting("disruptor", c.disruptor);
-		Application.get().bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
-		Application.get().bus.register(Events.GAME_RESTART, this);
+		Bus bus = Application.get().bus;
+		bus.register(Events.AFTER_ENTERPRISE_WARPED, this);
+		bus.register(Events.GAME_RESTART, this);
 	}
 
 	/*
@@ -77,20 +75,22 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 	 */
 	public void registerActionHandlers() {
 		// already registered?
-		if (klingonTurnHandler != null)
+		if (eventsRegistered)
 			return;
-		EventBus events = Application.get().events;
-		Application.get().bus.register(Events.BEFORE_FIRE, this);
-		klingonTurnHandler = events.addHandler(KlingonTurnStartedEvent.TYPE, this);
+		Bus bus = Application.get().bus;
+		bus.register(Events.BEFORE_FIRE, this);
+		bus.register(Events.KLINGON_TURN_STARTED, this);
+		eventsRegistered = true;
 	}
 
 	public void unregisterActionHandlers() {
 		// not registered?
-		if (klingonTurnHandler == null)
+		if (!eventsRegistered)
 			return;
-		Application.get().bus.unregister(Events.BEFORE_FIRE, this);
-		klingonTurnHandler.removeHandler();
-		klingonTurnHandler = null;
+		Bus bus = Application.get().bus;
+		bus.unregister(Events.BEFORE_FIRE, this);
+		bus.unregister(Events.KLINGON_TURN_STARTED, this);
+		eventsRegistered = false;
 	}
 
 	public boolean canCloak() {

@@ -12,7 +12,6 @@ import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.ThingMovedHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.ScoreKeeper;
-import superstartrek.client.control.TurnStartedEvent;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarBase;
@@ -36,8 +35,7 @@ public class TestComputerPresenter extends BaseTest{
 	
 	@Test
 	public void testOnTurnStarted_1() {
-		TurnStartedEvent evt = new TurnStartedEvent();
-		presenter.onTurnStarted(evt);
+		presenter.onTurnStarted();
 
 		verify(view).setRepairButtonEnabled(false);
 		verify(view).setRepairButtonCss("has-repair");
@@ -52,8 +50,7 @@ public class TestComputerPresenter extends BaseTest{
 		enterprise.setLocation(Location.location(1, 1));
 		enterprise.getPhasers().damage(10);
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
-		TurnStartedEvent evt = new TurnStartedEvent();
-		presenter.onTurnStarted(evt);
+		presenter.onTurnStarted();
 
 		verify(view).setRepairButtonEnabled(true);
 		verify(view).setRepairButtonCss("has-dock");
