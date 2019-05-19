@@ -181,7 +181,6 @@ public class PWA {
 			} else {
 				log.info("Cache exists");
 				callback.onSuccess(null);
-				checkForNewVersion();
 			}
 		});
 	}

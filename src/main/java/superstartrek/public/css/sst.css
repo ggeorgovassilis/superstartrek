@@ -358,6 +358,10 @@ margin-bottom:0.5em;
 	color: red;
 }
 
+#messages-content>li.error{
+	color: red;
+}
+
 #messages-content>li.fire {
 	color: yellow;
 }

@@ -6,13 +6,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import com.google.gwt.event.shared.UmbrellaException;
 
 public class EventBus {
 
 	Map<Event<? extends BaseHandler>, List<? extends BaseHandler>> handlers = new HashMap<Event<? extends BaseHandler>, List<? extends BaseHandler>>();
-	
+	private static Logger log = Logger.getLogger("");
+
 	public <T extends BaseHandler> void addHandler(Event<T> type, T handler) {
 		@SuppressWarnings("unchecked")
 		List<T> list = (List<T>) handlers.get(type);

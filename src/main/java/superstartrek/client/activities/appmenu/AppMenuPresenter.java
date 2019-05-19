@@ -5,11 +5,12 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Setting;
 
 public class AppMenuPresenter extends BasePresenter<AppMenuView>
-		implements PopupViewPresenter<AppMenuView>, AppMenuHandler, ValueChangeHandler<String> {
+		implements PopupViewPresenter<AppMenuView>, AppMenuHandler, ValueChangeHandler<String>{
 
 	String gotoStateAfterMenuHidden;
 
@@ -17,6 +18,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 		super(application);
 		addHandler(Events.APP_MENU_SHOW, this);
 		application.browserAPI.addHistoryListener(this);
+		
 	}
 
 	public void updateCommands() {
@@ -86,4 +88,5 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	public void userWantsToDismissPopup() {
 		hideMenu();
 	}
+	
 }
