@@ -114,7 +114,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void message(String formattedMessage, String category) {
-		eventBus.fireEvent(Events.MESSAGE_POSTED, (h)->h.messagePosted(formattedMessage, category));
+		eventBus.fireEvent(Events.MESSAGE_POSTED, (h) -> h.messagePosted(formattedMessage, category));
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void restart() {
-		eventBus.fireEvent(Events.GAME_RESTART, (h)->h.beforeGameRestart());
+		eventBus.fireEvent(Events.GAME_RESTART, (h) -> h.beforeGameRestart());
 		startGame();
 	}
 
@@ -166,13 +166,14 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		setupGameController();
 		startGame();
 	}
-	
+
 	public void startGame() {
 		setupStarMap();
 		Timer.postpone(() -> {
 			starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
 			gameController.startGame();
-			// null out so that resources can be garbage collected
+			// null out so that resources can be garbage collected; by now everyone who
+			// needs them during initialisation has gotten them already
 			resources = null;
 		});
 	}
@@ -187,7 +188,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		eventBus.addHandler(Events.GAME_OVER, this);
 		eventBus.addHandler(Events.RELOAD_APP, this);
 	}
-	
+
 	@Override
 	public void onModuleLoad() {
 		Application.that = this;
@@ -207,10 +208,9 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		reload();
 	}
 
-
 	@Override
 	public void onKeyDown(KeyDownEvent event) {
-		eventBus.fireEvent(Events.KEY_PRESSED, (h)->h.onKeyPressed(event.getNativeKeyCode()));
+		eventBus.fireEvent(Events.KEY_PRESSED, (h) -> h.onKeyPressed(event.getNativeKeyCode()));
 	}
 
 }

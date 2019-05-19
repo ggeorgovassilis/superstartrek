@@ -19,6 +19,7 @@
 		<skip.deploy>true</skip.deploy>
 		<skip.gwt>false</skip.gwt>
 		<skip.ant-copy>false</skip.ant-copy>
+		<gwt.disableClassMetadata>false</gwt.disableClassMetadata>
 	</properties>
 
 	<scm>
@@ -84,6 +85,7 @@
 				<gwt.saveSource>false</gwt.saveSource>
 				<gwt.style>OBFUSCATED</gwt.style>
 				<skip.deploy>false</skip.deploy>
+				<gwt.disableClassMetadata>true</gwt.disableClassMetadata>
 			</properties>
 			<build>
 				<plugins>
@@ -226,6 +228,7 @@
 					<methodNameDisplayMode>${gwt.methodNameDisplayMode}</methodNameDisplayMode>
 					<saveSource>${gwt.saveSource}</saveSource>
 					<style>${gwt.style}</style>
+					<disableClassMetadata>${gwt.disableClassMetadata}</disableClassMetadata>
 					<skip>${skip.gwt}</skip>
 				</configuration>
 			</plugin>
