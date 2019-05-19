@@ -5,8 +5,8 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.bus.Events;
 
-public class MessagesPresenter extends BasePresenter<MessagesView>
-		implements MessageHandler, PopupViewPresenter<MessagesView> {
+public class MessagesPresenter extends BasePresenter<IMessagesView>
+		implements MessageHandler, PopupViewPresenter<IMessagesView> {
 
 	public MessagesPresenter(Application application) {
 		super(application);

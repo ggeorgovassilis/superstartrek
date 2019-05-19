@@ -6,7 +6,7 @@ import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.PopupView;
 import superstartrek.client.utils.HtmlWidget;
 
-public class MessagesView extends PopupView<MessagesPresenter> {
+public class MessagesView extends PopupView<MessagesPresenter> implements IMessagesView {
 
 	Element eContent;
 	Element eButton;
@@ -28,10 +28,12 @@ public class MessagesView extends PopupView<MessagesPresenter> {
 		super(presenter);
 	}
 
+	@Override
 	public void clear() {
 		eContent.setInnerHTML("");
 	}
 
+	@Override
 	public void showMessage(String formattedMessage, String category) {
 		Element line = DOM.createElement("li");
 		line.setInnerHTML(formattedMessage);

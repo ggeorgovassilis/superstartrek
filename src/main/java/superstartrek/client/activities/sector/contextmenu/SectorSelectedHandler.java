@@ -6,5 +6,5 @@ import superstartrek.client.model.Quadrant;
 
 public interface SectorSelectedHandler extends BaseHandler{
 
-	void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screen);
+	void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screenY);
 }

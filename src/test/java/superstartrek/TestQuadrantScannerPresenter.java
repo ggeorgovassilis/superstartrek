@@ -9,12 +9,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gwt.event.dom.client.KeyCodes;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.quadrantscanner.IQuadrantScannerView;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
+import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
+import superstartrek.client.bus.Events;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
@@ -103,5 +107,27 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		verify(view).updateSector(2, 2, "", "");
 	}
 	
+	@Test
+	public void test_onSectorSelected() {
+		SectorSelectedHandler handler = mock(SectorSelectedHandler.class);
+		bus.addHandler(Events.SECTOR_SELECTED, handler);
+		presenter.onSectorSelected(1, 2, 100, 200);
+		verify(handler).onSectorSelected(Location.location(1, 2), quadrant, 100, 200);
+	}
 
+	@Test
+	public void test_onKeyPress() {
+		SectorSelectedHandler handler = mock(SectorSelectedHandler.class);
+		bus.addHandler(Events.SECTOR_SELECTED, handler);
+		
+		when(view.isVisible()).thenReturn(true);
+		when(view.getHorizontalOffsetOfSector(2, 1)).thenReturn(200);
+		when(view.getVerticalOffsetOfSector(2, 1)).thenReturn(100);
+
+		presenter.onKeyPressed(KeyCodes.KEY_RIGHT);
+		presenter.onKeyPressed(KeyCodes.KEY_RIGHT);
+		presenter.onKeyPressed(KeyCodes.KEY_DOWN);
+		presenter.onKeyPressed('m');
+		verify(handler).onSectorSelected(Location.location(2, 1), quadrant, 200, 100);
+	}
 }
