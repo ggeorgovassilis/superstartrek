@@ -3,8 +3,8 @@ package superstartrek.client.activities.klingons;
 import java.util.List;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireHandler;
-import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
+import superstartrek.client.activities.combat.CombatHandler;
+import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.bus.EventBus;
@@ -20,7 +20,7 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.BrowserAPI;
 
-public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, EnterpriseWarpedHandler {
+public class Klingon extends Vessel implements CombatHandler, GamePhaseHandler, NavigationHandler {
 
 	protected final Setting disruptor;
 	protected final Setting cloak;
@@ -227,7 +227,7 @@ public class Klingon extends Vessel implements FireHandler, GamePhaseHandler, En
 		app.message(getName() + " was destroyed", "klingon-destroyed");
 		super.destroy();
 		app.eventBus.fireEvent(Events.KLINGON_DESTROYED,
-				(h) -> h.onKlingonDestroyed(Klingon.this));
+				(h) -> h.onVesselDestroyed(Klingon.this));
 	}
 
 	public void repair() {

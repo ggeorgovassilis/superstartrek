@@ -7,10 +7,8 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
-import superstartrek.client.activities.combat.EnterpriseDamagedHandler;
-import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
@@ -27,8 +25,8 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
-		implements ComputerHandler, GamePhaseHandler, FireHandler, KlingonDestroyedHandler, ValueChangeHandler<String>,
-		EnterpriseDamagedHandler, EnterpriseRepairedHandler, KeyPressedEventHandler {
+		implements ComputerHandler, GamePhaseHandler, CombatHandler, ValueChangeHandler<String>,
+		EnterpriseRepairedHandler, KeyPressedEventHandler {
 
 	ScoreKeeper scoreKeeper;
 	boolean repairButtonDocksAtStarbase = false;
@@ -180,7 +178,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void onKlingonDestroyed(Klingon klingon) {
+	public void onVesselDestroyed(Vessel vessel) {
 		updateQuadrantHeaderView();
 	}
 
@@ -222,7 +220,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	@Override
 	public void onKeyPressed(int code) {
-		GWT.log("computerpresenter.okp");
 		switch(code) {
 		case 'l':
 		case 'L':

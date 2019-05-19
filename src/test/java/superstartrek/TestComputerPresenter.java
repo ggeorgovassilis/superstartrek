@@ -9,7 +9,7 @@ import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.IComputerScreen;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
-import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.model.Location;
@@ -69,7 +69,7 @@ public class TestComputerPresenter extends BaseTest{
 		enterprise.getImpulse().damage(1);
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
 
-		bus.addHandler(Events.THING_MOVED, new ThingMovedHandler() {
+		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {

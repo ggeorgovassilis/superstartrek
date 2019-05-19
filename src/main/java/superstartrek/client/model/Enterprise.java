@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.utils.BrowserAPI;
 
-public class Enterprise extends Vessel implements GamePhaseHandler, FireHandler {
+public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandler {
 
 	public final static double PHASER_RANGE = 3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;

@@ -5,12 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.mockito.AdditionalMatchers;
 
-import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler;
-import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
-import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -87,7 +86,7 @@ public class TestEnterprise extends BaseTest {
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
-		bus.addHandler(Events.THING_MOVED, new ThingMovedHandler() {
+		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
 
 			@Override
 			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
@@ -126,7 +125,7 @@ public class TestEnterprise extends BaseTest {
 		Quadrant targetQuadrant = starMap.getQuadrant(3, 4);
 		starMap.setQuadrant(targetQuadrant);
 
-		bus.addHandler(Events.AFTER_ENTERPRISE_WARPED, new EnterpriseWarpedHandler() {
+		bus.addHandler(Events.AFTER_ENTERPRISE_WARPED, new NavigationHandler() {
 
 			@Override
 			public void onEnterpriseWarped(Enterprise e, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
@@ -156,7 +155,7 @@ public class TestEnterprise extends BaseTest {
 		klingon.registerActionHandlers();
 		klingon.uncloak();
 
-		FireHandler handler = mock(FireHandler.class);
+		CombatHandler handler = mock(CombatHandler.class);
 
 		bus.addHandler(Events.BEFORE_FIRE, handler);
 
@@ -185,7 +184,7 @@ public class TestEnterprise extends BaseTest {
 		klingon.registerActionHandlers();
 		klingon.uncloak();
 
-		FireHandler handler = mock(FireHandler.class);
+		CombatHandler handler = mock(CombatHandler.class);
 
 		bus.addHandler(Events.BEFORE_FIRE, handler);
 		bus.addHandler(Events.AFTER_FIRE, handler);
@@ -267,7 +266,7 @@ public class TestEnterprise extends BaseTest {
 		klingon.uncloak();
 		enterprise.setLocation(Location.location(4, 4));
 		quadrant.getKlingons().add(klingon);
-		bus.addHandler(Events.BEFORE_FIRE, new FireHandler() {
+		bus.addHandler(Events.BEFORE_FIRE, new CombatHandler() {
 
 			@Override
 			public void onFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
@@ -277,7 +276,7 @@ public class TestEnterprise extends BaseTest {
 				assertEquals(21, damage, 1);
 			}
 		});
-		bus.addHandler(Events.AFTER_FIRE, new FireHandler() {
+		bus.addHandler(Events.AFTER_FIRE, new CombatHandler() {
 
 			@Override
 			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,

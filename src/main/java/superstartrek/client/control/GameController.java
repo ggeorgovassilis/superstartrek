@@ -1,15 +1,15 @@
 package superstartrek.client.control;
 
+import com.google.gwt.core.shared.GWT;
+
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler;
-import superstartrek.client.activities.navigation.EnterpriseDockedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
-import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
@@ -20,8 +20,8 @@ import superstartrek.client.model.StarBase;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
-public class GameController implements GamePhaseHandler, FireHandler, EnterpriseRepairedHandler, ThingMovedHandler,
-		KlingonDestroyedHandler, MessageHandler, EnergyConsumptionHandler, EnterpriseDockedHandler {
+public class GameController implements GamePhaseHandler, CombatHandler, EnterpriseRepairedHandler, NavigationHandler,
+		MessageHandler, EnergyConsumptionHandler{
 
 	Application application;
 	EventBus events;
@@ -49,6 +49,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 		eventBus.addHandler(Events.CONSUME_ENERGY, this);
 		eventBus.addHandler(Events.ENTERPRISE_DOCKED, this);
 		eventBus.addHandler(Events.GAME_RESTART, this);
+		eventBus.addHandler(Events.ENTERPRISE_DAMAGED, this);
 	}
 
 	public ScoreKeeper getScoreKeeper() {
@@ -83,8 +84,10 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	@Override
-	public void onKlingonDestroyed(Klingon klingon) {
-
+	public void onVesselDestroyed(Vessel vessel) {
+		if (!Klingon.is(vessel))
+			return;
+		Klingon klingon = Klingon.as(vessel);
 		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
 				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
 		if (!application.starMap.hasKlingons())
@@ -165,6 +168,7 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 	}
 
 	public void gameOver(GameOutcome outcome, String reason) {
+		gameIsRunning=false;
 		if (outcome == GameOutcome.won)
 			eventBus.fireEvent(Events.GAME_OVER, (h)->h.gameWon());
 		if (outcome == GameOutcome.lost)
@@ -177,9 +181,15 @@ public class GameController implements GamePhaseHandler, FireHandler, Enterprise
 			Enterprise enterprise = consumer.as();
 			if (enterprise.getAntimatter().getValue() <= 0) {
 				application.message("We run out of anti matter");
-				gameOver(GameOutcome.lost, "We run out of anti matter");
+				gameOver(GameOutcome.lost, "We run out of anti matter.");
 			}
 		}
+	}
+	
+	@Override
+	public void onEnterpriseDamaged(Enterprise enterprise) {
+		if (enterprise.getShields().getValue()<=0)
+			gameOver(GameOutcome.lost, "The Enterprise was destroyed.");
 	}
 
 	@Override

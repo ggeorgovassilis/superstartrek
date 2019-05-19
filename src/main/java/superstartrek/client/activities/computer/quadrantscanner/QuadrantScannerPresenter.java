@@ -6,13 +6,11 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
-import superstartrek.client.activities.combat.FireHandler;
+import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.KlingonDestroyedHandler;
 import superstartrek.client.activities.klingons.KlingonCloakingHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
-import superstartrek.client.activities.navigation.EnterpriseWarpedHandler;
-import superstartrek.client.activities.navigation.ThingMovedHandler;
+import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.bus.Events;
@@ -26,8 +24,8 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
-		implements SectorSelectedHandler, GamePhaseHandler, ThingMovedHandler, EnterpriseWarpedHandler, FireHandler,
-		EnterpriseRepairedHandler, KlingonCloakingHandler, KlingonDestroyedHandler, KeyPressedEventHandler {
+		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler,
+		EnterpriseRepairedHandler, KlingonCloakingHandler, KeyPressedEventHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
 	Location selectedSector = Location.location(0, 0);
@@ -159,8 +157,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void onKlingonDestroyed(Klingon klingon) {
-		clearSector(klingon.getLocation().getX(), klingon.getLocation().getY());
+	public void onVesselDestroyed(Vessel vessel) {
+		clearSector(vessel.getLocation().getX(), vessel.getLocation().getY());
 	}
 
 	@Override
