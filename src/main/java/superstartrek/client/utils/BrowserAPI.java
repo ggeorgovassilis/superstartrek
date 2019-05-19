@@ -1,5 +1,7 @@
 package superstartrek.client.utils;
 
+import java.util.Set;
+
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -20,4 +22,6 @@ public interface BrowserAPI {
 	Void confirm(String message, Callback<Boolean> answer);
 	Void reloadApplication();
 	String getParameter(String param);
+	Set<String> getFlags();
+
 }

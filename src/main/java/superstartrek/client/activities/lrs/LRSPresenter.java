@@ -42,7 +42,6 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 	}
 
 	public void updateLrsView() {
-
 		StarMap starMap = application.starMap;
 		Enterprise enterprise = starMap.enterprise;
 		Quadrant qEnterprise = enterprise.getQuadrant();

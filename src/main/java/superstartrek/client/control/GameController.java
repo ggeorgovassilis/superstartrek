@@ -1,7 +1,5 @@
 package superstartrek.client.control;
 
-import com.google.gwt.core.shared.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
@@ -11,7 +9,7 @@ import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
-import superstartrek.client.bus.Events;
+import static superstartrek.client.bus.Events.*;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -19,37 +17,47 @@ import superstartrek.client.model.Star;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.utils.BaseMixin;
 
 public class GameController implements GamePhaseHandler, CombatHandler, EnterpriseRepairedHandler, NavigationHandler,
-		MessageHandler, EnergyConsumptionHandler{
+		MessageHandler, EnergyConsumptionHandler, BaseMixin{
 
 	Application application;
 	EventBus events;
-	EventBus eventBus;
 	boolean gameIsRunning = true;
 	boolean startTurnPending = false;
 	boolean endTurnPending = false;
 	ScoreKeeper scoreKeeper;
-
+	
+	@Override
+	public Application getApplication() {
+		return application;
+	}
+	
+	@Override
+	public EventBus getEvents() {
+		return events;
+	}
+	
 	public GameController(Application application, ScoreKeeper scoreKeeper) {
 		this.application = application;
-		eventBus = application.eventBus;
+		events = application.eventBus;
 		this.scoreKeeper = scoreKeeper;
-		eventBus.addHandler(Events.GAME_STARTED, this);
-		eventBus.addHandler(Events.GAME_OVER, this);
-		eventBus.addHandler(Events.TURN_STARTED, this);
-		eventBus.addHandler(Events.TURN_ENDED, this);
-		eventBus.addHandler(Events.KLINGON_TURN_STARTED, this);
-		eventBus.addHandler(Events.AFTER_FIRE, this);
-		eventBus.addHandler(Events.ENTERPRISE_REPAIRED, this);
-		eventBus.addHandler(Events.THING_MOVED, this);
-		eventBus.addHandler(Events.KLINGON_DESTROYED, this);
-		eventBus.addHandler(Events.MESSAGE_READ, this);
-		eventBus.addHandler(Events.TURN_YIELDED, this);
-		eventBus.addHandler(Events.CONSUME_ENERGY, this);
-		eventBus.addHandler(Events.ENTERPRISE_DOCKED, this);
-		eventBus.addHandler(Events.GAME_RESTART, this);
-		eventBus.addHandler(Events.ENTERPRISE_DAMAGED, this);
+		addHandler(GAME_STARTED, this);
+		addHandler(GAME_OVER, this);
+		addHandler(TURN_STARTED, this);
+		addHandler(TURN_ENDED, this);
+		addHandler(KLINGON_TURN_STARTED, this);
+		addHandler(AFTER_FIRE, this);
+		addHandler(ENTERPRISE_REPAIRED, this);
+		addHandler(THING_MOVED, this);
+		addHandler(KLINGON_DESTROYED, this);
+		addHandler(MESSAGE_READ, this);
+		addHandler(TURN_YIELDED, this);
+		addHandler(CONSUME_ENERGY, this);
+		addHandler(ENTERPRISE_DOCKED, this);
+		addHandler(GAME_RESTART, this);
+		addHandler(ENTERPRISE_DAMAGED, this);
 	}
 
 	public ScoreKeeper getScoreKeeper() {
@@ -65,7 +73,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 
 		} else if (Star.is(target)) {
 			Star star = target.as();
-			application.message(weapon + " hit " + star.getName() + " at " + star.getLocation());
+			message(weapon + " hit " + star.getName() + " at " + star.getLocation());
 		}
 		if (actor == application.starMap.enterprise && !wasAutoFire)
 			endTurnAfterThis();
@@ -91,25 +99,25 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
 				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
 		if (!application.starMap.hasKlingons())
-			eventBus.fireEvent(Events.GAME_OVER, (h)->h.gameWon());
+			fireEvent(GAME_OVER, (h)->h.gameWon());
 	}
 
 	@Override
 	public void gameOver() {
-		application.message("Game over.");
+		message("Game over.");
 		gameIsRunning = false;
 	}
 
 	@Override
 	public void gameWon() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_GAME_WON);
-		application.message("Congratulations, all Klingons were destroyed.", "gamewon");
+		message("Congratulations, all Klingons were destroyed.", "gamewon");
 	}
 
 	@Override
 	public void gameLost() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_ENTERPRISE_DESTROYED);
-		application.message("The Enterprise was destroyed.", "gameover");
+		message("The Enterprise was destroyed.", "gameover");
 	}
 
 	@Override
@@ -124,8 +132,8 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 	public void startTurn() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_DAY);
 		application.starMap.advanceStarDate(1);
-		eventBus.fireEvent(Events.TURN_STARTED, (h)->h.onTurnStarted());
-		eventBus.fireEvent(Events.AFTER_TURN_STARTED, (h)->h.afterTurnStarted());
+		fireEvent(TURN_STARTED, (h)->h.onTurnStarted());
+		fireEvent(AFTER_TURN_STARTED, (h)->h.afterTurnStarted());
 	}
 
 	public void startTurnAfterThis() {
@@ -140,13 +148,13 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 
 	public void startGame() {
 		application.browserAPI.postHistoryChange("intro", true);
-		eventBus.fireEvent(Events.GAME_STARTED, (h)->h.onGameStarted(application.starMap));
+		fireEvent(GAME_STARTED, (h)->h.onGameStarted(application.starMap));
 	}
 
 	public void endTurn() {
-		eventBus.fireEvent(Events.TURN_ENDED, (h)->h.onTurnEnded());
-		eventBus.fireEvent(Events.KLINGON_TURN_STARTED, (h)->h.onKlingonTurnStarted());
-		eventBus.fireEvent(Events.KLINGON_TURN_ENDED, (h)->h.onKlingonTurnEnded());
+		fireEvent(TURN_ENDED, (h)->h.onTurnEnded());
+		fireEvent(KLINGON_TURN_STARTED, (h)->h.onKlingonTurnStarted());
+		fireEvent(KLINGON_TURN_ENDED, (h)->h.onKlingonTurnEnded());
 		// release resources so that it can be (hopefully) garbage collected; at this
 		// point, everyone who needs resources should have them
 	}
@@ -170,9 +178,9 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 	public void gameOver(GameOutcome outcome, String reason) {
 		gameIsRunning=false;
 		if (outcome == GameOutcome.won)
-			eventBus.fireEvent(Events.GAME_OVER, (h)->h.gameWon());
+			fireEvent(GAME_OVER, (h)->h.gameWon());
 		if (outcome == GameOutcome.lost)
-			eventBus.fireEvent(Events.GAME_OVER, (h)->h.gameLost());
+			fireEvent(GAME_OVER, (h)->h.gameLost());
 	}
 
 	@Override
@@ -180,7 +188,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		if (Enterprise.is(consumer)) {
 			Enterprise enterprise = consumer.as();
 			if (enterprise.getAntimatter().getValue() <= 0) {
-				application.message("We run out of anti matter");
+				message("We run out of anti matter");
 				gameOver(GameOutcome.lost, "We run out of anti matter.");
 			}
 		}

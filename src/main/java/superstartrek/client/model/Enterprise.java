@@ -8,16 +8,16 @@ import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 
-public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandler {
+public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandler, BaseMixin {
 
 	public final static double PHASER_RANGE = 3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
 	public final static double IMPULSE_CONSUMPTION = 5;
 
 	Application application;
-	superstartrek.client.bus.EventBus eventBus;
 	StarMap starMap;
 	Setting phasers = new Setting("phasers", 30);
 	Setting torpedos = new Setting("torpedos", 10);
@@ -65,11 +65,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		setName("NCC 1701 USS Enterprise");
 		setSymbol("O=Ξ");
 		setCss("enterprise");
-		eventBus = application.eventBus;
-		eventBus.addHandler(Events.TURN_STARTED, this);
-		eventBus.addHandler(Events.TURN_ENDED, this);
-		eventBus.addHandler(Events.GAME_RESTART, this);
-		eventBus.addHandler(Events.BEFORE_FIRE, this);
+		addHandler(Events.TURN_STARTED, this);
+		addHandler(Events.TURN_ENDED, this);
+		addHandler(Events.GAME_RESTART, this);
+		addHandler(Events.BEFORE_FIRE, this);
 	}
 
 	public Setting getAntimatter() {
@@ -111,11 +110,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
 		Quadrant qFrom = getQuadrant();
-		eventBus.fireEvent(Events.AFTER_ENTERPRISE_WARPED, (h) -> h
-				.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
+		fireEvent(Events.AFTER_ENTERPRISE_WARPED,
+				(h) -> h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
 
-		eventBus.fireEvent(Events.THING_MOVED,
-				(h) -> h.thingMoved(Enterprise.this, qFrom, oldLocation, dropQuadrant, freeSpot));
+		fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(Enterprise.this, qFrom, oldLocation, dropQuadrant, freeSpot));
 		turnsSinceWarp = 0;
 		return true;
 	}
@@ -134,8 +132,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		int maxX = (int) Math.min(7, lx + range);
 		int minY = (int) Math.max(0, ly - range);
 		int maxY = (int) Math.min(7, ly + range);
-		StarMap map = application.starMap;
-		QuadrantIndex index = new QuadrantIndex(getQuadrant(), map);
+		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
 		final int NOT_REACHABLE = -1;
 		final int REACHABLE = 1;
 		final int UNKNOWN = 0;
@@ -168,12 +165,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void moveToIgnoringConstraints(Location loc) {
 		Location oldLoc = getLocation();
 		setLocation(loc);
-		eventBus.fireEvent(Events.THING_MOVED, (h)->h.thingMoved(Enterprise.this, getQuadrant(), oldLoc, getQuadrant(), loc));
+		fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(Enterprise.this, getQuadrant(), oldLoc, getQuadrant(), loc));
 	}
 
 	public void navigateTo(Location loc) {
-		Application app = application;
-		StarMap map = app.starMap;
 		if (!canNavigateTo(loc)) {
 			// TODO: this should never be the case; navigation constraints are already
 			// checked. This assumes that cloaked klingons are "reachable"
@@ -182,13 +177,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		double distance = StarMap.distance(this.getLocation(), loc);
 		Location[] trace = new Location[] { getLocation() };
-		QuadrantIndex index = new QuadrantIndex(quadrant, map);
-		map.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
+		QuadrantIndex index = new QuadrantIndex(quadrant, starMap);
+		starMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
 			Thing thing = index.findThingAt(x, y);
-			if (thing != null && thing != app.starMap.enterprise) {
-				if (Klingon.isCloakedKlingon(thing)) {
+			if (thing != null && thing != Enterprise.this) {
+				if (Klingon.isCloakedKlingon(thing))
 					((Klingon) thing).uncloak();
-				}
 				return false;
 			}
 			trace[0] = Location.location(x, y);
@@ -196,7 +190,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		});
 		Location drop = trace[0];
 		if (!consume("impulse", computeConsumptionForImpulseNavigation(distance))) {
-			app.message("Insufficient reactor output");
+			message("Insufficient reactor output");
 			return;
 		}
 
@@ -250,10 +244,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		Thing eventTarget = target;
 		double eventDamage = damage;
-		eventBus.fireEvent(Events.BEFORE_FIRE, (h) -> h.onFire(quadrant, Enterprise.this,
-				eventTarget, "torpedos", eventDamage, false));
-		eventBus.fireEvent(Events.AFTER_FIRE, (h) -> h.afterFire(quadrant, Enterprise.this,
-				eventTarget, "torpedos", eventDamage, false));
+		fireEvent(Events.BEFORE_FIRE,
+				(h) -> h.onFire(quadrant, Enterprise.this, eventTarget, "torpedos", eventDamage, false));
+		fireEvent(Events.AFTER_FIRE,
+				(h) -> h.afterFire(quadrant, Enterprise.this, eventTarget, "torpedos", eventDamage, false));
 		if (target == null)
 			application.message("Torpedo exploded in the void");
 	}
@@ -299,15 +293,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		double distance = StarMap.distance(this, thing);
 		double damage = phasers.getValue() / distance;
 		phasers.setValue(0);
-		eventBus.fireEvent(Events.BEFORE_FIRE, (h) -> h.onFire(getQuadrant(),
-				Enterprise.this, klingon, "phasers", damage, isAutoAim));
-		eventBus.fireEvent(Events.AFTER_FIRE, (h) -> h.afterFire(getQuadrant(),
-				Enterprise.this, klingon, "phasers", damage, isAutoAim));
+		fireEvent(Events.BEFORE_FIRE,
+				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, "phasers", damage, isAutoAim));
+		fireEvent(Events.AFTER_FIRE,
+				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, "phasers", damage, isAutoAim));
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
-		eventBus.fireEvent(Events.ENTERPRISE_DOCKED,
-				(h) -> h.onEnterpriseDocked(Enterprise.this, starBase));
+		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase));
 		phasers.repair();
 		torpedos.repair();
 		impulse.repair();
@@ -315,8 +308,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		autoAim.repair();
 		antimatter.repair();
 		lrs.repair();
-		eventBus.fireEvent(Events.ENTERPRISE_REPAIRED,
-				(h) -> h.onEnterpriseRepaired(Enterprise.this));
+		fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -344,8 +336,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos)
 					|| maybeRepairProvisionally(autoAim) || maybeRepairProvisionally(lrs);
 			if (repaired) {
-				eventBus.fireEvent(Events.ENTERPRISE_REPAIRED,
-						(h) -> h.onEnterpriseRepaired(Enterprise.this));
+				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 				return;
 			}
 		}
@@ -420,8 +411,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			damageAutoaim();
 		if (lrs.isEnabled() && random.nextDouble() < impact)
 			damageLRS();
-		eventBus.fireEvent(Events.ENTERPRISE_DAMAGED,
-				(h) -> h.onEnterpriseDamaged(Enterprise.this));
+		fireEvent(Events.ENTERPRISE_DAMAGED, (h) -> h.onEnterpriseDamaged(Enterprise.this));
 	}
 
 	public boolean consume(String what, double value) {
@@ -429,8 +419,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return false;
 		getReactor().decrease(value);
 		getAntimatter().decrease(value);
-		eventBus.fireEvent(Events.CONSUME_ENERGY,
-				(h) -> h.handleEnergyConsumption(this, value, what));
+		fireEvent(Events.CONSUME_ENERGY, (h) -> h.handleEnergyConsumption(this, value, what));
 		return true;
 	}
 
@@ -458,7 +447,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		shields.reset();
 		impulse.reset();
 		if (!consume("energy", computeEnergyConsumption())) {
-			eventBus.fireEvent(Events.GAME_OVER, (h) -> h.gameLost());
+			fireEvent(Events.GAME_OVER, (h) -> h.gameLost());
 			return;
 		}
 		playComputerTurn();
@@ -492,7 +481,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	@Override
 	public void beforeGameRestart() {
-		eventBus.removeHandler(this);
+		removeHandler(this);
 	}
 
 }

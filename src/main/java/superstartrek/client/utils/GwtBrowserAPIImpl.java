@@ -1,5 +1,8 @@
 package superstartrek.client.utils;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.History;
@@ -8,7 +11,9 @@ import com.google.gwt.user.client.Window;
 
 import superstartrek.client.activities.pwa.Callback;
 
-public class GwtBrowserAPIImpl implements BrowserAPI{
+public class GwtBrowserAPIImpl implements BrowserAPI {
+
+	Set<String> flags;
 
 	@Override
 	public int getWindowWidthPx() {
@@ -54,7 +59,6 @@ public class GwtBrowserAPIImpl implements BrowserAPI{
 		return null;
 	}
 
-
 	@Override
 	public Void reloadApplication() {
 		Window.Location.reload();
@@ -63,12 +67,26 @@ public class GwtBrowserAPIImpl implements BrowserAPI{
 
 	@Override
 	public boolean hasKeyboard() {
-		return getWindowWidthPx()>400;
+		return getWindowWidthPx() > 400;
 	}
 
 	@Override
 	public String getParameter(String param) {
 		return Window.Location.getParameter(param);
+	}
+
+	@Override
+	public Set<String> getFlags() {
+		if (flags != null)
+			return flags;
+		String sflags = getParameter("flags");
+		if (sflags == null)
+			sflags = "";
+		String[] split = sflags.split(",");
+		flags = new HashSet<>();
+		for (String s : split)
+			flags.add(s);
+		return flags;
 	}
 
 }

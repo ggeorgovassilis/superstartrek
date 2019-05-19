@@ -5,7 +5,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
-import superstartrek.client.bus.Events;
+import static superstartrek.client.bus.Events.*;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.model.StarMap;
 
@@ -13,8 +13,8 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 
 	public IntroPresenter(Application application) {
 		super(application);
-		addHandler(Events.GAME_STARTED, this);
-		addHandler(Events.INFORMING_OF_INSTALLED_VERSION, this);
+		addHandler(GAME_STARTED, this);
+		addHandler(INFORMING_OF_INSTALLED_VERSION, this);
 		application.browserAPI.addHistoryListener(this);
 	}
 	

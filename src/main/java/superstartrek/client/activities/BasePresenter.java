@@ -1,11 +1,9 @@
 package superstartrek.client.activities;
 
 import superstartrek.client.Application;
-import superstartrek.client.bus.BaseHandler;
-import superstartrek.client.bus.Event;
-import superstartrek.client.bus.EventCallback;
+import superstartrek.client.utils.BaseMixin;
 
-public abstract class BasePresenter<V extends View> implements Presenter<V>{
+public abstract class BasePresenter<V extends View> implements Presenter<V>, BaseMixin{
 
 	protected V view;
 	protected final Application application;
@@ -24,11 +22,4 @@ public abstract class BasePresenter<V extends View> implements Presenter<V>{
 		this.view = view;
 	}
 	
-	protected <H extends BaseHandler> void addHandler(Event<H> type, H handler) {
-		application.eventBus.addHandler(type, handler);
-	}
-	
-	protected <H extends BaseHandler> void fireEvent(Event<H> type, EventCallback<H> callback) {
-		application.eventBus.fireEvent(type, callback);
-	}
 }

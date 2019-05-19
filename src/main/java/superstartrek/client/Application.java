@@ -1,19 +1,13 @@
 package superstartrek.client;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.shared.UmbrellaException;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -67,12 +61,10 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	public RequestFactory requestFactory;
 	public PWA pwa;
 	public ScoreKeeper scoreKeeper = new ScoreKeeperImpl();
-	Element logDiv;
 
 	private static Application that;
 	public GameController gameController;
 	protected Resources resources;
-	protected Set<String> flags;
 
 	public static void set(Application app) {
 		that = app;
@@ -150,19 +142,6 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		});
 	}
 
-	public Set<String> getFlags() {
-		if (flags == null) {
-			String sflags = browserAPI.getParameter("flags");
-			if (sflags == null)
-				sflags = "";
-			String[] split = sflags.split(",");
-			flags = new HashSet<>();
-			for (String s : split)
-				flags.add(s);
-		}
-		return flags;
-	}
-
 	public void reload() {
 		browserAPI.reloadApplication();
 	}
@@ -174,30 +153,6 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	public void setupGameController() {
 		gameController = new GameController(this, scoreKeeper);
-	}
-
-	void setupLogging() {
-		if (!GWT.isClient())
-			return;
-		logDiv = DOM.createDiv();
-		RootPanel.get().getElement().appendChild(logDiv);
-		log.addHandler(new Handler() {
-
-			@Override
-			public void publish(LogRecord record) {
-				Element entry = DOM.createDiv();
-				entry.setInnerText(record.getMessage());
-				logDiv.appendChild(entry);
-			}
-
-			@Override
-			public void flush() {
-			}
-
-			@Override
-			public void close() throws SecurityException {
-			}
-		});
 	}
 
 	public void setupHttp() {
