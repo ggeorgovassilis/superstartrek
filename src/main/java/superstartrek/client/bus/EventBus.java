@@ -6,14 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
-
 import com.google.gwt.event.shared.UmbrellaException;
 
 public class EventBus {
 
 	Map<Event<? extends BaseHandler>, List<? extends BaseHandler>> handlers = new HashMap<Event<? extends BaseHandler>, List<? extends BaseHandler>>();
-	private static Logger log = Logger.getLogger("");
 
 	public <T extends BaseHandler> void addHandler(Event<T> type, T handler) {
 		@SuppressWarnings("unchecked")
@@ -48,6 +45,9 @@ public class EventBus {
 		List<T> protoList = (List<T>) handlers.get(type);
 		if (protoList == null)
 			return;
+		//TODO: should we use protoList directly and instead queue add/remove handlers?
+		//pro: firing events is much more common than modifying listeners
+		//con: array lists are backed by js native arrays, cloning should be very fast.
 		List<T> copy = new ArrayList<T>(protoList);
 		Set<Throwable> errors = null;
 		for (T h : copy)

@@ -8,6 +8,7 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.lrs.ILRSScreen;
 import superstartrek.client.activities.lrs.LRSPresenter;
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Star.StarClass;
@@ -33,8 +34,8 @@ public class TestLRSPresenter extends BaseTest{
 	@Test
 	public void test_showLrs() {
 		
-		for (int x=0;x<8;x++)
-		for (int y=0;y<8;y++) {
+		for (int x=0;x<Constants.SECTORS_EDGE;x++)
+		for (int y=0;y<Constants.SECTORS_EDGE;y++) {
 			Quadrant q = new Quadrant("q"+x+""+y, x, y);
 			if ((x+y) % 5 == 0) {
 				for (int i=0;i<y;i++) {
@@ -42,7 +43,7 @@ public class TestLRSPresenter extends BaseTest{
 					q.getKlingons().add(k);
 				}
 			}
-			for (int i=0;i<(x+y)%7;i++) {
+			for (int i=0;i<(x+y)%(Constants.SECTORS_EDGE-1);i++) {
 				Star star = new Star(x, y, StarClass.A);
 				q.getStars().add(star);
 			}

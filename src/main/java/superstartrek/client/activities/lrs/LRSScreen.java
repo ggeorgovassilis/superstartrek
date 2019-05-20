@@ -4,6 +4,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
+import superstartrek.client.model.Constants;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
@@ -24,7 +25,7 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	@Override
 	public void decorateScreen() {
 		super.decorateWidget();
-		cells = new Element[8][8];
+		cells = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 		NodeList<Element> tds = CSS.querySelectorAll("#longrangescan .quadrants td");
 		for (int i=tds.getLength()-1;i>=0;i--) {
 			Element eTd = tds.getItem(i);

@@ -119,13 +119,13 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void enableLlrsButton() {
-		eLrsButton.removeClassName("disabled");
+		CSS.setEnabled(eLrsButton, true);
 		eLrsButton.setAttribute("href", "#longrangescan");
 	}
 
 	@Override
 	public void disableLrsButton() {
-		eLrsButton.addClassName("disabled");
+		CSS.setEnabled(eLrsButton, false);
 		eLrsButton.setAttribute("href", "#computer");
 	}
 
@@ -136,13 +136,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void setRepairButtonEnabled(boolean enabled) {
-		eRepair.removeAttribute("disabled");
-		eRepair.removeClassName("disabled");
-		if (!enabled) {
-			eRepair.setAttribute("disabled", "disabled");
-			eRepair.addClassName("disabled");
-		}
-			
+		CSS.setEnabled(eRepair, enabled);
 	}
 
 	@Override

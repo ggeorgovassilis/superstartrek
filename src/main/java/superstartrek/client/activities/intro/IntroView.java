@@ -8,6 +8,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseScreen;
+import superstartrek.client.activities.CSS;
 import superstartrek.client.utils.HtmlWidget;
 
 public class IntroView extends BaseScreen<IntroPresenter>{
@@ -41,13 +42,11 @@ public class IntroView extends BaseScreen<IntroPresenter>{
 	}
 	
 	public void disableUpdateCheckButton() {
-		eUpdateButton.addClassName("disabled");
-		eUpdateButton.setAttribute("disabled", "disabled");
+		CSS.setEnabled(eUpdateButton, false);
 	}
 
 	public void enableUpdateCheckButton() {
-		eUpdateButton.removeClassName("disabled");
-		eUpdateButton.removeAttribute("disabled");
+		CSS.setEnabled(eUpdateButton, true);
 	}
 
 }

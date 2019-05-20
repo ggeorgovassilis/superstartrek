@@ -2,6 +2,7 @@ package superstartrek;
 
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
@@ -67,8 +68,8 @@ public class TestQuadrant extends BaseTest{
 		enterprise.setQuadrant(new Quadrant("asdasd",2,2));
 		starMap.enterprise = enterprise;
 
-		for (int x = 0; x < 8; x++)
-			for (int y = 0; y < 8; y++)
+		for (int x = 0; x < Constants.SECTORS_EDGE; x++)
+			for (int y = 0; y < Constants.SECTORS_EDGE; y++)
 				assertNull(quadrant.findThingAt(x, y));
 
 	}

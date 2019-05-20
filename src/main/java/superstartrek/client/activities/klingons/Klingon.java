@@ -296,6 +296,6 @@ public class Klingon extends Vessel implements CombatHandler, GamePhaseHandler, 
 
 	@Override
 	public void beforeGameRestart() {
-		unregisterActionHandlers();
+		getEvents().removeHandler(this);
 	}
 }

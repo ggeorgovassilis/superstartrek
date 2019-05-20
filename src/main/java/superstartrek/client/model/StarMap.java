@@ -7,7 +7,7 @@ import superstartrek.client.utils.BrowserAPI;
 
 public class StarMap {
 
-	protected Quadrant[][] quadrants = new Quadrant[8][8];
+	protected Quadrant[][] quadrants = new Quadrant[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	public Enterprise enterprise;
 	protected long starDate = 2100;
 
@@ -31,9 +31,9 @@ public class StarMap {
 
 	public void markAsExploredAround(Quadrant q) {
 		int xFrom = Math.max(0, q.getX() - 1);
-		int xTo = Math.min(7, q.getX() + 1);
+		int xTo = Math.min(Constants.SECTORS_EDGE-1, q.getX() + 1);
 		int yFrom = Math.max(0, q.getY() - 1);
-		int yTo = Math.min(7, q.getY() + 1);
+		int yTo = Math.min(Constants.SECTORS_EDGE-1, q.getY() + 1);
 		for (int y = yFrom; y <= yTo; y++)
 			for (int x = xFrom; x <= xTo; x++)
 				getQuadrant(x, y).setExplored(true);
@@ -68,7 +68,7 @@ public class StarMap {
 	}
 
 	public boolean isOnMap(int x, int y) {
-		return (x >= 0 && x <= 7 && y >= 0 && y <= 7);
+		return (x >= 0 && x <= Constants.SECTORS_EDGE-1 && y >= 0 && y <= Constants.SECTORS_EDGE-1);
 	}
 
 	public Quadrant getQuadrant(int x, int y) {
@@ -81,8 +81,8 @@ public class StarMap {
 		BrowserAPI random = Application.get().browserAPI;
 		QuadrantIndex index = new QuadrantIndex(q, this);
 		while (true) {
-			int x = random.nextInt(8);
-			int y = random.nextInt(8);
+			int x = random.nextInt(Constants.SECTORS_EDGE);
+			int y = random.nextInt(Constants.SECTORS_EDGE);
 			Thing thing = index.findThingAt(x, y);
 			if (thing == null)
 				return Location.location(x, y);
@@ -150,8 +150,8 @@ public class StarMap {
 		BrowserAPI random = Application.get().browserAPI;
 		for (int radius = 1; radius <= maxRadius; radius++) {
 			for (int tries = 0; tries < radius * radius; tries++) {
-				int x = Math.min(7, Math.max(0, loc.getX() + (random.nextInt(1 + radius)) - (radius / 2)));
-				int y = Math.min(7, Math.max(0, loc.getY() + (random.nextInt(1 + radius)) - (radius / 2)));
+				int x = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.getX() + (random.nextInt(1 + radius)) - (radius / 2)));
+				int y = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.getY() + (random.nextInt(1 + radius)) - (radius / 2)));
 				if (null == index.findThingAt(x, y))
 					return Location.location(x, y);
 			}

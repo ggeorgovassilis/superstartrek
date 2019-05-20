@@ -2,10 +2,10 @@ package superstartrek.client.model;
 
 public class Location {
 
-	protected final static Location[][] cache = new Location[8][8];
+	protected final static Location[][] cache = new Location[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	static {
-		for (int x=0;x<8;x++)
-			for (int y=0;y<8;y++)
+		for (int x=0;x<Constants.SECTORS_EDGE;x++)
+			for (int y=0;y<Constants.SECTORS_EDGE;y++)
 				cache[x][y] = new Location(x,y);
 	}
 

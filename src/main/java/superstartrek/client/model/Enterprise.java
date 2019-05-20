@@ -103,7 +103,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 		Quadrant dropQuadrant = container[0];
 		setQuadrant(dropQuadrant);
-		Location freeSpot = starMap.findFreeSpotAround(new QuadrantIndex(getQuadrant(), starMap), getLocation(), 8);
+		Location freeSpot = starMap.findFreeSpotAround(new QuadrantIndex(getQuadrant(), starMap), getLocation(), Constants.SECTORS_EDGE);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
 		starMap.markAsExploredAround(dropQuadrant);
@@ -129,14 +129,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		int lx = getLocation().getX();
 		int ly = getLocation().getY();
 		int minX = (int) Math.max(0, lx - range);
-		int maxX = (int) Math.min(7, lx + range);
+		int maxX = (int) Math.min(Constants.SECTORS_EDGE-1, lx + range);
 		int minY = (int) Math.max(0, ly - range);
-		int maxY = (int) Math.min(7, ly + range);
+		int maxY = (int) Math.min(Constants.SECTORS_EDGE-1, ly + range);
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
 		final int NOT_REACHABLE = -1;
 		final int REACHABLE = 1;
 		final int UNKNOWN = 0;
-		int[][] visitLog = new int[8][8]; // -1= not reachable, 0 = not visited yet, 1 = reachable
+		int[][] visitLog = new int[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE]; // -1= not reachable, 0 = not visited yet, 1 = reachable
 		visitLog[lx][ly] = 1;
 		for (int x = minX; x <= maxX; x++)
 			for (int y = minY; y <= maxY; y++) {
@@ -216,7 +216,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return;
 		}
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
-		List<Thing> things = application.starMap.findObstaclesInLine(index, getLocation(), sector, 8);
+		List<Thing> things = application.starMap.findObstaclesInLine(index, getLocation(), sector, Constants.SECTORS_EDGE);
 		things.remove(this);
 		getTorpedos().decrease(1);
 		Thing target = null;

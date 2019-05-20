@@ -19,6 +19,15 @@ public class CSS {
 		int index = (int) Math.floor((damageClasses.length - 1) * setting.health());
 		return damageClasses[index];
 	}
+	
+	public static void setEnabled(Element e, boolean enabled) {
+		e.removeAttribute("disabled");
+		e.removeClassName("disabled");
+		if (!enabled) {
+			e.setAttribute("disabled", "");
+			e.addClassName("disabled");
+		}
+	}
 
 	// according to https://caniuse.com/#search=querySelector this is supported in
 	// all browsers that are currently around

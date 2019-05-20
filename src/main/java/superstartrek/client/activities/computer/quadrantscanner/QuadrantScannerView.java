@@ -10,13 +10,14 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
+import superstartrek.client.model.Constants;
 import superstartrek.client.utils.DomUtils;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
 
-	Element[][] eSectors = new Element[8][8];
+	Element[][] eSectors = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	Element eSelectedSector;
 
 	@Override
@@ -48,10 +49,10 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		super(presenter);
 		Widget widgetImpl = getWidget();
 		Element eTable = DomUtils.getTbody(widgetImpl.getElement());
-		final double RELATIVE_WIDTH = 100.0 / 8.0;
-		final double RELATIVE_HEIGHT = 100.0 / 8.0;
-		for (int y = 0; y < 8; y++) {
-			for (int x = 0; x < 8; x++) {
+		final double RELATIVE_WIDTH = 100.0 / Constants.SECTORS_EDGE;
+		final double RELATIVE_HEIGHT = 100.0 / Constants.SECTORS_EDGE;
+		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
+			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Element eTd = DOM.createDiv();
 				eTd.setAttribute("data-x", "" + x);
 				eTd.setAttribute("data-y", "" + y);

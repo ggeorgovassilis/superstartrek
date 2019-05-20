@@ -7,7 +7,7 @@ package superstartrek.client.model;
  */
 public class QuadrantIndex implements GeometricLookup{
 
-	Thing[][] things = new Thing[8][8];
+	Thing[][] things = new Thing[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	
 	public QuadrantIndex(Quadrant quadrant, StarMap starMap) {
 		for (Thing t:starMap.getEverythingIn(quadrant))

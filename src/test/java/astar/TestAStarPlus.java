@@ -15,6 +15,7 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.navigation.astarplus.AStarPlus;
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -38,12 +39,12 @@ public class TestAStarPlus extends BaseTest{
 		for (int i = 0; i < TURNS; i++) {
 			Quadrant q = new Quadrant("", 0, 0);
 			StarMap map = new StarMap();
-			Location from = Location.location(random.nextInt(8), random.nextInt(8));
-			Location to = Location.location(random.nextInt(8), random.nextInt(8));
+			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE), random.nextInt(Constants.SECTORS_EDGE));
+			Location to = Location.location(random.nextInt(Constants.SECTORS_EDGE), random.nextInt(Constants.SECTORS_EDGE));
 			int[][] blocksArray = new int[random.nextInt(32)][2];
 			for (int l = 0; l < blocksArray.length; l++) {
-				int x = random.nextInt(8);
-				int y = random.nextInt(8);
+				int x = random.nextInt(Constants.SECTORS_EDGE);
+				int y = random.nextInt(Constants.SECTORS_EDGE);
 				blocksArray[l][0] = y;
 				blocksArray[l][1] = x;
 				q.getStars().add(new Star(x, y, false, StarClass.A));
@@ -62,7 +63,7 @@ public class TestAStarPlus extends BaseTest{
 
 	public static String printMap(int[][] blocksArray, Location from, Location to, List<Location> path) {
 		StringBuffer sb = new StringBuffer();
-		char matrix[][] = new char[8][8];
+		char matrix[][] = new char[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 		for (int l = 0; l < blocksArray.length; l++) {
 			int y = blocksArray[l][0];
 			int x = blocksArray[l][1];
@@ -72,8 +73,8 @@ public class TestAStarPlus extends BaseTest{
 			matrix[loc.getX()][loc.getY()] = '*';
 		matrix[from.getX()][from.getY()] = 'S';
 		matrix[to.getX()][to.getY()] = 'E';
-		for (int y = 0; y < 8; y++) {
-			for (int x = 0; x < 8; x++)
+		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
+			for (int x = 0; x < Constants.SECTORS_EDGE; x++)
 				sb.append(matrix[x][y] == (char) 0 ? ' ' : matrix[x][y]);
 			sb.append("\n");
 		}
@@ -135,13 +136,13 @@ public class TestAStarPlus extends BaseTest{
 			Application.set(null);
 			Application app = new Application();
 			map.enterprise = new Enterprise(app, map);
-			Location from = Location.location(random.nextInt(8), random.nextInt(8));
-			Location to = Location.location(random.nextInt(8), random.nextInt(8));
-			AStar astar = new AStar(8, 8, new Node(from.getY(), from.getX()), new Node(to.getY(), to.getX()));
+			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE), random.nextInt(Constants.SECTORS_EDGE));
+			Location to = Location.location(random.nextInt(Constants.SECTORS_EDGE), random.nextInt(Constants.SECTORS_EDGE));
+			AStar astar = new AStar(Constants.SECTORS_EDGE, Constants.SECTORS_EDGE, new Node(from.getY(), from.getX()), new Node(to.getY(), to.getX()));
 			int[][] blocksArray = new int[random.nextInt(32)][2];
 			for (int l = 0; l < blocksArray.length; l++) {
-				int x = random.nextInt(8);
-				int y = random.nextInt(8);
+				int x = random.nextInt(Constants.SECTORS_EDGE);
+				int y = random.nextInt(Constants.SECTORS_EDGE);
 				blocksArray[l][0] = y;
 				blocksArray[l][1] = x;
 				q.getStars().add(new Star(x, y, false, StarClass.A));

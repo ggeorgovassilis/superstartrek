@@ -6,6 +6,7 @@ import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -30,7 +31,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 			int qy = q0.getY() + y - 1;
 			for (int x = 0; x < 3; x++) {
 				int qx = q0.getX() + x - 1;
-				if (qx >= 0 && qy >= 0 && qx < 8 && qy < 8) {
+				if (qx >= 0 && qy >= 0 && qx < Constants.SECTORS_EDGE && qy < Constants.SECTORS_EDGE) {
 					Quadrant q = map.getQuadrant(qx, qy);
 					Maps.renderCell(x, y, map, q, "", view);
 				} else

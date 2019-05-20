@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
+import superstartrek.client.activities.CSS;
 import superstartrek.client.utils.Timer;
 
 public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
@@ -71,11 +72,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	public void enableButton(String id, boolean status) {
 		HTMLPanel panel = (HTMLPanel) getWidget();
 		Element e = panel.getElementById(id).getParentElement();
-		if (status)
-			e.removeClassName("disabled");
-		else
-			e.addClassName("disabled");
-
+		CSS.setEnabled(e, status);
 	}
 
 	@Override

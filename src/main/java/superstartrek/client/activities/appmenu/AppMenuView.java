@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 
+import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.PopupView;
 import superstartrek.client.utils.Strings;
 
@@ -28,9 +29,7 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 	
 	public void setMenuEntryEnabled(String cmd, boolean enabled) {
 		Element e = DOM.getElementById(cmd);
-		e.removeClassName("disabled");
-		if (!enabled)
-			e.addClassName("disabled");
+		CSS.setEnabled(e, enabled);
 	}
 	
 	@Override

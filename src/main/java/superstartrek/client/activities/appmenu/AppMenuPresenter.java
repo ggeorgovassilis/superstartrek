@@ -5,7 +5,6 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
-import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Setting;
 

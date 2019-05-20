@@ -19,7 +19,9 @@ public class Setup {
 	}
 	
 	public Quadrant makeQuadrant(StarMap map, int x, int y) {
-		Quadrant q = new Quadrant(names[(int)Math.floor((y*8+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
+		if (Constants.SECTORS_EDGE!=8)
+			throw new RuntimeException("Names have not beed coded for anything but 8x8 quadrants yet");
+		Quadrant q = new Quadrant(names[(int)Math.floor((y*+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
 		BrowserAPI random = Application.get().browserAPI;
 		int stars = random.nextInt(Constants.MAX_STARS_IN_QUADRANT);
 		while (stars-->0) {
@@ -51,8 +53,8 @@ public class Setup {
 	public StarMap createNewMap() {
 		StarMap map = new StarMap();
 		map.enterprise = new Enterprise(application, map);
-		for (int y = 0; y < 8; y++)
-			for (int x = 0; x < 8; x++) {
+		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
+			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Quadrant q = makeQuadrant(map, x, y);
 				map.setQuadrant(q);;
 			}

@@ -4,6 +4,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
@@ -45,8 +46,8 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		StarMap starMap = application.starMap;
 		Enterprise enterprise = starMap.enterprise;
 		Quadrant qEnterprise = enterprise.getQuadrant();
-		for (int y = 0; y < 8; y++)
-			for (int x = 0; x < 8; x++) {
+		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
+			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				double requiredEnergy = enterprise.computeConsumptionForWarp(qEnterprise, starMap.getQuadrant(x, y));
 				boolean isReachable = requiredEnergy <= enterprise.getReactor().getValue();
 				updateQuadrant(x, y, isReachable);

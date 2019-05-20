@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
@@ -24,22 +25,22 @@ public class AStarPlus {
 
 	final static int OCCUPIED = -1;
 	final static int FREE = 0;
-	final int[] matrix = new int[65]; // 0 is never used, look into code for explanation
-	final int[] todo = new int[64];
+	final int[] matrix = new int[1+(Constants.SECTORS_EDGE*Constants.SECTORS_EDGE)]; // 0 is never used, look into code for explanation
+	final int[] todo = new int[Constants.SECTORS_EDGE*Constants.SECTORS_EDGE];
 	int todoHead = 0;
 	int todoTail = 0;
 
 	int coordsToIndex(int x, int y) {
 		// need to add 1 because "0" (0*8+8) means "free"
-		return 1 + x + y * 8;
+		return 1 + x + y * Constants.SECTORS_EDGE;
 	}
 
 	int indexToX(int index) {
-		return (index - 1) % 8;
+		return (index - 1) % Constants.SECTORS_EDGE;
 	}
 
 	int indexToY(int index) {
-		return (index - 1) / 8;
+		return (index - 1) / Constants.SECTORS_EDGE;
 	}
 
 	void addToDo(int index) {
@@ -84,9 +85,9 @@ public class AStarPlus {
 		int sectorY = indexToY(fromSectorIndex);
 
 		int minX = Math.max(0, sectorX - 1);
-		int maxX = Math.min(7, sectorX + 1);
+		int maxX = Math.min(Constants.SECTORS_EDGE-1, sectorX + 1);
 		int minY = Math.max(0, sectorY - 1);
-		int maxY = Math.min(7, sectorY + 1);
+		int maxY = Math.min(Constants.SECTORS_EDGE-1, sectorY + 1);
 		int dx = maxX - minX;
 		int index = coordsToIndex(minX, minY);
 		for (int y = minY; y <= maxY; y++) {
@@ -98,7 +99,7 @@ public class AStarPlus {
 					addToDo(index);
 				}
 			}
-			index = rowStartIndex + 8;
+			index = rowStartIndex + Constants.SECTORS_EDGE;
 		}
 	}
 
@@ -116,8 +117,8 @@ public class AStarPlus {
 	}
 
 	void printMatrix() {
-		for (int y = 0; y < 8; y++) {
-			for (int x = 0; x < 8; x++) {
+		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
+			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				int index = coordsToIndex(x, y);
 				if (matrix[index] == FREE)
 					System.out.print(" ");

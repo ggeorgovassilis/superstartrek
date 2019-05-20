@@ -16,6 +16,7 @@ import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import static superstartrek.client.bus.Events.*;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -110,11 +111,11 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		// would increase DOM interactions.
 		// this approach (render into an array first, paint each sector only once)
 		// minimises DOM interactions.
-		Thing[][] arr = new Thing[8][8];
+		Thing[][] arr = new Thing[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 		for (Thing t : starMap.getEverythingIn(q))
 			mark(t, arr);
-		for (int x = 0; x < 8; x++)
-			for (int y = 0; y < 8; y++) {
+		for (int x = 0; x < arr.length; x++)
+			for (int y = 0; y < arr[x].length; y++) {
 				Thing t = arr[x][y];
 				if (t != null)
 					updateSector(t);
@@ -170,8 +171,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	public void clearAllNavigationTargets() {
-		for (int y = 0; y < 8; y++)
-			for (int x = 0; x < 8; x++)
+		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
+			for (int x = 0; x < Constants.SECTORS_EDGE; x++)
 				view.removeCssFromCell(x, y, "navigation-target");
 	}
 
@@ -197,13 +198,13 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			newSector = Location.location(Math.max(0, selectedSector.getX() - 1), selectedSector.getY());
 			break;
 		case KeyCodes.KEY_RIGHT:
-			newSector = Location.location(Math.min(7, selectedSector.getX() + 1), selectedSector.getY());
+			newSector = Location.location(Math.min(Constants.SECTORS_EDGE-1, selectedSector.getX() + 1), selectedSector.getY());
 			break;
 		case KeyCodes.KEY_UP:
 			newSector = Location.location(selectedSector.getX(), Math.max(0, selectedSector.getY() - 1));
 			break;
 		case KeyCodes.KEY_DOWN:
-			newSector = Location.location(selectedSector.getX(), Math.min(7, selectedSector.getY() + 1));
+			newSector = Location.location(selectedSector.getX(), Math.min(Constants.SECTORS_EDGE-1, selectedSector.getY() + 1));
 			break;
 		case 'M':
 		case 'm':
