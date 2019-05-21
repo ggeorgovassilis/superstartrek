@@ -2,6 +2,7 @@ package superstartrek.client.model;
 
 public class Constants {
 
+	public final static int MIN_STARS_IN_QUADRANT = 4; 
 	public final static int MAX_STARS_IN_QUADRANT = 12; 
 	public final static int MAX_KLINGONS_IN_QUADRANT = 5; 
 	public final static double CHANCE_OF_KLINGONS_IN_QUADRANT = 0.2; 

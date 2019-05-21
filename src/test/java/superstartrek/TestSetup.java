@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Setup;
 import static org.junit.Assert.*;
@@ -30,7 +31,7 @@ public class TestSetup extends BaseTest{
 		when(browser.nextInt(any(int.class))).thenReturn(
 				//@formatter:off
 				// stars
-										NUMBER_OF_STARS,
+										NUMBER_OF_STARS-Constants.MIN_STARS_IN_QUADRANT,
 										2,3,1,
 										1,1,2,
 										3,1,0,

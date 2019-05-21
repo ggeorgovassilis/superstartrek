@@ -13,7 +13,7 @@ public class Setup {
 	final String roman[]= {"I","II","III","IV"};
 	
 	final Application application;
-
+	
 	public Setup(Application application) {
 		this.application = application;
 	}
@@ -23,7 +23,7 @@ public class Setup {
 			throw new RuntimeException("Names have not beed coded for anything but 8x8 quadrants yet");
 		Quadrant q = new Quadrant(names[(int)Math.floor((y*+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
 		BrowserAPI random = Application.get().browserAPI;
-		int stars = random.nextInt(Constants.MAX_STARS_IN_QUADRANT);
+		int stars = Constants.MIN_STARS_IN_QUADRANT+random.nextInt(Constants.MAX_STARS_IN_QUADRANT-Constants.MIN_STARS_IN_QUADRANT);
 		while (stars-->0) {
 			Location loc = map.findFreeSpot(q);
 			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[random.nextInt(StarClass.values().length)]);

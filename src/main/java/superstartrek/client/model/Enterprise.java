@@ -81,8 +81,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		int destinationX = destinationQuadrant.getX();
 		int destinationY = destinationQuadrant.getY();
 		double necessaryEnergy = computeConsumptionForWarp(fromQuadrant, destinationQuadrant);
-		// we always can warp out even if low on energy provided our sector is clean
-		if (!consume("warp", necessaryEnergy) && !getQuadrant().getKlingons().isEmpty()) {
+		if (!consume("warp", necessaryEnergy)) {
 			// we can let this slide if no enemies in quadrant
 			application.message("Insufficient reactor output");
 			return false;

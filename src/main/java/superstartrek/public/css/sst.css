@@ -869,7 +869,6 @@ a.disabled,button.disabled {
 .app-menu li a {
 	background-color: rgb(0, 108, 109);
 	width: 100%;
-	line-height: 2.5em;
 	width: 100%;
 	font-size: 100%;
 }

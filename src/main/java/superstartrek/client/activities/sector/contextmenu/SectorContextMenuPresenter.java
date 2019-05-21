@@ -27,7 +27,6 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.CONTEXT_MENU_HIDE, this);
-		addHandler(Events.KEY_PRESSED, this);
 		application.browserAPI.addHistoryListener(this);
 
 		buttonsEnabled.put("cmd_navigate", false);
@@ -66,6 +65,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		int target_y_px = target_y_em * vertEmToPx;
 		view.setLocation(target_x_px, target_y_px);
 		view.show();
+		addHandler(Events.KEY_PRESSED, this);
+
 	}
 
 	public void showMenu(int screenX, int screenY, Location sector, Quadrant quadrant) {
@@ -84,6 +85,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 	protected void hideMenu(ScheduledCommand callback) {
 		view.hide(callback);
+		removeHandler(Events.KEY_PRESSED, this);
 	}
 
 	public void onMenuClicked() {
