@@ -1,4 +1,4 @@
-package genericsbus;
+package eventbus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.EventCallback;
 import superstartrek.client.bus.Event;
 
-public class TestingBus extends EventBus{
+public class CountingEventBus extends EventBus{
 
 	Map<Event<?>, Integer> fireCount = new HashMap<Event<?>, Integer>();
 

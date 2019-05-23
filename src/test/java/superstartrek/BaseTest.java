@@ -5,9 +5,7 @@ import static org.mockito.Mockito.mock;
 import org.junit.After;
 import org.junit.Before;
 
-import com.google.gwt.event.shared.testing.CountingEventBus;
-
-import genericsbus.TestingBus;
+import eventbus.CountingEventBus;
 import superstartrek.client.Application;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
@@ -22,12 +20,13 @@ public abstract class BaseTest {
 	BrowserAPI browser;
 	Enterprise enterprise;
 	Quadrant quadrant;
-	TestingBus bus;
+	CountingEventBus bus;
 	
 	@Before
 	public void setupCommonObjects() {
 		application = new Application();
-		application.eventBus = bus = new TestingBus();
+		bus = new CountingEventBus();
+		application.eventBus = bus;
 		starMap = new StarMap();
 		application.browserAPI = browser = mock(BrowserAPI.class);
 		application.starMap = starMap;

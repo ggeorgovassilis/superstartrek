@@ -1,4 +1,4 @@
-package genericsbus;
+package eventbus;
 
 import superstartrek.client.bus.BaseHandler;
 

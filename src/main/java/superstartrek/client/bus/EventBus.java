@@ -18,7 +18,7 @@ public class EventBus {
 		if (list == null) {
 			list = new ArrayList<T>();
 			handlers.put(type, list);
-		}
+		} else
 		if (list.contains(handler))
 			return;
 		list.add(handler);
@@ -35,8 +35,7 @@ public class EventBus {
 		for (Event<?> type : handlers.keySet()) {
 			@SuppressWarnings("unchecked")
 			List<T> list = (List<T>) handlers.get(type);
-			if (list != null)
-				list.remove(handler);
+			list.remove(handler);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package genericsbus;
+package eventbus;
 
 import java.util.List;
 
@@ -16,8 +16,9 @@ public class CombinedHandler implements Handler1, Handler2{
 	}
 
 	@Override
-	public void method1(int p1, String p2, List<String> p3) {
+	public Void method1(int p1, String p2, List<String> p3) {
 		sb.append("CombinedHandler.method1 "+p1+" "+p2+" "+p3.size());
+		return null;
 	}
 
 }

@@ -8,6 +8,8 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Random;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
@@ -45,7 +47,9 @@ public class PWA {
 	        				//@formatter:on
 	};
 
-	final static String CACHE_NAME = "sst1";
+	final String CHECKSUM_URL = "/superstartrek/site/package.txt";
+
+	final String CACHE_NAME = "sst1";
 	AppInstallationEvent deferredInstallationPrompt;
 	Application application;
 	LocalCache cache;
@@ -100,73 +104,47 @@ public class PWA {
 		deferredInstallationPrompt = null;
 	}
 
-	public void getChecksumOfInstalledApplication(RequestCallback callback) {
+	public void getFileContent(String url, Callback<String[]> success, Callback<Throwable> error) {
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
-		try {
-			r.request(RequestBuilder.GET, "/superstartrek/site/package.txt", callback);
-		} catch (Exception e) {
-			log.info(e.getMessage());
-		}
-	}
+		r.request(RequestBuilder.GET, url, new RequestCallback() {
 
-	public void getChecksumOfNewestVersion(RequestCallback callback) {
-		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
-		int rnd = application.browserAPI.nextInt(100000);
-		try {
-			r.request(RequestBuilder.GET, "/superstartrek/site/package.txt?rnd=" + rnd, callback);
-		} catch (Exception e) {
-			log.info(e.getMessage());
-		}
+			@Override
+			public void onResponseReceived(Request request, Response response) {
+				if (response.getStatusCode() == 200 || response.getStatusCode() == 304) {
+					String checksumOfInstalledApplication = response.getText();
+					String dateOfInstalledApplication = response.getHeader("last-modified");
+					success.onSuccess(new String[] { checksumOfInstalledApplication, dateOfInstalledApplication });
+				}
+			}
+
+			@Override
+			public void onError(Request request, Throwable exception) {
+				log.severe(exception.getMessage());
+				error.onFailure(exception);
+			}
+		});
 	}
 
 	public void checkForNewVersion() {
 		log.info("Checking for new version");
 		Application app = application;
-		getChecksumOfInstalledApplication(new RequestCallback() {
-
-			@Override
-			public void onResponseReceived(Request request, Response response) {
-				String checksumOfInstalledApplication = response.getText();
-				String dateOfInstalledApplication = response.getHeader("last-modified");
-				log.info("Installed app version " + checksumOfInstalledApplication);
-				application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
-						 (h) -> h
-								.installedAppVersionIs(checksumOfInstalledApplication, dateOfInstalledApplication));
-				getChecksumOfNewestVersion(new RequestCallback() {
-
-					@Override
-					public void onResponseReceived(Request request, Response response) {
-						String checksumOfNewestVersion = response.getText();
-						log.info("Checksum of latest package : " + checksumOfNewestVersion);
-						boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
-						log.info("is same: " + isSame);
-						if (response.getStatusCode() != 200 && response.getStatusCode() != 304) {
-							app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
-									(h) -> h.checkFailed());
-							return;
-						}
-						if (isSame)
-							app.eventBus.fireEvent(Events.VERSION_IS_CURRENT,
-									(h) -> h.versionIsCurrent());
-						else
-							app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE,
-									(h) -> h.newVersionAvailable());
-					}
-
-					@Override
-					public void onError(Request request, Throwable exception) {
-						app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
-								(h) -> h.checkFailed());
-					}
-				});
-			}
-
-			@Override
-			public void onError(Request request, Throwable exception) {
-				app.eventBus.fireEvent(Events.VERSION_CHECK_FAILED,
-						(h) -> h.checkFailed());
-			}
-		});
+		getFileContent(CHECKSUM_URL, (arr) -> {
+			String checksumOfInstalledApplication = arr[0];
+			String dateOfInstalledApplication = arr[1];
+			log.info("Installed app version " + checksumOfInstalledApplication);
+			application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
+					(h) -> h.installedAppVersionIs(checksumOfInstalledApplication, dateOfInstalledApplication));
+			getFileContent(CHECKSUM_URL + "?rnd=" + application.browserAPI.nextInt(10000), (arr2) -> {
+				String checksumOfNewestVersion = arr2[0];
+				log.info("Checksum of latest package : " + checksumOfNewestVersion);
+				boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
+				log.info("is same: " + isSame);
+				if (isSame)
+					app.eventBus.fireEvent(Events.VERSION_IS_CURRENT, (h) -> h.versionIsCurrent());
+				else
+					app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE, (h) -> h.newVersionAvailable());
+			}, (e) -> application.eventBus.fireEvent(Events.VERSION_CHECK_FAILED, (h) -> h.checkFailed()));
+		}, (e) -> application.eventBus.fireEvent(Events.VERSION_CHECK_FAILED, (h) -> h.checkFailed()));
 	}
 
 	public void setupCache(Callback<Void> callback) {
@@ -194,8 +172,7 @@ public class PWA {
 			log.info("installation event callback");
 			deferredInstallationPrompt = event;
 			deferredInstallationPrompt.preventDefault();
-			application.eventBus.fireEvent(Events.SHOW_APP_INSTALL_PROMPT,
-					(h) -> h.showInstallPrompt());
+			application.eventBus.fireEvent(Events.SHOW_APP_INSTALL_PROMPT, (h) -> h.showInstallPrompt());
 		});
 		setupCache(callback);
 	}
