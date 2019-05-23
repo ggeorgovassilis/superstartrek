@@ -469,6 +469,10 @@ a.progress-bar {
 	line-height:2em;
 }
 
+.antimatter-low{
+	background-color: maroon;
+}
+
 .shields-icon{
     background-image: url(../images/shield.svg);
     background-color: darkslategray;
