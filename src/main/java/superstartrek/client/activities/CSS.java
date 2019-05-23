@@ -21,9 +21,10 @@ public class CSS {
 	}
 	
 	public static void setEnabled(Element e, boolean enabled) {
-		e.removeAttribute("disabled");
-		e.removeClassName("disabled");
-		if (!enabled) {
+		if (enabled) {
+			e.removeAttribute("disabled");
+			e.removeClassName("disabled");
+		} else {
 			e.setAttribute("disabled", "");
 			e.addClassName("disabled");
 		}

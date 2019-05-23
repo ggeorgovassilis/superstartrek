@@ -25,8 +25,8 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
-		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler,
-		EnterpriseRepairedHandler, KlingonCloakingHandler, KeyPressedEventHandler {
+		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,
+		KlingonCloakingHandler, KeyPressedEventHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
 	Location selectedSector = Location.location(0, 0);
@@ -34,8 +34,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
 		Quadrant quadrant = application.starMap.enterprise.getQuadrant();
-		fireEvent(SECTOR_SELECTED,
-				(h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
+		fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
 	public QuadrantScannerPresenter(Application application, SectorContextMenuPresenter sectorMenuPresenter) {
@@ -62,8 +61,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	void updateSector(Thing thing) {
-		String content = null;
-		String css = null;
+		String content = "";
+		String css = "";
 		if (thing.isVisible()) {
 			content = thing.getSymbol();
 			css = thing.getCss();
@@ -76,9 +75,6 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 					css += " disruptor-disabled";
 				}
 			}
-		} else {
-			content = "";
-			css = "";
 		}
 		view.updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content, css);
 	}
@@ -198,13 +194,15 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			newSector = Location.location(Math.max(0, selectedSector.getX() - 1), selectedSector.getY());
 			break;
 		case KeyCodes.KEY_RIGHT:
-			newSector = Location.location(Math.min(Constants.SECTORS_EDGE-1, selectedSector.getX() + 1), selectedSector.getY());
+			newSector = Location.location(Math.min(Constants.SECTORS_EDGE - 1, selectedSector.getX() + 1),
+					selectedSector.getY());
 			break;
 		case KeyCodes.KEY_UP:
 			newSector = Location.location(selectedSector.getX(), Math.max(0, selectedSector.getY() - 1));
 			break;
 		case KeyCodes.KEY_DOWN:
-			newSector = Location.location(selectedSector.getX(), Math.min(Constants.SECTORS_EDGE-1, selectedSector.getY() + 1));
+			newSector = Location.location(selectedSector.getX(),
+					Math.min(Constants.SECTORS_EDGE - 1, selectedSector.getY() + 1));
 			break;
 		case 'M':
 		case 'm':
