@@ -9,6 +9,7 @@ import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import static superstartrek.client.bus.Events.*;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.QuadrantActivationHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -20,7 +21,8 @@ import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 
-public class Klingon extends Vessel implements CombatHandler, GamePhaseHandler, NavigationHandler, BaseMixin {
+public class Klingon extends Vessel
+		implements CombatHandler, GamePhaseHandler, NavigationHandler, BaseMixin, QuadrantActivationHandler {
 
 	final Setting disruptor;
 	final Setting cloak;
@@ -58,7 +60,7 @@ public class Klingon extends Vessel implements CombatHandler, GamePhaseHandler, 
 		setSymbol(c.symbol);
 		setCss("klingon cloaked");
 		this.disruptor = new Setting("disruptor", c.disruptor);
-		addHandler(AFTER_ENTERPRISE_WARPED, this);
+		addHandler(QUADRANT_ACTIVATED, this);
 		addHandler(GAME_RESTART, this);
 	}
 
@@ -157,10 +159,10 @@ public class Klingon extends Vessel implements CombatHandler, GamePhaseHandler, 
 			return;
 		if (!isVisible())
 			uncloak();
-		fireEvent(BEFORE_FIRE, (h) -> h.onFire(enterprise.getQuadrant(), Klingon.this, enterprise,
-				"disruptor", disruptor.getValue(), true));
-		fireEvent(AFTER_FIRE, (h) -> h.afterFire(enterprise.getQuadrant(), Klingon.this, enterprise,
-				"disruptor", disruptor.getValue(), true));
+		fireEvent(BEFORE_FIRE, (h) -> h.onFire(enterprise.getQuadrant(), Klingon.this, enterprise, "disruptor",
+				disruptor.getValue(), true));
+		fireEvent(AFTER_FIRE, (h) -> h.afterFire(enterprise.getQuadrant(), Klingon.this, enterprise, "disruptor",
+				disruptor.getValue(), true));
 	}
 
 	public void cloak() {
@@ -227,11 +229,14 @@ public class Klingon extends Vessel implements CombatHandler, GamePhaseHandler, 
 		getShields().setValue(getShields().getCurrentUpperBound());
 	}
 
+	
+	
 	@Override
-	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		// TODO: contains() is a slow check and all klingons in all quadrants react to
-		// this event
-		if (qTo.contains(this)) {
+	public void onActiveQuadrantChanged(Quadrant quadrantFrom, Quadrant quadrantTo) {
+		if (!quadrantFrom.contains(this)) {
+			unregisterActionHandlers();
+		}
+		if (quadrantTo.contains(this)) {
 			registerActionHandlers();
 			repair();
 			cloak.setValue(canCloak());
@@ -239,10 +244,9 @@ public class Klingon extends Vessel implements CombatHandler, GamePhaseHandler, 
 			// TODO: this method is called for every klingon in the quadrant. findFreeSpot
 			// builds an index each time, which
 			// might be slow.
-			Location newLocation = Application.get().starMap.findFreeSpot(qTo);
+			Location newLocation = Application.get().starMap.findFreeSpot(quadrantTo);
 			jumpTo(newLocation);
-		} else
-			unregisterActionHandlers();
+		}
 	}
 
 	@Override
@@ -266,8 +270,7 @@ public class Klingon extends Vessel implements CombatHandler, GamePhaseHandler, 
 		if (getCloak().isEnabled() && random.nextDouble() < impact)
 			getCloak().setEnabled(false);
 
-		message(weapon + " hit " + target.getName() + " at " + target.getLocation(),
-				"klingon-damaged");
+		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
 		if (shields.getValue() <= 0) {
 			destroy();
 		}

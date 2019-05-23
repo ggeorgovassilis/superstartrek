@@ -45,7 +45,7 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 	}
 
 	@Test
-	public void testOnEnterpriseWarped() {
+	public void test_onActiveQuadrantChanged() {
 		Quadrant qFrom = new Quadrant("from 1 2", 1, 2);
 		Quadrant qTo = new Quadrant("to 3 4", 3, 4);
 		Location lFrom = Location.location(4, 5);
@@ -66,7 +66,7 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		k.setLocation(Location.location(7,7));
 		qTo.getKlingons().add(k);
 		
-		presenter.onEnterpriseWarped(enterprise, qFrom, lFrom, qTo, lTo);
+		presenter.onActiveQuadrantChanged(qFrom, qTo);
 		verify(view).updateSector(eq(0), eq(0), eq("O=Ξ"), eq("enterprise "));
 		verify(view, times(60)).updateSector(any(int.class), any(int.class), eq(""), eq(""));
 		verify(view).updateSector(5, 6, StarClass.A.symbol, "star star-class-a");

@@ -16,6 +16,7 @@ import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import static superstartrek.client.bus.Events.*;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
+import superstartrek.client.control.QuadrantActivationHandler;
 import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -26,7 +27,7 @@ import superstartrek.client.model.Vessel;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,
-		KlingonCloakingHandler, KeyPressedEventHandler {
+		KlingonCloakingHandler, KeyPressedEventHandler, QuadrantActivationHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
 	Location selectedSector = Location.location(0, 0);
@@ -34,6 +35,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
 		Quadrant quadrant = application.starMap.enterprise.getQuadrant();
+		//this is an event instead of directly calling #onSectorSelected(...) because others fire this event to in order to update the view
 		fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
@@ -43,7 +45,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		addHandler(SECTOR_SELECTED, this);
 		addHandler(GAME_STARTED, this);
 		addHandler(THING_MOVED, this);
-		addHandler(AFTER_ENTERPRISE_WARPED, this);
+		addHandler(QUADRANT_ACTIVATED, this);
 		addHandler(AFTER_FIRE, this);
 		addHandler(ENTERPRISE_REPAIRED, this);
 		addHandler(KLINGON_DESTROYED, this);
@@ -134,10 +136,10 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+	public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
 		updateScreen();
 	}
-
+	
 	@Override
 	public void onEnterpriseRepaired(Enterprise enterprise) {
 		updateSector(enterprise.getQuadrant(), enterprise.getLocation().getX(), enterprise.getLocation().getY());

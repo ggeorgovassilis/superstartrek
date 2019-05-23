@@ -6,6 +6,7 @@ import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.control.QuadrantActivationHandler;
 import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -15,12 +16,12 @@ import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.Maps;
 
 public class SRSPresenter extends BasePresenter<ISRSView>
-		implements GamePhaseHandler, NavigationHandler, CombatHandler{
+		implements GamePhaseHandler, CombatHandler, QuadrantActivationHandler{
 
 	public SRSPresenter(Application application) {
 		super(application);
 		addHandler(Events.GAME_STARTED, this);
-		addHandler(Events.AFTER_ENTERPRISE_WARPED, this);
+		addHandler(Events.QUADRANT_ACTIVATED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
 	}
 
@@ -60,10 +61,10 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	}
 
 	@Override
-	public void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+	public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
 		updateRadar();
 	}
-
+	
 	@Override
 	public void onVesselDestroyed(Vessel vessel) {
 		updateCenterQuadrant();

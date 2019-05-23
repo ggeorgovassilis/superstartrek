@@ -100,19 +100,21 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return true;
 		});
 
+		if (callbackBeforeWarping != null)
+			callbackBeforeWarping.run();
+
 		Quadrant dropQuadrant = container[0];
 		setQuadrant(dropQuadrant);
+		fireEvent(Events.QUADRANT_ACTIVATED, (h)->h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
+
 		Location freeSpot = starMap.findFreeSpotAround(new QuadrantIndex(getQuadrant(), starMap), getLocation(), Constants.SECTORS_EDGE);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
-		starMap.markAsExploredAround(dropQuadrant);
-		if (callbackBeforeWarping != null)
-			callbackBeforeWarping.run();
-		Quadrant qFrom = getQuadrant();
+		
 		fireEvent(Events.AFTER_ENTERPRISE_WARPED,
 				(h) -> h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
 
-		fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(Enterprise.this, qFrom, oldLocation, dropQuadrant, freeSpot));
+		fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
 		turnsSinceWarp = 0;
 		return true;
 	}

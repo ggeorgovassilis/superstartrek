@@ -4,17 +4,20 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.bus.Events;
+import superstartrek.client.control.QuadrantActivationHandler;
 import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Maps;
 
-public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChangeHandler<String> {
+public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChangeHandler<String>, QuadrantActivationHandler {
 
 	public LRSPresenter(Application application) {
 		super(application);
 		application.browserAPI.addHistoryListener(this);
+		addHandler(Events.QUADRANT_ACTIVATED, this);
 	}
 
 	public void quadrantWasClicked(int x, int y) {
@@ -68,6 +71,11 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 			showLrs();
 		else
 			view.hide();
+	}
+	
+	@Override
+	public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
+		application.starMap.markAsExploredAround(newQuadrant);
 	}
 
 }
