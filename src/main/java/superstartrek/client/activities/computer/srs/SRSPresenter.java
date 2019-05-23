@@ -39,6 +39,12 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 			}
 		}
 	}
+	
+	public void updateCenterQuadrant() {
+		StarMap map = application.starMap;
+		Quadrant q = map.enterprise.getQuadrant();
+		Maps.renderCell(1, 1, map, q, "", view);
+	}
 
 	public void quadrantWasClicked(int dx, int dy) {
 		StarMap map = application.starMap;
@@ -60,9 +66,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 
 	@Override
 	public void onVesselDestroyed(Vessel vessel) {
-		// actually only the center cell on the SRS map needs to be updated, but this
-		// event is rare and drawing the radar not expensive
-		updateRadar();
+		updateCenterQuadrant();
 	}
 
 	@Override

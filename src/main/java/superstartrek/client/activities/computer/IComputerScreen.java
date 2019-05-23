@@ -9,6 +9,10 @@ public interface IComputerScreen extends View{
 	void updateShields(int value, int currentUpperBound, int maximum);
 	
 	void updateAntimatter(int value, int maximum);
+	
+	void addAntimatterCss(String css);	
+
+	void removeAntimatterCss(String css);	
 
 	void showStarDate(String sd);
 

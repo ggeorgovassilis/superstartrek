@@ -13,6 +13,7 @@ import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.ScoreKeeper;
+import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -96,6 +97,9 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public void updateAntimatterView() {
 		Setting antimatter = enterprise.getAntimatter();
 		view.updateAntimatter((int) antimatter.getValue(), (int) antimatter.getMaximum());
+		if (antimatter.getValue()<antimatter.getMaximum()*Constants.ANTIMATTER_WARNING_THRESHOLD)
+			view.addAntimatterCss("antimatter-low");
+		else view.removeAntimatterCss("antimatter-low");
 	}
 
 	public void updateQuadrantHeaderView() {
@@ -109,7 +113,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 				minDistanceSquared = Math.min(minDistanceSquared, StarMap.distance_squared(enterprisePosition.getX(),
 						enterprisePosition.getY(), k.getLocation().getX(), k.getLocation().getY()));
 				if (minDistanceSquared < distanceOfRedAlertSquared)
-					break; // 9 is read alert, can't get worse than that so no point in iterating further
+					break; // 9 is red alert, can't get worse than that so no point in iterating further
 			}
 			alert = minDistanceSquared < distanceOfRedAlertSquared ? "red-alert" : "yellow-alert";
 		}
@@ -203,6 +207,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	@Override
 	public void onEnterpriseRepaired(Enterprise enterprise) {
 		updateButtonViews();
+		updateAntimatterView();
 	}
 
 	@Override

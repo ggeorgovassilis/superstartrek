@@ -144,4 +144,14 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eRepair.setClassName("half-width "+css);
 	}
 
+	@Override
+	public void addAntimatterCss(String css) {
+		eMaxAntimatter.addClassName(css);
+	}
+
+	@Override
+	public void removeAntimatterCss(String css) {
+		eMaxAntimatter.removeClassName(css);
+	}
+
 }
