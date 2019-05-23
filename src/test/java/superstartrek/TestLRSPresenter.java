@@ -55,10 +55,10 @@ public class TestLRSPresenter extends BaseTest{
 		enterprise.setQuadrant(starMap.getQuadrant(0, 0));
 		presenter.showLrs();
 		verify(view).show();
-		verify(view).updateCell(0, 0, " 0", "navigation-target has-enterprise explored");
-		verify(view).updateCell(1, 0, " 1", "navigation-target  explored");
-		verify(view).updateCell(0, 1, " 1", "navigation-target  explored");
-		verify(view).updateCell(2, 0, " 2", "navigation-target  explored");
-		verify(view).updateCell(eq(3), eq(4), eq(" 0"), eq("navigation-target "));
+		verify(view).updateCell(0, 0, "0", "navigation-target has-enterprise explored");
+		verify(view).updateCell(1, 0, "1", "navigation-target  explored");
+		verify(view).updateCell(0, 1, "1", "navigation-target  explored");
+		verify(view).updateCell(2, 0, "2", "navigation-target  explored");
+		verify(view).updateCell(eq(3), eq(4), eq("0"), eq("navigation-target "));
 	}
 }

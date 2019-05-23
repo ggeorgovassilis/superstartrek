@@ -58,11 +58,11 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 		removeStyleName("expanded");
 		if (isVisible()) {
 			viewInTransition = true;
-			Timer.postpone(()-> {
-					viewInTransition = false;
-					SectorContextMenuView.super.hide();
-					if (cmd != null)
-						cmd.execute();
+			Timer.postpone(() -> {
+				viewInTransition = false;
+				SectorContextMenuView.super.hide();
+				if (cmd != null)
+					cmd.execute();
 			}, 250);
 		} else if (cmd != null)
 			cmd.execute();
@@ -78,9 +78,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	@Override
 	public void show() {
 		super.show();
-		Timer.postpone(()-> 
-				addStyleName("expanded")
-		, 10);
+		Timer.postpone(() -> addStyleName("expanded"), 10);
 	}
 
 	public void handleButtonInteraction(DomEvent<?> event) {
@@ -106,15 +104,4 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	public void onTouchStart(TouchStartEvent event) {
 		handleButtonInteraction(event);
 	}
-
-	@Override
-	public int getMetricWidthInPx() {
-		return DOM.getElementById("em-metric").getOffsetWidth();
-	}
-
-	@Override
-	public int getMetricHeightInPx() {
-		return DOM.getElementById("em-metric").getOffsetHeight();
-	}
-
 }

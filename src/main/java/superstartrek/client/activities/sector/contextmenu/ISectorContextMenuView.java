@@ -8,7 +8,4 @@ public interface ISectorContextMenuView extends View {
 
 	void enableButton(String id, boolean status);
 	
-	int getMetricWidthInPx();
-	int getMetricHeightInPx();
-
 }

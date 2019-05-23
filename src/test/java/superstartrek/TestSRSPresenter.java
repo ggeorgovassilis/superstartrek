@@ -75,15 +75,15 @@ public class TestSRSPresenter {
 		e.setLocation(Location.location(6,7));
 		presenter.updateRadar();
 		verify(view).updateCell(0, 0, "!0", " has-starbase");
-		verify(view).updateCell(1, 0, " 1", "");
-		verify(view).updateCell(2, 0, " 2", "");
+		verify(view).updateCell(1, 0, "1", "");
+		verify(view).updateCell(2, 0, "2", "");
 
-		verify(view).updateCell(0, 1, " 1", "");
+		verify(view).updateCell(0, 1, "1", "");
 		verify(view).updateCell(1, 1, "!4", "has-enterprise has-starbase");
-		verify(view).updateCell(2, 1, " 6", "");
+		verify(view).updateCell(2, 1, "6", "");
 
 		verify(view).updateCell(0, 2, "!3", " has-starbase");
-		verify(view).updateCell(1, 2, " 3", "");
+		verify(view).updateCell(1, 2, "3", "");
 		verify(view).updateCell(2, 2, "!3", " has-starbase");
 	}
 }

@@ -3,18 +3,36 @@ package superstartrek.client.utils;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Window;
 
 import superstartrek.client.activities.pwa.Callback;
 
-public class GwtBrowserAPIImpl implements BrowserAPI {
+public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler {
 
 	Set<String> flags;
+	int emMetricOffsetWidth;
+	int emMetricOffsetHeight;
 
+	public GwtBrowserAPIImpl() {
+		Window.addResizeHandler(this);
+		updateMetrics();
+	}
+
+	void updateMetrics() {
+		Element e = DOM.getElementById("em-metric");
+		emMetricOffsetHeight = e.getOffsetHeight();
+		emMetricOffsetWidth = e.getOffsetWidth();
+	}
+	
+	
 	@Override
 	public int getWindowWidthPx() {
 		return Window.getClientWidth();
@@ -87,6 +105,21 @@ public class GwtBrowserAPIImpl implements BrowserAPI {
 		for (String s : split)
 			flags.add(s);
 		return flags;
+	}
+
+	@Override
+	public int getMetricWidthInPx() {
+		return emMetricOffsetWidth;
+	}
+
+	@Override
+	public int getMetricHeightInPx() {
+		return emMetricOffsetHeight;
+	}
+
+	@Override
+	public void onResize(ResizeEvent event) {
+		updateMetrics();
 	}
 
 }

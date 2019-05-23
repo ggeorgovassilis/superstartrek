@@ -41,8 +41,8 @@ public class TestSectorContextMenuPresenter extends BaseTest{
 			}
 		}).when(view).hide(any(ScheduledCommand.class));
 		when(browser.getWindowWidthPx()).thenReturn(400);
-		when(view.getMetricWidthInPx()).thenReturn(10);
-		when(view.getMetricHeightInPx()).thenReturn(10);
+		when(browser.getMetricWidthInPx()).thenReturn(10);
+		when(browser.getMetricHeightInPx()).thenReturn(10);
 		presenter.showMenu(66, 77, Location.location(1,2), q);
 		verify(view).enableButton("cmd_navigate", true);
 		verify(view).enableButton("cmd_firePhasers", false);

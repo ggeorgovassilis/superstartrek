@@ -39,8 +39,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		SectorContextMenuPresenter.this.quadrant = quadrant;
 		Enterprise e = application.starMap.enterprise;
 		// read dimensions before modifying the DOM to avoid re-layout
-		int horizEmToPx = view.getMetricWidthInPx();
-		int vertEmToPx = view.getMetricHeightInPx();
+		int horizEmToPx = application.browserAPI.getMetricWidthInPx();
+		int vertEmToPx = application.browserAPI.getMetricHeightInPx();
 
 		buttonsEnabled.put("cmd_navigate",
 				e.canNavigateTo(sector));

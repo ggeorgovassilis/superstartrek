@@ -11,9 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class HtmlWidget extends Widget {
 
 	public HtmlWidget(Element e) {
-		setElement(e);
-		if (RootPanel.getBodyElement().isOrHasChild(e))
-			onAttach();
+		this(e, RootPanel.getBodyElement().isOrHasChild(e));
 	}
 
 	public HtmlWidget(Element e, boolean attach) {

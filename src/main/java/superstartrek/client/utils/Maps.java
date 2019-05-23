@@ -20,8 +20,7 @@ public class Maps {
 			if (q.getStarBase()!=null) {
 				symbol += "!";
 				css += " has-starbase";
-			} else
-				symbol += " ";
+			}
 			symbol += q.getStars().size();
 		} else {
 			symbol = "0";
