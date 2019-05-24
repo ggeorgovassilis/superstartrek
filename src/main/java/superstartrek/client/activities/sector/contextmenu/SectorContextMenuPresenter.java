@@ -11,6 +11,7 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
@@ -26,7 +27,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		super(application);
 		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(Events.TURN_ENDED, this);
-		addHandler(Events.CONTEXT_MENU_HIDE, this);
+		addHandler(Events.CONTEXT_MENU_HIDDEN, this);
 		application.browserAPI.addHistoryListener(this);
 
 		buttonsEnabled.put("cmd_navigate", false);
@@ -98,7 +99,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 			hideMenu(() -> {
 				switch (command) {
 				case "cmd_scanSector":
-					fireEvent(Events.SCAN_SECTOR, (h)->h.scanSector(sector, quadrant));
+					fireEvent(Commands.SCAN_SECTOR, (h)->h.scanSector(sector, quadrant));
 					break;
 				case "cmd_navigate":
 					enterprise.navigateTo(sector);

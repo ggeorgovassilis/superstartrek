@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import superstartrek.client.activities.sector.scan.IScanSectorView;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
+import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Location;
 import static org.mockito.Mockito.*;
@@ -25,7 +26,7 @@ public class TestSectorScannerPresenter extends BaseTest{
 	public void testScanSector_notthing() {
 		enterprise.setLocation(Location.location(0,0));
 		Location l = Location.location(4,5);
-		bus.fireEvent(Events.SCAN_SECTOR, (h)->h.scanSector(l, quadrant));
+		bus.fireEvent(Commands.SCAN_SECTOR, (h)->h.scanSector(l, quadrant));
 		
 		verify(view).setObjectLocation(eq("4:5"));
 		verify(view).setObjectName(eq("Nothing"));
@@ -40,7 +41,7 @@ public class TestSectorScannerPresenter extends BaseTest{
 	public void testScanSector_enterprise() {
 		enterprise.setLocation(Location.location(0,0));
 		Location l = Location.location(0,0);
-		bus.fireEvent(Events.SCAN_SECTOR, (h)->h.scanSector(l, quadrant));
+		bus.fireEvent(Commands.SCAN_SECTOR, (h)->h.scanSector(l, quadrant));
 		
 		verify(view).setObjectLocation(eq("0:0"));
 		verify(view).setObjectName(eq("NCC 1701 USS Enterprise"));

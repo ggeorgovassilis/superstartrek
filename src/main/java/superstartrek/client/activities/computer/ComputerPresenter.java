@@ -9,6 +9,7 @@ import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
+import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
@@ -37,7 +38,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		super(application);
 		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
-		addHandler(Events.SHOW_COMPUTER, this);
+		addHandler(Commands.SHOW_COMPUTER, this);
 		addHandler(Events.TURN_STARTED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
 		addHandler(Events.ENTERPRISE_DAMAGED, this);

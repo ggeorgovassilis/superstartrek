@@ -5,6 +5,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Setting;
 
@@ -15,7 +16,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 
 	public AppMenuPresenter(Application application) {
 		super(application);
-		addHandler(Events.APP_MENU_SHOW, this);
+		addHandler(Commands.APP_MENU_SHOW, this);
 		application.browserAPI.addHistoryListener(this);
 		
 	}

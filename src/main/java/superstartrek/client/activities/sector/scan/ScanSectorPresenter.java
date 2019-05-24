@@ -4,6 +4,7 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -15,7 +16,7 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 
 	public ScanSectorPresenter(Application application) {
 		super(application);
-		addHandler(Events.SCAN_SECTOR, this);
+		addHandler(Commands.SCAN_SECTOR, this);
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class ScanSectorPresenter extends BasePresenter<IScanSectorView> implemen
 		if (!view.isVisible())
 			return;
 		view.hide();
-		fireEvent(Events.SHOW_COMPUTER, (h)->h.showScreen());
+		fireEvent(Commands.SHOW_COMPUTER, (h)->h.showScreen());
 	}
 	
 	public void onCommandClicked(String cmd) {

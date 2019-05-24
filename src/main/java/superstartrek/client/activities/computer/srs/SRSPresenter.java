@@ -3,6 +3,7 @@ package superstartrek.client.activities.computer.srs;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.combat.CombatHandler;
+import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
@@ -54,7 +55,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	}
 
 	public void onAppMenuButtonClicked() {
-		fireEvent(Events.APP_MENU_SHOW, (h)->h.showMenu());
+		fireEvent(Commands.APP_MENU_SHOW, (h)->h.showMenu());
 	}
 
 	@Override

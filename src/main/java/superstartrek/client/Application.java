@@ -27,6 +27,7 @@ import superstartrek.client.activities.report.StatusReportView;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.activities.sector.scan.ScanSectorView;
+import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameController;
@@ -183,7 +184,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	public void registerEventHandlers() {
 		eventBus.addHandler(Events.GAME_OVER, this);
-		eventBus.addHandler(Events.RELOAD_APP, this);
+		eventBus.addHandler(Commands.RELOAD_APP, this);
 	}
 
 	@Override
