@@ -99,8 +99,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
 				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
 		if (!application.starMap.hasKlingons()) {
-			fireEvent(GAME_OVER, (h)->h.gameOver());
-			fireEvent(GAME_OVER, (h)->h.gameWon());
+			gameOver(GameOutcome.won, "All klingons destroyed");
 		}
 	}
 
