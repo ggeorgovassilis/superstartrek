@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -12,18 +14,30 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 
+import superstartrek.client.activities.Presenter;
+import superstartrek.client.activities.View;
 import superstartrek.client.activities.pwa.Callback;
+import superstartrek.client.bus.EventBus;
+import superstartrek.client.bus.Events;
 
-public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler {
+public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHandler {
 
 	Set<String> flags;
 	int emMetricOffsetWidth;
 	int emMetricOffsetHeight;
+	RootPanel _page;
+	EventBus bus;
 
-	public GwtBrowserAPIImpl() {
+	public GwtBrowserAPIImpl(EventBus bus) {
 		Window.addResizeHandler(this);
 		updateMetrics();
+		_page = RootPanel.get();
+		this.bus = bus;
+		_page.addDomHandler(this, KeyDownEvent.getType());
+
 	}
 
 	void updateMetrics() {
@@ -122,6 +136,17 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler {
 		//metrics change only when document zoom changes (in that case this method is invoked).
 		//TODO: it's possible that metrics don't change even then as zooming is transparent to the app.
 		updateMetrics();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public<P extends Presenter> void addToPage(View<P> view) {
+		_page.add(view);
+	}
+
+	@Override
+	public void onKeyDown(KeyDownEvent event) {
+		bus.fireEvent(Events.KEY_PRESSED, (h) -> h.onKeyPressed(event.getNativeKeyCode()));
 	}
 
 }

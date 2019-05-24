@@ -8,8 +8,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.shared.UmbrellaException;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.RootPanel;
 
 import superstartrek.client.activities.appmenu.AppMenuPresenter;
 import superstartrek.client.activities.appmenu.AppMenuView;
@@ -51,11 +49,10 @@ import superstartrek.client.activities.pwa.UpdateAppPromptView;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;
 
-public class Application implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler, KeyDownHandler {
+public class Application implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler {
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus eventBus = new EventBus();
-	public HTMLPanel _page;
 	public StarMap starMap;
 	public BrowserAPI browserAPI;
 	public RequestFactory requestFactory;
@@ -65,7 +62,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	private static Application that;
 	public GameController gameController;
 	protected Resources resources;
-
+	
 	public static void set(Application app) {
 		that = app;
 	}
@@ -194,24 +191,16 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		Application.that = this;
 		setUncaughtExceptionHandler();
 		if (GWT.isClient())
-			browserAPI = new GwtBrowserAPIImpl();
+			browserAPI = new GwtBrowserAPIImpl(eventBus);
 		resources = GWT.create(Resources.class);
-		//TODO: decide what to do with _page, because most code is directly accessing the RootPanel
-		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		setupHttp();
 		registerEventHandlers();
 		setupPwa((v) -> setupTheRest());
-		RootPanel.get().addDomHandler(this, KeyDownEvent.getType());
 	}
 
 	@Override
 	public void appMustReload() {
 		reload();
-	}
-
-	@Override
-	public void onKeyDown(KeyDownEvent event) {
-		eventBus.fireEvent(Events.KEY_PRESSED, (h) -> h.onKeyPressed(event.getNativeKeyCode()));
 	}
 
 }

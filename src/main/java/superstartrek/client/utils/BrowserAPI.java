@@ -4,6 +4,9 @@ import java.util.Set;
 
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+
+import superstartrek.client.activities.Presenter;
+import superstartrek.client.activities.View;
 import superstartrek.client.activities.pwa.Callback;
 
 public interface BrowserAPI {
@@ -27,5 +30,8 @@ public interface BrowserAPI {
 	Void reloadApplication();
 	String getParameter(String param);
 	Set<String> getFlags();
+	
+	@SuppressWarnings("rawtypes")
+	<P extends Presenter> void addToPage(View<P> view);
 
 }

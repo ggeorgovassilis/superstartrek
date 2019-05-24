@@ -11,7 +11,6 @@ import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
@@ -40,7 +39,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 		addStyleName("sector-context-menu");
 		super.decorateWidget();
 		hide();
-		RootPanel.get().add(this);
+		presenter.getApplication().browserAPI.addToPage(this);
 	}
 
 	@Override

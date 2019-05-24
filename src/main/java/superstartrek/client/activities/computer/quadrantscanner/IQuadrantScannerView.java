@@ -2,7 +2,7 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import superstartrek.client.activities.View;
 
-public interface IQuadrantScannerView extends View{
+public interface IQuadrantScannerView extends View<QuadrantScannerPresenter>{
 
 	void deselectSectors();
 
