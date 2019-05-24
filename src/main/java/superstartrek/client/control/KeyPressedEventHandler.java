@@ -1,8 +1,8 @@
 package superstartrek.client.control;
 
-import superstartrek.client.bus.BaseHandler;
+import superstartrek.client.bus.EventHandler;
 
-public interface KeyPressedEventHandler extends BaseHandler{
+public interface KeyPressedEventHandler extends EventHandler{
 
 	void onKeyPressed(int keyCode);
 }

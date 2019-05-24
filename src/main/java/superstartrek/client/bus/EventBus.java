@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.UmbrellaException;
 
 public class EventBus {
 
-	Map<Event<? extends BaseHandler>, List<? extends BaseHandler>> handlers = new HashMap<Event<? extends BaseHandler>, List<? extends BaseHandler>>();
+	Map<Event<? extends EventHandler>, List<? extends EventHandler>> handlers = new HashMap<Event<? extends EventHandler>, List<? extends EventHandler>>();
 
-	public <T extends BaseHandler> void addHandler(Event<T> type, T handler) {
+	public <T extends EventHandler> void addHandler(Event<T> type, T handler) {
 		@SuppressWarnings("unchecked")
 		List<T> list = (List<T>) handlers.get(type);
 		if (list == null) {
@@ -26,14 +25,14 @@ public class EventBus {
 		list.add(handler);
 	}
 
-	public <T extends BaseHandler> void removeHandler(Event<T> type, T handler) {
+	public <T extends EventHandler> void removeHandler(Event<T> type, T handler) {
 		@SuppressWarnings("unchecked")
 		List<T> list = (List<T>) handlers.get(type);
 		if (list != null)
 			list.remove(handler);
 	}
 
-	public <T extends BaseHandler> void removeHandler(T handler) {
+	public <T extends EventHandler> void removeHandler(T handler) {
 		for (Event<?> type : handlers.keySet()) {
 			@SuppressWarnings("unchecked")
 			List<T> list = (List<T>) handlers.get(type);
@@ -41,7 +40,7 @@ public class EventBus {
 		}
 	}
 
-	public <T extends BaseHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
+	public <T extends EventHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
 		@SuppressWarnings("unchecked")
 		List<T> protoList = (List<T>) handlers.get(type);
 		if (protoList == null)
@@ -53,7 +52,7 @@ public class EventBus {
 		Set<Throwable> errors = null;
 		for (T h : copy)
 			try {
-				GWT.log("Firing "+type.toString()+" to "+h);
+				//GWT.log("Firing "+type.toString()+" to "+h);
 				callback.call(h);
 			} catch (Throwable e) {
 				if (errors == null)

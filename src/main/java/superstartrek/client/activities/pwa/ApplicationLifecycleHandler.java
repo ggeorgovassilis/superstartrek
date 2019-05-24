@@ -1,8 +1,8 @@
 package superstartrek.client.activities.pwa;
 
-import superstartrek.client.bus.BaseHandler;
+import superstartrek.client.bus.EventHandler;
 
-public interface ApplicationLifecycleHandler extends BaseHandler{
+public interface ApplicationLifecycleHandler extends EventHandler{
 
 	default void newVersionAvailable(){};
 	default void versionIsCurrent(){};

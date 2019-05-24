@@ -336,8 +336,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void repairProvisionally() {
 		int i = 10;
 		while (i-- > 0) {
-			boolean repaired = maybeRepairProvisionally("impulse drive", impulse) || maybeRepairProvisionally("shields", shields)
-					|| maybeRepairProvisionally("phasers",phasers) || maybeRepairProvisionally("torpedo bay", torpedos)
+			boolean repaired = maybeRepairProvisionally("impulse drive", impulse)
+					|| maybeRepairProvisionally("shields", shields) || maybeRepairProvisionally("phasers", phasers)
+					|| maybeRepairProvisionally("torpedo bay", torpedos)
 					|| maybeRepairProvisionally("tactical computer", autoAim) || maybeRepairProvisionally("LRS", lrs);
 			if (repaired) {
 				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
@@ -394,13 +395,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void applyDamage(double damage) {
-		double impact = 0.5 * damage / (shields.getValue() + 1.0);
 		// from a game-play POV being damaged right after jumping into a quadrant sucks,
 		// that's why the damage is reduced in this case.
 		// the in-world justification is that opponents can't get a reliable target lock
 		if (turnsSinceWarp < 2) {
 			damage = damage * 0.5;
 		}
+		double impact = 0.5 * damage / (shields.getValue() + 1.0);
 		shields.decrease(damage);
 		BrowserAPI random = application.browserAPI;
 		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < impact)

@@ -6,7 +6,6 @@ import org.junit.Test;
 import superstartrek.client.activities.sector.scan.IScanSectorView;
 import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
 import superstartrek.client.bus.Commands;
-import superstartrek.client.bus.Events;
 import superstartrek.client.model.Location;
 import static org.mockito.Mockito.*;
 

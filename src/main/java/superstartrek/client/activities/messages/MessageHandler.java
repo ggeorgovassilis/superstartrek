@@ -1,8 +1,8 @@
 package superstartrek.client.activities.messages;
 
-import superstartrek.client.bus.BaseHandler;
+import superstartrek.client.bus.EventHandler;
 
-public interface MessageHandler extends BaseHandler{
+public interface MessageHandler extends EventHandler{
 
 	default void messagePosted(String formattedMessage, String category) {};
 	default void messagesAcknowledged() {};

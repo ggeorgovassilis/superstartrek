@@ -5,7 +5,6 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.bus.Commands;
-import superstartrek.client.bus.Events;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;

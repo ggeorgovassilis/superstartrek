@@ -1,11 +1,9 @@
 package superstartrek.client.control;
 
-import com.google.gwt.event.shared.EventHandler;
-
-import superstartrek.client.bus.BaseHandler;
+import superstartrek.client.bus.EventHandler;
 import superstartrek.client.model.StarMap;
 
-public interface GamePhaseHandler extends EventHandler, BaseHandler {
+public interface GamePhaseHandler extends EventHandler {
 	
 	default void onTurnStarted() {};
 

@@ -1,5 +1,5 @@
 package superstartrek.client.bus;
 
-public interface BaseHandler {
+public interface EventHandler {
 
 }

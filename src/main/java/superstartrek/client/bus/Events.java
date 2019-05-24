@@ -1,8 +1,6 @@
 package superstartrek.client.bus;
 
-import superstartrek.client.activities.appmenu.AppMenuHandler;
 import superstartrek.client.activities.combat.CombatHandler;
-import superstartrek.client.activities.computer.ComputerHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.KlingonCloakingHandler;
 import superstartrek.client.activities.messages.MessageHandler;
@@ -11,7 +9,6 @@ import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
-import superstartrek.client.activities.sector.scan.ScanSectorHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.QuadrantActivationHandler;

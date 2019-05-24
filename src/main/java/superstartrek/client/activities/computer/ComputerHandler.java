@@ -1,8 +1,8 @@
 package superstartrek.client.activities.computer;
 
-import superstartrek.client.bus.BaseHandler;
+import superstartrek.client.bus.EventHandler;
 
-public interface ComputerHandler extends BaseHandler{
+public interface ComputerHandler extends EventHandler{
 
 	void showScreen();
 	void hideScreen();

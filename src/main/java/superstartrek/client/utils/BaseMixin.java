@@ -1,7 +1,7 @@
 package superstartrek.client.utils;
 
 import superstartrek.client.Application;
-import superstartrek.client.bus.BaseHandler;
+import superstartrek.client.bus.EventHandler;
 import superstartrek.client.bus.Event;
 import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.EventCallback;
@@ -25,19 +25,19 @@ public interface BaseMixin {
 		getApplication().message(message);
 	}
 	
-	default <T extends BaseHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
+	default <T extends EventHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
 		getEvents().fireEvent(type, callback);
 	}
 
-	default <T extends BaseHandler> void addHandler(Event<T> type, T handler) {
+	default <T extends EventHandler> void addHandler(Event<T> type, T handler) {
 		getEvents().addHandler(type, handler);
 	}
 
-	default <T extends BaseHandler> void removeHandler(Event<T> type, T handler) {
+	default <T extends EventHandler> void removeHandler(Event<T> type, T handler) {
 		getEvents().removeHandler(type, handler);
 	}
 
-	default <T extends BaseHandler> void removeHandler(T handler) {
+	default <T extends EventHandler> void removeHandler(T handler) {
 		getEvents().removeHandler(handler);
 	}
 	

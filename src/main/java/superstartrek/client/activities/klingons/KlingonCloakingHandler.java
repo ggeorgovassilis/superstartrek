@@ -1,8 +1,8 @@
 package superstartrek.client.activities.klingons;
 
-import superstartrek.client.bus.BaseHandler;
+import superstartrek.client.bus.EventHandler;
 
-public interface KlingonCloakingHandler extends BaseHandler{
+public interface KlingonCloakingHandler extends EventHandler{
 
 	default void klingonUncloaked(Klingon klingon) {};
 	default void klingonCloaked(Klingon klingon) {};
