@@ -98,8 +98,10 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		Klingon klingon = Klingon.as(vessel);
 		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
 				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
-		if (!application.starMap.hasKlingons())
+		if (!application.starMap.hasKlingons()) {
+			fireEvent(GAME_OVER, (h)->h.gameOver());
 			fireEvent(GAME_OVER, (h)->h.gameWon());
+		}
 	}
 
 	@Override
