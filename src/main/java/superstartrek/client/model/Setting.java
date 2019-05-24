@@ -2,14 +2,12 @@ package superstartrek.client.model;
 
 public class Setting {
 
-	protected final String name;
 	protected final double maximum;
 	protected double currentUpperBound;
 	protected double value;
 	protected boolean enabled=true;
 	
-	public Setting(String name, double maximum) {
-		this.name = name;
+	public Setting(double maximum) {
 		this.maximum = maximum;
 		this.currentUpperBound = maximum;
 		this.value = maximum;
@@ -37,10 +35,6 @@ public class Setting {
 
 	public int percentage() {
 		return (int)Math.floor(100*ratio());
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public double getCurrentUpperBound() {
@@ -99,6 +93,6 @@ public class Setting {
 	
 	@Override
 	public String toString() {
-		return getName()+" : "+getValue()+"/"+getCurrentUpperBound()+"/"+getMaximum();
+		return ""+getValue()+"/"+getCurrentUpperBound()+"/"+getMaximum();
 	}
 }

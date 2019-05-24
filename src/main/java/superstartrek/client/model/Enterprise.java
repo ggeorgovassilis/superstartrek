@@ -19,12 +19,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	Application application;
 	StarMap starMap;
-	Setting phasers = new Setting("phasers", 30);
-	Setting torpedos = new Setting("torpedos", 10);
-	Setting antimatter = new Setting("antimatter", 1000);
-	Setting reactor = new Setting("reactor", 60);
-	Setting autoAim = new Setting("auto aim", 1);
-	Setting lrs = new Setting("LRS", 1);
+	Setting phasers = new Setting(30);
+	Setting torpedos = new Setting(10);
+	Setting antimatter = new Setting(1000);
+	Setting reactor = new Setting(60);
+	Setting autoAim = new Setting(1);
+	Setting lrs = new Setting(1);
 	Quadrant quadrant;
 	List<Location> reachableSectors = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public Enterprise(Application app, StarMap map) {
-		super(new Setting("impulse", 3), new Setting("shields", 100));
+		super(new Setting(3), new Setting(100));
 		this.application = app;
 		this.starMap = map;
 		setName("NCC 1701 USS Enterprise");
@@ -76,10 +76,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
-		Location fromLocation = getLocation();
-		Quadrant fromQuadrant = getQuadrant();
-		int destinationX = destinationQuadrant.getX();
-		int destinationY = destinationQuadrant.getY();
+		final Location fromLocation = getLocation();
+		final Quadrant fromQuadrant = getQuadrant();
 		double necessaryEnergy = computeConsumptionForWarp(fromQuadrant, destinationQuadrant);
 		if (!consume("warp", necessaryEnergy)) {
 			// we can let this slide if no enemies in quadrant
@@ -88,33 +86,36 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 
 		Quadrant[] container = new Quadrant[1];
-		starMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationX, destinationY, (x, y) -> {
-			Quadrant q = starMap.getQuadrant(x, y);
-			container[0] = q;
-			List<Klingon> klingons = q.getKlingons();
-			// TODO for now, allow warping out of the departure quadrant
-			if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
-				application.message("We were intercepted by " + klingons.get(0).getName(), "intercepted");
-				return false;
-			}
-			return true;
-		});
+		starMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationQuadrant.getX(),
+				destinationQuadrant.getY(), (x, y) -> {
+					Quadrant q = starMap.getQuadrant(x, y);
+					container[0] = q;
+					List<Klingon> klingons = q.getKlingons();
+					// TODO for now, allow warping out of the departure quadrant
+					if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
+						application.message("We were intercepted by " + klingons.get(0).getName(), "intercepted");
+						return false;
+					}
+					return true;
+				});
 
 		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
 
 		Quadrant dropQuadrant = container[0];
 		setQuadrant(dropQuadrant);
-		fireEvent(Events.QUADRANT_ACTIVATED, (h)->h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
+		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
-		Location freeSpot = starMap.findFreeSpotAround(new QuadrantIndex(getQuadrant(), starMap), getLocation(), Constants.SECTORS_EDGE);
+		Location freeSpot = starMap.findFreeSpotAround(new QuadrantIndex(getQuadrant(), starMap), getLocation(),
+				Constants.SECTORS_EDGE);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
-		
+
 		fireEvent(Events.AFTER_ENTERPRISE_WARPED,
 				(h) -> h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
 
-		fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
+		fireEvent(Events.THING_MOVED,
+				(h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
 		turnsSinceWarp = 0;
 		return true;
 	}
@@ -130,14 +131,15 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		int lx = getLocation().getX();
 		int ly = getLocation().getY();
 		int minX = (int) Math.max(0, lx - range);
-		int maxX = (int) Math.min(Constants.SECTORS_EDGE-1, lx + range);
+		int maxX = (int) Math.min(Constants.SECTORS_EDGE - 1, lx + range);
 		int minY = (int) Math.max(0, ly - range);
-		int maxY = (int) Math.min(Constants.SECTORS_EDGE-1, ly + range);
+		int maxY = (int) Math.min(Constants.SECTORS_EDGE - 1, ly + range);
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
 		final int NOT_REACHABLE = -1;
 		final int REACHABLE = 1;
 		final int UNKNOWN = 0;
-		int[][] visitLog = new int[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE]; // -1= not reachable, 0 = not visited yet, 1 = reachable
+		int[][] visitLog = new int[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE]; // -1= not reachable, 0 = not
+																					// visited yet, 1 = reachable
 		visitLog[lx][ly] = 1;
 		for (int x = minX; x <= maxX; x++)
 			for (int y = minY; y <= maxY; y++) {
@@ -217,7 +219,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return;
 		}
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
-		List<Thing> things = application.starMap.findObstaclesInLine(index, getLocation(), sector, Constants.SECTORS_EDGE);
+		List<Thing> things = application.starMap.findObstaclesInLine(index, getLocation(), sector,
+				Constants.SECTORS_EDGE);
 		things.remove(this);
 		getTorpedos().decrease(1);
 		Thing target = null;
@@ -316,7 +319,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		return !setting.isEnabled() || setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
 	}
 
-	protected boolean maybeRepairProvisionally(Setting setting) {
+	protected boolean maybeRepairProvisionally(String name, Setting setting) {
 		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
@@ -326,16 +329,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 																				// fully
 		setting.setValue(setting.getCurrentUpperBound());
 		setting.setEnabled(true);
-		application.message("Repaired " + setting.getName());
+		application.message("Repaired " + name);
 		return true;
 	}
 
 	public void repairProvisionally() {
 		int i = 10;
 		while (i-- > 0) {
-			boolean repaired = maybeRepairProvisionally(impulse) || maybeRepairProvisionally(shields)
-					|| maybeRepairProvisionally(phasers) || maybeRepairProvisionally(torpedos)
-					|| maybeRepairProvisionally(autoAim) || maybeRepairProvisionally(lrs);
+			boolean repaired = maybeRepairProvisionally("impulse drive", impulse) || maybeRepairProvisionally("shields", shields)
+					|| maybeRepairProvisionally("phasers",phasers) || maybeRepairProvisionally("torpedo bay", torpedos)
+					|| maybeRepairProvisionally("tactical computer", autoAim) || maybeRepairProvisionally("LRS", lrs);
 			if (repaired) {
 				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 				return;

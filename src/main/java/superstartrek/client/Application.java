@@ -196,6 +196,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		if (GWT.isClient())
 			browserAPI = new GwtBrowserAPIImpl();
 		resources = GWT.create(Resources.class);
+		//TODO: decide what to do with _page, because most code is directly accessing the RootPanel
 		_page = HTMLPanel.wrap(RootPanel.getBodyElement());
 		setupHttp();
 		registerEventHandlers();

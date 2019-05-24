@@ -48,8 +48,6 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 	public void test_onActiveQuadrantChanged() {
 		Quadrant qFrom = new Quadrant("from 1 2", 1, 2);
 		Quadrant qTo = new Quadrant("to 3 4", 3, 4);
-		Location lFrom = Location.location(4, 5);
-		Location lTo = Location.location(6, 7);
 		enterprise.setQuadrant(qTo);
 
 		starMap.setQuadrant(qFrom);

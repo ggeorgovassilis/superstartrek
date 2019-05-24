@@ -24,15 +24,7 @@ import superstartrek.client.utils.BrowserAPI;
 public class Klingon extends Vessel
 		implements CombatHandler, GamePhaseHandler, NavigationHandler, BaseMixin, QuadrantActivationHandler {
 
-	final Setting disruptor;
-	final Setting cloak;
-	boolean eventsRegistered = false;
-	final static int MAX_SECTOR_SPEED = 1;
-	final static int DISRUPTOR_RANGE_SECTORS = 2;
-
-	public final ShipClass shipClass;
-
-	public enum ShipClass {
+	public static enum ShipClass {
 
 		Raider("a Klingon raider", 50, 10,
 				"<div class=vessel><span class=bridge>c</span><span class=fuselage>-</span><span class=wings>}</span></div>"),
@@ -52,14 +44,20 @@ public class Klingon extends Vessel
 		public final int disruptor;
 	}
 
+	final Setting disruptor;
+	final Setting cloak;
+	final static int MAX_SECTOR_SPEED = 1;
+	final static int DISRUPTOR_RANGE_SECTORS = 2;
+	public final ShipClass shipClass;
+
 	public Klingon(ShipClass c) {
-		super(new Setting("impulse", 1), new Setting("shields", c.shields));
+		super(new Setting(1), new Setting(c.shields));
 		this.shipClass = c;
-		cloak = new Setting("cloak", 1);
+		cloak = new Setting(1);
 		setName(c.label);
 		setSymbol(c.symbol);
 		setCss("klingon cloaked");
-		this.disruptor = new Setting("disruptor", c.disruptor);
+		this.disruptor = new Setting(c.disruptor);
 		addHandler(QUADRANT_ACTIVATED, this);
 		addHandler(GAME_RESTART, this);
 	}
@@ -70,21 +68,13 @@ public class Klingon extends Vessel
 	 * quadrant and unregister them when it leaves.
 	 */
 	public void registerActionHandlers() {
-		// already registered?
-		if (eventsRegistered)
-			return;
 		addHandler(BEFORE_FIRE, this);
 		addHandler(KLINGON_TURN_STARTED, this);
-		eventsRegistered = true;
 	}
 
 	public void unregisterActionHandlers() {
-		// not registered?
-		if (!eventsRegistered)
-			return;
 		removeHandler(BEFORE_FIRE, this);
 		removeHandler(KLINGON_TURN_STARTED, this);
-		eventsRegistered = false;
 	}
 
 	public boolean canCloak() {
@@ -120,7 +110,7 @@ public class Klingon extends Vessel
 	public void repositionKlingon(QuadrantIndex index) {
 		if (!getImpulse().isEnabled())
 			return;
-		StarMap map = Application.get().starMap;
+		StarMap map = getStarMap();
 		Enterprise enterprise = map.enterprise;
 		// no need to move if distance is <=2 and Klingon has a clear shot at the
 		// Enterprise
@@ -139,7 +129,7 @@ public class Klingon extends Vessel
 	}
 
 	public void jumpTo(Location dest) {
-		Application app = Application.get();
+		Application app = getApplication();
 		Quadrant quadrant = app.getActiveQuadrant();
 		Location currentLocation = getLocation();
 		setLocation(dest);
@@ -149,8 +139,7 @@ public class Klingon extends Vessel
 	public void fireOnEnterprise(QuadrantIndex index) {
 		if (!getDisruptor().isEnabled())
 			return;
-		Application app = Application.get();
-		StarMap map = app.starMap;
+		StarMap map = getStarMap();
 		Enterprise enterprise = map.enterprise;
 		boolean inRange = StarMap.within_distance(this, enterprise, DISRUPTOR_RANGE_SECTORS);
 		if (!inRange)
@@ -172,12 +161,10 @@ public class Klingon extends Vessel
 	}
 
 	public void flee(QuadrantIndex index) {
-		if (canCloak() && isVisible()) {
+		if (canCloak() && isVisible())
 			cloak();
-		}
-		if (!getImpulse().isEnabled()) {
+		if (!getImpulse().isEnabled())
 			return;
-		}
 		Application app = getApplication();
 		double distance = StarMap.distance(getLocation(), app.starMap.enterprise.getLocation());
 		if (getImpulse().isEnabled() && getImpulse().getValue() >= 1) {
@@ -213,7 +200,6 @@ public class Klingon extends Vessel
 
 	@Override
 	public void destroy() {
-		unregisterActionHandlers();
 		removeHandler(this);
 		getApplication().getActiveQuadrant().getKlingons().remove(this);
 		message(getName() + " was destroyed", "klingon-destroyed");
@@ -233,7 +219,7 @@ public class Klingon extends Vessel
 	
 	@Override
 	public void onActiveQuadrantChanged(Quadrant quadrantFrom, Quadrant quadrantTo) {
-		if (!quadrantFrom.contains(this)) {
+		if (quadrantFrom.contains(this)) {
 			unregisterActionHandlers();
 		}
 		if (quadrantTo.contains(this)) {
@@ -244,7 +230,7 @@ public class Klingon extends Vessel
 			// TODO: this method is called for every klingon in the quadrant. findFreeSpot
 			// builds an index each time, which
 			// might be slow.
-			Location newLocation = Application.get().starMap.findFreeSpot(quadrantTo);
+			Location newLocation = getStarMap().findFreeSpot(quadrantTo);
 			jumpTo(newLocation);
 		}
 	}
@@ -261,7 +247,7 @@ public class Klingon extends Vessel
 		}
 		double impact = damage / (shields.getValue() + 1);
 		shields.decrease(damage);
-		BrowserAPI random = Application.get().browserAPI;
+		BrowserAPI random = getApplication().browserAPI;
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
 		if (getImpulse().isEnabled() && random.nextDouble() < impact)
 			getImpulse().setEnabled(false);

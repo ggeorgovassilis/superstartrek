@@ -29,7 +29,7 @@ public class Setup {
 			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[random.nextInt(StarClass.values().length)]);
 			q.getStars().add(star);
 		}
-		if ((x+y*8) % (64/Constants.NO_OF_STARBASES_ON_MAP) ==0) {
+		if ((x+y*Constants.SECTORS_EDGE) % ((Constants.SECTORS_EDGE*Constants.SECTORS_EDGE)/Constants.NO_OF_STARBASES_ON_MAP) ==0) {
 			StarBase starBase = new StarBase();
 			Location loc = map.findFreeSpot(q);
 			starBase.setLocation(loc);

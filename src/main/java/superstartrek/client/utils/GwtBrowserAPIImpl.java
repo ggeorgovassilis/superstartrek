@@ -119,6 +119,8 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler {
 
 	@Override
 	public void onResize(ResizeEvent event) {
+		//metrics change only when document zoom changes (in that case this method is invoked).
+		//TODO: it's possible that metrics don't change even then as zooming is transparent to the app.
 		updateMetrics();
 	}
 

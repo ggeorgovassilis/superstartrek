@@ -2,7 +2,7 @@ package superstartrek.client.model;
 
 public class Star extends Thing{
 
-	public enum StarClass {
+	public static enum StarClass {
 
 		O("\u2605", "Class O", "star-class-o"), B("\u2606", "Class B", "star-class-b"),
 		A("\u2606", "Class A", "star-class-a"), F("\u2605","Class F", "star-class-f");

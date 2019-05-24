@@ -6,9 +6,10 @@ import superstartrek.client.model.StarMap;
 
 public class Maps {
 
-	public static void renderCell(int cellX, int cellY, StarMap map, Quadrant q, String extraCss, MapCellRenderer renderer) {
+	//extraCssPadded: css must end with a blank space
+	public static void renderCell(int cellX, int cellY, StarMap map, Quadrant q, String extraCssPadded, MapCellRenderer renderer) {
 		String symbol = "";
-		String css = extraCss+(map.enterprise.getQuadrant() == q ?"has-enterprise":"");
+		String css = extraCssPadded+(map.enterprise.getQuadrant() == q ?"has-enterprise":"");
 		if (q != null) {
 			if (q.isExplored()) {
 				css+=" explored";	
