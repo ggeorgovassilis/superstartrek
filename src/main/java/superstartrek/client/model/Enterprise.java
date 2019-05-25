@@ -104,6 +104,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 		Quadrant dropQuadrant = container[0];
 		setQuadrant(dropQuadrant);
+		application.starMap.markAsExploredAround(dropQuadrant);
 		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
 		Location freeSpot = starMap.findFreeSpotAround(new QuadrantIndex(getQuadrant(), starMap), getLocation(),

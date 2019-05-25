@@ -12,12 +12,11 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.utils.Maps;
 
-public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChangeHandler<String>, QuadrantActivationHandler {
+public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChangeHandler<String> {
 
 	public LRSPresenter(Application application) {
 		super(application);
 		application.browserAPI.addHistoryListener(this);
-		addHandler(Events.QUADRANT_ACTIVATED, this);
 	}
 
 	public void quadrantWasClicked(int x, int y) {
@@ -73,9 +72,4 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 			view.hide();
 	}
 	
-	@Override
-	public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
-		application.starMap.markAsExploredAround(newQuadrant);
-	}
-
 }
