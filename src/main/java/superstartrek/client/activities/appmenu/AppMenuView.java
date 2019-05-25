@@ -10,7 +10,7 @@ import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.PopupView;
 import superstartrek.client.utils.Strings;
 
-public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHandler{
+public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHandler, IAppMenuView{
 
 	public AppMenuView(AppMenuPresenter presenter) {
 		super(presenter);
@@ -27,6 +27,7 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 		return presenter.getApplication().getResources().appMenu().getText();
 	}
 	
+	@Override
 	public void setMenuEntryEnabled(String cmd, boolean enabled) {
 		Element e = DOM.getElementById(cmd);
 		CSS.setEnabled(e, enabled);
