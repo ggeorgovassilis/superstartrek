@@ -10,14 +10,26 @@ self.addEventListener('error', function(e) {
 });
 
 self.addEventListener('fetch', function (e) {
-  e.respondWith(caches.match(e.request).then(function (response) {
+  e.respondWith(caches.match(e.request)['catch'](function(){
+	  console.log("SW error");
+  }).then(function (response) {
+	  if (response && !response.ok){
+		  var init = { "status" : 500 , "statusText" : "offline" };
+		  console.log("SW returning error");
+		  return new Response("",init);
+	  }
       if (response) { // if cache is available, respond with cache
         console.debug('HIT',e.request.url);
         return response;
-      } else {       // if there are no cache, try fetching request
-        console.debug('MISS',e.request.url);
-        return fetch(e.request);
       }
+      // if there are no cache, try fetching request
+      console.debug('MISS',e.request.url);
+      return fetch(e.request)['catch'](function(e){
+    	  console.log("SW error 2 ", e)
+		  var init = { "status" : 500 , "statusText" : "offline" };
+		  console.log("SW returning error");
+		  return new Response("",init);
+      });
 
       // You can omit if/else for console.debug & put one line below like this
 		// too.
