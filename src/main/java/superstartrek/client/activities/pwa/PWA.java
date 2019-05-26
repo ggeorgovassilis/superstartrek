@@ -102,7 +102,7 @@ public class PWA {
 		deferredInstallationPrompt = null;
 	}
 
-	public void getFileContent(String url, Callback<String[]> success, Callback<Throwable> error) {
+	public void getFileContent(String url, Callback<String[]> success) {
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
 		r.request(RequestBuilder.GET, url, new RequestCallback() {
 
@@ -112,13 +112,33 @@ public class PWA {
 					String checksumOfInstalledApplication = response.getText();
 					String dateOfInstalledApplication = response.getHeader("last-modified");
 					success.onSuccess(new String[] { checksumOfInstalledApplication, dateOfInstalledApplication });
-				}
+				} else
+					log.severe("Wrong response code " + response.getStatusCode());
 			}
 
 			@Override
 			public void onError(Request request, Throwable exception) {
-				log.severe(exception.getMessage());
-				error.onFailure(exception);
+				log.severe("getFileContent.onError: " + exception.getMessage());
+				success.onFailure(exception);
+			}
+		});
+	}
+
+	public void getLatestVersionFromServer(Callback<String> callback) {
+		getFileContent(CHECKSUM_URL + "?rnd=" + application.browserAPI.nextInt(10000), new Callback<String[]>() {
+
+			@Override
+			public void onSuccess(String[] result) {
+				String checksumOfNewestVersion = result[0];
+				log.info("Checksum of latest package : " + checksumOfNewestVersion);
+				callback.onSuccess(checksumOfNewestVersion);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				log.info("There you have it. error");
+				application.eventBus.fireEvent(Events.VERSION_CHECK_FAILED, (h) -> h.checkFailed());
+
 			}
 		});
 	}
@@ -126,23 +146,32 @@ public class PWA {
 	public void checkForNewVersion() {
 		log.info("Checking for new version");
 		Application app = application;
-		getFileContent(CHECKSUM_URL, (arr) -> {
-			String checksumOfInstalledApplication = arr[0];
-			String dateOfInstalledApplication = arr[1];
-			log.info("Installed app version " + checksumOfInstalledApplication);
-			application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
-					(h) -> h.installedAppVersionIs(checksumOfInstalledApplication, dateOfInstalledApplication));
-			getFileContent(CHECKSUM_URL + "?rnd=" + application.browserAPI.nextInt(10000), (arr2) -> {
-				String checksumOfNewestVersion = arr2[0];
-				log.info("Checksum of latest package : " + checksumOfNewestVersion);
-				boolean isSame = checksumOfInstalledApplication.equals(checksumOfNewestVersion);
-				log.info("is same: " + isSame);
-				if (isSame)
-					app.eventBus.fireEvent(Events.VERSION_IS_CURRENT, (h) -> h.versionIsCurrent());
-				else
-					app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE, (h) -> h.newVersionAvailable());
-			}, (e) -> application.eventBus.fireEvent(Events.VERSION_CHECK_FAILED, (h) -> h.checkFailed()));
-		}, (e) -> application.eventBus.fireEvent(Events.VERSION_CHECK_FAILED, (h) -> h.checkFailed()));
+		getFileContent(CHECKSUM_URL, new Callback<String[]>() {
+
+			@Override
+			public void onSuccess(String[] result) {
+				String checksumOfInstalledApplication = result[0];
+				String dateOfInstalledApplication = result[1];
+				log.info("Installed app version " + checksumOfInstalledApplication);
+				application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
+						(h) -> h.installedAppVersionIs(checksumOfInstalledApplication, dateOfInstalledApplication));
+				getLatestVersionFromServer((latestVersion) -> {
+					boolean isSame = checksumOfInstalledApplication.equals(latestVersion);
+					log.info("is same: " + isSame);
+					if (isSame)
+						app.eventBus.fireEvent(Events.VERSION_IS_CURRENT, (h) -> h.versionIsCurrent());
+					else
+						app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE, (h) -> h.newVersionAvailable());
+				});
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				log.severe("Update check failed");
+				application.eventBus.fireEvent(Events.VERSION_CHECK_FAILED, (h) -> h.checkFailed());
+			}
+		});
+
 	}
 
 	public void setupCache(Callback<Void> callback) {

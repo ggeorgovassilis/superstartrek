@@ -894,6 +894,7 @@ a.disabled,button.disabled {
 }
 
 #app-install-prompt, #update-app-prompt {
+	margin-top:45%;
 	color: black;
 	padding: 0.2em;
 	background-color:darkgray;
