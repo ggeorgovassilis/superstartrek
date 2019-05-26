@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.user.client.Random;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -16,6 +18,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double PHASER_RANGE = 3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
 	public final static double IMPULSE_CONSUMPTION = 5;
+	public final static double DEVICE_IMPACT_MODIFIER=0.3;
+	public final static double SHIELD_IMPACT_MODIFIER=0.5;
+	public final static double CHANCE_OF_AUTOREPAIR=0.3;
 
 	Application application;
 	StarMap starMap;
@@ -25,11 +30,17 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting reactor = new Setting(60);
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
+	Setting autoRepair = new Setting(1);
 	Quadrant quadrant;
 	List<Location> reachableSectors = new ArrayList<>();
 
 	int turnsSinceWarp = 0;
-
+	
+	
+	public Setting getAutoRepair() {
+		return autoRepair;
+	}
+	
 	public Setting getLrs() {
 		return lrs;
 	}
@@ -117,6 +128,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 		fireEvent(Events.THING_MOVED,
 				(h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
+		maybeAutoRepair();
 		turnsSinceWarp = 0;
 		return true;
 	}
@@ -200,6 +212,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 		impulse.decrease(distance);
 		moveToIgnoringConstraints(drop);
+		maybeAutoRepair();
+	}
+	
+	public void maybeAutoRepair() {
+		if (autoRepair.getBooleanValue() && application.browserAPI.nextDouble()<CHANCE_OF_AUTOREPAIR && canRepairProvisionally())
+			repairProvisionally();
 	}
 
 	public double computeConsumptionForImpulseNavigation(double distance) {
@@ -402,20 +420,21 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (turnsSinceWarp < 2) {
 			damage = damage * 0.5;
 		}
-		double impact = 0.5 * damage / (shields.getValue() + 1.0);
-		shields.decrease(damage);
+		double shieldImpact = SHIELD_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
+		shields.decrease(shieldImpact);
+		double deviceImpact = DEVICE_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
 		BrowserAPI random = application.browserAPI;
-		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < impact)
+		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < deviceImpact)
 			damageShields();
-		if (impulse.getCurrentUpperBound() > 0 && random.nextDouble() < impact)
+		if (impulse.getCurrentUpperBound() > 0 && random.nextDouble() < deviceImpact)
 			damageImpulse();
-		if (torpedos.isEnabled() && random.nextDouble() < impact)
+		if (torpedos.isEnabled() && random.nextDouble() < deviceImpact)
 			damageTorpedos();
-		if (phasers.getCurrentUpperBound() > 0 && random.nextDouble() < impact)
+		if (phasers.getCurrentUpperBound() > 0 && random.nextDouble() < deviceImpact)
 			damagePhasers();
-		if (autoAim.isEnabled() && random.nextDouble() < impact)
+		if (autoAim.isEnabled() && random.nextDouble() < deviceImpact)
 			damageAutoaim();
-		if (lrs.isEnabled() && random.nextDouble() < impact)
+		if (lrs.isEnabled() && random.nextDouble() < deviceImpact)
 			damageLRS();
 		fireEvent(Events.ENTERPRISE_DAMAGED, (h) -> h.onEnterpriseDamaged(Enterprise.this));
 	}

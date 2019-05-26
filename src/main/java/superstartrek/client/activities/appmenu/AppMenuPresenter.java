@@ -9,7 +9,7 @@ import superstartrek.client.bus.Commands;
 import superstartrek.client.model.Setting;
 
 public class AppMenuPresenter extends BasePresenter<IAppMenuView>
-		implements PopupViewPresenter<IAppMenuView>, AppMenuHandler, ValueChangeHandler<String>{
+		implements PopupViewPresenter<IAppMenuView>, AppMenuHandler, ValueChangeHandler<String> {
 
 	String gotoStateAfterMenuHidden;
 
@@ -17,11 +17,12 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 		super(application);
 		addHandler(Commands.APP_MENU_SHOW, this);
 		application.browserAPI.addHistoryListener(this);
-		
+
 	}
 
 	public void updateCommands() {
 		view.setMenuEntryEnabled("cmd_autoaim", application.starMap.enterprise.getAutoAim().getBooleanValue());
+		view.setMenuEntryEnabled("cmd_autorepair", application.starMap.enterprise.getAutoRepair().getBooleanValue());
 	}
 
 	@Override
@@ -49,6 +50,11 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 		autoaim.setValue(!autoaim.getBooleanValue() && autoaim.isEnabled());
 	}
 
+	public void toggleAutoRepair() {
+		Setting autorepair = application.starMap.enterprise.getAutoRepair();
+		autorepair.setValue(!autorepair.getBooleanValue() && autorepair.isEnabled());
+	}
+
 	public void restart() {
 		application.browserAPI.confirm("All progress will be lost. Continue?", (result) -> {
 			if (result)
@@ -71,6 +77,11 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 			// hideMenu called implicitly through history change event
 			gotoStateAfterMenuHidden = "manual";
 			break;
+		case "cmd_autorepair":
+			toggleAutoRepair();
+			updateCommands();
+			hideMenu();
+			break;
 		}
 
 	}
@@ -87,5 +98,5 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	public void userWantsToDismissPopup() {
 		hideMenu();
 	}
-	
+
 }
