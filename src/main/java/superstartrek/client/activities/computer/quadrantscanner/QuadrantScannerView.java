@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
@@ -42,6 +43,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	protected HtmlWidget createWidgetImplementation() {
 		HtmlWidget p = new HtmlWidget(DOM.createDiv());
 		p.getElement().setId("quadrantscan");
+		p.getElement().setAttribute("sadasd", "asdasd");
 		return p;
 	}
 
@@ -77,7 +79,9 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		try {
 			int x = Integer.parseInt(e.getAttribute("data-x"));
 			int y = Integer.parseInt(e.getAttribute("data-y"));
-			presenter.onSectorSelected(x, y, e.getOffsetLeft(), e.getOffsetTop());
+			int dy = getElement().getAbsoluteTop();
+			int dx = getElement().getAbsoluteLeft();
+			presenter.onSectorSelected(x, y, dx+e.getOffsetLeft(), dy+e.getOffsetTop());
 			event.stopPropagation();
 			event.preventDefault();
 		} catch (Exception ex) {

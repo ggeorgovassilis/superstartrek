@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -44,6 +45,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	protected void decorateScreen() {
+		GWT.log("2ssss");
 		super.decorateScreen();
 		addStyleName("computer-screen");
 		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
@@ -60,10 +62,10 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		SRSView srsView = new SRSView(srsPresenter);
 		panel.addAndReplaceElement(srsView, "shortrangescan");
 		eRepair = panel.getElementById("cmd_repair");
-		eStatusIconImpulse = CSS.querySelectorAll("#cmd_showStatusReport .impulse").getItem(0);
-		eStatusIconTactical = CSS.querySelectorAll("#cmd_showStatusReport .tactical-computer").getItem(0);
-		eStatusIconTorpedos = CSS.querySelectorAll("#cmd_showStatusReport .torpedo-bay").getItem(0);
-		eStatusIconPhasers = CSS.querySelectorAll("#cmd_showStatusReport .phasers").getItem(0);
+		eStatusIconImpulse = panel.getElementById("short-status-impulse");
+		eStatusIconTactical = panel.getElementById("short-status-tactical-computer");
+		eStatusIconTorpedos = panel.getElementById("short-status-torpedo-bay");
+		eStatusIconPhasers = panel.getElementById("short-status-phasers");
 		eMaxAntimatter = CSS.querySelectorAll("#cmd_showStatusReport .progress-indicator").getItem(0);
 		eMaxShields = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		eValueShields = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
