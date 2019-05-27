@@ -132,6 +132,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		turnsSinceWarp = 0;
 		return true;
 	}
+	
+	public List<Location> getLastReachableSectors(){
+		return reachableSectors;
+	}
 
 	public List<Location> findReachableSectors() {
 		reachableSectors.clear();
@@ -507,6 +511,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	@Override
 	public void beforeGameRestart() {
 		removeHandler(this);
+		reachableSectors.clear();
 	}
 
 }

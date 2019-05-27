@@ -168,15 +168,15 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			updateSector(quadrant, target.getLocation().getX(), target.getLocation().getY());
 	}
 
-	public void clearAllNavigationTargets() {
-		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
-			for (int x = 0; x < Constants.SECTORS_EDGE; x++)
-				view.removeCssFromCell(x, y, "navigation-target");
+	public void clearNavigationTargets(List<Location> locations) {
+		for (Location l:locations)
+				view.removeCssFromCell(l.getX(), l.getY(), "navigation-target");
 	}
 
 	public void updateMapWithReachableSectors() {
-		List<Location> sectors = application.starMap.enterprise.findReachableSectors();
-		clearAllNavigationTargets();
+		Enterprise enterprise = getStarMap().enterprise;
+		clearNavigationTargets(enterprise.getLastReachableSectors());
+		List<Location> sectors = enterprise.findReachableSectors();
 		for (Location l : sectors)
 			markSectorAsNavigationTarget(l.getX(), l.getY());
 	}
