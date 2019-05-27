@@ -207,6 +207,10 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	background-color: midnightblue;
 }
 
+
+.container{
+	overflow:hidden;
+}
 /**
  * Short range scan
  */
