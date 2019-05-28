@@ -129,5 +129,13 @@ public class TestComputerPresenter extends BaseTest{
 		verify(view).updateShields(90, 90, 100);
 	}
 
+	@Test
+	public void test_statusButtonView() {
+		enterprise.getTorpedos().setEnabled(false);
+		enterprise.getPhasers().damage(10);
+		presenter.updateStatusButtonView();
+		verify(view).updateShortStatus("", "", "damaged damage-medium", "damaged damage-offline");
+	}
+	
 
 }

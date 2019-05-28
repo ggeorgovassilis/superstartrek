@@ -37,10 +37,11 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos) {
-		eStatusIconImpulse.setClassName(cssImpulse);
-		eStatusIconTactical.setClassName(cssTactical);
-		eStatusIconPhasers.setClassName(cssPhasers);
-		eStatusIconTorpedos.setClassName(cssTorpedos);
+		final String sf = "status-flag ";
+		eStatusIconImpulse.setClassName(sf+cssImpulse);
+		eStatusIconTactical.setClassName(sf+cssTactical);
+		eStatusIconPhasers.setClassName(sf+cssPhasers);
+		eStatusIconTorpedos.setClassName(sf+cssTorpedos);
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eLrsButton = DOM.getElementById("lrs-button");
 		setRepairButtonEnabled(false);
 		addHandler(this, ClickEvent.getType());
-		DOM.sinkEvents(panel.getElementById("helm"), Event.ONCLICK);
+		DOM.sinkEvents(panel.getElement(), Event.ONCLICK);
 	}
 
 	@Override

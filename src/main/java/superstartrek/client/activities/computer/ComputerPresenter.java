@@ -37,7 +37,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super(application);
-		GWT.log("_ss");
+		GWT.log("_s");
 		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
 		addHandler(Commands.SHOW_COMPUTER, this);
@@ -84,12 +84,20 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		// this has to go after setting the CSS or CSS will be overwritten
 		view.setRepairButtonEnabled(canShowDockButton || canShowRepairButton);
 	}
+	
+	String damageClass(Setting setting) {
+		String css = CSS.damageClass(setting);
+		if (setting.health()<1)
+			css="damaged "+css;
+		return css;
+	}
 
+	
 	public void updateStatusButtonView() {
-		String cssImpulse = CSS.damageClass(enterprise.getImpulse());
-		String cssTactical = CSS.damageClass(enterprise.getAutoAim());
-		String cssPhasers = CSS.damageClass(enterprise.getPhasers());
-		String cssTorpedos = CSS.damageClass(enterprise.getTorpedos());
+		String cssImpulse = damageClass(enterprise.getImpulse());
+		String cssTactical = damageClass(enterprise.getAutoAim());
+		String cssPhasers = damageClass(enterprise.getPhasers());
+		String cssTorpedos = damageClass(enterprise.getTorpedos());
 		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
 		if (enterprise.getLrs().isEnabled())
 			view.enableLlrsButton();
