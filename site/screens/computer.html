@@ -1,44 +1,37 @@
-<section id="helm">
-	<div class="short-range-scan-container">
-		<table id="shortrangescan"></table>
+	<table id="shortrangescan"></table>
+	<div class=container>
+		<button id="cmd_repair" class="half-width">
+			<span class="repair-icon visible-with-repair">Repair</span><span
+				class="dock-icon visible-with-dock">Dock at star base</span>
+		</button>
+		<button accesskey="w" id="cmd_skip" class="half-width">Skip</button>
 	</div>
-	<div id="commandbar" class="command-bar">
-		<div>
-			<button id="cmd_repair" class="half-width">
-				<span class="repair-icon visible-with-repair">Repair</span><span
-					class="dock-icon visible-with-dock">Dock at star base</span>
-			</button>
-			<button accesskey="w" id="cmd_skip" class="half-width">Skip</button>
+	<div id="quadrantscancontainer"></div>
+	<div id="commandbar" class="command-bar container">
+
+		<div id="srs_heading" class="container short-range-scan-label">
+			<a id="app-menu-button" href="#appmenu" class="half-width">SRS <span
+				id="quadrant_name"></span></a> <a id="lrs-button" accesskey="l"
+				class="half-width" href="#longrangescan">LRS</a>
 		</div>
 
-		<div id="quadrantscancontainer"></div>
-
-
-<header id="srs_heading" class="short-range-scan-label">
-<a id="app-menu-button" href="#appmenu" class="half-width">SRS <span id="quadrant_name"></span></a>
-<a id="lrs-button" accesskey="l" class="half-width" href="#longrangescan">LRS</a>
-</header>
-
-		<div class=container>
-			<div class="status-icons">
-				<span id="short-status-impulse">Impulse</span><span
-					id="short-status-tactical-computer">Tactical</span><span
-					id="short-status-phasers">Phasers</span><span
-					id="short-status-torpedo-bay">Torpedos</span>
-			</div>
-
-			<button accesskey="s" id="cmd_toggleShields" class="progress-bar">
-				<span class="shields-icon"></span> <span class="max-indicator"></span>
-				<span class="progress-indicator"></span> <span class="progress-text">Shields</span>
-			</button>
-			<a accesskey="r" id="cmd_showStatusReport" href="#statusreport"
-				class="progress-bar"> <span class="report-icon"></span> <span
-				class="progress-indicator"></span><span class=progress-text>Status
-					report</span>
-			</a>
+		<div class="status-flags">
+			<span id="short-status-impulse" class="status-flag">Impulse</span><span
+				id="short-status-tactical-computer" class="status-flag">Tactical</span><span
+				id="short-status-phasers" class="status-flag">Phasers</span><span
+				id="short-status-torpedo-bay" class="status-flag">Torpedos</span>
 		</div>
+
+		<button accesskey="s" id="cmd_toggleShields" class="progress-bar">
+			<span class="shields-icon"></span> <span class="max-indicator"></span>
+			<span class="progress-indicator"></span> <span class="progress-text">Shields</span>
+		</button>
+		<a accesskey="r" id="cmd_showStatusReport" href="#statusreport"
+			class="progress-bar"> <span class="report-icon"></span> <span
+			class="progress-indicator"></span><span class=progress-text>Status
+				report</span>
+		</a>
 	</div>
 
-</section>
 <div id=stardate></div>
 <div id=score></div>

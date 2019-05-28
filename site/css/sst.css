@@ -16,7 +16,7 @@ body, html, div, table, tr, td, span, header, section {
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-header {
+header, section {
 	display: block;
 	overflow: hidden;
 }
@@ -216,7 +216,6 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
  */
 .short-range-scan-container {
 	overflow: hidden;
-	float: left;
 	margin-right: 0.5em;
 	background-color: rgba(10, 10, 10, 0.5);
 	width: 100%;
@@ -644,24 +643,28 @@ a.progress-bar {
 	width: 10em;
 }
 
-.status-icons {
+.status-flags {
 	display: block;
 	margin-left: 0em;
 	overflow: hidden;
-	background-color: darkslategray;
+	background-color: darkolivegreen;
 	font-size: 0.8em;
 	text-align:center;
 }
 
-#cmd_toggleShields .progress-text{
-	margin-left:3em;
-}
-
-.status-icons span {
+.status-flag {
 	display: block;
 	float: left;
-	width: 24%;
+	width: 25%;
 	line-height: 1.5em;
+}
+
+.status-flag.damaged{
+	background-color:darkred;
+}
+
+#cmd_toggleShields .progress-text{
+	margin-left:3em;
 }
 
 .manual .toc {
