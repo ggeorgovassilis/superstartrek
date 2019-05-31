@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -37,7 +36,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super(application);
-		GWT.log("_s");
 		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
 		addHandler(Commands.SHOW_COMPUTER, this);

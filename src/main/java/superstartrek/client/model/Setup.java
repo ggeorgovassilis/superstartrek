@@ -18,13 +18,18 @@ public class Setup {
 		this.application = application;
 	}
 	
-	public Quadrant makeQuadrant(StarMap map, int x, int y) {
-		if (Constants.SECTORS_EDGE!=8)
+	void maybeShouldWarn(int currentSectors, int hardcodedSectors) {
+		if (currentSectors!=hardcodedSectors)
 			throw new RuntimeException("Names have not beed coded for anything but 8x8 quadrants yet");
+	}
+	
+	public Quadrant makeQuadrant(StarMap map, int x, int y) {
+		maybeShouldWarn(Constants.SECTORS_EDGE, 8);
 		Quadrant q = new Quadrant(names[(int)Math.floor((y*+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
 		BrowserAPI random = Application.get().browserAPI;
 		int stars = Constants.MIN_STARS_IN_QUADRANT+random.nextInt(Constants.MAX_STARS_IN_QUADRANT-Constants.MIN_STARS_IN_QUADRANT);
 		while (stars-->0) {
+			//TODO: this is potentially slow, as findFreeSpot creates a QuadrantIndex over and over
 			Location loc = map.findFreeSpot(q);
 			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[random.nextInt(StarClass.values().length)]);
 			q.getStars().add(star);
