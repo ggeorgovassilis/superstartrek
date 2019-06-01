@@ -10,11 +10,12 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.CSS;
+import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Timer;
 
 public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
@@ -28,17 +29,17 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	protected Widget createWidgetImplementation() {
-		return new HTMLPanel(presenter.getApplication().getResources().sectorContextMenu().getText());
+		return new HtmlWidget(DOM.createDiv(), presenter.getApplication().getResources().sectorContextMenu().getText());
 	}
 
 	@Override
 	public void decorateWidget() {
-		addDomHandler(this, MouseDownEvent.getType());
-		addDomHandler(this, ClickEvent.getType());
-		addDomHandler(this, TouchStartEvent.getType());
 		addStyleName("sector-context-menu");
 		super.decorateWidget();
 		hide();
+		addDomHandler(this, MouseDownEvent.getType());
+		addDomHandler(this, ClickEvent.getType());
+		addDomHandler(this, TouchStartEvent.getType());
 		presenter.getApplication().browserAPI.addToPage(this);
 	}
 
@@ -68,7 +69,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	public void enableButton(String id, boolean status) {
-		HTMLPanel panel = (HTMLPanel) getWidget();
+		HtmlWidget panel = (HtmlWidget) getWidget();
 		Element e = panel.getElementById(id).getParentElement();
 		CSS.setEnabled(e, status);
 	}
