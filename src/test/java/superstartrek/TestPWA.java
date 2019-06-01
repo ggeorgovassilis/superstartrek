@@ -102,6 +102,7 @@ public class TestPWA extends BaseTest{
 		assertTrue(newVersionAvailable.get());
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void test_setupCache_success() {
 		Callback<Void> callback = mock(Callback.class);
@@ -117,6 +118,7 @@ public class TestPWA extends BaseTest{
 		verify(callback).onSuccess(null);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void test_setupCache_failure() {
 		Callback<Void> callback = mock(Callback.class);

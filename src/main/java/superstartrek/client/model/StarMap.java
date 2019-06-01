@@ -89,7 +89,7 @@ public class StarMap {
 		}
 	}
 
-	public void walkLine(int x0, int y0, int x1, int y1, Walker callback) {
+	public static void walkLine(int x0, int y0, int x1, int y1, Walker callback) {
 		int sx = 0;
 		int sy = 0;
 		int err = 0;
@@ -134,7 +134,7 @@ public class StarMap {
 	 * @param cap  stop after finding that many obstacles
 	 * @return
 	 */
-	public List<Thing> findObstaclesInLine(QuadrantIndex q, Location from, Location to, int cap) {
+	public static List<Thing> findObstaclesInLine(QuadrantIndex q, Location from, Location to, int cap) {
 		List<Thing> found = new ArrayList<>();
 		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), (x, y) -> {
 			Thing thing = q.findThingAt(x, y);

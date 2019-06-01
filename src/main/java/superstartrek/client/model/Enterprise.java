@@ -3,8 +3,6 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.user.client.Random;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -97,7 +95,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 
 		Quadrant[] container = new Quadrant[1];
-		starMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationQuadrant.getX(),
+		StarMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationQuadrant.getX(),
 				destinationQuadrant.getY(), (x, y) -> {
 					Quadrant q = starMap.getQuadrant(x, y);
 					container[0] = q;
@@ -165,7 +163,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 				// squared distance check saves one sqrt() call and thus is faster
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
-				starMap.walkLine(lx, ly, x, y, (x1, y1) -> {
+				StarMap.walkLine(lx, ly, x, y, (x1, y1) -> {
 					if (visitLog[x1][y1] != UNKNOWN)
 						return visitLog[x1][y1] == REACHABLE;
 					// from here on, visitLog is known to be 0
@@ -198,7 +196,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		double distance = StarMap.distance(this.getLocation(), loc);
 		Location[] trace = new Location[] { getLocation() };
 		QuadrantIndex index = new QuadrantIndex(quadrant, starMap);
-		starMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
+		StarMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
 			Thing thing = index.findThingAt(x, y);
 			if (thing != null && thing != Enterprise.this) {
 				if (Klingon.isCloakedKlingon(thing))
@@ -242,7 +240,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return;
 		}
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
-		List<Thing> things = application.starMap.findObstaclesInLine(index, getLocation(), sector,
+		List<Thing> things = StarMap.findObstaclesInLine(index, getLocation(), sector,
 				Constants.SECTORS_EDGE);
 		things.remove(this);
 		getTorpedos().decrease(1);

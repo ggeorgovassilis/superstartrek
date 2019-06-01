@@ -98,7 +98,7 @@ public class Klingon extends Vessel
 
 	public boolean hasClearShotAt(QuadrantIndex index, Location target, Enterprise enterprise, StarMap map) {
 		if (StarMap.within_distance(target, getLocation(), DISRUPTOR_RANGE_SECTORS)) {
-			List<Thing> obstacles = map.findObstaclesInLine(index, getLocation(), target, 2);
+			List<Thing> obstacles = StarMap.findObstaclesInLine(index, getLocation(), target, 2);
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
 			if (obstacles.isEmpty())
@@ -141,8 +141,7 @@ public class Klingon extends Vessel
 			return;
 		StarMap map = getStarMap();
 		Enterprise enterprise = map.enterprise;
-		boolean inRange = StarMap.within_distance(this, enterprise, DISRUPTOR_RANGE_SECTORS);
-		if (!inRange)
+		if (!StarMap.within_distance(this, enterprise, DISRUPTOR_RANGE_SECTORS))
 			return;
 		if (!hasClearShotAt(index, enterprise.getLocation(), enterprise, map))
 			return;
@@ -163,25 +162,21 @@ public class Klingon extends Vessel
 	public void flee(QuadrantIndex index) {
 		if (canCloak() && isVisible())
 			cloak();
-		if (!getImpulse().isEnabled())
+		if (!getImpulse().isEnabled() || getImpulse().getValue() < 1)
 			return;
 		Application app = getApplication();
 		double distance = StarMap.distance(getLocation(), app.starMap.enterprise.getLocation());
-		if (getImpulse().isEnabled() && getImpulse().getValue() >= 1) {
-			int triesLeft = 5;
-			Location loc = null;
-			do {
-				loc = app.starMap.findFreeSpotAround(index, getLocation(), 1 + (int) getImpulse().getValue());
-				if (loc != null) {
-					double newDistance = StarMap.distance(app.starMap.enterprise.getLocation(), loc);
-					if (newDistance <= distance)
-						loc = null;
+		int triesLeft = 3;
+		while (triesLeft-- > 0) {
+			Location loc = app.starMap.findFreeSpotAround(index, getLocation(), 1 + (int) getImpulse().getValue());
+			if (loc != null) {
+				double newDistance = StarMap.distance(app.starMap.enterprise.getLocation(), loc);
+				if (newDistance > distance) {
+					triesLeft = 0;
+					jumpTo(loc);
 				}
-				triesLeft--;
-			} while (triesLeft > 0 && loc == null);
-			if (loc != null)
-				jumpTo(loc);
-		}
+			}
+		} 
 	}
 
 	@Override
@@ -215,8 +210,6 @@ public class Klingon extends Vessel
 		getShields().setValue(getShields().getCurrentUpperBound());
 	}
 
-	
-	
 	@Override
 	public void onActiveQuadrantChanged(Quadrant quadrantFrom, Quadrant quadrantTo) {
 		if (quadrantFrom.contains(this)) {

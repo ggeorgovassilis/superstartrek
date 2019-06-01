@@ -36,6 +36,7 @@ public class TestAppMenuPresenter extends BaseTest {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void test_onMenuItemClicked_restart() {
 

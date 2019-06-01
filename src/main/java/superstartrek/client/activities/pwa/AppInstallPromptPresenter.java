@@ -1,7 +1,5 @@
 package superstartrek.client.activities.pwa;
 
-import com.google.gwt.user.client.Cookies;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
