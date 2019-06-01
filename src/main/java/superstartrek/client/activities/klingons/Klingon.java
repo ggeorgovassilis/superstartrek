@@ -27,32 +27,36 @@ public class Klingon extends Vessel
 	public static enum ShipClass {
 
 		Raider("a Klingon raider", 50, 10,
-				"<div class=vessel><span class=bridge>c</span><span class=fuselage>-</span><span class=wings>}</span></div>"),
+				"<div class=vessel><span class=bridge>c</span><span class=fuselage>-</span><span class=wings>}</span></div>",
+				100),
 		BirdOfPrey("a Bird-of-prey", 100, 20,
-				"<div class=vessel><span class=bridge>C</span><span class=fuselage>-</span><span class=wings>D</span></div>");
+				"<div class=vessel><span class=bridge>C</span><span class=fuselage>-</span><span class=wings>D</span></div>",
+				300);
 
-		ShipClass(String label, int shields, int disruptor, String symbol) {
+		ShipClass(String label, int shields, int disruptor, String symbol, int xp) {
 			this.label = label;
 			this.shields = shields;
 			this.symbol = symbol;
 			this.disruptor = disruptor;
+			this.xp = xp;
 		}
 
 		public final String label;
 		public final int shields;
 		public final String symbol;
 		public final int disruptor;
+		public final int xp;
 	}
 
 	final Setting disruptor;
 	final Setting cloak;
 	final static int MAX_SECTOR_SPEED = 1;
 	final static int DISRUPTOR_RANGE_SECTORS = 2;
-	public final ShipClass shipClass;
+	final int xp;
 
 	public Klingon(ShipClass c) {
 		super(new Setting(1), new Setting(c.shields));
-		this.shipClass = c;
+		this.xp = c.xp;
 		cloak = new Setting(1);
 		setName(c.label);
 		setSymbol(c.symbol);
@@ -60,6 +64,10 @@ public class Klingon extends Vessel
 		this.disruptor = new Setting(c.disruptor);
 		addHandler(QUADRANT_ACTIVATED, this);
 		addHandler(GAME_RESTART, this);
+	}
+
+	public int getXp() {
+		return xp;
 	}
 
 	/*
@@ -182,10 +190,7 @@ public class Klingon extends Vessel
 	@Override
 	public void onKlingonTurnStarted() {
 		// Reminder: only klingons in the active sector receive this event
-		Application app = getApplication();
-		StarMap map = app.starMap;
-		Quadrant quadrant = app.getActiveQuadrant();
-		QuadrantIndex index = new QuadrantIndex(quadrant, map);
+		QuadrantIndex index = new QuadrantIndex(getApplication().getActiveQuadrant(), getStarMap());
 		if (!getDisruptor().isEnabled())
 			flee(index);
 		else

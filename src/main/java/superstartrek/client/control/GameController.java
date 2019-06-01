@@ -4,7 +4,6 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
@@ -96,8 +95,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		if (!Klingon.is(vessel))
 			return;
 		Klingon klingon = Klingon.as(vessel);
-		getScoreKeeper().addScore(klingon.shipClass == ShipClass.Raider ? ScoreKeeper.POINTS_KLINGON_RAIDER_DESTROYED
-				: ScoreKeeper.POINTS_KLINGON_BOF_DESTROYED);
+		getScoreKeeper().addScore(klingon.getXp());
 		if (!application.starMap.hasKlingons()) {
 			gameOver(GameOutcome.won, "All klingons destroyed");
 		}
