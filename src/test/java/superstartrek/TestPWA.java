@@ -10,10 +10,12 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.activities.pwa.http.Request;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
+import superstartrek.client.activities.pwa.promise.Promise;
 import superstartrek.client.bus.Events;
 import superstartrek.client.utils.BrowserAPI;
 
@@ -100,4 +102,33 @@ public class TestPWA extends BaseTest{
 		assertTrue(newVersionAvailable.get());
 	}
 	
+	@Test
+	public void test_setupCache_success() {
+		Callback<Void> callback = mock(Callback.class);
+		Promise<Boolean> promise = mock(Promise.class);
+		when(cache.queryCacheExistence("sst1")).thenReturn(promise);
+		when(promise.then(any(Callback.class))).thenAnswer((invocation)->{
+			Callback<Boolean> c = (Callback)invocation.getArguments()[0];
+			c.onSuccess(true);
+			return null;
+		});
+		pwa.setupCache(callback);
+		verify(promise).then(any(Callback.class));
+		verify(callback).onSuccess(null);
+	}
+	
+	@Test
+	public void test_setupCache_failure() {
+		Callback<Void> callback = mock(Callback.class);
+		Promise<Boolean> promise = mock(Promise.class);
+		when(cache.queryCacheExistence("sst1")).thenReturn(promise);
+		when(promise.then(any(Callback.class))).thenAnswer((invocation)->{
+			Callback<Boolean> c = (Callback)invocation.getArguments()[0];
+			c.onSuccess(false);
+			return null;
+		});
+		pwa.setupCache(callback);
+		verify(promise).then(any(Callback.class));
+		verify(cache).cacheFiles(eq("sst1"), any(new String[0].getClass()), eq(callback));
+	}
 }
