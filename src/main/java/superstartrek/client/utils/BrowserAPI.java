@@ -20,6 +20,8 @@ public interface BrowserAPI {
 	
 	boolean hasKeyboard();
 	
+	String getCookie(String name);
+	void setCookie(String name, String value);
 	int nextInt(int upperBound);
 	double nextDouble();
 	

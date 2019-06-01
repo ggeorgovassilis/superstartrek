@@ -10,6 +10,7 @@ import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Random;
@@ -146,6 +147,16 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	@Override
 	public void onKeyDown(KeyDownEvent event) {
 		bus.fireEvent(Events.KEY_PRESSED, (h) -> h.onKeyPressed(event.getNativeKeyCode()));
+	}
+
+	@Override
+	public String getCookie(String name) {
+		return Cookies.getCookie(name);
+	}
+
+	@Override
+	public void setCookie(String name, String value) {
+		Cookies.setCookie(name, value);
 	}
 
 }

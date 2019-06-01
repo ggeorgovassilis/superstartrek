@@ -8,7 +8,7 @@ import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.bus.Events;
 import superstartrek.client.utils.Strings;
 
-public class AppInstallPromptPresenter extends BasePresenter<AppInstallPromptView> implements ApplicationLifecycleHandler, PopupViewPresenter<AppInstallPromptView>{
+public class AppInstallPromptPresenter extends BasePresenter<IAppInstallPromptView> implements ApplicationLifecycleHandler, PopupViewPresenter<IAppInstallPromptView>{
 
 	public AppInstallPromptPresenter(Application application) {
 		super(application);
@@ -16,12 +16,12 @@ public class AppInstallPromptPresenter extends BasePresenter<AppInstallPromptVie
 	}
 	
 	public boolean didUserForbidInstallation() {
-		String v = Cookies.getCookie("neverinstall");
+		String v = getApplication().browserAPI.getCookie("neverinstall");
 		return !Strings.isEmpty(v);
 	}
 	
 	public void rememberThatUserForbidsInstallation() {
-		Cookies.setCookie("neverinstall", "never");
+		getApplication().browserAPI.setCookie("neverinstall", "never");
 	}
 	
 	@Override

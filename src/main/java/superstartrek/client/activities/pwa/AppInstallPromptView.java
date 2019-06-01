@@ -4,7 +4,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import superstartrek.client.activities.PopupView;
 
-public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> {
+public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> implements IAppInstallPromptView {
 
 	public AppInstallPromptView(AppInstallPromptPresenter presenter) {
 		super(presenter);
