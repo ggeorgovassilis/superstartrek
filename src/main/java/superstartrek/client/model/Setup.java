@@ -25,7 +25,7 @@ public class Setup {
 	
 	public Quadrant makeQuadrant(StarMap map, int x, int y) {
 		maybeShouldWarn(Constants.SECTORS_EDGE, 8);
-		Quadrant q = new Quadrant(names[(int)Math.floor((y*+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
+		Quadrant q = new Quadrant(names[(int)Math.floor((y*8+x)/4)]+ " "+roman[(y*8+x) % 4],x,y);
 		BrowserAPI random = Application.get().browserAPI;
 		int stars = Constants.MIN_STARS_IN_QUADRANT+random.nextInt(Constants.MAX_STARS_IN_QUADRANT-Constants.MIN_STARS_IN_QUADRANT);
 		while (stars-->0) {

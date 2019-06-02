@@ -35,6 +35,8 @@ import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
+import superstartrek.client.persistence.GameSaver;
+import superstartrek.client.persistence.StarMapSerialiser;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.utils.GwtBrowserAPIImpl;
 import superstartrek.client.utils.Timer;
@@ -87,6 +89,11 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	protected void setupStarMap() {
 		Setup setup = new Setup(this);
 		starMap = setup.createNewMap();
+	}
+	
+	public void saveGame() {
+		GameSaver gs = new GameSaver();
+		gs.saveGame(this);
 	}
 
 	protected void setupScreens() {
