@@ -82,7 +82,7 @@ public class TestGameController extends BaseTest {
 
 		k2.destroy();
 		assertEquals(1, bus.getFiredCount(Events.GAME_OVER));
-		assertEquals(3, bus.getFiredCount(Events.MESSAGE_POSTED));
+		assertEquals(4, bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 
 }

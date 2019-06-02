@@ -111,12 +111,14 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 	public void gameWon() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_GAME_WON);
 		message("Congratulations, all Klingons were destroyed.", "gamewon");
+		message("Your score is "+getScoreKeeper().getScore(), "score");
 	}
 
 	@Override
 	public void gameLost() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_ENTERPRISE_DESTROYED);
 		message("The Enterprise was destroyed.", "gameover");
+		message("Your score is "+getScoreKeeper().getScore(), "score");
 	}
 
 	@Override

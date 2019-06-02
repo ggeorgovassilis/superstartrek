@@ -374,6 +374,11 @@ margin-bottom:0.5em;
 	font-size: 120%;
 }
 
+#messages-content>li.score {
+	color: gold;
+	font-size: 120%;
+}
+
 #messages-content>li.klingon-uncloaked {
 	color: yellow;
 }
