@@ -12,4 +12,8 @@ public class StarBase extends Thing{
 		this();
 		setLocation(l);
 	}
+	
+	public static boolean is(Thing thing) {
+		return thing instanceof StarBase;
+	}
 }

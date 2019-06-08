@@ -86,6 +86,10 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 			hideMenu();
 			application.saveGame();
 			break;
+		case "cmd_load":
+			hideMenu();
+			application.loadGame();
+			break;
 		}
 
 	}

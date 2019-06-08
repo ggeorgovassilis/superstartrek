@@ -2,7 +2,7 @@ package superstartrek.client.model;
 
 public class Setting {
 
-	protected final double maximum;
+	protected double maximum;
 	protected double currentUpperBound;
 	protected double value;
 	protected boolean enabled=true;
@@ -11,6 +11,10 @@ public class Setting {
 		this.maximum = maximum;
 		this.currentUpperBound = maximum;
 		this.value = maximum;
+	}
+	
+	public void setMaximum(double maximum) {
+		this.maximum = maximum;
 	}
 
 	public boolean isEnabled() {

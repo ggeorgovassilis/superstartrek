@@ -18,6 +18,10 @@ public abstract class Vessel extends Thing{
 		this.shields = shields;
 	}
 	
+	protected Vessel(){
+		this(new Setting(0), new Setting(0));
+	}
+	
 	
 	public void destroy() {
 	}

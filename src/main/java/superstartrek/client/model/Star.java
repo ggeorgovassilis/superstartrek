@@ -24,6 +24,9 @@ public class Star extends Thing{
 		setCss("star " + sc.css);
 		setLocation(Location.location(x, y));
 	}
+	
+	public Star() {
+	}
 
 	public Star(int x, int y, StarClass sc) {
 		this(x, y, true, sc);

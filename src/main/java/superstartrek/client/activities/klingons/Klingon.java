@@ -48,12 +48,16 @@ public class Klingon extends Vessel
 		public final int xp;
 	}
 
-	final Setting disruptor;
-	final Setting cloak;
+	Setting disruptor;
+	Setting cloak;
 	final static int MAX_SECTOR_SPEED = 1;
 	final static int DISRUPTOR_RANGE_SECTORS = 2;
-	final int xp;
+	int xp;
 
+	public Klingon() {
+		this(ShipClass.BirdOfPrey);
+	}
+	
 	public Klingon(ShipClass c) {
 		super(new Setting(1), new Setting(c.shields));
 		this.xp = c.xp;

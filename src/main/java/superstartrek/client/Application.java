@@ -95,6 +95,11 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		GameSaver gs = new GameSaver();
 		gs.saveGame(this);
 	}
+	
+	public void loadGame() {
+		GameSaver gs = new GameSaver();
+		gs.loadGame(this);
+	}
 
 	protected void setupScreens() {
 		// since every presenter registers itself as an event listener they won't be

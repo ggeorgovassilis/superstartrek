@@ -100,6 +100,8 @@ public class StarMapSerialiser {
 	public void serialise(StarMap map, Quadrant quadrant) {
 		sb.append("{");
 		sb.append("\"name\":\"").append(quadrant.getName()).append("\",\n");
+		sb.append("\"x\":").append(quadrant.getX()).append(",\n");
+		sb.append("\"y\":").append(quadrant.getY()).append(",\n");
 		sb.append("\"things\":[");
 		List<Thing> things = map.getEverythingIn(quadrant);
 		for (Thing thing:things) {
@@ -112,6 +114,7 @@ public class StarMapSerialiser {
 	}
 	
 	public String serialise(StarMap map) {
+		sb.append("{\n\"quadrants\":");
 		sb.append("[");
 		for (int y=0;y<Constants.SECTORS_EDGE;y++) 
 		for (int x=0;x<Constants.SECTORS_EDGE;x++) {
@@ -119,7 +122,7 @@ public class StarMapSerialiser {
 				if (!(x==Constants.SECTORS_EDGE-1 && x==y))
 					sb.append(",\n");
 			}
-		sb.append("]");
+		sb.append("]}");
 		return sb.toString();
 	}
 	
