@@ -13,7 +13,7 @@ public class GameSaver {
 	
 
 	public void saveGame(Application app) {
-		StarMapSerialiser sms = new StarMapSerialiser();
+		StarMapSerialiser sms = new StarMapSerialiser(app);
 		String json = sms.serialise(app.starMap);
 		GWT.log(json);
 		JSONValue v = JSONParser.parseStrict(json);
@@ -30,5 +30,6 @@ public class GameSaver {
 		app.starMap = starMap;
 		app.eventBus.fireEvent(Events.GAME_STARTED, (h)->h.onGameStarted(starMap));
 		app.browserAPI.postHistoryChange("computer");
+		app.eventBus.fireEvent(Events.TURN_STARTED, (h)->h.onTurnStarted());
 	}
 }

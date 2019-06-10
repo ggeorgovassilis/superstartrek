@@ -68,6 +68,7 @@ public class Klingon extends Vessel
 		this.disruptor = new Setting(c.disruptor);
 		addHandler(QUADRANT_ACTIVATED, this);
 		addHandler(GAME_RESTART, this);
+		addHandler(GAME_STARTED, this);
 	}
 
 	public int getXp() {
@@ -289,4 +290,11 @@ public class Klingon extends Vessel
 	public void beforeGameRestart() {
 		getEvents().removeHandler(this);
 	}
+	
+	@Override
+	public void onGameStarted(StarMap map) {
+		if (getApplication().getActiveQuadrant().contains(this))
+			registerActionHandlers();
+	}
+	
 }

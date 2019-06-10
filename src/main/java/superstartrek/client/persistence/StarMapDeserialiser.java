@@ -35,6 +35,9 @@ public class StarMapDeserialiser {
 			Quadrant quadrant = readQuadrant(jsQuadrant, starMap);
 			starMap.setQuadrant(quadrant);
 		}
+		starMap.setStarDate((long)jsMap.get("stardate").isNumber().doubleValue());
+		app.gameController.getScoreKeeper().reset();
+		app.gameController.getScoreKeeper().addScore((int)jsMap.get("score").isNumber().doubleValue());
 		return starMap;
 	}
 
@@ -44,6 +47,7 @@ public class StarMapDeserialiser {
 		int x = (int) jsQuadrant.get("x").isNumber().doubleValue();
 		int y = (int) jsQuadrant.get("y").isNumber().doubleValue();
 		Quadrant q = new Quadrant(name, x, y);
+		q.setExplored(jsQuadrant.get("explored").isBoolean().booleanValue());
 		JSONArray jsThings = jsQuadrant.get("things").isArray();
 		for (int i = 0; i < jsThings.size(); i++) {
 			Thing thing = readThing(jsThings.get(i).isObject());

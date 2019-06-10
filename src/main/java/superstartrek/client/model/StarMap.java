@@ -54,6 +54,10 @@ public class StarMap {
 	public long getStarDate() {
 		return starDate;
 	}
+	
+	public void setStarDate(long sd) {
+		this.starDate = sd;
+	}
 
 	public void advanceStarDate(long value) {
 		starDate += value;

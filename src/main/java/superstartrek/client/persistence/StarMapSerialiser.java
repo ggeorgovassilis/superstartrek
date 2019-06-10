@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.json.client.JSONArray;
 
+import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
@@ -18,7 +19,12 @@ import superstartrek.client.model.Vessel;
 
 public class StarMapSerialiser {
 
-	protected StringBuffer sb = new StringBuffer();
+	StringBuffer sb = new StringBuffer();
+	Application app;
+	
+	public StarMapSerialiser(Application app) {
+		this.app = app;
+	}
 	
 	public void serialise(Thing thing) {
 		sb.append("\t{\"name\":\""+thing.getName()+"\",\n");
@@ -102,6 +108,7 @@ public class StarMapSerialiser {
 		sb.append("\"name\":\"").append(quadrant.getName()).append("\",\n");
 		sb.append("\"x\":").append(quadrant.getX()).append(",\n");
 		sb.append("\"y\":").append(quadrant.getY()).append(",\n");
+		sb.append("\"explored\":").append(quadrant.isExplored()).append(",\n");
 		sb.append("\"things\":[");
 		List<Thing> things = map.getEverythingIn(quadrant);
 		for (Thing thing:things) {
@@ -122,7 +129,10 @@ public class StarMapSerialiser {
 				if (!(x==Constants.SECTORS_EDGE-1 && x==y))
 					sb.append(",\n");
 			}
-		sb.append("]}");
+		sb.append("],\n");
+		sb.append("\"stardate\":"+map.getStarDate()).append(",\n");
+		sb.append("\"score\":"+app.gameController.getScoreKeeper().getScore()).append("\n");
+		sb.append("}");
 		return sb.toString();
 	}
 	
