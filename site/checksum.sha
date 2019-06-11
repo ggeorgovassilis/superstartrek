@@ -1,6 +1,6 @@
 b10f37c8bb1803d98c127a01d1a71cc5 *MANIFEST.MF
 e9c8969a74c9843a39cd2e40b76e107a *anchor.svg
-652e4b2631e5fb0f9c9e6b607651d6f9 *app-menu.html
+16d0532d32f23b8c9ded6aed1d96c789 *app-menu.html
 63224fd4867fc49670fe4550a0c77f2c *bird_of_prey.png
 409911a0a0c47544e0186b273df854cd *bird_of_prey.svg
 7534064b3454435e995269bc6dccab83 *bookmark.svg
@@ -17,7 +17,7 @@ b0f2b2841632f4ad1a647b3761be035a *icon192x192.png
 a4ff375464f94001b5eac2668581a640 *icon512x512.png
 369d71ddbcf62647440f27d3fa6bde42 *index.html
 1e070ac03ae4a53ff271e29f3c587efb *install-app-prompt.html
-47f206e9bdd36d8c92da1d6ed92f26f0 *intro.html
+830f662b47643eedd3bc9cd670e4a30c *intro.html
 2265d3c1a9e251272236a9093ef7c774 *laser.svg
 00039d57aa92e85bc97d462c08f7d0c5 *lrs.html
 9400b48fbdeed99e719871a84b76c655 *manual.html
@@ -34,6 +34,6 @@ d11fa913f0537b82dd3db52fb3aa7ca8 *service-worker.js
 4aeab9adbca314a8cc08c254635a8867 *sst.webmanifest
 fabc28bd92cbe78c4b666b9762f6b39f *stars-background.gif
 c01b26c2b318b960aafe2b198bccab73 *status-report.html
-27bbcb5fc464ef528ebdd3096498302e *superstartrek.superstartrek.nocache.js
+dcfcb0d6b002ca0a519b66d12ddb806c *superstartrek.superstartrek.nocache.js
 3b83f13891b250cbffb66132af201b62 *torpedo.svg
 e7f21fbd818c1bbb3345e10dbb85ec86 *update-app-prompt.html
