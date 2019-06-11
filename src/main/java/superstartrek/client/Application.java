@@ -58,6 +58,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	public BrowserAPI browserAPI;
 	public RequestFactory requestFactory;
 	public PWA pwa;
+	public GameSaver gameSaver;
 	public ScoreKeeper scoreKeeper = new ScoreKeeperImpl();
 
 	private static Application that;
@@ -91,16 +92,6 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		starMap = setup.createNewMap();
 	}
 	
-	public void saveGame() {
-		GameSaver gs = new GameSaver();
-		gs.saveGame(this);
-	}
-	
-	public void loadGame() {
-		GameSaver gs = new GameSaver();
-		gs.loadGame(this);
-	}
-
 	protected void setupScreens() {
 		// since every presenter registers itself as an event listener they won't be
 		// garbage-collected, so we don't need to keep references to them
@@ -196,6 +187,10 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		eventBus.addHandler(Events.GAME_OVER, this);
 		eventBus.addHandler(Commands.RELOAD_APP, this);
 	}
+	
+	public void setupGameSaver() {
+		gameSaver = new GameSaver(this);
+	}
 
 	@Override
 	public void onModuleLoad() {
@@ -206,6 +201,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		resources = GWT.create(Resources.class);
 		setupHttp();
 		registerEventHandlers();
+		setupGameSaver();
 		setupPwa((v) -> setupTheRest());
 	}
 

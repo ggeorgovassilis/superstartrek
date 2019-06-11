@@ -1,6 +1,7 @@
 package superstartrek.client.activities.intro;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
@@ -14,12 +15,14 @@ import superstartrek.client.utils.HtmlWidget;
 public class IntroView extends BaseScreen<IntroPresenter>{
 	
 	Element eUpdateButton;
+	Element eContinueSavedGameButton;
 
 	public IntroView(IntroPresenter presenter) {
 		super(presenter);
 		getElement().setInnerHTML(presenter.getApplication().getResources().introScreen().getText());
 		addStyleName("intro-screen");
 		eUpdateButton = ((HtmlWidget)getWidget()).getElementById("cmd_check_for_updates");
+		eContinueSavedGameButton = ((HtmlWidget)getWidget()).getElementById("cmd_continue_saved_game");
 		getWidget().addHandler(new ClickHandler() {
 			
 			@Override
@@ -27,6 +30,8 @@ public class IntroView extends BaseScreen<IntroPresenter>{
 				Element e = event.getNativeEvent().getEventTarget().cast();
 				if (eUpdateButton.isOrHasChild(e))
 					presenter.onCheckForUpdatesButtonClicked();
+				else if (eContinueSavedGameButton.isOrHasChild(e))
+					presenter.onContinueGameButtonClicked();
 			}
 		}, ClickEvent.getType());
 		getWidget().sinkEvents(Event.ONCLICK);
@@ -47,6 +52,10 @@ public class IntroView extends BaseScreen<IntroPresenter>{
 
 	public void enableUpdateCheckButton() {
 		CSS.setEnabled(eUpdateButton, true);
+	}
+	
+	public void setContinueGameButtonVisible(boolean visible){
+		eContinueSavedGameButton.getStyle().setDisplay(visible?Display.BLOCK:Display.NONE);
 	}
 
 }

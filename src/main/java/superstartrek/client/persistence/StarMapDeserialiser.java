@@ -42,7 +42,6 @@ public class StarMapDeserialiser {
 	}
 
 	public Quadrant readQuadrant(JSONObject jsQuadrant, StarMap starMap) {
-		GWT.log(jsQuadrant.toString());
 		String name = jsQuadrant.get("name").isString().stringValue();
 		int x = (int) jsQuadrant.get("x").isNumber().doubleValue();
 		int y = (int) jsQuadrant.get("y").isNumber().doubleValue();

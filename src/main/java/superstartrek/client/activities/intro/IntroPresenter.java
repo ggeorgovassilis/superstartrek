@@ -25,6 +25,7 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 	
 	@Override
 	public void onGameStarted(StarMap map) {
+		view.setContinueGameButtonVisible(application.gameSaver.doesSavedGameExist());
 		view.show();
 		application.browserAPI.postHistoryChange("intro");
 	}
@@ -32,6 +33,7 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		if ("intro".equals(event.getValue())) {
+			view.setContinueGameButtonVisible(application.gameSaver.doesSavedGameExist());
 			view.show();
 		} else
 			view.hide();
@@ -58,6 +60,10 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 	public void onCheckForUpdatesButtonClicked() {
 		view.disableUpdateCheckButton();
 		application.pwa.checkForNewVersion();
+	}
+	
+	public void onContinueGameButtonClicked() {
+		application.gameSaver.loadGame();
 	}
 
 }

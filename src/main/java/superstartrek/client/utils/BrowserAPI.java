@@ -35,5 +35,9 @@ public interface BrowserAPI {
 	
 	@SuppressWarnings("rawtypes")
 	<P extends Presenter> void addToPage(View<P> view);
+	
+	String getLocallyStoredValue(String key);
+	void storeValueLocally(String key, String value);
+	void deleteValueLocally(String key);
 
 }

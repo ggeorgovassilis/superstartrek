@@ -10,6 +10,7 @@ import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.History;
@@ -157,6 +158,21 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	@Override
 	public void setCookie(String name, String value) {
 		Cookies.setCookie(name, value);
+	}
+
+	@Override
+	public String getLocallyStoredValue(String key) {
+		return Storage.getLocalStorageIfSupported().getItem(key);
+	}
+
+	@Override
+	public void storeValueLocally(String key, String value) {
+		Storage.getLocalStorageIfSupported().setItem(key, value);
+	}
+
+	@Override
+	public void deleteValueLocally(String key) {
+		Storage.getLocalStorageIfSupported().removeItem(key);
 	}
 
 }
