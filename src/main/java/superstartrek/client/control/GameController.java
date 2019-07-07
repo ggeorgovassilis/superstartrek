@@ -9,11 +9,15 @@ import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
 import static superstartrek.client.bus.Events.*;
+
+import com.google.gwt.user.client.Window;
+
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.StarBase;
+import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.utils.BaseMixin;
@@ -26,7 +30,9 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 	boolean gameIsRunning = true;
 	boolean startTurnPending = false;
 	boolean endTurnPending = false;
+	boolean gameIsLoading = false;
 	ScoreKeeper scoreKeeper;
+	
 	
 	@Override
 	public Application getApplication() {
@@ -57,6 +63,16 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		addHandler(ENTERPRISE_DOCKED, this);
 		addHandler(GAME_RESTART, this);
 		addHandler(ENTERPRISE_DAMAGED, this);
+	}
+	
+	@Override
+	public void onGameStarted(StarMap map) {
+		if (!gameIsLoading && application.gameSaver.doesSavedGameExist()) {
+			gameIsLoading = true;
+			application.gameSaver.loadGame();
+			application.gameSaver.deleteGame();
+			gameIsLoading = false;
+		}
 	}
 
 	public ScoreKeeper getScoreKeeper() {

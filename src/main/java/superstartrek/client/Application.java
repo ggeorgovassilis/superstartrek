@@ -147,6 +147,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	public void restart() {
 		eventBus.fireEvent(Events.GAME_RESTART, (h) -> h.beforeGameRestart());
+		gameSaver.deleteGame();
 		startGame();
 	}
 
