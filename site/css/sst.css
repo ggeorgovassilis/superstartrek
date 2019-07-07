@@ -42,6 +42,10 @@ li {
 	list-style-type: none;
 }
 
+.credits li a{
+	line-height:1.5em;
+}
+
 a, a:visited, button, .button {
 	text-decoration: none;
 	color: white;
