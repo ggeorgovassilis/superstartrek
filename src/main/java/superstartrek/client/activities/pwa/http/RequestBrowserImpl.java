@@ -2,6 +2,7 @@ package superstartrek.client.activities.pwa.http;
 
 import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
@@ -15,14 +16,22 @@ public class RequestBrowserImpl implements Request{
 			
 			@Override
 			public void onResponseReceived(com.google.gwt.http.client.Request request, Response response) {
-				if (response.getStatusCode()==500)
+				int code = response.getStatusCode();
+				switch(code) {
+				case 200:
+				case 301:
+				case 304:
+				case 307:
+					callback.onResponseReceived(request, response);
+					break;
+				default:
 					callback.onError(request, new Exception("Service worker responded with error"));
-				else
-				callback.onResponseReceived(request, response);
+				}
 			}
 			
 			@Override
 			public void onError(com.google.gwt.http.client.Request request, Throwable exception) {
+				GWT.log("xxx");
 				callback.onError(request, exception);
 			}
 		});
