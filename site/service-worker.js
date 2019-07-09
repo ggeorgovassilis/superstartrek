@@ -19,7 +19,6 @@ self.addEventListener('fetch', function (e) {
 		  return new Response("",init);
 	  }
       if (response) { // if cache is available, respond with cache
-        console.debug('HIT',e.request.url);
         return response;
       }
       // if there are no cache, try fetching request
