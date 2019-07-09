@@ -81,11 +81,11 @@
 			<properties>
 				<gwt.draftCompile>false</gwt.draftCompile>
 				<gwt.module>superstartrek.sst-prod</gwt.module>
-				<gwt.methodNameDisplayMode>FULL</gwt.methodNameDisplayMode>
-				<gwt.saveSource>true</gwt.saveSource>
-				<gwt.style>DETAILED</gwt.style>
+				<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
+				<gwt.saveSource>false</gwt.saveSource>
+				<gwt.style>OBFUSCATED</gwt.style>
 				<skip.deploy>false</skip.deploy>
-				<gwt.disableClassMetadata>false</gwt.disableClassMetadata>
+				<gwt.disableClassMetadata>true</gwt.disableClassMetadata>
 			</properties>
 			<build>
 				<plugins>
