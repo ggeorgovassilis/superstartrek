@@ -81,9 +81,8 @@ public class PWA {
 	 * prompt, the "beforeinstallprompt" event fires again!
 	 */
 	public native void addInstallationListener(Callback<AppInstallationEvent> callback) /*-{
-		var that = this;
 		$wnd.addEventListener('beforeinstallprompt', function (e){
-			that.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(e);
+			callback.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(e);
 		});
 	}-*/;
 	//@formatter:on
