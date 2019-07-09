@@ -81,8 +81,8 @@
 			<properties>
 				<gwt.draftCompile>false</gwt.draftCompile>
 				<gwt.module>superstartrek.sst-prod</gwt.module>
-				<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
-				<gwt.saveSource>false</gwt.saveSource>
+				<gwt.methodNameDisplayMode>FULL</gwt.methodNameDisplayMode>
+				<gwt.saveSource>true</gwt.saveSource>
 				<gwt.style>DETAILED</gwt.style>
 				<skip.deploy>false</skip.deploy>
 				<gwt.disableClassMetadata>false</gwt.disableClassMetadata>
