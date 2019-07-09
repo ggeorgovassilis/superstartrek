@@ -83,9 +83,9 @@
 				<gwt.module>superstartrek.sst-prod</gwt.module>
 				<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
 				<gwt.saveSource>false</gwt.saveSource>
-				<gwt.style>OBFUSCATED</gwt.style>
+				<gwt.style>DETAILED</gwt.style>
 				<skip.deploy>false</skip.deploy>
-				<gwt.disableClassMetadata>true</gwt.disableClassMetadata>
+				<gwt.disableClassMetadata>false</gwt.disableClassMetadata>
 			</properties>
 			<build>
 				<plugins>
