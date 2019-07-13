@@ -2,6 +2,7 @@ package superstartrek.client.utils;
 
 import java.util.Set;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -39,5 +40,7 @@ public interface BrowserAPI {
 	String getLocallyStoredValue(String key);
 	void storeValueLocally(String key, String value);
 	void deleteValueLocally(String key);
+	
+	Element createElementNs(String nameSpace, String tag);
 
 }

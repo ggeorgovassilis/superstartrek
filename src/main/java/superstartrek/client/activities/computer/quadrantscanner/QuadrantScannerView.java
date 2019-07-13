@@ -1,7 +1,11 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -19,6 +23,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	Element[][] eSectors = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	Element eSelectedSector;
+	List<Element> phaserElements = new ArrayList<>();
 
 	@Override
 	public void deselectSectors() {
@@ -108,6 +113,38 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	@Override
 	public int getVerticalOffsetOfSector(int x, int y) {
 		return eSectors[x][y].getAbsoluteTop();
+	}
+
+	@Override
+	public void drawBeamBetween(int x1, int y1, int x2, int y2, String colour) {
+		Element e1 = eSectors[x1][y1];
+		Element e2 = eSectors[x2][y2];
+		
+		int x1px = e1.getOffsetLeft()+e1.getClientWidth()/2;
+		int y1px = e1.getOffsetTop()+e1.getClientHeight()/2;
+
+		int x2px = e2.getOffsetLeft()+e2.getClientWidth()/2;
+		int y2px = e2.getOffsetTop()+e2.getClientHeight()/2;
+
+		Element eSvg = presenter.getApplication().browserAPI.createElementNs("http://www.w3.org/2000/svg", "svg");
+		eSvg.setAttribute("width", "100%");
+		eSvg.setAttribute("height", "100%");
+		eSvg.getStyle().setLeft(0, Unit.PX);
+		eSvg.getStyle().setTop(0, Unit.PX);
+		eSvg.getStyle().setProperty("pointerEvents", "none");
+//		eSvg.setAttribute("width", ""+(Math.abs(x1px-x2px)));
+//		eSvg.setAttribute("height", ""+Math.abs(y1px-y2px));
+		eSvg.setInnerHTML("<line x1='"+x1px+"px' y1='"+y1px+"px' x2='"+x2px+"px' y2='"+y2px+"px' stroke='"+colour+"'/>");
+		eSvg.getStyle().setPosition(Position.ABSOLUTE);
+		getElement().appendChild(eSvg);
+		phaserElements.add(eSvg);
+	}
+
+	@Override
+	public void clearPhaserMarks() {
+		for (Element e:phaserElements)
+			e.removeFromParent();
+		phaserElements.clear();
 	}
 
 }

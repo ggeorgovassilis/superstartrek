@@ -175,4 +175,9 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 		Storage.getLocalStorageIfSupported().removeItem(key);
 	}
 
+	@Override
+	public native Element createElementNs(String nameSpace, String tag)/*-{
+	return document.createElementNS(nameSpace,tag);
+	}-*/;
+
 }

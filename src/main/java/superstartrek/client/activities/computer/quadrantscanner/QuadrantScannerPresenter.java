@@ -52,6 +52,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		addHandler(KLINGON_CLOAKED, this);
 		addHandler(KLINGON_UNCLOAKED, this);
 		addHandler(AFTER_TURN_STARTED, this);
+		addHandler(KLINGON_TURN_STARTED, this);
 		addHandler(KEY_PRESSED, this);
 	}
 
@@ -164,8 +165,11 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
 			boolean wasAutoFire) {
 		// target might have been destroyed (so not on map anymore) and thus null
-		if (target != null)
+		if (target != null) {
 			updateSector(quadrant, target.getLocation().getX(), target.getLocation().getY());
+			String colour=(actor == application.starMap.enterprise)?"yellow":"red";
+			view.drawBeamBetween(actor.getLocation().getX(), actor.getLocation().getY(), target.getLocation().getX(), target.getLocation().getY(), colour);
+		}
 	}
 
 	public void clearNavigationTargets(List<Location> locations) {
@@ -221,6 +225,11 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			view.selectSector(selectedSector.getX(), selectedSector.getY());
 			fireEvent(CONTEXT_MENU_HIDDEN, (h) -> h.onMenuHide());
 		}
+	}
+	
+	@Override
+	public void onKlingonTurnStarted() {
+		view.clearPhaserMarks();
 	}
 
 }
