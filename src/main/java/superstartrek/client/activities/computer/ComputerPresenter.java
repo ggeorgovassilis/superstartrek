@@ -24,6 +24,7 @@ import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.model.Weapon;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		implements ComputerHandler, GamePhaseHandler, CombatHandler, ValueChangeHandler<String>,
@@ -183,7 +184,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage, boolean wasAutoFire) {
 		if (target == starMap.enterprise) {
 			updateShieldsView();
 		}

@@ -18,6 +18,7 @@ import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.model.Weapon;
 import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 
@@ -160,9 +161,9 @@ public class Klingon extends Vessel
 			return;
 		if (!isVisible())
 			uncloak();
-		fireEvent(BEFORE_FIRE, (h) -> h.onFire(enterprise.getQuadrant(), Klingon.this, enterprise, "disruptor",
+		fireEvent(BEFORE_FIRE, (h) -> h.onFire(enterprise.getQuadrant(), Klingon.this, enterprise, Weapon.disruptor,
 				disruptor.getValue(), true));
-		fireEvent(AFTER_FIRE, (h) -> h.afterFire(enterprise.getQuadrant(), Klingon.this, enterprise, "disruptor",
+		fireEvent(AFTER_FIRE, (h) -> h.afterFire(enterprise.getQuadrant(), Klingon.this, enterprise, Weapon.disruptor,
 				disruptor.getValue(), true));
 	}
 
@@ -239,7 +240,7 @@ public class Klingon extends Vessel
 	}
 
 	@Override
-	public void onFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
+	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
 			boolean wasAutoFire) {
 		if (target != this)
 			return;

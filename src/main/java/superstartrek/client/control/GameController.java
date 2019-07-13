@@ -20,6 +20,7 @@ import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.model.Weapon;
 import superstartrek.client.utils.BaseMixin;
 
 public class GameController implements GamePhaseHandler, CombatHandler, EnterpriseRepairedHandler, NavigationHandler,
@@ -80,7 +81,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 	}
 
 	@Override
-	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage, boolean wasAutoFire) {
 		if (Enterprise.is(target)) {
 			Enterprise enterprise = target.as();
 			if (enterprise.getShields().getValue() <= 0)

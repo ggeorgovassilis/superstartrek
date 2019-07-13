@@ -17,6 +17,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.model.Weapon;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.utils.BrowserAPI;
 
@@ -165,7 +166,7 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq("phasers"), AdditionalMatchers.eq(21, 1), eq(false));
+		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(21, 1), eq(false));
 	}
 
 	@Test
@@ -196,7 +197,7 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(0, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(0)).onFire(same(quadrant), same(enterprise), same(klingon), eq("phasers"), AdditionalMatchers.eq(21, 1), eq(false));
+		verify(handler, times(0)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(21, 1), eq(false));
 		verify(messageHandler).messagePosted("Insufficient reactor output", "info");
 	}
 
@@ -227,8 +228,8 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 
-		verify(handler, times(1)).onFire(quadrant, enterprise, klingon, "torpedos", 25, false);
-		verify(handler, times(1)).afterFire(quadrant, enterprise, klingon, "torpedos", 25, false);
+		verify(handler, times(1)).onFire(quadrant, enterprise, klingon, Weapon.torpedo, 25, false);
+		verify(handler, times(1)).afterFire(quadrant, enterprise, klingon, Weapon.torpedo, 25, false);
 
 	}
 
@@ -301,7 +302,7 @@ public class TestEnterprise extends BaseTest {
 		bus.addHandler(Events.BEFORE_FIRE, new CombatHandler() {
 
 			@Override
-			public void onFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
+			public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
 					boolean wasAutoFire) {
 				assertEquals(klingon, target);
 				assertEquals(enterprise, actor);
@@ -311,7 +312,7 @@ public class TestEnterprise extends BaseTest {
 		bus.addHandler(Events.AFTER_FIRE, new CombatHandler() {
 
 			@Override
-			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
+			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
 					boolean wasAutoFire) {
 				assertEquals(klingon, target);
 				assertEquals(enterprise, actor);

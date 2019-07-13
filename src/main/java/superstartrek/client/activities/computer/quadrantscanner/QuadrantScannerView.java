@@ -3,8 +3,10 @@ package superstartrek.client.activities.computer.quadrantscanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -14,10 +16,12 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
+import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.model.Constants;
 import superstartrek.client.utils.DomUtils;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
+import superstartrek.client.utils.Timer;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
 
@@ -85,7 +89,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 			int y = Integer.parseInt(e.getAttribute("data-y"));
 			int dy = getElement().getAbsoluteTop();
 			int dx = getElement().getAbsoluteLeft();
-			presenter.onSectorSelected(x, y, dx+e.getOffsetLeft(), dy+e.getOffsetTop());
+			presenter.onSectorSelected(x, y, dx + e.getOffsetLeft(), dy + e.getOffsetTop());
 			event.stopPropagation();
 			event.preventDefault();
 		} catch (Exception ex) {
@@ -119,12 +123,12 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	public void drawBeamBetween(int x1, int y1, int x2, int y2, String colour) {
 		Element e1 = eSectors[x1][y1];
 		Element e2 = eSectors[x2][y2];
-		
-		int x1px = e1.getOffsetLeft()+e1.getClientWidth()/2;
-		int y1px = e1.getOffsetTop()+e1.getClientHeight()/2;
 
-		int x2px = e2.getOffsetLeft()+e2.getClientWidth()/2;
-		int y2px = e2.getOffsetTop()+e2.getClientHeight()/2;
+		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
+		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
+
+		int x2px = e2.getOffsetLeft() + e2.getClientWidth() / 2;
+		int y2px = e2.getOffsetTop() + e2.getClientHeight() / 2;
 
 		Element eSvg = presenter.getApplication().browserAPI.createElementNs("http://www.w3.org/2000/svg", "svg");
 		eSvg.setAttribute("width", "100%");
@@ -134,17 +138,48 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		eSvg.getStyle().setProperty("pointerEvents", "none");
 //		eSvg.setAttribute("width", ""+(Math.abs(x1px-x2px)));
 //		eSvg.setAttribute("height", ""+Math.abs(y1px-y2px));
-		eSvg.setInnerHTML("<line x1='"+x1px+"px' y1='"+y1px+"px' x2='"+x2px+"px' y2='"+y2px+"px' stroke='"+colour+"'/>");
+		eSvg.setInnerHTML("<line x1='" + x1px + "px' y1='" + y1px + "px' x2='" + x2px + "px' y2='" + y2px
+				+ "px' stroke='" + colour + "'/>");
 		eSvg.getStyle().setPosition(Position.ABSOLUTE);
 		getElement().appendChild(eSvg);
 		phaserElements.add(eSvg);
 	}
 
 	@Override
-	public void clearPhaserMarks() {
-		for (Element e:phaserElements)
+	public void clearBeamMarks() {
+		for (Element e : phaserElements)
 			e.removeFromParent();
 		phaserElements.clear();
+	}
+
+	@Override
+	public void animateTorpedoFireBetween(int x1, int y1, int x2, int y2, Callback<Void> callback) {
+		GWT.log("animate torpedo");
+		Element e1 = eSectors[x1][y1];
+		Element e2 = eSectors[x2][y2];
+
+		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
+		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
+
+		int x2px = e2.getOffsetLeft() + e2.getClientWidth() / 2;
+		int y2px = e2.getOffsetTop() + e2.getClientHeight() / 2;
+
+		Element eTorpedo = DOM.createSpan();
+		Style s = eTorpedo.getStyle();
+		s.setLeft(x1px, Unit.PX);
+		s.setTop(y1px, Unit.PX);
+		eTorpedo.setClassName("torpedo-dot");
+		getElement().appendChild(eTorpedo);
+		int dx = x2px - x1px;
+		int dy = y2px - y1px;
+		Timer.postpone(() -> {
+			s.setProperty("transform", "translate(" + dx + "px," + dy + "px)");
+			s.setProperty("transition", "linear 1s");
+		}, 100);
+		Timer.postpone(()->{
+			eTorpedo.removeFromParent();
+			callback.onSuccess(null);
+		}, 1100);
 	}
 
 }

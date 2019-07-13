@@ -18,6 +18,7 @@ import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.model.Weapon;
 import superstartrek.client.model.Star.StarClass;
 
 public class TestKlingon extends BaseTest{
@@ -67,10 +68,10 @@ public class TestKlingon extends BaseTest{
 		bus.addHandler(Events.AFTER_FIRE, new CombatHandler() {
 
 			@Override
-			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage, boolean wasAutoFire) {
+			public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage, boolean wasAutoFire) {
 				assertEquals(klingon, actor);
 				assertEquals(enterprise, target);
-				assertEquals("disruptor", weapon);
+				assertEquals(Weapon.disruptor, weapon);
 				assertEquals(10, damage, 0.1);
 			}
 		});

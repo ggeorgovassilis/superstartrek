@@ -13,6 +13,7 @@ import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Star;
+import superstartrek.client.model.Weapon;
 import superstartrek.client.model.Star.StarClass;
 
 public class TestGameController extends BaseTest {
@@ -28,7 +29,7 @@ public class TestGameController extends BaseTest {
 	@Test
 	public void test_that_turn_ends_after_enterprise_fires() {
 		bus.fireEvent(Events.AFTER_FIRE, (h) -> h.afterFire(quadrant, enterprise,
-				new Klingon(ShipClass.BirdOfPrey), "Phaser", 1, false));
+				new Klingon(ShipClass.BirdOfPrey), Weapon.phaser, 1, false));
 		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
 		assertEquals(1, bus.getFiredCount(Events.KLINGON_TURN_STARTED));
 		assertEquals(1, bus.getFiredCount(Events.KLINGON_TURN_ENDED));
@@ -38,7 +39,7 @@ public class TestGameController extends BaseTest {
 	@Test
 	public void test_that_message_is_printed_when_star_is_hit() {
 		bus.fireEvent(Events.AFTER_FIRE, (h) -> h.afterFire(quadrant, enterprise,
-				new Star(1, 2, StarClass.A), "Phaser", 1, false));
+				new Star(1, 2, StarClass.A), Weapon.phaser, 1, false));
 		assertEquals(1, bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 
@@ -46,7 +47,7 @@ public class TestGameController extends BaseTest {
 	public void test_that_game_is_over_if_enterprise_destroyed() {
 		enterprise.getShields().setValue(0);
 		bus.fireEvent(Events.AFTER_FIRE,
-				(h) -> h.afterFire(quadrant, enterprise, enterprise, "disruptor", 1, false));
+				(h) -> h.afterFire(quadrant, enterprise, enterprise, Weapon.disruptor, 1, false));
 		assertEquals(1, bus.getFiredCount(Events.GAME_OVER));
 	}
 

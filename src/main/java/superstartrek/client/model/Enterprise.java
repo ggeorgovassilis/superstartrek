@@ -270,9 +270,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		Thing eventTarget = target;
 		double eventDamage = damage;
 		fireEvent(Events.BEFORE_FIRE,
-				(h) -> h.onFire(quadrant, Enterprise.this, eventTarget, "torpedos", eventDamage, false));
+				(h) -> h.onFire(quadrant, Enterprise.this, eventTarget, Weapon.torpedo, eventDamage, false));
 		fireEvent(Events.AFTER_FIRE,
-				(h) -> h.afterFire(quadrant, Enterprise.this, eventTarget, "torpedos", eventDamage, false));
+				(h) -> h.afterFire(quadrant, Enterprise.this, eventTarget, Weapon.torpedo, eventDamage, false));
 		if (target == null)
 			application.message("Torpedo exploded in the void");
 	}
@@ -319,9 +319,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		double damage = phasers.getValue() / distance;
 		phasers.setValue(0);
 		fireEvent(Events.BEFORE_FIRE,
-				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, "phasers", damage, isAutoAim));
+				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
 		fireEvent(Events.AFTER_FIRE,
-				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, "phasers", damage, isAutoAim));
+				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
@@ -485,7 +485,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	@Override
-	public void onFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
+	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
 			boolean wasAutoFire) {
 		if (target != this)
 			return;

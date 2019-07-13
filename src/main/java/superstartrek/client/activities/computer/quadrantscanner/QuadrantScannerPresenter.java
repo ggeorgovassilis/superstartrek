@@ -24,6 +24,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.model.Weapon;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,
@@ -35,7 +36,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
 		Quadrant quadrant = application.starMap.enterprise.getQuadrant();
-		//this is an event instead of directly calling #onSectorSelected(...) because others fire this event to in order to update the view
+		// this is an event instead of directly calling #onSectorSelected(...) because
+		// others fire this event to in order to update the view
 		fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
@@ -140,7 +142,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
 		updateScreen();
 	}
-	
+
 	@Override
 	public void onEnterpriseRepaired(Enterprise enterprise) {
 		updateSector(enterprise.getQuadrant(), enterprise.getLocation().getX(), enterprise.getLocation().getY());
@@ -162,19 +164,28 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, String weapon, double damage,
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
 			boolean wasAutoFire) {
 		// target might have been destroyed (so not on map anymore) and thus null
-		if (target != null) {
-			updateSector(quadrant, target.getLocation().getX(), target.getLocation().getY());
-			String colour=(actor == application.starMap.enterprise)?"yellow":"red";
-			view.drawBeamBetween(actor.getLocation().getX(), actor.getLocation().getY(), target.getLocation().getX(), target.getLocation().getY(), colour);
+		if (target == null)
+			return;
+		updateSector(quadrant, target.getLocation().getX(), target.getLocation().getY());
+		switch (weapon) {
+		case disruptor:
+		case phaser:
+			String colour = (actor == application.starMap.enterprise) ? "yellow" : "red";
+			view.drawBeamBetween(actor.getLocation().getX(), actor.getLocation().getY(), target.getLocation().getX(),
+					target.getLocation().getY(), colour);
+			break;
+		case torpedo:
+			view.animateTorpedoFireBetween(actor.getLocation().getX(), actor.getLocation().getY(), target.getLocation().getX(),
+					target.getLocation().getY(), (v)->{});
 		}
 	}
 
 	public void clearNavigationTargets(List<Location> locations) {
-		for (Location l:locations)
-				view.removeCssFromCell(l.getX(), l.getY(), "navigation-target");
+		for (Location l : locations)
+			view.removeCssFromCell(l.getX(), l.getY(), "navigation-target");
 	}
 
 	public void updateMapWithReachableSectors() {
@@ -226,10 +237,10 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			fireEvent(CONTEXT_MENU_HIDDEN, (h) -> h.onMenuHide());
 		}
 	}
-	
+
 	@Override
 	public void onKlingonTurnStarted() {
-		view.clearPhaserMarks();
+		view.clearBeamMarks();
 	}
 
 }
