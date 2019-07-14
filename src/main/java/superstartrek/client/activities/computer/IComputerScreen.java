@@ -28,4 +28,7 @@ public interface IComputerScreen extends View<ComputerPresenter>{
 	
 	void disableLrsButton();
 
+	void setCommandBarMode(String mode);
+	
+	void setScanProperty(String rowId, String cellId, String rowCss, String value);
 }

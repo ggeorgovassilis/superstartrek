@@ -234,7 +234,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			selectedSector = newSector;
 			view.deselectSectors();
 			view.selectSector(selectedSector.getX(), selectedSector.getY());
-			fireEvent(CONTEXT_MENU_HIDDEN, (h) -> h.onMenuHide());
+			fireEvent(CONTEXT_MENU_HIDDEN, (h) -> h.onMenuHidden());
 		}
 	}
 

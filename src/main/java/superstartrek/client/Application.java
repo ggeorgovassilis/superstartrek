@@ -23,8 +23,6 @@ import superstartrek.client.activities.messages.MessagesView;
 import superstartrek.client.activities.report.StatusReportPresenter;
 import superstartrek.client.activities.report.StatusReportView;
 import superstartrek.client.activities.messages.MessagesPresenter;
-import superstartrek.client.activities.sector.scan.ScanSectorPresenter;
-import superstartrek.client.activities.sector.scan.ScanSectorView;
 import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.Events;
@@ -99,7 +97,6 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		new IntroView(new IntroPresenter(this));
 		new ManualScreen(new ManualPresenter(this));
 		new ComputerScreen(new ComputerPresenter(this, scoreKeeper));
-		new ScanSectorView(new ScanSectorPresenter(this));
 		new MessagesView(new MessagesPresenter(this));
 		new LRSScreen(new LRSPresenter(this));
 		new StatusReportView(new StatusReportPresenter(this));

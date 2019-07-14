@@ -28,7 +28,6 @@ public class PWA {
 	        				"images/cancel.svg",
 	        				"images/communicator.svg", 
 	        				"images/federation_logo.svg",
-	        				"images/fire_at_will.svg", 
 	        				"images/hamburger-menu.svg",
 	        				"images/hexagon_filled.svg",
 	        				"images/hexagon.svg", 

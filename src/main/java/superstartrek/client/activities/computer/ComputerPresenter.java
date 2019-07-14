@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -9,6 +10,8 @@ import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
+import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler;
+import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
@@ -28,7 +31,7 @@ import superstartrek.client.model.Weapon;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		implements ComputerHandler, GamePhaseHandler, CombatHandler, ValueChangeHandler<String>,
-		EnterpriseRepairedHandler, KeyPressedEventHandler {
+		EnterpriseRepairedHandler, KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
 
 	ScoreKeeper scoreKeeper;
 	boolean repairButtonDocksAtStarbase = false;
@@ -46,6 +49,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		addHandler(Events.ENTERPRISE_REPAIRED, this);
 		addHandler(Events.GAME_STARTED, this);
 		addHandler(Events.KEY_PRESSED, this);
+		addHandler(Events.SECTOR_SELECTED, this);
+		addHandler(Events.CONTEXT_MENU_HIDE, this);
 	}
 
 	public void setEnterprise(Enterprise enterprise) {
@@ -212,6 +217,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	protected void updateButtonViews() {
 		updateStatusButtonView();
 		updateRepairButtonView();
+		view.setCommandBarMode("mode-command");
 	}
 
 	@Override
@@ -255,4 +261,57 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 			break;
 		}
 	}
+
+	@Override
+	public void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screenY) {
+		view.setCommandBarMode("mode-scanner");
+		scanSector(sector, quadrant);
+	}
+	
+	public void scanSector(Location location, Quadrant quadrant) {
+		Quadrant q = quadrant;
+		//s
+		Thing thing = q.findThingAt(location);
+		String name = Thing.isVisible(thing)?thing.getName():"Nothing";
+		view.setScanProperty("scan-report-name", "scan-report-name-value", "", name+" at "+location.toString());
+		if (!Thing.isVisible(thing)) {
+			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
+			view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden","");
+			view.setScanProperty("scan-report-cloak", "scan-report-cloak-value", "hidden","");
+			view.setScanProperty("scan-report-engines", "scan-report-engines-value", "hidden","");
+		}
+		if (Vessel.is(thing)) {
+			Vessel vessel = thing.as();
+			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "", "%"+vessel.getShields().percentage());
+			if (Klingon.is(thing)) {
+				Klingon k = vessel.as();
+				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isEnabled()?"":"damage-offline", k.getDisruptor().isEnabled()?"online":"offline");
+				view.setScanProperty("scan-report-cloak", "scan-report-cloak-value", k.getCloak().isEnabled()?"":"damage-offline", k.getCloak().isEnabled()?"online":"offline");
+			} else
+			if (Enterprise.is(thing)) {
+				Enterprise e = vessel.as();
+				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", e.getPhasers().isEnabled()?"":"damage-offline", e.getPhasers().isEnabled()?"online":"offline");
+			}
+			view.setScanProperty("scan-report-engines", "scan-report-engines-value", vessel.getImpulse().isEnabled()?"":"damage-offline", vessel.getImpulse().isEnabled()?"online":"offline");
+		} else {
+			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
+			view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden", "");
+			view.setScanProperty("scan-report-engines", "scan-report-engines-value", "hidden", "");
+			view.setScanProperty("scan-report-cloak", "scan-report-cloak-value", "hidden", "");
+		}
+		view.show();
+		//asdasd
+	}
+
+
+	@Override
+	public void onMenuHidden() {
+		view.setCommandBarMode("mode-command");
+	}
+	
+	@Override
+	public void onStartToHideMenu() {
+		view.setCommandBarMode("mode-command");
+	}
+
 }

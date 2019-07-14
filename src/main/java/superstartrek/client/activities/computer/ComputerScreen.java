@@ -34,6 +34,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	Element eMaxShields;
 	Element eValueShields;
 	Element eQuadrantName;
+	Element eAboveRadarSlot;
 
 	@Override
 	public void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos) {
@@ -75,6 +76,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eStarDate = DOM.getElementById("stardate");
 		eScore = DOM.getElementById("score");
 		eLrsButton = DOM.getElementById("lrs-button");
+		eAboveRadarSlot = DOM.getElementById("above-radar-slot");
 		setRepairButtonEnabled(false);
 		addHandler(this, ClickEvent.getType());
 		DOM.sinkEvents(panel.getElement(), Event.ONCLICK);
@@ -155,6 +157,18 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	@Override
 	public void removeAntimatterCss(String css) {
 		eMaxAntimatter.removeClassName(css);
+	}
+
+	@Override
+	public void setCommandBarMode(String mode) {
+		eAboveRadarSlot.setClassName(mode);
+	}
+
+	@Override
+	public void setScanProperty(String rowId, String cellId, String rowCss, String value) {
+		DOM.getElementById(rowId).setClassName(rowCss);
+		Element e = DOM.getElementById(cellId);
+		if (e!=null) e.setInnerText(value);
 	}
 
 }

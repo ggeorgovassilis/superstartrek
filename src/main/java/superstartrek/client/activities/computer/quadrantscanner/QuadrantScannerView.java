@@ -172,14 +172,16 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		getElement().appendChild(eTorpedo);
 		int dx = x2px - x1px;
 		int dy = y2px - y1px;
+		int gap_ms = 100;
+		int animation_duration_ms = 100;
 		Timer.postpone(() -> {
 			s.setProperty("transform", "translate(" + dx + "px," + dy + "px)");
-			s.setProperty("transition", "linear 1s");
-		}, 100);
+			s.setProperty("transition", "linear "+(animation_duration_ms/1000)+"s");
+		}, gap_ms);
 		Timer.postpone(()->{
 			eTorpedo.removeFromParent();
 			callback.onSuccess(null);
-		}, 1100);
+		}, gap_ms+animation_duration_ms);
 	}
 
 }

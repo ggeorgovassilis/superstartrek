@@ -37,6 +37,7 @@ public class Events {
 	public final static Event<MessageHandler> MESSAGE_POSTED = new Event<>("MESSAGE_POSTED");
 	public final static Event<MessageHandler> MESSAGE_READ = new Event<>("MESSAGE_READ");
 	public final static Event<ContextMenuHideHandler> CONTEXT_MENU_HIDDEN = new Event<>("CONTEXT_MENU_HIDDEN");
+	public final static Event<ContextMenuHideHandler> CONTEXT_MENU_HIDE = new Event<>("CONTEXT_MENU_HIDE");
 	public final static Event<GamePhaseHandler> KLINGON_TURN_ENDED = new Event<>("KLINGON_TURN_ENDED");
 	public final static Event<GamePhaseHandler> GAME_OVER = new Event<>("GAME_OVER");
 	public final static Event<GamePhaseHandler> AFTER_TURN_STARTED = new Event<>("AFTER_TURN_STARTED");

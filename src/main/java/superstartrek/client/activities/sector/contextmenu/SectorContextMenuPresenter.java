@@ -16,8 +16,8 @@ import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 
-public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView>
-		implements SectorSelectedHandler, GamePhaseHandler, ValueChangeHandler<String>, ContextMenuHideHandler, KeyPressedEventHandler {
+public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView> implements SectorSelectedHandler,
+		GamePhaseHandler, ValueChangeHandler<String>, ContextMenuHideHandler, KeyPressedEventHandler {
 
 	Location sector;
 	Quadrant quadrant;
@@ -29,9 +29,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.CONTEXT_MENU_HIDDEN, this);
 		application.browserAPI.addHistoryListener(this);
-
 		buttonsEnabled.put("cmd_navigate", false);
-		buttonsEnabled.put("cmd_scanSector", true);
 		buttonsEnabled.put("cmd_firePhasers", false);
 		buttonsEnabled.put("cmd_fireTorpedos", false);
 	}
@@ -43,8 +41,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		int horizEmToPx = application.browserAPI.getMetricWidthInPx();
 		int vertEmToPx = application.browserAPI.getMetricHeightInPx();
 
-		buttonsEnabled.put("cmd_navigate",
-				e.canNavigateTo(sector));
+		buttonsEnabled.put("cmd_navigate", e.canNavigateTo(sector));
 		buttonsEnabled.put("cmd_firePhasers", e.canFirePhaserAt(sector) == null);
 		buttonsEnabled.put("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
 		for (String cmd : buttonsEnabled.keySet())
@@ -77,7 +74,12 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	@Override
 	public void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screenY) {
 		this.sector = sector;
-		showMenu(screenX, screenY, sector, quadrant);
+		if (view.isVisible())
+			hideMenu(() -> {
+				getEvents().fireEvent(Events.CONTEXT_MENU_HIDDEN, (v) -> v.onMenuHidden());
+			});
+		else
+			showMenu(screenX, screenY, sector, quadrant);
 	}
 
 	public void onEscapePressed() {
@@ -85,6 +87,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	protected void hideMenu(ScheduledCommand callback) {
+
+		if (view.isVisible()) getEvents().fireEvent(Events.CONTEXT_MENU_HIDE, (h)->h.onStartToHideMenu());
 		view.hide(callback);
 		removeHandler(Events.KEY_PRESSED, this);
 	}
@@ -98,9 +102,6 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		if (buttonsEnabled.get(command) == true)
 			hideMenu(() -> {
 				switch (command) {
-				case "cmd_scanSector":
-					fireEvent(Commands.SCAN_SECTOR, (h)->h.scanSector(sector, quadrant));
-					break;
 				case "cmd_navigate":
 					enterprise.navigateTo(sector);
 					break;
@@ -125,7 +126,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	@Override
-	public void onMenuHide() {
+	public void onMenuHidden() {
 		if (view.isVisible())
 			hideMenu(null);
 	}
