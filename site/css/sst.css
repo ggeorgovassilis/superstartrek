@@ -469,6 +469,33 @@ a.progress-bar {
 	right:0;
 	bottom:0;
 }
+
+.visible-with-mode-scanner li{
+	display:inline;
+}
+
+#scan-report-name-value, #scan-report-shields-value{
+	color: turquoise;
+}
+.visible-with-mode-scanner div{
+	overflow:hidden;
+	display:inline;
+}
+
+.visible-with-mode-scanner label{
+	padding-right:1em;
+}
+
+#scan-report-name label, #scan-report-shields label{
+	width:5em;
+	display:block;
+	float:left;
+}
+
+#scan-report-name{
+	display:block;
+}
+
 /**
  * Commands visibility
  */
@@ -485,6 +512,10 @@ a.progress-bar {
 	padding-left:3em;
 }
 
+#above-radar-slot{
+	height:2.8em;
+	background-color:black;
+}
 .torpedo-dot{
 	position:absolute;
 	width:0.5em;
@@ -543,6 +574,14 @@ a.progress-bar {
 	#cmd_repair {
 		padding-left: 2em;
 	}
+}
+
+.visible-with-mode-command, .visible-with-mode-scanner{
+	display:none;
+}
+
+.mode-command .visible-with-mode-command, .mode-scanner .visible-with-mode-scanner{
+	display:block;
 }
 
 
@@ -708,7 +747,7 @@ a.progress-bar {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .status-online {
@@ -855,7 +894,7 @@ a.disabled,button.disabled {
 }
 
 .expanded .c1 {
-	transform: translate(3.45em,2em);
+	transform: translate(3.45em,0em);
 }
 
 .expanded .c2 {
