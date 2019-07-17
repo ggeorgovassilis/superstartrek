@@ -451,7 +451,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public double computeEnergyConsumption() {
-		return getShields().getValue() / 10 + 10.0;
+		return (getShields().getValue()+1.0) * 0.08;
 	}
 
 	public void autoAim() {

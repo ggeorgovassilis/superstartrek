@@ -83,9 +83,9 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	}
 
 	@Override
-	public void updateShields(int value, int currentUpperBound, int maximum) {
-		eMaxShields.getStyle().setWidth(100 * currentUpperBound / maximum, Unit.PCT);
-		eValueShields.getStyle().setWidth(100 * value / maximum, Unit.PCT);
+	public void updateShields(double value, double currentUpperBound, double maximum) {
+		eMaxShields.getStyle().setWidth(100.0 * currentUpperBound / maximum, Unit.PCT);
+		eValueShields.getStyle().setWidth(100.0 * value / maximum, Unit.PCT);
 	}
 
 	public ComputerScreen(ComputerPresenter presenter) {
@@ -109,8 +109,8 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	}
 
 	@Override
-	public void updateAntimatter(int value, int maximum) {
-		eMaxAntimatter.getStyle().setWidth(100 * value / maximum, Unit.PCT);
+	public void updateAntimatter(double value, double maximum) {
+		eMaxAntimatter.getStyle().setWidth(100.0 * value / maximum, Unit.PCT);
 	}
 
 	@Override

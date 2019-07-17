@@ -6,9 +6,9 @@ public interface IComputerScreen extends View<ComputerPresenter>{
 
 	void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos);
 
-	void updateShields(int value, int currentUpperBound, int maximum);
+	void updateShields(double value, double currentUpperBound, double maximum);
 	
-	void updateAntimatter(int value, int maximum);
+	void updateAntimatter(double value, double maximum);
 	
 	void addAntimatterCss(String css);	
 

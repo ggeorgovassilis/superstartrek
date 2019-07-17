@@ -111,7 +111,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	public void updateAntimatterView() {
 		Setting antimatter = enterprise.getAntimatter();
-		view.updateAntimatter((int) antimatter.getValue(), (int) antimatter.getMaximum());
+		view.updateAntimatter(antimatter.getValue(), antimatter.getMaximum());
 		if (antimatter.getValue()<antimatter.getMaximum()*Constants.ANTIMATTER_WARNING_THRESHOLD)
 			view.addAntimatterCss("antimatter-low");
 		else view.removeAntimatterCss("antimatter-low");
@@ -138,7 +138,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	public void updateShieldsView() {
 		Setting shields = enterprise.getShields();
-		view.updateShields((int) shields.getValue(), (int) shields.getCurrentUpperBound(), (int) shields.getMaximum());
+		view.updateShields(shields.getValue(), shields.getCurrentUpperBound(), shields.getMaximum());
 	}
 
 	public void dockInStarbase() {
