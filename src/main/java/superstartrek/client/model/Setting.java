@@ -81,10 +81,15 @@ public class Setting {
 		setValue(getMaximum());
 	}
 
-	public void repair() {
-		setCurrentUpperBound(getMaximum());
+	public boolean repair() {
+		boolean neededRepair = false;
+		if (getCurrentUpperBound()<getMaximum()) {
+			setCurrentUpperBound(getMaximum());
+			neededRepair = true;
+		}
 		setEnabled(true);
 		reset();
+		return neededRepair;
 	}
 	
 	public boolean getBooleanValue() {

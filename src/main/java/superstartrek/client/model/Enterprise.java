@@ -16,9 +16,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double PHASER_RANGE = 3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
 	public final static double IMPULSE_CONSUMPTION = 5;
-	public final static double DEVICE_IMPACT_MODIFIER=0.3;
-	public final static double SHIELD_IMPACT_MODIFIER=0.5;
-	public final static double CHANCE_OF_AUTOREPAIR=0.3;
+	public final static double DEVICE_IMPACT_MODIFIER = 0.3;
+	public final static double SHIELD_IMPACT_MODIFIER = 0.5;
+	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
 
 	Application application;
 	StarMap starMap;
@@ -33,12 +33,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	List<Location> reachableSectors = new ArrayList<>();
 
 	int turnsSinceWarp = 0;
-	
-	
+
 	public Setting getAutoRepair() {
 		return autoRepair;
 	}
-	
+
 	public Setting getLrs() {
 		return lrs;
 	}
@@ -130,8 +129,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		turnsSinceWarp = 0;
 		return true;
 	}
-	
-	public List<Location> getLastReachableSectors(){
+
+	public List<Location> getLastReachableSectors() {
 		return reachableSectors;
 	}
 
@@ -216,9 +215,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		moveToIgnoringConstraints(drop);
 		maybeAutoRepair();
 	}
-	
+
 	public void maybeAutoRepair() {
-		if (autoRepair.getBooleanValue() && application.browserAPI.nextDouble()<CHANCE_OF_AUTOREPAIR && canRepairProvisionally())
+		if (autoRepair.getBooleanValue() && application.browserAPI.nextDouble() < CHANCE_OF_AUTOREPAIR
+				&& canRepairProvisionally())
 			repairProvisionally();
 	}
 
@@ -240,8 +240,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return;
 		}
 		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
-		List<Thing> things = StarMap.findObstaclesInLine(index, getLocation(), sector,
-				Constants.SECTORS_EDGE);
+		List<Thing> things = StarMap.findObstaclesInLine(index, getLocation(), sector, Constants.SECTORS_EDGE);
 		things.remove(this);
 		getTorpedos().decrease(1);
 		Thing target = null;
@@ -326,14 +325,19 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public void dockAtStarbase(StarBase starBase) {
 		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase));
-		phasers.repair();
-		torpedos.repair();
-		impulse.repair();
-		shields.repair();
-		autoAim.repair();
-		antimatter.repair();
-		lrs.repair();
-		fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
+		int repairCount = 0;
+		repairCount += phasers.repair() ? 1 : 0;
+		int torpedosRestocked = (int) (torpedos.getMaximum() - torpedos.getValue());
+		repairCount += torpedos.repair() ? 1 : 0;
+		repairCount += impulse.repair() ? 1 : 0;
+		repairCount += shields.repair() ? 1 : 0;
+		repairCount += autoAim.repair() ? 1 : 0;
+		int antimatterRefuelled = (int) (antimatter.getMaximum() - antimatter.getValue());
+		repairCount += antimatter.repair() ? 1 : 0;
+		repairCount += lrs.repair() ? 1 : 0;
+		final int fRepairCount = repairCount;
+		fireEvent(Events.ENTERPRISE_REPAIRED,
+				(h) -> h.onEnterpriseRepaired(Enterprise.this, fRepairCount, torpedosRestocked, antimatterRefuelled));
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -357,12 +361,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void repairProvisionally() {
 		int i = 10;
 		while (i-- > 0) {
-			boolean repaired = maybeRepairProvisionally("impulse drive", impulse)
-					|| maybeRepairProvisionally("shields", shields) || maybeRepairProvisionally("phasers", phasers)
-					|| maybeRepairProvisionally("torpedo bay", torpedos)
-					|| maybeRepairProvisionally("tactical computer", autoAim) || maybeRepairProvisionally("LRS", lrs);
-			if (repaired) {
-				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
+			int count = (maybeRepairProvisionally("impulse drive", impulse) ? 1 : 0)
+					+ (maybeRepairProvisionally("shields", shields) ? 1 : 0)
+					+ (maybeRepairProvisionally("phasers", phasers) ? 1 : 0)
+					+ (maybeRepairProvisionally("torpedo bay", torpedos) ? 1 : 0)
+					+ (maybeRepairProvisionally("tactical computer", autoAim) ? 1 : 0)
+					+ (maybeRepairProvisionally("LRS", lrs) ? 1 : 0);
+			if (count>0) {
+				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this, count, 0, 0));
 				return;
 			}
 		}
@@ -451,7 +457,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public double computeEnergyConsumption() {
-		return (getShields().getValue()+1.0) * 0.08;
+		return (getShields().getValue() + 1.0) * 0.08;
 	}
 
 	public void autoAim() {

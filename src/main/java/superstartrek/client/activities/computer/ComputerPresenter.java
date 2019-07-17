@@ -221,7 +221,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void onEnterpriseRepaired(Enterprise enterprise) {
+	public void onEnterpriseRepaired(Enterprise enterprise, int itemCount, int torpedos, int antimatter) {
 		updateButtonViews();
 		updateAntimatterView();
 	}
