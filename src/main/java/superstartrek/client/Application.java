@@ -34,7 +34,6 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.persistence.GameSaver;
-import superstartrek.client.persistence.StarMapSerialiser;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.utils.GwtBrowserAPIImpl;
 import superstartrek.client.utils.Timer;

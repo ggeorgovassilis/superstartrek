@@ -5,5 +5,5 @@ import superstartrek.client.model.Enterprise;
 
 public interface EnterpriseRepairedHandler extends EventHandler{
 
-	void onEnterpriseRepaired(Enterprise enterprise, int itemsRepaired, int torpedosRestocked, int antimatterRefuelled);
+	void onEnterpriseRepaired(Enterprise enterprise);
 }

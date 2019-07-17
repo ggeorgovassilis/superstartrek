@@ -10,9 +10,6 @@ import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
 import static superstartrek.client.bus.Events.*;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
-
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -97,10 +94,8 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 	}
 
 	@Override
-	public void onEnterpriseRepaired(Enterprise enterprise, int items, int torpedos, int antimatter) {
+	public void onEnterpriseRepaired(Enterprise enterprise) {
 		endTurnAfterThis();
-		GWT.log("onEnterpriseRepaired "+items+" "+torpedos+" "+antimatter);
-		getScoreKeeper().addScore(ScoreKeeper.POINTS_ENTERPRISE_REPAIR*(items+torpedos+(antimatter/100)));
 	}
 
 	@Override
@@ -221,8 +216,8 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 	}
 
 	@Override
-	public void onEnterpriseDocked(Enterprise enterprise, StarBase starBase) {
-		getScoreKeeper().addScore(ScoreKeeper.POINTS_DOCK_STARBASE);
+	public void onEnterpriseDocked(Enterprise enterprise, StarBase starBase, int items, int torpedos, int antimatter) {
+		getScoreKeeper().addScore(ScoreKeeper.POINTS_ENTERPRISE_REPAIR*(items+torpedos+(antimatter/100)));
 	}
 	
 	@Override

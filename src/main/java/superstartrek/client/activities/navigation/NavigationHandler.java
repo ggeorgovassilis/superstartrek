@@ -15,7 +15,7 @@ public interface NavigationHandler extends EventHandler {
 	default void onEnterpriseWarped(Enterprise enterprise, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 	}
 
-	default void onEnterpriseDocked(Enterprise enterprise, StarBase starBase) {
+	default void onEnterpriseDocked(Enterprise enterprise, StarBase starBase, int itemsRepaired, int torpedosRestocked, int antimatterRefuelled) {
 	}
 
 }

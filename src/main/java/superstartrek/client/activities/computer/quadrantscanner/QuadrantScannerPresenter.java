@@ -144,7 +144,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	@Override
-	public void onEnterpriseRepaired(Enterprise enterprise, int items, int torpedos, int antimatter) {
+	public void onEnterpriseRepaired(Enterprise enterprise) {
 		updateSector(enterprise.getQuadrant(), enterprise.getLocation().getX(), enterprise.getLocation().getY());
 	}
 

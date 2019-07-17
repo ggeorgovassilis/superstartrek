@@ -324,7 +324,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void dockAtStarbase(StarBase starBase) {
-		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase));
 		int repairCount = 0;
 		repairCount += phasers.repair() ? 1 : 0;
 		int torpedosRestocked = (int) (torpedos.getMaximum() - torpedos.getValue());
@@ -337,7 +336,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		repairCount += lrs.repair() ? 1 : 0;
 		final int fRepairCount = repairCount;
 		fireEvent(Events.ENTERPRISE_REPAIRED,
-				(h) -> h.onEnterpriseRepaired(Enterprise.this, fRepairCount, torpedosRestocked, antimatterRefuelled));
+				(h) -> h.onEnterpriseRepaired(Enterprise.this));
+		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount, torpedosRestocked, antimatterRefuelled));
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -368,7 +368,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 					+ (maybeRepairProvisionally("tactical computer", autoAim) ? 1 : 0)
 					+ (maybeRepairProvisionally("LRS", lrs) ? 1 : 0);
 			if (count>0) {
-				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this, count, 0, 0));
+				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 				return;
 			}
 		}

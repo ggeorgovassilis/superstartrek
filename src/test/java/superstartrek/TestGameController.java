@@ -55,7 +55,7 @@ public class TestGameController extends BaseTest {
 	public void test_that_turn_ends_after_enterprise_repairs() {
 		enterprise.getShields().setValue(0);
 		bus.fireEvent(Events.ENTERPRISE_REPAIRED,
-				(h) -> h.onEnterpriseRepaired(enterprise,1,2,3));
+				(h) -> h.onEnterpriseRepaired(enterprise));
 		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
 	}
 

@@ -1,10 +1,6 @@
 package superstartrek.client.persistence;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.storage.client.Storage;
-
 import superstartrek.client.Application;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.StarMap;

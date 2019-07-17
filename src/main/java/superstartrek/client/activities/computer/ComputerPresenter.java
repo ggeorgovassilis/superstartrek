@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -221,7 +220,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void onEnterpriseRepaired(Enterprise enterprise, int itemCount, int torpedos, int antimatter) {
+	public void onEnterpriseRepaired(Enterprise enterprise) {
 		updateButtonViews();
 		updateAntimatterView();
 	}

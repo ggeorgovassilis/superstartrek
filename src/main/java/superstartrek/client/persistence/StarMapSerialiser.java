@@ -2,9 +2,6 @@ package superstartrek.client.persistence;
 
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.json.client.JSONArray;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Constants;
