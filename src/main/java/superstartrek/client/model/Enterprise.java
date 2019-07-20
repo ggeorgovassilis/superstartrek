@@ -20,15 +20,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double SHIELD_IMPACT_MODIFIER = 0.5;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
 
-	Application application;
-	StarMap starMap;
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
 	Setting antimatter = new Setting(1000);
-	Setting reactor = new Setting(60);
+	Setting reactor = new Setting(40);
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
 	Setting autoRepair = new Setting(1);
+
+	Application application;
+	StarMap starMap;
 	Quadrant quadrant;
 	List<Location> reachableSectors = new ArrayList<>();
 

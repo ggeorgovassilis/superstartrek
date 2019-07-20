@@ -59,6 +59,6 @@ public class TestLRSPresenter extends BaseTest{
 		verify(view).updateCell(1, 0, "1", "navigation-target  explored");
 		verify(view).updateCell(0, 1, "1", "navigation-target  explored");
 		verify(view).updateCell(2, 0, "2", "navigation-target  explored");
-		verify(view).updateCell(eq(3), eq(4), eq("0"), eq("navigation-target "));
+		verify(view).updateCell(eq(3), eq(0), eq("3"), eq("navigation-target "));
 	}
 }
