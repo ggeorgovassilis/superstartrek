@@ -55,7 +55,7 @@ public class Setup {
 			throw new RuntimeException("Names have not beed coded for anything but 8x8 quadrants yet");
 	}
 	
-	void putKlingonsIntoQuadrant(Quadrant quadrant, BrowserAPI random, StarMap map, Formations f) {
+	void deployFormationIntoQuadrant(Quadrant quadrant, BrowserAPI random, StarMap map, Formations f) {
 		for (int i=0;i<f.raiders;i++) {
 			Klingon k = new Klingon(Klingon.ShipClass.Raider);
 			Location loc = map.findFreeSpot(quadrant);
@@ -96,7 +96,7 @@ public class Setup {
 			BrowserAPI random = Application.get().browserAPI;
 			int index = random.nextInt(formations.size());
 			Formations f = formations.remove(index);
-			putKlingonsIntoQuadrant(q, random, map, f);
+			deployFormationIntoQuadrant(q, random, map, f);
 		}
 	}
 	
