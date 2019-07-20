@@ -1,11 +1,28 @@
 package superstartrek.client.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.utils.BrowserAPI;
 
 public class Setup {
+	
+	public static enum Formations{
+		f1(1,0),f2(0,1),f3(5,0),f4(3,1),f5(0,2),f6(0,3),f7(3,3);
+		
+		Formations(int raiders, int birdsOfPrey){
+			this.raiders = raiders;
+			this.birdsOfPrey = birdsOfPrey;
+		}
+		final int raiders;
+		final int birdsOfPrey;
+	}
+	
+	final List<Formations> formations = new ArrayList<>();
 
 	final String names[] = { "Antares", "Siruis", "Rigel", "Deneb", "Procyon", "Capella", "Vega", "Betelgeuse",
 			"Canopus", "Aldebaran", "Altair", "Regolus", "Saggitarius","Arcturus","Pollux","Spica" };
@@ -16,11 +33,41 @@ public class Setup {
 	
 	public Setup(Application application) {
 		this.application = application;
+		formations.add(Formations.f1);
+		formations.add(Formations.f1);
+		formations.add(Formations.f1);
+		formations.add(Formations.f1);
+		formations.add(Formations.f2);
+		formations.add(Formations.f2);
+		formations.add(Formations.f3);
+		formations.add(Formations.f3);
+		formations.add(Formations.f4);
+		formations.add(Formations.f4);
+		formations.add(Formations.f5);
+		formations.add(Formations.f5);
+		formations.add(Formations.f6);
+		formations.add(Formations.f6);
+		formations.add(Formations.f7);
 	}
 	
 	void maybeShouldWarn(int currentSectors, int hardcodedSectors) {
 		if (currentSectors!=hardcodedSectors)
 			throw new RuntimeException("Names have not beed coded for anything but 8x8 quadrants yet");
+	}
+	
+	void putKlingonsIntoQuadrant(Quadrant quadrant, BrowserAPI random, StarMap map, Formations f) {
+		for (int i=0;i<f.raiders;i++) {
+			Klingon k = new Klingon(Klingon.ShipClass.Raider);
+			Location loc = map.findFreeSpot(quadrant);
+			k.setLocation(loc);
+			quadrant.getKlingons().add(k);
+		}
+		for (int i=0;i<f.birdsOfPrey;i++) {
+			Klingon k = new Klingon(Klingon.ShipClass.BirdOfPrey);
+			Location loc = map.findFreeSpot(quadrant);
+			k.setLocation(loc);
+			quadrant.getKlingons().add(k);
+		}
 	}
 	
 	public Quadrant makeQuadrant(StarMap map, int x, int y) {
@@ -41,18 +88,26 @@ public class Setup {
 			q.setExplored(true);
 			q.setStarBase(starBase);
 		}
-		//don't put klingons in start quadrant
-		if (x+y!=0 && random.nextDouble()<Constants.CHANCE_OF_KLINGONS_IN_QUADRANT) {
-			int klingons = 1+random.nextInt(Constants.MAX_KLINGONS_IN_QUADRANT);
-			while (klingons-->0) {
-				int cIndex = random.nextInt(Klingon.ShipClass.values().length);
-				Klingon k = new Klingon((Klingon.ShipClass.values()[cIndex]));
-				Location loc = map.findFreeSpot(q);
-				k.setLocation(loc);
-				q.getKlingons().add(k);
-			}
-		}
 		return q;
+	}
+	
+	public void putKlingonsInQuadrant(Quadrant q, StarMap map) {
+		if (q.x+q.y!=0 && !formations.isEmpty()) {
+			BrowserAPI random = Application.get().browserAPI;
+			int index = random.nextInt(formations.size());
+			Formations f = formations.remove(index);
+			putKlingonsIntoQuadrant(q, random, map, f);
+		}
+	}
+	
+	public void putKlingonsOnStarMap(StarMap map) {
+		BrowserAPI random = Application.get().browserAPI;
+		while (!formations.isEmpty()) {
+			int x = random.nextInt(Constants.SECTORS_EDGE);
+			int y = random.nextInt(Constants.SECTORS_EDGE);
+			Quadrant q = map.getQuadrant(x, y);
+			putKlingonsInQuadrant(q, map);
+		}
 	}
 	
 	public StarMap createNewMap() {
@@ -68,6 +123,7 @@ public class Setup {
 		map.enterprise.setQuadrant(map.quadrants[0][0]);
 		map.enterprise.getQuadrant().setExplored(true);
 		map.enterprise.setLocation(map.findFreeSpot(map.quadrants[0][0]));
+		putKlingonsOnStarMap(map);
 		return map;
 	}
 }

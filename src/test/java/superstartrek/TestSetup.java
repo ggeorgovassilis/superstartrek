@@ -38,10 +38,9 @@ public class TestSetup extends BaseTest{
 										0,1,2,
 										7,0,3,
 				// klingons
-										NUMBER_OF_KLINGONS,
-										0,1,5,
-										1,2,2,
-										0,3,2
+										10, //formation f5
+										1,5, // free location
+										2,2// free location
 );
 		//@formatter:on
 
@@ -68,16 +67,15 @@ public class TestSetup extends BaseTest{
 		assertEquals("Class F star",quadrant.getStars().get(4).getName());
 		assertEquals("star star-class-f", quadrant.getStars().get(4).getCss());
 		
-		assertEquals(NUMBER_OF_KLINGONS+1,quadrant.getKlingons().size());
+		setup.putKlingonsInQuadrant(quadrant, starMap);
+		assertEquals(2,quadrant.getKlingons().size());
 		
 		List<Klingon> klingons = new ArrayList<>(quadrant.getKlingons());
 		assertEquals(Location.location(1, 5), klingons.get(0).getLocation());
-		assertEquals("a Klingon raider",klingons.get(0).getName());
+		assertEquals("a Bird-of-prey",klingons.get(0).getName());
 
 		assertEquals(Location.location(2, 2), klingons.get(1).getLocation());
 		assertEquals("a Bird-of-prey",klingons.get(1).getName());
 
-		assertEquals(Location.location(3, 2), klingons.get(2).getLocation());
-		assertEquals("a Klingon raider",klingons.get(2).getName());
 	}
 }
