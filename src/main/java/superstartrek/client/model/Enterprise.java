@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.shared.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -295,7 +297,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (phasers.getValue() == 0) {
 			return "Phasers already fired.";
 		}
-		if (getReactor().getValue() < phasers.getValue()) {
+		double phaserEnergy = Math.min(phasers.getValue(), reactor.getValue());
+		if (phaserEnergy<1) {
 			return "Insufficient reactor output";
 		}
 		return null;
@@ -304,20 +307,24 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void firePhasersAt(Location sector, boolean isAutoAim) {
 		Thing thing = quadrant.findThingAt(sector);
 		String error = canFirePhaserAt(sector);
+		GWT.log("fire phasers "+error);
 		if (error != null) {
 			if (!isAutoAim)
 				application.message(error);
 			return;
 		}
-		if (!consume("phasers", phasers.getValue())) {
+		double phaserEnergy = Math.min(phasers.getValue(), reactor.getValue());
+		if (phaserEnergy<1)
+			return;
+		if (!consume("phasers", phaserEnergy)) {
 			if (!isAutoAim)
 				application.message("Insufficient reactor output");
 			return;
 		}
 		Klingon klingon = (Klingon) thing;
 		double distance = StarMap.distance(this, thing);
-		double damage = phasers.getValue() / distance;
-		phasers.setValue(0);
+		double damage = phaserEnergy / distance;
+		phasers.setValue(phasers.getValue()-phaserEnergy);
 		fireEvent(Events.BEFORE_FIRE,
 				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
 		fireEvent(Events.AFTER_FIRE,
@@ -336,9 +343,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		repairCount += antimatter.repair() ? 1 : 0;
 		repairCount += lrs.repair() ? 1 : 0;
 		final int fRepairCount = repairCount;
-		fireEvent(Events.ENTERPRISE_REPAIRED,
-				(h) -> h.onEnterpriseRepaired(Enterprise.this));
-		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount, torpedosRestocked, antimatterRefuelled));
+		fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
+		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount,
+				torpedosRestocked, antimatterRefuelled));
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -367,8 +374,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 					+ (maybeRepairProvisionally("phasers", phasers) ? 1 : 0)
 					+ (maybeRepairProvisionally("torpedo bay", torpedos) ? 1 : 0)
 					+ (maybeRepairProvisionally("tactical computer", autoAim) ? 1 : 0)
-					+ (maybeRepairProvisionally("LRS", lrs) ? 1 : 0);
-			if (count>0) {
+					+ (maybeRepairProvisionally("LRS", lrs) ? 1 : 0)
+					+ (maybeRepairProvisionally("reactor", reactor) ? 1 : 0);
+			if (count > 0) {
 				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 				return;
 			}
@@ -378,13 +386,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public boolean canRepairProvisionally() {
 		return canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers) || canBeRepaired(torpedos)
-				|| canBeRepaired(autoAim) || canBeRepaired(lrs);
+				|| canBeRepaired(autoAim) || canBeRepaired(lrs) || canBeRepaired(reactor);
 	}
 
 	public boolean isDamaged() {
 		return impulse.getCurrentUpperBound() < impulse.getMaximum()
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
-				|| phasers.getCurrentUpperBound() < phasers.getMaximum() || !torpedos.isEnabled()
+				|| phasers.getCurrentUpperBound() < phasers.getMaximum()
+				|| reactor.getCurrentUpperBound() > reactor.getMaximum() || !torpedos.isEnabled()
 				|| !autoAim.isEnabled() || !lrs.isEnabled();
 	}
 
@@ -410,6 +419,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (phasers.getCurrentUpperBound() < 1)
 			phasers.setEnabled(false);
 		application.message("Phaser banks damaged", "enterprise-damaged");
+	}
+
+	public void damageReactor() {
+		reactor.damage(reactor.getMaximum() * 0.3);
+		if (reactor.getCurrentUpperBound() < 1)
+			reactor.setEnabled(false);
+		application.message("Reactor damaged", "enterprise-damaged");
 	}
 
 	public void damageAutoaim() {
@@ -443,6 +459,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			damagePhasers();
 		if (autoAim.isEnabled() && random.nextDouble() < deviceImpact)
 			damageAutoaim();
+		if (reactor.isEnabled() && random.nextDouble() < deviceImpact)
+			damageReactor();
 		if (lrs.isEnabled() && random.nextDouble() < deviceImpact)
 			damageLRS();
 		fireEvent(Events.ENTERPRISE_DAMAGED, (h) -> h.onEnterpriseDamaged(Enterprise.this));
