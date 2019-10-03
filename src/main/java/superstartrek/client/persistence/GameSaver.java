@@ -15,7 +15,6 @@ public class GameSaver {
 	}
 
 	public void saveGame() {
-		GWT.log("save game");
 		StarMapSerialiser sms = new StarMapSerialiser(app);
 		String json = sms.serialise(app.starMap);
 		app.browserAPI.storeValueLocally("savegame", json);

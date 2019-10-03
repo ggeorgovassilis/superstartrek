@@ -25,7 +25,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
 	Setting antimatter = new Setting(1000);
-	Setting reactor = new Setting(40);
+	Setting reactor = new Setting(50);
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
 	Setting autoRepair = new Setting(1);
@@ -140,10 +140,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public List<Location> findReachableSectors() {
 		reachableSectors.clear();
 		double range = getImpulse().getValue();
-		while (range > 1 && computeConsumptionForImpulseNavigation(range) >= getReactor().getValue())
-			range = range - 0.5;
+		while (range >= 1 && computeConsumptionForImpulseNavigation(range) >= getReactor().getValue())
+			range = range - 0.3;
 		if (range < 1)
 			return reachableSectors;
+		GWT.log("Max range is "+range);
 		double range_squared = range * range;
 		int lx = getLocation().getX();
 		int ly = getLocation().getY();
@@ -209,7 +210,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return true;
 		});
 		Location drop = trace[0];
-		if (!consume("impulse", computeConsumptionForImpulseNavigation(distance))) {
+		double energyNeededForMovement = computeConsumptionForImpulseNavigation(distance);
+		if (!consume("impulse", energyNeededForMovement)) {
+			GWT.log("Available energy "+reactor.getValue()+" but needs "+energyNeededForMovement);
 			message("Insufficient reactor output");
 			return;
 		}
@@ -307,7 +310,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void firePhasersAt(Location sector, boolean isAutoAim) {
 		Thing thing = quadrant.findThingAt(sector);
 		String error = canFirePhaserAt(sector);
-		GWT.log("fire phasers "+error);
 		if (error != null) {
 			if (!isAutoAim)
 				application.message(error);
@@ -342,6 +344,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		int antimatterRefuelled = (int) (antimatter.getMaximum() - antimatter.getValue());
 		repairCount += antimatter.repair() ? 1 : 0;
 		repairCount += lrs.repair() ? 1 : 0;
+		repairCount += reactor.repair() ? 1 : 0;
 		final int fRepairCount = repairCount;
 		fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount,
@@ -488,6 +491,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void playComputerTurn() {
+		GWT.log("play computer "+getStarMap().getStarDate());
 		if (autoAim.getBooleanValue() && autoAim.isEnabled())
 			autoAim();
 	}

@@ -154,7 +154,6 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void animateTorpedoFireBetween(int x1, int y1, int x2, int y2, Callback<Void> callback) {
-		GWT.log("animate torpedo");
 		Element e1 = eSectors[x1][y1];
 		Element e2 = eSectors[x2][y2];
 
