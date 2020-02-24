@@ -13,6 +13,6 @@ The app can be installed for offline use by adding it to the home screen. In Chr
 
 ## developing
 
-Development takes place in the gh-pages branch.
+**Important** Development takes place in the gh-pages branch.
 
 gwt devmode configuration: `-startupUrl http://localhost:9876/superstartrek.superstartrek/index.html#intro -war target/sst -noserver superstartrek.sst-dev -style PRETTY`
