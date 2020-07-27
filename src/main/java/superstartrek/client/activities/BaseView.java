@@ -20,6 +20,10 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 
 	protected void decorateWidget() {
 	}
+	
+	protected boolean isAbsulutelyPositioned() {
+		return false;
+	}
 
 	@SuppressWarnings("unchecked")
 	protected BaseView(P presenter) {
@@ -33,10 +37,12 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 	@Override
 	public void show() {
 		setVisible(true);
-		int contentHeight = getOffsetHeight();
-		int windowHeight = Window.getClientHeight();
-		int margin=Math.max(0,windowHeight-contentHeight);
-		getElement().getStyle().setMarginTop(margin, Unit.PX);
+		if (!isAbsulutelyPositioned()) {
+			int contentHeight = getOffsetHeight();
+			int windowHeight = Window.getClientHeight();
+			int margin=Math.max(0,windowHeight-contentHeight);
+			getElement().getStyle().setMarginTop(margin, Unit.PX);
+		}
 	}
 	
 	@Override

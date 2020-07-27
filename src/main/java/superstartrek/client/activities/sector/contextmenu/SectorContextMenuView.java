@@ -1,5 +1,6 @@
 package superstartrek.client.activities.sector.contextmenu;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
@@ -33,6 +34,11 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	}
 
 	@Override
+	protected boolean isAbsulutelyPositioned() {
+		return true;
+	}
+	
+	@Override
 	public void decorateWidget() {
 		addStyleName("sector-context-menu");
 		super.decorateWidget();
@@ -45,6 +51,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	public void setLocation(int x, int y) {
+		GWT.log("SectorContxtMenuView.setLocation "+x+","+y );
 		Element e = getElement();
 		e.getStyle().setLeft(x, Unit.PX);
 		e.getStyle().setTop(y, Unit.PX);
