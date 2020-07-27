@@ -5,6 +5,7 @@ e9c8969a74c9843a39cd2e40b76e107a *anchor.svg
 409911a0a0c47544e0186b273df854cd *bird_of_prey.svg
 7534064b3454435e995269bc6dccab83 *bookmark.svg
 eeb646a22fd2d04787c6ea0b4d6d7981 *cancel.svg
+70db5ad12decac9643f81ae849b1a0f4 *checksum.sha
 6d22e4f2d2057c6e8d6fab098e76e80f *clear.cache.gif
 b106e2422d959fb50cad36ad897c10c1 *communicator.svg
 bc54c81cfa24e36e1b0ccb844447e993 *computer.html
@@ -15,7 +16,7 @@ ca5fb652ffa6b77bf6061023dd0dd9c4 *hexagon.svg
 4326e01402a07721a01ce25a05aee869 *hexagon_filled.svg
 b0f2b2841632f4ad1a647b3761be035a *icon192x192.png
 a4ff375464f94001b5eac2668581a640 *icon512x512.png
-369d71ddbcf62647440f27d3fa6bde42 *index.html
+e36f5e88858c28dec07dcf9728fa2cd2 *index.html
 1e070ac03ae4a53ff271e29f3c587efb *install-app-prompt.html
 830f662b47643eedd3bc9cd670e4a30c *intro.html
 2265d3c1a9e251272236a9093ef7c774 *laser.svg
@@ -23,6 +24,7 @@ a4ff375464f94001b5eac2668581a640 *icon512x512.png
 9400b48fbdeed99e719871a84b76c655 *manual.html
 9d7b12f10268adcda667417e70a8ae38 *messages.html
 2439484dfa01b81bd20f7547b573a59f *navigation.svg
+2348770febc0374a92fabe7c903f5e46 *package.txt
 27d563cfc353bc0c469a7d599251be0c *radar.svg
 2c3997e1e40416f519c445e785b7b30d *repair.svg
 0e421ea747efb41e586136823212fafb *report.svg
@@ -33,6 +35,6 @@ f36681e3d4c6af28bb4a47bc095d18f6 *sst.css
 4aeab9adbca314a8cc08c254635a8867 *sst.webmanifest
 fabc28bd92cbe78c4b666b9762f6b39f *stars-background.gif
 c01b26c2b318b960aafe2b198bccab73 *status-report.html
-76b290f3c873b6cd336f1b857b02227d *superstartrek.superstartrek.nocache.js
+aba6f77658e3a3a63e7da1e8bbad3698 *superstartrek.superstartrek.nocache.js
 3b83f13891b250cbffb66132af201b62 *torpedo.svg
 e7f21fbd818c1bbb3345e10dbb85ec86 *update-app-prompt.html
