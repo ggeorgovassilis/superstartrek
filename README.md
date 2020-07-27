@@ -10,3 +10,5 @@ A mobile friendly web remake of [Super Star Trek](https://en.wikipedia.org/wiki/
 ## developing
 
 gwt devmode configuration for ecplipse: `-startupUrl index.html -war target/sst -noserver superstartrek.superstartrek`
+
+**Important note**: the main development branch is gh-pages
