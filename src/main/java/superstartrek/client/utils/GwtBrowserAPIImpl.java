@@ -35,7 +35,7 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	public GwtBrowserAPIImpl(EventBus bus) {
 		Window.addResizeHandler(this);
 		updateMetrics();
-		_page = RootPanel.get();
+		_page = RootPanel.get("container");
 		this.bus = bus;
 		_page.addDomHandler(this, KeyDownEvent.getType());
 
