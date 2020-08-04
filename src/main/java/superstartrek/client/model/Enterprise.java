@@ -28,6 +28,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting reactor = new Setting(50);
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
+	Setting warpDrive = new Setting(1);
 
 	Application application;
 	StarMap starMap;
@@ -64,6 +65,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public Setting getAutoAim() {
 		return autoAim;
 	}
+	
+	public Setting getWarpDrive() {
+		return warpDrive;
+	}
 
 	public Enterprise(Application app, StarMap map) {
 		super(new Setting(3), new Setting(100));
@@ -83,6 +88,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
+		if (!warpDrive.isEnabled()) {
+			application.message("Warp drive is offline.","info");
+			return false;
+		}
 		final Location fromLocation = getLocation();
 		final Quadrant fromQuadrant = getQuadrant();
 		double necessaryEnergy = computeConsumptionForWarp(fromQuadrant, destinationQuadrant);
@@ -393,6 +402,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 					+ (maybeRepairProvisionally("torpedo bay", torpedos) ? 1 : 0)
 					+ (maybeRepairProvisionally("tactical computer", autoAim) ? 1 : 0)
 					+ (maybeRepairProvisionally("LRS", lrs) ? 1 : 0)
+					+ (maybeRepairProvisionally("warp drive", warpDrive) ? 1 : 0)
 					+ (maybeRepairProvisionally("reactor", reactor) ? 1 : 0);
 			if (count > 0) {
 				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
@@ -403,7 +413,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public boolean canRepairProvisionally() {
-		return canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers) || canBeRepaired(torpedos)
+		return canBeRepaired(warpDrive) || canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers) || canBeRepaired(torpedos)
 				|| canBeRepaired(autoAim) || canBeRepaired(lrs) || canBeRepaired(reactor);
 	}
 
@@ -412,7 +422,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
 				|| phasers.getCurrentUpperBound() < phasers.getMaximum()
 				|| reactor.getCurrentUpperBound() > reactor.getMaximum() || !torpedos.isEnabled()
-				|| !autoAim.isEnabled() || !lrs.isEnabled();
+				|| !autoAim.isEnabled() || !lrs.isEnabled()  || !warpDrive.isEnabled();
 	}
 
 	public void damageShields() {
@@ -455,6 +465,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		lrs.setEnabled(false);
 		application.message("LRS damaged", "enterprise-damaged");
 	}
+	
+	public void damageWarpDrive() {
+		warpDrive.setEnabled(false);
+		application.message("Warp drive damaged", "enterprise-damaged");
+	}
 
 	public void applyDamage(double damage) {
 		// from a game-play POV being damaged right after jumping into a quadrant sucks,
@@ -481,6 +496,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			damageReactor();
 		if (lrs.isEnabled() && random.nextDouble() < deviceImpact)
 			damageLRS();
+		if (warpDrive.isEnabled() && random.nextDouble() < deviceImpact) {
+			damageWarpDrive();
+		}
 		fireEvent(Events.ENTERPRISE_DAMAGED, (h) -> h.onEnterpriseDamaged(Enterprise.this));
 	}
 

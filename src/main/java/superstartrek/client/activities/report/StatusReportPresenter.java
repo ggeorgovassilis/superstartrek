@@ -23,11 +23,13 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 		view.setProperty("report_reactor_remaining", Math.floor(enterprise.getReactor().getValue())+" / "+Math.floor(enterprise.getReactor().getCurrentUpperBound()));
 		view.setProperty("report_tactical_computer", enterprise.getAutoAim().isEnabled()?"online":"offline");
 		view.setProperty("report_LRS", enterprise.getLrs().isEnabled()?"online":"offline");
+		view.setProperty("report_warp", enterprise.getWarpDrive().isEnabled()?"online":"offline");
 		
 		view.setOverlay("impulse", CSS.damageClass(enterprise.getImpulse()));
 		view.setOverlay("phasers", CSS.damageClass(enterprise.getPhasers()));
 		view.setOverlay("torpedobay", CSS.damageClass(enterprise.getTorpedos()));
 		view.setOverlay("shields", CSS.damageClass(enterprise.getShields()));
+		view.setOverlay("warp", CSS.damageClass(enterprise.getWarpDrive()));
 	}
 	
 	public StatusReportPresenter(Application application) {
