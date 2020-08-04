@@ -21,6 +21,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double DEVICE_IMPACT_MODIFIER = 0.3;
 	public final static double SHIELD_IMPACT_MODIFIER = 0.5;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
+	public final static int TIME_TO_REPAIR_SETTING = 3;
 
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
@@ -36,7 +37,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	List<Location> reachableSectors = new ArrayList<>();
 
 	int turnsSinceWarp = 0;
-
 
 	public Setting getLrs() {
 		return lrs;
@@ -65,7 +65,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public Setting getAutoAim() {
 		return autoAim;
 	}
-	
+
 	public Setting getWarpDrive() {
 		return warpDrive;
 	}
@@ -89,7 +89,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
 		if (!warpDrive.isEnabled()) {
-			application.message("Warp drive is offline.","info");
+			application.message("Warp drive is offline.", "info");
 			return false;
 		}
 		final Location fromLocation = getLocation();
@@ -149,7 +149,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			range = range - 0.3;
 		if (range < 1)
 			return reachableSectors;
-		GWT.log("Max range is "+range);
+		GWT.log("Max range is " + range);
 		double range_squared = range * range;
 		int lx = getLocation().getX();
 		int ly = getLocation().getY();
@@ -217,7 +217,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		Location drop = trace[0];
 		double energyNeededForMovement = computeConsumptionForImpulseNavigation(distance);
 		if (!consume("impulse", energyNeededForMovement)) {
-			GWT.log("Available energy "+reactor.getValue()+" but needs "+energyNeededForMovement);
+			GWT.log("Available energy " + reactor.getValue() + " but needs " + energyNeededForMovement);
 			message("Insufficient reactor output");
 			return;
 		}
@@ -227,8 +227,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void maybeAutoRepair() {
-		if (application.browserAPI.nextDouble() < CHANCE_OF_AUTOREPAIR
-				&& canRepairProvisionally())
+		if (application.browserAPI.nextDouble() < CHANCE_OF_AUTOREPAIR && canRepairProvisionally())
 			repairProvisionally();
 	}
 
@@ -305,7 +304,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return "Phasers already fired.";
 		}
 		double phaserEnergy = Math.min(phasers.getValue(), reactor.getValue());
-		if (phaserEnergy<1) {
+		if (phaserEnergy < 1) {
 			return "Insufficient reactor output";
 		}
 		return null;
@@ -320,7 +319,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return;
 		}
 		double phaserEnergy = Math.min(phasers.getValue(), reactor.getValue());
-		if (phaserEnergy<1)
+		if (phaserEnergy < 1)
 			return;
 		if (!consume("phasers", phaserEnergy)) {
 			if (!isAutoAim)
@@ -330,14 +329,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		Klingon klingon = (Klingon) thing;
 		double distance = StarMap.distance(this, thing);
 		double damage = phaserEnergy / distance;
-		phasers.setValue(phasers.getValue()-phaserEnergy);
+		phasers.setValue(phasers.getValue() - phaserEnergy);
 		fireEvent(Events.BEFORE_FIRE,
 				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
 		fireEvent(Events.AFTER_FIRE,
 				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
 	}
-
-	
 
 	public void dockInStarbase() {
 		StarBase starBase = quadrant.getStarBase();
@@ -350,7 +347,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return;
 		}
 		if (!inRange && !hasKlingons) {
-			Location loc = starMap.findFreeSpotAround(new QuadrantIndex(quadrant, starMap), quadrant.getStarBase().getLocation(), 2);
+			Location loc = starMap.findFreeSpotAround(new QuadrantIndex(quadrant, starMap),
+					quadrant.getStarBase().getLocation(), 2);
 			if (loc == null) {
 				application.message("No space around starbase");
 				return;
@@ -373,6 +371,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount,
 				torpedosRestocked, antimatterRefuelled));
+		application.message("Enterprise docked at " + starBase.getName());
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
@@ -383,7 +382,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
-		if (application.browserAPI.nextDouble() < 0.5)
+		if (starMap.getStarDate() - setting.getTimeOfDamage() < TIME_TO_REPAIR_SETTING)
 			return false;
 		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * 0.75)); // boolean settings can be repaired
 																				// fully
@@ -394,27 +393,24 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void repairProvisionally() {
-		int i = 20;
-		while (i-- > 0) {
-			int count = (maybeRepairProvisionally("impulse drive", impulse) ? 1 : 0)
-					+ (maybeRepairProvisionally("shields", shields) ? 1 : 0)
-					+ (maybeRepairProvisionally("phasers", phasers) ? 1 : 0)
-					+ (maybeRepairProvisionally("torpedo bay", torpedos) ? 1 : 0)
-					+ (maybeRepairProvisionally("tactical computer", autoAim) ? 1 : 0)
-					+ (maybeRepairProvisionally("LRS", lrs) ? 1 : 0)
-					+ (maybeRepairProvisionally("warp drive", warpDrive) ? 1 : 0)
-					+ (maybeRepairProvisionally("reactor", reactor) ? 1 : 0);
-			if (count > 0) {
-				fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
-				return;
-			}
-		}
-		application.message("Couldn't repair anything");
+		boolean v = maybeRepairProvisionally("impulse drive", impulse);
+		v |= maybeRepairProvisionally("shields", shields);
+		v |= maybeRepairProvisionally("phasers", phasers);
+		v |= maybeRepairProvisionally("torpedo bay", torpedos);
+		v |= maybeRepairProvisionally("tactical computer", autoAim);
+		v |= maybeRepairProvisionally("LRS", lrs);
+		v |= maybeRepairProvisionally("warp drive", warpDrive);
+		v |= maybeRepairProvisionally("reactor", reactor);
+		if (v) {
+			fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
+			return;
+		} else application.message("Couldn't repair anything");
+
 	}
 
 	public boolean canRepairProvisionally() {
-		return canBeRepaired(warpDrive) || canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers) || canBeRepaired(torpedos)
-				|| canBeRepaired(autoAim) || canBeRepaired(lrs) || canBeRepaired(reactor);
+		return canBeRepaired(warpDrive) || canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers)
+				|| canBeRepaired(torpedos) || canBeRepaired(autoAim) || canBeRepaired(lrs) || canBeRepaired(reactor);
 	}
 
 	public boolean isDamaged() {
@@ -422,16 +418,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
 				|| phasers.getCurrentUpperBound() < phasers.getMaximum()
 				|| reactor.getCurrentUpperBound() > reactor.getMaximum() || !torpedos.isEnabled()
-				|| !autoAim.isEnabled() || !lrs.isEnabled()  || !warpDrive.isEnabled();
+				|| !autoAim.isEnabled() || !lrs.isEnabled() || !warpDrive.isEnabled();
 	}
 
 	public void damageShields() {
-		shields.damage(30);
+		shields.damage(30, starMap.getStarDate());
 		application.message("Shields damaged, dropped to %" + shields.percentageHealth(), "enterprise-damaged");
 	}
 
 	public void damageImpulse() {
-		impulse.damage(1);
+		impulse.damage(1, starMap.getStarDate());
 		if (impulse.getValue() < 1)
 			impulse.setEnabled(false);
 		application.message("Impulse drive damaged", "enterprise-damaged");
@@ -443,14 +439,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void damagePhasers() {
-		phasers.damage(phasers.getMaximum() * 0.3);
+		phasers.damage(phasers.getMaximum() * 0.3, starMap.getStarDate());
 		if (phasers.getCurrentUpperBound() < 1)
 			phasers.setEnabled(false);
 		application.message("Phaser banks damaged", "enterprise-damaged");
 	}
 
 	public void damageReactor() {
-		reactor.damage(reactor.getMaximum() * 0.3);
+		reactor.damage(reactor.getMaximum() * 0.3, starMap.getStarDate());
 		if (reactor.getCurrentUpperBound() < 1)
 			reactor.setEnabled(false);
 		application.message("Reactor damaged", "enterprise-damaged");
@@ -465,7 +461,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		lrs.setEnabled(false);
 		application.message("LRS damaged", "enterprise-damaged");
 	}
-	
+
 	public void damageWarpDrive() {
 		warpDrive.setEnabled(false);
 		application.message("Warp drive damaged", "enterprise-damaged");
@@ -524,7 +520,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void playComputerTurn() {
-		GWT.log("play computer "+getStarMap().getStarDate());
+		GWT.log("play computer " + getStarMap().getStarDate());
 		if (autoAim.getBooleanValue() && autoAim.isEnabled())
 			autoAim();
 	}

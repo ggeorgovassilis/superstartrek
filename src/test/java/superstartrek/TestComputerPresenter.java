@@ -46,7 +46,7 @@ public class TestComputerPresenter extends BaseTest{
 	@Test
 	public void testOnTurnStarted_2() {
 		enterprise.setLocation(Location.location(1, 1));
-		enterprise.getPhasers().damage(10);
+		enterprise.getPhasers().damage(10, starMap.getStarDate());
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
 		presenter.onTurnStarted();
 
@@ -90,7 +90,7 @@ public class TestComputerPresenter extends BaseTest{
 	
 	@Test
 	public void test_updateShieldsView() {
-		enterprise.getShields().damage(10);
+		enterprise.getShields().damage(10, starMap.getStarDate());
 		presenter.updateShieldsView();
 		verify(view).updateShields(90, 90, 100);
 	}
@@ -98,7 +98,7 @@ public class TestComputerPresenter extends BaseTest{
 	@Test
 	public void test_statusButtonView() {
 		enterprise.getTorpedos().setEnabled(false);
-		enterprise.getPhasers().damage(10);
+		enterprise.getPhasers().damage(10, starMap.getStarDate());
 		presenter.updateStatusButtonView();
 		verify(view).updateShortStatus("", "", "damaged damage-medium", "damaged damage-offline");
 	}

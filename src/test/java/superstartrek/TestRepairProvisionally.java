@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import superstartrek.client.bus.Events;
+import superstartrek.client.model.Enterprise;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
@@ -28,14 +29,13 @@ public class TestRepairProvisionally extends BaseTest{
 
 	@Test
 	public void testRepairPhasers() {
-		enterprise.getPhasers().damage(enterprise.getPhasers().getMaximum()/2);
+		enterprise.getPhasers().damage(enterprise.getPhasers().getMaximum()/2, starMap.getStarDate());
 		enterprise.getPhasers().setEnabled(false);
-		enterprise.repairProvisionally();
-		enterprise.repairProvisionally();
+		starMap.advanceStarDate(Enterprise.TIME_TO_REPAIR_SETTING);
 		enterprise.repairProvisionally();
 		
 		assertTrue(enterprise.getPhasers().isEnabled());
 		assertTrue(enterprise.getPhasers().getValue()>10);
-		assertEquals(3,bus.getFiredCount(Events.MESSAGE_POSTED));
+		assertEquals(1, bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 }

@@ -328,10 +328,10 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void testDockWithStarbase() {
 		enterprise.setLocation(Location.location(1, 1));
-		enterprise.getPhasers().damage(10);
+		enterprise.getPhasers().damage(10, starMap.getStarDate());
 		enterprise.getAntimatter().decrease(10);
-		enterprise.getTorpedos().damage(1);
-		enterprise.getImpulse().damage(1);
+		enterprise.getTorpedos().damage(1, starMap.getStarDate());
+		enterprise.getImpulse().damage(1, starMap.getStarDate());
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
 
 		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
