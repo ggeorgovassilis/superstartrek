@@ -699,6 +699,10 @@ a.progress-bar {
 	z-index: 2;
 }
 
+.overlay.warp{
+	z-index: 2;
+}
+
 .legend #what, .legend #status {
 	float: left;
 	width: 10em;
