@@ -33,7 +33,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		EnterpriseRepairedHandler, KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
 
 	ScoreKeeper scoreKeeper;
-	boolean repairButtonDocksAtStarbase = false;
 	Enterprise enterprise;
 	StarMap starMap;
 
@@ -79,15 +78,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		view.hide();
 	}
 
-	public void updateRepairButtonView() {
-		boolean canShowDockButton = canShowDockButton();
-		boolean canShowRepairButton = !canShowDockButton && enterprise.canRepairProvisionally();
-		repairButtonDocksAtStarbase = canShowDockButton;
-		view.setRepairButtonCss(canShowDockButton ? "has-dock" : "has-repair");
-		// this has to go after setting the CSS or CSS will be overwritten
-		view.setRepairButtonEnabled(canShowDockButton || canShowRepairButton);
-	}
-	
 	String damageClass(Setting setting) {
 		String css = CSS.damageClass(setting);
 		if (setting.health()<1)
@@ -140,30 +130,12 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		view.updateShields(shields.getValue(), shields.getCurrentUpperBound(), shields.getMaximum());
 	}
 
-	public void dockInStarbase() {
-		Quadrant q = enterprise.getQuadrant();
-		boolean inRange = StarMap.within_distance(enterprise, q.getStarBase(), 1.1);
-		if (!inRange) {
-			Location loc = starMap.findFreeSpotAround(new QuadrantIndex(q, starMap), q.getStarBase().getLocation(), 2);
-			if (loc == null) {
-				application.message("No space around starbase");
-				return;
-			}
-			enterprise.moveToIgnoringConstraints(loc);
-		}
-		enterprise.dockAtStarbase(q.getStarBase());
-	}
-
 	public boolean canShowDockButton() {
 		Quadrant q = enterprise.getQuadrant();
 		StarBase starBase = q.getStarBase();
 		boolean visible = starBase != null
 				&& (q.getKlingons().isEmpty() || StarMap.within_distance(enterprise, starBase, 2));
 		return visible;
-	}
-
-	public void repairProvisionally() {
-		starMap.enterprise.repairProvisionally();
 	}
 
 	public void onSkipButtonClicked() {
@@ -178,13 +150,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		updateAntimatterView();
 		updateScoreView();
 		updateButtonViews();
-	}
-
-	public void onRepairButtonClicked() {
-		if (repairButtonDocksAtStarbase)
-			dockInStarbase();
-		else
-			repairProvisionally();
 	}
 
 	@Override
@@ -215,7 +180,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	
 	protected void updateButtonViews() {
 		updateStatusButtonView();
-		updateRepairButtonView();
 		view.setCommandBarMode("mode-command");
 	}
 
@@ -248,10 +212,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		case 's':
 		case 'S':
 			onSkipButtonClicked();
-			break;
-		case 'r':
-		case 'R':
-			onRepairButtonClicked();
 			break;
 		case KeyCodes.KEY_BACKSPACE:
 		case 'b':

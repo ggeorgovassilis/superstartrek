@@ -21,6 +21,13 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	Location sector;
 	Quadrant quadrant;
 	Map<String, Boolean> buttonsEnabled = new HashMap<>();
+	
+	public final static String cmd_navigate = "cmd_navigate";
+	public final static String cmd_firePhasers = "cmd_firePhasers";
+	public final static String cmd_fireTorpedos = "cmd_fireTorpedos";
+	public final static String cmd_dockStarbase = "cmd_dockStarbase";
+		
+
 
 	public SectorContextMenuPresenter(Application application) {
 		super(application);
@@ -28,9 +35,10 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.CONTEXT_MENU_HIDDEN, this);
 		application.browserAPI.addHistoryListener(this);
-		buttonsEnabled.put("cmd_navigate", false);
-		buttonsEnabled.put("cmd_firePhasers", false);
-		buttonsEnabled.put("cmd_fireTorpedos", false);
+		buttonsEnabled.put(cmd_navigate, false);
+		buttonsEnabled.put(cmd_firePhasers, false);
+		buttonsEnabled.put(cmd_fireTorpedos, false);
+		buttonsEnabled.put(cmd_dockStarbase, true);
 	}
 
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
@@ -60,6 +68,10 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 		int target_y_em = Math.max(screenY / vertEmToPx, menuHeightEm / 2);
 		int target_y_px = target_y_em * vertEmToPx;
+		boolean isStarbaseAtTarget = quadrant.getStarBase() != null
+				&& (quadrant.getStarBase() == quadrant.findThingAt(sector));
+		view.enableDockWithStarbaseButton(isStarbaseAtTarget);
+
 		view.setLocation(target_x_px, target_y_px);
 		view.show();
 		addHandler(Events.KEY_PRESSED, this);
@@ -87,7 +99,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 	protected void hideMenu(ScheduledCommand callback) {
 
-		if (view.isVisible()) getEvents().fireEvent(Events.CONTEXT_MENU_HIDE, (h)->h.onStartToHideMenu());
+		if (view.isVisible())
+			getEvents().fireEvent(Events.CONTEXT_MENU_HIDE, (h) -> h.onStartToHideMenu());
 		view.hide(callback);
 		removeHandler(Events.KEY_PRESSED, this);
 	}
@@ -101,14 +114,17 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		if (buttonsEnabled.get(command) == true)
 			hideMenu(() -> {
 				switch (command) {
-				case "cmd_navigate":
+				case cmd_navigate:
 					enterprise.navigateTo(sector);
 					break;
-				case "cmd_firePhasers":
+				case cmd_firePhasers:
 					enterprise.firePhasersAt(sector, false);
 					break;
-				case "cmd_fireTorpedos":
+				case cmd_fireTorpedos:
 					enterprise.fireTorpedosAt(sector);
+					break;
+				case cmd_dockStarbase:
+					enterprise.dockInStarbase();
 					break;
 				}
 			});

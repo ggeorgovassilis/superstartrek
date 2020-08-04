@@ -21,7 +21,6 @@ import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
 
 public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
 
-	Element eRepair;
 	Element eSkip;
 	Element eStatusIconImpulse;
 	Element eStatusIconTactical;
@@ -63,7 +62,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
 		SRSView srsView = new SRSView(srsPresenter);
 		panel.addAndReplaceElement(srsView, "shortrangescan");
-		eRepair = panel.getElementById("cmd_repair");
 		eStatusIconImpulse = panel.getElementById("short-status-impulse");
 		eStatusIconTactical = panel.getElementById("short-status-tactical-computer");
 		eStatusIconTorpedos = panel.getElementById("short-status-torpedo-bay");
@@ -77,7 +75,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eScore = DOM.getElementById("score");
 		eLrsButton = DOM.getElementById("lrs-button");
 		eAboveRadarSlot = DOM.getElementById("above-radar-slot");
-		setRepairButtonEnabled(false);
 		addHandler(this, ClickEvent.getType());
 		DOM.sinkEvents(panel.getElement(), Event.ONCLICK);
 	}
@@ -116,9 +113,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	@Override
 	public void onClick(ClickEvent event) {
 		Element target = event.getNativeEvent().getEventTarget().cast();
-		if (eRepair.isOrHasChild(target))
-			presenter.onRepairButtonClicked();
-		else if (eSkip.isOrHasChild(target))
+		if (eSkip.isOrHasChild(target))
 			presenter.onSkipButtonClicked();
 	}
 
@@ -137,16 +132,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	@Override
 	public void showScore(String score) {
 		eScore.setInnerText(score);
-	}
-
-	@Override
-	public void setRepairButtonEnabled(boolean enabled) {
-		CSS.setEnabled(eRepair, enabled);
-	}
-
-	@Override
-	public void setRepairButtonCss(String css) {
-		eRepair.setClassName("half-width "+css);
 	}
 
 	@Override

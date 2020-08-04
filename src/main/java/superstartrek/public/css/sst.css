@@ -402,6 +402,10 @@ margin-bottom:0.5em;
 	font-size: 120%;
 }
 
+#messages-content>li.enterprise-repaired{
+	color: lime;
+}
+
 .messages-logo {
 	float: left;
 	background-color: darkcyan;
@@ -841,7 +845,6 @@ a.disabled,button.disabled {
 	text-align: center;
 	position: absolute;
 	line-height: 4em;
-	will-change: transform;
 	transition: transform 200ms ease;
 }
 
@@ -893,27 +896,39 @@ a.disabled,button.disabled {
 	background-image: url('../images/cancel.svg')
 }
 
-.expanded .c1 {
+#cmd_dockStarbase {
+	background-image: url('../images/dock.svg')
+}
+
+.expanded .cell.c1 {
 	transform: translate(3.45em,0em);
 }
 
-.expanded .c2 {
-	transform: translate(0em,4em);
+.cell.c2 {
+	visibility:hidden;
 }
 
-.expanded .c3 {
-	transform: translate(-3.45em,2em);
+.can-dock-with-starbase .cell.c2{
+	visibility:visible;
 }
 
-.expanded .c4 {
-	transform: translate(-3.45em,-2em);
-}
-
-.expanded .c5 {
+.expanded .cell.c2 {
 	transform: translate(0em,-4em);
 }
 
-.expanded .c6 {
+.expanded .cell.c3 {
+	transform: translate(-3.45em,2em);
+}
+
+.expanded .cell.c4 {
+	transform: translate(-3.45em,-2em);
+}
+
+.expanded .cell.c5 {
+	transform: translate(0em,-4em);
+}
+
+.expanded .cell.c6 {
 	transform: translate(3.45em,-2em);
 }
 

@@ -57,9 +57,6 @@ public class StarMapSerialiser {
 		sb.append("\t\"autoaim\":");
 		subserialise(enterprise.getAutoAim());
 		sb.append(",\n");
-		sb.append("\t\"autorepair\":");
-		subserialise(enterprise.getAutoRepair());
-		sb.append(",\n");
 		sb.append("\t\"lrs\":");
 		subserialise(enterprise.getLrs());
 		sb.append(",\n");

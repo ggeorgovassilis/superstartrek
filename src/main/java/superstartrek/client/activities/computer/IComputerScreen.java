@@ -18,10 +18,6 @@ public interface IComputerScreen extends View<ComputerPresenter>{
 
 	void showScore(String score);
 
-	void setRepairButtonCss(String css);
-	
-	void setRepairButtonEnabled(boolean enabled);
-	
 	void setQuadrantName(String name, String css);
 	
 	void enableLlrsButton();

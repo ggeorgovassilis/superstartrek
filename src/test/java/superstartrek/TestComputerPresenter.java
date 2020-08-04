@@ -37,8 +37,6 @@ public class TestComputerPresenter extends BaseTest{
 	public void testOnTurnStarted_1() {
 		presenter.onTurnStarted();
 
-		verify(view).setRepairButtonEnabled(false);
-		verify(view).setRepairButtonCss("has-repair");
 		verify(view).showStarDate("2100");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
@@ -52,44 +50,12 @@ public class TestComputerPresenter extends BaseTest{
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
 		presenter.onTurnStarted();
 
-		verify(view).setRepairButtonEnabled(true);
-		verify(view).setRepairButtonCss("has-dock");
 		verify(view).showStarDate("2100");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
 		verify(view).updateShields(100, 100, 100);
 	}
 
-	@Test
-	public void testDockWithStarbase() {
-		enterprise.setLocation(Location.location(1, 1));
-		enterprise.getPhasers().damage(10);
-		enterprise.getAntimatter().decrease(10);
-		enterprise.getTorpedos().damage(1);
-		enterprise.getImpulse().damage(1);
-		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
-
-		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
-
-			@Override
-			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-				assertEquals(enterprise, thing);
-				assertEquals(quadrant, qFrom);
-				assertEquals(Location.location(1, 1), lFrom);
-				assertEquals(quadrant, qTo);
-				assertEquals(Location.location(4, 4), lTo);
-			}
-		});
-		when(browser.nextDouble()).thenReturn(0.0);
-		when(browser.nextInt(any(int.class))).thenReturn(1,1,2,2,5);
-		presenter.dockInStarbase();
-
-		assertEquals(1, bus.getFiredCount(Events.THING_MOVED));
-		assertEquals(Location.location(4, 4), enterprise.getLocation());
-
-		assertEquals(1, bus.getFiredCount(Events.ENTERPRISE_REPAIRED));
-		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
-	}
 
 	@Test
 	public void test_updateQuadrantHeader_klingon_near() {

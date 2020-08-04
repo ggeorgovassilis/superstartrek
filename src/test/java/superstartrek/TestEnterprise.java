@@ -15,6 +15,7 @@ import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
+import superstartrek.client.model.StarBase;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Weapon;
@@ -323,4 +324,36 @@ public class TestEnterprise extends BaseTest {
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 	}
+	
+	@Test
+	public void testDockWithStarbase() {
+		enterprise.setLocation(Location.location(1, 1));
+		enterprise.getPhasers().damage(10);
+		enterprise.getAntimatter().decrease(10);
+		enterprise.getTorpedos().damage(1);
+		enterprise.getImpulse().damage(1);
+		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
+
+		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
+
+			@Override
+			public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
+				assertEquals(enterprise, thing);
+				assertEquals(quadrant, qFrom);
+				assertEquals(Location.location(1, 1), lFrom);
+				assertEquals(quadrant, qTo);
+				assertEquals(Location.location(4, 4), lTo);
+			}
+		});
+		when(browser.nextDouble()).thenReturn(0.0);
+		when(browser.nextInt(any(int.class))).thenReturn(1,1,2,2,5);
+		enterprise.dockInStarbase();
+
+		assertEquals(1, bus.getFiredCount(Events.THING_MOVED));
+		assertEquals(Location.location(4, 4), enterprise.getLocation());
+
+		assertEquals(1, bus.getFiredCount(Events.ENTERPRISE_REPAIRED));
+		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
+	}
+
 }

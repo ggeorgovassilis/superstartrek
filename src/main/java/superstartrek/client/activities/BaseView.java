@@ -34,15 +34,22 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 		presenter.setView(this);
 	}
 	
-	@Override
-	public void show() {
-		setVisible(true);
+
+	// aligns screens to the bottom of the screen for easier interactions with the thumb
+	//TODO: there should be a feature detection or setting to determine whether bottom alignment is required
+	protected void layoutForEasyHandlingOnMobileDevices() {
 		if (!isAbsulutelyPositioned()) {
 			int contentHeight = getOffsetHeight();
 			int windowHeight = Window.getClientHeight();
 			int margin=Math.max(0,windowHeight-contentHeight);
 			getElement().getStyle().setMarginTop(margin, Unit.PX);
 		}
+	}
+	
+	@Override
+	public void show() {
+		setVisible(true);
+		layoutForEasyHandlingOnMobileDevices();
 	}
 	
 	@Override

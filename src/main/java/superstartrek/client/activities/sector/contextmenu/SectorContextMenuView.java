@@ -30,7 +30,9 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	protected Widget createWidgetImplementation() {
-		return new HtmlWidget(DOM.createDiv(), presenter.getApplication().getResources().sectorContextMenu().getText());
+		String html = presenter.getApplication().getResources().sectorContextMenu().getText();
+		GWT.log("createWidgetImplementation "+html);
+		return new HtmlWidget(DOM.createDiv(), html);
 	}
 
 	@Override
@@ -40,6 +42,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	
 	@Override
 	public void decorateWidget() {
+		GWT.log("test decorateWidget");
 		addStyleName("sector-context-menu");
 		super.decorateWidget();
 		hide();
@@ -111,5 +114,12 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	@Override
 	public void onTouchStart(TouchStartEvent event) {
 		handleButtonInteraction(event);
+	}
+
+	@Override
+	public void enableDockWithStarbaseButton(boolean status) {
+		getElement().removeClassName("can-dock-with-starbase");
+		if (status)
+			getElement().addClassName("can-dock-with-starbase");
 	}
 }

@@ -127,7 +127,6 @@ public class StarMapDeserialiser {
 		readVessel(jsThing, e);
 		readSetting(jsThing.get("antimatter").isObject(), e.getAntimatter());
 		readSetting(jsThing.get("autoaim").isObject(), e.getAutoAim());
-		readSetting(jsThing.get("autorepair").isObject(), e.getAutoRepair());
 		readSetting(jsThing.get("lrs").isObject(), e.getLrs());
 		readSetting(jsThing.get("phasers").isObject(), e.getPhasers());
 		readSetting(jsThing.get("reactor").isObject(), e.getReactor());

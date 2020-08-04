@@ -28,7 +28,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting reactor = new Setting(50);
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
-	Setting autoRepair = new Setting(1);
 
 	Application application;
 	StarMap starMap;
@@ -37,9 +36,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	int turnsSinceWarp = 0;
 
-	public Setting getAutoRepair() {
-		return autoRepair;
-	}
 
 	public Setting getLrs() {
 		return lrs;
@@ -219,11 +215,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 		impulse.decrease(distance);
 		moveToIgnoringConstraints(drop);
-		maybeAutoRepair();
 	}
 
 	public void maybeAutoRepair() {
-		if (autoRepair.getBooleanValue() && application.browserAPI.nextDouble() < CHANCE_OF_AUTOREPAIR
+		if (application.browserAPI.nextDouble() < CHANCE_OF_AUTOREPAIR
 				&& canRepairProvisionally())
 			repairProvisionally();
 	}
@@ -333,7 +328,27 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
 	}
 
-	public void dockAtStarbase(StarBase starBase) {
+	
+
+	public void dockInStarbase() {
+		StarBase starBase = quadrant.getStarBase();
+		if (starBase == null)
+			return;
+		boolean inRange = StarMap.within_distance(this, quadrant.getStarBase(), 1.1);
+		boolean hasKlingons = !quadrant.getKlingons().isEmpty();
+		if (!inRange && hasKlingons) {
+			application.message("Navigate manually when enemies present.");
+			return;
+		}
+		if (!inRange && !hasKlingons) {
+			Location loc = starMap.findFreeSpotAround(new QuadrantIndex(quadrant, starMap), quadrant.getStarBase().getLocation(), 2);
+			if (loc == null) {
+				application.message("No space around starbase");
+				return;
+			}
+			this.moveToIgnoringConstraints(loc);
+		}
+
 		int repairCount = 0;
 		repairCount += phasers.repair() ? 1 : 0;
 		int torpedosRestocked = (int) (torpedos.getMaximum() - torpedos.getValue());
@@ -365,12 +380,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 																				// fully
 		setting.setValue(setting.getCurrentUpperBound());
 		setting.setEnabled(true);
-		application.message("Repaired " + name);
+		application.message("Repaired " + name, "enterprise-repaired");
 		return true;
 	}
 
 	public void repairProvisionally() {
-		int i = 10;
+		int i = 20;
 		while (i-- > 0) {
 			int count = (maybeRepairProvisionally("impulse drive", impulse) ? 1 : 0)
 					+ (maybeRepairProvisionally("shields", shields) ? 1 : 0)
@@ -506,6 +521,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			fireEvent(Events.GAME_OVER, (h) -> h.gameLost());
 			return;
 		}
+		maybeAutoRepair();
 		playComputerTurn();
 	}
 

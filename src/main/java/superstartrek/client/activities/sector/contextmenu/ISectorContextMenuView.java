@@ -8,4 +8,5 @@ public interface ISectorContextMenuView extends View<SectorContextMenuPresenter>
 
 	void enableButton(String id, boolean status);
 	
+	void enableDockWithStarbaseButton(boolean status);
 }
