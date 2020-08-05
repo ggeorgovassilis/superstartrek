@@ -463,15 +463,14 @@ a.progress-bar {
 	display: block;
 }
 
-#stardate {
-	position:absolute;
-	left:0;
-	bottom:0;
-}
 #score {
 	position:absolute;
 	right:0;
 	bottom:0;
+}
+
+.skip-label{
+	color:darkturquoise;
 }
 
 .visible-with-mode-scanner li{
