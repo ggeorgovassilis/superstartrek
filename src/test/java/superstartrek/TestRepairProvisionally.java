@@ -24,7 +24,7 @@ public class TestRepairProvisionally extends BaseTest{
 		enterprise.repairProvisionally();
 		
 		assertTrue(enterprise.getTorpedos().isEnabled());
-		assertEquals(3,bus.getFiredCount(Events.MESSAGE_POSTED));
+		assertEquals(1,bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 
 	@Test

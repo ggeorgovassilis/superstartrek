@@ -9,8 +9,10 @@ import superstartrek.client.model.Weapon;
 
 public interface CombatHandler extends EventHandler {
 
+	enum partTarget{none, weapons, propulsion}
+	
 	default void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
-			boolean wasAutoFire) {
+			boolean wasAutoFire, partTarget partTarget) {
 	}
 
 	default void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,

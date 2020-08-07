@@ -80,10 +80,15 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	@Override
 	public void enableButton(String id, boolean status) {
 		HtmlWidget panel = (HtmlWidget) getWidget();
+		GWT.log(panel.getElement().getInnerHTML());
+		
 		//button's parent is the cell.
 		//TODO: should we keep a reference to the cell elements instead of looking them up?
-		Element e = panel.getElementById(id).getParentElement();
-		CSS.setEnabled(e, status);
+		GWT.log("enableButton  " + id);
+		Element e = panel.getElementById(id);
+		GWT.log(" "+e);
+		Element parent = e.getParentElement();
+		CSS.setEnabled(parent , status);
 	}
 
 	@Override

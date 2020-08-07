@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.mockito.AdditionalMatchers;
 
 import superstartrek.client.activities.combat.CombatHandler;
+import superstartrek.client.activities.combat.CombatHandler.partTarget;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler;
@@ -167,7 +168,7 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(21, 1), eq(false));
+		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(21, 1), eq(false), eq(partTarget.none));
 	}
 
 	@Test
@@ -198,7 +199,7 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(0, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(0)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(21, 1), eq(false));
+		verify(handler, times(0)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(21, 1), eq(false), eq(partTarget.none));
 		verify(messageHandler).messagePosted("Insufficient reactor output", "info");
 	}
 
@@ -229,7 +230,7 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 
-		verify(handler, times(1)).onFire(quadrant, enterprise, klingon, Weapon.torpedo, 25, false);
+		verify(handler, times(1)).onFire(quadrant, enterprise, klingon, Weapon.torpedo, 25, false, partTarget.none);
 		verify(handler, times(1)).afterFire(quadrant, enterprise, klingon, Weapon.torpedo, 25, false);
 
 	}
@@ -304,10 +305,11 @@ public class TestEnterprise extends BaseTest {
 
 			@Override
 			public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
-					boolean wasAutoFire) {
+					boolean wasAutoFire, partTarget part) {
 				assertEquals(klingon, target);
 				assertEquals(enterprise, actor);
 				assertEquals(21, damage, 1);
+				assertEquals(partTarget.none, part);
 			}
 		});
 		bus.addHandler(Events.AFTER_FIRE, new CombatHandler() {

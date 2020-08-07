@@ -22,6 +22,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double SHIELD_IMPACT_MODIFIER = 0.5;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
 	public final static int TIME_TO_REPAIR_SETTING = 3;
+	public final static double PRECISION_SHOT_EFFIIENCY=0.5;
 
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
@@ -101,6 +102,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return false;
 		}
 
+		
 		Quadrant[] container = new Quadrant[1];
 		StarMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationQuadrant.getX(),
 				destinationQuadrant.getY(), (x, y) -> {
@@ -227,7 +229,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void maybeAutoRepair() {
-		if (application.browserAPI.nextDouble() < CHANCE_OF_AUTOREPAIR && canRepairProvisionally())
 			repairProvisionally();
 	}
 
@@ -278,7 +279,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		Thing eventTarget = target;
 		double eventDamage = damage;
 		fireEvent(Events.BEFORE_FIRE,
-				(h) -> h.onFire(quadrant, Enterprise.this, eventTarget, Weapon.torpedo, eventDamage, false));
+				(h) -> h.onFire(quadrant, Enterprise.this, eventTarget, Weapon.torpedo, eventDamage, false, partTarget.none));
 		fireEvent(Events.AFTER_FIRE,
 				(h) -> h.afterFire(quadrant, Enterprise.this, eventTarget, Weapon.torpedo, eventDamage, false));
 		if (target == null)
@@ -331,9 +332,35 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		double damage = phaserEnergy / distance;
 		phasers.setValue(phasers.getValue() - phaserEnergy);
 		fireEvent(Events.BEFORE_FIRE,
-				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
+				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim, partTarget.none));
 		fireEvent(Events.AFTER_FIRE,
 				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
+	}
+
+	//TODO unit test
+	//TODO refactor with firePhasers
+	public void firePrecisionShot(Location sector, partTarget part) {
+		Thing thing = quadrant.findThingAt(sector);
+		String error = canFirePhaserAt(sector);
+		if (error != null) {
+			application.message(error);
+			return;
+		}
+		double phaserEnergy = Math.min(phasers.getValue(), reactor.getValue());
+		if (phaserEnergy < 1)
+			return;
+		if (!consume("phasers", phaserEnergy)) {
+			application.message("Insufficient reactor output");
+			return;
+		}
+		Klingon klingon = (Klingon) thing;
+		double distance = StarMap.distance(this, thing);
+		double damage = PRECISION_SHOT_EFFIIENCY*phaserEnergy / distance;
+		phasers.setValue(phasers.getValue() - phaserEnergy);
+		fireEvent(Events.BEFORE_FIRE,
+				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, false, part));
+		fireEvent(Events.AFTER_FIRE,
+				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, false));
 	}
 
 	public void dockInStarbase() {
@@ -404,13 +431,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (v) {
 			fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 			return;
-		} else application.message("Couldn't repair anything");
+		}
 
 	}
 
 	public boolean canRepairProvisionally() {
-		return canBeRepaired(warpDrive) || canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers)
-				|| canBeRepaired(torpedos) || canBeRepaired(autoAim) || canBeRepaired(lrs) || canBeRepaired(reactor);
+		return canBeRepaired(impulse) || canBeRepaired(shields) || canBeRepaired(phasers) || canBeRepaired(torpedos)
+				|| canBeRepaired(autoAim) || canBeRepaired(lrs) || canBeRepaired(warpDrive) || canBeRepaired(reactor);
 	}
 
 	public boolean isDamaged() {
@@ -545,7 +572,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	@Override
 	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
-			boolean wasAutoFire) {
+			boolean wasAutoFire, partTarget part) {
 		if (target != this)
 			return;
 		application.message(actor.getName() + " at " + actor.getLocation() + " fired on us", "damage");

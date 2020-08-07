@@ -53,6 +53,8 @@ public class Klingon extends Vessel
 	Setting cloak;
 	final static int MAX_SECTOR_SPEED = 1;
 	final static int DISRUPTOR_RANGE_SECTORS = 2;
+	final static double PRECISION_SHOT_CHANCE_DAMAGE=0.3;
+
 	int xp;
 
 	public Klingon() {
@@ -162,7 +164,7 @@ public class Klingon extends Vessel
 		if (!isVisible())
 			uncloak();
 		fireEvent(BEFORE_FIRE, (h) -> h.onFire(enterprise.getQuadrant(), Klingon.this, enterprise, Weapon.disruptor,
-				disruptor.getValue(), true));
+				disruptor.getValue(), true, partTarget.none));
 		fireEvent(AFTER_FIRE, (h) -> h.afterFire(enterprise.getQuadrant(), Klingon.this, enterprise, Weapon.disruptor,
 				disruptor.getValue(), true));
 	}
@@ -241,7 +243,7 @@ public class Klingon extends Vessel
 
 	@Override
 	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
-			boolean wasAutoFire) {
+			boolean wasAutoFire, partTarget part) {
 		if (target != this)
 			return;
 		if (!isVisible()) {
@@ -261,6 +263,21 @@ public class Klingon extends Vessel
 			getCloak().setEnabled(false);
 
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
+		if ((part!=partTarget.none) && (random.nextDouble()<PRECISION_SHOT_CHANCE_DAMAGE)){
+			if (random.nextDouble()<PRECISION_SHOT_CHANCE_DAMAGE)
+			switch (part) {
+			case weapons:
+				disruptor.setEnabled(false);
+				message(weapon + " disabled " + target.getName() + " disruptors.", "klingon-damaged");
+				break;
+			case propulsion:
+				impulse.setEnabled(false);
+				message(weapon + " disabled " + target.getName() + " propulsion.", "klingon-damaged");
+				break;
+			default:
+				
+			}
+		}
 		if (shields.getValue() <= 0) {
 			destroy();
 		}

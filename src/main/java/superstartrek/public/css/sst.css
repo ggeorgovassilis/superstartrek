@@ -887,6 +887,14 @@ a.disabled,button.disabled {
 	background-image: url('../images/laser.svg')
 }
 
+#cmd_precision_weapons{
+	background-image: url('../images/target.svg'), url('../images/spark.svg');
+}
+
+#cmd_precision_propulsion{
+	background-image: url('../images/target.svg'), url('../images/missile.svg');
+}
+
 #cmd_fireTorpedos {
 	background-image: url('../images/torpedo.svg')
 }
@@ -904,7 +912,7 @@ a.disabled,button.disabled {
 }
 
 .expanded .cell.c1 {
-	transform: translate(3.45em,0em);
+	transform: translate(3.45em,-2em);
 }
 
 .cell.c2 {
@@ -928,11 +936,11 @@ a.disabled,button.disabled {
 }
 
 .expanded .cell.c5 {
-	transform: translate(0em,-4em);
+	transform: translate(0em, 4em);
 }
 
 .expanded .cell.c6 {
-	transform: translate(3.45em,-2em);
+	transform: translate(3.45em, 2em);
 }
 
 #em-metric {

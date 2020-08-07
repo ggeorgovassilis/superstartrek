@@ -74,6 +74,7 @@ public class Setting {
 		setTimeOfDamage(timeOfDamage);
 	}
 	
+	//TODO: this is badly named; not clear what the difference with setEnabled(false) is
 	public void disable() {
 		setCurrentUpperBound(0);
 		setValue(0);

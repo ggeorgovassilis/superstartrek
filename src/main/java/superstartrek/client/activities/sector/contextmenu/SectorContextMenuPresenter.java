@@ -8,6 +8,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -26,6 +27,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	public final static String cmd_firePhasers = "cmd_firePhasers";
 	public final static String cmd_fireTorpedos = "cmd_fireTorpedos";
 	public final static String cmd_dockStarbase = "cmd_dockStarbase";
+	public final static String cmd_precision_weapons = "cmd_precision_weapons";
+	public final static String cmd_precision_propulsion = "cmd_precision_propulsion";
 		
 
 
@@ -39,6 +42,9 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		buttonsEnabled.put(cmd_firePhasers, false);
 		buttonsEnabled.put(cmd_fireTorpedos, false);
 		buttonsEnabled.put(cmd_dockStarbase, true);
+		buttonsEnabled.put(cmd_precision_weapons, false);
+		buttonsEnabled.put(cmd_precision_propulsion, false);
+		
 	}
 
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
@@ -48,9 +54,11 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		int horizEmToPx = application.browserAPI.getMetricWidthInPx();
 		int vertEmToPx = application.browserAPI.getMetricHeightInPx();
 
-		buttonsEnabled.put("cmd_navigate", e.canNavigateTo(sector));
-		buttonsEnabled.put("cmd_firePhasers", e.canFirePhaserAt(sector) == null);
-		buttonsEnabled.put("cmd_fireTorpedos", e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
+		buttonsEnabled.put(cmd_navigate, e.canNavigateTo(sector));
+		buttonsEnabled.put(cmd_firePhasers, e.canFirePhaserAt(sector) == null);
+		buttonsEnabled.put(cmd_precision_weapons, e.canFirePhaserAt(sector) == null);
+		buttonsEnabled.put(cmd_precision_propulsion, e.canFirePhaserAt(sector) == null);
+		buttonsEnabled.put(cmd_fireTorpedos, e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
 		for (String cmd : buttonsEnabled.keySet())
 			view.enableButton(cmd, buttonsEnabled.get(cmd));
 		// if the menu is too close to the screen borders it might be cut off and not
@@ -126,6 +134,12 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 				case cmd_dockStarbase:
 					enterprise.dockInStarbase();
 					break;
+				case cmd_precision_weapons:
+					enterprise.firePrecisionShot(sector, CombatHandler.partTarget.weapons);
+					break;
+				case cmd_precision_propulsion:
+					enterprise.firePrecisionShot(sector, CombatHandler.partTarget.propulsion);
+					break;
 				}
 			});
 	}
@@ -153,19 +167,15 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		switch (code) {
 		case 'n':
 		case 'N':
-			onCommandClicked("cmd_navigate");
+			onCommandClicked(cmd_navigate);
 			break;
 		case 'p':
 		case 'P':
-			onCommandClicked("cmd_firePhasers");
+			onCommandClicked(cmd_firePhasers);
 			break;
 		case 't':
 		case 'T':
-			onCommandClicked("cmd_fireTorpedos");
-			break;
-		case '-':
-		case '_':
-			onCommandClicked("cmd_scanSector");
+			onCommandClicked(cmd_fireTorpedos);
 			break;
 		}
 	}
