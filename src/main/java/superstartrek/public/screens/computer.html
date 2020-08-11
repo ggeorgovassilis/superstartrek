@@ -1,0 +1,47 @@
+
+<table id="shortrangescan"></table>
+<div class=container>
+	<div id="above-radar-slot" class="mode-command">
+		<div class="visible-with-mode-command">
+			<button id="cmd_repair" class="half-width">
+				<span class="repair-icon visible-with-repair">Repair</span><span
+					class="dock-icon visible-with-dock">Dock at star base</span>
+			</button>
+			<button accesskey="w" id="cmd_skip" class="half-width"><span class="skip-label">&#9658;&#9658;</span><span id="stardate"></span></button>
+		</div>
+		<ul class="visible-with-mode-scanner">
+			<li id="scan-report-name"><label>Designation</label><div id="scan-report-name-value"></div></li>
+			<li id="scan-report-shields"><label>Shields</label><div id="scan-report-shields-value"></div></li>
+			<li id="scan-report-weapons"><label>Weapons</label></li>
+			<li id="scan-report-cloak"><label>Cloak</label></li>
+			<li id="scan-report-engines"><label>Engines</label></li>
+		</ul>
+	</div>
+</div>
+<div id="quadrantscancontainer"></div>
+<div id="commandbar" class="command-bar container">
+
+	<div id="srs_heading" class="container short-range-scan-label">
+		<a id="app-menu-button" href="#appmenu" class="half-width">SRS <span
+			id="quadrant_name"></span></a> <a id="lrs-button" accesskey="l"
+			class="half-width" href="#longrangescan">LRS</a>
+	</div>
+
+	<div class="status-flags">
+		<span id="short-status-impulse" class="status-flag">Impulse</span><span
+			id="short-status-tactical-computer" class="status-flag">Tactical</span><span
+			id="short-status-phasers" class="status-flag">Phasers</span><span
+			id="short-status-torpedo-bay" class="status-flag">Torpedos</span>
+	</div>
+
+	<button accesskey="s" id="cmd_toggleShields" class="progress-bar">
+		<span class="shields-icon"></span> <span class="max-indicator"></span>
+		<span class="progress-indicator"></span> <span class="progress-text">Shields</span>
+	</button>
+	<a accesskey="r" id="cmd_showStatusReport" href="#statusreport"
+		class="progress-bar"> <span class="report-icon"></span> <span
+		class="progress-indicator"></span><span class=progress-text>Status
+			report</span>
+	</a>
+</div>
+<div id=score></div>
