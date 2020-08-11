@@ -3,7 +3,6 @@ package superstartrek.client.activities.computer.quadrantscanner;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;

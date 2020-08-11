@@ -1,6 +1,5 @@
 package superstartrek.client.persistence;
 
-import com.google.gwt.core.client.GWT;
 import superstartrek.client.Application;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.StarMap;

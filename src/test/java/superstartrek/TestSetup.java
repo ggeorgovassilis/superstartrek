@@ -26,7 +26,6 @@ public class TestSetup extends BaseTest{
 	@Test
 	public void test_makeQuadrant() {
 		final int NUMBER_OF_STARS = 5;
-		final int NUMBER_OF_KLINGONS = 2;
 		when(browser.nextDouble()).thenReturn(0.1);
 		when(browser.nextInt(any(int.class))).thenReturn(
 				//@formatter:off

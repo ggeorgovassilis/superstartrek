@@ -5,10 +5,11 @@ import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.messages.MessageHandler;
-import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
 import static superstartrek.client.bus.Events.*;
+
+import com.google.gwt.core.client.GWT;
 
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
@@ -21,7 +22,7 @@ import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Weapon;
 import superstartrek.client.utils.BaseMixin;
 
-public class GameController implements GamePhaseHandler, CombatHandler, EnterpriseRepairedHandler, NavigationHandler,
+public class GameController implements GamePhaseHandler, CombatHandler, NavigationHandler,
 		MessageHandler, EnergyConsumptionHandler, BaseMixin{
 
 	Application application;
@@ -53,7 +54,6 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		addHandler(TURN_ENDED, this);
 		addHandler(KLINGON_TURN_STARTED, this);
 		addHandler(AFTER_FIRE, this);
-		addHandler(ENTERPRISE_REPAIRED, this);
 		addHandler(THING_MOVED, this);
 		addHandler(KLINGON_DESTROYED, this);
 		addHandler(MESSAGE_READ, this);
@@ -91,11 +91,6 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		}
 		if (actor == application.starMap.enterprise && !wasAutoFire)
 			endTurnAfterThis();
-	}
-
-	@Override
-	public void onEnterpriseRepaired(Enterprise enterprise) {
-		endTurnAfterThis();
 	}
 
 	@Override
@@ -144,9 +139,10 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 			application.restart();
 	}
 
-	public void startTurn() {
+	protected void startTurn() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_DAY);
 		application.starMap.advanceStarDate(1);
+		GWT.log("Start turn "+getStarMap().getStarDate());
 		fireEvent(TURN_STARTED, (h)->h.onTurnStarted());
 		fireEvent(AFTER_TURN_STARTED, (h)->h.afterTurnStarted());
 	}
@@ -156,8 +152,8 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 			return;
 		startTurnPending = true;
 		superstartrek.client.utils.Timer.postpone(() -> {
-			startTurnPending = false;
 			startTurn();
+			startTurnPending = false;
 		});
 	}
 
@@ -166,7 +162,8 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 		fireEvent(GAME_STARTED, (h)->h.onGameStarted(application.starMap));
 	}
 
-	public void endTurn() {
+	protected void endTurn() {
+		GWT.log("Ending turn "+getStarMap().getStarDate());
 		fireEvent(TURN_ENDED, (h)->h.onTurnEnded());
 		fireEvent(KLINGON_TURN_STARTED, (h)->h.onKlingonTurnStarted());
 		fireEvent(KLINGON_TURN_ENDED, (h)->h.onKlingonTurnEnded());
@@ -184,9 +181,9 @@ public class GameController implements GamePhaseHandler, CombatHandler, Enterpri
 			return;
 		endTurnPending = true;
 		superstartrek.client.utils.Timer.postpone(() -> {
-			endTurnPending = false;
 			endTurn();
 			startTurnAfterThis();
+			endTurnPending = false;
 		});
 	}
 

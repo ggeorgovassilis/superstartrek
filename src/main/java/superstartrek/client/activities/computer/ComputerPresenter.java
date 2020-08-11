@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -21,7 +20,6 @@ import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;

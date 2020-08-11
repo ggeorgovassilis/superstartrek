@@ -1,6 +1,5 @@
 package superstartrek.client.activities.sector.contextmenu;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
@@ -31,7 +30,6 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	@Override
 	protected Widget createWidgetImplementation() {
 		String html = presenter.getApplication().getResources().sectorContextMenu().getText();
-		GWT.log("createWidgetImplementation "+html);
 		return new HtmlWidget(DOM.createDiv(), html);
 	}
 
@@ -42,7 +40,6 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	
 	@Override
 	public void decorateWidget() {
-		GWT.log("test decorateWidget");
 		addStyleName("sector-context-menu");
 		super.decorateWidget();
 		hide();
@@ -54,7 +51,6 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	public void setLocation(int x, int y) {
-		GWT.log("SectorContxtMenuView.setLocation "+x+","+y );
 		Element e = getElement();
 		e.getStyle().setLeft(x, Unit.PX);
 		e.getStyle().setTop(y, Unit.PX);
@@ -80,13 +76,10 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	@Override
 	public void enableButton(String id, boolean status) {
 		HtmlWidget panel = (HtmlWidget) getWidget();
-		GWT.log(panel.getElement().getInnerHTML());
 		
 		//button's parent is the cell.
 		//TODO: should we keep a reference to the cell elements instead of looking them up?
-		GWT.log("enableButton  " + id);
 		Element e = panel.getElementById(id);
-		GWT.log(" "+e);
 		Element parent = e.getParentElement();
 		CSS.setEnabled(parent , status);
 	}

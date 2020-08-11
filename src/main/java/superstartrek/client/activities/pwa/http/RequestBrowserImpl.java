@@ -2,7 +2,6 @@ package superstartrek.client.activities.pwa.http;
 
 import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
@@ -31,7 +30,6 @@ public class RequestBrowserImpl implements Request{
 			
 			@Override
 			public void onError(com.google.gwt.http.client.Request request, Throwable exception) {
-				GWT.log("xxx");
 				callback.onError(request, exception);
 			}
 		});

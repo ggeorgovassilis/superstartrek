@@ -3,8 +3,6 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.shared.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -135,7 +133,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 		fireEvent(Events.THING_MOVED,
 				(h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
-		maybeAutoRepair();
 		turnsSinceWarp = 0;
 		return true;
 	}
@@ -151,7 +148,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			range = range - 0.3;
 		if (range < 1)
 			return reachableSectors;
-		GWT.log("Max range is " + range);
 		double range_squared = range * range;
 		int lx = getLocation().getX();
 		int ly = getLocation().getY();
@@ -219,7 +215,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		Location drop = trace[0];
 		double energyNeededForMovement = computeConsumptionForImpulseNavigation(distance);
 		if (!consume("impulse", energyNeededForMovement)) {
-			GWT.log("Available energy " + reactor.getValue() + " but needs " + energyNeededForMovement);
 			message("Insufficient reactor output");
 			return;
 		}
@@ -548,7 +543,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void playComputerTurn() {
-		GWT.log("play computer " + getStarMap().getStarDate());
 		if (autoAim.getBooleanValue() && autoAim.isEnabled())
 			autoAim();
 	}

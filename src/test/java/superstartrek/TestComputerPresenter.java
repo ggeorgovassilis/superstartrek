@@ -1,6 +1,5 @@
 package superstartrek;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -9,13 +8,9 @@ import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.IComputerScreen;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
-import superstartrek.client.activities.navigation.NavigationHandler;
-import superstartrek.client.bus.Events;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarBase;
-import superstartrek.client.model.Thing;
 
 public class TestComputerPresenter extends BaseTest{
 

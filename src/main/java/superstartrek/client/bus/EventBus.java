@@ -52,7 +52,6 @@ public class EventBus {
 		Set<Throwable> errors = null;
 		for (T h : copy)
 			try {
-				//GWT.log("Firing "+type.toString()+" to "+h);
 				callback.call(h);
 			} catch (Throwable e) {
 				if (errors == null)

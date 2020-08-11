@@ -52,14 +52,6 @@ public class TestGameController extends BaseTest {
 	}
 
 	@Test
-	public void test_that_turn_ends_after_enterprise_repairs() {
-		enterprise.getShields().setValue(0);
-		bus.fireEvent(Events.ENTERPRISE_REPAIRED,
-				(h) -> h.onEnterpriseRepaired(enterprise));
-		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
-	}
-
-	@Test
 	public void test_that_turn_ends_after_enterprise_moves() {
 		bus.fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(enterprise, quadrant, enterprise.getLocation(), quadrant, Location.location(4, 4)));
 		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));

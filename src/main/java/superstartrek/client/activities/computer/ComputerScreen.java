@@ -1,6 +1,5 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,7 +45,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	protected void decorateScreen() {
-		GWT.log("2ssss");
 		super.decorateScreen();
 		addStyleName("computer-screen");
 		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
