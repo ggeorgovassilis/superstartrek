@@ -93,6 +93,10 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	background-color: rgb(50, 158, 159);
 }
 
+.screen{
+	position:absolute;
+	width:100%;
+}
 /*
  * Long range scan
  */
