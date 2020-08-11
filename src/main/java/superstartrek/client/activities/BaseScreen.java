@@ -3,6 +3,7 @@ package superstartrek.client.activities;
 @SuppressWarnings("rawtypes")
 public abstract class BaseScreen<P extends Presenter> extends BaseView<P>{
 
+
 	public BaseScreen(P p) {
 		super(p);
 		hide();
