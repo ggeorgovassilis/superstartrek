@@ -22,6 +22,10 @@ public class PWA {
 	        				"css/sst.css", 
 	        				"sst.webmanifest",
 	        				"superstartrek.superstartrek.nocache.js",
+	        				"images/stars-background.gif", 
+	        				"site/service-worker.js",
+	        				"site/sst.webmanifest",
+	        				"site/",
 	        				"package.txt",
 	        				"images/anchor.svg",
 	        				"images/bookmark.svg",
@@ -39,8 +43,10 @@ public class PWA {
 	        				"images/repair.svg",
 	        				"images/report.svg",
 	        				"images/shield.svg",
-	        				"images/stars-background.gif", 
-	        				"images/torpedo.svg"
+	        				"images/torpedo.svg",
+	        				"images/target.svg",
+	        				"images/spark.svg",
+	        				"images/missiles.svg"
 	        				//@formatter:on
 	};
 
