@@ -7,6 +7,10 @@ A mobile friendly web remake of [Super Star Trek](https://en.wikipedia.org/wiki/
 
 [Play it online](https://ggeorgovassilis.github.io/superstartrek/site/index.html)
 
+![Screenshot 1](https://github.com/ggeorgovassilis/superstartrek/raw/gh-pages/images-for-README/screenshot1.png "Screenshot 1")
+
+![Screenshot 2](https://github.com/ggeorgovassilis/superstartrek/raw/gh-pages/images-for-README/screenshot2.png "Screenshot 2")
+
 ## developing
 
 **Important note**: the main development branch is gh-pages
