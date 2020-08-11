@@ -17,7 +17,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public final static double PHASER_RANGE = 3;
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
-	public final static double IMPULSE_CONSUMPTION = 5;
+	public final static double IMPULSE_CONSUMPTION = 2;
 	public final static double DEVICE_IMPACT_MODIFIER = 0.3;
 	public final static double SHIELD_IMPACT_MODIFIER = 0.5;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
@@ -233,7 +233,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public double computeConsumptionForImpulseNavigation(double distance) {
-		return distance * IMPULSE_CONSUMPTION;
+		return distance*distance * IMPULSE_CONSUMPTION;
 	}
 
 	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {
@@ -529,6 +529,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (getReactor().getValue() < value)
 			return false;
 		getReactor().decrease(value);
+		//TODO: re-evaluate antimatter consumption for impulse movement. is this already covered with reactor consumption?
 		getAntimatter().decrease(value);
 		fireEvent(Events.CONSUME_ENERGY, (h) -> h.handleEnergyConsumption(this, value, what));
 		return true;
