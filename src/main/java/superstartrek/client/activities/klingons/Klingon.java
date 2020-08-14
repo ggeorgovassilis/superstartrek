@@ -53,14 +53,14 @@ public class Klingon extends Vessel
 	Setting cloak;
 	final static int MAX_SECTOR_SPEED = 1;
 	final static int DISRUPTOR_RANGE_SECTORS = 2;
-	final static double PRECISION_SHOT_CHANCE_DAMAGE=0.3;
+	final static double PRECISION_SHOT_CHANCE_DAMAGE = 0.5;
 
 	int xp;
 
 	public Klingon() {
 		this(ShipClass.BirdOfPrey);
 	}
-	
+
 	public Klingon(ShipClass c) {
 		super(new Setting(1), new Setting(c.shields));
 		this.xp = c.xp;
@@ -192,7 +192,7 @@ public class Klingon extends Vessel
 					jumpTo(loc);
 				}
 			}
-		} 
+		}
 	}
 
 	@Override
@@ -242,8 +242,8 @@ public class Klingon extends Vessel
 	}
 
 	@Override
-	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
-			boolean wasAutoFire, partTarget part) {
+	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage, boolean wasAutoFire,
+			partTarget part) {
 		if (target != this)
 			return;
 		if (!isVisible()) {
@@ -255,16 +255,16 @@ public class Klingon extends Vessel
 		shields.decrease(damage);
 		BrowserAPI random = getApplication().browserAPI;
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
-		if (getImpulse().isEnabled() && random.nextDouble() < impact)
-			getImpulse().setEnabled(false);
-		if (getDisruptor().isEnabled() && random.nextDouble() < impact)
-			getDisruptor().setEnabled(false);
-		if (getCloak().isEnabled() && random.nextDouble() < impact)
-			getCloak().setEnabled(false);
-
+		if (part == partTarget.none) {
+			if (getImpulse().isEnabled() && random.nextDouble() < impact)
+				getImpulse().setEnabled(false);
+			if (getDisruptor().isEnabled() && random.nextDouble() < impact)
+				getDisruptor().setEnabled(false);
+			if (getCloak().isEnabled() && random.nextDouble() < impact)
+				getCloak().setEnabled(false);
+		}
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
-		if ((part!=partTarget.none) && (random.nextDouble()<PRECISION_SHOT_CHANCE_DAMAGE)){
-			if (random.nextDouble()<PRECISION_SHOT_CHANCE_DAMAGE)
+		if ((part != partTarget.none) && (random.nextDouble() < PRECISION_SHOT_CHANCE_DAMAGE)) {
 			switch (part) {
 			case weapons:
 				disruptor.setEnabled(false);
@@ -275,7 +275,7 @@ public class Klingon extends Vessel
 				message(weapon + " disabled " + target.getName() + " propulsion.", "klingon-damaged");
 				break;
 			default:
-				
+
 			}
 		}
 		if (shields.getValue() <= 0) {
@@ -308,11 +308,11 @@ public class Klingon extends Vessel
 	public void beforeGameRestart() {
 		getEvents().removeHandler(this);
 	}
-	
+
 	@Override
 	public void onGameStarted(StarMap map) {
 		if (getApplication().getActiveQuadrant().contains(this))
 			registerActionHandlers();
 	}
-	
+
 }

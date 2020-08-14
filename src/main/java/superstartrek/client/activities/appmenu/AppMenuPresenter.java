@@ -1,5 +1,6 @@
 package superstartrek.client.activities.appmenu;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -21,7 +22,8 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	}
 
 	public void updateCommands() {
-		view.setMenuEntryEnabled("cmd_autoaim", application.starMap.enterprise.getAutoAim().getBooleanValue());
+		Setting autoAim = application.starMap.enterprise.getAutoAim();
+		view.setMenuEntryEnabled("cmd_autoaim", autoAim.isOperational());
 	}
 
 	@Override
@@ -46,7 +48,8 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 
 	public void toggleAutoAim() {
 		Setting autoaim = application.starMap.enterprise.getAutoAim();
-		autoaim.setValue(!autoaim.getBooleanValue() && autoaim.isEnabled());
+		autoaim.setEnabled(!autoaim.isEnabled() && autoaim.ratio()==1.0);
+		GWT.log("nwe autoaim vaue "+autoaim.isEnabled());
 	}
 
 	public void restart() {

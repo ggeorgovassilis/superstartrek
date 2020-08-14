@@ -38,7 +38,7 @@ public class TestEnterprise extends BaseTest {
 
 		enterprise.damageTorpedos();
 
-		assertFalse(enterprise.getTorpedos().isEnabled());
+		assertFalse(enterprise.getTorpedos().isOperational());
 		verify(handler).messagePosted(eq("Torpedo bay damaged"), eq("enterprise-damaged"));
 	}
 
@@ -58,7 +58,7 @@ public class TestEnterprise extends BaseTest {
 		assertEquals(3, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
 		assertEquals(0, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
-		assertFalse(enterprise.getPhasers().isEnabled());
+		assertFalse(enterprise.getPhasers().isOperational());
 		verify(handler, times(4)).messagePosted(eq("Phaser banks damaged"), eq("enterprise-damaged"));
 	}
 
@@ -76,7 +76,7 @@ public class TestEnterprise extends BaseTest {
 		assertEquals(1, enterprise.getImpulse().getCurrentUpperBound(), 0.1);
 
 		enterprise.damageImpulse();
-		assertFalse(enterprise.getImpulse().isEnabled());
+		assertFalse(enterprise.getImpulse().isOperational());
 		assertEquals(0, enterprise.getImpulse().getCurrentUpperBound(), 0.1);
 
 		verify(handler, times(3)).messagePosted(eq("Impulse drive damaged"), eq("enterprise-damaged"));
@@ -164,11 +164,11 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(100, klingon.getShields().getValue(), 0.1);
 		enterprise.firePhasersAt(klingon.getLocation(), false);
-		assertEquals(78, klingon.getShields().getValue(), 10);
+		assertEquals(89, klingon.getShields().getValue(), 10);
 
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(21, 1), eq(false), eq(partTarget.none));
+		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(10, 1), eq(false), eq(partTarget.none));
 	}
 
 	@Test
@@ -308,7 +308,7 @@ public class TestEnterprise extends BaseTest {
 					boolean wasAutoFire, partTarget part) {
 				assertEquals(klingon, target);
 				assertEquals(enterprise, actor);
-				assertEquals(21, damage, 1);
+				assertEquals(10, damage, 1);
 				assertEquals(partTarget.none, part);
 			}
 		});
@@ -319,7 +319,7 @@ public class TestEnterprise extends BaseTest {
 					boolean wasAutoFire) {
 				assertEquals(klingon, target);
 				assertEquals(enterprise, actor);
-				assertEquals(21, damage, 1);
+				assertEquals(10, damage, 1);
 			}
 		});
 		enterprise.autoAim();

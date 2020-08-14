@@ -20,7 +20,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double SHIELD_IMPACT_MODIFIER = 0.5;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
 	public final static int TIME_TO_REPAIR_SETTING = 3;
-	public final static double PRECISION_SHOT_EFFIIENCY=0.5;
+	public final static double PRECISION_SHOT_EFFIIENCY=0.2;
+	public final static double PHASER_EFFICIENCY=0.5;
 
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
@@ -324,7 +325,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		Klingon klingon = (Klingon) thing;
 		double distance = StarMap.distance(this, thing);
-		double damage = phaserEnergy / distance;
+		double damage = PHASER_EFFICIENCY* phaserEnergy / distance;
 		phasers.setValue(phasers.getValue() - phaserEnergy);
 		fireEvent(Events.BEFORE_FIRE,
 				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim, partTarget.none));
@@ -397,7 +398,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
-		return !setting.isEnabled() || setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
+		return setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
 	}
 
 	protected boolean maybeRepairProvisionally(String name, Setting setting) {
@@ -409,7 +410,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * 0.75)); // boolean settings can be repaired
 																				// fully
 		setting.setValue(setting.getCurrentUpperBound());
-		setting.setEnabled(true);
+		// respect user choice
+		if (setting!=autoAim)
+			setting.setEnabled(true);
 		application.message("Repaired " + name, "enterprise-repaired");
 		return true;
 	}
@@ -440,7 +443,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
 				|| phasers.getCurrentUpperBound() < phasers.getMaximum()
 				|| reactor.getCurrentUpperBound() > reactor.getMaximum() || !torpedos.isEnabled()
-				|| !autoAim.isEnabled() || !lrs.isEnabled() || !warpDrive.isEnabled();
+				|| !autoAim.isOperational() || !lrs.isOperational() || !warpDrive.isOperational();
 	}
 
 	public void damageShields() {
@@ -451,41 +454,41 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void damageImpulse() {
 		impulse.damage(1, starMap.getStarDate());
 		if (impulse.getValue() < 1)
-			impulse.setEnabled(false);
+			impulse.damageAndDisable(starMap.getStarDate());
 		application.message("Impulse drive damaged", "enterprise-damaged");
 	}
 
 	public void damageTorpedos() {
-		torpedos.setEnabled(false);
+		torpedos.damageAndDisable(starMap.getStarDate());
 		application.message("Torpedo bay damaged", "enterprise-damaged");
 	}
 
 	public void damagePhasers() {
 		phasers.damage(phasers.getMaximum() * 0.3, starMap.getStarDate());
 		if (phasers.getCurrentUpperBound() < 1)
-			phasers.setEnabled(false);
+			phasers.damageAndDisable(starMap.getStarDate());
 		application.message("Phaser banks damaged", "enterprise-damaged");
 	}
 
 	public void damageReactor() {
 		reactor.damage(reactor.getMaximum() * 0.3, starMap.getStarDate());
 		if (reactor.getCurrentUpperBound() < 1)
-			reactor.setEnabled(false);
+			reactor.damageAndDisable(starMap.getStarDate());
 		application.message("Reactor damaged", "enterprise-damaged");
 	}
 
 	public void damageAutoaim() {
-		autoAim.setEnabled(false);
+		autoAim.damageAndDisable(starMap.getStarDate());
 		application.message("Tactical computer damaged", "enterprise-damaged");
 	}
 
 	public void damageLRS() {
-		lrs.setEnabled(false);
+		lrs.damageAndDisable(starMap.getStarDate());
 		application.message("LRS damaged", "enterprise-damaged");
 	}
 
 	public void damageWarpDrive() {
-		warpDrive.setEnabled(false);
+		lrs.damageAndDisable(starMap.getStarDate());
 		application.message("Warp drive damaged", "enterprise-damaged");
 	}
 

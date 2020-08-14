@@ -31,7 +31,7 @@ public class Setting {
 	}
 
 	public double health() {
-		return (isEnabled()?1.0:0.0)*getCurrentUpperBound()/getMaximum();
+		return getCurrentUpperBound()/getMaximum();
 	}
 
 	public int percentageHealth() {
@@ -74,10 +74,10 @@ public class Setting {
 		setTimeOfDamage(timeOfDamage);
 	}
 	
-	//TODO: this is badly named; not clear what the difference with setEnabled(false) is
-	public void disable() {
+	public void damageAndDisable(long timeOfDamage) {
 		setCurrentUpperBound(0);
 		setValue(0);
+		setTimeOfDamage(timeOfDamage);
 	}
 	
 	public void reset() {
@@ -98,6 +98,10 @@ public class Setting {
 	
 	public void setTimeOfDamage(long timeOfDamage) {
 		this.timeOfDamage = timeOfDamage;
+	}
+	
+	public boolean isOperational() {
+		return isEnabled() && getValue()>0;
 	}
 	
 	public boolean repair() {

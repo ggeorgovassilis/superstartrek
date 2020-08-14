@@ -18,12 +18,11 @@ public class TestRepairProvisionally extends BaseTest{
 	
 	@Test
 	public void testRepairTorpedos() {
-		enterprise.getTorpedos().setEnabled(false);
-		enterprise.repairProvisionally();
-		enterprise.repairProvisionally();
+		enterprise.getTorpedos().damageAndDisable(starMap.getStarDate());
+		starMap.advanceStarDate(Enterprise.TIME_TO_REPAIR_SETTING+1);
 		enterprise.repairProvisionally();
 		
-		assertTrue(enterprise.getTorpedos().isEnabled());
+		assertTrue(enterprise.getTorpedos().isOperational());
 		assertEquals(1,bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 
