@@ -307,9 +307,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		return null;
 	}
 
-	public void firePhasersAt(Location sector, boolean isAutoAim) {
+	public void firePhasersAt(Location sector, boolean isAutoAim, partTarget precisionShot) {
 		Thing thing = quadrant.findThingAt(sector);
 		String error = canFirePhaserAt(sector);
+		boolean isPrecisionShot = precisionShot!=partTarget.none;
 		if (error != null) {
 			if (!isAutoAim)
 				application.message(error);
@@ -325,38 +326,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		Klingon klingon = (Klingon) thing;
 		double distance = StarMap.distance(this, thing);
-		double damage = PHASER_EFFICIENCY* phaserEnergy / distance;
+		double damage = isPrecisionShot?(PRECISION_SHOT_EFFIIENCY* phaserEnergy / distance):(PHASER_EFFICIENCY* phaserEnergy / distance);
 		phasers.setValue(phasers.getValue() - phaserEnergy);
 		fireEvent(Events.BEFORE_FIRE,
-				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim, partTarget.none));
+				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim, precisionShot));
 		fireEvent(Events.AFTER_FIRE,
 				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
-	}
-
-	//TODO unit test
-	//TODO refactor with firePhasers
-	public void firePrecisionShot(Location sector, partTarget part) {
-		Thing thing = quadrant.findThingAt(sector);
-		String error = canFirePhaserAt(sector);
-		if (error != null) {
-			application.message(error);
-			return;
-		}
-		double phaserEnergy = Math.min(phasers.getValue(), reactor.getValue());
-		if (phaserEnergy < 1)
-			return;
-		if (!consume("phasers", phaserEnergy)) {
-			application.message("Insufficient reactor output");
-			return;
-		}
-		Klingon klingon = (Klingon) thing;
-		double distance = StarMap.distance(this, thing);
-		double damage = PRECISION_SHOT_EFFIIENCY*phaserEnergy / distance;
-		phasers.setValue(phasers.getValue() - phaserEnergy);
-		fireEvent(Events.BEFORE_FIRE,
-				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, false, part));
-		fireEvent(Events.AFTER_FIRE,
-				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, false));
 	}
 
 	public void dockInStarbase() {
@@ -540,7 +515,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void autoAim() {
 		for (Klingon k : getQuadrant().getKlingons())
 			if (k.isVisible() && StarMap.within_distance(this, k, PHASER_RANGE)) {
-				firePhasersAt(k.getLocation(), true);
+				firePhasersAt(k.getLocation(), true, partTarget.none);
 				return;
 			}
 	}

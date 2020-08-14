@@ -9,6 +9,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.combat.CombatHandler;
+import superstartrek.client.activities.combat.CombatHandler.partTarget;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -126,7 +127,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 					enterprise.navigateTo(sector);
 					break;
 				case cmd_firePhasers:
-					enterprise.firePhasersAt(sector, false);
+					enterprise.firePhasersAt(sector, false, partTarget.none);
 					break;
 				case cmd_fireTorpedos:
 					enterprise.fireTorpedosAt(sector);
@@ -135,10 +136,10 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 					enterprise.dockInStarbase();
 					break;
 				case cmd_precision_weapons:
-					enterprise.firePrecisionShot(sector, CombatHandler.partTarget.weapons);
+					enterprise.firePhasersAt(sector, false, CombatHandler.partTarget.weapons);
 					break;
 				case cmd_precision_propulsion:
-					enterprise.firePrecisionShot(sector, CombatHandler.partTarget.propulsion);
+					enterprise.firePhasersAt(sector, false, CombatHandler.partTarget.propulsion);
 					break;
 				}
 			});

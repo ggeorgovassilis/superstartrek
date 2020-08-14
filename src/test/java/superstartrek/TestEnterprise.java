@@ -163,12 +163,39 @@ public class TestEnterprise extends BaseTest {
 		bus.addHandler(Events.BEFORE_FIRE, handler);
 
 		assertEquals(100, klingon.getShields().getValue(), 0.1);
-		enterprise.firePhasersAt(klingon.getLocation(), false);
+		enterprise.firePhasersAt(klingon.getLocation(), false, partTarget.none);
 		assertEquals(89, klingon.getShields().getValue(), 10);
 
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
 		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(10, 1), eq(false), eq(partTarget.none));
+	}
+
+	@Test
+	public void testFirePhasers_precision_shot() {
+		application.browserAPI = mock(BrowserAPI.class);
+		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
+		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
+		starMap.setQuadrant(quadrant);
+		enterprise.setQuadrant(quadrant);
+
+		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
+		quadrant.getKlingons().add(klingon);
+		klingon.setLocation(Location.location(1, 1));
+		klingon.registerActionHandlers();
+		klingon.uncloak();
+
+		CombatHandler handler = mock(CombatHandler.class);
+
+		bus.addHandler(Events.BEFORE_FIRE, handler);
+
+		assertEquals(100, klingon.getShields().getValue(), 0.1);
+		enterprise.firePhasersAt(klingon.getLocation(), false, partTarget.propulsion);
+		assertEquals(89, klingon.getShields().getValue(), 10);
+
+		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
+		// TODO: damage probably wrong
+		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(4, 1), eq(false), eq(partTarget.propulsion));
 	}
 
 	@Test
@@ -194,7 +221,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.getReactor().setValue(0);
 
 		assertEquals(100, klingon.getShields().getValue(), 0.1);
-		enterprise.firePhasersAt(klingon.getLocation(), false);
+		enterprise.firePhasersAt(klingon.getLocation(), false, partTarget.none);
 		assertEquals(100, klingon.getShields().getValue(), 10);
 
 		assertEquals(0, bus.getFiredCount(Events.BEFORE_FIRE));
