@@ -155,6 +155,7 @@ public class StarMap {
 	public Location findFreeSpotAround(QuadrantIndex index, Location loc, int maxRadius) {
 		BrowserAPI random = Application.get().browserAPI;
 		for (int radius = 1; radius <= maxRadius; radius++) {
+			//TODO seems unnecessarily heuristic and wasteful. find a better, more deterministic way
 			for (int tries = 0; tries < radius * radius; tries++) {
 				int x = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.getX() + (random.nextInt(1 + radius)) - (radius / 2)));
 				int y = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.getY() + (random.nextInt(1 + radius)) - (radius / 2)));

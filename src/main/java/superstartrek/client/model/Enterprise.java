@@ -501,8 +501,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (getReactor().getValue() < value)
 			return false;
 		getReactor().decrease(value);
-		//TODO: re-evaluate antimatter consumption for impulse movement. is this already covered with reactor consumption?
-		getAntimatter().decrease(value);
 		fireEvent(Events.CONSUME_ENERGY, (h) -> h.handleEnergyConsumption(this, value, what));
 		return true;
 	}
