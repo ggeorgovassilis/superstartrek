@@ -25,5 +25,10 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 	public void setOverlay(String overlay, String status) {
 		CSS.querySelectorAll("#enterprise-schematics ."+overlay).getItem(0).setClassName(overlay+" overlay "+status);
 	}
+	
+	@Override
+	protected boolean isAbsolutelyPositioned() {
+		return true;
+	}
 
 }

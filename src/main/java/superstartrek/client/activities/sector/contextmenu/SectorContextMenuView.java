@@ -34,7 +34,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	}
 
 	@Override
-	protected boolean isAbsulutelyPositioned() {
+	protected boolean isAbsolutelyPositioned() {
 		return true;
 	}
 	

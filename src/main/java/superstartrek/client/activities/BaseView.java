@@ -21,7 +21,7 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 	protected void decorateWidget() {
 	}
 	
-	protected boolean isAbsulutelyPositioned() {
+	protected boolean isAbsolutelyPositioned() {
 		return false;
 	}
 
@@ -38,7 +38,7 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 	// aligns screens to the bottom of the screen for easier interactions with the thumb
 	//TODO: there should be a feature detection or setting to determine whether bottom alignment is required
 	protected void layoutForEasyHandlingOnMobileDevices() {
-		if (!isAbsulutelyPositioned()) {
+		if (!isAbsolutelyPositioned()) {
 			int contentHeight = getOffsetHeight();
 			int windowHeight = Window.getClientHeight();
 			int margin=Math.max(0,windowHeight-contentHeight);
