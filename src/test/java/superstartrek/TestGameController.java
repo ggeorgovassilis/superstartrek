@@ -61,13 +61,13 @@ public class TestGameController extends BaseTest {
 	public void test_that_game_ends_after_last_klingon_is_destroyed() {
 		Klingon k1 = new Klingon(ShipClass.BirdOfPrey);
 		k1.setLocation(Location.location(4, 4));
-		k1.getDisruptor().damageAndDisable(starMap.getStarDate());
-		k1.getImpulse().damageAndDisable(starMap.getStarDate());
+		k1.getDisruptor().damageAndTurnOff(starMap.getStarDate());
+		k1.getImpulse().damageAndTurnOff(starMap.getStarDate());
 		quadrant.getKlingons().add(k1);
 		Klingon k2 = new Klingon(ShipClass.BirdOfPrey);
 		k2.setLocation(Location.location(6, 4));
-		k2.getDisruptor().damageAndDisable(starMap.getStarDate());
-		k2.getImpulse().damageAndDisable(starMap.getStarDate());
+		k2.getDisruptor().damageAndTurnOff(starMap.getStarDate());
+		k2.getImpulse().damageAndTurnOff(starMap.getStarDate());
 		quadrant.getKlingons().add(k2);
 
 		k1.destroy();

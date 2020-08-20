@@ -92,11 +92,10 @@ public class TestComputerPresenter extends BaseTest{
 
 	@Test
 	public void test_statusButtonView() {
-		enterprise.getTorpedos().damageAndDisable(starMap.getStarDate());
+		enterprise.getTorpedos().damageAndTurnOff(starMap.getStarDate());
 		enterprise.getPhasers().damage(10, starMap.getStarDate());
 		presenter.updateStatusButtonView();
-		verify(view).updateShortStatus("", "", "damaged damage-medium", "damaged damage-offline");
+		verify(view).updateShortStatus("", "", "damaged damage-medium", "damage-offline");
 	}
 	
-
 }

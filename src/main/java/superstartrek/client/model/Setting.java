@@ -5,25 +5,18 @@ public class Setting {
 	protected double maximum;
 	protected double currentUpperBound;
 	protected double value;
-	protected boolean enabled=true;
 	protected long timeOfDamage;
+	protected boolean broken;
 	
 	public Setting(double maximum) {
 		this.maximum = maximum;
 		this.currentUpperBound = maximum;
 		this.value = maximum;
+		this.broken = false;
 	}
 	
 	public void setMaximum(double maximum) {
 		this.maximum = maximum;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	public double ratio() {
@@ -74,9 +67,8 @@ public class Setting {
 		setTimeOfDamage(timeOfDamage);
 	}
 	
-	public void damageAndDisable(long timeOfDamage) {
-		setCurrentUpperBound(0);
-		setValue(0);
+	public void damageAndTurnOff(long timeOfDamage) {
+		setBroken(true);
 		setTimeOfDamage(timeOfDamage);
 	}
 	
@@ -101,7 +93,7 @@ public class Setting {
 	}
 	
 	public boolean isOperational() {
-		return isEnabled() && getValue()>0;
+		return !isBroken() && getValue()>0;
 	}
 	
 	public boolean repair() {
@@ -110,9 +102,16 @@ public class Setting {
 			setCurrentUpperBound(getMaximum());
 			neededRepair = true;
 		}
-		setEnabled(true);
 		reset();
 		return neededRepair;
+	}
+	
+	public boolean isBroken() {
+		return broken;
+	}
+	
+	public void setBroken(boolean broken) {
+		this.broken = broken;
 	}
 	
 	@Override

@@ -84,6 +84,7 @@ public class TestKlingon extends BaseTest{
 	public void test_flee() {
 		when(browser.nextInt(any(int.class))).thenReturn(1,1);
 		klingon.setLocation(Location.location(3, 2));
+		klingon.uncloak();
 		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
 
 			@Override
@@ -116,5 +117,14 @@ public class TestKlingon extends BaseTest{
 		quadrant.getStars().add(star);
 		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), starMap);
 		assertFalse(klingon.hasClearShotAt(index, enterprise.getLocation(), enterprise, starMap));
+	}
+	
+	@Test
+	public void test_cloaking_after_quadrant_changed() {
+		when(browser.nextInt(any(int.class))).thenReturn(7,7,7,7);
+		klingon.uncloak();
+		klingon.onActiveQuadrantChanged(quadrant, quadrant);
+		assertFalse(klingon.isVisible());
+		
 	}
 }

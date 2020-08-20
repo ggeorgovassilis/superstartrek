@@ -74,9 +74,9 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			if (Vessel.is(thing)) {
 				Vessel vessel = thing.as();
 				css += " " + CSS.damageClass(vessel.getShields());
-				if (!vessel.getImpulse().isEnabled())
+				if (!vessel.getImpulse().isOperational())
 					css += " impulse-disabled";
-				if (Klingon.is(thing) && (!Klingon.as(thing).getDisruptor().isEnabled())) {
+				if (Klingon.is(thing) && (!Klingon.as(thing).getDisruptor().isOperational())) {
 					css += " disruptor-disabled";
 				}
 			}

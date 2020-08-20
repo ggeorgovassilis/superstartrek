@@ -94,7 +94,7 @@ public class Klingon extends Vessel
 	}
 
 	public boolean canCloak() {
-		return cloak.isEnabled();
+		return !cloak.isBroken();
 	}
 
 	public Setting getCloak() {
@@ -124,7 +124,7 @@ public class Klingon extends Vessel
 	}
 
 	public void repositionKlingon(QuadrantIndex index) {
-		if (!getImpulse().isEnabled())
+		if (!getImpulse().isOperational())
 			return;
 		StarMap map = getStarMap();
 		Enterprise enterprise = map.enterprise;
@@ -153,7 +153,7 @@ public class Klingon extends Vessel
 	}
 
 	public void fireOnEnterprise(QuadrantIndex index) {
-		if (!getDisruptor().isEnabled())
+		if (getDisruptor().isBroken())
 			return;
 		StarMap map = getStarMap();
 		Enterprise enterprise = map.enterprise;
@@ -178,7 +178,7 @@ public class Klingon extends Vessel
 	public void flee(QuadrantIndex index) {
 		if (canCloak() && isVisible())
 			cloak();
-		if (!getImpulse().isEnabled() || getImpulse().getValue() < 1)
+		if (!getImpulse().isOperational() || getImpulse().getValue() < 1)
 			return;
 		Application app = getApplication();
 		double distance = StarMap.distance(getLocation(), app.starMap.enterprise.getLocation());
@@ -199,7 +199,7 @@ public class Klingon extends Vessel
 	public void onKlingonTurnStarted() {
 		// Reminder: only klingons in the active sector receive this event
 		QuadrantIndex index = new QuadrantIndex(getApplication().getActiveQuadrant(), getStarMap());
-		if (!getDisruptor().isEnabled())
+		if (getDisruptor().isBroken())
 			flee(index);
 		else
 			repositionKlingon(index);
@@ -216,10 +216,11 @@ public class Klingon extends Vessel
 	}
 
 	public void repair() {
-		getImpulse().setEnabled(true);
-		getDisruptor().setEnabled(true);
-		cloak.setEnabled(true);
-		getShields().setCurrentUpperBound(Math.max(getShields().getMaximum() / 2, getShields().getCurrentUpperBound()));
+		getImpulse().setBroken(false);
+		getDisruptor().setBroken(false);
+		getCloak().setBroken(false);
+		getCloak().setValue(true);
+		getShields().setCurrentUpperBound(Math.max(getShields().getMaximum()*0.5, getShields().getCurrentUpperBound()));
 		getShields().setValue(getShields().getCurrentUpperBound());
 	}
 
@@ -256,22 +257,22 @@ public class Klingon extends Vessel
 		BrowserAPI random = getApplication().browserAPI;
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
 		if (part == partTarget.none) {
-			if (getImpulse().isEnabled() && random.nextDouble() < impact)
-				getImpulse().setEnabled(false);
-			if (getDisruptor().isEnabled() && random.nextDouble() < impact)
-				getDisruptor().setEnabled(false);
-			if (getCloak().isEnabled() && random.nextDouble() < impact)
-				getCloak().setEnabled(false);
+			if (getImpulse().isOperational() && random.nextDouble() < impact)
+				getImpulse().setBroken(true);
+			if (getDisruptor().isOperational() && random.nextDouble() < impact)
+				getDisruptor().setBroken(true);
+			if (getCloak().isOperational() && random.nextDouble() < impact)
+				getCloak().setBroken(true);
 		}
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
 		if ((part != partTarget.none) && (random.nextDouble() < PRECISION_SHOT_CHANCE_DAMAGE)) {
 			switch (part) {
 			case weapons:
-				disruptor.setEnabled(false);
+				disruptor.setBroken(true);
 				message(weapon + " disabled " + target.getName() + " disruptors.", "klingon-damaged");
 				break;
 			case propulsion:
-				impulse.setEnabled(false);
+				impulse.setBroken(true);
 				message(weapon + " disabled " + target.getName() + " propulsion.", "klingon-damaged");
 				break;
 			default:

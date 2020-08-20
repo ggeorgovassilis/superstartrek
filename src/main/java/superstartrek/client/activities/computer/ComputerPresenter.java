@@ -90,6 +90,9 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		String cssTactical = damageClass(enterprise.getAutoAim());
 		String cssPhasers = damageClass(enterprise.getPhasers());
 		String cssTorpedos = damageClass(enterprise.getTorpedos());
+		//TODO this "leaks" CSS responsibility into the presenter. refactor.
+		if (enterprise.getTorpedos().getValue()<1)
+			cssTorpedos="damaged damage-offline";
 		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
 		if (enterprise.getLrs().isOperational())
 			view.enableLlrsButton();
@@ -205,7 +208,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		switch(code) {
 		case 'l':
 		case 'L':
-			if (application.starMap.enterprise.getLrs().isEnabled())
+			if (application.starMap.enterprise.getLrs().isOperational())
 				application.browserAPI.postHistoryChange("longrangescan");
 			break;
 		case 's':
@@ -243,14 +246,14 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "", "%"+vessel.getShields().percentage());
 			if (Klingon.is(thing)) {
 				Klingon k = vessel.as();
-				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isEnabled()?"":"damage-offline", k.getDisruptor().isEnabled()?"online":"offline");
-				view.setScanProperty("scan-report-cloak", "scan-report-cloak-value", k.getCloak().isEnabled()?"":"damage-offline", k.getCloak().isEnabled()?"online":"offline");
+				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isOperational()?"":"damage-offline", k.getDisruptor().isOperational()?"online":"offline");
+				view.setScanProperty("scan-report-cloak", "scan-report-cloak-value", k.getCloak().isBroken()?"damage-offline":"", k.getCloak().isBroken()?"offline":"online");
 			} else
 			if (Enterprise.is(thing)) {
 				Enterprise e = vessel.as();
-				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", e.getPhasers().isEnabled()?"":"damage-offline", e.getPhasers().isEnabled()?"online":"offline");
+				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", e.getPhasers().isOperational()?"":"damage-offline", e.getPhasers().isOperational()?"online":"offline");
 			}
-			view.setScanProperty("scan-report-engines", "scan-report-engines-value", vessel.getImpulse().isEnabled()?"":"damage-offline", vessel.getImpulse().isEnabled()?"online":"offline");
+			view.setScanProperty("scan-report-engines", "scan-report-engines-value", vessel.getImpulse().isOperational()?"":"damage-offline", vessel.getImpulse().isOperational()?"online":"offline");
 		} else {
 			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
 			view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden", "");

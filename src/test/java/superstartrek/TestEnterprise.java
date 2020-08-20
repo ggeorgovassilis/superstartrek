@@ -48,13 +48,13 @@ public class TestEnterprise extends BaseTest {
 		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
 		enterprise.damagePhasers();
-		assertTrue(enterprise.getPhasers().isEnabled());
+		assertTrue(enterprise.getPhasers().isOperational());
 		assertEquals(21, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
-		assertTrue(enterprise.getPhasers().isEnabled());
+		assertTrue(enterprise.getPhasers().isOperational());
 		assertEquals(12, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
-		assertTrue(enterprise.getPhasers().isEnabled());
+		assertTrue(enterprise.getPhasers().isOperational());
 		assertEquals(3, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
 		assertEquals(0, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
@@ -68,11 +68,11 @@ public class TestEnterprise extends BaseTest {
 		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
 		enterprise.damageImpulse();
-		assertTrue(enterprise.getImpulse().isEnabled());
+		assertTrue(enterprise.getImpulse().isOperational());
 		assertEquals(2, enterprise.getImpulse().getCurrentUpperBound(), 0.1);
 
 		enterprise.damageImpulse();
-		assertTrue(enterprise.getImpulse().isEnabled());
+		assertTrue(enterprise.getImpulse().isOperational());
 		assertEquals(1, enterprise.getImpulse().getCurrentUpperBound(), 0.1);
 
 		enterprise.damageImpulse();

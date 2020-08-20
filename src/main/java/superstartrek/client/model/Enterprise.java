@@ -88,7 +88,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public boolean warpTo(Quadrant destinationQuadrant, Runnable callbackBeforeWarping) {
-		if (!warpDrive.isEnabled()) {
+		if (!warpDrive.isOperational()) {
 			application.message("Warp drive is offline.", "info");
 			return false;
 		}
@@ -237,7 +237,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void fireTorpedosAt(Location sector) {
-		if (!torpedos.isEnabled()) {
+		if (!torpedos.isOperational()) {
 			application.message("Torpedo bay is damaged");
 			return;
 		}
@@ -294,7 +294,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (distance > PHASER_RANGE) {
 			return "Target is too far away.";
 		}
-		if (!phasers.isEnabled()) {
+		if (!phasers.isOperational()) {
 			return "Phaser banks are disabled";
 		}
 		if (phasers.getValue() == 0) {
@@ -373,7 +373,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	protected boolean canBeRepaired(Setting setting) {
-		return setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
+		return setting.isBroken() || setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
 	}
 
 	protected boolean maybeRepairProvisionally(String name, Setting setting) {
@@ -385,9 +385,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * 0.75)); // boolean settings can be repaired
 																				// fully
 		setting.setValue(setting.getCurrentUpperBound());
-		// respect user choice
-		if (setting!=autoAim)
-			setting.setEnabled(true);
+		setting.setBroken(false);
 		application.message("Repaired " + name, "enterprise-repaired");
 		return true;
 	}
@@ -417,7 +415,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		return impulse.getCurrentUpperBound() < impulse.getMaximum()
 				|| shields.getCurrentUpperBound() < shields.getMaximum()
 				|| phasers.getCurrentUpperBound() < phasers.getMaximum()
-				|| reactor.getCurrentUpperBound() > reactor.getMaximum() || !torpedos.isEnabled()
+				|| reactor.getCurrentUpperBound() > reactor.getMaximum() || !torpedos.isOperational()
 				|| !autoAim.isOperational() || !lrs.isOperational() || !warpDrive.isOperational();
 	}
 
@@ -429,41 +427,42 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void damageImpulse() {
 		impulse.damage(1, starMap.getStarDate());
 		if (impulse.getValue() < 1)
-			impulse.damageAndDisable(starMap.getStarDate());
+			impulse.damageAndTurnOff(starMap.getStarDate());
 		application.message("Impulse drive damaged", "enterprise-damaged");
 	}
 
 	public void damageTorpedos() {
-		torpedos.damageAndDisable(starMap.getStarDate());
+		torpedos.damageAndTurnOff(starMap.getStarDate());
+		torpedos.setValue(Math.floor(torpedos.getValue()*0.5));
 		application.message("Torpedo bay damaged", "enterprise-damaged");
 	}
 
 	public void damagePhasers() {
 		phasers.damage(phasers.getMaximum() * 0.3, starMap.getStarDate());
 		if (phasers.getCurrentUpperBound() < 1)
-			phasers.damageAndDisable(starMap.getStarDate());
+			phasers.damageAndTurnOff(starMap.getStarDate());
 		application.message("Phaser banks damaged", "enterprise-damaged");
 	}
 
 	public void damageReactor() {
 		reactor.damage(reactor.getMaximum() * 0.3, starMap.getStarDate());
 		if (reactor.getCurrentUpperBound() < 1)
-			reactor.damageAndDisable(starMap.getStarDate());
+			reactor.damageAndTurnOff(starMap.getStarDate());
 		application.message("Reactor damaged", "enterprise-damaged");
 	}
 
 	public void damageAutoaim() {
-		autoAim.damageAndDisable(starMap.getStarDate());
+		autoAim.damageAndTurnOff(starMap.getStarDate());
 		application.message("Tactical computer damaged", "enterprise-damaged");
 	}
 
 	public void damageLRS() {
-		lrs.damageAndDisable(starMap.getStarDate());
+		lrs.damageAndTurnOff(starMap.getStarDate());
 		application.message("LRS damaged", "enterprise-damaged");
 	}
 
 	public void damageWarpDrive() {
-		lrs.damageAndDisable(starMap.getStarDate());
+		lrs.damageAndTurnOff(starMap.getStarDate());
 		application.message("Warp drive damaged", "enterprise-damaged");
 	}
 
@@ -482,17 +481,17 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			damageShields();
 		if (impulse.getCurrentUpperBound() > 0 && random.nextDouble() < deviceImpact)
 			damageImpulse();
-		if (torpedos.isEnabled() && random.nextDouble() < deviceImpact)
+		if (torpedos.isOperational() && random.nextDouble() < deviceImpact)
 			damageTorpedos();
 		if (phasers.getCurrentUpperBound() > 0 && random.nextDouble() < deviceImpact)
 			damagePhasers();
-		if (autoAim.isEnabled() && random.nextDouble() < deviceImpact)
+		if (autoAim.isOperational() && random.nextDouble() < deviceImpact)
 			damageAutoaim();
-		if (reactor.isEnabled() && random.nextDouble() < deviceImpact)
+		if (reactor.isOperational() && random.nextDouble() < deviceImpact)
 			damageReactor();
-		if (lrs.isEnabled() && random.nextDouble() < deviceImpact)
+		if (lrs.isOperational() && random.nextDouble() < deviceImpact)
 			damageLRS();
-		if (warpDrive.isEnabled() && random.nextDouble() < deviceImpact) {
+		if (warpDrive.isOperational() && random.nextDouble() < deviceImpact) {
 			damageWarpDrive();
 		}
 		fireEvent(Events.ENTERPRISE_DAMAGED, (h) -> h.onEnterpriseDamaged(Enterprise.this));
@@ -521,7 +520,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void playComputerTurn() {
-		if (autoAim.getBooleanValue() && autoAim.isEnabled())
+		if (autoAim.getBooleanValue() && autoAim.isOperational())
 			autoAim();
 	}
 
@@ -540,7 +539,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void toggleAutoAim() {
-		autoAim.setValue(!getAutoAim().getBooleanValue() && getAutoAim().isEnabled());
+		autoAim.setValue(!getAutoAim().getBooleanValue() && getAutoAim().isOperational());
 	}
 
 	@Override

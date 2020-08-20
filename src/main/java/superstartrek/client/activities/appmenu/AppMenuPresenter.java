@@ -48,8 +48,7 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 
 	public void toggleAutoAim() {
 		Setting autoaim = application.starMap.enterprise.getAutoAim();
-		autoaim.setEnabled(!autoaim.isEnabled() && autoaim.ratio()==1.0);
-		GWT.log("nwe autoaim vaue "+autoaim.isEnabled());
+		autoaim.setValue(!autoaim.isBroken() && !autoaim.getBooleanValue());
 	}
 
 	public void restart() {

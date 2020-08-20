@@ -66,7 +66,7 @@ public class StarMapSerialiser {
 	}
 	
 	public void subserialise(Setting setting) {
-		sb.append("{\"value\":"+setting.getValue()+",\"max\":"+setting.getMaximum()+",\"upperBound\":"+setting.getCurrentUpperBound()+"}");
+		sb.append("{\"value\":"+setting.getValue()+",\"max\":"+setting.getMaximum()+",\"upperBound\":"+setting.getCurrentUpperBound()+", \"broken\":"+setting.isBroken()+"}");
 	}
 
 	public void subserialise(Vessel vessel) {

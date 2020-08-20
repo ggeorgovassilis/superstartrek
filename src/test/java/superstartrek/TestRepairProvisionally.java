@@ -18,7 +18,7 @@ public class TestRepairProvisionally extends BaseTest{
 	
 	@Test
 	public void testRepairTorpedos() {
-		enterprise.getTorpedos().damageAndDisable(starMap.getStarDate());
+		enterprise.getTorpedos().damageAndTurnOff(starMap.getStarDate());
 		starMap.advanceStarDate(Enterprise.TIME_TO_REPAIR_SETTING+1);
 		enterprise.repairProvisionally();
 		
@@ -29,12 +29,13 @@ public class TestRepairProvisionally extends BaseTest{
 	@Test
 	public void testRepairPhasers() {
 		enterprise.getPhasers().damage(enterprise.getPhasers().getMaximum()/2, starMap.getStarDate());
-		enterprise.getPhasers().setEnabled(false);
+		enterprise.getPhasers().setBroken(true);
 		starMap.advanceStarDate(Enterprise.TIME_TO_REPAIR_SETTING);
 		enterprise.repairProvisionally();
 		
-		assertTrue(enterprise.getPhasers().isEnabled());
+		assertTrue(enterprise.getPhasers().isOperational());
 		assertTrue(enterprise.getPhasers().getValue()>10);
+		assertFalse(enterprise.getPhasers().isBroken());
 		assertEquals(1, bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 }

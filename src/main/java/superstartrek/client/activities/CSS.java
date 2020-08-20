@@ -16,7 +16,7 @@ public class CSS {
 	 * @return
 	 */
 	public static String damageClass(Setting setting) {
-		int index = (int) Math.floor((damageClasses.length - 1) * setting.health());
+		int index = setting.isBroken()?0:(int) Math.floor((damageClasses.length - 1) * setting.health());
 		return damageClasses[index];
 	}
 	

@@ -59,7 +59,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		buttonsEnabled.put(cmd_firePhasers, e.canFirePhaserAt(sector) == null);
 		buttonsEnabled.put(cmd_precision_weapons, e.canFirePhaserAt(sector) == null);
 		buttonsEnabled.put(cmd_precision_propulsion, e.canFirePhaserAt(sector) == null);
-		buttonsEnabled.put(cmd_fireTorpedos, e.getTorpedos().isEnabled() && e.getTorpedos().getValue() > 0);
+		buttonsEnabled.put(cmd_fireTorpedos, e.getTorpedos().isOperational() && e.getTorpedos().getValue()>=1);
 		for (String cmd : buttonsEnabled.keySet())
 			view.enableButton(cmd, buttonsEnabled.get(cmd));
 		// if the menu is too close to the screen borders it might be cut off and not
