@@ -18,15 +18,12 @@ import superstartrek.client.model.Constants;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setting;
 import superstartrek.client.model.Setup;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.persistence.StarMapSerialiser;
 import superstartrek.client.utils.BrowserAPI;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 import java.util.Random;
@@ -131,6 +128,7 @@ public class TestStarMapSerializer extends BaseTest {
 				return null;
 			}
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public <P extends Presenter> void addToPage(View<P> view) {
 			}

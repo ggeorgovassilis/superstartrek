@@ -5,7 +5,7 @@ public class Setting {
 	protected double maximum;
 	protected double currentUpperBound;
 	protected double value;
-	protected long timeOfDamage;
+	protected int timeOfDamage;
 	protected boolean broken;
 	
 	public Setting(double maximum) {
@@ -61,13 +61,13 @@ public class Setting {
 		return value;
 	}
 	
-	public void damage(double delta, long timeOfDamage) {
+	public void damage(double delta, int timeOfDamage) {
 		setCurrentUpperBound(Math.max(0,getCurrentUpperBound()-delta));
 		setValue(Math.min(getValue(), getCurrentUpperBound()));
 		setTimeOfDamage(timeOfDamage);
 	}
 	
-	public void damageAndTurnOff(long timeOfDamage) {
+	public void damageAndTurnOff(int timeOfDamage) {
 		setBroken(true);
 		setTimeOfDamage(timeOfDamage);
 	}
@@ -88,7 +88,7 @@ public class Setting {
 		return timeOfDamage;
 	}
 	
-	public void setTimeOfDamage(long timeOfDamage) {
+	public void setTimeOfDamage(int timeOfDamage) {
 		this.timeOfDamage = timeOfDamage;
 	}
 	

@@ -37,7 +37,7 @@ public class StarMapDeserialiser {
 			Quadrant quadrant = readQuadrant(jsQuadrant, starMap);
 			starMap.setQuadrant(quadrant);
 		}
-		starMap.setStarDate((long)jsMap.get("stardate").isNumber().doubleValue());
+		starMap.setStarDate((int)jsMap.get("stardate").isNumber().doubleValue());
 		app.gameController.getScoreKeeper().reset();
 		app.gameController.getScoreKeeper().addScore((int)jsMap.get("score").isNumber().doubleValue());
 		return starMap;
