@@ -462,7 +462,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void damageWarpDrive() {
-		lrs.damageAndTurnOff(starMap.getStarDate());
+		warpDrive.damageAndTurnOff(starMap.getStarDate());
 		application.message("Warp drive damaged", "enterprise-damaged");
 	}
 
