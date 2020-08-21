@@ -20,6 +20,10 @@ public class CSS {
 		return damageClasses[index];
 	}
 	
+	public static String getOfflineDamageClass() {
+		return damageClasses[0];
+	}
+	
 	public static void setEnabled(Element e, boolean enabled) {
 		if (enabled) {
 			e.removeAttribute("disabled");

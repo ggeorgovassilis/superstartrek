@@ -77,8 +77,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		view.hide();
 	}
 
-	String damageClass(Setting setting) {
-		String css = CSS.damageClass(setting);
+	String damageClass(Setting setting, boolean load) {
+		String css = load?CSS.damageClass(setting):CSS.getOfflineDamageClass();
 		if (setting.health()<1)
 			css="damaged "+css;
 		return css;
@@ -86,13 +86,10 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	
 	public void updateStatusButtonView() {
-		String cssImpulse = damageClass(enterprise.getImpulse());
-		String cssTactical = damageClass(enterprise.getAutoAim());
-		String cssPhasers = damageClass(enterprise.getPhasers());
-		String cssTorpedos = damageClass(enterprise.getTorpedos());
-		//TODO this "leaks" CSS responsibility into the presenter. refactor.
-		if (enterprise.getTorpedos().getValue()<1)
-			cssTorpedos="damaged damage-offline";
+		String cssImpulse = damageClass(enterprise.getImpulse(), true);
+		String cssTactical = damageClass(enterprise.getAutoAim(), true);
+		String cssPhasers = damageClass(enterprise.getPhasers(), true);
+		String cssTorpedos = damageClass(enterprise.getTorpedos(), enterprise.getTorpedos().getValue()>=1);
 		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
 		if (enterprise.getLrs().isOperational())
 			view.enableLlrsButton();
