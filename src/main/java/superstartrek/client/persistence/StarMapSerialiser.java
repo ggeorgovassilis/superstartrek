@@ -19,16 +19,22 @@ public class StarMapSerialiser {
 	StringBuffer sb = new StringBuffer();
 	Application app;
 	
+	void closeScope(String suffix) {
+		if (sb.charAt(sb.length()-1) == ',')
+			sb.deleteCharAt(sb.length()-1);
+		sb.append(suffix);
+	}
+	
 	public StarMapSerialiser(Application app) {
 		this.app = app;
 	}
 	
 	public void serialise(Thing thing) {
-		sb.append("\t{\"name\":\""+thing.getName()+"\",\n");
-		sb.append("\t\"x\":"+thing.getLocation().getX()+",\n");
-		sb.append("\t\"y\":"+thing.getLocation().getY()+",\n");
-		sb.append("\t\"css\":\""+thing.getCss()+"\",\n");
-		sb.append("\t\"symbol\":\""+thing.getSymbol()+"\",\n");
+		sb.append("{\"name\":\""+thing.getName()+"\",");
+		sb.append("\"x\":"+thing.getLocation().getX()+",");
+		sb.append("\"y\":"+thing.getLocation().getY()+",");
+		sb.append("\"css\":\""+thing.getCss()+"\",");
+		sb.append("\"symbol\":\""+thing.getSymbol()+"\",");
 		if (Star.is(thing))
 			subserialise((Star)thing);
 		if (Vessel.is(thing))
@@ -39,30 +45,29 @@ public class StarMapSerialiser {
 			subserialise((Enterprise)thing);
 		if (thing instanceof StarBase)
 			subserialise((StarBase)thing);
-		sb.append("\"_\":\"\"");
-		sb.append("\t}");
+		closeScope("}");
 	}
 	
 	public void subserialise(Enterprise enterprise) {
-		sb.append("\t\"type\":\"enterprise\",\n");
-		sb.append("\t\"phasers\":");
+		sb.append("\"type\":\"enterprise\",");
+		sb.append("\"phasers\":");
 		subserialise(enterprise.getPhasers());
-		sb.append(",\n");
-		sb.append("\t\"torpedos\":");
+		sb.append(",");
+		sb.append("\"torpedos\":");
 		subserialise(enterprise.getTorpedos());
-		sb.append(",\n");
-		sb.append("\t\"antimatter\":");
+		sb.append(",");
+		sb.append("\"antimatter\":");
 		subserialise(enterprise.getAntimatter());
-		sb.append(",\n");
-		sb.append("\t\"autoaim\":");
+		sb.append(",");
+		sb.append("\"autoaim\":");
 		subserialise(enterprise.getAutoAim());
-		sb.append(",\n");
-		sb.append("\t\"lrs\":");
+		sb.append(",");
+		sb.append("\"lrs\":");
 		subserialise(enterprise.getLrs());
-		sb.append(",\n");
-		sb.append("\t\"reactor\":");
+		sb.append(",");
+		sb.append("\"reactor\":");
 		subserialise(enterprise.getReactor());
-		sb.append(",\n");
+		sb.append(",");
 	}
 	
 	public void subserialise(Setting setting) {
@@ -70,31 +75,31 @@ public class StarMapSerialiser {
 	}
 
 	public void subserialise(Vessel vessel) {
-		sb.append("\t\"impulse\":");
+		sb.append("\"impulse\":");
 		subserialise(vessel.getImpulse());
-		sb.append(",\n");
-		sb.append("\t\"shields\":");
+		sb.append(",");
+		sb.append("\"shields\":");
 		subserialise(vessel.getShields());
-		sb.append(",\n");
+		sb.append(",");
 	}
 
 	public void subserialise(Klingon klingon) {
-		sb.append("\t\"type\":\"klingon\",\n");
-		sb.append("\t\"disruptor\":");
+		sb.append("\"type\":\"klingon\",\n");
+		sb.append("\"disruptor\":");
 		subserialise(klingon.getDisruptor());
-		sb.append(",\n");
-		sb.append("\t\"cloak\":");
+		sb.append(",");
+		sb.append("\"cloak\":");
 		subserialise(klingon.getCloak());
-		sb.append(",\n");
-		sb.append("\"xp\":"+klingon.getXp()+",\n");
+		sb.append(",");
+		sb.append("\"xp\":"+klingon.getXp()+",");
 	}
 
 	public void subserialise(Star star) {
-		sb.append("\t\"type\":\"star\",\n");
+		sb.append("\"type\":\"star\",");
 	}
 
 	public void subserialise(StarBase starbase) {
-		sb.append("\t\"type\":\"starbase\",\n");
+		sb.append("\"type\":\"starbase\",");
 	}
 
 	public void serialise(StarMap map, Quadrant quadrant) {
@@ -111,22 +116,22 @@ public class StarMapSerialiser {
 				sb.append("\n,");
 		}
 		sb.append("]");
-		sb.append("}");
+		closeScope("}");
 	}
 	
 	public String serialise(StarMap map) {
-		sb.append("{\n\"quadrants\":");
+		sb.append("{\"quadrants\":");
 		sb.append("[");
 		for (int y=0;y<Constants.SECTORS_EDGE;y++) 
 		for (int x=0;x<Constants.SECTORS_EDGE;x++) {
 				serialise(map, map.getQuadrant(x, y));
 				if (!(x==Constants.SECTORS_EDGE-1 && x==y))
-					sb.append(",\n");
+					sb.append(",");
 			}
-		sb.append("],\n");
-		sb.append("\"stardate\":"+map.getStarDate()).append(",\n");
-		sb.append("\"score\":"+app.gameController.getScoreKeeper().getScore()).append("\n");
-		sb.append("}");
+		sb.append("],");
+		sb.append("\"stardate\":"+map.getStarDate()).append(",");
+		sb.append("\"score\":"+app.gameController.getScoreKeeper().getScore());
+		closeScope("}");
 		return sb.toString();
 	}
 	

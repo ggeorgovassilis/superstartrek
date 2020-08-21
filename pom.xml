@@ -51,7 +51,8 @@
 								</goals>
 								<configuration>
 									<tasks>
-										<copy todir="${project.build.directory}/sst/superstartrek.superstartrek">
+										<copy
+											todir="${project.build.directory}/sst/superstartrek.superstartrek">
 											<fileset
 												dir="${project.basedir}/src/main/java/superstartrek/public" />
 										</copy>
@@ -164,6 +165,13 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20200518</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 	<build>

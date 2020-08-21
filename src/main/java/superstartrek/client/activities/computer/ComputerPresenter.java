@@ -229,6 +229,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		scanSector(sector, quadrant);
 	}
 	
+	// prints quick scan info (eg. enemy ship stats) on the command bar
 	public void scanSector(Location location, Quadrant quadrant) {
 		Quadrant q = quadrant;
 		//s

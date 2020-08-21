@@ -120,7 +120,6 @@ public class Setup {
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Quadrant q = makeQuadrant(map, x, y);
 				map.setQuadrant(q);
-				;
 			}
 
 		// TODO: find free spot
