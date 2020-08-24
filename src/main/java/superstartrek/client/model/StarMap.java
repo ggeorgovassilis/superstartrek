@@ -84,7 +84,7 @@ public class StarMap {
 	public Location findFreeSpot(Quadrant q) {
 		BrowserAPI random = Application.get().browserAPI;
 		QuadrantIndex index = new QuadrantIndex(q, this);
-		//This should always terminate; quadrats are rather sparesely populated
+		//This should always terminate; quadrants are rather sparsely populated
 		while (true) {
 			int x = random.nextInt(Constants.SECTORS_EDGE);
 			int y = random.nextInt(Constants.SECTORS_EDGE);
