@@ -56,7 +56,7 @@ a, a:visited, button, .button {
 	line-height: 3em;
 	height:3em;
 	font-size: 100%;
-	background-color: darkslategray;
+	background-color: #11709f;
 	appearance: none;
 	float: left;
 	width: 100%;
@@ -119,6 +119,10 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	text-align: center;
 }
 
+.quadrants td.navigation-target{
+	color:black;
+}
+
 .quadrants td.explored {
 	color: white;
 }
@@ -129,11 +133,11 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 }
 
 .navigation-target {
-	background-color: rgba(0, 140, 240, 0.3);
+	background-color: rgba(185, 201, 47, 0.4);
 }
 
 .has-klingons {
-	background-color: maroon;
+	background-color:#bf0f0f;
 }
 
 .cloaked {
@@ -534,7 +538,7 @@ a.progress-bar {
 
 .shields-icon{
     background-image: url(../images/shield.svg);
-    background-color: darkslategray;
+    background-color: #11709f;
     background-size: 2.5em;
     background-repeat: no-repeat;
     background-position: 0.1em;
@@ -547,7 +551,7 @@ a.progress-bar {
 
 .report-icon{
 	background-image: url('../images/report.svg');
-	background-color: darkslategray;
+	background-color: #11709f;
     background-size: 2.5em;
     background-repeat: no-repeat;
     background-position: 0.1em;
@@ -968,7 +972,7 @@ a.disabled,button.disabled {
 
 .app-menu li a.disabled {
 	color: silver;
-	background-color: darkslategrey;
+	background-color: #11709f;
 }
 
 #app-menu-button {
