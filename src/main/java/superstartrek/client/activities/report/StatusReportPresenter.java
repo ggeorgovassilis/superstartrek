@@ -14,12 +14,12 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 		view.setProperty("report_stardate", ""+application.starMap.getStarDate());
 		view.setProperty("report_score", ""+application.scoreKeeper.getScore());
 		view.setProperty("report_location", enterprise.getQuadrant().getName());
-		view.setProperty("report_max_impulse", "%"+enterprise.getImpulse().percentageHealth());
-		view.setProperty("report_shields", "%"+(enterprise.getShields().percentageHealth()));
-		view.setProperty("report_phaser_power", "%"+(enterprise.getPhasers().percentageHealth()));
+		view.setProperty("report_max_impulse", "%"+Math.floor(enterprise.getImpulse().percentageHealth()));
+		view.setProperty("report_shields", "%"+Math.floor(enterprise.getShields().percentageHealth()));
+		view.setProperty("report_phaser_power", "%"+Math.floor(enterprise.getPhasers().percentageHealth()));
 		view.setProperty("report_torpedos", ""+(enterprise.getTorpedos().getValue()));
-		view.setProperty("report_energy", ""+(enterprise.getAntimatter().getValue()));
-		view.setProperty("report_reactor", "%"+(enterprise.getReactor().percentageHealth()));
+		view.setProperty("report_energy", ""+Math.floor(enterprise.getAntimatter().getValue()));
+		view.setProperty("report_reactor", "%"+(Math.floor(enterprise.getReactor().percentageHealth())));
 		view.setProperty("report_reactor_remaining", Math.floor(enterprise.getReactor().getValue())+" / "+Math.floor(enterprise.getReactor().getCurrentUpperBound()));
 		view.setProperty("report_tactical_computer", enterprise.getAutoAim().isOperational()?"online":"offline");
 		view.setProperty("report_LRS", enterprise.getLrs().isOperational()?"online":"offline");
