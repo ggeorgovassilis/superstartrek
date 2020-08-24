@@ -49,7 +49,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				double requiredEnergy = enterprise.computeConsumptionForWarp(qEnterprise, starMap.getQuadrant(x, y));
-				boolean isReachable = requiredEnergy <= enterprise.getReactor().getValue();
+				boolean isReachable = enterprise.getWarpDrive().isOperational() && (requiredEnergy <= enterprise.getReactor().getValue());
 				updateQuadrant(x, y, isReachable);
 			}
 		updateEnterpriseLocation();
