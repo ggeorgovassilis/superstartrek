@@ -40,12 +40,12 @@ public class TestLRSPresenter extends BaseTest{
 			if ((x+y) % 5 == 0) {
 				for (int i=0;i<y;i++) {
 					Klingon k = new Klingon(ShipClass.BirdOfPrey);
-					q.getKlingons().add(k);
+					q.add(k);
 				}
 			}
 			for (int i=0;i<(x+y)%(Constants.SECTORS_EDGE-1);i++) {
 				Star star = new Star(x, y, StarClass.A);
-				q.getStars().add(star);
+				q.add(star);
 			}
 			if (x<3&&y<3)
 				q.setExplored(true);

@@ -32,7 +32,7 @@ public class TestAStar {
 				int y = random.nextInt(Constants.SECTORS_EDGE);
 				blocksArray[l][0] = y;
 				blocksArray[l][1] = x;
-				q.getStars().add(new Star(x, y, false, StarClass.A));
+				q.add(new Star(x, y, false, StarClass.A));
 			}
 			astar.setBlocks(blocksArray);
 			List<Node> pathAStar = astar.findPath();

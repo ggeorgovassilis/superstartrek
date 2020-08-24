@@ -53,9 +53,9 @@ public class StarMapDeserialiser {
 		for (int i = 0; i < jsThings.size(); i++) {
 			Thing thing = readThing(jsThings.get(i).isObject());
 			if (Star.is(thing))
-				q.getStars().add((Star) thing);
+				q.add((Star) thing);
 			else if (Klingon.is(thing))
-				q.getKlingons().add((Klingon) thing);
+				q.add((Klingon) thing);
 			else if (StarBase.is(thing))
 				q.setStarBase((StarBase) thing);
 			else if (Enterprise.is(thing)) {

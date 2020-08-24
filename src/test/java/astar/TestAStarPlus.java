@@ -47,7 +47,7 @@ public class TestAStarPlus extends BaseTest{
 				int y = random.nextInt(Constants.SECTORS_EDGE);
 				blocksArray[l][0] = y;
 				blocksArray[l][1] = x;
-				q.getStars().add(new Star(x, y, false, StarClass.A));
+				q.add(new Star(x, y, false, StarClass.A));
 			}
 
 			for (int innerTurn = 0; innerTurn < TURNS_WITH_SAME_MAP; innerTurn++) {
@@ -145,7 +145,7 @@ public class TestAStarPlus extends BaseTest{
 				int y = random.nextInt(Constants.SECTORS_EDGE);
 				blocksArray[l][0] = y;
 				blocksArray[l][1] = x;
-				q.getStars().add(new Star(x, y, false, StarClass.A));
+				q.add(new Star(x, y, false, StarClass.A));
 			}
 			astar.setBlocks(blocksArray);
 
@@ -183,7 +183,7 @@ public class TestAStarPlus extends BaseTest{
 	//	e.setQuadrant(q);
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(from);
-		q.getKlingons().add(k);
+		q.add(k);
 		AStarPlus asp = new AStarPlus();
 		List<Location> pathAsp = asp.findPathBetween(from, to, q, map);
 		System.out.println("asp " + pathAsp);

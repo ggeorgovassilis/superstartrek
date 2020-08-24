@@ -19,14 +19,14 @@ public class TestQuadrant extends BaseTest{
 	public void test_findThingAt_1() {
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(1, 1));
-		quadrant.getKlingons().add(k);
+		quadrant.add(k);
 
 		k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(2, 3));
-		quadrant.getKlingons().add(k);
+		quadrant.add(k);
 
 		Star star = new Star(4, 4, StarClass.A);
-		quadrant.getStars().add(star);
+		quadrant.add(star);
 
 		StarBase starBase = new StarBase(Location.location(5, 6));
 		quadrant.setStarBase(starBase);
@@ -41,14 +41,14 @@ public class TestQuadrant extends BaseTest{
 	public void test_findThingAt_2() {
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(1, 1));
-		quadrant.getKlingons().add(k);
+		quadrant.add(k);
 
 		k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(2, 3));
-		quadrant.getKlingons().add(k);
+		quadrant.add(k);
 
 		Star star = new Star(4, 4, StarClass.A);
-		quadrant.getStars().add(star);
+		quadrant.add(star);
 
 		StarBase starBase = new StarBase(Location.location(5, 6));
 		quadrant.setStarBase(starBase);

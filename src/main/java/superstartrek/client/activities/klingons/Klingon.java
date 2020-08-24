@@ -15,7 +15,6 @@ import superstartrek.client.control.QuadrantActivationHandler;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Setting;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
@@ -114,7 +113,7 @@ public class Klingon extends Vessel
 		return disruptor;
 	}
 
-	public boolean hasClearShotAt(QuadrantIndex index, Location target, Enterprise enterprise, StarMap map) {
+	public boolean hasClearShotAt(Quadrant index, Location target, Enterprise enterprise, StarMap map) {
 		if (StarMap.within_distance(target, getLocation(), DISRUPTOR_RANGE_SECTORS)) {
 			List<Thing> obstacles = StarMap.findObstaclesInLine(index, getLocation(), target, 2);
 			obstacles.remove(enterprise);
@@ -125,7 +124,7 @@ public class Klingon extends Vessel
 		return false;
 	}
 
-	public void repositionKlingon(QuadrantIndex index) {
+	public void repositionKlingon(Quadrant index) {
 		if (!getImpulse().isOperational())
 			return;
 		StarMap map = getStarMap();
@@ -154,7 +153,7 @@ public class Klingon extends Vessel
 		fireEvent(THING_MOVED, (h) -> h.thingMoved(Klingon.this, quadrant, currentLocation, quadrant, dest));
 	}
 
-	public void fireOnEnterprise(QuadrantIndex index) {
+	public void fireOnEnterprise(Quadrant index) {
 		if (getDisruptor().isBroken())
 			return;
 		StarMap map = getStarMap();
@@ -177,7 +176,7 @@ public class Klingon extends Vessel
 		message(getName() + " cloaked at " + this.getLocation(), "klingon-uncloaked");
 	}
 
-	public void flee(QuadrantIndex index) {
+	public void flee(Quadrant index) {
 		if (canCloak() && isVisible())
 			cloak();
 		if (!getImpulse().isOperational() || getImpulse().getValue() < 1)
@@ -200,18 +199,18 @@ public class Klingon extends Vessel
 	@Override
 	public void onKlingonTurnStarted() {
 		// Reminder: only klingons in the active sector receive this event
-		QuadrantIndex index = new QuadrantIndex(getApplication().getActiveQuadrant(), getStarMap());
+		Quadrant q = getApplication().getActiveQuadrant();
 		if (getDisruptor().isBroken())
-			flee(index);
+			flee(q);
 		else
-			repositionKlingon(index);
-		fireOnEnterprise(index);
+			repositionKlingon(q);
+		fireOnEnterprise(q);
 	}
 
 	@Override
 	public void destroy() {
 		removeHandler(this);
-		getApplication().getActiveQuadrant().getKlingons().remove(this);
+		getApplication().getActiveQuadrant().remove(this);
 		message(getName() + " was destroyed", "klingon-destroyed");
 		super.destroy();
 		fireEvent(KLINGON_DESTROYED, (h) -> h.onVesselDestroyed(Klingon.this));

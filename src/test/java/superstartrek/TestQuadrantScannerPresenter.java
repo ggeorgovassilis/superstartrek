@@ -57,12 +57,12 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		sb.setLocation(Location.location(1,7));
 		qTo.setStarBase(sb);
 		
-		qTo.getStars().add(new Star(6,5, StarClass.A));
-		qTo.getStars().add(new Star(5,6, StarClass.A));
+		qTo.add(new Star(6,5, StarClass.A));
+		qTo.add(new Star(5,6, StarClass.A));
 		
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(7,7));
-		qTo.getKlingons().add(k);
+		qTo.add(k);
 		
 		presenter.onActiveQuadrantChanged(qFrom, qTo);
 		verify(view).updateSector(eq(0), eq(0), eq("O=Ξ"), eq("enterprise "));
@@ -79,13 +79,13 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
-		quadrant.getStars().add(new Star(1,6,StarClass.A));
-		quadrant.getStars().add(new Star(2,6,StarClass.A));
-		quadrant.getStars().add(new Star(3,6,StarClass.A));
-		quadrant.getStars().add(new Star(5,6,StarClass.A));
-		quadrant.getStars().add(new Star(6,6,StarClass.A));
-		quadrant.getStars().add(new Star(7,6,StarClass.A));
-		quadrant.getStars().add(new Star(4,3,StarClass.A));
+		quadrant.add(new Star(1,6,StarClass.A));
+		quadrant.add(new Star(2,6,StarClass.A));
+		quadrant.add(new Star(3,6,StarClass.A));
+		quadrant.add(new Star(5,6,StarClass.A));
+		quadrant.add(new Star(6,6,StarClass.A));
+		quadrant.add(new Star(7,6,StarClass.A));
+		quadrant.add(new Star(4,3,StarClass.A));
 		List<Location> targets = enterprise.findReachableSectors();
 		assertFalse(targets.isEmpty());
 		presenter.updateMapWithReachableSectors();
@@ -100,7 +100,7 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		Quadrant q = new Quadrant("test", 1, 2);
 		Klingon k = new Klingon(Klingon.ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(3, 4));
-		q.getKlingons().add(k);
+		q.add(k);
 		presenter.thingMoved(k, q, Location.location(2, 2), q, k.getLocation());
 		verify(view).updateSector(2, 2, "", "");
 	}

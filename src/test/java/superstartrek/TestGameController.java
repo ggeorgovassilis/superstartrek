@@ -63,12 +63,12 @@ public class TestGameController extends BaseTest {
 		k1.setLocation(Location.location(4, 4));
 		k1.getDisruptor().damageAndTurnOff(starMap.getStarDate());
 		k1.getImpulse().damageAndTurnOff(starMap.getStarDate());
-		quadrant.getKlingons().add(k1);
+		quadrant.add(k1);
 		Klingon k2 = new Klingon(ShipClass.BirdOfPrey);
 		k2.setLocation(Location.location(6, 4));
 		k2.getDisruptor().damageAndTurnOff(starMap.getStarDate());
 		k2.getImpulse().damageAndTurnOff(starMap.getStarDate());
-		quadrant.getKlingons().add(k2);
+		quadrant.add(k2);
 
 		k1.destroy();
 		assertEquals(0, bus.getFiredCount(Events.GAME_OVER));

@@ -153,7 +153,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setQuadrant(quadrant);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		quadrant.getKlingons().add(klingon);
+		quadrant.add(klingon);
 		klingon.setLocation(Location.location(1, 1));
 		klingon.registerActionHandlers();
 		klingon.uncloak();
@@ -180,7 +180,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setQuadrant(quadrant);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		quadrant.getKlingons().add(klingon);
+		quadrant.add(klingon);
 		klingon.setLocation(Location.location(1, 1));
 		klingon.registerActionHandlers();
 		klingon.uncloak();
@@ -207,7 +207,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setQuadrant(quadrant);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		quadrant.getKlingons().add(klingon);
+		quadrant.add(klingon);
 		klingon.setLocation(Location.location(1, 1));
 		klingon.registerActionHandlers();
 		klingon.uncloak();
@@ -241,7 +241,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setQuadrant(quadrant);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		quadrant.getKlingons().add(klingon);
+		quadrant.add(klingon);
 		klingon.setLocation(Location.location(1, 1));
 		klingon.registerActionHandlers();
 		klingon.uncloak();
@@ -269,13 +269,13 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
 		starMap.enterprise = enterprise;
-		quadrant.getStars().add(new Star(1, 6, StarClass.A));
-		quadrant.getStars().add(new Star(2, 6, StarClass.A));
-		quadrant.getStars().add(new Star(3, 6, StarClass.A));
-		quadrant.getStars().add(new Star(5, 6, StarClass.A));
-		quadrant.getStars().add(new Star(6, 6, StarClass.A));
-		quadrant.getStars().add(new Star(7, 6, StarClass.A));
-		quadrant.getStars().add(new Star(4, 3, StarClass.A));
+		quadrant.add(new Star(1, 6, StarClass.A));
+		quadrant.add(new Star(2, 6, StarClass.A));
+		quadrant.add(new Star(3, 6, StarClass.A));
+		quadrant.add(new Star(5, 6, StarClass.A));
+		quadrant.add(new Star(6, 6, StarClass.A));
+		quadrant.add(new Star(7, 6, StarClass.A));
+		quadrant.add(new Star(4, 3, StarClass.A));
 		List<Location> list = enterprise.findReachableSectors();
 		assertTrue(list.contains(Location.location(4, 5)));
 		assertTrue(list.contains(Location.location(4, 6)));
@@ -309,7 +309,7 @@ public class TestEnterprise extends BaseTest {
 
 		Klingon klingon = new Klingon(Klingon.ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(5, 5));
-		quadrant.getKlingons().add(klingon);
+		quadrant.add(klingon);
 		assertEquals("There is nothing at 7:7", enterprise.canFirePhaserAt(Location.location(7, 7)));
 		assertEquals("Phasers can target only enemy vessels", enterprise.canFirePhaserAt(star.getLocation()));
 
@@ -327,7 +327,7 @@ public class TestEnterprise extends BaseTest {
 		klingon.setLocation(Location.location(5, 5));
 		klingon.uncloak();
 		enterprise.setLocation(Location.location(4, 4));
-		quadrant.getKlingons().add(klingon);
+		quadrant.add(klingon);
 		bus.addHandler(Events.BEFORE_FIRE, new CombatHandler() {
 
 			@Override

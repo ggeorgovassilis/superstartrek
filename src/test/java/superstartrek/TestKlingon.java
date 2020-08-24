@@ -14,7 +14,6 @@ import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.Events;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.QuadrantIndex;
 import superstartrek.client.model.Star;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
@@ -28,7 +27,7 @@ public class TestKlingon extends BaseTest{
 	@Before
 	public void setup() {
 		klingon = new Klingon(ShipClass.Raider);
-		quadrant.getKlingons().add(klingon);
+		quadrant.add(klingon);
 	}
 
 	@After
@@ -51,7 +50,7 @@ public class TestKlingon extends BaseTest{
 				assertEquals(Location.location(0, 4), lTo);
 			}
 		});
-		klingon.repositionKlingon(new QuadrantIndex(quadrant, starMap));
+		klingon.repositionKlingon(quadrant);
 		assertEquals(2, bus.getFiredCount(Events.THING_MOVED));
 
 		// a*+ moves a bit strangely; it can move temporarily away from a target (even
@@ -76,7 +75,7 @@ public class TestKlingon extends BaseTest{
 			}
 		});
 
-		klingon.fireOnEnterprise(new QuadrantIndex(quadrant, starMap));
+		klingon.fireOnEnterprise(quadrant);
 		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 	}
 
@@ -97,7 +96,7 @@ public class TestKlingon extends BaseTest{
 			}
 
 		});
-		klingon.flee(new QuadrantIndex(quadrant, starMap));
+		klingon.flee(quadrant);
 		assertEquals(1, bus.getFiredCount(Events.THING_MOVED));
 	}
 	
@@ -105,8 +104,7 @@ public class TestKlingon extends BaseTest{
 	public void test_hasClearShotAt() {
 		klingon.setLocation(Location.location(3, 3));
 		enterprise.setLocation(Location.location(3, 5));
-		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), starMap);
-		assertTrue(klingon.hasClearShotAt(index, enterprise.getLocation(), enterprise, starMap));
+		assertTrue(klingon.hasClearShotAt(enterprise.getQuadrant(), enterprise.getLocation(), enterprise, starMap));
 	}
 	
 	@Test
@@ -114,9 +112,8 @@ public class TestKlingon extends BaseTest{
 		klingon.setLocation(Location.location(3, 3));
 		enterprise.setLocation(Location.location(3, 5));
 		Star star = new Star(3, 4, StarClass.A);
-		quadrant.getStars().add(star);
-		QuadrantIndex index = new QuadrantIndex(enterprise.getQuadrant(), starMap);
-		assertFalse(klingon.hasClearShotAt(index, enterprise.getLocation(), enterprise, starMap));
+		quadrant.add(star);
+		assertFalse(klingon.hasClearShotAt(enterprise.getQuadrant(), enterprise.getLocation(), enterprise, starMap));
 	}
 	
 	@Test

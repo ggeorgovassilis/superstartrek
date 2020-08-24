@@ -60,13 +60,13 @@ public class Setup {
 			Klingon k = new Klingon(Klingon.ShipClass.Raider);
 			Location loc = map.findFreeSpot(quadrant);
 			k.setLocation(loc);
-			quadrant.getKlingons().add(k);
+			quadrant.add(k);
 		}
 		for (int i = 0; i < f.birdsOfPrey; i++) {
 			Klingon k = new Klingon(Klingon.ShipClass.BirdOfPrey);
 			Location loc = map.findFreeSpot(quadrant);
 			k.setLocation(loc);
-			quadrant.getKlingons().add(k);
+			quadrant.add(k);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class Setup {
 			// and over. on the other hand, quadrants are made only once at the beginning of the game
 			Location loc = map.findFreeSpot(q);
 			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[random.nextInt(StarClass.values().length)]);
-			q.getStars().add(star);
+			q.add(star);
 		}
 		if ((x + y * Constants.SECTORS_EDGE)
 				% ((Constants.SECTORS_EDGE * Constants.SECTORS_EDGE) / Constants.NO_OF_STARBASES_ON_MAP) == 0) {

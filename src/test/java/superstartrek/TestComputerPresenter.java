@@ -57,7 +57,7 @@ public class TestComputerPresenter extends BaseTest{
 		enterprise.setLocation(Location.location(1, 1));
 		Klingon k = new Klingon(ShipClass.Raider);
 		k.setLocation(Location.location(3, 3));
-		quadrant.getKlingons().add(k);
+		quadrant.add(k);
 		
 		presenter.updateQuadrantHeaderView();
 		
@@ -69,7 +69,7 @@ public class TestComputerPresenter extends BaseTest{
 		enterprise.setLocation(Location.location(1, 1));
 		Klingon k = new Klingon(ShipClass.Raider);
 		k.setLocation(Location.location(5, 7));
-		quadrant.getKlingons().add(k);
+		quadrant.add(k);
 		presenter.updateQuadrantHeaderView();
 		
 		verify(view).setQuadrantName("test quadrant 1:2", "yellow-alert");

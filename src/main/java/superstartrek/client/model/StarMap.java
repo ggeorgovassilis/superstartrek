@@ -83,12 +83,11 @@ public class StarMap {
 
 	public Location findFreeSpot(Quadrant q) {
 		BrowserAPI random = Application.get().browserAPI;
-		QuadrantIndex index = new QuadrantIndex(q, this);
 		//This should always terminate; quadrants are rather sparsely populated
 		while (true) {
 			int x = random.nextInt(Constants.SECTORS_EDGE);
 			int y = random.nextInt(Constants.SECTORS_EDGE);
-			Thing thing = index.findThingAt(x, y);
+			Thing thing = q.findThingAt(x, y);
 			if (thing == null)
 				return Location.location(x, y);
 		}
@@ -139,7 +138,7 @@ public class StarMap {
 	 * @param cap  stop after finding that many obstacles
 	 * @return
 	 */
-	public static List<Thing> findObstaclesInLine(QuadrantIndex q, Location from, Location to, int cap) {
+	public static List<Thing> findObstaclesInLine(Quadrant q, Location from, Location to, int cap) {
 		List<Thing> found = new ArrayList<>();
 		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), (x, y) -> {
 			Thing thing = q.findThingAt(x, y);
@@ -151,7 +150,7 @@ public class StarMap {
 		return found;
 	}
 
-	public Location findFreeSpotAround(QuadrantIndex index, Location loc, int maxRadius) {
+	public Location findFreeSpotAround(Quadrant index, Location loc, int maxRadius) {
 		BrowserAPI random = Application.get().browserAPI;
 		for (int radius = 1; radius <= maxRadius; radius++) {
 			//While this may seem unnecessarily heuristic and wasteful, it is not:
@@ -179,8 +178,8 @@ public class StarMap {
 	public List<Thing> getEverythingIn(Quadrant quadrant) {
 		List<Thing> things = new ArrayList<>(quadrant.getStars());
 		things.addAll(quadrant.getKlingons());
-		if (quadrant.starBase != null)
-			things.add(quadrant.starBase);
+		if (quadrant.getStarBase() != null)
+			things.add(quadrant.getStarBase());
 		if (enterprise.getQuadrant() == quadrant)
 			things.add(enterprise);
 		return things;

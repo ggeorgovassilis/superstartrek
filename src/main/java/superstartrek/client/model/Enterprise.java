@@ -124,14 +124,15 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		application.starMap.markAsExploredAround(dropQuadrant);
 		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
-		Location freeSpot = starMap.findFreeSpotAround(new QuadrantIndex(getQuadrant(), starMap), getLocation(),
+		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation(),
 				Constants.SECTORS_EDGE);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
 
+		fromQuadrant.removeEnterprise(this);
 		fireEvent(Events.AFTER_ENTERPRISE_WARPED,
 				(h) -> h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
-
+		dropQuadrant.addEnterprise(this);
 		fireEvent(Events.THING_MOVED,
 				(h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
 		turnsSinceWarp = 0;
@@ -156,7 +157,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		int maxX = (int) Math.min(Constants.SECTORS_EDGE - 1, lx + range);
 		int minY = (int) Math.max(0, ly - range);
 		int maxY = (int) Math.min(Constants.SECTORS_EDGE - 1, ly + range);
-		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
 		final int NOT_REACHABLE = -1;
 		final int REACHABLE = 1;
 		final int UNKNOWN = 0;
@@ -174,7 +174,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 					if (visitLog[x1][y1] != UNKNOWN)
 						return visitLog[x1][y1] == REACHABLE;
 					// from here on, visitLog is known to be 0
-					if (Thing.isVisible(index.findThingAt(x1, y1))) {
+					if (Thing.isVisible(getQuadrant().findThingAt(x1, y1))) {
 						visitLog[x1][y1] = NOT_REACHABLE;
 						return false;
 					}
@@ -202,9 +202,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		double distance = StarMap.distance(this.getLocation(), loc);
 		Location[] trace = new Location[] { getLocation() };
-		QuadrantIndex index = new QuadrantIndex(quadrant, starMap);
 		StarMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
-			Thing thing = index.findThingAt(x, y);
+			Thing thing = quadrant.findThingAt(x, y);
 			if (thing != null && thing != Enterprise.this) {
 				if (Klingon.isCloakedKlingon(thing))
 					((Klingon) thing).uncloak();
@@ -245,8 +244,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			application.message("Torpedo bay is empty");
 			return;
 		}
-		QuadrantIndex index = new QuadrantIndex(getQuadrant(), starMap);
-		List<Thing> things = StarMap.findObstaclesInLine(index, getLocation(), sector, Constants.SECTORS_EDGE);
+		List<Thing> things = StarMap.findObstaclesInLine(getQuadrant(), getLocation(), sector, Constants.SECTORS_EDGE);
 		things.remove(this);
 		getTorpedos().decrease(1);
 		Thing target = null;
@@ -346,7 +344,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return;
 		}
 		if (!inRange && !hasKlingons) {
-			Location loc = starMap.findFreeSpotAround(new QuadrantIndex(quadrant, starMap),
+			Location loc = starMap.findFreeSpotAround(quadrant,
 					quadrant.getStarBase().getLocation(), 2);
 			if (loc == null) {
 				application.message("No space around starbase");
