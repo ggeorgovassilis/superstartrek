@@ -20,8 +20,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double SHIELD_IMPACT_MODIFIER = 0.5;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
 	public final static int TIME_TO_REPAIR_SETTING = 3;
-	public final static double PRECISION_SHOT_EFFIIENCY=0.2;
-	public final static double PHASER_EFFICIENCY=0.5;
+	public final static double PRECISION_SHOT_EFFICIENCY=0.2;
+	public final static double PHASER_EFFICIENCY=0.4;
 
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
@@ -252,7 +252,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		Thing target = null;
 		double damage = 50;
 		BrowserAPI browser = application.browserAPI;
-		double precision = 2 * (autoAim.getBooleanValue() ? 1 : 0.7);
+		double precision = 2.0 * (autoAim.isOperational() ? 1 : 0.7);
 		for (Thing thing : things) {
 			boolean hit = false;
 			if (Klingon.is(thing)) {
@@ -310,12 +310,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void firePhasersAt(Location sector, boolean isAutoAim, partTarget precisionShot) {
 		Thing thing = quadrant.findThingAt(sector);
 		String error = canFirePhaserAt(sector);
-		boolean isPrecisionShot = precisionShot!=partTarget.none;
 		if (error != null) {
 			if (!isAutoAim)
 				application.message(error);
 			return;
 		}
+		boolean isPrecisionShot = precisionShot!=partTarget.none;
 		double phaserEnergy = Math.min(phasers.getValue(), reactor.getValue());
 		if (phaserEnergy < 1)
 			return;
@@ -326,7 +326,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		Klingon klingon = (Klingon) thing;
 		double distance = StarMap.distance(this, thing);
-		double damage = isPrecisionShot?(PRECISION_SHOT_EFFIIENCY* phaserEnergy / distance):(PHASER_EFFICIENCY* phaserEnergy / distance);
+		double efficiency = isPrecisionShot?PRECISION_SHOT_EFFICIENCY:PHASER_EFFICIENCY;
+		double damage = efficiency * phaserEnergy / distance;
 		phasers.setValue(phasers.getValue() - phaserEnergy);
 		fireEvent(Events.BEFORE_FIRE,
 				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim, precisionShot));
@@ -512,11 +513,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void autoAim() {
+		List<Klingon> potentialTargets = new ArrayList<Klingon>();
 		for (Klingon k : getQuadrant().getKlingons())
 			if (k.isVisible() && StarMap.within_distance(this, k, PHASER_RANGE)) {
-				firePhasersAt(k.getLocation(), true, partTarget.none);
-				return;
+				potentialTargets.add(k);
 			}
+		if (potentialTargets.isEmpty())
+			return;
+		Klingon target = potentialTargets.get(application.browserAPI.nextInt(potentialTargets.size()));
+		firePhasersAt(target.getLocation(), true, partTarget.none);
+		return;
 	}
 
 	public void playComputerTurn() {

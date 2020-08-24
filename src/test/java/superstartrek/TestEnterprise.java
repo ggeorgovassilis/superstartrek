@@ -168,7 +168,7 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(10, 1), eq(false), eq(partTarget.none));
+		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(8.5, 1), eq(false), eq(partTarget.none));
 	}
 
 	@Test
@@ -335,7 +335,7 @@ public class TestEnterprise extends BaseTest {
 					boolean wasAutoFire, partTarget part) {
 				assertEquals(klingon, target);
 				assertEquals(enterprise, actor);
-				assertEquals(10, damage, 1);
+				assertEquals(8.5, damage, 1);
 				assertEquals(partTarget.none, part);
 			}
 		});
@@ -346,7 +346,7 @@ public class TestEnterprise extends BaseTest {
 					boolean wasAutoFire) {
 				assertEquals(klingon, target);
 				assertEquals(enterprise, actor);
-				assertEquals(10, damage, 1);
+				assertEquals(8.5, damage, 1);
 			}
 		});
 		enterprise.autoAim();
