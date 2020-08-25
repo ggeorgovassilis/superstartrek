@@ -134,8 +134,7 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 }
 
 .navigation-target {
-	background-color: #b48035;
-	opacity:0.5;
+	background-color: rgba(200,148,60,0.5);
 }
 
 .has-klingons {
@@ -344,7 +343,7 @@ outline:solid transparent 1px;
 
 /* messages */
 #messages {
-	background-color: #f9edd7;
+	background-color:black;
 	color: white;
 	font-family: monospace, courier, courier new, typewriter, sans-serif;
 	padding: 10px;
@@ -359,7 +358,7 @@ outline:solid transparent 1px;
 	margin: 0;
 	padding: 0 0 1em 0;
 	overflow: hidden;
-	color:black;
+	color:white;
 }
 
 #messages-content > li:not(:last-child){
@@ -373,11 +372,11 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.enterprise-damaged {
-	color: #a3393d;
+	color: red;
 }
 
 #messages-content>li.error{
-	color: #a3393d;
+	color: red;
 }
 
 #messages-content>li.fire {
@@ -399,7 +398,7 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.klingon-damaged, .entry.klingon-destroyed {
-	color: #505050;
+	color: #2d91c5;
 }
 
 #messages-content>li.gamewon {
