@@ -1,6 +1,5 @@
 package superstartrek.client.persistence;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -26,8 +25,6 @@ public class StarMapDeserialiser {
 	}
 
 	public StarMap readStarMap(String json) {
-		GWT.log("Deserialsing");
-		GWT.log(json);
 		StarMap starMap = new StarMap();
 		JSONObject jsMap = JSONParser.parseStrict(json).isObject();
 		app.starMap = starMap;

@@ -175,14 +175,4 @@ public class StarMap {
 		return false;
 	}
 
-	public List<Thing> getEverythingIn(Quadrant quadrant) {
-		List<Thing> things = new ArrayList<>(quadrant.getStars());
-		things.addAll(quadrant.getKlingons());
-		if (quadrant.getStarBase() != null)
-			things.add(quadrant.getStarBase());
-		if (enterprise.getQuadrant() == quadrant)
-			things.add(enterprise);
-		return things;
-	}
-
 }

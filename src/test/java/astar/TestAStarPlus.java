@@ -1,9 +1,9 @@
 package astar;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -26,10 +26,9 @@ import superstartrek.client.model.Star.StarClass;
 /*
  * A* is a reference implementation used to validate that a*+ works ok
  */
-public class TestAStarPlus extends BaseTest{
-	
+public class TestAStarPlus extends BaseTest {
 
-	@Ignore //too slow for regular builds
+	@Ignore // too slow for regular builds
 	@Test
 	public void testAStarPlusPerformance() {
 		final int TURNS = 50000;
@@ -39,21 +38,21 @@ public class TestAStarPlus extends BaseTest{
 		for (int i = 0; i < TURNS; i++) {
 			Quadrant q = new Quadrant("", 0, 0);
 			StarMap map = new StarMap();
-			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE), random.nextInt(Constants.SECTORS_EDGE));
-			Location to = Location.location(random.nextInt(Constants.SECTORS_EDGE), random.nextInt(Constants.SECTORS_EDGE));
-			int[][] blocksArray = new int[random.nextInt(32)][2];
-			for (int l = 0; l < blocksArray.length; l++) {
+			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE),
+					random.nextInt(Constants.SECTORS_EDGE));
+			Location to = Location.location(random.nextInt(Constants.SECTORS_EDGE),
+					random.nextInt(Constants.SECTORS_EDGE));
+			int obstacles = random.nextInt(32);
+			for (int l = 0; l < obstacles; l++) {
 				int x = random.nextInt(Constants.SECTORS_EDGE);
 				int y = random.nextInt(Constants.SECTORS_EDGE);
-				blocksArray[l][0] = y;
-				blocksArray[l][1] = x;
 				q.add(new Star(x, y, false, StarClass.A));
 			}
 
 			for (int innerTurn = 0; innerTurn < TURNS_WITH_SAME_MAP; innerTurn++) {
 				AStarPlus asp = new AStarPlus();
 				List<Location> pathAsp = asp.findPathBetween(from, to, q, map);
-				assertTrue(pathAsp.size()>=0); // useless check, but mutes Eclipse warning about pathAsp not used
+				assertTrue(pathAsp.size() >= 0); // useless check, but mutes Eclipse warning about pathAsp not used
 			}
 
 		}
@@ -61,74 +60,51 @@ public class TestAStarPlus extends BaseTest{
 		System.out.println(((double) time / (double) TURNS) + " ms per turn");
 	}
 
-	public static String printMap(int[][] blocksArray, Location from, Location to, List<Location> path) {
+	public static String printMap(Quadrant quadrant, Location from, Location to, List<Location> path) {
 		StringBuffer sb = new StringBuffer();
 		char matrix[][] = new char[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-		for (int l = 0; l < blocksArray.length; l++) {
-			int y = blocksArray[l][0];
-			int x = blocksArray[l][1];
-			matrix[x][y] = '#';
-		}
+		for (int y = 0; y < Constants.SECTORS_EDGE; y++) 
+			for (int x = 0; x < Constants.SECTORS_EDGE; x++)
+				matrix[x][y] = ' ';
+		quadrant.doWithThings(t->matrix[t.getLocation().getX()][t.getLocation().getY()]='#');
 		for (Location loc : path)
 			matrix[loc.getX()][loc.getY()] = '*';
 		matrix[from.getX()][from.getY()] = 'S';
 		matrix[to.getX()][to.getY()] = 'E';
+		sb.append("|");
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++)
-				sb.append(matrix[x][y] == (char) 0 ? ' ' : matrix[x][y]);
-			sb.append("\n");
+				sb.append(matrix[x][y]);
+			sb.append("\n|");
 		}
 		return sb.toString();
 	}
 
-	protected void checkPlausibility(Location from, Location to, List<Location> expectedSolution,
-			List<Location> solutionToCheck, String log) {
-		Location last = from;
-		//check some corner cases:
-		
-		//1. from == to
-		if (from.equals(to)) {
-			assertTrue(log, solutionToCheck.isEmpty());
-			return;
+	protected void checkPlausibility(Location from, Location to, List<Location> solutionToCheck, Quadrant q,
+			String log) {
+		Location previousStep = from;
+		int count[] = new int[1];
+		q.doWithThings(t->count[0]++);
+		//The rationale behind this length check is: the more obstacles, the longer the path.
+		assertTrue(log, solutionToCheck.size() < Constants.SECTORS_EDGE+count[0]);
+		for (Location l : solutionToCheck) {
+			String errorMessage = l.toString() + "\n" + log;
+			assertTrue(errorMessage, StarMap.distance(l, previousStep) < 2);
+			assertNull(errorMessage, q.findThingAt(l));
+			previousStep = l;
 		}
-		//2. expectedSolution is empty even though there is a path
-		//a* sometimes doesn't find a path even if there is one (which a*+ finds).
-		//this means that sometimes expectedSolution is empty even though it shouldn't
-		if (solutionToCheck.isEmpty()) {
-			assertTrue(log, expectedSolution.isEmpty());
-			return;
-		}
-		//3. "to" is last step in path
-		assertEquals(log, to, solutionToCheck.get(solutionToCheck.size()-1));
-		
-		//4. the expected solution is about the same size as the one we found; a*+ walks diagonally, so its solutions are generally better, hence
-		//expectedSolution is an upper bound
-		if (!expectedSolution.isEmpty())
-			assertTrue(log, expectedSolution.size() >= solutionToCheck.size());
-		
-		//5. there are no "leaps"; every square in the path is next to the previous
-		for (Location current:solutionToCheck) {
-			assertTrue(log, StarMap.within_distance(current, last,2));
-			last = current;
-		}
-		
 	}
 
-	/* surprisingly, a* reference implementation fails with this map, which a*+ solves: 
-	 
-    #  E
-# #   * 
-##  #*  
-  # *  #
-    #S #
-  # #   
-##     #
- ##  #   
-	 
+	/*
+	 * surprisingly, a* reference implementation fails with this map, which a*+
+	 * solves:
+	 * 
+	 * # E # # * ## #* # * # #S # # # ## # ## #
+	 * 
 	 */
 	@Test
 	public void testAStarPlus() {
-		final int TURNS = 1000;
+		final int TURNS = 3000;
 		Random random = new Random(0);
 		for (int i = 0; i < TURNS; i++) {
 			Quadrant q = new Quadrant("", 0, 0);
@@ -136,40 +112,31 @@ public class TestAStarPlus extends BaseTest{
 			Application.set(null);
 			Application app = new Application();
 			map.enterprise = new Enterprise(app, map);
-			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE), random.nextInt(Constants.SECTORS_EDGE));
-			Location to = Location.location(random.nextInt(Constants.SECTORS_EDGE), random.nextInt(Constants.SECTORS_EDGE));
-			AStar astar = new AStar(Constants.SECTORS_EDGE, Constants.SECTORS_EDGE, new Node(from.getY(), from.getX()), new Node(to.getY(), to.getX()));
-			int[][] blocksArray = new int[random.nextInt(32)][2];
-			for (int l = 0; l < blocksArray.length; l++) {
+			Application.set(app);
+			app.starMap = map;
+			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE),
+					random.nextInt(Constants.SECTORS_EDGE));
+			Location to = Location.location(random.nextInt(Constants.SECTORS_EDGE),
+					random.nextInt(Constants.SECTORS_EDGE));
+			int obstacles = random.nextInt(32);
+			for (int l = 0; l < obstacles; l++) {
 				int x = random.nextInt(Constants.SECTORS_EDGE);
 				int y = random.nextInt(Constants.SECTORS_EDGE);
-				blocksArray[l][0] = y;
-				blocksArray[l][1] = x;
 				q.add(new Star(x, y, false, StarClass.A));
 			}
-			astar.setBlocks(blocksArray);
-
-			List<Node> pathAStar = astar.findPath();
-			List<Location> expectedSolution = new ArrayList<Location>(pathAStar.size());
-			for (Node n : pathAStar)
-				expectedSolution.add(Location.location(n.getCol(), n.getRow()));
 
 			AStarPlus asp = new AStarPlus();
 			List<Location> pathAsp = asp.findPathBetween(from, to, q, map);
 			String log = "--------------\n";
-			log+=(from + " -> " + to+"\n");
-			log+=("a*  " + expectedSolution+"\n");
-			log+=printMap(blocksArray, from, to, expectedSolution)+"\n";
-			log+=("a*+ " + pathAsp+"\n");
-			log+=printMap(blocksArray, from, to, pathAsp)+"\n";
+			log += ("a*+ " + pathAsp + "\n");
+			log += printMap(q, from, to, pathAsp) + "\n";
 
-			checkPlausibility(from, to, expectedSolution, pathAsp, log);
-			
+			checkPlausibility(from, to, pathAsp, q, log);
+
 			Application.set(null);
 
 		}
 	}
-	
 
 	@Test
 	public void testAStarPlus_2() {
@@ -178,9 +145,9 @@ public class TestAStarPlus extends BaseTest{
 		Location from = Location.location(1, 3);
 		Location to = Location.location(2, 7);
 		map.enterprise = new Enterprise(Application.get(), map);
-		//e.setLocation(to);
-		//map.enterprise = e;
-	//	e.setQuadrant(q);
+		// e.setLocation(to);
+		// map.enterprise = e;
+		// e.setQuadrant(q);
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(from);
 		q.add(k);

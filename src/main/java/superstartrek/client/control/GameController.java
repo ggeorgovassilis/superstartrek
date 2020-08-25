@@ -9,8 +9,6 @@ import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
 import static superstartrek.client.bus.Events.*;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -142,7 +140,6 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 	protected void startTurn() {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_DAY);
 		application.starMap.advanceStarDate(1);
-		GWT.log("Start turn "+getStarMap().getStarDate());
 		fireEvent(TURN_STARTED, (h)->h.onTurnStarted());
 		fireEvent(AFTER_TURN_STARTED, (h)->h.afterTurnStarted());
 	}
@@ -163,7 +160,6 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 	}
 
 	protected void endTurn() {
-		GWT.log("Ending turn "+getStarMap().getStarDate());
 		fireEvent(TURN_ENDED, (h)->h.onTurnEnded());
 		fireEvent(KLINGON_TURN_STARTED, (h)->h.onKlingonTurnStarted());
 		fireEvent(KLINGON_TURN_ENDED, (h)->h.onKlingonTurnEnded());

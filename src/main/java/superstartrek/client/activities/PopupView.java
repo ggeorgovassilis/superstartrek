@@ -75,10 +75,14 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		// focus needs to be delayed to after animation is done to avoid animation lag
 		// focus makes no sense if keyboard not present
 		if (presenter.getApplication().browserAPI.hasKeyboard())
-			Timer.postpone(() -> getElement().focus(), Constants.ANIMATION_DURATION_MS);
+			Timer.postpone(() -> animationIsDone(), Constants.ANIMATION_DURATION_MS);
 		visible = true;
 	}
 
+	protected void animationIsDone() {
+		getElement().focus();
+	}
+	
 	@Override
 	public void hide(ScheduledCommand callback) {
 		hideGlassPanel();

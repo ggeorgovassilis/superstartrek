@@ -113,8 +113,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		// this approach (render into an array first, paint each sector only once)
 		// minimises DOM interactions.
 		Thing[][] arr = new Thing[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-		for (Thing t : starMap.getEverythingIn(q))
-			mark(t, arr);
+		q.doWithThings(t->mark(t,arr));
 		for (int x = 0; x < arr.length; x++)
 			for (int y = 0; y < arr[x].length; y++) {
 				Thing t = arr[x][y];

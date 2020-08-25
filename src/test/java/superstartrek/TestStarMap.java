@@ -8,7 +8,6 @@ import org.junit.Test;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
-import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Star.StarClass;
 import static org.mockito.Mockito.*;
 public class TestStarMap extends BaseTest{

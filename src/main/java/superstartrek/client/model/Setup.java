@@ -115,7 +115,8 @@ public class Setup {
 
 	public StarMap createNewMap() {
 		StarMap map = new StarMap();
-		map.enterprise = new Enterprise(application, map);
+		Enterprise enterprise = new Enterprise(application, map);
+		map.enterprise = enterprise;
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Quadrant q = makeQuadrant(map, x, y);
@@ -123,9 +124,10 @@ public class Setup {
 			}
 
 		// TODO: find free spot
-		map.enterprise.setQuadrant(map.quadrants[0][0]);
-		map.enterprise.getQuadrant().setExplored(true);
-		map.enterprise.setLocation(map.findFreeSpot(map.quadrants[0][0]));
+		enterprise.setQuadrant(map.quadrants[0][0]);
+		enterprise.getQuadrant().setExplored(true);
+		enterprise.setLocation(map.findFreeSpot(map.quadrants[0][0]));
+		enterprise.getQuadrant().addEnterprise(enterprise);
 		putKlingonsOnStarMap(map);
 		return map;
 	}

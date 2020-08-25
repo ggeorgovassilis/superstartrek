@@ -26,7 +26,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	Element[][] eSectors = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	Element eSelectedSector;
-	List<Element> phaserElements = new ArrayList<>();
+	List<Element> beamElements = new ArrayList<>();
 
 	@Override
 	public void deselectSectors() {
@@ -141,14 +141,14 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 				+ "px' stroke='" + colour + "'/>");
 		eSvg.getStyle().setPosition(Position.ABSOLUTE);
 		getElement().appendChild(eSvg);
-		phaserElements.add(eSvg);
+		beamElements.add(eSvg);
 	}
 
 	@Override
 	public void clearBeamMarks() {
-		for (Element e : phaserElements)
+		for (Element e : beamElements)
 			e.removeFromParent();
-		phaserElements.clear();
+		beamElements.clear();
 	}
 
 	@Override

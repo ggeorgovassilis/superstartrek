@@ -2,8 +2,6 @@ package superstartrek.client.activities.klingons;
 
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
@@ -264,7 +262,6 @@ public class Klingon extends Vessel
 				getDisruptor().setBroken(true);
 			if (!getCloak().isBroken() && random.nextDouble() < impact) {
 				getCloak().damageAndTurnOff(getStarMap().getStarDate());
-				GWT.log("Damaged cloak");
 			}
 		}
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");

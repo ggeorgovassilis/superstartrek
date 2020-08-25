@@ -46,6 +46,12 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 		if (isVisible())
 			return;
 		super.show();
+	}
+	
+	@Override
+	protected void animationIsDone() {
+		//not calling super because that would be an unncecessary double focus (super.animationIsDone focusses
+		//the entire popup view
 		eButton.focus();
 	}
 

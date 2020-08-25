@@ -2,6 +2,7 @@ package superstartrek.client.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
@@ -26,7 +27,7 @@ public class Quadrant implements GeometricLookup {
 	public boolean contains(Klingon klingon) {
 		return klingons.contains(klingon);
 	}
-
+	
 	public void setStarBase(StarBase starBase) {
 		this.starBase = starBase;
 		things[starBase.getLocation().x][starBase.getLocation().y] = starBase;
@@ -119,6 +120,18 @@ public class Quadrant implements GeometricLookup {
 	public void removeEnterprise(Enterprise e) {
 		clear(e.getLocation());
 	}
+	
+	public void doWithThings(Consumer<Thing> consumer) {
+		for (Thing thing:stars)
+			consumer.accept(thing);
+		for (Thing thing:klingons)
+			consumer.accept(thing);
+		if (starBase!=null)
+			consumer.accept(starBase);
+		Enterprise enterprise = Application.get().starMap.enterprise;
+		if (enterprise.getQuadrant() == this)
+			consumer.accept(enterprise);
+	};
 	
 
 }

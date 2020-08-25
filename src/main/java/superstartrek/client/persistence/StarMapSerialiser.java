@@ -1,7 +1,5 @@
 package superstartrek.client.persistence;
 
-import java.util.List;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.model.Constants;
@@ -109,12 +107,16 @@ public class StarMapSerialiser {
 		sb.append("\"y\":").append(quadrant.getY()).append(",\n");
 		sb.append("\"explored\":").append(quadrant.isExplored()).append(",\n");
 		sb.append("\"things\":[");
-		List<Thing> things = map.getEverythingIn(quadrant);
-		for (Thing thing:things) {
+		int length = sb.length();
+		quadrant.doWithThings(thing->{
 			serialise(thing);
-			if (things.get(things.size()-1) != thing)
-				sb.append("\n,");
-		}
+			sb.append("\n,");
+		});
+		// length check tells us if doWithThings worked (it's a callback so it cannot modify state
+		// variables outside the loop (have to be final).
+		// the last "," is syntactically incorrect so we're removing it ONLY if the loop above ran.
+		if (length<sb.length())
+			sb.delete(sb.length()-1, sb.length());
 		sb.append("]");
 		closeScope("}");
 	}
