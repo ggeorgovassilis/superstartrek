@@ -1,4 +1,4 @@
-superstartrek
+Super Star Trek
 =============
 
 A mobile friendly re-make of [Super Star Trek](https://en.wikipedia.org/wiki/Star_Trek_\(1971_video_game\))
