@@ -56,11 +56,12 @@ a, a:visited, button, .button {
 	line-height: 3em;
 	height:3em;
 	font-size: 100%;
-	background-color: #11709f;
+	background-color: #2d91c5;
 	appearance: none;
 	float: left;
 	width: 100%;
 	padding:0;
+	font-weight:bold;
 }
 
 .half-width {
@@ -133,11 +134,12 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 }
 
 .navigation-target {
-	background-color: rgba(185, 201, 47, 0.4);
+	background-color: #b48035;
+	opacity:0.5;
 }
 
 .has-klingons {
-	background-color:#bf0f0f;
+	background-color:#a3393d;
 }
 
 .cloaked {
@@ -179,7 +181,7 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 
 #quadrantscan>div {
 	border-right: solid gray 1px;
-	border-bottom: solid gray 1px;
+	border-bottom: solid #505050 1px;
 	text-align: center;
 	width: 12.5%;
 	margin: 0;
@@ -342,7 +344,7 @@ outline:solid transparent 1px;
 
 /* messages */
 #messages {
-	background-color: black;
+	background-color: #f9edd7;
 	color: white;
 	font-family: monospace, courier, courier new, typewriter, sans-serif;
 	padding: 10px;
@@ -360,13 +362,14 @@ outline:solid transparent 1px;
 }
 
 #messages-content > li:not(:last-child){
-border-bottom:solid grey 1px;
-padding-bottom:0.5em;
-margin-bottom:0.5em;
+	border-bottom:solid grey 1px;
+	padding-bottom:0.5em;
+	margin-bottom:0.5em;
+	color:black;
 }
 
 #messages-content>li.damage, .damaged {
-	color: orange;
+	color: #a3393d;
 }
 
 #messages-content>li.enterprise-damaged {
@@ -392,11 +395,11 @@ margin-bottom:0.5em;
 }
 
 #messages-content>li.klingon-uncloaked {
-	color: yellow;
+	color: #b48035;
 }
 
 #messages-content>li.klingon-damaged, .entry.klingon-destroyed {
-	color: cyan;
+	color: #2d91c5;
 }
 
 #messages-content>li.gamewon {
@@ -727,7 +730,7 @@ a.progress-bar {
 }
 
 .status-flag.damaged{
-	background-color:darkred;
+	background-color:#a3393d;
 }
 
 #cmd_toggleShields .progress-text{
