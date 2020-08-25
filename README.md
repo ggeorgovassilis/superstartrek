@@ -1,7 +1,7 @@
 Super Star Trek
 =============
 
-A mobile friendly re-make of [Super Star Trek](https://en.wikipedia.org/wiki/Star_Trek_\(1971_video_game\))
+A mobile friendly, web-based re-make of [Super Star Trek](https://en.wikipedia.org/wiki/Star_Trek_\(1971_video_game\))
 
 **>>>>** [Play it online](https://ggeorgovassilis.github.io/superstartrek/site/index.html) **<<<<**
 
