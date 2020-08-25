@@ -359,13 +359,13 @@ outline:solid transparent 1px;
 	margin: 0;
 	padding: 0 0 1em 0;
 	overflow: hidden;
+	color:black;
 }
 
 #messages-content > li:not(:last-child){
 	border-bottom:solid grey 1px;
 	padding-bottom:0.5em;
 	margin-bottom:0.5em;
-	color:black;
 }
 
 #messages-content>li.damage, .damaged {
@@ -373,24 +373,24 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.enterprise-damaged {
-	color: red;
+	color: #a3393d;
 }
 
 #messages-content>li.error{
-	color: red;
+	color: #a3393d;
 }
 
 #messages-content>li.fire {
-	color: yellow;
+	color: #505050;
 }
 
 #messages-content>li.gameover {
-	color: red;
+	color: #2d91c5;
 	font-size: 120%;
 }
 
 #messages-content>li.score {
-	color: gold;
+	color: #505050;
 	font-size: 120%;
 }
 
@@ -399,11 +399,11 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.klingon-damaged, .entry.klingon-destroyed {
-	color: #2d91c5;
+	color: #505050;
 }
 
 #messages-content>li.gamewon {
-	color: lightblue;
+	color: #2d91c5;
 	font-size: 120%;
 }
 
@@ -414,7 +414,7 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.enterprise-repaired{
-	color: lime;
+	color: #2d91c5;
 }
 
 .messages-logo {
