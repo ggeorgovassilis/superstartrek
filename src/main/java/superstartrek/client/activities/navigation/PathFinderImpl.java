@@ -15,7 +15,7 @@ public class PathFinderImpl implements PathFinder{
 	     */
 		
 		AStarPlus astar = new AStarPlus();
-		List<Location> path = astar.findPathBetween(from, to, quadrant, map);
+		List<Location> path = astar.findPathBetween(from, to, quadrant, map, 100);
 		return path;
 	}
 }

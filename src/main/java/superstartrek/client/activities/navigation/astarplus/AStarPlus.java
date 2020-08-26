@@ -110,7 +110,10 @@ public class AStarPlus {
 		}
 	}
 
-	List<Location> reconstructPath(int indexFrom, int indexTo) {
+	//TODO: idea for improvement
+	//The only use case for AStarPlus is Klingons moving towards the Enterprise.
+	//As they move only a few sectors per turn, we don't need the entire path - just the first one or two steps.
+	List<Location> reconstructPath(int indexFrom, int indexTo, int trimSteps) {
 		List<Location> path = new ArrayList<Location>();
 		int previousIndex = indexTo;
 		do {
@@ -119,7 +122,8 @@ public class AStarPlus {
 			if (indexTo!=previousIndex)
 				path.add(Location.location(x, y));
 			previousIndex = matrix[previousIndex];
-		} while (previousIndex != indexFrom);
+			trimSteps--;
+		} while (previousIndex != indexFrom && trimSteps>=0);
 
 		// Collections.reverse(path);
 		return path;
@@ -140,7 +144,18 @@ public class AStarPlus {
 		}
 	}
 
-	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, StarMap map) {
+	/**
+	 * Finds path between "from" and "to".
+	 * @param from Start path here. The returned list does not contain "from"
+	 * @param to End path here. The returned list contains "to".
+	 * @param quadrant Every "Thing" in this Quadrant is considered an obstacle (excluding anything at "to").
+	 * @param map
+	 * @param trimSteps Return only that many steps in the path. This is a performance
+	 * optimisation. The entire path is still computed, but if only the first "trimSteps" number of steps are needed,
+	 * the algorithm can run a bit faster.
+	 * @return
+	 */
+	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, StarMap map, int trimSteps) {
 		if (from == to)
 			return new ArrayList<Location>();
 		Location tmp = from;
@@ -155,7 +170,7 @@ public class AStarPlus {
 		while (hasMoreTodo()) {
 			int indexNext = getNextTodo();
 			if (indexNext == indexTo) {
-				return reconstructPath(indexFrom, indexTo);
+				return reconstructPath(indexFrom, indexTo, trimSteps);
 			}
 			addNeighboursToTodo(indexNext);
 		}

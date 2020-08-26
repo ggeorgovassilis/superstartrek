@@ -50,7 +50,7 @@ public class Klingon extends Vessel
 
 	Setting disruptor;
 	Setting cloak;
-	final static int MAX_SECTOR_SPEED = 1;
+	public final static int MAX_SECTOR_SPEED = 1;
 	final static int DISRUPTOR_RANGE_SECTORS = 2;
 	final static double PRECISION_SHOT_CHANCE_DAMAGE = 0.5;
 

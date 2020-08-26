@@ -1,5 +1,7 @@
 package astar;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -27,6 +29,8 @@ import superstartrek.client.model.Star.StarClass;
  * A* is a reference implementation used to validate that a*+ works ok
  */
 public class TestAStarPlus extends BaseTest {
+	
+	int failedPaths = 0;
 
 	@Ignore // too slow for regular builds
 	@Test
@@ -51,7 +55,7 @@ public class TestAStarPlus extends BaseTest {
 
 			for (int innerTurn = 0; innerTurn < TURNS_WITH_SAME_MAP; innerTurn++) {
 				AStarPlus asp = new AStarPlus();
-				List<Location> pathAsp = asp.findPathBetween(from, to, q, map);
+				List<Location> pathAsp = asp.findPathBetween(from, to, q, map, 100);
 				assertTrue(pathAsp.size() >= 0); // useless check, but mutes Eclipse warning about pathAsp not used
 			}
 
@@ -85,8 +89,25 @@ public class TestAStarPlus extends BaseTest {
 		Location previousStep = from;
 		int count[] = new int[1];
 		q.doWithThings(t->count[0]++);
+		
+		if (StarMap.within_distance(from, to, 1.5)) {
+			assertTrue(solutionToCheck.isEmpty());
+			return;
+		}
+
+		//There is currently no reliable way to check whether an existing solution was missed.
+		//However there are some heuristics:
+		//
+		if (solutionToCheck.isEmpty()) {
+			//1. sectors can't be adjacent
+			assertFalse(StarMap.within_distance(from, to, 1.5));
+			//2. enough obstacles are present
+			assertTrue(count[0]>2);
+			return;
+		}
 		//The rationale behind this length check is: the more obstacles, the longer the path.
 		assertTrue(log, solutionToCheck.size() < Constants.SECTORS_EDGE+count[0]);
+		assertTrue(StarMap.distance(from, to)+" "+log, 1.5*solutionToCheck.size()+2>StarMap.distance(from, to));
 		for (Location l : solutionToCheck) {
 			String errorMessage = l.toString() + "\n" + log;
 			assertTrue(errorMessage, StarMap.distance(l, previousStep) < 2);
@@ -126,12 +147,54 @@ public class TestAStarPlus extends BaseTest {
 			}
 
 			AStarPlus asp = new AStarPlus();
-			List<Location> pathAsp = asp.findPathBetween(from, to, q, map);
+			List<Location> pathAsp = asp.findPathBetween(from, to, q, map, 100);
 			String log = "--------------\n";
 			log += ("a*+ " + pathAsp + "\n");
 			log += printMap(q, from, to, pathAsp) + "\n";
 
 			checkPlausibility(from, to, pathAsp, q, log);
+
+			Application.set(null);
+
+		}
+	}
+
+	/*
+	 * Same as testAStarPlus but with trimming steps
+	 */
+	@Test
+	public void testAStarPlus_abbreviated() {
+		final int TURNS = 3000;
+		Random random = new Random(0);
+		for (int i = 0; i < TURNS; i++) {
+			Quadrant q = new Quadrant("", 0, 0);
+			StarMap map = new StarMap();
+			Application.set(null);
+			Application app = new Application();
+			map.enterprise = new Enterprise(app, map);
+			Application.set(app);
+			app.starMap = map;
+			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE),
+					random.nextInt(Constants.SECTORS_EDGE));
+			Location to = Location.location(random.nextInt(Constants.SECTORS_EDGE),
+					random.nextInt(Constants.SECTORS_EDGE));
+			int obstacles = random.nextInt(32);
+			for (int l = 0; l < obstacles; l++) {
+				int x = random.nextInt(Constants.SECTORS_EDGE);
+				int y = random.nextInt(Constants.SECTORS_EDGE);
+				q.add(new Star(x, y, false, StarClass.A));
+			}
+
+			AStarPlus asp = new AStarPlus();
+			List<Location> pathAsp = asp.findPathBetween(from, to, q, map, Klingon.MAX_SECTOR_SPEED);
+			String log = "--------------\n";
+			log += ("a*+ " + pathAsp + "\n");
+			log += printMap(q, from, to, pathAsp) + "\n";
+
+			AStarPlus reference = new AStarPlus();
+			List<Location> fullPath = reference.findPathBetween(from, to, q, map, 100);
+			for (int s=0;s<Math.min(Klingon.MAX_SECTOR_SPEED, fullPath.size());s++)
+				assertEquals(fullPath.get(s), pathAsp.get(s));
 
 			Application.set(null);
 
@@ -152,7 +215,7 @@ public class TestAStarPlus extends BaseTest {
 		k.setLocation(from);
 		q.add(k);
 		AStarPlus asp = new AStarPlus();
-		List<Location> pathAsp = asp.findPathBetween(from, to, q, map);
+		List<Location> pathAsp = asp.findPathBetween(from, to, q, map, 100);
 		System.out.println("asp " + pathAsp);
 	}
 }
