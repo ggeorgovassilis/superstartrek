@@ -10,8 +10,8 @@ import superstartrek.client.activities.klingons.Klingon;
 public class Quadrant implements GeometricLookup {
 
 	protected final String name;
-	protected final int x;
-	protected final int y;
+	public final int x;
+	public final int y;
 	protected boolean explored;
 	private List<Star> stars = new ArrayList<>();
 	private StarBase starBase;
@@ -55,14 +55,6 @@ public class Quadrant implements GeometricLookup {
 
 	public String getName() {
 		return name;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
 	}
 
 	@Override

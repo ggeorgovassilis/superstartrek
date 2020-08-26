@@ -30,10 +30,10 @@ public class StarMap {
 	}
 
 	public void markAsExploredAround(Quadrant q) {
-		int xFrom = Math.max(0, q.getX() - 1);
-		int xTo = Math.min(Constants.SECTORS_EDGE-1, q.getX() + 1);
-		int yFrom = Math.max(0, q.getY() - 1);
-		int yTo = Math.min(Constants.SECTORS_EDGE-1, q.getY() + 1);
+		int xFrom = Math.max(0, q.x - 1);
+		int xTo = Math.min(Constants.SECTORS_EDGE-1, q.x + 1);
+		int yFrom = Math.max(0, q.y - 1);
+		int yTo = Math.min(Constants.SECTORS_EDGE-1, q.y + 1);
 		for (int y = yFrom; y <= yTo; y++)
 			for (int x = xFrom; x <= xTo; x++)
 				getQuadrant(x, y).setExplored(true);
@@ -44,11 +44,11 @@ public class StarMap {
 	}
 
 	public static double distance(Location la, Location lb) {
-		return distance(la.getX(), la.getY(), lb.getX(), lb.getY());
+		return distance(la.x, la.y, lb.x, lb.y);
 	}
 
 	public void setQuadrant(Quadrant q) {
-		quadrants[q.getX()][q.getY()] = q;
+		quadrants[q.x][q.y] = q;
 	}
 
 	public int getStarDate() {
@@ -140,7 +140,7 @@ public class StarMap {
 	 */
 	public static List<Thing> findObstaclesInLine(Quadrant q, Location from, Location to, int cap) {
 		List<Thing> found = new ArrayList<>();
-		walkLine(from.getX(), from.getY(), to.getX(), to.getY(), (x, y) -> {
+		walkLine(from.x, from.y, to.x, to.y, (x, y) -> {
 			Thing thing = q.findThingAt(x, y);
 			if (thing != null) {
 				found.add(thing);
@@ -157,8 +157,8 @@ public class StarMap {
 			//1. quadrants are sparsely populated, the chance of finding a free spot is high
 			//2. game play relies on randomness, eg. retreating Klingons would become predictable
 			for (int tries = 0; tries < radius * radius; tries++) {
-				int x = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.getX() + (random.nextInt(1 + radius)) - (radius / 2)));
-				int y = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.getY() + (random.nextInt(1 + radius)) - (radius / 2)));
+				int x = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.x + (random.nextInt(1 + radius)) - (radius / 2)));
+				int y = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.y + (random.nextInt(1 + radius)) - (radius / 2)));
 				if (null == index.findThingAt(x, y))
 					return Location.location(x, y);
 			}

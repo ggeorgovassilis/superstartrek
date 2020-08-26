@@ -80,7 +80,7 @@ public class Setup {
 			// TODO: this is potentially slow, as findFreeSpot creates a QuadrantIndex over
 			// and over. on the other hand, quadrants are made only once at the beginning of the game
 			Location loc = map.findFreeSpot(q);
-			Star star = new Star(loc.getX(), loc.getY(), StarClass.values()[random.nextInt(StarClass.values().length)]);
+			Star star = new Star(loc.x, loc.y, StarClass.values()[random.nextInt(StarClass.values().length)]);
 			q.add(star);
 		}
 		if ((x + y * Constants.SECTORS_EDGE)

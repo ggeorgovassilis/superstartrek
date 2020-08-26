@@ -90,9 +90,9 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		assertFalse(targets.isEmpty());
 		presenter.updateMapWithReachableSectors();
 		for (Location loc:targets)
-			verify(view).addCssToCell(loc.getX(), loc.getY(), "navigation-target");
+			verify(view).addCssToCell(loc.x, loc.y, "navigation-target");
 		for (Star star:quadrant.getStars())
-			verify(view, never()).addCssToCell(star.getLocation().getX(), star.getLocation().getY(), "navigation-target");
+			verify(view, never()).addCssToCell(star.getLocation().x, star.getLocation().y, "navigation-target");
 	}
 	
 	@Test

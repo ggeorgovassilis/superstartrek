@@ -9,8 +9,8 @@ public class Location {
 				cache[x][y] = new Location(x,y);
 	}
 
-	protected final int x;
-	protected final int y;
+	public final int x;
+	public final int y;
 
 	@Override
 	public String toString() {
@@ -26,12 +26,4 @@ public class Location {
 		return cache[x][y];
 	}
 
-	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
-		return y;
-	}
-	
 }

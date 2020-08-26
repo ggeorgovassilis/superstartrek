@@ -113,8 +113,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		if (!quadrant.getKlingons().isEmpty()) {
 			double minDistanceSquared = distanceOfRedAlertSquared;
 			for (Klingon k : quadrant.getKlingons()) {
-				minDistanceSquared = Math.min(minDistanceSquared, StarMap.distance_squared(enterprisePosition.getX(),
-						enterprisePosition.getY(), k.getLocation().getX(), k.getLocation().getY()));
+				minDistanceSquared = Math.min(minDistanceSquared, StarMap.distance_squared(enterprisePosition.x,
+						enterprisePosition.y, k.getLocation().x, k.getLocation().y));
 				if (minDistanceSquared < distanceOfRedAlertSquared)
 					break; // 9 is red alert, can't get worse than that so no point in iterating further
 			}

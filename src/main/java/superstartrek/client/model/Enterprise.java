@@ -103,13 +103,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 		
 		Quadrant[] container = new Quadrant[1];
-		StarMap.walkLine(getQuadrant().getX(), getQuadrant().getY(), destinationQuadrant.getX(),
-				destinationQuadrant.getY(), (x, y) -> {
+		StarMap.walkLine(getQuadrant().x, getQuadrant().y, destinationQuadrant.x,
+				destinationQuadrant.y, (x, y) -> {
 					Quadrant q = starMap.getQuadrant(x, y);
 					container[0] = q;
 					List<Klingon> klingons = q.getKlingons();
 					// TODO for now, allow warping out of the departure quadrant
-					if (!(x == getQuadrant().getX() && y == getQuadrant().getY()) && !klingons.isEmpty()) {
+					if (!(x == getQuadrant().x && y == getQuadrant().y) && !klingons.isEmpty()) {
 						application.message("We were intercepted by " + klingons.get(0).getName(), "intercepted");
 						return false;
 					}
@@ -145,14 +145,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public List<Location> findReachableSectors() {
 		reachableSectors.clear();
-		double range = getImpulse().getValue();
-		while (range >= 1 && computeConsumptionForImpulseNavigation(range) >= getReactor().getValue())
-			range = range - 0.3;
+		double range = computeImpulseNavigationRange();
 		if (range < 1)
 			return reachableSectors;
 		double range_squared = range * range;
-		int lx = getLocation().getX();
-		int ly = getLocation().getY();
+		int lx = getLocation().x;
+		int ly = getLocation().y;
 		int minX = (int) Math.max(0, lx - range);
 		int maxX = (int) Math.min(Constants.SECTORS_EDGE - 1, lx + range);
 		int minY = (int) Math.max(0, ly - range);
@@ -202,7 +200,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		double distance = StarMap.distance(this.getLocation(), loc);
 		Location[] trace = new Location[] { getLocation() };
-		StarMap.walkLine(getLocation().getX(), getLocation().getY(), loc.getX(), loc.getY(), (x, y) -> {
+		StarMap.walkLine(getLocation().x, getLocation().y, loc.x, loc.y, (x, y) -> {
 			Thing thing = quadrant.findThingAt(x, y);
 			if (thing != null && thing != Enterprise.this) {
 				if (Klingon.isCloakedKlingon(thing))
@@ -229,6 +227,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public double computeConsumptionForImpulseNavigation(double distance) {
 		return distance*distance * IMPULSE_CONSUMPTION;
+	}
+	
+	public double computeImpulseNavigationRange() {
+		return Math.min(impulse.getValue(), Math.sqrt(getReactor().getValue()/IMPULSE_CONSUMPTION));
 	}
 
 	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {

@@ -31,8 +31,8 @@ public class TestStarMap extends BaseTest{
 	public void test_findFreeSpotAround_1() {
 		Location testLocation = Location.location(1, 1);
 		Location free = starMap.findFreeSpotAround(quadrant, testLocation, 1);
-		assertEquals(1, free.getX());
-		assertEquals(1, free.getY());
+		assertEquals(1, free.x);
+		assertEquals(1, free.y);
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class TestStarMap extends BaseTest{
 		quadrant.add(new Star(1, 1, StarClass.A));
 		Location testLocation = Location.location(1, 1);
 		Location free = starMap.findFreeSpotAround(quadrant, testLocation, 1);
-		assertEquals(2, free.getX());
-		assertEquals(2, free.getY());
+		assertEquals(2, free.x);
+		assertEquals(2, free.y);
 	}
 }

@@ -62,7 +62,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screen) {
 		view.deselectSectors();
 		selectedSector = sector;
-		view.selectSector(selectedSector.getX(), selectedSector.getY());
+		view.selectSector(selectedSector.x, selectedSector.y);
 	}
 
 	void updateSector(Thing thing) {
@@ -81,7 +81,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 				}
 			}
 		}
-		view.updateSector(thing.getLocation().getX(), thing.getLocation().getY(), content, css);
+		view.updateSector(thing.getLocation().x, thing.getLocation().y, content, css);
 	}
 
 	void clearSector(int x, int y) {
@@ -102,7 +102,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	void mark(Thing thing, Thing[][] array) {
 		Location location = thing.getLocation();
-		array[location.getX()][location.getY()] = thing;
+		array[location.x][location.y] = thing;
 	}
 
 	void updateScreen() {
@@ -133,7 +133,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		// can't just clear sector, because the "from" location may refer to a different
 		// quadrant when eg. Enterprise warps
-		updateSector(qTo, lFrom.getX(), lFrom.getY());
+		updateSector(qTo, lFrom.x, lFrom.y);
 		updateSector(thing);
 	}
 
@@ -144,7 +144,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	@Override
 	public void onEnterpriseRepaired(Enterprise enterprise) {
-		updateSector(enterprise.getQuadrant(), enterprise.getLocation().getX(), enterprise.getLocation().getY());
+		updateSector(enterprise.getQuadrant(), enterprise.getLocation().x, enterprise.getLocation().y);
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	@Override
 	public void onVesselDestroyed(Vessel vessel) {
-		clearSector(vessel.getLocation().getX(), vessel.getLocation().getY());
+		clearSector(vessel.getLocation().x, vessel.getLocation().y);
 	}
 
 	@Override
@@ -168,23 +168,23 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		// target might have been destroyed (so not on map anymore) and thus null
 		if (target == null)
 			return;
-		updateSector(quadrant, target.getLocation().getX(), target.getLocation().getY());
+		updateSector(quadrant, target.getLocation().x, target.getLocation().y);
 		switch (weapon) {
 		case disruptor:
 		case phaser:
 			String colour = (actor == application.starMap.enterprise) ? "yellow" : "red";
-			view.drawBeamBetween(actor.getLocation().getX(), actor.getLocation().getY(), target.getLocation().getX(),
-					target.getLocation().getY(), colour);
+			view.drawBeamBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
+					target.getLocation().y, colour);
 			break;
 		case torpedo:
-			view.animateTorpedoFireBetween(actor.getLocation().getX(), actor.getLocation().getY(), target.getLocation().getX(),
-					target.getLocation().getY(), (v)->{});
+			view.animateTorpedoFireBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
+					target.getLocation().y, (v)->{});
 		}
 	}
 
 	public void clearNavigationTargets(List<Location> locations) {
 		for (Location l : locations)
-			view.removeCssFromCell(l.getX(), l.getY(), "navigation-target");
+			view.removeCssFromCell(l.x, l.y, "navigation-target");
 	}
 
 	public void updateMapWithReachableSectors() {
@@ -192,7 +192,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		clearNavigationTargets(enterprise.getLastReachableSectors());
 		List<Location> sectors = enterprise.findReachableSectors();
 		for (Location l : sectors)
-			markSectorAsNavigationTarget(l.getX(), l.getY());
+			markSectorAsNavigationTarget(l.x, l.y);
 	}
 
 	@Override
@@ -207,23 +207,23 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		Location newSector = null;
 		switch (code) {
 		case KeyCodes.KEY_LEFT:
-			newSector = Location.location(Math.max(0, selectedSector.getX() - 1), selectedSector.getY());
+			newSector = Location.location(Math.max(0, selectedSector.x - 1), selectedSector.y);
 			break;
 		case KeyCodes.KEY_RIGHT:
-			newSector = Location.location(Math.min(Constants.SECTORS_EDGE - 1, selectedSector.getX() + 1),
-					selectedSector.getY());
+			newSector = Location.location(Math.min(Constants.SECTORS_EDGE - 1, selectedSector.x + 1),
+					selectedSector.y);
 			break;
 		case KeyCodes.KEY_UP:
-			newSector = Location.location(selectedSector.getX(), Math.max(0, selectedSector.getY() - 1));
+			newSector = Location.location(selectedSector.x, Math.max(0, selectedSector.y - 1));
 			break;
 		case KeyCodes.KEY_DOWN:
-			newSector = Location.location(selectedSector.getX(),
-					Math.min(Constants.SECTORS_EDGE - 1, selectedSector.getY() + 1));
+			newSector = Location.location(selectedSector.x,
+					Math.min(Constants.SECTORS_EDGE - 1, selectedSector.y + 1));
 			break;
 		case 'M':
 		case 'm':
-			int dx = view.getHorizontalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
-			int dy = view.getVerticalOffsetOfSector(selectedSector.getX(), selectedSector.getY());
+			int dx = view.getHorizontalOffsetOfSector(selectedSector.x, selectedSector.y);
+			int dy = view.getVerticalOffsetOfSector(selectedSector.x, selectedSector.y);
 			Quadrant quadrant = application.starMap.enterprise.getQuadrant();
 			fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(selectedSector, quadrant, dx, dy));
 			break;
@@ -232,7 +232,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		if (newSector != null) {
 			selectedSector = newSector;
 			view.deselectSectors();
-			view.selectSector(selectedSector.getX(), selectedSector.getY());
+			view.selectSector(selectedSector.x, selectedSector.y);
 			fireEvent(CONTEXT_MENU_HIDDEN, (h) -> h.onMenuHidden());
 		}
 	}

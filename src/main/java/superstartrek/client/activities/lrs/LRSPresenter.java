@@ -39,7 +39,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 	protected void updateEnterpriseLocation() {
 		Enterprise enterprise = application.starMap.enterprise;
 		Quadrant q = enterprise.getQuadrant();
-		view.addCss(q.getX(), q.getY(), "has-enterprise");
+		view.addCss(q.x, q.y, "has-enterprise");
 	}
 
 	public void updateLrsView() {
@@ -59,7 +59,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		updateLrsView();
 		view.show();
 		Quadrant loc = application.starMap.enterprise.getQuadrant();
-		view.focusCell(loc.getX(), loc.getY());
+		view.focusCell(loc.x, loc.y);
 	}
 
 	@Override

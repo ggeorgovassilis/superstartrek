@@ -70,11 +70,11 @@ public class TestAStarPlus extends BaseTest {
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++) 
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++)
 				matrix[x][y] = ' ';
-		quadrant.doWithThings(t->matrix[t.getLocation().getX()][t.getLocation().getY()]='#');
+		quadrant.doWithThings(t->matrix[t.getLocation().x][t.getLocation().y]='#');
 		for (Location loc : path)
-			matrix[loc.getX()][loc.getY()] = '*';
-		matrix[from.getX()][from.getY()] = 'S';
-		matrix[to.getX()][to.getY()] = 'E';
+			matrix[loc.x][loc.y] = '*';
+		matrix[from.x][from.y] = 'S';
+		matrix[to.x][to.y] = 'E';
 		sb.append("|");
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++)

@@ -29,8 +29,8 @@ public class StarMapSerialiser {
 	
 	public void serialise(Thing thing) {
 		sb.append("{\"name\":\""+thing.getName()+"\",");
-		sb.append("\"x\":"+thing.getLocation().getX()+",");
-		sb.append("\"y\":"+thing.getLocation().getY()+",");
+		sb.append("\"x\":"+thing.getLocation().x+",");
+		sb.append("\"y\":"+thing.getLocation().y+",");
 		sb.append("\"css\":\""+thing.getCss()+"\",");
 		sb.append("\"symbol\":\""+thing.getSymbol()+"\",");
 		if (Star.is(thing))
@@ -103,8 +103,8 @@ public class StarMapSerialiser {
 	public void serialise(StarMap map, Quadrant quadrant) {
 		sb.append("{");
 		sb.append("\"name\":\"").append(quadrant.getName()).append("\",\n");
-		sb.append("\"x\":").append(quadrant.getX()).append(",\n");
-		sb.append("\"y\":").append(quadrant.getY()).append(",\n");
+		sb.append("\"x\":").append(quadrant.x).append(",\n");
+		sb.append("\"y\":").append(quadrant.y).append(",\n");
 		sb.append("\"explored\":").append(quadrant.isExplored()).append(",\n");
 		sb.append("\"things\":[");
 		int length = sb.length();

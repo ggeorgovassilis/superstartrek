@@ -27,9 +27,9 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 		StarMap map = application.starMap;
 		Quadrant q0 = map.enterprise.getQuadrant();
 		for (int y = 0; y < 3; y++) {
-			int qy = q0.getY() + y - 1;
+			int qy = q0.y + y - 1;
 			for (int x = 0; x < 3; x++) {
-				int qx = q0.getX() + x - 1;
+				int qx = q0.x + x - 1;
 				if (qx >= 0 && qy >= 0 && qx < Constants.SECTORS_EDGE && qy < Constants.SECTORS_EDGE) {
 					Quadrant q = map.getQuadrant(qx, qy);
 					Maps.renderCell(x, y, map, q, "", view);
@@ -48,8 +48,8 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	public void quadrantWasClicked(int dx, int dy) {
 		StarMap map = application.starMap;
 		Quadrant q = map.enterprise.getQuadrant();
-		int x = q.getX() + dx;
-		int y = q.getY() + dy;
+		int x = q.x + dx;
+		int y = q.y + dy;
 		if (map.isOnMap(x, y))
 			map.enterprise.warpTo(map.getQuadrant(x, y), null);
 	}

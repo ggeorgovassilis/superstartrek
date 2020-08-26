@@ -151,8 +151,8 @@ public class TestStarMapSerializer extends BaseTest {
 			for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
 				Quadrant q = starMap.getQuadrant(x, y);
 				JSONObject qJs = obj.getJSONArray("quadrants").getJSONObject(x + y * Constants.SECTORS_EDGE);
-				assertEquals(q.getX(), qJs.getInt("x"));
-				assertEquals(q.getY(), qJs.getInt("y"));
+				assertEquals(q.x, qJs.getInt("x"));
+				assertEquals(q.y, qJs.getInt("y"));
 				assertEquals(q.getName(), qJs.getString("name"));
 				JSONArray thingsJs = qJs.getJSONArray("things");
 				for (int i = 0; i < thingsJs.length(); i++) {

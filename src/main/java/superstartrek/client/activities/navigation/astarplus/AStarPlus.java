@@ -77,7 +77,7 @@ public class AStarPlus {
 
 	void markOccupied(Thing thing) {
 		Location l = thing.getLocation();
-		int index = coordsToIndex(l.getX(), l.getY());
+		int index = coordsToIndex(l.x, l.y);
 		matrix[index] = OCCUPIED;
 	}
 
@@ -162,10 +162,10 @@ public class AStarPlus {
 		from = to;
 		to = tmp;
 		initialiseMatrix(quadrant, map);
-		final int indexFrom = coordsToIndex(from.getX(), from.getY());
+		final int indexFrom = coordsToIndex(from.x, from.y);
 		addToDo(indexFrom);
 		matrix[indexFrom] = OCCUPIED;
-		int indexTo = coordsToIndex(to.getX(), to.getY());
+		int indexTo = coordsToIndex(to.x, to.y);
 		matrix[indexTo] = FREE;
 		while (hasMoreTodo()) {
 			int indexNext = getNextTodo();
