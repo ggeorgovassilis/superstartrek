@@ -35,4 +35,7 @@ public interface Resources extends ClientBundle {
 	@Source("superstartrek/public/screens/app-menu.html")
 	public TextResource appMenu();
 
+	@Source("superstartrek/public/screens/settings.html")
+	public TextResource settingsScreen();
+
 }

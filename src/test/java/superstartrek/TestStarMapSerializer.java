@@ -138,6 +138,18 @@ public class TestStarMapSerializer extends BaseTest {
 			public HandlerRegistration addHistoryListener(ValueChangeHandler<String> handler) {
 				return null;
 			}
+
+			@Override
+			public Void addGlobalCss(String css) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public Void removeGlobalCss(String css) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		};
 		application.starMap = starMap = setup.createNewMap();
 		application.gameController = mock(GameController.class);

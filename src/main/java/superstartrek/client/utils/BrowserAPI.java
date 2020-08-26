@@ -42,5 +42,7 @@ public interface BrowserAPI {
 	void deleteValueLocally(String key);
 	
 	Element createElementNs(String nameSpace, String tag);
+	Void addGlobalCss(String css);
+	Void removeGlobalCss(String css);
 
 }

@@ -180,4 +180,16 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	return document.createElementNS(nameSpace,tag);
 	}-*/;
 
+	@Override
+	public Void addGlobalCss(String css) {
+		RootPanel.get().addStyleName(css);
+		return null;
+	}
+
+	@Override
+	public Void removeGlobalCss(String css) {
+		RootPanel.get().removeStyleName(css);
+		return null;
+	}
+
 }

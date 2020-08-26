@@ -22,6 +22,8 @@ import superstartrek.client.activities.manual.ManualScreen;
 import superstartrek.client.activities.messages.MessagesView;
 import superstartrek.client.activities.report.StatusReportPresenter;
 import superstartrek.client.activities.report.StatusReportView;
+import superstartrek.client.activities.settings.SettingsPresenter;
+import superstartrek.client.activities.settings.SettingsScreen;
 import superstartrek.client.activities.messages.MessagesPresenter;
 import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.EventBus;
@@ -36,6 +38,7 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.persistence.GameSaver;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.utils.GwtBrowserAPIImpl;
+import superstartrek.client.utils.Strings;
 import superstartrek.client.utils.Timer;
 import superstartrek.client.activities.pwa.AppInstallPromptPresenter;
 import superstartrek.client.activities.pwa.AppInstallPromptView;
@@ -48,6 +51,8 @@ import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;
 
 public class Application implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler {
+
+	public final static String UI_SCALE_KEY = "UI_SCALE";
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus eventBus = new EventBus();
@@ -61,7 +66,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	private static Application that;
 	public GameController gameController;
 	protected Resources resources;
-	
+
 	public static void set(Application app) {
 		that = app;
 	}
@@ -88,10 +93,11 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		Setup setup = new Setup(this);
 		starMap = setup.createNewMap();
 	}
-	
+
 	protected void setupScreens() {
 		// since every presenter registers itself as an event listener they won't be
 		// garbage-collected, so we don't need to keep references to them
+		setUIScale(getUIScale());
 		new LoadingScreen(new LoadingPresenter(this));
 		new IntroView(new IntroPresenter(this));
 		new ManualScreen(new ManualPresenter(this));
@@ -102,6 +108,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		new UpdateAppPromptView(new UpdateAppPromptPresenter(this));
 		new AppMenuView(new AppMenuPresenter(this));
 		new AppInstallPromptView(new AppInstallPromptPresenter(this));
+		new SettingsScreen(new SettingsPresenter(this));
 	}
 
 	public void message(String formattedMessage) {
@@ -184,7 +191,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		eventBus.addHandler(Events.GAME_OVER, this);
 		eventBus.addHandler(Commands.RELOAD_APP, this);
 	}
-	
+
 	public void setupGameSaver() {
 		gameSaver = new GameSaver(this);
 	}
@@ -205,6 +212,21 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	@Override
 	public void appMustReload() {
 		reload();
+	}
+
+	public void setUIScale(String scale) {
+		browserAPI.removeGlobalCss("ui-scale-small");
+		browserAPI.removeGlobalCss("ui-scale-medium");
+		browserAPI.removeGlobalCss("ui-scale-large");
+		browserAPI.addGlobalCss("ui-scale-" + scale);
+		browserAPI.storeValueLocally(UI_SCALE_KEY, scale);
+	}
+
+	public String getUIScale() {
+		String scale = browserAPI.getLocallyStoredValue(UI_SCALE_KEY);
+		if (Strings.isEmpty(scale))
+			scale="medium";
+		return scale;
 	}
 
 }

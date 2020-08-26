@@ -128,7 +128,7 @@ public class StarMap {
 	};
 
 	/**
-	 * Finds the all obstacles in the line connecting from (inclusive) to to
+	 * Finds all obstacles in the line connecting from (inclusive) to to
 	 * (inclusive). If from and to are occupied by {@link Thing}s, then those will
 	 * be the only objects returned.
 	 * 
