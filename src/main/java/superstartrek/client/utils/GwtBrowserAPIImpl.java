@@ -100,6 +100,8 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 
 	@Override
 	public boolean hasKeyboard() {
+		//TODO: this is a bad heuristic. maybe listen for key press events; is there are any, this 
+		//device has a keyboard?
 		return getWindowWidthPx() > 400;
 	}
 

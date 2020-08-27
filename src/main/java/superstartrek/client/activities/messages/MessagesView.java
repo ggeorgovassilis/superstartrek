@@ -3,6 +3,8 @@ package superstartrek.client.activities.messages;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Timer;
+
 import superstartrek.client.activities.PopupView;
 import superstartrek.client.utils.HtmlWidget;
 
@@ -10,6 +12,7 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 
 	Element eContent;
 	Element eButton;
+	boolean inTransition = false;
 
 	@Override
 	public void decorateWidget() {
@@ -43,9 +46,13 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 
 	@Override
 	public void show() {
-		if (isVisible())
+		if (inTransition || isVisible())
 			return;
-		super.show();
+		inTransition = true;
+		superstartrek.client.utils.Timer.postpone(()->{
+			super.show();
+			inTransition = false;
+		});
 	}
 	
 	@Override
