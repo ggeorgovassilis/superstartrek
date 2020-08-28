@@ -101,6 +101,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return false;
 		}
 
+		reachableSectors.clear();
 		
 		Quadrant[] container = new Quadrant[1];
 		StarMap.walkLine(getQuadrant().x, getQuadrant().y, destinationQuadrant.x,
