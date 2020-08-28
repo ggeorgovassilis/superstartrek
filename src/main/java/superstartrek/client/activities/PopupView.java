@@ -59,6 +59,11 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	}
 
 	protected void hideGlassPanel() {
+		//Events are registered and unregistered instead of registered once
+		//in the constructor because the same glass panel element singleton
+		//is shared with all classes which extends PopupView: if each class
+		//registered its own handler, they would all recieve copies of the
+		//same event.
 		Element glassPanel = DOM.getElementById("glasspanel");
 		Event.setEventListener(glassPanel, null);
 		Event.sinkEvents(glassPanel, 0);
