@@ -84,8 +84,6 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	}
 
 	protected void animationIsDone() {
-		if (presenter.getApplication().browserAPI.hasKeyboard())
-			getElement().focus();
 	}
 	
 	@Override
