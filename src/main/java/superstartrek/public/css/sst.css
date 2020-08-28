@@ -853,6 +853,7 @@ a.disabled,button.disabled {
 	position: absolute;
 	line-height: 4em;
 	transition: transform 200ms ease;
+	will-change: transform;
 }
 
 .sector-context-menu .cell.disabled {
