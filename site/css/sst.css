@@ -346,7 +346,6 @@ outline:solid transparent 1px;
 	background-color:black;
 	color: white;
 	font-family: monospace, courier, courier new, typewriter, sans-serif;
-	padding: 10px;
 	border: solid grey 1px;
 }
 
@@ -368,7 +367,7 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.damage, .damaged {
-	color: #a3393d;
+	color: red;
 }
 
 #messages-content>li.enterprise-damaged {
@@ -384,7 +383,7 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.gameover {
-	color: #2d91c5;
+	color: yellow;
 	font-size: 120%;
 }
 
@@ -394,7 +393,7 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.klingon-uncloaked {
-	color: #b48035;
+	color: orange;
 }
 
 #messages-content>li.klingon-damaged, .entry.klingon-destroyed {
@@ -402,18 +401,18 @@ outline:solid transparent 1px;
 }
 
 #messages-content>li.gamewon {
-	color: #2d91c5;
+	color: yellow;
 	font-size: 120%;
 }
 
 #messages-content>li.product-info {
-	color: lime;
+	color: white;
 	font-weight: bold;
 	font-size: 120%;
 }
 
 #messages-content>li.enterprise-repaired{
-	color: #2d91c5;
+	color: lime;
 }
 
 .messages-logo {
@@ -854,6 +853,7 @@ a.disabled,button.disabled {
 	position: absolute;
 	line-height: 4em;
 	transition: transform 200ms ease;
+	will-change: transform;
 }
 
 .sector-context-menu .cell.disabled {
