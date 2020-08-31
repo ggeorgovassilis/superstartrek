@@ -231,6 +231,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 	
 	public double computeImpulseNavigationRange() {
+		//The sqrt models more accurately the physics of E=0.5*m*v²
+		//Also, a game-play-friendly side effect is that a minimum of maneuverability even
+		//with a damaged reactor is possible.
 		return Math.min(impulse.getValue(), Math.sqrt(getReactor().getValue()/IMPULSE_CONSUMPTION));
 	}
 
