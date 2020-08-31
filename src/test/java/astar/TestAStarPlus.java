@@ -193,7 +193,7 @@ public class TestAStarPlus extends BaseTest {
 			AStarPlus reference = new AStarPlus();
 			List<Location> fullPath = reference.findPathBetween(from, to, q, map, 100);
 			for (int s=0;s<Math.min(Klingon.MAX_SECTOR_SPEED, fullPath.size());s++)
-				assertEquals(fullPath.get(s), pathAsp.get(s));
+				assertEquals(log, fullPath.get(s), pathAsp.get(s));
 
 			Application.set(null);
 
