@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -147,6 +148,12 @@ public class TestStarMapSerializer extends BaseTest {
 
 			@Override
 			public Void removeGlobalCss(String css) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public HandlerRegistration addWindowResizeHandler(ResizeHandler handler) {
 				// TODO Auto-generated method stub
 				return null;
 			}

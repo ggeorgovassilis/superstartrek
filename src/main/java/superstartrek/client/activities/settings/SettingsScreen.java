@@ -45,8 +45,8 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	}
 
 	@Override
-	protected boolean isAbsolutelyPositioned() {
-		return true;
+	protected boolean alignsOnItsOwn() {
+		return false;
 	}
 
 	@Override

@@ -38,6 +38,11 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		eSelectedSector = eSectors[x][y];
 		eSelectedSector.addClassName("selected");
 	}
+	
+	@Override
+	protected boolean alignsOnItsOwn() {
+		return true;
+	}
 
 	@Override
 	public void updateSector(int x, int y, String content, String css) {

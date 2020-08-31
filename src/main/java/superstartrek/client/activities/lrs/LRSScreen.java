@@ -70,4 +70,9 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	public void removeCss(int x, int y, String css) {
 		cells[x][y].removeClassName(css);
 	}
+	
+	@Override
+	protected boolean alignsOnItsOwn() {
+		return false;
+	}
 }

@@ -190,6 +190,10 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	public void registerEventHandlers() {
 		eventBus.addHandler(Events.GAME_OVER, this);
 		eventBus.addHandler(Commands.RELOAD_APP, this);
+		browserAPI.addWindowResizeHandler((e)->{
+			eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onScreenResize());
+			eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onAfterScreenResize(e.getWidth(), e.getHeight()));
+		});
 	}
 
 	public void setupGameSaver() {

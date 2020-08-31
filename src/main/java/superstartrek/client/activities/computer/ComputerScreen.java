@@ -153,5 +153,10 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		Element e = DOM.getElementById(cellId);
 		if (e!=null) e.setInnerText(value);
 	}
+	
+	@Override
+	protected boolean alignsOnItsOwn() {
+		return false;
+	}
 
 }

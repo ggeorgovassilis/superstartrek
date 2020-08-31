@@ -10,7 +10,9 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 
 	@Override
 	protected HtmlWidget createWidgetImplementation() {
-		return new HtmlWidget(DOM.createDiv(), presenter.getApplication().getResources().statusReport().getText());
+		Element e = DOM.createDiv();
+		e.setId("screen-statusreport");
+		return new HtmlWidget(e, presenter.getApplication().getResources().statusReport().getText());
 	}
 	
 	public StatusReportView(StatusReportPresenter p) {
@@ -27,8 +29,8 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 	}
 	
 	@Override
-	protected boolean isAbsolutelyPositioned() {
-		return true;
+	protected boolean alignsOnItsOwn() {
+		return false;
 	}
 
 }

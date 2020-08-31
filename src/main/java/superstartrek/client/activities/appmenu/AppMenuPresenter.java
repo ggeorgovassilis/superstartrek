@@ -1,5 +1,6 @@
 package superstartrek.client.activities.appmenu;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -41,6 +42,7 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	}
 
 	public void onMenuHidden() {
+		GWT.log("onMenuHidden "+gotoStateAfterMenuHidden);
 		if (gotoStateAfterMenuHidden != null)
 			application.browserAPI.postHistoryChange(gotoStateAfterMenuHidden);
 	}
@@ -67,6 +69,9 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 		case "cmd_restart":
 			hideMenu();
 			restart();
+			break;
+		case "cmd_settings":
+			gotoStateAfterMenuHidden = "settings";
 			break;
 		case "cmd_manual":
 			// hideMenu called implicitly through history change event

@@ -1,5 +1,6 @@
 package superstartrek.client.bus;
 
+import superstartrek.client.activities.ScreenResizeHandler;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.klingons.KlingonCloakingHandler;
@@ -53,4 +54,5 @@ public class Events {
 	public final static Event<ApplicationLifecycleHandler> NEW_VERSION_AVAILABLE = new Event<>("NEW_VERSION_AVAILABLE");
 	public final static Event<ApplicationLifecycleHandler> VERSION_IS_CURRENT = new Event<>("VERSION_IS_CURRENT");
 	public final static Event<ApplicationLifecycleHandler> SHOW_APP_INSTALL_PROMPT = new Event<>("SHOW_APP_INSTALL_PROMPT");
+	public final static Event<ScreenResizeHandler> SCREEN_RESIZES = new Event<>("SCREEN_RESIZES");
 }

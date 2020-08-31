@@ -194,4 +194,9 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 		return null;
 	}
 
+	@Override
+	public HandlerRegistration addWindowResizeHandler(ResizeHandler handler) {
+		return Window.addResizeHandler(handler);
+	}
+
 }

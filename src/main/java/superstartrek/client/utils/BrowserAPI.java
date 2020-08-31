@@ -3,6 +3,7 @@ package superstartrek.client.utils;
 import java.util.Set;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -44,5 +45,6 @@ public interface BrowserAPI {
 	Element createElementNs(String nameSpace, String tag);
 	Void addGlobalCss(String css);
 	Void removeGlobalCss(String css);
+	HandlerRegistration addWindowResizeHandler(ResizeHandler handler);
 
 }
