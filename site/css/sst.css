@@ -1010,6 +1010,11 @@ a.disabled,button.disabled {
 
 /* Settings screen */
 
+.settings-screen {
+	padding: 0.5em;
+	background-color:black;
+}
+
 .settings-screen .label-small{
 	font-size:80%;
 }
