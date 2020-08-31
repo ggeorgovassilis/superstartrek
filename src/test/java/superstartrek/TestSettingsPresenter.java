@@ -2,8 +2,6 @@ package superstartrek;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 
 import static org.mockito.Mockito.*;

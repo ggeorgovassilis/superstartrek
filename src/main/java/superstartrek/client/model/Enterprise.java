@@ -186,7 +186,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	// only for internal use, bypasses checks
-	public void moveToIgnoringConstraints(Location loc) {
+	void moveToIgnoringConstraints(Location loc) {
 		Location oldLoc = getLocation();
 		setLocation(loc);
 		fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(Enterprise.this, getQuadrant(), oldLoc, getQuadrant(), loc));

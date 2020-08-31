@@ -1,16 +1,12 @@
 package superstartrek.client.activities;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.bus.Events;
-import superstartrek.client.utils.Timer;
 
 @SuppressWarnings("rawtypes")
 public abstract class BaseView<P extends Presenter> extends Composite implements View<P>, ScreenResizeHandler {
