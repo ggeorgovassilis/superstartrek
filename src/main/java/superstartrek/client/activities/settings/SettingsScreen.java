@@ -3,6 +3,7 @@ package superstartrek.client.activities.settings;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
@@ -15,6 +16,7 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	Element eSmall;
 	Element eMedium;
 	Element eLarge;
+	Element eCheckForUpdates;
 
 	public SettingsScreen(SettingsPresenter p) {
 		super(p);
@@ -22,12 +24,15 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 		eSmall = DOM.getElementById("ui-scaling-small");
 		eMedium = DOM.getElementById("ui-scaling-medium");
 		eLarge = DOM.getElementById("ui-scaling-large");
-		addDomHandler((event) -> handleClick(event), ChangeEvent.getType());
+		eCheckForUpdates = DOM.getElementById("cmd_check_for_updates_2");
+		addDomHandler((event) -> handleChange(event), ChangeEvent.getType());
+		addDomHandler((event) -> handleClick(event), ClickEvent.getType());
 	}
 
-	protected void handleClick(DomEvent<?> event) {
+	protected void handleChange(DomEvent<?> event) {
 		NativeEvent ne = event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
+		
 		String value = "medium";
 		if (eSmall == e)
 			value = "small";
@@ -36,6 +41,15 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 		if (eLarge == e)
 			value = "large";
 		presenter.onUIScaleSettingClicked(value);
+	}
+
+	protected void handleClick(DomEvent<?> event) {
+		NativeEvent ne = event.getNativeEvent();
+		Element e = ne.getEventTarget().cast();
+		
+		if (e == eCheckForUpdates) {
+			presenter.onCheckForUpdatesButtonClicked();
+		}
 	}
 
 	

@@ -25,5 +25,9 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	public void onUIScaleSettingClicked(String scale) {
 		application.setUIScale(scale);
 	}
+	
+	public void onCheckForUpdatesButtonClicked() {
+		application.pwa.checkForNewVersion();
+	}
 
 }
