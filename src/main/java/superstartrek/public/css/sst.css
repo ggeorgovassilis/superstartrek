@@ -95,8 +95,9 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 }
 
 .screen{
+	left:0;
+	right:0;
 	position:absolute;
-	width:100%;
 }
 /*
  * Long range scan
@@ -1039,3 +1040,6 @@ a.disabled,button.disabled {
 	font-size:120%;
 }
 
+.settings-screen .setting{
+	padding-top:1em;
+}

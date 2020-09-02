@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.Widget;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.utils.HtmlWidget;
 
+
 public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISettingsScreen {
 
 	Element eSmall;
