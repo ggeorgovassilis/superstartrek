@@ -545,7 +545,7 @@ a.progress-bar {
     background-repeat: no-repeat;
     background-position: 0.1em;
     width: 3em;
-    height: 3em;
+    height: 2.5em;
     position: absolute;
     display: block;
     z-index: 1;
@@ -735,6 +735,31 @@ a.progress-bar {
 #cmd_toggleShields .progress-text{
 	margin-left:3em;
 }
+
+.shield-west .shields-icon{
+	border-left:solid lime 0.5em;
+	width: 2.5em;
+}
+
+.shield-east .shields-icon{
+	border-right:solid lime 0.5em;
+	width: 2.5em;
+}
+
+.shield-north .shields-icon{
+	border-top:solid lime 0.5em;
+	height: 2.5em;
+}
+
+.shield-south .shields-icon{
+	border-bottom:solid lime 0.5em;
+	height: 2.5em;
+}
+
+.shield-none .shields-icon{
+	border:solid lime 0.2em;
+}
+
 
 .manual .toc {
 	float: left;
