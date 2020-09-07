@@ -20,6 +20,7 @@ import superstartrek.client.model.StarBase;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Weapon;
+import superstartrek.client.model.Enterprise.ShieldDirection;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.utils.BrowserAPI;
 
@@ -383,6 +384,69 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.ENTERPRISE_REPAIRED));
 		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
+	}
+	
+	@Test
+	public void test_applyDamage() {
+		when(browser.nextDouble()).thenReturn(1.0);
+		assertEquals(100, enterprise.getShields().getValue(), 0.1);
+		enterprise.applyDamage(30);
+		assertEquals(99.25, enterprise.getShields().getValue(), 0.1);
+	}
+	
+	@Test
+	public void test_onFire_no_directional_shield() {
+		when(browser.nextDouble()).thenReturn(1.0);
+		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
+		quadrant.add(klingon);
+		klingon.setLocation(Location.location(1, 1));
+		klingon.registerActionHandlers();
+		klingon.uncloak();
+		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false, partTarget.none);
+		assertEquals(99.7, enterprise.getShields().getValue(), 0.1);
+	}
+
+	@Test
+	public void test_onFire_with_directional_shield_side_fire() {
+		assertEquals(enterprise.getLocation(), Location.location(0, 0));
+		when(browser.nextDouble()).thenReturn(1.0);
+		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
+		klingon.setLocation(Location.location(1, 0));
+		quadrant.add(klingon);
+		klingon.registerActionHandlers();
+		klingon.uncloak();
+		enterprise.setShieldDirection(ShieldDirection.north);
+		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false, partTarget.none);
+		assertEquals(99.6, enterprise.getShields().getValue(), 0.1);
+	}
+
+	@Test
+	public void test_onFire_with_directional_shield_rear_fire() {
+		assertEquals(enterprise.getLocation(), Location.location(0, 0));
+		when(browser.nextDouble()).thenReturn(1.0);
+		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
+		klingon.setLocation(Location.location(0, 1));
+		quadrant.add(klingon);
+		klingon.registerActionHandlers();
+		klingon.uncloak();
+		enterprise.setShieldDirection(ShieldDirection.north);
+		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false, partTarget.none);
+		assertEquals(99.5, enterprise.getShields().getValue(), 0.1);
+	}
+
+	@Test
+	public void test_onFire_with_directional_shield_front_fire() {
+		enterprise.setLocation(Location.location(0, 2));
+		assertEquals(enterprise.getLocation(), Location.location(0, 2));
+		when(browser.nextDouble()).thenReturn(1.0);
+		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
+		klingon.setLocation(Location.location(0, 1));
+		quadrant.add(klingon);
+		klingon.registerActionHandlers();
+		klingon.uncloak();
+		enterprise.setShieldDirection(ShieldDirection.north);
+		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false, partTarget.none);
+		assertEquals(99.75, enterprise.getShields().getValue(), 0.1);
 	}
 
 }

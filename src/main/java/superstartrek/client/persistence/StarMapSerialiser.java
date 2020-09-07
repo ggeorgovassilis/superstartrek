@@ -66,6 +66,7 @@ public class StarMapSerialiser {
 		sb.append("\"reactor\":");
 		subserialise(enterprise.getReactor());
 		sb.append(",");
+		sb.append("\"shieldsDirection\":\"").append(enterprise.getShieldDirection().toString()).append("\",");
 	}
 	
 	public void subserialise(Setting setting) {

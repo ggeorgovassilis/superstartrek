@@ -27,4 +27,8 @@ public interface IComputerScreen extends View<ComputerPresenter>{
 	void setCommandBarMode(String mode);
 	
 	void setScanProperty(String rowId, String cellId, String rowCss, String value);
+	
+	void removeShieldCss(String css);
+	
+	void addShieldCss(String css);
 }

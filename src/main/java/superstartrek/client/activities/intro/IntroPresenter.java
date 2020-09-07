@@ -61,8 +61,4 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 		application.pwa.checkForNewVersion();
 	}
 	
-	public void onContinueGameButtonClicked() {
-		application.gameSaver.loadGame();
-	}
-	
 }

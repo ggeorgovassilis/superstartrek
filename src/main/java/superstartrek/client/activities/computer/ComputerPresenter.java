@@ -27,6 +27,7 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Weapon;
+import superstartrek.client.model.Enterprise.ShieldDirection;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		implements ComputerHandler, GamePhaseHandler, CombatHandler, ValueChangeHandler<String>,
@@ -128,6 +129,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public void updateShieldsView() {
 		Setting shields = enterprise.getShields();
 		view.updateShields(shields.getValue(), shields.getCurrentUpperBound(), shields.getMaximum());
+		updateShieldsDirectionCss(enterprise.getShieldDirection());
 	}
 
 	public boolean canShowDockButton() {
@@ -187,6 +189,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	@Override
 	public void onEnterpriseRepaired(Enterprise enterprise) {
 		updateButtonViews();
+		updateShieldsView();
 		updateAntimatterView();
 	}
 
@@ -261,7 +264,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 			view.setScanProperty("scan-report-cloak", "scan-report-cloak-value", "hidden", "");
 		}
 		view.show();
-		//asdasd
 	}
 
 
@@ -273,6 +275,20 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	@Override
 	public void onStartToHideMenu() {
 		view.setCommandBarMode("mode-command");
+	}
+	
+	void updateShieldsDirectionCss(ShieldDirection direction) {
+		for (ShieldDirection d:ShieldDirection.values())
+			view.removeShieldCss("shield-"+d);
+		view.addShieldCss("shield-"+direction);
+	}
+	
+	public void onToggleShieldsButtonClicked() {
+		ShieldDirection dir = enterprise.getShieldDirection();
+		int nextIndex = (dir.ordinal()+1) % ShieldDirection.values().length;
+		ShieldDirection nextDir = ShieldDirection.values()[nextIndex];
+		enterprise.setShieldDirection(nextDir);
+		updateShieldsDirectionCss(nextDir);
 	}
 
 }

@@ -98,4 +98,10 @@ public class TestComputerPresenter extends BaseTest{
 		verify(view).updateShortStatus("", "", "damaged damage-medium", "damage-offline");
 	}
 	
+	@Test
+	public void test_toggle_shields_direction() {
+		presenter.onToggleShieldsButtonClicked();
+		verify(view).addShieldCss("shield-north");
+	}
+	
 }

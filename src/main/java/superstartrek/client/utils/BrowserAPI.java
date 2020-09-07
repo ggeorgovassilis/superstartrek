@@ -31,6 +31,7 @@ public interface BrowserAPI {
 	Void postHistoryChange(String token);
 	Void postHistoryChange(String token, boolean issueEvent);
 	Void confirm(String message, Callback<Boolean> answer);
+	Void alert(String message);
 	Void reloadApplication();
 	String getParameter(String param);
 	Set<String> getFlags();

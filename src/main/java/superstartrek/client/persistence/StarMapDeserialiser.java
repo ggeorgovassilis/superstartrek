@@ -15,6 +15,7 @@ import superstartrek.client.model.StarBase;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
+import superstartrek.client.model.Enterprise.ShieldDirection;
 
 public class StarMapDeserialiser {
 	
@@ -132,6 +133,7 @@ public class StarMapDeserialiser {
 		readSetting(jsThing.get("phasers").isObject(), e.getPhasers());
 		readSetting(jsThing.get("reactor").isObject(), e.getReactor());
 		readSetting(jsThing.get("torpedos").isObject(), e.getTorpedos());
+		e.setShieldDirection(ShieldDirection.valueOf(jsThing.get("shieldsDirection").isString().stringValue()));
 		return e;
 	}
 }

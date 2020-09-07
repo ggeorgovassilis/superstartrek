@@ -9,6 +9,8 @@ import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
 import static superstartrek.client.bus.Events.*;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
@@ -19,6 +21,7 @@ import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Weapon;
 import superstartrek.client.utils.BaseMixin;
+import superstartrek.client.utils.Timer;
 
 public class GameController implements GamePhaseHandler, CombatHandler, NavigationHandler,
 		MessageHandler, EnergyConsumptionHandler, BaseMixin{
@@ -66,8 +69,10 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 	public void onGameStarted(StarMap map) {
 		if (!gameIsLoading && application.gameSaver.doesSavedGameExist()) {
 			gameIsLoading = true;
-			application.gameSaver.loadGame();
+			boolean success = application.gameSaver.loadGame();
 			application.gameSaver.deleteGame();
+			if (!success)
+				Timer.postpone(()->application.restart());
 			gameIsLoading = false;
 		}
 	}

@@ -157,6 +157,12 @@ public class TestStarMapSerializer extends BaseTest {
 				// TODO Auto-generated method stub
 				return null;
 			}
+
+			@Override
+			public Void alert(String message) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		};
 		application.starMap = starMap = setup.createNewMap();
 		application.gameController = mock(GameController.class);

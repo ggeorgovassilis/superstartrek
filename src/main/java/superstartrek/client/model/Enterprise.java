@@ -3,6 +3,8 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
@@ -17,12 +19,24 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
 	public final static double IMPULSE_CONSUMPTION = 2;
 	public final static double DEVICE_IMPACT_MODIFIER = 0.3;
-	public final static double SHIELD_IMPACT_MODIFIER = 0.5;
+	public final static double SHIELD_IMPACT_MODIFIER = 5.0;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
 	public final static int TIME_TO_REPAIR_SETTING = 3;
 	public final static double PRECISION_SHOT_EFFICIENCY=0.2;
 	public final static double PHASER_EFFICIENCY=0.4;
+	public final static double SHIELD_DIRECTIONAL_COEFFICIENT=0.5;
 
+	public enum ShieldDirection{
+		
+		none(0), north(90), east(0), south(270), west(180);
+		double angle;
+		ShieldDirection(double angle){
+			this.angle = angle;
+		}
+
+	}
+	
+	ShieldDirection shieldDirection = ShieldDirection.none;
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
 	Setting antimatter = new Setting(1000);
@@ -30,6 +44,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
 	Setting warpDrive = new Setting(1);
+	
 
 	Application application;
 	StarMap starMap;
@@ -473,13 +488,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void applyDamage(double damage) {
+		
 		// from a game-play POV being damaged right after jumping into a quadrant sucks,
 		// that's why the damage is reduced in this case.
 		// the in-world justification is that opponents can't get a reliable target lock
 		if (turnsSinceWarp < 2) {
 			damage = damage * 0.5;
 		}
+	
 		double shieldImpact = SHIELD_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
+		
 		shields.decrease(shieldImpact);
 		double deviceImpact = DEVICE_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
 		BrowserAPI random = application.browserAPI;
@@ -552,6 +570,21 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void toggleAutoAim() {
 		autoAim.setValue(!getAutoAim().getBooleanValue() && getAutoAim().isOperational());
 	}
+	
+	double computeDirectionalShieldEfficiency(Location location) {
+		if (shieldDirection == ShieldDirection.none)
+			return 0.75;
+		int dx = this.location.x - location.x;
+		// reverse direction because higher Y mean going south, while atan2 uses the opposite notation
+		int dy = location.y - this.location.y;
+		double th = (Math.atan2(dy, dx)+Math.PI)/(2.0*Math.PI)*360;
+		if (th>=360)
+			th-=360.0;
+		double shieldDirectionTh = shieldDirection.angle;
+		double deltaTh = Math.abs(shieldDirectionTh-th);
+		//the largest angular difference can be 180°
+		return 1.0-(deltaTh/180.0);
+	}
 
 	@Override
 	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
@@ -559,7 +592,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (target != this)
 			return;
 		application.message(actor.getName() + " at " + actor.getLocation() + " fired on us", "damage");
-		applyDamage(damage);
+		double directionalImpact = 0.5+0.5*(1.0-computeDirectionalShieldEfficiency(actor.getLocation()));
+		applyDamage(damage*directionalImpact);
 	}
 
 	@Override
@@ -579,6 +613,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void beforeGameRestart() {
 		removeHandler(this);
 		reachableSectors.clear();
+	}
+	
+	public ShieldDirection getShieldDirection() {
+		return shieldDirection;
+	}
+	
+	public void setShieldDirection(ShieldDirection shieldDirection) {
+		this.shieldDirection = shieldDirection;
 	}
 
 }

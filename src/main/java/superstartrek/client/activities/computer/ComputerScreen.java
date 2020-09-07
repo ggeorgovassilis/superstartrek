@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -33,6 +34,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	Element eValueShields;
 	Element eQuadrantName;
 	Element eAboveRadarSlot;
+	Element eToggleShields;
 
 	@Override
 	public void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos) {
@@ -73,6 +75,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eScore = DOM.getElementById("score");
 		eLrsButton = DOM.getElementById("lrs-button");
 		eAboveRadarSlot = DOM.getElementById("above-radar-slot");
+		eToggleShields = DOM.getElementById("cmd_toggleShields");
 		addHandler(this, ClickEvent.getType());
 		DOM.sinkEvents(panel.getElement(), Event.ONCLICK);
 	}
@@ -113,6 +116,9 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		Element target = event.getNativeEvent().getEventTarget().cast();
 		if (eSkip.isOrHasChild(target))
 			presenter.onSkipButtonClicked();
+		else
+		if (eToggleShields.isOrHasChild(target))
+			presenter.onToggleShieldsButtonClicked();
 	}
 
 	@Override
@@ -157,6 +163,16 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	@Override
 	protected boolean alignsOnItsOwn() {
 		return false;
+	}
+
+	@Override
+	public void removeShieldCss(String css) {
+		eToggleShields.removeClassName(css);
+	}
+	
+	@Override
+	public void addShieldCss(String css) {
+		eToggleShields.addClassName(css);
 	}
 
 }
