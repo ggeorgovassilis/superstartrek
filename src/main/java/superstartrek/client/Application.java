@@ -53,6 +53,7 @@ import superstartrek.client.activities.pwa.http.RequestFactoryBrowserImpl;
 public class Application implements EntryPoint, GamePhaseHandler, ApplicationLifecycleHandler {
 
 	public final static String UI_SCALE_KEY = "UI_SCALE";
+	public final static String UI_THEME_KEY = "UI_THEME";
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus eventBus = new EventBus();
@@ -98,6 +99,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		// since every presenter registers itself as an event listener they won't be
 		// garbage-collected, so we don't need to keep references to them
 		setUIScale(getUIScale());
+		setUITheme(getUITheme());
 		new LoadingScreen(new LoadingPresenter(this));
 		new IntroView(new IntroPresenter(this));
 		new ManualScreen(new ManualPresenter(this));
@@ -222,8 +224,23 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		browserAPI.removeGlobalCss("ui-scale-small");
 		browserAPI.removeGlobalCss("ui-scale-medium");
 		browserAPI.removeGlobalCss("ui-scale-large");
+		browserAPI.removeGlobalCss("ui-scale-xl");
 		browserAPI.addGlobalCss("ui-scale-" + scale);
 		browserAPI.storeValueLocally(UI_SCALE_KEY, scale);
+	}
+	
+	public void setUITheme(String theme) {
+		browserAPI.storeValueLocally(UI_THEME_KEY, theme);
+		browserAPI.removeGlobalCss("ui-theme-highcontrast");
+		browserAPI.removeGlobalCss("ui-theme-default");
+		browserAPI.addGlobalCss("ui-theme-"+theme);
+	}
+	
+	public String getUITheme() {
+		String theme = browserAPI.getLocallyStoredValue(UI_THEME_KEY);
+		if (Strings.isEmpty(theme))
+			theme = "default";
+		return theme;
 	}
 
 	public String getUIScale() {

@@ -23,7 +23,7 @@ public class TestSettingsPresenter extends BaseTest{
 	}
 	
 	@Test
-	public void test_show_screen() {
+	public void test_change_scale() {
 		when(browser.getLocallyStoredValue(Application.UI_SCALE_KEY)).thenReturn("small");
 		ValueChangeEvent<String> event = new ValueChangeEvent<String>("settings") {
 			
@@ -32,5 +32,16 @@ public class TestSettingsPresenter extends BaseTest{
 		verify(view).show();
 		verify(view).selectUIScale("small");
 	}
-	
+
+	@Test
+	public void test_change_theme() {
+		when(browser.getLocallyStoredValue(Application.UI_THEME_KEY)).thenReturn("high-contrast");
+		ValueChangeEvent<String> event = new ValueChangeEvent<String>("settings") {
+			
+		};
+		presenter.onValueChange(event);
+		verify(view).show();
+		verify(view).selectTheme("high-contrast");
+	}
+
 }

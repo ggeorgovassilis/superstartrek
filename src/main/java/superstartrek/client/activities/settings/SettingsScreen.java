@@ -1,5 +1,10 @@
 package superstartrek.client.activities.settings;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -17,7 +22,12 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	Element eSmall;
 	Element eMedium;
 	Element eLarge;
+	Element eXL;
 	Element eCheckForUpdates;
+	Element eDefaultTheme;
+	Element eHighContrastTheme;
+	Set<Element> uiScales = new HashSet<Element>();
+	Set<Element> uiThemes = new HashSet<Element>();
 
 	public SettingsScreen(SettingsPresenter p) {
 		super(p);
@@ -25,23 +35,31 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 		eSmall = DOM.getElementById("ui-scaling-small");
 		eMedium = DOM.getElementById("ui-scaling-medium");
 		eLarge = DOM.getElementById("ui-scaling-large");
+		eXL = DOM.getElementById("ui-scaling-xl");
 		eCheckForUpdates = DOM.getElementById("cmd_check_for_updates_2");
+		eDefaultTheme = DOM.getElementById("ui-theme-default");
+		eHighContrastTheme = DOM.getElementById("ui-theme-highcontrast");
 		addDomHandler((event) -> handleChange(event), ChangeEvent.getType());
 		addDomHandler((event) -> handleClick(event), ClickEvent.getType());
+		uiScales.add(eSmall);
+		uiScales.add(eMedium);
+		uiScales.add(eLarge);
+		uiScales.add(eXL);
+		uiThemes.add(eDefaultTheme);
+		uiThemes.add(eHighContrastTheme);
 	}
 
 	protected void handleChange(DomEvent<?> event) {
 		NativeEvent ne = event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
+		String value = e.getAttribute("value");
 		
-		String value = "medium";
-		if (eSmall == e)
-			value = "small";
-		if (eMedium == e)
-			value = "medium";
-		if (eLarge == e)
-			value = "large";
-		presenter.onUIScaleSettingClicked(value);
+		if (uiScales.contains(e)) {
+			presenter.onUIScaleSettingClicked(value);
+		};
+		if (uiThemes.contains(e)) {
+			presenter.onUIThemeSettingClicked(value);
+		}
 	}
 
 	protected void handleClick(DomEvent<?> event) {
@@ -66,16 +84,13 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 
 	@Override
 	public void selectUIScale(String scale) {
-		Element e = null;
-		switch (scale) {
-		case "small":
-			e = eSmall; break;
-		case "large":
-			e = eLarge; break;
-		case "medium":
-		default:
-			e = eMedium; break;
-		}
-		e.setPropertyBoolean("checked", true);
+		for (Element e:uiScales)
+			e.setPropertyString("checked", scale.equals(e.getAttribute("value"))?"true":null);
+	}
+
+	@Override
+	public void selectTheme(String theme) {
+		for (Element e:uiThemes)
+			e.setPropertyString("checked", theme.equals(e.getAttribute("value"))?"true":null);
 	}
 }
