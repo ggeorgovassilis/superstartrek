@@ -988,14 +988,9 @@ a.disabled,button.disabled {
 }
 
 .app-menu li a {
-	background-color: rgb(0, 108, 109);
 	width: 100%;
 	width: 100%;
 	font-size: 100%;
-}
-
-.app-menu li a:hover {
-	background-color: rgb(50, 158, 159);
 }
 
 .app-menu li a.disabled {
@@ -1065,6 +1060,19 @@ a.disabled,button.disabled {
 	font-size:120%;
 }
 
+.ui-scale-xl{
+	font-size:140%;
+}
+
 .settings-screen .setting{
 	padding-top:1em;
+}
+
+/* high constrast theme */
+.ui-theme-highcontrast a, .ui-theme-highcontrast button{
+	background-color: #11509f;
+}
+
+.ui-theme-highcontrast #messages-content>li.klingon-damaged, .ui-theme-highcontrast .entry.klingon-destroyed {
+	color: lightskyblue;
 }
