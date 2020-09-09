@@ -238,13 +238,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		Thing thing = q.findThingAt(location);
 		String name = Thing.isVisible(thing)?thing.getName():"Nothing";
 		view.setScanProperty("scan-report-name", "scan-report-name-value", "", name+" at "+location.toString());
-		if (!Thing.isVisible(thing)) {
-			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
-			view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden","");
-			view.setScanProperty("scan-report-cloak", "scan-report-cloak-value", "hidden","");
-			view.setScanProperty("scan-report-engines", "scan-report-engines-value", "hidden","");
-		}
-		if (Vessel.is(thing)) {
+		if (Thing.isVisible(thing) && Vessel.is(thing)) {
 			Vessel vessel = thing.as();
 			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "", "%"+vessel.getShields().percentage());
 			if (Klingon.is(thing)) {

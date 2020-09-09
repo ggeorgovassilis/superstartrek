@@ -1,5 +1,6 @@
 package superstartrek;
 
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -10,6 +11,8 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.model.Location;
+import superstartrek.client.model.Star;
+import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.model.StarBase;
 
 public class TestComputerPresenter extends BaseTest{
@@ -104,4 +107,55 @@ public class TestComputerPresenter extends BaseTest{
 		verify(view).addShieldCss("shield-north");
 	}
 	
+	@Test
+	public void test_scanSector_empty_sector() {
+		presenter.scanSector(Location.location(6, 6), quadrant);
+		verify(view).setScanProperty("scan-report-name", "scan-report-name-value", "", "Nothing at 6:6");
+		verify(view).setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
+		verify(view).setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden","");
+		verify(view).setScanProperty("scan-report-cloak", "scan-report-cloak-value", "hidden","");
+		verify(view).setScanProperty("scan-report-engines", "scan-report-engines-value", "hidden","");
+		verify(view).show();
+
+	}
+
+	@Test
+	public void test_scanSector_cloaked_klingon() {
+		Klingon k = new Klingon(ShipClass.Raider);
+		k.cloak();
+		k.setLocation(Location.location(4, 4));
+		quadrant.add(k);
+		presenter.scanSector(Location.location(4, 4), quadrant);
+		verify(view).setScanProperty("scan-report-name", "scan-report-name-value", "", "Nothing at 4:4");
+		verify(view).setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
+		verify(view).setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden","");
+		verify(view).setScanProperty("scan-report-cloak", "scan-report-cloak-value", "hidden","");
+		verify(view).setScanProperty("scan-report-engines", "scan-report-engines-value", "hidden","");
+	}
+
+	@Test
+	public void test_scanSector_klingon() {
+		Klingon k = new Klingon(ShipClass.Raider);
+		k.uncloak();
+		k.setLocation(Location.location(4, 4));
+		quadrant.add(k);
+		presenter.scanSector(Location.location(4, 4), quadrant);
+		verify(view).setScanProperty("scan-report-name", "scan-report-name-value", "", "a Klingon raider at 4:4");
+		verify(view).setScanProperty("scan-report-shields", "scan-report-shields-value", "", "%100");
+		verify(view).setScanProperty("scan-report-weapons", "scan-report-weapons-value", "","online");
+		verify(view).setScanProperty("scan-report-cloak", "scan-report-cloak-value", "","online");
+		verify(view).setScanProperty("scan-report-engines", "scan-report-engines-value", "","online");
+	}
+
+	@Test
+	public void test_scanSector_star() {
+		quadrant.add(new Star(3,3, StarClass.B));
+		presenter.scanSector(Location.location(3, 3), quadrant);
+		verify(view).setScanProperty("scan-report-name", "scan-report-name-value", "", "Class B star at 3:3");
+		verify(view).setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
+		verify(view).setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden","");
+		verify(view).setScanProperty("scan-report-cloak", "scan-report-cloak-value", "hidden","");
+		verify(view).setScanProperty("scan-report-engines", "scan-report-engines-value", "hidden","");
+	}
+
 }
