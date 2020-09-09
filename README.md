@@ -17,4 +17,7 @@ A mobile friendly web remake of [Super Star Trek](https://en.wikipedia.org/wiki/
 
 gwt devmode configuration for ecplipse: `-startupUrl index.html -war target/sst -noserver superstartrek.superstartrek`
 
+Build locally:
+`mvn install`
+
 
