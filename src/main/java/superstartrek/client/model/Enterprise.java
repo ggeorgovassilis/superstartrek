@@ -134,14 +134,17 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			callbackBeforeWarping.run();
 
 		Quadrant dropQuadrant = container[0];
+		quadrant.removeEnterprise(this);
 		setQuadrant(dropQuadrant);
-		application.starMap.markAsExploredAround(dropQuadrant);
-		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
 		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation(),
 				Constants.SECTORS_EDGE);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
+		dropQuadrant.addEnterprise(this);
+
+		application.starMap.markAsExploredAround(dropQuadrant);
+		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
 		fromQuadrant.removeEnterprise(this);
 		fireEvent(Events.AFTER_ENTERPRISE_WARPED,
@@ -201,7 +204,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	// only for internal use, bypasses checks
 	void moveToIgnoringConstraints(Location loc) {
 		Location oldLoc = getLocation();
+		quadrant.removeEnterprise(this);
 		setLocation(loc);
+		quadrant.addEnterprise(this);
 		fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(Enterprise.this, getQuadrant(), oldLoc, getQuadrant(), loc));
 	}
 

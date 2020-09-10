@@ -30,6 +30,8 @@ public class TestQuadrant extends BaseTest{
 
 		StarBase starBase = new StarBase(Location.location(5, 6));
 		quadrant.setStarBase(starBase);
+		
+		quadrant.addEnterprise(enterprise);
 
 		assertTrue(quadrant.findThingAt(2, 3) instanceof Klingon);
 		assertTrue(quadrant.findThingAt(1, 1) instanceof Klingon);

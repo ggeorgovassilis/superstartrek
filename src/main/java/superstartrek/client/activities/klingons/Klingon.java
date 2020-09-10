@@ -147,7 +147,9 @@ public class Klingon extends Vessel
 		Application app = getApplication();
 		Quadrant quadrant = app.getActiveQuadrant();
 		Location currentLocation = getLocation();
+		quadrant.remove(this);
 		setLocation(dest);
+		quadrant.add(this);
 		fireEvent(THING_MOVED, (h) -> h.thingMoved(Klingon.this, quadrant, currentLocation, quadrant, dest));
 	}
 

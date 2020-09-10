@@ -154,8 +154,8 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setQuadrant(quadrant);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		quadrant.add(klingon);
 		klingon.setLocation(Location.location(1, 1));
+		quadrant.add(klingon);
 		klingon.registerActionHandlers();
 		klingon.uncloak();
 
@@ -179,10 +179,11 @@ public class TestEnterprise extends BaseTest {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
+		quadrant.addEnterprise(enterprise);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		quadrant.add(klingon);
 		klingon.setLocation(Location.location(1, 1));
+		quadrant.add(klingon);
 		klingon.registerActionHandlers();
 		klingon.uncloak();
 
@@ -206,10 +207,11 @@ public class TestEnterprise extends BaseTest {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
+		quadrant.addEnterprise(enterprise);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
-		quadrant.add(klingon);
 		klingon.setLocation(Location.location(1, 1));
+		quadrant.add(klingon);
 		klingon.registerActionHandlers();
 		klingon.uncloak();
 
@@ -304,10 +306,10 @@ public class TestEnterprise extends BaseTest {
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
+		quadrant.addEnterprise(enterprise);
 
 		Star star = new Star(3, 3, Star.StarClass.A);
-		quadrant.getStars().add(star);
-
+		quadrant.add(star);
 		Klingon klingon = new Klingon(Klingon.ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(5, 5));
 		quadrant.add(klingon);

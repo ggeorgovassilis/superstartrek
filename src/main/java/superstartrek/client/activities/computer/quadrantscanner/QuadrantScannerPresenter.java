@@ -35,9 +35,9 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
-		Quadrant quadrant = application.starMap.enterprise.getQuadrant();
+		Quadrant quadrant = application.getActiveQuadrant();
 		// this is an event instead of directly calling #onSectorSelected(...) because
-		// others fire this event to in order to update the view
+		// others fire this event too in order to update the view
 		fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
@@ -68,7 +68,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	void updateSector(Thing thing) {
 		String content = "";
 		String css = "";
-		if (thing.isVisible()) {
+		if (Thing.isVisible(thing)) {
 			content = thing.getSymbol();
 			css = thing.getCss();
 			if (Vessel.is(thing)) {

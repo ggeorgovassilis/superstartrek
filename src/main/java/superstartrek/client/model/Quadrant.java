@@ -64,22 +64,23 @@ public class Quadrant implements GeometricLookup {
 
 	@Override
 	public Thing findThingAt(Location location) {
-		for (Thing t : stars)
-			if (t.getLocation() == location)
-				return t;
-		for (Thing t : klingons)
-			if (t.getLocation() == location)
-				return t;
-		if (starBase != null && starBase.getLocation() == location)
-			return starBase;
-		StarMap map = Application.get().starMap;
-		if (map != null) // possibly null during Setup construction
-		{
-			Enterprise enterprise = Application.get().starMap.enterprise;
-			Quadrant eq = enterprise.getQuadrant();
-			return (eq == this && enterprise.getLocation() == location) ? enterprise : null;
-		}
-		return null;
+		return things[location.x][location.y];
+//		for (Thing t : stars)
+//			if (t.getLocation() == location)
+//				return t;
+//		for (Thing t : klingons)
+//			if (t.getLocation() == location)
+//				return t;
+//		if (starBase != null && starBase.getLocation() == location)
+//			return starBase;
+//		StarMap map = Application.get().starMap;
+//		if (map != null) // possibly null during Setup construction
+//		{
+//			Enterprise enterprise = Application.get().starMap.enterprise;
+//			Quadrant eq = enterprise.getQuadrant();
+//			return (eq == this && enterprise.getLocation() == location) ? enterprise : null;
+//		}
+//		return null;
 	}
 	
 	private void mark(Thing thing) {
@@ -125,5 +126,4 @@ public class Quadrant implements GeometricLookup {
 			consumer.accept(enterprise);
 	};
 	
-
 }
