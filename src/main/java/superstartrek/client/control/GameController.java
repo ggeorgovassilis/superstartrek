@@ -9,8 +9,6 @@ import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
 import static superstartrek.client.bus.Events.*;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;

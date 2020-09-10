@@ -3,8 +3,6 @@ package superstartrek.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
