@@ -31,14 +31,15 @@ public class TestAStarPlus extends BaseTest {
 	
 	int failedPaths = 0;
 
-	@Ignore // too slow for regular builds
+	@Ignore //test too slow for regular builds
 	@Test
 	public void testAStarPlusPerformance() {
-		final int TURNS = 50000;
+		final long TEST_DURATION_MS = 5000;
 		final int TURNS_WITH_SAME_MAP = 500;
 		Random random = new Random(0);
 		long time = -System.currentTimeMillis();
-		for (int i = 0; i < TURNS; i++) {
+		int turns = 0;
+		while (time+System.currentTimeMillis()<TEST_DURATION_MS) {
 			Quadrant q = new Quadrant("", 0, 0);
 			StarMap map = new StarMap();
 			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE),
@@ -57,10 +58,10 @@ public class TestAStarPlus extends BaseTest {
 				List<Location> pathAsp = asp.findPathBetween(from, to, q, map, 100);
 				assertTrue(pathAsp.size() >= 0); // useless check, but mutes Eclipse warning about pathAsp not used
 			}
-
+			turns++;
 		}
 		time += System.currentTimeMillis();
-		System.out.println(((double) time / (double) TURNS) + " ms per turn");
+		System.out.println(((double) time / (double) turns) + " ms per turn");
 	}
 
 	public static String printMap(Quadrant quadrant, Location from, Location to, List<Location> path) {
