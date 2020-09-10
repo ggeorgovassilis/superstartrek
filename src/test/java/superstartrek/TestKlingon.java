@@ -122,6 +122,12 @@ public class TestKlingon extends BaseTest{
 		klingon.uncloak();
 		klingon.onActiveQuadrantChanged(quadrant, quadrant);
 		assertFalse(klingon.isVisible());
-		
+	}
+	
+	@Test
+	public void test_destroy() {
+		assertEquals(klingon, quadrant.findThingAt(klingon.getLocation()));
+		klingon.destroy();
+		assertNull(quadrant.findThingAt(klingon.getLocation()));
 	}
 }
