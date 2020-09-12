@@ -42,7 +42,6 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	}
 
 	public void onMenuHidden() {
-		GWT.log("onMenuHidden "+gotoStateAfterMenuHidden);
 		if (gotoStateAfterMenuHidden != null)
 			application.browserAPI.postHistoryChange(gotoStateAfterMenuHidden);
 	}

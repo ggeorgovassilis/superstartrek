@@ -88,11 +88,11 @@ public class Quadrant{
 		clear(klingon.getLocation());
 	}
 	
-	public void addEnterprise(Enterprise e) {
+	public void add(Enterprise e) {
 		mark(e);
 	}
 	
-	public void removeEnterprise(Enterprise e) {
+	public void remove(Enterprise e) {
 		clear(e.getLocation());
 	}
 	

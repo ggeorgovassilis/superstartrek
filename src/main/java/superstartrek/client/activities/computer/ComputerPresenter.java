@@ -168,7 +168,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
-		GWT.log("ComputerScreenPresenter onValueChange "+event.getValue());
 		switch (event.getValue()) {
 		case "computer":
 			showScreen();

@@ -179,7 +179,7 @@ public class TestEnterprise extends BaseTest {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
-		quadrant.addEnterprise(enterprise);
+		quadrant.add(enterprise);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(1, 1));
@@ -207,7 +207,7 @@ public class TestEnterprise extends BaseTest {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
-		quadrant.addEnterprise(enterprise);
+		quadrant.add(enterprise);
 
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(1, 1));
@@ -306,7 +306,7 @@ public class TestEnterprise extends BaseTest {
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
-		quadrant.addEnterprise(enterprise);
+		quadrant.add(enterprise);
 
 		Star star = new Star(3, 3, Star.StarClass.A);
 		quadrant.add(star);

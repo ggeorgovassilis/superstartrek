@@ -127,7 +127,7 @@ public class Setup {
 		enterprise.setQuadrant(map.quadrants[0][0]);
 		enterprise.getQuadrant().setExplored(true);
 		enterprise.setLocation(map.findFreeSpot(map.quadrants[0][0]));
-		enterprise.getQuadrant().addEnterprise(enterprise);
+		enterprise.getQuadrant().add(enterprise);
 		putKlingonsOnStarMap(map);
 		return map;
 	}

@@ -20,20 +20,23 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double SHIELD_IMPACT_MODIFIER = 5.0;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
 	public final static int TIME_TO_REPAIR_SETTING = 3;
-	public final static double PRECISION_SHOT_EFFICIENCY=0.2;
-	public final static double PHASER_EFFICIENCY=0.4;
-	public final static double SHIELD_DIRECTIONAL_COEFFICIENT=0.5;
+	public final static double PRECISION_SHOT_EFFICIENCY = 0.2;
+	public final static double PHASER_EFFICIENCY = 0.4;
+	public final static double SHIELD_DIRECTIONAL_COEFFICIENT = 0.4;
+	public final static double SHIELD_BASE_COEFFICIENT = 0.75;
 
-	public enum ShieldDirection{
-		
+	public enum ShieldDirection {
+
 		none(0), north(90), east(0), south(270), west(180);
+
 		double angle;
-		ShieldDirection(double angle){
+
+		ShieldDirection(double angle) {
 			this.angle = angle;
 		}
 
 	}
-	
+
 	ShieldDirection shieldDirection = ShieldDirection.none;
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
@@ -42,7 +45,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
 	Setting warpDrive = new Setting(1);
-	
 
 	Application application;
 	StarMap starMap;
@@ -115,41 +117,39 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 
 		reachableSectors.clear();
-		
+
 		Quadrant[] container = new Quadrant[1];
-		StarMap.walkLine(getQuadrant().x, getQuadrant().y, destinationQuadrant.x,
-				destinationQuadrant.y, (x, y) -> {
-					Quadrant q = starMap.getQuadrant(x, y);
-					container[0] = q;
-					List<Klingon> klingons = q.getKlingons();
-					// TODO for now, allow warping out of the departure quadrant
-					if (!(x == getQuadrant().x && y == getQuadrant().y) && !klingons.isEmpty()) {
-						application.message("We were intercepted by " + klingons.get(0).getName(), "intercepted");
-						return false;
-					}
-					return true;
-				});
+		StarMap.walkLine(getQuadrant().x, getQuadrant().y, destinationQuadrant.x, destinationQuadrant.y, (x, y) -> {
+			Quadrant q = starMap.getQuadrant(x, y);
+			container[0] = q;
+			List<Klingon> klingons = q.getKlingons();
+			// TODO for now, allow warping out of the departure quadrant
+			if (!(x == getQuadrant().x && y == getQuadrant().y) && !klingons.isEmpty()) {
+				application.message("We were intercepted by " + klingons.get(0).getName(), "intercepted");
+				return false;
+			}
+			return true;
+		});
 
 		if (callbackBeforeWarping != null)
 			callbackBeforeWarping.run();
 
 		Quadrant dropQuadrant = container[0];
-		quadrant.removeEnterprise(this);
+		quadrant.remove(this);
 		setQuadrant(dropQuadrant);
 
-		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation(),
-				Constants.SECTORS_EDGE);
+		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation(), Constants.SECTORS_EDGE);
 		Location oldLocation = getLocation();
 		setLocation(freeSpot);
-		dropQuadrant.addEnterprise(this);
+		dropQuadrant.add(this);
 
 		application.starMap.markAsExploredAround(dropQuadrant);
 		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
-		fromQuadrant.removeEnterprise(this);
+		fromQuadrant.remove(this);
 		fireEvent(Events.AFTER_ENTERPRISE_WARPED,
 				(h) -> h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
-		dropQuadrant.addEnterprise(this);
+		dropQuadrant.add(this);
 		fireEvent(Events.THING_MOVED,
 				(h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
 		turnsSinceWarp = 0;
@@ -204,9 +204,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	// only for internal use, bypasses checks
 	void moveToIgnoringConstraints(Location loc) {
 		Location oldLoc = getLocation();
-		quadrant.removeEnterprise(this);
+		quadrant.remove(this);
 		setLocation(loc);
-		quadrant.addEnterprise(this);
+		quadrant.add(this);
 		fireEvent(Events.THING_MOVED, (h) -> h.thingMoved(Enterprise.this, getQuadrant(), oldLoc, getQuadrant(), loc));
 	}
 
@@ -241,19 +241,20 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void maybeAutoRepair() {
-			repairProvisionally();
+		repairProvisionally();
 	}
 
 	public double computeConsumptionForImpulseNavigation(double distance) {
-		return distance*distance * IMPULSE_CONSUMPTION;
+		return distance * distance * IMPULSE_CONSUMPTION;
 	}
-	
+
 	public double computeImpulseNavigationRange() {
-		//The sqrt models more accurately the physics of E=0.5*m*v²
-		//Also, a game-play-friendly side effect is that a minimum of maneuverability even
-		//with a damaged reactor is possible.
-		double vimp = impulse.isOperational()?impulse.getValue():0;
-		return Math.min(vimp, Math.sqrt(getReactor().getValue()/IMPULSE_CONSUMPTION));
+		// The sqrt models more accurately the physics of E=0.5*m*v²
+		// Also, a game-play-friendly side effect is that a minimum of maneuverability
+		// even
+		// with a damaged reactor is possible.
+		double vimp = impulse.isOperational() ? impulse.getValue() : 0;
+		return Math.min(vimp, Math.sqrt(getReactor().getValue() / IMPULSE_CONSUMPTION));
 	}
 
 	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {
@@ -297,8 +298,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		Thing eventTarget = target;
 		double eventDamage = damage;
-		fireEvent(Events.BEFORE_FIRE,
-				(h) -> h.onFire(quadrant, Enterprise.this, eventTarget, Weapon.torpedo, eventDamage, false, partTarget.none));
+		fireEvent(Events.BEFORE_FIRE, (h) -> h.onFire(quadrant, Enterprise.this, eventTarget, Weapon.torpedo,
+				eventDamage, false, partTarget.none));
 		fireEvent(Events.AFTER_FIRE,
 				(h) -> h.afterFire(quadrant, Enterprise.this, eventTarget, Weapon.torpedo, eventDamage, false));
 		if (target == null)
@@ -338,7 +339,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 				application.message(error);
 			return;
 		}
-		boolean isPrecisionShot = precisionShot!=partTarget.none;
+		boolean isPrecisionShot = precisionShot != partTarget.none;
 		double phaserEnergy = Math.min(phasers.getValue(), reactor.getValue());
 		if (phaserEnergy < 1)
 			return;
@@ -349,11 +350,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		Klingon klingon = (Klingon) thing;
 		double distance = StarMap.distance(this, thing);
-		double efficiency = isPrecisionShot?PRECISION_SHOT_EFFICIENCY:PHASER_EFFICIENCY;
+		double efficiency = isPrecisionShot ? PRECISION_SHOT_EFFICIENCY : PHASER_EFFICIENCY;
 		double damage = efficiency * phaserEnergy / distance;
 		phasers.setValue(phasers.getValue() - phaserEnergy);
-		fireEvent(Events.BEFORE_FIRE,
-				(h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim, precisionShot));
+		fireEvent(Events.BEFORE_FIRE, (h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage,
+				isAutoAim, precisionShot));
 		fireEvent(Events.AFTER_FIRE,
 				(h) -> h.afterFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage, isAutoAim));
 	}
@@ -369,8 +370,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return;
 		}
 		if (!inRange && !hasKlingons) {
-			Location loc = starMap.findFreeSpotAround(quadrant,
-					quadrant.getStarBase().getLocation(), 2);
+			Location loc = starMap.findFreeSpotAround(quadrant, quadrant.getStarBase().getLocation(), 2);
 			if (loc == null) {
 				application.message("No space around starbase");
 				return;
@@ -457,7 +457,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public void damageTorpedos() {
 		torpedos.damageAndTurnOff(starMap.getStarDate());
-		torpedos.setValue(Math.floor(torpedos.getValue()*0.5));
+		torpedos.setValue(Math.floor(torpedos.getValue() * 0.5));
 		application.message("Torpedo bay damaged", "enterprise-damaged");
 	}
 
@@ -491,16 +491,16 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public void applyDamage(double damage) {
-		
+
 		// from a game-play POV being damaged right after jumping into a quadrant sucks,
 		// that's why the damage is reduced in this case.
 		// the in-world justification is that opponents can't get a reliable target lock
 		if (turnsSinceWarp < 2) {
 			damage = damage * 0.5;
 		}
-	
+
 		double shieldImpact = SHIELD_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
-		
+
 		shields.decrease(shieldImpact);
 		double deviceImpact = DEVICE_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
 		BrowserAPI random = application.browserAPI;
@@ -528,7 +528,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (getReactor().getValue() < value)
 			return false;
 		getReactor().decrease(value);
-		//TODO: re-evaluate antimatter consumption for impulse movement. is this already covered with reactor consumption?
+		// TODO: re-evaluate antimatter consumption for impulse movement. is this
+		// already covered with reactor consumption?
 		getAntimatter().decrease(value);
 		fireEvent(Events.CONSUME_ENERGY, (h) -> h.handleEnergyConsumption(this, value, what));
 		return true;
@@ -573,30 +574,32 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void toggleAutoAim() {
 		autoAim.setValue(!getAutoAim().getBooleanValue() && getAutoAim().isOperational());
 	}
-	
+
 	double computeDirectionalShieldEfficiency(Location location) {
 		if (shieldDirection == ShieldDirection.none)
-			return 0.75;
+			return SHIELD_BASE_COEFFICIENT;
 		int dx = this.location.x - location.x;
-		// reverse direction because higher Y mean going south, while atan2 uses the opposite notation
+		// reverse direction because higher Y mean going south, while atan2 uses the
+		// opposite notation
 		int dy = location.y - this.location.y;
-		double th = (Math.atan2(dy, dx)+Math.PI)/(2.0*Math.PI)*360;
-		if (th>=360)
-			th-=360.0;
+		double th = 360.0*(Math.atan2(dy, dx) + Math.PI) / (2.0 * Math.PI);
+		while (th >= 360)
+			th -= 360.0;
 		double shieldDirectionTh = shieldDirection.angle;
-		double deltaTh = Math.abs(shieldDirectionTh-th);
-		//the largest angular difference can be 180°
-		return 1.0-(deltaTh/180.0);
+		double deltaTh = Math.abs(shieldDirectionTh - th);
+		// the largest angular difference can be 180°
+		return 1.0 - (deltaTh / 180.0);
 	}
 
 	@Override
-	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
-			boolean wasAutoFire, partTarget part) {
+	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage, boolean wasAutoFire,
+			partTarget part) {
 		if (target != this)
 			return;
 		application.message(actor.getName() + " at " + actor.getLocation() + " fired on us", "damage");
-		double directionalImpact = 0.5+0.5*(1.0-computeDirectionalShieldEfficiency(actor.getLocation()));
-		applyDamage(damage*directionalImpact);
+		double directionalImpact = 0.5
+				+ SHIELD_DIRECTIONAL_COEFFICIENT * (1.0 - computeDirectionalShieldEfficiency(actor.getLocation()));
+		applyDamage(damage * directionalImpact);
 	}
 
 	@Override
@@ -617,11 +620,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		removeHandler(this);
 		reachableSectors.clear();
 	}
-	
+
 	public ShieldDirection getShieldDirection() {
 		return shieldDirection;
 	}
-	
+
 	public void setShieldDirection(ShieldDirection shieldDirection) {
 		this.shieldDirection = shieldDirection;
 	}
