@@ -32,6 +32,8 @@ import superstartrek.client.control.GameController;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
+import superstartrek.client.credits.CreditsPresenter;
+import superstartrek.client.credits.CreditsScreen;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
@@ -111,6 +113,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		new AppMenuView(new AppMenuPresenter(this));
 		new AppInstallPromptView(new AppInstallPromptPresenter(this));
 		new SettingsScreen(new SettingsPresenter(this));
+		new CreditsScreen(new CreditsPresenter(this));
 	}
 
 	public void message(String formattedMessage) {
