@@ -1068,6 +1068,18 @@ a.disabled,button.disabled {
 	padding-top:1em;
 }
 
+/* credits and licenses screen */
+
+.credits-screen ul a{
+	background-color:transparent;
+	text-align:left;
+	text-decoration: underline;
+	font-weight:normal;
+	display:inline;
+	float:none;
+	line-height:1.8em;
+}
+
 /* high constrast theme */
 .ui-theme-highcontrast a, .ui-theme-highcontrast button{
 	background-color: #11509f;
@@ -1075,4 +1087,8 @@ a.disabled,button.disabled {
 
 .ui-theme-highcontrast #messages-content>li.klingon-damaged, .ui-theme-highcontrast .entry.klingon-destroyed {
 	color: lightskyblue;
+}
+
+.ui-theme-highcontrast .credits-screen ul a{
+	background-color:transparent;
 }
