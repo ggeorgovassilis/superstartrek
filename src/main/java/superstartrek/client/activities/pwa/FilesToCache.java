@@ -32,7 +32,8 @@ public class FilesToCache {
 			"images/target.svg",
 			"images/spark.svg",
 			"images/missile.svg",
-			"images/dock.svg"
+			"images/dock.svg",
+			"images/qr-code.svg"
 			//@formatter:on
 };
 
