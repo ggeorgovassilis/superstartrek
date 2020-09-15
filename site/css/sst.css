@@ -329,6 +329,15 @@ outline:solid transparent 1px;
 }
 }
 
+.qr-code-link{
+	outline:none;
+}
+
+.qr-code-link img{
+	border:none;
+	width:100%;
+}
+
 .credits {
 	clear: both;
 	overflow: hidden;
