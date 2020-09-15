@@ -18,9 +18,6 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 		super(application);
 		addHandler(GAME_STARTED, this);
 		addHandler(INFORMING_OF_INSTALLED_VERSION, this);
-		addHandler(Events.VERSION_CHECK_FAILED, this);
-		addHandler(Events.VERSION_IS_CURRENT, this);
-		addHandler(Events.NEW_VERSION_AVAILABLE, this);
 		application.browserAPI.addHistoryListener(this);
 	}
 	
@@ -36,29 +33,6 @@ public class IntroPresenter extends BasePresenter<IntroView> implements Applicat
 			view.show();
 		} else
 			view.hide();
-	}
-	
-	@Override
-	public void installedAppVersionIs(String version, String timestamp) {
-		view.enableUpdateCheckButton();
-		view.showAppVersion(version +" "+timestamp);
-	}
-
-	@Override
-	public void checkFailed() {
-		view.enableUpdateCheckButton();
-		application.message("Update check failed","error");
-	}
-	
-	@Override
-	public void versionIsCurrent() {
-		view.enableUpdateCheckButton();
-		application.message("No updates found","info");
-	}
-	
-	public void onCheckForUpdatesButtonClicked() {
-		view.disableUpdateCheckButton();
-		application.pwa.checkForNewVersion();
 	}
 	
 }

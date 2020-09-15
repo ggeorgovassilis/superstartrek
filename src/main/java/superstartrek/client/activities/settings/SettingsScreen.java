@@ -91,4 +91,20 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 		for (Element e:uiThemes)
 			e.setPropertyString("checked", theme.equals(e.getAttribute("value"))?"true":null);
 	}
+	
+	public void showAppVersion(String version){
+		DOM.getElementById("app-version").setInnerText("app version "+version);
+	}
+
+	@Override
+	public void disableUpdateCheckButton() {
+		eCheckForUpdates.removeClassName("disabled");
+		eCheckForUpdates.addClassName("disabled");
+	}
+
+	@Override
+	public void enableUpdateCheckButton() {
+		eCheckForUpdates.removeClassName("disabled");
+	}
+
 }
