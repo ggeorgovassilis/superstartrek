@@ -13,7 +13,7 @@ public class Maps {
 		if (q != null) {
 			if (q.isExplored()) {
 				css+=" explored";	
-				if (!q.getKlingons().isEmpty()) {
+				if (q.hasKlingons()) {
 					symbol += "K";
 					css += " has-klingons";
 				} 

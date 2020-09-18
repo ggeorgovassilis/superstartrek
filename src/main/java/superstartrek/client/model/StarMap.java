@@ -170,7 +170,7 @@ public class StarMap {
 		for (int x = 0; x < quadrants.length; x++)
 			for (int y = 0; y < quadrants[x].length; y++)
 				// quadrant could be null in unit test
-				if (quadrants[x][y] != null && !quadrants[x][y].getKlingons().isEmpty())
+				if (quadrants[x][y] != null && quadrants[x][y].hasKlingons())
 					return true;
 		return false;
 	}
