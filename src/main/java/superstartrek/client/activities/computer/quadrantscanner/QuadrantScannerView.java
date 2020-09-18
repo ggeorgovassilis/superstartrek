@@ -1,8 +1,11 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
@@ -24,21 +27,70 @@ import superstartrek.client.utils.Timer;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
 
-	Element[][] eSectors = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-	Element eSelectedSector;
+	// Buckets are a "cache" of the DOM. Queries and updates are first served by
+	// Buckets,
+	// which can reduce DOM interactions.
+	static class Bucket {
+		Element e;
+		String innerHtml = "";
+		Set<String> css = new HashSet<String>();
+
+		Bucket(Element el) {
+			e = el;
+			innerHtml = el.getInnerHTML();
+			for (String s : el.getClassName().split(" "))
+				if (!s.isEmpty())
+					css.add(s);
+		}
+
+		void addClassName(String c) {
+			if (css.contains(c)) {
+				return;
+			}
+			css.add(c);
+			e.addClassName(c);
+		}
+
+		void removeClassName(String c) {
+			if (!css.contains(c)) {
+				return;
+			}
+			css.remove(c);
+			e.removeClassName(c);
+		}
+
+		void setInnerHTML(String html) {
+			if (innerHtml.equals(html)) {
+				return;
+			}
+			innerHtml = html;
+			e.setInnerHTML(html);
+		}
+
+		void setClassName(String cn) {
+			if (css.size() != 1 || (!cn.equals(css.iterator().next()))) {
+				css.clear();
+				css.add(cn);
+				e.setClassName(cn);
+			}
+		}
+	}
+
+	Bucket[][] buckets = new Bucket[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
+	Bucket bSelectedSector;
 	List<Element> beamElements = new ArrayList<>();
 
 	@Override
 	public void deselectSectors() {
-		eSelectedSector.removeClassName("selected");
+		bSelectedSector.removeClassName("selected");
 	}
 
 	@Override
 	public void selectSector(int x, int y) {
-		eSelectedSector = eSectors[x][y];
-		eSelectedSector.addClassName("selected");
+		bSelectedSector = buckets[x][y];
+		bSelectedSector.addClassName("selected");
 	}
-	
+
 	@Override
 	protected boolean alignsOnItsOwn() {
 		return true;
@@ -46,9 +98,9 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void updateSector(int x, int y, String content, String css) {
-		Element e = eSectors[x][y];
-		e.setInnerHTML(content);
-		e.setClassName(css);
+		Bucket b = buckets[x][y];
+		b.setInnerHTML(content);
+		b.setClassName(css);
 	}
 
 	@Override
@@ -72,13 +124,13 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 				eTd.setAttribute("data-y", "" + y);
 				eTd.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);
 				eTd.getStyle().setTop(RELATIVE_HEIGHT * (double) y, Unit.PCT);
-				eSectors[x][y] = eTd;
+				buckets[x][y] = new Bucket(eTd);
 				eTable.appendChild(eTd);
 			}
 		}
 		widgetImpl.addDomHandler((event) -> handleClick(event), MouseDownEvent.getType());
 		widgetImpl.addDomHandler((event) -> handleClick(event), TouchStartEvent.getType());
-		eSelectedSector = eSectors[0][0];
+		bSelectedSector = buckets[0][0];
 
 	}
 
@@ -105,28 +157,28 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void removeCssFromCell(int x, int y, String css) {
-		eSectors[x][y].removeClassName(css);
+		buckets[x][y].removeClassName(css);
 	}
 
 	@Override
 	public void addCssToCell(int x, int y, String css) {
-		eSectors[x][y].addClassName(css);
+		buckets[x][y].addClassName(css);
 	}
 
 	@Override
 	public int getHorizontalOffsetOfSector(int x, int y) {
-		return eSectors[x][y].getAbsoluteLeft();
+		return buckets[x][y].e.getAbsoluteLeft();
 	}
 
 	@Override
 	public int getVerticalOffsetOfSector(int x, int y) {
-		return eSectors[x][y].getAbsoluteTop();
+		return buckets[x][y].e.getAbsoluteTop();
 	}
 
 	@Override
 	public void drawBeamBetween(int x1, int y1, int x2, int y2, String colour) {
-		Element e1 = eSectors[x1][y1];
-		Element e2 = eSectors[x2][y2];
+		Element e1 = buckets[x1][y1].e;
+		Element e2 = buckets[x2][y2].e;
 
 		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
 		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
@@ -158,8 +210,8 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void animateTorpedoFireBetween(int x1, int y1, int x2, int y2, Callback<Void> callback) {
-		Element e1 = eSectors[x1][y1];
-		Element e2 = eSectors[x2][y2];
+		Element e1 = buckets[x1][y1].e;
+		Element e2 = buckets[x2][y2].e;
 
 		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
 		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
@@ -179,12 +231,12 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		int animation_duration_ms = 100;
 		Timer.postpone(() -> {
 			s.setProperty("transform", "translate(" + dx + "px," + dy + "px)");
-			s.setProperty("transition", "linear "+(animation_duration_ms/1000)+"s");
+			s.setProperty("transition", "linear " + (animation_duration_ms / 1000) + "s");
 		}, gap_ms);
-		Timer.postpone(()->{
+		Timer.postpone(() -> {
 			eTorpedo.removeFromParent();
 			callback.onSuccess(null);
-		}, gap_ms+animation_duration_ms);
+		}, gap_ms + animation_duration_ms);
 	}
 
 }
