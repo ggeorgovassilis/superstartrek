@@ -2,6 +2,7 @@ package superstartrek.client.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.combat.CombatHandler;
@@ -46,6 +47,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
 	Setting warpDrive = new Setting(1);
+	boolean toggledShieldsThisTurn = false;
 
 	Application application;
 	StarMap starMap;
@@ -562,6 +564,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		reactor.reset();
 		shields.reset();
 		impulse.reset();
+		toggledShieldsThisTurn = false;
 		if (!consume("energy", computeEnergyConsumption())) {
 			fireEvent(Events.GAME_OVER, (h) -> h.gameLost());
 			return;
@@ -574,17 +577,17 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		autoAim.setValue(!getAutoAim().getBooleanValue() && getAutoAim().isOperational());
 	}
 
-	double computeDirectionalShieldEfficiency(Location location) {
-		if (shieldDirection == ShieldDirection.omni)
+	public double computeDirectionalShieldEfficiency(ShieldDirection sd, Location location) {
+		if (sd == ShieldDirection.omni)
 			return SHIELD_BASE_COEFFICIENT;
 		int dx = this.location.x - location.x;
 		// reverse direction because higher Y mean going south, while atan2 uses the
 		// opposite notation
 		int dy = location.y - this.location.y;
-		double th = 360.0*(Math.atan2(dy, dx) + Math.PI) / (2.0 * Math.PI);
+		double th = 360.0 * (Math.atan2(dy, dx) + Math.PI) / (2.0 * Math.PI);
 		while (th >= 360)
 			th -= 360.0;
-		double shieldDirectionTh = shieldDirection.angle;
+		double shieldDirectionTh = sd.angle;
 		double deltaTh = Math.abs(shieldDirectionTh - th);
 		// the largest angular difference can be 180°
 		return 1.0 - (deltaTh / 180.0);
@@ -596,8 +599,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (target != this)
 			return;
 		application.message(actor.getName() + " at " + actor.getLocation() + " fired on us", "damage");
-		double directionalImpact = 0.5
-				+ SHIELD_DIRECTIONAL_COEFFICIENT * (1.0 - computeDirectionalShieldEfficiency(actor.getLocation()));
+		double directionalImpact = 0.5 + SHIELD_DIRECTIONAL_COEFFICIENT
+				* (1.0 - computeDirectionalShieldEfficiency(shieldDirection, actor.getLocation()));
 		applyDamage(damage * directionalImpact);
 	}
 
@@ -628,12 +631,45 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		this.shieldDirection = shieldDirection;
 	}
 
+	public ShieldDirection computeOptimalShieldDirection() {
+		List<Klingon> threats = getQuadrant().getKlingons().stream()
+				.filter(k -> k.isVisible() && k.getDisruptor().isOperational()
+						&& StarMap.within_distance(getLocation(), k.getLocation(), Klingon.DISRUPTOR_RANGE_SECTORS))
+				.sorted((k1,
+						k2) -> ((int) Math.signum(k2.getDisruptor().getMaximum() - k1.getDisruptor().getMaximum())))
+				.collect(Collectors.toList());
+		if (threats.isEmpty())
+			return ShieldDirection.omni;
+		ShieldDirection bestDirection = ShieldDirection.north;
+		Location threatLocation = threats.get(0).getLocation();
+		double efficiency = -1;
+		for (ShieldDirection sd : ShieldDirection.values()) {
+			double d = computeDirectionalShieldEfficiency(sd, threatLocation);
+			if (d > efficiency) {
+				efficiency = d;
+				bestDirection = sd;
+			}
+		}
+		return bestDirection;
+	}
+
 	public void toggleShields() {
 		ShieldDirection dir = getShieldDirection();
-		int nextIndex = (dir.ordinal()+1) % ShieldDirection.values().length;
-		ShieldDirection nextDir = ShieldDirection.values()[nextIndex];
+		ShieldDirection nextDir = dir;
+		if (toggledShieldsThisTurn) {
+			int nextIndex = (dir.ordinal() + 1) % ShieldDirection.values().length;
+			nextDir = ShieldDirection.values()[nextIndex];
+		} else {
+			ShieldDirection optimalDir = computeOptimalShieldDirection();
+			if (optimalDir == dir) {
+				int nextIndex = (dir.ordinal() + 1) % ShieldDirection.values().length;
+				nextDir = ShieldDirection.values()[nextIndex];
+			} else
+				nextDir = optimalDir;
+		}
+		toggledShieldsThisTurn = true;
 		setShieldDirection(nextDir);
 
 	}
-	
+
 }

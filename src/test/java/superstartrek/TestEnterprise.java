@@ -169,7 +169,8 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(8.5, 1), eq(false), eq(partTarget.none));
+		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser),
+				AdditionalMatchers.eq(8.5, 1), eq(false), eq(partTarget.none));
 	}
 
 	@Test
@@ -197,7 +198,8 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(4, 1), eq(false), eq(partTarget.propulsion));
+		verify(handler, times(1)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser),
+				AdditionalMatchers.eq(4, 1), eq(false), eq(partTarget.propulsion));
 	}
 
 	@Test
@@ -220,7 +222,7 @@ public class TestEnterprise extends BaseTest {
 		MessageHandler messageHandler = mock(MessageHandler.class);
 		bus.addHandler(Events.BEFORE_FIRE, handler);
 		bus.addHandler(Events.MESSAGE_POSTED, messageHandler);
-		
+
 		enterprise.getReactor().setValue(0);
 
 		assertEquals(100, klingon.getShields().getValue(), 0.1);
@@ -229,7 +231,8 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(0, bus.getFiredCount(Events.BEFORE_FIRE));
 		// TODO: damage probably wrong
-		verify(handler, times(0)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser), AdditionalMatchers.eq(21, 1), eq(false), eq(partTarget.none));
+		verify(handler, times(0)).onFire(same(quadrant), same(enterprise), same(klingon), eq(Weapon.phaser),
+				AdditionalMatchers.eq(21, 1), eq(false), eq(partTarget.none));
 		verify(messageHandler).messagePosted("Insufficient reactor output", "info");
 	}
 
@@ -356,7 +359,7 @@ public class TestEnterprise extends BaseTest {
 		assertEquals(1, bus.getFiredCount(Events.BEFORE_FIRE));
 		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 	}
-	
+
 	@Test
 	public void testDockWithStarbase() {
 		enterprise.setLocation(Location.location(1, 1));
@@ -378,7 +381,7 @@ public class TestEnterprise extends BaseTest {
 			}
 		});
 		when(browser.nextDouble()).thenReturn(0.0);
-		when(browser.nextInt(any(int.class))).thenReturn(1,1,2,2,5);
+		when(browser.nextInt(any(int.class))).thenReturn(1, 1, 2, 2, 5);
 		enterprise.dockInStarbase();
 
 		assertEquals(1, bus.getFiredCount(Events.THING_MOVED));
@@ -387,7 +390,7 @@ public class TestEnterprise extends BaseTest {
 		assertEquals(1, bus.getFiredCount(Events.ENTERPRISE_REPAIRED));
 		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
 	}
-	
+
 	@Test
 	public void test_applyDamage() {
 		when(browser.nextDouble()).thenReturn(1.0);
@@ -395,7 +398,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.applyDamage(30);
 		assertEquals(99.25, enterprise.getShields().getValue(), 0.1);
 	}
-	
+
 	@Test
 	public void test_onFire_no_directional_shield() {
 		when(browser.nextDouble()).thenReturn(1.0);
@@ -404,7 +407,8 @@ public class TestEnterprise extends BaseTest {
 		klingon.setLocation(Location.location(1, 1));
 		klingon.registerActionHandlers();
 		klingon.uncloak();
-		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false, partTarget.none);
+		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false,
+				partTarget.none);
 		assertEquals(99.7, enterprise.getShields().getValue(), 0.1);
 	}
 
@@ -418,7 +422,8 @@ public class TestEnterprise extends BaseTest {
 		klingon.registerActionHandlers();
 		klingon.uncloak();
 		enterprise.setShieldDirection(ShieldDirection.north);
-		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false, partTarget.none);
+		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false,
+				partTarget.none);
 		assertEquals(99.6, enterprise.getShields().getValue(), 0.1);
 	}
 
@@ -432,7 +437,8 @@ public class TestEnterprise extends BaseTest {
 		klingon.registerActionHandlers();
 		klingon.uncloak();
 		enterprise.setShieldDirection(ShieldDirection.north);
-		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false, partTarget.none);
+		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false,
+				partTarget.none);
 		assertEquals(99.5, enterprise.getShields().getValue(), 0.1);
 	}
 
@@ -447,8 +453,60 @@ public class TestEnterprise extends BaseTest {
 		klingon.registerActionHandlers();
 		klingon.uncloak();
 		enterprise.setShieldDirection(ShieldDirection.north);
-		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false, partTarget.none);
+		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false,
+				partTarget.none);
 		assertEquals(99.75, enterprise.getShields().getValue(), 0.1);
+	}
+
+	@Test
+	public void test_computeDirectionalShieldEfficiency() {
+		enterprise.setLocation(Location.location(1, 1));
+		assertEquals(0.75, enterprise.computeDirectionalShieldEfficiency(ShieldDirection.omni, Location.location(1, 0)),
+				0.1);
+		assertEquals(0.75, enterprise.computeDirectionalShieldEfficiency(ShieldDirection.omni, Location.location(1, 0)),
+				0.1);
+
+		assertEquals(1.0, enterprise.computeDirectionalShieldEfficiency(ShieldDirection.north, Location.location(1, 0)),
+				0.1);
+		assertEquals(0.0, enterprise.computeDirectionalShieldEfficiency(ShieldDirection.south, Location.location(1, 0)),
+				0.1);
+		assertEquals(0.5, enterprise.computeDirectionalShieldEfficiency(ShieldDirection.west, Location.location(1, 0)),
+				0.1);
+
+		assertEquals(1.0, enterprise.computeDirectionalShieldEfficiency(ShieldDirection.west, Location.location(0, 1)),
+				0.1);
+	}
+
+	@Test
+	public void test_toggleShields_no_klingons() {
+		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.north, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.east, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.south, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.west, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
+	}
+
+	@Test
+	public void test_toggleShields_with_klingons() {
+		Klingon k = new Klingon(ShipClass.BirdOfPrey);
+		k.uncloak();
+		k.setLocation(Location.location(1, 0));
+		quadrant.add(k);
+		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.east, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.south, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.west, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
 	}
 
 }
