@@ -8,6 +8,7 @@ import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.model.Enterprise.ShieldDirection;
 import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 
@@ -135,21 +136,18 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			callbackBeforeWarping.run();
 
 		Quadrant dropQuadrant = container[0];
-		quadrant.remove(this);
-		setQuadrant(dropQuadrant);
-
-		Location freeSpot = starMap.findFreeSpotAround(getQuadrant(), getLocation(), Constants.SECTORS_EDGE);
+		Location freeSpot = starMap.findFreeSpotAround(dropQuadrant, getLocation(), Constants.SECTORS_EDGE);
 		Location oldLocation = getLocation();
+		fromQuadrant.remove(this);
 		setLocation(freeSpot);
+		setQuadrant(dropQuadrant);
 		dropQuadrant.add(this);
 
 		application.starMap.markAsExploredAround(dropQuadrant);
 		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
-		fromQuadrant.remove(this);
 		fireEvent(Events.AFTER_ENTERPRISE_WARPED,
 				(h) -> h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
-		dropQuadrant.add(this);
 		fireEvent(Events.THING_MOVED,
 				(h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
 		turnsSinceWarp = 0;
@@ -364,7 +362,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (starBase == null)
 			return;
 		boolean inRange = StarMap.within_distance(this, quadrant.getStarBase(), 1.1);
-		boolean hasKlingons = !quadrant.getKlingons().isEmpty();
+		boolean hasKlingons = quadrant.hasKlingons();
 		if (!inRange && hasKlingons) {
 			application.message("Navigate manually when enemies present.");
 			return;
@@ -384,6 +382,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		repairCount += torpedos.repair() ? 1 : 0;
 		repairCount += impulse.repair() ? 1 : 0;
 		repairCount += shields.repair() ? 1 : 0;
+		shieldDirection = ShieldDirection.none;
 		repairCount += autoAim.repair() ? 1 : 0;
 		int antimatterRefuelled = (int) (antimatter.getMaximum() - antimatter.getValue());
 		repairCount += antimatter.repair() ? 1 : 0;
@@ -629,4 +628,12 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		this.shieldDirection = shieldDirection;
 	}
 
+	public void toggleShields() {
+		ShieldDirection dir = getShieldDirection();
+		int nextIndex = (dir.ordinal()+1) % ShieldDirection.values().length;
+		ShieldDirection nextDir = ShieldDirection.values()[nextIndex];
+		setShieldDirection(nextDir);
+
+	}
+	
 }
