@@ -111,7 +111,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		Quadrant quadrant = enterprise.getQuadrant();
 		Location enterprisePosition = enterprise.getLocation();
 		final double distanceOfRedAlertSquared = 3 * 3;
-		if (!quadrant.getKlingons().isEmpty()) {
+		if (quadrant.hasKlingons()) {
 			double minDistanceSquared = distanceOfRedAlertSquared;
 			for (Klingon k : quadrant.getKlingons()) {
 				minDistanceSquared = Math.min(minDistanceSquared, StarMap.distance_squared(enterprisePosition.x,
@@ -135,7 +135,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		Quadrant q = enterprise.getQuadrant();
 		StarBase starBase = q.getStarBase();
 		boolean visible = starBase != null
-				&& (q.getKlingons().isEmpty() || StarMap.within_distance(enterprise, starBase, 2));
+				&& (!q.hasKlingons() || StarMap.within_distance(enterprise, starBase, 2));
 		return visible;
 	}
 
@@ -276,11 +276,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 	
 	public void onToggleShieldsButtonClicked() {
-		ShieldDirection dir = enterprise.getShieldDirection();
-		int nextIndex = (dir.ordinal()+1) % ShieldDirection.values().length;
-		ShieldDirection nextDir = ShieldDirection.values()[nextIndex];
-		enterprise.setShieldDirection(nextDir);
-		updateShieldsDirectionCss(nextDir);
+		enterprise.toggleShields();
+		updateShieldsDirectionCss(enterprise.getShieldDirection());
 	}
 
 }
