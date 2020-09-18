@@ -3,8 +3,8 @@ package superstartrek.client.activities.pwa;
 public class FilesToCache {
 
 	public static final String[] fileNames = new String[] {//@formatter:off
-				".", 
-				"index.html", 
+			".", 
+			"index.html", 
 			"css/sst.css", 
 			"sst.webmanifest",
 			"superstartrek.superstartrek.nocache.js",
