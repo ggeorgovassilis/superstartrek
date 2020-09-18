@@ -28,7 +28,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public enum ShieldDirection {
 
-		none(0), north(90), east(0), south(270), west(180);
+		omni(0), north(90), east(0), south(270), west(180);
 
 		double angle;
 
@@ -38,7 +38,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	}
 
-	ShieldDirection shieldDirection = ShieldDirection.none;
+	ShieldDirection shieldDirection = ShieldDirection.omni;
 	Setting phasers = new Setting(30);
 	Setting torpedos = new Setting(10);
 	Setting antimatter = new Setting(1000);
@@ -382,7 +382,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		repairCount += torpedos.repair() ? 1 : 0;
 		repairCount += impulse.repair() ? 1 : 0;
 		repairCount += shields.repair() ? 1 : 0;
-		shieldDirection = ShieldDirection.none;
+		shieldDirection = ShieldDirection.omni;
 		repairCount += autoAim.repair() ? 1 : 0;
 		int antimatterRefuelled = (int) (antimatter.getMaximum() - antimatter.getValue());
 		repairCount += antimatter.repair() ? 1 : 0;
@@ -575,7 +575,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	double computeDirectionalShieldEfficiency(Location location) {
-		if (shieldDirection == ShieldDirection.none)
+		if (shieldDirection == ShieldDirection.omni)
 			return SHIELD_BASE_COEFFICIENT;
 		int dx = this.location.x - location.x;
 		// reverse direction because higher Y mean going south, while atan2 uses the
