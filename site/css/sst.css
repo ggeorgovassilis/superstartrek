@@ -201,19 +201,23 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	background-position: 0.2em 0.2em;
 }
 
+.star-class-a {
+	color: white;
+}
+
+.star-class-b {
+	color: cyan;
+}
+
+.star-class-f {
+	color: yellow;
+}
+
 .star-class-o {
 	color: darkturquoise;
 }
 
-.star-class-b {
-	color: cadetblue;
-}
-
-.star-class-a {
-	color: cyan;
-}
-
-.star-class-a {
+.star-class-asteroid {
 	color: lightgray;
 }
 

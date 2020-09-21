@@ -5,7 +5,7 @@ ef1f071701f037fbed51ee98ff3945b1 *app-menu.html
 409911a0a0c47544e0186b273df854cd *bird_of_prey.svg
 7534064b3454435e995269bc6dccab83 *bookmark.svg
 eeb646a22fd2d04787c6ea0b4d6d7981 *cancel.svg
-9384523d13a4a5080e0959ff4bdd9d7d *checksum.sha
+4de2d9dc03a68b61387043d5cc9d25c6 *checksum.sha
 6d22e4f2d2057c6e8d6fab098e76e80f *clear.cache.gif
 b106e2422d959fb50cad36ad897c10c1 *communicator.svg
 b9204a08a54e4784657b14bff1a1cd41 *compilation-mappings.txt
@@ -28,7 +28,7 @@ c24b830d3a9ad7de2156618289f56e81 *lrs.html
 9d7b12f10268adcda667417e70a8ae38 *messages.html
 6d08e70a0d638b9979893c9ab4e6a538 *missile.svg
 2439484dfa01b81bd20f7547b573a59f *navigation.svg
-065ab179efffd0a7a1ba00126f300ef2 *package.txt
+bf8c612eb35178bd7f45ab9f6064b472 *package.txt
 e8736c0920bbf1d2fe1cc12a63723641 *qr-code.svg
 27d563cfc353bc0c469a7d599251be0c *radar.svg
 2c3997e1e40416f519c445e785b7b30d *repair.svg
@@ -38,12 +38,12 @@ e8736c0920bbf1d2fe1cc12a63723641 *qr-code.svg
 d837d285b9a0d757389b86d20c2e11f6 *settings.html
 4161a311e79ce95cabb7aa901b3f21ec *shield.svg
 47a7c551976cb52cf3271ae96170af9e *spark.svg
-b2c890896c45f300160c562c80eb1d1a *sst.css
+ba33d249e21c5ef2985a4e7363da760f *sst.css
 4aeab9adbca314a8cc08c254635a8867 *sst.webmanifest
 fabc28bd92cbe78c4b666b9762f6b39f *stars-background.gif
 2dffe947ac959174da980621b1323db4 *status-report.html
 7bd857f2bb0b9b6600960ef826d38844 *superstartrek.superstartrek.devmode.js
-67e70d51f5b96942356cfeb07e4558b8 *superstartrek.superstartrek.nocache.js
+d3fbbb3d0eaf66448ced1fff62b9bccb *superstartrek.superstartrek.nocache.js
 aa2b39424ae618ea2cac504c356e6822 *target.svg
 3b83f13891b250cbffb66132af201b62 *torpedo.svg
 e7f21fbd818c1bbb3345e10dbb85ec86 *update-app-prompt.html
