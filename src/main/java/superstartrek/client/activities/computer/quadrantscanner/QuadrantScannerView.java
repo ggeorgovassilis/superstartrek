@@ -31,12 +31,15 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	// which can reduce DOM interactions.
 	static class Bucket {
 		Element e;
-		String innerHtml = "";
+		String innerHtml = ""; //must be initialised to some random string; later comparison might fail
+		// with predictable strings such as null or ""
+		
+		//GWT's "Element.hasClass" is slow, so we cache css classes here
 		Set<String> css = new HashSet<String>();
 
 		Bucket(Element el) {
 			e = el;
-			innerHtml = el.getInnerHTML();
+			innerHtml = el.getInnerHTML(); //this is slow, but executed only once at widget creation
 			for (String s : el.getClassName().split(" "))
 				if (!s.isEmpty())
 					css.add(s);

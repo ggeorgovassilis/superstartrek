@@ -51,7 +51,7 @@ public class TestSetup extends BaseTest{
 		assertEquals("star star-class-o", quadrant.getStars().get(0).getCss());
 
 		assertEquals(Location.location(1, 1), quadrant.getStars().get(1).getLocation());
-		assertEquals("Asteroid star", quadrant.getStars().get(1).getName());
+		assertEquals("Asteroid", quadrant.getStars().get(1).getName());
 		assertEquals("star star-class-asteroid", quadrant.getStars().get(1).getCss());
 
 		assertEquals(Location.location(1, 2), quadrant.getStars().get(2).getLocation());
@@ -59,7 +59,7 @@ public class TestSetup extends BaseTest{
 		assertEquals("star star-class-a", quadrant.getStars().get(2).getCss());
 
 		assertEquals(Location.location(3, 1),quadrant.getStars().get(3).getLocation());
-		assertEquals("Asteroid star",quadrant.getStars().get(3).getName());
+		assertEquals("Asteroid",quadrant.getStars().get(3).getName());
 		assertEquals("star star-class-asteroid", quadrant.getStars().get(3).getCss());
 
 		assertEquals(Location.location(0, 0),quadrant.getStars().get(4).getLocation());

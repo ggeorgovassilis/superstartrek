@@ -1,5 +1,7 @@
 package superstartrek.client.persistence;
 
+import java.util.HashMap;
+import java.util.Map;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
@@ -20,9 +22,19 @@ import superstartrek.client.model.Enterprise.ShieldDirection;
 public class StarMapDeserialiser {
 	
 	Application app;
+	// many strings (eg. star names) are frequently replicated. Internalising them
+	// saves plenty of memory.
+	Map<String,String> internedStrings = new HashMap<String, String>();
 	
 	public StarMapDeserialiser(Application app) {
 		this.app = app;
+	}
+	
+	String internalise(String s) {
+		if (internedStrings.containsKey(s))
+			return internedStrings.get(s);
+		internedStrings.put(s,s);
+		return s;
 	}
 
 	public StarMap readStarMap(String json) {
@@ -42,7 +54,7 @@ public class StarMapDeserialiser {
 	}
 
 	public Quadrant readQuadrant(JSONObject jsQuadrant, StarMap starMap) {
-		String name = jsQuadrant.get("name").isString().stringValue();
+		String name = internalise(jsQuadrant.get("name").isString().stringValue());
 		int x = (int) jsQuadrant.get("x").isNumber().doubleValue();
 		int y = (int) jsQuadrant.get("y").isNumber().doubleValue();
 		Quadrant q = new Quadrant(name, x, y);
@@ -66,7 +78,7 @@ public class StarMapDeserialiser {
 
 	public Thing readThing(JSONObject jsThing) {
 		Thing thing = null;
-		String type = jsThing.get("type").isString().stringValue();
+		String type = internalise(jsThing.get("type").isString().stringValue());
 		switch (type) {
 		case "star":
 			thing = readStar(jsThing);
@@ -92,10 +104,10 @@ public class StarMapDeserialiser {
 	}
 	
 	public void readThing(JSONObject jsThing, Thing thing) {
-		thing.setCss(jsThing.get("css").isString().stringValue());
-		thing.setSymbol(jsThing.get("symbol").isString().stringValue());
+		thing.setCss(internalise(jsThing.get("css").isString().stringValue()));
+		thing.setSymbol(internalise(jsThing.get("symbol").isString().stringValue()));
 		thing.setLocation(Location.location((int)jsThing.get("x").isNumber().doubleValue(), (int)jsThing.get("y").isNumber().doubleValue()));
-		thing.setName(jsThing.get("name").isString().stringValue());
+		thing.setName(internalise(jsThing.get("name").isString().stringValue()));
 	}
 	
 	public void readVessel(JSONObject jsThing, Vessel vessel) {
