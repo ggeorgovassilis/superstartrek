@@ -9,7 +9,6 @@ import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.model.Enterprise.ShieldDirection;
 import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 
