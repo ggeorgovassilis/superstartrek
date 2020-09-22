@@ -11,6 +11,8 @@ public interface IQuadrantScannerView extends View<QuadrantScannerPresenter>{
 
 	void updateSector(int x, int y, String content, String css);
 	
+	void clearSector(int x, int y);
+	
 	void removeCssFromCell(int x, int y, String css);
 	void addCssToCell(int x, int y, String css);
 	int getHorizontalOffsetOfSector(int x, int y);

@@ -66,11 +66,9 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	void updateSector(Thing thing) {
-		String content = "";
-		String css = "";
 		if (Thing.isVisible(thing)) {
-			content = thing.getSymbol();
-			css = thing.getCss();
+			String content = thing.getSymbol();
+			String css = thing.getCss();
 			if (Vessel.is(thing)) {
 				Vessel vessel = thing.as();
 				css += " " + CSS.damageClass(vessel.getShields());
@@ -80,12 +78,13 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 					css += " disruptor-disabled";
 				}
 			}
-		}
-		view.updateSector(thing.getLocation().x, thing.getLocation().y, content, css);
+			view.updateSector(thing.getLocation().x, thing.getLocation().y, content, css);
+		} else
+			view.clearSector(thing.getLocation().x, thing.getLocation().y);
 	}
 
 	void clearSector(int x, int y) {
-		view.updateSector(x, y, "", "");
+		view.clearSector(x, y);
 	}
 
 	void markSectorAsNavigationTarget(int x, int y) {

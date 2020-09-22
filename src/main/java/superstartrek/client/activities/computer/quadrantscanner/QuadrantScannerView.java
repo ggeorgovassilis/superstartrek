@@ -67,6 +67,12 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 			}
 			e.setClassName(classList);
 		}
+		
+		void clear() {
+			innerHtml = "";
+			e.setInnerHTML("");
+			css.clear();
+		}
 
 		void setInnerHTML(String html) {
 			if (innerHtml.equals(html)) {
@@ -246,6 +252,12 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 			eTorpedo.removeFromParent();
 			callback.onSuccess(null);
 		}, gap_ms + animation_duration_ms);
+	}
+
+	@Override
+	public void clearSector(int x, int y) {
+		Bucket b = buckets[x][y];
+		b.clear();
 	}
 
 }

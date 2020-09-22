@@ -66,7 +66,7 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		
 		presenter.onActiveQuadrantChanged(qFrom, qTo);
 		verify(view).updateSector(eq(0), eq(0), eq("O=Ξ"), eq("enterprise "));
-		verify(view, times(60)).updateSector(any(int.class), any(int.class), eq(""), eq(""));
+		verify(view, times(60)).clearSector(any(int.class), any(int.class));
 		verify(view).updateSector(5, 6, StarClass.A.symbol, "star star-class-a");
 		verify(view).updateSector(6, 5, StarClass.A.symbol, "star star-class-a");
 		verify(view).updateSector(1, 7, "&lt;!&gt;", "starbase");
@@ -102,7 +102,7 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		k.setLocation(Location.location(3, 4));
 		q.add(k);
 		presenter.thingMoved(k, q, Location.location(2, 2), q, k.getLocation());
-		verify(view).updateSector(2, 2, "", "");
+		verify(view).clearSector(2, 2);
 	}
 	
 	@Test
