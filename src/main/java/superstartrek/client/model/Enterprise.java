@@ -660,7 +660,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			nextDir = ShieldDirection.values()[nextIndex];
 		} else {
 			ShieldDirection optimalDir = computeOptimalShieldDirection();
-			if (optimalDir == dir) {
+			if (optimalDir == dir && optimalDir!=ShieldDirection.omni) {
 				int nextIndex = (dir.ordinal() + 1) % ShieldDirection.values().length;
 				nextDir = ShieldDirection.values()[nextIndex];
 			} else

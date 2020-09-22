@@ -50,7 +50,8 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 				return;
 			}
 			css.add(c);
-			e.addClassName(c);
+			//faster than e.addClassName
+			e.setClassName(e.getClassName()+" "+c);
 		}
 
 		void removeClassName(String c) {
@@ -58,7 +59,13 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 				return;
 			}
 			css.remove(c);
-			e.removeClassName(c);
+			String classList="";
+			String prefix="";
+			for (String s:css) {
+				classList+=prefix+s;
+				prefix=" ";
+			}
+			e.setClassName(classList);
 		}
 
 		void setInnerHTML(String html) {

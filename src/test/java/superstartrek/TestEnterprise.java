@@ -481,6 +481,9 @@ public class TestEnterprise extends BaseTest {
 	public void test_toggleShields_no_klingons() {
 		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
 		enterprise.toggleShields();
+		//1st toggle in turn returns best direction
+		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
+		enterprise.toggleShields();
 		assertEquals(ShieldDirection.north, enterprise.getShieldDirection());
 		enterprise.toggleShields();
 		assertEquals(ShieldDirection.east, enterprise.getShieldDirection());
@@ -509,4 +512,23 @@ public class TestEnterprise extends BaseTest {
 		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
 	}
 
+	@Test
+	public void test_toggleShields_with_klingons2() {
+		quadrant.remove(enterprise);
+		enterprise.setLocation(Location.location(3, 3));
+		quadrant.add(enterprise);
+		
+		Klingon k = new Klingon(ShipClass.BirdOfPrey);
+		k.uncloak();
+		k.setLocation(Location.location(2, 4));
+		quadrant.add(k);
+		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		//1st toggle in turn returns best direction; 2nd will rotate shield around
+		assertEquals(ShieldDirection.omni, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.north, enterprise.getShieldDirection());
+		enterprise.toggleShields();
+		assertEquals(ShieldDirection.east, enterprise.getShieldDirection());
+	}
 }

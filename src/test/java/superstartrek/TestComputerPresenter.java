@@ -103,7 +103,7 @@ public class TestComputerPresenter extends BaseTest{
 	@Test
 	public void test_toggle_shields_direction() {
 		presenter.onToggleShieldsButtonClicked();
-		verify(view).addShieldCss("shield-north");
+		verify(view).addShieldCss("shield-omni");
 	}
 	
 	@Test
