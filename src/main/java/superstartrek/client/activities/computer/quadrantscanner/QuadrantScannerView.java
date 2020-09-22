@@ -71,6 +71,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		void clear() {
 			innerHtml = "";
 			e.setInnerHTML("");
+			e.setClassName("");
 			css.clear();
 		}
 
