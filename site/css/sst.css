@@ -896,7 +896,7 @@ a.disabled,button.disabled {
 }
 
 .sector-context-menu .cell.disabled {
-	filter: grayscale(100%) brightness(100%) contrast(50%);
+	filter: grayscale(100%) brightness(20%) contrast(80%);
 }
 
 .sector-context-menu .cell button {
