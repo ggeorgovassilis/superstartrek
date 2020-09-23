@@ -26,74 +26,8 @@ import superstartrek.client.utils.Timer;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
 
-	// Buckets are a "cache" of the DOM. Queries and updates are first served by
-	// Buckets,
-	// which can reduce DOM interactions.
-	static class Bucket {
-		Element e;
-		String innerHtml = ""; //must be initialised to some random string; later comparison might fail
-		// with predictable strings such as null or ""
-		
-		//GWT's "Element.hasClass" is slow, so we cache css classes here
-		Set<String> css = new HashSet<String>();
-
-		Bucket(Element el) {
-			e = el;
-			innerHtml = el.getInnerHTML(); //this is slow, but executed only once at widget creation
-			for (String s : el.getClassName().split(" "))
-				if (!s.isEmpty())
-					css.add(s);
-		}
-
-		void addClassName(String c) {
-			if (css.contains(c)) {
-				return;
-			}
-			css.add(c);
-			//faster than e.addClassName
-			e.setClassName(e.getClassName()+" "+c);
-		}
-
-		void removeClassName(String c) {
-			if (!css.contains(c)) {
-				return;
-			}
-			css.remove(c);
-			String classList="";
-			String prefix="";
-			for (String s:css) {
-				classList+=prefix+s;
-				prefix=" ";
-			}
-			e.setClassName(classList);
-		}
-		
-		void clear() {
-			innerHtml = "";
-			e.setInnerHTML("");
-			e.setClassName("");
-			css.clear();
-		}
-
-		void setInnerHTML(String html) {
-			if (innerHtml.equals(html)) {
-				return;
-			}
-			innerHtml = html;
-			e.setInnerHTML(html);
-		}
-
-		void setClassName(String cn) {
-			if (css.size() != 1 || (!cn.equals(css.iterator().next()))) {
-				css.clear();
-				css.add(cn);
-				e.setClassName(cn);
-			}
-		}
-	}
-
-	Bucket[][] buckets = new Bucket[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-	Bucket bSelectedSector;
+	ElementWrapper[][] buckets = new ElementWrapper[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
+	ElementWrapper bSelectedSector;
 	List<Element> beamElements = new ArrayList<>();
 
 	@Override
@@ -114,7 +48,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void updateSector(int x, int y, String content, String css) {
-		Bucket b = buckets[x][y];
+		ElementWrapper b = buckets[x][y];
 		b.setInnerHTML(content);
 		b.setClassName(css);
 	}
@@ -140,7 +74,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 				eTd.setAttribute("data-y", "" + y);
 				eTd.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);
 				eTd.getStyle().setTop(RELATIVE_HEIGHT * (double) y, Unit.PCT);
-				buckets[x][y] = new Bucket(eTd);
+				buckets[x][y] = ElementWrapper.create(eTd);
 				eTable.appendChild(eTd);
 			}
 		}
@@ -183,18 +117,18 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public int getHorizontalOffsetOfSector(int x, int y) {
-		return buckets[x][y].e.getAbsoluteLeft();
+		return buckets[x][y].getElement().getAbsoluteLeft();
 	}
 
 	@Override
 	public int getVerticalOffsetOfSector(int x, int y) {
-		return buckets[x][y].e.getAbsoluteTop();
+		return buckets[x][y].getElement().getAbsoluteTop();
 	}
 
 	@Override
 	public void drawBeamBetween(int x1, int y1, int x2, int y2, String colour) {
-		Element e1 = buckets[x1][y1].e;
-		Element e2 = buckets[x2][y2].e;
+		Element e1 = buckets[x1][y1].getElement();
+		Element e2 = buckets[x2][y2].getElement();
 
 		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
 		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
@@ -226,8 +160,8 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void animateTorpedoFireBetween(int x1, int y1, int x2, int y2, Callback<Void> callback) {
-		Element e1 = buckets[x1][y1].e;
-		Element e2 = buckets[x2][y2].e;
+		Element e1 = buckets[x1][y1].getElement();
+		Element e2 = buckets[x2][y2].getElement();
 
 		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
 		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
@@ -257,7 +191,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void clearSector(int x, int y) {
-		Bucket b = buckets[x][y];
+		ElementWrapper b = buckets[x][y];
 		b.clear();
 	}
 
