@@ -564,10 +564,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		shields.reset();
 		impulse.reset();
 		toggledShieldsThisTurn = false;
-		if (!consume("energy", computeEnergyConsumption())) {
-			fireEvent(Events.GAME_OVER, (h) -> h.gameLost());
-			return;
-		}
+		consume("energy", computeEnergyConsumption());
 		maybeAutoRepair();
 		playComputerTurn();
 	}

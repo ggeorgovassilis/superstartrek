@@ -41,6 +41,8 @@ public class Events {
 	public final static Event<ContextMenuHideHandler> CONTEXT_MENU_HIDE = new Event<>("CONTEXT_MENU_HIDE");
 	public final static Event<GamePhaseHandler> KLINGON_TURN_ENDED = new Event<>("KLINGON_TURN_ENDED");
 	public final static Event<GamePhaseHandler> GAME_OVER = new Event<>("GAME_OVER");
+	public final static Event<GamePhaseHandler> GAME_WON = new Event<>("GAME_WON");
+	public final static Event<GamePhaseHandler> GAME_LOST = new Event<>("GAME_LOST");
 	public final static Event<GamePhaseHandler> AFTER_TURN_STARTED = new Event<>("AFTER_TURN_STARTED");
 	public final static Event<NavigationHandler> THING_MOVED = new Event<>("THING_MOVED");
 	public final static Event<GamePhaseHandler> GAME_RESTART = new Event<>("GAME_RESTART");

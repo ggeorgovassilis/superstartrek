@@ -7,6 +7,8 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
+import superstartrek.client.bus.Events;
+
 import static superstartrek.client.bus.Events.*;
 
 import superstartrek.client.model.Enterprise;
@@ -188,10 +190,12 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 
 	public void gameOver(GameOutcome outcome, String reason) {
 		gameIsRunning=false;
+		message("Game "+outcome.toString(), "gameover");
 		if (outcome == GameOutcome.won)
-			fireEvent(GAME_OVER, (h)->h.gameWon());
+			fireEvent(GAME_WON, (h)->h.gameWon());
 		if (outcome == GameOutcome.lost)
-			fireEvent(GAME_OVER, (h)->h.gameLost());
+			fireEvent(GAME_LOST, (h)->h.gameLost());
+		fireEvent(GAME_OVER, (h)->h.gameOver());
 	}
 
 	@Override
@@ -199,16 +203,17 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		if (Enterprise.is(consumer)) {
 			Enterprise enterprise = consumer.as();
 			if (enterprise.getAntimatter().getValue() <= 0) {
-				message("We run out of anti matter");
-				gameOver(GameOutcome.lost, "We run out of anti matter.");
+				message("We ran out of anti matter");
+				gameOver(GameOutcome.lost, "We ran out of anti matter.");
 			}
 		}
 	}
 	
 	@Override
 	public void onEnterpriseDamaged(Enterprise enterprise) {
-		if (enterprise.getShields().getValue()<=0)
+		if (enterprise.getShields().getValue()<=0) {
 			gameOver(GameOutcome.lost, "The Enterprise was destroyed.");
+		}
 	}
 
 	@Override

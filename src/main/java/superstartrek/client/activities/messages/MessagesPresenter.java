@@ -6,13 +6,17 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.bus.Events;
+import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
+import superstartrek.client.model.StarMap;
 
 public class MessagesPresenter extends BasePresenter<IMessagesView>
-		implements MessageHandler, PopupViewPresenter<IMessagesView>, KeyPressedEventHandler{
+		implements MessageHandler, PopupViewPresenter<IMessagesView>, KeyPressedEventHandler, GamePhaseHandler{
 
 	public MessagesPresenter(Application application) {
 		super(application);
+		addHandler(Events.GAME_STARTED, this);
+		addHandler(Events.GAME_OVER, this);
 		addHandler(Events.MESSAGE_POSTED, this);
 	}
 
@@ -46,6 +50,17 @@ public class MessagesPresenter extends BasePresenter<IMessagesView>
 			case KeyCodes.KEY_ENTER:
 				hideMessages();
 		}
+	}
+	
+	@Override
+	public void onGameStarted(StarMap map) {
+		removeHandler(Events.MESSAGE_POSTED, this);
+		addHandler(Events.MESSAGE_POSTED, this);
+	}
+	
+	@Override
+	public void gameOver() {
+		removeHandler(Events.MESSAGE_POSTED, this);
 	}
 
 }
