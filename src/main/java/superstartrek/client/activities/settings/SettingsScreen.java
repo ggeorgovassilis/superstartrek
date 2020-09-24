@@ -64,7 +64,7 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 		NativeEvent ne = event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
 		
-		if (e == eCheckForUpdates) {
+		if (eCheckForUpdates.isOrHasChild(e)) {
 			presenter.onCheckForUpdatesButtonClicked();
 		}
 	}

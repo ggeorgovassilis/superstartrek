@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.utils.HtmlWidget;
+import superstartrek.client.utils.Strings;
 import superstartrek.client.utils.Timer;
 
 public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
@@ -95,7 +96,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 		event.preventDefault();
 		event.stopPropagation();
 		String command = e.getAttribute("id");
-		if (command != null && !command.isEmpty())
+		if (!Strings.isEmpty(command))
 			presenter.onCommandClicked(command);
 	}
 

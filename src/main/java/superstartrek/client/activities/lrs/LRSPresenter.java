@@ -58,7 +58,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 	public void showLrs() {
 		updateLrsView();
 		view.show();
-		Quadrant loc = application.starMap.enterprise.getQuadrant();
+		Quadrant loc = getActiveQuadrant();
 		view.focusCell(loc.x, loc.y);
 	}
 

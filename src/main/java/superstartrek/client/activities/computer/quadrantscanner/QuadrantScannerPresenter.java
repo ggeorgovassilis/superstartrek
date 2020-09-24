@@ -105,8 +105,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	void updateScreen() {
-		StarMap starMap = getApplication().starMap;
-		Quadrant q = starMap.enterprise.getQuadrant();
+		Quadrant q = getActiveQuadrant();
 		// we could just erase all sectors first and paint things over it, but that
 		// would increase DOM interactions.
 		// this approach (render into an array first, paint each sector only once)
@@ -223,7 +222,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		case 'm':
 			int dx = view.getHorizontalOffsetOfSector(selectedSector.x, selectedSector.y);
 			int dy = view.getVerticalOffsetOfSector(selectedSector.x, selectedSector.y);
-			Quadrant quadrant = application.starMap.enterprise.getQuadrant();
+			Quadrant quadrant = getActiveQuadrant();
 			fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(selectedSector, quadrant, dx, dy));
 			break;
 		}

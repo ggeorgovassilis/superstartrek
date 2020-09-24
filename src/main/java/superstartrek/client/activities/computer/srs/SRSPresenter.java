@@ -25,7 +25,7 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 
 	public void updateRadar() {
 		StarMap map = application.starMap;
-		Quadrant q0 = map.enterprise.getQuadrant();
+		Quadrant q0 = getActiveQuadrant();
 		for (int y = 0; y < 3; y++) {
 			int qy = q0.y + y - 1;
 			for (int x = 0; x < 3; x++) {
@@ -41,13 +41,13 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	
 	public void updateCenterQuadrant() {
 		StarMap map = application.starMap;
-		Quadrant q = map.enterprise.getQuadrant();
+		Quadrant q = getActiveQuadrant();
 		Maps.renderCell(1, 1, map, q, "", view);
 	}
 
 	public void quadrantWasClicked(int dx, int dy) {
 		StarMap map = application.starMap;
-		Quadrant q = map.enterprise.getQuadrant();
+		Quadrant q = getActiveQuadrant();
 		int x = q.x + dx;
 		int y = q.y + dy;
 		if (map.isOnMap(x, y))
