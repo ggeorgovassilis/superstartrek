@@ -849,7 +849,7 @@ a.disabled,button.disabled {
 .PopupView.slidein {
 	left: 0%;
 	visibility: visible;
-	transform:translateX(0%);
+	transform: translateX(0%);
 	transition: transform 0.2s ease, visibility 0.2s;
 }
 

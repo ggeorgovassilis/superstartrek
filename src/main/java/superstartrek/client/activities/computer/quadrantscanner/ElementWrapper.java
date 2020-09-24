@@ -5,6 +5,12 @@ import com.google.gwt.dom.client.Element;
 
 import superstartrek.client.utils.Strings;
 
+/** 
+ * A wrapper and cache around {@link Element}. Some methods, eg. Element.addClass or Element,removeClass
+ * are slow and CPU intensive. DOM operations are slow [citation needed] and should be avoided. The ElementWrapper
+ * caches values of interest and minimises interactions with the DOM. ElementWrapper should be used where
+ * elements are frequently accessed such as the sector tiles in the quadrant scanner screen.
+ */
 class ElementWrapper extends JavaScriptObject{
 
 	protected ElementWrapper() {
