@@ -1,10 +1,7 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
@@ -19,7 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.model.Constants;
-import superstartrek.client.utils.DomUtils;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 import superstartrek.client.utils.Timer;
@@ -57,31 +53,29 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	protected HtmlWidget createWidgetImplementation() {
 		HtmlWidget p = new HtmlWidget(DOM.createDiv());
 		p.getElement().setId("quadrantscan");
-		p.getElement().setAttribute("sadasd", "asdasd");
 		return p;
 	}
 
 	public QuadrantScannerView(QuadrantScannerPresenter presenter) {
 		super(presenter);
 		Widget widgetImpl = getWidget();
-		Element eTable = DomUtils.getTbody(widgetImpl.getElement());
+		Element eMatrix = widgetImpl.getElement();
 		final double RELATIVE_WIDTH = 100.0 / Constants.SECTORS_EDGE;
 		final double RELATIVE_HEIGHT = 100.0 / Constants.SECTORS_EDGE;
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
-				Element eTd = DOM.createDiv();
-				eTd.setAttribute("data-x", "" + x);
-				eTd.setAttribute("data-y", "" + y);
-				eTd.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);
-				eTd.getStyle().setTop(RELATIVE_HEIGHT * (double) y, Unit.PCT);
-				buckets[x][y] = ElementWrapper.create(eTd);
-				eTable.appendChild(eTd);
+				Element eSector = DOM.createDiv();
+				eSector.setAttribute("data-x", "" + x);
+				eSector.setAttribute("data-y", "" + y);
+				eSector.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);
+				eSector.getStyle().setTop(RELATIVE_HEIGHT * (double) y, Unit.PCT);
+				buckets[x][y] = ElementWrapper.create(eSector);
+				eMatrix.appendChild(eSector);
 			}
 		}
 		widgetImpl.addDomHandler((event) -> handleClick(event), MouseDownEvent.getType());
 		widgetImpl.addDomHandler((event) -> handleClick(event), TouchStartEvent.getType());
 		bSelectedSector = buckets[0][0];
-
 	}
 
 	protected void handleClick(DomEvent<?> event) {
