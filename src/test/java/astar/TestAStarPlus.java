@@ -41,7 +41,6 @@ public class TestAStarPlus extends BaseTest {
 		int turns = 0;
 		while (time+System.currentTimeMillis()<TEST_DURATION_MS) {
 			Quadrant q = new Quadrant("", 0, 0);
-			StarMap map = new StarMap();
 			Location from = Location.location(random.nextInt(Constants.SECTORS_EDGE),
 					random.nextInt(Constants.SECTORS_EDGE));
 			Location to = Location.location(random.nextInt(Constants.SECTORS_EDGE),
@@ -55,7 +54,7 @@ public class TestAStarPlus extends BaseTest {
 
 			for (int innerTurn = 0; innerTurn < TURNS_WITH_SAME_MAP; innerTurn++) {
 				AStarPlus asp = new AStarPlus();
-				List<Location> pathAsp = asp.findPathBetween(from, to, q, map, 100);
+				List<Location> pathAsp = asp.findPathBetween(from, to, q, 100);
 				assertTrue(pathAsp.size() >= 0); // useless check, but mutes Eclipse warning about pathAsp not used
 			}
 			turns++;
@@ -147,7 +146,7 @@ public class TestAStarPlus extends BaseTest {
 			}
 
 			AStarPlus asp = new AStarPlus();
-			List<Location> pathAsp = asp.findPathBetween(from, to, q, map, 100);
+			List<Location> pathAsp = asp.findPathBetween(from, to, q, 100);
 			String log = "--------------\n";
 			log += ("a*+ " + pathAsp + "\n");
 			log += printMap(q, from, to, pathAsp) + "\n";
@@ -186,13 +185,13 @@ public class TestAStarPlus extends BaseTest {
 			}
 
 			AStarPlus asp = new AStarPlus();
-			List<Location> pathAsp = asp.findPathBetween(from, to, q, map, Klingon.MAX_SECTOR_SPEED);
+			List<Location> pathAsp = asp.findPathBetween(from, to, q, Klingon.MAX_SECTOR_SPEED);
 			String log = "--------------\n";
 			log += ("a*+ " + pathAsp + "\n");
 			log += printMap(q, from, to, pathAsp) + "\n";
 
 			AStarPlus reference = new AStarPlus();
-			List<Location> fullPath = reference.findPathBetween(from, to, q, map, 100);
+			List<Location> fullPath = reference.findPathBetween(from, to, q, 100);
 			for (int s=0;s<Math.min(Klingon.MAX_SECTOR_SPEED, fullPath.size());s++)
 				assertEquals(log, fullPath.get(s), pathAsp.get(s));
 
@@ -215,7 +214,7 @@ public class TestAStarPlus extends BaseTest {
 		k.setLocation(from);
 		q.add(k);
 		AStarPlus asp = new AStarPlus();
-		List<Location> pathAsp = asp.findPathBetween(from, to, q, map, 100);
+		List<Location> pathAsp = asp.findPathBetween(from, to, q, 100);
 		System.out.println("asp " + pathAsp);
 	}
 }

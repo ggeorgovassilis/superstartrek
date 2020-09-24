@@ -4,7 +4,6 @@ import java.util.List;
 
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
 
 public interface PathFinder {
 
@@ -13,10 +12,13 @@ public interface PathFinder {
 	 * Path will avoid obstacles. Any "Thing" instance is considered an obstacle.
 	 * @param from Location to start path from
 	 * @param to Location to end path at
-	 * @param quadrant Quadrant the path is in
-	 * @param map 
 	 * @return
 	 */
-	List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, StarMap map);
+	List<Location> findPathBetween(Location from, Location to);
+	
+	/**
+	 * Paths will be found in this quadrant. Must be called before invoking {@link #findPathBetween(Location, Location)}
+	 */
+	void load(Quadrant quadrant);
 
 }

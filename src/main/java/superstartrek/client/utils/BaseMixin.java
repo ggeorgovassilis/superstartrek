@@ -5,6 +5,7 @@ import superstartrek.client.bus.EventHandler;
 import superstartrek.client.bus.Event;
 import superstartrek.client.bus.EventBus;
 import superstartrek.client.bus.EventCallback;
+import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.StarMap;
 
 public interface BaseMixin {
@@ -43,5 +44,9 @@ public interface BaseMixin {
 	
 	default StarMap getStarMap() {
 		return getApplication().starMap;
+	}
+	
+	default Quadrant getActiveQuadrant() {
+		return getApplication().getActiveQuadrant();
 	}
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import superstartrek.client.model.Constants;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 
 /**
@@ -81,7 +80,7 @@ public class AStarPlus {
 		matrix[index] = OCCUPIED;
 	}
 
-	void initialiseMatrix(Quadrant quadrant, StarMap map) {
+	void initialiseMatrix(Quadrant quadrant) {
 		for (int i = 0; i < matrix.length; i++)
 			matrix[i] = FREE;
 		quadrant.doWithThings(obstacle -> markOccupied(obstacle));
@@ -149,19 +148,21 @@ public class AStarPlus {
 	 * @param from Start path here. The returned list does not contain "from"
 	 * @param to End path here. The returned list contains "to".
 	 * @param quadrant Every "Thing" in this Quadrant is considered an obstacle (excluding anything at "to").
-	 * @param map
 	 * @param trimSteps Return only that many steps in the path. This is a performance
 	 * optimisation. The entire path is still computed, but if only the first "trimSteps" number of steps are needed,
 	 * the algorithm can run a bit faster.
 	 * @return
 	 */
-	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, StarMap map, int trimSteps) {
+	public List<Location> findPathBetween(Location from, Location to, Quadrant quadrant, int trimSteps) {
 		if (from == to)
 			return new ArrayList<Location>();
+		// the implementation works in reverse: it traces steps from "to" towards "from".
+		// this would require reversing the list at the end; by swapping terminals
+		// we skip that step.
 		Location tmp = from;
 		from = to;
 		to = tmp;
-		initialiseMatrix(quadrant, map);
+		initialiseMatrix(quadrant);
 		final int indexFrom = coordsToIndex(from.x, from.y);
 		addToDo(indexFrom);
 		matrix[indexFrom] = OCCUPIED;

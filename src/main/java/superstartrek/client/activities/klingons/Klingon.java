@@ -132,8 +132,8 @@ public class Klingon extends Vessel
 			return;
 		PathFinder pathFinder = new PathFinderImpl();
 		// path includes start and end
-		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation(),
-				enterprise.getQuadrant(), map);
+		pathFinder.load(quadrant);
+		List<Location> path = pathFinder.findPathBetween(this.getLocation(), enterprise.getLocation());
 		if (path.isEmpty())
 			return;
 		// path used to contain origin sector (old a* impl); it doesn't anymore, that's
