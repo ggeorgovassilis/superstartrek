@@ -33,7 +33,6 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	@Override
 	public void decorateWidget() {
 		super.decorateWidget();
-		getElement().setAttribute("tabindex", "1");
 		addStyleName("PopupView");
 		addDomHandler((event) -> {
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
@@ -79,7 +78,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		// focus popup so that ESC key can hide it (otherwise key handler won't fire).
 		// focus needs to be delayed to after animation is done to avoid animation lag
 		// focus makes no sense if keyboard not present
-		Timer.postpone(() -> animationIsDone(), Constants.ANIMATION_DURATION_MS);
+		Timer.postpone(() -> animationIsDone(), Constants.POST_ANIMATION_DURATION_MS);
 		visible = true;
 	}
 
