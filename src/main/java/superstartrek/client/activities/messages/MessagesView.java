@@ -36,7 +36,7 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 	public void showMessage(String formattedMessage, String category) {
 		Element line = DOM.createElement("li");
 		line.setInnerHTML(formattedMessage);
-		line.addClassName(category);
+		line.setClassName(category);
 		eContent.appendChild(line);
 	}
 
