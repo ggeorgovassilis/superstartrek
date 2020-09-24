@@ -42,10 +42,6 @@ li {
 	list-style-type: none;
 }
 
-.credits li a{
-	line-height:1.5em;
-}
-
 a, a:visited, button, .button {
 	text-decoration: none;
 	color: white;
@@ -64,14 +60,14 @@ a, a:visited, button, .button {
 	font-weight:bold;
 }
 
-.half-width {
-	width: 50%;
+a.disabled,button.disabled {
+	background-color: rgb(20, 40, 60);
+	color: darkgray !important;
+	filter:grayscale(0.5) blur(0.7px);
 }
 
-.credits a {
-	outline: none transparent 0px;
-	width: auto;
-	float: none;
+.half-width {
+	width: 50%;
 }
 
 @media ( max-width : 800px) {
@@ -99,9 +95,26 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	right:0;
 	position:absolute;
 }
+
+/*
+ * Credits
+ */
+ 
+.credits a {
+	line-height:1.5em;
+	outline: none transparent 0px;
+	width: auto;
+	float: none;
+}
+
 /*
  * Long range scan
  */
+ #longrangescan {
+	width: 99.5%;
+	background: rgba(0, 0, 0, 0.7);
+}
+ 
 .region-names {
 	background-color: #111111;
 	color: white;
@@ -109,23 +122,26 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	font-size: 0.8em;
 }
 
-.region-names td {
+.region-names > td {
 	line-height: 2em;
 }
 
-.quadrants td {
+.quadrants {
+	color: #636363;
+}
+
+.quadrants > td {
 	border-right: solid DarkViolet 1px;
 	padding: 4px 10px 4px 10px;
 	cursor: pointer;
-	color: #636363;
 	text-align: center;
 }
 
-.quadrants td.navigation-target{
+.navigation-target{
 	color:black;
 }
 
-.quadrants td.explored {
+.explored {
 	color: white;
 }
 
@@ -146,15 +162,6 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 	color: transparent !important;
 }
 
-.vessel-scan {
-	width: 100%;
-	margin-bottom: 0.5em;
-}
-
-.vessel-scan tr {
-	line-height: 1.5em;
-}
-
 .has-starbase {
 	background: blue;
 }
@@ -164,288 +171,12 @@ a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
 		, midnightblue 10px);
 }
 
-#quadrantscan {
-	width: 99.5%;
-	/* 100% causes window scrolling which slows painting down*/
-	font-size: 130%;
-	margin: 0;
-	padding: 0;
-	height: 10em;
-	min-height: 10em;
-	max-height: 10em;
-	position: relative;
-	border-left: solid gray 1px;
-	border-top: solid gray 1px;
-	overflow:hidden;
-}
-
-#quadrantscan>div {
-	border-right: solid gray 1px;
-	border-bottom: solid #505050 1px;
-	text-align: center;
-	width: 12.5%;
-	margin: 0;
-	padding: 0;
-	cursor: pointer;
-	font-size: inherit;
-	height: 1.2em;
-	line-height: 1.2em;
-	overflow: hidden;
-	position: absolute;
-}
-
-#lrs-button{
-	background-image: url('../images/radar.svg');
-	background-repeat: no-repeat;
-	background-size: 2.5em;
-	background-position: 0.2em 0.2em;
-}
-
-.star-class-a {
-	color: white;
-}
-
-.star-class-b {
-	color: cyan;
-}
-
-.star-class-f {
-	color: yellow;
-}
-
-.star-class-o {
-	color: darkturquoise;
-}
-
-.star-class-asteroid {
-	color: lightgray;
-}
-
-.selected {
-	background-color: midnightblue;
-}
-
-
-.container{
-	overflow:hidden;
-}
-/**
- * Short range scan
- */
-.short-range-scan-container {
-	overflow: hidden;
-	margin-right: 0.5em;
-	background-color: rgba(10, 10, 10, 0.5);
-	width: 100%;
-	margin-bottom: 0.5em;
-}
-
-#shortrangescan td {
-	width: 33.3%;
-	text-align: center;
-	cursor: pointer;
-	padding: 5px 0 5px 0;
-}
-
-#shortrangescan {
-	width: 100%;
-	height: 6em;
-	min-height: 6em;
-	max-height: 6em;
-	overflow: visible;
-	border-collapse: collapse;
-}
-
-#shortrangescan tr {
-	height: 2em;
-	min-height: 2em;
-	max-height: 2em;
-	overflow: visible;
-}
-
 /*
- * Computer
- */
-#longrangescan {
-	width: 99.5%;
-	background: rgba(0, 0, 0, 0.7);
-}
-
-/*
- * Intro screen
+ * Computer screen
  */
  
-.federation-logo {
+ a.single {
 	display: block;
-	height: 10em;
-}
-
-#screen-intro {
-	display: block;
-	font-family: monospace;
-}
-
-.logo {
-	font-size: 100%;
-	font-weight: bold;
-}
-
-@media ( max-width : 1000px) {
-	#commandbar, #sectorselectionbar a, #sectorselectionbar button {
-		width: 100%;
-	}
-	#shortrangescan, .short-range-scan-container {
-		width: 100%;
-		margin-bottom: 0;
-	}
-	.logo {
-		font-size: 80%;
-	}
-}
-
-@media ( max-width : 600px) {
-	.logo {
-		font-size: 60%;
-	}
-}
-
-.intro-container {
-	margin-bottom: 1em;
-}
-
-.start-game-button {
-	display: block;
-	background-color: rgb(0, 108, 109);
-	animation: pulse 2s infinite;
-	font-size: 100%;
-}
-
-@keyframes pulse { 0% {
-	background-color: rgba(0, 108, 109, 0.3);
-	outline: solid transparent 1px;
-}
-
-50%{
-background-color:rgb(0,108,109);
-outline:solid turquoise 1px;}
-100%{background-color:rgba(0,108,109,0.3);
-outline:solid transparent 1px;
-}
-}
-
-.qr-code-link{
-	outline:none;
-}
-
-.qr-code-link img{
-	border:none;
-	width:100%;
-}
-
-.credits {
-	clear: both;
-	overflow: hidden;
-	background-color: rgba(0, 0, 0, 0.7);
-	padding-left: 0.5em;
-}
-
-.credits a {
-	border: none transparent 0px;
-	background-color: transparent;
-	text-decoration: underline;
-}
-
-/* messages */
-#messages {
-	background-color:black;
-	color: white;
-	font-family: monospace, courier, courier new, typewriter, sans-serif;
-	border: solid grey 1px;
-}
-
-#dismiss-message-button {
-	margin-top: 0.5em;
-}
-
-#messages-content {
-	margin: 0;
-	padding: 0 0 1em 0;
-	overflow: hidden;
-	color:white;
-}
-
-#messages-content > li:not(:last-child){
-	border-bottom:solid grey 1px;
-	padding-bottom:0.5em;
-	margin-bottom:0.5em;
-}
-
-#messages-content>li.damage, .damaged {
-	color: red;
-}
-
-#messages-content>li.enterprise-damaged {
-	color: red;
-}
-
-#messages-content>li.error{
-	color: red;
-}
-
-#messages-content>li.fire {
-	color: #505050;
-}
-
-#messages-content>li.gameover {
-	color: yellow;
-	font-size: 120%;
-}
-
-#messages-content>li.score {
-	color: #505050;
-	font-size: 120%;
-}
-
-#messages-content>li.klingon-uncloaked {
-	color: orange;
-}
-
-#messages-content>li.klingon-damaged, .entry.klingon-destroyed {
-	color: #2d91c5;
-}
-
-#messages-content>li.gamewon {
-	color: yellow;
-	font-size: 120%;
-}
-
-#messages-content>li.product-info {
-	color: white;
-	font-weight: bold;
-	font-size: 120%;
-}
-
-#messages-content>li.enterprise-repaired{
-	color: lime;
-}
-
-.messages-logo {
-	float: left;
-	background-color: darkcyan;
-	margin-right: 1em;
-	height: 5em;
-}
-
-a.single {
-	display: block;
-}
-
-.messages .content {
-	margin-bottom: 1em;
-}
-
-#downmarker {
-	margin-top: 100%;
 }
 
 .progress-bar {
@@ -629,6 +360,266 @@ a.progress-bar {
 	font-weight: bold;
 }
 
+#quadrantscan {
+	width: 99.5%;
+	/* 100% causes window scrolling which slows painting down*/
+	font-size: 130%;
+	margin: 0;
+	padding: 0;
+	height: 10em;
+	min-height: 10em;
+	max-height: 10em;
+	position: relative;
+	border-left: solid gray 1px;
+	border-top: solid gray 1px;
+	overflow:hidden;
+}
+
+#quadrantscan>div {
+	border-right: solid gray 1px;
+	border-bottom: solid #505050 1px;
+	text-align: center;
+	width: 12.5%;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+	font-size: inherit;
+	height: 1.2em;
+	line-height: 1.2em;
+	overflow: hidden;
+	position: absolute;
+}
+
+#lrs-button{
+	background-image: url('../images/radar.svg');
+	background-repeat: no-repeat;
+	background-size: 2.5em;
+	background-position: 0.2em 0.2em;
+}
+
+.star-class-a {
+	color: white;
+}
+
+.star-class-b {
+	color: cyan;
+}
+
+.star-class-f {
+	color: yellow;
+}
+
+.star-class-o {
+	color: darkturquoise;
+}
+
+.star-class-asteroid {
+	color: lightgray;
+}
+
+.selected {
+	background-color: midnightblue;
+}
+
+.container{
+	overflow:hidden;
+}
+/**
+ * Short range scan
+ */
+
+#shortrangescan {
+	width: 100%;
+	height: 6em;
+	min-height: 6em;
+	max-height: 6em;
+	overflow: visible;
+	border-collapse: collapse;
+}
+
+#shortrangescan tr {
+	height: 2em;
+	min-height: 2em;
+	max-height: 2em;
+	overflow: visible;
+}
+
+#shortrangescan td {
+	width: 33.3%;
+	text-align: center;
+	cursor: pointer;
+	padding: 5px 0 5px 0;
+}
+
+/*
+ * Intro screen
+ */
+ 
+.federation-logo {
+	display: block;
+	height: 10em;
+}
+
+#screen-intro {
+	display: block;
+	font-family: monospace;
+}
+
+.logo {
+	font-size: 100%;
+	font-weight: bold;
+}
+
+@media ( max-width : 1000px) {
+	#commandbar, #sectorselectionbar a, #sectorselectionbar button {
+		width: 100%;
+	}
+	#shortrangescan, .short-range-scan-container {
+		width: 100%;
+		margin-bottom: 0;
+	}
+	.logo {
+		font-size: 80%;
+	}
+}
+
+@media ( max-width : 600px) {
+	.logo {
+		font-size: 60%;
+	}
+}
+
+.intro-container {
+	margin-bottom: 1em;
+}
+
+.start-game-button {
+	display: block;
+	background-color: rgb(0, 108, 109);
+	animation: pulse 2s infinite;
+	font-size: 100%;
+}
+
+@keyframes pulse { 0% {
+	background-color: rgba(0, 108, 109, 0.3);
+	outline: solid transparent 1px;
+}
+
+50%{
+background-color:rgb(0,108,109);
+outline:solid turquoise 1px;}
+100%{background-color:rgba(0,108,109,0.3);
+outline:solid transparent 1px;
+}
+}
+
+.qr-code-link{
+	outline:none;
+}
+
+.qr-code-link img{
+	border:none;
+	width:100%;
+}
+
+.credits {
+	clear: both;
+	overflow: hidden;
+	background-color: rgba(0, 0, 0, 0.7);
+	padding-left: 0.5em;
+}
+
+.credits a {
+	border: none transparent 0px;
+	background-color: transparent;
+	text-decoration: underline;
+}
+
+/* 
+ * Messages popup
+ */
+#messages {
+	background-color:black;
+	color: white;
+	font-family: monospace, courier, courier new, typewriter, sans-serif;
+	border: solid grey 1px;
+}
+
+#dismiss-message-button {
+	margin-top: 0.5em;
+}
+
+#messages-content {
+	margin: 0;
+	padding: 0 0 1em 0;
+	overflow: hidden;
+	color:white;
+}
+
+#messages-content > li:not(:last-child){
+	border-bottom:solid grey 1px;
+	padding-bottom:0.5em;
+	margin-bottom:0.5em;
+}
+
+#messages-content>li.damage, .damaged {
+	color: red;
+}
+
+#messages-content>li.enterprise-damaged {
+	color: red;
+}
+
+#messages-content>li.error{
+	color: red;
+}
+
+#messages-content>li.fire {
+	color: #505050;
+}
+
+#messages-content>li.gameover {
+	color: yellow;
+	font-size: 120%;
+}
+
+#messages-content>li.score {
+	color: #505050;
+	font-size: 120%;
+}
+
+#messages-content>li.klingon-uncloaked {
+	color: orange;
+}
+
+#messages-content>li.klingon-damaged, .entry.klingon-destroyed {
+	color: #2d91c5;
+}
+
+#messages-content>li.gamewon {
+	color: yellow;
+	font-size: 120%;
+}
+
+#messages-content>li.product-info {
+	color: white;
+	font-weight: bold;
+	font-size: 120%;
+}
+
+#messages-content>li.enterprise-repaired{
+	color: lime;
+}
+
+.messages-logo {
+	float: left;
+	background-color: darkcyan;
+	margin-right: 1em;
+	height: 5em;
+}
+
+
+
 #enterprise-schematics {
 	font-size: 1em;
 	position: relative;
@@ -773,7 +764,9 @@ a.progress-bar {
 	border:solid lime 0.2em;
 }
 
-
+/*
+ * Mission briefing
+ */
 .manual .toc {
 	float: left;
 }
@@ -819,12 +812,6 @@ a.progress-bar {
 	overflow: hidden;
 }
 
-a.disabled,button.disabled {
-	background-color: rgb(20, 40, 60);
-	color: darkgray !important;
-	filter:grayscale(0.5) blur(0.7px);
-}
-
 #update-app-prompt button, #install-app-prompt button {
 	width: 50%;
 }
@@ -849,7 +836,7 @@ a.disabled,button.disabled {
 .PopupView.slidein {
 	left: 0%;
 	visibility: visible;
-	transform:translateX(0%);
+	transform: translateX(0%);
 	transition: transform 0.2s ease, visibility 0.2s;
 }
 
