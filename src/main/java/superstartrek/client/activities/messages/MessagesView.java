@@ -53,8 +53,6 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 	
 	@Override
 	protected void animationIsDone() {
-		//not calling super because that would be an unnecessary double focus (super.animationIsDone focuses
-		//the entire popup view
 		eButton.focus();
 	}
 

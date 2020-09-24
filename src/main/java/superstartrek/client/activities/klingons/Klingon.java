@@ -116,20 +116,19 @@ public class Klingon extends Vessel
 			List<Thing> obstacles = StarMap.findObstaclesInLine(index, getLocation(), target, 2);
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
-			if (obstacles.isEmpty())
-				return true;
+			return obstacles.isEmpty();
 		}
 		return false;
 	}
 
-	public void repositionKlingon(Quadrant index) {
+	public void repositionKlingon(Quadrant quadrant) {
 		if (!getImpulse().isOperational())
 			return;
 		StarMap map = getStarMap();
 		Enterprise enterprise = map.enterprise;
 		// no need to move if distance is <=2 and Klingon has a clear shot at the
 		// Enterprise
-		if (hasClearShotAt(index, enterprise.getLocation(), enterprise, map))
+		if (hasClearShotAt(quadrant, enterprise.getLocation(), enterprise, map))
 			return;
 		PathFinder pathFinder = new PathFinderImpl();
 		// path includes start and end
