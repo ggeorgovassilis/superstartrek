@@ -16,14 +16,14 @@ public class CSS {
 	 * @return
 	 */
 	public static String damageClass(Setting setting) {
-		int index = setting.isBroken()?0:(int) Math.floor((damageClasses.length - 1) * setting.health());
+		int index = setting.isBroken() ? 0 : (int) Math.floor((damageClasses.length - 1) * setting.health());
 		return damageClasses[index];
 	}
-	
+
 	public static String getOfflineDamageClass() {
 		return damageClasses[0];
 	}
-	
+
 	public static void setEnabled(Element e, boolean enabled) {
 		if (enabled) {
 			e.removeAttribute("disabled");
@@ -36,7 +36,8 @@ public class CSS {
 
 	// according to https://caniuse.com/#search=querySelector this is supported in
 	// all browsers that are currently around
-	public final static native NodeList<Element> querySelectorAll(String selectors) /*-{
-																					return $doc.querySelectorAll(selectors);
-																					}-*/;
+	public final static native NodeList<Element> querySelectorAll(
+			String selectors) /*
+								 * -{ return $doc.querySelectorAll(selectors); }-
+								 */;
 }

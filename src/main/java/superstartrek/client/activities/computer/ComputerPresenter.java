@@ -232,7 +232,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	// prints quick scan info (eg. enemy ship stats) on the command bar
 	public void scanSector(Location location, Quadrant quadrant) {
 		Quadrant q = quadrant;
-		//s
 		Thing thing = q.findThingAt(location);
 		String name = Thing.isVisible(thing)?thing.getName():"Nothing";
 		view.setScanProperty("scan-report-name", "scan-report-name-value", "", name+" at "+location.toString());
