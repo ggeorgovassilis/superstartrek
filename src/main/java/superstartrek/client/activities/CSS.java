@@ -36,8 +36,10 @@ public class CSS {
 
 	// according to https://caniuse.com/#search=querySelector this is supported in
 	// all browsers that are currently around
-	public final static native NodeList<Element> querySelectorAll(
-			String selectors) /*
-								 * -{ return $doc.querySelectorAll(selectors); }-
-								 */;
+	//@formatter:off
+	public final static native NodeList<Element> querySelectorAll(String selectors) /*-{ 
+		return $doc.querySelectorAll(selectors); 
+	}-*/;
+	//@formatter:on
+
 }

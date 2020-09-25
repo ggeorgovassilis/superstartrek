@@ -22,6 +22,7 @@
 		<gwt.disableClassMetadata>false</gwt.disableClassMetadata>
 		<gwt.disableCastChecking>false</gwt.disableCastChecking>
 		<gwt.optimizationLevel>-1</gwt.optimizationLevel>
+		<gwt-maven-plugin.version>2.9.0</gwt-maven-plugin.version>
 	</properties>
 
 	<scm>
@@ -87,7 +88,7 @@
 				<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
 				<gwt.saveSource>false</gwt.saveSource>
 				<gwt.style>OBFUSCATED</gwt.style>
-				<skip.deploy>false</skip.deploy>
+				<skip.deploy>true</skip.deploy>
 				<gwt.disableClassMetadata>true</gwt.disableClassMetadata>
 				<gwt.disableCastChecking>true</gwt.disableCastChecking>
 				<gwt.optimizationLevel>9</gwt.optimizationLevel>
@@ -224,7 +225,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt.version}</version>
+				<version>${gwt-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -244,6 +245,7 @@
 					<skip>${skip.gwt}</skip>
 					<disableCastChecking>${gwt.disableCastChecking}</disableCastChecking>
 					<optimizationLevel>${gwt.optimizationLevel}</optimizationLevel>
+					<compileReport>true</compileReport>
 				</configuration>
 			</plugin>
 			<plugin>
