@@ -2,6 +2,8 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
@@ -44,6 +46,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void updateSector(int x, int y, String content, String css) {
+		GWT.log("Update sector "+x+":"+y+" "+content+" "+css);
 		ElementWrapper b = buckets[x][y];
 		b.setInnerHTML(content);
 		b.setClassName(css);
@@ -185,6 +188,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void clearSector(int x, int y) {
+		GWT.log("clear sector "+x+":"+y);
 		ElementWrapper b = buckets[x][y];
 		b.clear();
 	}

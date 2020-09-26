@@ -71,6 +71,7 @@ public class StarMapDeserialiser {
 			else if (Enterprise.is(thing)) {
 				starMap.enterprise = (Enterprise) thing;
 				starMap.enterprise.setQuadrant(q);
+				q.add(starMap.enterprise);
 			}
 		}
 		return q;
