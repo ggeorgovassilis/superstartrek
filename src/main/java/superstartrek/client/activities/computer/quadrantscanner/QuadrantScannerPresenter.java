@@ -60,11 +60,9 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	@Override
 	public void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screen) {
-		Timer.postpone(()->{
-			view.deselectSectors();
-			selectedSector = sector;
-			view.selectSector(selectedSector.x, selectedSector.y);
-		});
+		view.deselectSectors();
+		selectedSector = sector;
+		view.selectSector(selectedSector.x, selectedSector.y);
 	}
 
 	void updateSector(Thing thing) {
@@ -113,7 +111,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		// this approach (render into an array first, paint each sector only once)
 		// minimises DOM interactions.
 		Thing[][] arr = new Thing[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-		q.doWithThings(t->mark(t,arr));
+		q.doWithThings(t -> mark(t, arr));
 		for (int x = 0; x < arr.length; x++)
 			for (int y = 0; y < arr[x].length; y++) {
 				Thing t = arr[x][y];
@@ -178,7 +176,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			break;
 		case torpedo:
 			view.animateTorpedoFireBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
-					target.getLocation().y, (v)->{});
+					target.getLocation().y, (v) -> {
+					});
 		}
 	}
 
