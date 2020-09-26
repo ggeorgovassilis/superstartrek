@@ -42,6 +42,6 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return presenter.getApplication().getResources().updateAppPrompt().getText();
+		return presenter.getApplication().getScreenTemplates().updateAppPrompt().getText();
 	}
 }

@@ -1,12 +1,8 @@
 package superstartrek.client.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
-
-import com.google.gwt.core.client.GWT;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.klingons.Klingon;
@@ -116,15 +112,5 @@ public class Quadrant{
 			consumer.accept(enterprise);
 		
 	};
-	
-	public void checkConsistency() {
-		doWithThings((t)->{
-			if (things[t.getLocation().x][t.getLocation().y]!=t)
-				GWT.log(t.getName()+" at "+t.getLocation()+" was not recorded in things matrix. Instead, there was a "+things[t.getLocation().x][t.getLocation().y]);
-		});
-		Set<Thing> list = new HashSet<Thing>();
-		doWithThings((t)->list.add(t));
-		
-	}
 	
 }

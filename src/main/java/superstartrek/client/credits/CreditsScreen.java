@@ -15,7 +15,7 @@ public class CreditsScreen extends BaseScreen<CreditsPresenter>{
 
 	@Override
 	protected Widget createWidgetImplementation() {
-		return new HtmlWidget(DOM.createDiv(),presenter.getApplication().getResources().creditsScreen().getText());
+		return new HtmlWidget(DOM.createDiv(),presenter.getApplication().getScreenTemplates().creditsScreen().getText());
 	}
 	
 }

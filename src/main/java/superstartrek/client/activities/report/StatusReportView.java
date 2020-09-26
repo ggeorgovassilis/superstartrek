@@ -12,7 +12,7 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 	protected HtmlWidget createWidgetImplementation() {
 		Element e = DOM.createDiv();
 		e.setId("screen-statusreport");
-		return new HtmlWidget(e, presenter.getApplication().getResources().statusReport().getText());
+		return new HtmlWidget(e, presenter.getApplication().getScreenTemplates().statusReport().getText());
 	}
 	
 	public StatusReportView(StatusReportPresenter p) {

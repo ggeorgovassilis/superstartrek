@@ -12,7 +12,7 @@ public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> i
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return presenter.getApplication().getResources().appInstallPrompt().getText();
+		return presenter.getApplication().getScreenTemplates().appInstallPrompt().getText();
 	}
 
 	@Override

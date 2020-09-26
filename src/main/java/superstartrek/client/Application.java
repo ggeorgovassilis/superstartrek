@@ -38,6 +38,7 @@ import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.persistence.GameSaver;
+import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.utils.GwtBrowserAPIImpl;
 import superstartrek.client.utils.Strings;
@@ -68,7 +69,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	private static Application that;
 	public GameController gameController;
-	protected Resources resources;
+	protected ScreenTemplates screenTemplates;
 
 	public static void set(Application app) {
 		that = app;
@@ -88,8 +89,8 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		return starMap.enterprise.getQuadrant();
 	}
 
-	public Resources getResources() {
-		return resources;
+	public ScreenTemplates getScreenTemplates() {
+		return screenTemplates;
 	}
 
 	protected void setupStarMap() {
@@ -182,7 +183,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 			gameController.startGame();
 			// null out so that resources can be garbage collected; by now everyone who
 			// needs them during initialisation has gotten them already
-			resources = null;
+			screenTemplates = null;
 		});
 	}
 
@@ -211,7 +212,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		setUncaughtExceptionHandler();
 		if (GWT.isClient())
 			browserAPI = new GwtBrowserAPIImpl(eventBus);
-		resources = GWT.create(Resources.class);
+		screenTemplates = GWT.create(ScreenTemplates.class);
 		setupHttp();
 		registerEventHandlers();
 		setupGameSaver();

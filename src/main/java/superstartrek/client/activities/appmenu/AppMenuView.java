@@ -24,7 +24,7 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return presenter.getApplication().getResources().appMenu().getText();
+		return presenter.getApplication().getScreenTemplates().appMenu().getText();
 	}
 	
 	@Override

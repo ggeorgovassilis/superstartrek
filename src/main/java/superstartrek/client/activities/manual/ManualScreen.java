@@ -15,7 +15,7 @@ public class ManualScreen extends BaseScreen<ManualPresenter>{
 	
 	@Override
 	protected Widget createWidgetImplementation() {
-		return new HtmlWidget(DOM.createDiv(),presenter.getApplication().getResources().manualScreen().getText());
+		return new HtmlWidget(DOM.createDiv(),presenter.getApplication().getScreenTemplates().manualScreen().getText());
 	}
 
 }

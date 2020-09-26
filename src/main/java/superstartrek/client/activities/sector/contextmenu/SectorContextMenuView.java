@@ -30,7 +30,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	protected Widget createWidgetImplementation() {
-		String html = presenter.getApplication().getResources().sectorContextMenu().getText();
+		String html = presenter.getApplication().getScreenTemplates().sectorContextMenu().getText();
 		return new HtmlWidget(DOM.createDiv(), html);
 	}
 

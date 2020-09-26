@@ -17,7 +17,7 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	
 	@Override
 	protected HtmlWidget createWidgetImplementation() {
-		HtmlWidget widget = new HtmlWidget(DOM.createTable(),presenter.getApplication().getResources().lrsScreen().getText());
+		HtmlWidget widget = new HtmlWidget(DOM.createTable(),presenter.getApplication().getScreenTemplates().lrsScreen().getText());
 		widget.getElement().setId("longrangescan");
 		return widget;
 	}

@@ -5,13 +5,15 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseScreen;
+import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.HtmlWidget;
 
 public class IntroView extends BaseScreen<IntroPresenter>{
 	
 	public IntroView(IntroPresenter presenter) {
 		super(presenter);
-		getElement().setInnerHTML(presenter.getApplication().getResources().introScreen().getText());
+		ScreenTemplates templates = presenter.getApplication().getScreenTemplates();
+		getElement().setInnerHTML(templates.introScreen().getText());
 		addStyleName("intro-screen");
 		getWidget().sinkEvents(Event.ONCLICK);
 	}

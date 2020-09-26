@@ -58,6 +58,6 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return presenter.getApplication().getResources().messages().getText();
+		return presenter.getApplication().getScreenTemplates().messages().getText();
 	}
 }

@@ -48,7 +48,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	protected void decorateScreen() {
 		super.decorateScreen();
 		addStyleName("computer-screen");
-		getElement().setInnerHTML(presenter.getApplication().getResources().computerScreen().getText());
+		getElement().setInnerHTML(presenter.getApplication().getScreenTemplates().computerScreen().getText());
 
 		SectorContextMenuPresenter sectorMenuPresenter = new SectorContextMenuPresenter(presenter.getApplication());
 		sectorMenuPresenter.setView(new SectorContextMenuView(sectorMenuPresenter));

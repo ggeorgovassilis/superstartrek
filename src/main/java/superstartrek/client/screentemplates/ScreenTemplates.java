@@ -1,44 +1,44 @@
-package superstartrek.client;
+package superstartrek.client.screentemplates;
 
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
 
-public interface Resources extends ClientBundle {
+public interface ScreenTemplates extends ClientBundle {
 
-	@Source("superstartrek/public/screens/install-app-prompt.html")
+	@Source("install-app-prompt.html")
 	public TextResource appInstallPrompt();
 
-	@Source("superstartrek/public/screens/update-app-prompt.html")
+	@Source("update-app-prompt.html")
 	public TextResource updateAppPrompt();
 
-	@Source("superstartrek/public/screens/intro.html")
+	@Source("intro.html")
 	public TextResource introScreen();
 
-	@Source("superstartrek/public/screens/computer.html")
+	@Source("computer.html")
 	public TextResource computerScreen();
 
-	@Source("superstartrek/public/screens/manual.html")
+	@Source("manual.html")
 	public TextResource manualScreen();
 
-	@Source("superstartrek/public/screens/sector-context-menu.html")
+	@Source("sector-context-menu.html")
 	public TextResource sectorContextMenu();
 
-	@Source("superstartrek/public/screens/lrs.html")
+	@Source("lrs.html")
 	public TextResource lrsScreen();
 
-	@Source("superstartrek/public/screens/status-report.html")
+	@Source("status-report.html")
 	public TextResource statusReport();
 
-	@Source("superstartrek/public/screens/messages.html")
+	@Source("messages.html")
 	public TextResource messages();
 
-	@Source("superstartrek/public/screens/app-menu.html")
+	@Source("app-menu.html")
 	public TextResource appMenu();
 
-	@Source("superstartrek/public/screens/settings.html")
+	@Source("settings.html")
 	public TextResource settingsScreen();
 
-	@Source("superstartrek/public/screens/credits.html")
+	@Source("credits.html")
 	public TextResource creditsScreen();
 
 }

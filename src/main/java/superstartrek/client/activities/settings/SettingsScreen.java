@@ -72,7 +72,7 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	
 	@Override
 	protected Widget createWidgetImplementation() {
-		return new HtmlWidget(DOM.createDiv(), presenter.getApplication().getResources().settingsScreen().getText());
+		return new HtmlWidget(DOM.createDiv(), presenter.getApplication().getScreenTemplates().settingsScreen().getText());
 	}
 
 	@Override
