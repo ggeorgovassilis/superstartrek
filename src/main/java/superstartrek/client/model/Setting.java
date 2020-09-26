@@ -98,8 +98,9 @@ public class Setting {
 	
 	public boolean repair() {
 		boolean neededRepair = false;
-		if (getCurrentUpperBound()<getMaximum()) {
+		if (getCurrentUpperBound()<getMaximum() || isBroken()) {
 			setCurrentUpperBound(getMaximum());
+			broken = false;
 			neededRepair = true;
 		}
 		reset();

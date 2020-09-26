@@ -512,7 +512,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			damageTorpedos();
 		if (phasers.getCurrentUpperBound() > 0 && random.nextDouble() < deviceImpact)
 			damagePhasers();
-		if (autoAim.isOperational() && random.nextDouble() < deviceImpact)
+		if (!autoAim.isBroken() && random.nextDouble() < deviceImpact)
 			damageAutoaim();
 		if (reactor.isOperational() && random.nextDouble() < deviceImpact)
 			damageReactor();
