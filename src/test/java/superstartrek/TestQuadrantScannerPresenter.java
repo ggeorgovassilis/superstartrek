@@ -113,19 +113,4 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		verify(handler).onSectorSelected(Location.location(1, 2), quadrant, 100, 200);
 	}
 
-	@Test
-	public void test_onKeyPress() {
-		SectorSelectedHandler handler = mock(SectorSelectedHandler.class);
-		bus.addHandler(Events.SECTOR_SELECTED, handler);
-		
-		when(view.isVisible()).thenReturn(true);
-		when(view.getHorizontalOffsetOfSector(2, 1)).thenReturn(200);
-		when(view.getVerticalOffsetOfSector(2, 1)).thenReturn(100);
-
-		presenter.onKeyPressed(KeyCodes.KEY_RIGHT);
-		presenter.onKeyPressed(KeyCodes.KEY_RIGHT);
-		presenter.onKeyPressed(KeyCodes.KEY_DOWN);
-		presenter.onKeyPressed('m');
-		verify(handler).onSectorSelected(Location.location(2, 1), quadrant, 200, 100);
-	}
 }
