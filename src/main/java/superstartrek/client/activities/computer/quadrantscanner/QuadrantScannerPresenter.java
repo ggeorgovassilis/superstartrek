@@ -25,10 +25,11 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Weapon;
+import superstartrek.client.utils.Timer;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,
-		KlingonCloakingHandler, KeyPressedEventHandler, QuadrantActivationHandler {
+		KlingonCloakingHandler, QuadrantActivationHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
 	Location selectedSector = Location.location(0, 0);
@@ -55,14 +56,15 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		addHandler(KLINGON_UNCLOAKED, this);
 		addHandler(AFTER_TURN_STARTED, this);
 		addHandler(KLINGON_TURN_STARTED, this);
-		addHandler(KEY_PRESSED, this);
 	}
 
 	@Override
 	public void onSectorSelected(Location sector, Quadrant quadrant, int screenX, int screen) {
-		view.deselectSectors();
-		selectedSector = sector;
-		view.selectSector(selectedSector.x, selectedSector.y);
+		Timer.postpone(()->{
+			view.deselectSectors();
+			selectedSector = sector;
+			view.selectSector(selectedSector.x, selectedSector.y);
+		});
 	}
 
 	void updateSector(Thing thing) {
@@ -196,43 +198,6 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	@Override
 	public void afterTurnStarted() {
 		updateMapWithReachableSectors();
-	}
-
-	@Override
-	public void onKeyPressed(int code) {
-		if (!view.isVisible())
-			return;
-		Location newSector = null;
-		switch (code) {
-		case KeyCodes.KEY_LEFT:
-			newSector = Location.location(Math.max(0, selectedSector.x - 1), selectedSector.y);
-			break;
-		case KeyCodes.KEY_RIGHT:
-			newSector = Location.location(Math.min(Constants.SECTORS_EDGE - 1, selectedSector.x + 1),
-					selectedSector.y);
-			break;
-		case KeyCodes.KEY_UP:
-			newSector = Location.location(selectedSector.x, Math.max(0, selectedSector.y - 1));
-			break;
-		case KeyCodes.KEY_DOWN:
-			newSector = Location.location(selectedSector.x,
-					Math.min(Constants.SECTORS_EDGE - 1, selectedSector.y + 1));
-			break;
-		case 'M':
-		case 'm':
-			int dx = view.getHorizontalOffsetOfSector(selectedSector.x, selectedSector.y);
-			int dy = view.getVerticalOffsetOfSector(selectedSector.x, selectedSector.y);
-			Quadrant quadrant = getActiveQuadrant();
-			fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(selectedSector, quadrant, dx, dy));
-			break;
-		}
-
-		if (newSector != null) {
-			selectedSector = newSector;
-			view.deselectSectors();
-			view.selectSector(selectedSector.x, selectedSector.y);
-			fireEvent(CONTEXT_MENU_HIDDEN, (h) -> h.onMenuHidden());
-		}
 	}
 
 	@Override
