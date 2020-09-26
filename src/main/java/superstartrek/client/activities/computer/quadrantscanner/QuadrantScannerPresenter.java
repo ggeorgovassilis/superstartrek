@@ -2,7 +2,6 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
-import com.google.gwt.event.dom.client.KeyCodes;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
@@ -15,7 +14,6 @@ import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPrese
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import static superstartrek.client.bus.Events.*;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
 import superstartrek.client.model.Constants;
 import superstartrek.client.model.Enterprise;
@@ -25,7 +23,6 @@ import superstartrek.client.model.StarMap;
 import superstartrek.client.model.Thing;
 import superstartrek.client.model.Vessel;
 import superstartrek.client.model.Weapon;
-import superstartrek.client.utils.Timer;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,

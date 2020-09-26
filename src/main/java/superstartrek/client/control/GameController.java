@@ -7,8 +7,6 @@ import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.EventBus;
-import superstartrek.client.bus.Events;
-
 import static superstartrek.client.bus.Events.*;
 
 import superstartrek.client.model.Enterprise;

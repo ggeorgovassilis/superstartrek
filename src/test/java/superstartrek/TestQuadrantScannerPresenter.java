@@ -9,8 +9,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gwt.event.dom.client.KeyCodes;
-
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.quadrantscanner.IQuadrantScannerView;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
