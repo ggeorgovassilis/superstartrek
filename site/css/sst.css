@@ -82,11 +82,11 @@ a.disabled,button.disabled {
 	width: 100%;
 }
 
-a:hover, button:hover, .quadrants td:hover, #shortrangescan td:hover, .progress-indicator:hover {
+a:hover, button:hover, .progress-indicator:hover {
 	text-decoration: none;
 }
 
-a:hover, #shortrangescan td:hover, .quadrants td:hover, button:hover {
+a:hover, button:hover {
 	background-color: rgb(50, 158, 159);
 }
 
