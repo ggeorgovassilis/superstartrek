@@ -37,7 +37,7 @@ public class AStarPlus {
 	int todoTail = 0;
 
 	int coordsToIndex(int x, int y) {
-		// need to add 1 because "0" (0*8+8) means "free"
+		// need to add 1 because "0" (0*8+0) means "free"
 		return 1 + x + y * Constants.SECTORS_EDGE;
 	}
 
