@@ -23,6 +23,14 @@ public class StarMap {
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
+	/**
+	 * It is faster to compute squares then square roots
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return
+	 */
 	public static int distance_squared(int x1, int y1, int x2, int y2) {
 		int dx = x1 - x2;
 		int dy = y1 - y2;

@@ -18,7 +18,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
 	public final static double IMPULSE_CONSUMPTION = 2;
 	public final static double DEVICE_IMPACT_MODIFIER = 0.3;
-	public final static double SHIELD_IMPACT_MODIFIER = 5.0;
+	public final static double SHIELD_IMPACT_MODIFIER = 40.0;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
 	public final static int TIME_TO_REPAIR_SETTING = 3;
 	public final static double PRECISION_SHOT_EFFICIENCY = 0.2;
@@ -88,7 +88,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public Enterprise(Application app, StarMap map) {
-		super(new Setting(3), new Setting(100));
+		super(new Setting(3), new Setting(60));
 		this.application = app;
 		this.starMap = map;
 		setName("NCC 1701 USS Enterprise");
@@ -181,7 +181,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			for (int y = minY; y <= maxY; y++) {
 				if (visitLog[x][y] != UNKNOWN)
 					continue;
-				// squared distance check saves one sqrt() call and thus is faster
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
 				StarMap.walkLine(lx, ly, x, y, (x1, y1) -> {
@@ -211,8 +210,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public void navigateTo(Location loc) {
 		if (!canNavigateTo(loc)) {
-			// TODO: this should never be the case; navigation constraints are already
-			// checked. This assumes that cloaked klingons are "reachable"
+			// This should never be the case; navigation constraints are already
+			// checked earlier by reachable sectors. This assumes that cloaked Klingons are "reachable"
 			application.message("Can't go there");
 			return;
 		}
@@ -220,9 +219,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		Location[] trace = new Location[] { getLocation() };
 		StarMap.walkLine(getLocation().x, getLocation().y, loc.x, loc.y, (x, y) -> {
 			Thing thing = quadrant.findThingAt(x, y);
-			if (thing != null && thing != Enterprise.this) {
-				if (Klingon.isCloakedKlingon(thing))
-					((Klingon) thing).uncloak();
+			if (Klingon.isCloakedKlingon(thing)) {
+				Klingon.as(thing).uncloak();
 				return false;
 			}
 			trace[0] = Location.location(x, y);
@@ -443,8 +441,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 				|| !autoAim.isOperational() || !lrs.isOperational() || !warpDrive.isOperational();
 	}
 
-	public void damageShields() {
-		shields.damage(30, starMap.getStarDate());
+	public void damageShields(double impact) {
+		shields.damage(impact, starMap.getStarDate());
 		application.message("Shields damaged, dropped to %" + shields.percentageHealth(), "enterprise-damaged");
 	}
 
@@ -505,7 +503,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		double deviceImpact = DEVICE_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
 		BrowserAPI random = application.browserAPI;
 		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < deviceImpact)
-			damageShields();
+			damageShields(damage);
 		if (impulse.getCurrentUpperBound() > 0 && random.nextDouble() < deviceImpact)
 			damageImpulse();
 		if (torpedos.isOperational() && random.nextDouble() < deviceImpact)

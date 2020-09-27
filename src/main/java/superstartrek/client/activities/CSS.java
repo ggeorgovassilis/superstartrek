@@ -34,6 +34,14 @@ public class CSS {
 		}
 	}
 
+	public static void setEnabledCSS(Element e, boolean enabled) {
+		if (enabled) {
+			e.removeClassName("disabled");
+		} else {
+			e.addClassName("disabled");
+		}
+	}
+
 	// according to https://caniuse.com/#search=querySelector this is supported in
 	// all browsers that are currently around
 	//@formatter:off

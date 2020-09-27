@@ -181,12 +181,14 @@ public class Klingon extends Vessel
 		if (!getImpulse().isOperational() || getImpulse().getValue() < 1)
 			return;
 		Application app = getApplication();
-		double distance = StarMap.distance(getLocation(), app.starMap.enterprise.getLocation());
+		Enterprise enterprise = app.starMap.enterprise;
+		Location enterpriseLocation = enterprise.getLocation();
+		double distance = StarMap.distance(getLocation(), enterpriseLocation);
 		int triesLeft = 3;
 		while (triesLeft-- > 0) {
 			Location loc = app.starMap.findFreeSpotAround(index, getLocation(), 1 + (int) getImpulse().getValue());
 			if (loc != null) {
-				double newDistance = StarMap.distance(app.starMap.enterprise.getLocation(), loc);
+				double newDistance = StarMap.distance(enterpriseLocation, loc);
 				if (newDistance > distance) {
 					triesLeft = 0;
 					jumpTo(loc);
@@ -198,7 +200,7 @@ public class Klingon extends Vessel
 	@Override
 	public void onKlingonTurnStarted() {
 		// Reminder: only klingons in the active sector receive this event
-		Quadrant q = getApplication().getActiveQuadrant();
+		Quadrant q = getActiveQuadrant();
 		if (getDisruptor().isBroken())
 			flee(q);
 		else
@@ -209,7 +211,7 @@ public class Klingon extends Vessel
 	@Override
 	public void destroy() {
 		removeHandler(this);
-		getApplication().getActiveQuadrant().remove(this);
+		getActiveQuadrant().remove(this);
 		message(getName() + " was destroyed", "klingon-destroyed");
 		super.destroy();
 		fireEvent(KLINGON_DESTROYED, (h) -> h.onVesselDestroyed(Klingon.this));

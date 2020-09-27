@@ -8,10 +8,6 @@ public final class Event<T extends EventHandler> {
 		this.name = name;
 	}
 	
-	public Event() {
-		this("unnamed");
-	}
-	
 	@Override
 	public String toString() {
 		return name;

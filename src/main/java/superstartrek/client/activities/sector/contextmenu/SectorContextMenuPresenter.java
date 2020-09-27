@@ -120,7 +120,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 	public void onCommandClicked(String command) {
 		Enterprise enterprise = application.starMap.enterprise;
-		if (buttonsEnabled.get(command) == true)
+		if (buttonsEnabled.get(command))
 			hideMenu(() -> {
 				switch (command) {
 				case cmd_navigate:

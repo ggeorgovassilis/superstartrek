@@ -76,23 +76,24 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	public void enableButton(String id, boolean status) {
-		HtmlWidget panel = (HtmlWidget) getWidget();
-		
 		//button's parent is the cell.
 		//TODO: should we keep a reference to the cell elements instead of looking them up?
-		Element e = panel.getElementById(id);
+		Element e = DOM.getElementById(id);
 		Element parent = e.getParentElement();
-		CSS.setEnabled(parent , status);
+		CSS.setEnabledCSS(parent , status);
 	}
 
 	@Override
 	public void show() {
 		super.show();
+		//TODO: document the delay of 10ms
 		Timer.postpone(() -> addStyleName("expanded"), 10);
 	}
 
 	public void handleButtonInteraction(DomEvent<?> event) {
 		Element e = event.getNativeEvent().getEventTarget().cast();
+		//since this isn't really a button but a semi-transparent DIV, clicks might be
+		//propagated to elements under the DIV cell. Cancel them to avoid side effects.
 		event.preventDefault();
 		event.stopPropagation();
 		String command = e.getAttribute("id");
