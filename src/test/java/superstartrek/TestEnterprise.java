@@ -394,9 +394,9 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void test_applyDamage() {
 		when(browser.nextDouble()).thenReturn(1.0);
-		assertEquals(100, enterprise.getShields().getValue(), 0.1);
+		assertEquals(60, enterprise.getShields().getValue(), 0.1);
 		enterprise.applyDamage(30);
-		assertEquals(99.25, enterprise.getShields().getValue(), 0.1);
+		assertEquals(50.1, enterprise.getShields().getValue(), 0.1);
 	}
 
 	@Test
@@ -409,7 +409,7 @@ public class TestEnterprise extends BaseTest {
 		klingon.uncloak();
 		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false,
 				partTarget.none);
-		assertEquals(99.7, enterprise.getShields().getValue(), 0.1);
+		assertEquals(56, enterprise.getShields().getValue(), 0.1);
 	}
 
 	@Test
@@ -424,7 +424,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setShieldDirection(ShieldDirection.north);
 		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false,
 				partTarget.none);
-		assertEquals(99.6, enterprise.getShields().getValue(), 0.1);
+		assertEquals(55.4, enterprise.getShields().getValue(), 0.1);
 	}
 
 	@Test
@@ -439,7 +439,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setShieldDirection(ShieldDirection.north);
 		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false,
 				partTarget.none);
-		assertEquals(99.5, enterprise.getShields().getValue(), 0.1);
+		assertEquals(54.1, enterprise.getShields().getValue(), 0.1);
 	}
 
 	@Test
@@ -455,7 +455,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setShieldDirection(ShieldDirection.north);
 		enterprise.onFire(quadrant, klingon, enterprise, Weapon.disruptor, klingon.getDisruptor().getValue(), false,
 				partTarget.none);
-		assertEquals(99.75, enterprise.getShields().getValue(), 0.1);
+		assertEquals(56.75, enterprise.getShields().getValue(), 0.1);
 	}
 
 	@Test

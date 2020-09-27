@@ -50,7 +50,7 @@ public class TestComputerPresenter extends BaseTest{
 		verify(view).showStarDate("2100");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);
-		verify(view).updateShields(100, 100, 100);
+		verify(view).updateShields(60, 60, 60);
 	}
 
 
@@ -89,7 +89,7 @@ public class TestComputerPresenter extends BaseTest{
 	public void test_updateShieldsView() {
 		enterprise.getShields().damage(10, starMap.getStarDate());
 		presenter.updateShieldsView();
-		verify(view).updateShields(90, 90, 100);
+		verify(view).updateShields(50, 50, 60);
 	}
 
 	@Test
