@@ -44,6 +44,7 @@ public class Events {
 	public final static Event<GamePhaseHandler> GAME_WON = new Event<>("GAME_WON");
 	public final static Event<GamePhaseHandler> GAME_LOST = new Event<>("GAME_LOST");
 	public final static Event<GamePhaseHandler> AFTER_TURN_STARTED = new Event<>("AFTER_TURN_STARTED");
+	public final static Event<GamePhaseHandler> PLAYER_TURN_STARTED = new Event<>("PLAYER_TURN_STARTED");
 	public final static Event<NavigationHandler> THING_MOVED = new Event<>("THING_MOVED");
 	public final static Event<GamePhaseHandler> GAME_RESTART = new Event<>("GAME_RESTART");
 	public final static Event<GamePhaseHandler> TURN_YIELDED = new Event<>("TURN_YIELDED");

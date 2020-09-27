@@ -145,6 +145,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		application.starMap.advanceStarDate(1);
 		fireEvent(TURN_STARTED, (h)->h.onTurnStarted());
 		fireEvent(AFTER_TURN_STARTED, (h)->h.afterTurnStarted());
+		fireEvent(PLAYER_TURN_STARTED, (h)->h.onPlayerTurnStarted());
 	}
 
 	public void startTurnAfterThis() {

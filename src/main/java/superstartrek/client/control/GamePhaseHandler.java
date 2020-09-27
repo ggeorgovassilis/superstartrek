@@ -5,6 +5,8 @@ import superstartrek.client.model.StarMap;
 
 public interface GamePhaseHandler extends EventHandler {
 	
+	default void onPlayerTurnStarted() {};
+	
 	default void onTurnStarted() {};
 
 	default void afterTurnStarted() {};

@@ -8,7 +8,6 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.bus.Commands;
@@ -30,7 +29,7 @@ import superstartrek.client.model.Enterprise.ShieldDirection;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		implements ComputerHandler, GamePhaseHandler, CombatHandler, ValueChangeHandler<String>,
-		EnterpriseRepairedHandler, KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
+		KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
 
 	ScoreKeeper scoreKeeper;
 	Enterprise enterprise;
@@ -41,10 +40,9 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
  		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
 		addHandler(Commands.SHOW_COMPUTER, this);
-		addHandler(Events.TURN_STARTED, this);
+		addHandler(Events.PLAYER_TURN_STARTED, this);
+		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
-		addHandler(Events.ENTERPRISE_DAMAGED, this);
-		addHandler(Events.ENTERPRISE_REPAIRED, this);
 		addHandler(Events.GAME_STARTED, this);
 		addHandler(Events.KEY_PRESSED, this);
 		addHandler(Events.SECTOR_SELECTED, this);
@@ -144,12 +142,17 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void onTurnStarted() {
+	public void onPlayerTurnStarted() {
 		updateStarDateView();
 		updateShieldsView();
 		updateQuadrantHeaderView();
 		updateAntimatterView();
 		updateScoreView();
+		updateButtonViews();
+	}
+
+	@Override
+	public void onTurnEnded() {
 		updateButtonViews();
 	}
 
@@ -182,18 +185,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	protected void updateButtonViews() {
 		updateStatusButtonView();
 		view.setCommandBarMode("mode-command");
-	}
-
-	@Override
-	public void onEnterpriseRepaired(Enterprise enterprise) {
-		updateButtonViews();
-		updateShieldsView();
-		updateAntimatterView();
-	}
-
-	@Override
-	public void onEnterpriseDamaged(Enterprise enterprise) {
-		updateButtonViews();
 	}
 
 	@Override

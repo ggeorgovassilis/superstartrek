@@ -31,8 +31,8 @@ public class TestComputerPresenter extends BaseTest{
 	}
 	
 	@Test
-	public void testOnTurnStarted_1() {
-		presenter.onTurnStarted();
+	public void testOnPlayerTurnStarted_1() {
+		presenter.onPlayerTurnStarted();
 
 		verify(view).showStarDate("2100");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
@@ -41,12 +41,11 @@ public class TestComputerPresenter extends BaseTest{
 	}
 
 	@Test
-	public void testOnTurnStarted_2() {
+	public void testOnPlayerTurnStarted_2() {
 		enterprise.setLocation(Location.location(1, 1));
 		enterprise.getPhasers().damage(10, starMap.getStarDate());
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
-		presenter.onTurnStarted();
-
+		presenter.onPlayerTurnStarted();
 		verify(view).showStarDate("2100");
 		verify(view).setQuadrantName("test quadrant 1:2", "");
 		verify(view).updateAntimatter(1000,1000);

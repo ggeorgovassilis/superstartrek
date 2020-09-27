@@ -54,10 +54,6 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 			map.enterprise.warpTo(map.getQuadrant(x, y), null);
 	}
 
-	public void onAppMenuButtonClicked() {
-		fireEvent(Commands.APP_MENU_SHOW, (h)->h.showMenu());
-	}
-
 	@Override
 	public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
 		updateRadar();
