@@ -9,8 +9,6 @@ public interface GamePhaseHandler extends EventHandler {
 	
 	default void onTurnStarted() {};
 
-	default void afterTurnStarted() {};
-
 	default void onTurnEnded() {};
 
 	default void onTurnYielded() {};

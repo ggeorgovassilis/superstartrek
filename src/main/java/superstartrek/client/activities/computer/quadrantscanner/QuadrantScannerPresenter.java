@@ -51,8 +51,8 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		addHandler(KLINGON_DESTROYED, this);
 		addHandler(KLINGON_CLOAKED, this);
 		addHandler(KLINGON_UNCLOAKED, this);
-		addHandler(AFTER_TURN_STARTED, this);
 		addHandler(KLINGON_TURN_STARTED, this);
+		addHandler(PLAYER_TURN_STARTED, this);
 	}
 
 	@Override
@@ -190,9 +190,9 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		for (Location l : sectors)
 			markSectorAsNavigationTarget(l.x, l.y);
 	}
-
+	
 	@Override
-	public void afterTurnStarted() {
+	public void onPlayerTurnStarted() {
 		updateMapWithReachableSectors();
 	}
 
