@@ -109,7 +109,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			application.message("Warp drive is offline.", "info");
 			return false;
 		}
-		final Location fromLocation = getLocation();
 		final Quadrant fromQuadrant = getQuadrant();
 		double necessaryEnergy = computeConsumptionForWarp(fromQuadrant, destinationQuadrant);
 		if (!consume("warp", necessaryEnergy)) {
@@ -147,8 +146,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		application.starMap.markAsExploredAround(dropQuadrant);
 		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
-		fireEvent(Events.AFTER_ENTERPRISE_WARPED,
-				(h) -> h.onEnterpriseWarped(this, fromQuadrant, fromLocation, dropQuadrant, freeSpot));
 		fireEvent(Events.THING_MOVED,
 				(h) -> h.thingMoved(Enterprise.this, fromQuadrant, oldLocation, dropQuadrant, freeSpot));
 		turnsSinceWarp = 0;

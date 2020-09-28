@@ -12,7 +12,7 @@ import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.bus.Events;
-import superstartrek.client.model.Enterprise;
+import superstartrek.client.control.QuadrantActivationHandler;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Star;
@@ -129,20 +129,17 @@ public class TestEnterprise extends BaseTest {
 		Quadrant targetQuadrant = starMap.getQuadrant(3, 4);
 		starMap.setQuadrant(targetQuadrant);
 
-		bus.addHandler(Events.AFTER_ENTERPRISE_WARPED, new NavigationHandler() {
+		bus.addHandler(Events.QUADRANT_ACTIVATED, new QuadrantActivationHandler() {
 
 			@Override
-			public void onEnterpriseWarped(Enterprise e, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-				assertEquals(enterprise, enterprise);
-				assertEquals(quadrant, qFrom);
-				assertEquals(targetQuadrant, qTo);
-				assertEquals(Location.location(0, 0), lFrom);
-				assertEquals(Location.location(1, 1), lTo);
+			public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
+				assertEquals(quadrant, oldQuadrant);
+				assertEquals(targetQuadrant, newQuadrant);
 			}
 		});
 		enterprise.warpTo(targetQuadrant, null);
 
-		assertEquals(1, bus.getFiredCount(Events.AFTER_ENTERPRISE_WARPED));
+		assertEquals(1, bus.getFiredCount(Events.QUADRANT_ACTIVATED));
 	}
 
 	@Test

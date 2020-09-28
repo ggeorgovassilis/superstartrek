@@ -19,7 +19,7 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	}
 
 	public void updateCommands() {
-		Setting autoAim = application.starMap.enterprise.getAutoAim();
+		Setting autoAim = getStarMap().enterprise.getAutoAim();
 		view.setMenuEntryEnabled("cmd_autoaim", autoAim.isOperational());
 	}
 

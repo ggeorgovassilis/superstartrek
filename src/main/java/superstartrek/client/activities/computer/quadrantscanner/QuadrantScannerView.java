@@ -137,8 +137,6 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		eSvg.getStyle().setLeft(0, Unit.PX);
 		eSvg.getStyle().setTop(0, Unit.PX);
 		eSvg.getStyle().setProperty("pointerEvents", "none");
-//		eSvg.setAttribute("width", ""+(Math.abs(x1px-x2px)));
-//		eSvg.setAttribute("height", ""+Math.abs(y1px-y2px));
 		eSvg.setInnerHTML("<line x1='" + x1px + "px' y1='" + y1px + "px' x2='" + x2px + "px' y2='" + y2px
 				+ "px' stroke='" + colour + "'/>");
 		eSvg.getStyle().setPosition(Position.ABSOLUTE);

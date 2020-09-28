@@ -23,7 +23,6 @@ public class Events {
 
 	// names are only for debugging purposes; can be disabled in Event class
 	public final static Event<QuadrantActivationHandler> QUADRANT_ACTIVATED = new Event<>("QUADRANT_ACTIVATED");
-	public final static Event<NavigationHandler> AFTER_ENTERPRISE_WARPED = new Event<>("AFTER_ENTERPRISE_WARPED");
 	public final static Event<CombatHandler> ENTERPRISE_DAMAGED = new Event<>("ENTERPRISE_DAMAGED");
 	public final static Event<CombatHandler> BEFORE_FIRE = new Event<>("BEFORE_FIRE");
 	public final static Event<CombatHandler> AFTER_FIRE = new Event<>("AFTER_FIRE");
