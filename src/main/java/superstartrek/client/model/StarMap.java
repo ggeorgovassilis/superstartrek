@@ -164,7 +164,7 @@ public class StarMap {
 			//While this may seem unnecessarily heuristic and wasteful, it is not:
 			//1. quadrants are sparsely populated, the chance of finding a free spot is high
 			//2. game play relies on randomness, eg. retreating Klingons would become predictable
-			for (int tries = 0; tries < radius * radius; tries++) {
+			for (int remainingTries = radius*radius ; remainingTries > 0; remainingTries--) {
 				int x = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.x + (random.nextInt(1 + radius)) - (radius / 2)));
 				int y = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.y + (random.nextInt(1 + radius)) - (radius / 2)));
 				if (null == index.findThingAt(x, y))
