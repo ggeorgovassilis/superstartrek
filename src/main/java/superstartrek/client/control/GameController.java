@@ -90,13 +90,13 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 			Star star = target.as();
 			message(weapon + " hit " + star.getName() + " at " + star.getLocation());
 		}
-		if (actor == application.starMap.enterprise && !wasAutoFire)
+		if (actor == getEnterprise() && !wasAutoFire)
 			endTurnAfterThis();
 	}
 
 	@Override
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
-		if (thing == application.starMap.enterprise)
+		if (thing == getEnterprise())
 			endTurnAfterThis();
 	}
 

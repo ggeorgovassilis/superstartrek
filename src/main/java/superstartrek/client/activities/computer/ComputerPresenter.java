@@ -195,7 +195,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		switch(code) {
 		case 'l':
 		case 'L':
-			if (application.starMap.enterprise.getLrs().isOperational())
+			if (getEnterprise().getLrs().isOperational())
 				application.browserAPI.postHistoryChange("longrangescan");
 			break;
 		case 's':

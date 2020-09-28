@@ -13,6 +13,7 @@ import superstartrek.client.activities.combat.CombatHandler.partTarget;
 import superstartrek.client.model.Enterprise;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
@@ -50,15 +51,14 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
 		SectorContextMenuPresenter.this.quadrant = quadrant;
-		Enterprise e = application.starMap.enterprise;
+		Enterprise e = getEnterprise();
 		// read dimensions before modifying the DOM to avoid re-layout
-		int horizEmToPx = application.browserAPI.getMetricWidthInPx();
-		int vertEmToPx = application.browserAPI.getMetricHeightInPx();
 
+		boolean canFirePhaserAt = e.canFirePhaserAt(sector) == null;
 		buttonsEnabled.put(cmd_navigate, e.canNavigateTo(sector));
-		buttonsEnabled.put(cmd_firePhasers, e.canFirePhaserAt(sector) == null);
-		buttonsEnabled.put(cmd_precision_weapons, e.canFirePhaserAt(sector) == null);
-		buttonsEnabled.put(cmd_precision_propulsion, e.canFirePhaserAt(sector) == null);
+		buttonsEnabled.put(cmd_firePhasers, canFirePhaserAt);
+		buttonsEnabled.put(cmd_precision_weapons, canFirePhaserAt);
+		buttonsEnabled.put(cmd_precision_propulsion, canFirePhaserAt);
 		buttonsEnabled.put(cmd_fireTorpedos, e.getTorpedos().isOperational() && e.getTorpedos().getValue()>=1);
 		for (String cmd : buttonsEnabled.keySet())
 			view.enableButton(cmd, buttonsEnabled.get(cmd));
@@ -69,7 +69,11 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		// that's empirical knowledge from the CSS
 		int menuWidthEm = 8;
 		int menuHeightEm = 5;
-		int screen_width_em = application.browserAPI.getWindowWidthPx() / horizEmToPx;
+
+		BrowserAPI browserAPI = application.browserAPI;
+		int horizEmToPx = browserAPI.getMetricWidthInPx();
+		int vertEmToPx = browserAPI.getMetricHeightInPx();
+		int screen_width_em = browserAPI.getWindowWidthPx() / horizEmToPx;
 
 		int target_x_em = Math.max(screenX / horizEmToPx, menuWidthEm / 2);
 		target_x_em = Math.min(target_x_em, screen_width_em - menuWidthEm);
@@ -118,7 +122,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	public void onCommandClicked(String command) {
-		Enterprise enterprise = application.starMap.enterprise;
+		Enterprise enterprise = getEnterprise();
 		if (buttonsEnabled.get(command))
 			hideMenu(() -> {
 				switch (command) {

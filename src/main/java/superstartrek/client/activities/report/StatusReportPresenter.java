@@ -10,7 +10,7 @@ import superstartrek.client.model.Enterprise;
 public class StatusReportPresenter extends BasePresenter<StatusReportView> implements ValueChangeHandler<String>{
 
 	public void updateView() {
-		Enterprise enterprise = application.starMap.enterprise;
+		Enterprise enterprise = getEnterprise();
 		view.setProperty("report_stardate", ""+application.starMap.getStarDate());
 		view.setProperty("report_score", ""+application.scoreKeeper.getScore());
 		view.setProperty("report_location", enterprise.getQuadrant().getName());

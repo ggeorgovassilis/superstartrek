@@ -167,7 +167,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 		switch (weapon) {
 		case disruptor:
 		case phaser:
-			String colour = (actor == application.starMap.enterprise) ? "yellow" : "red";
+			String colour = (actor == getEnterprise()) ? "yellow" : "red";
 			view.drawBeamBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
 					target.getLocation().y, colour);
 		default:
@@ -180,13 +180,13 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	public void updateMapWithReachableSectors() {
-		Enterprise enterprise = getStarMap().enterprise;
+		Enterprise enterprise = getEnterprise();
 		clearNavigationTargets(enterprise.getLastReachableSectors());
 		List<Location> sectors = enterprise.findReachableSectors();
 		for (Location l : sectors)
 			markSectorAsNavigationTarget(l.x, l.y);
 	}
-	
+
 	@Override
 	public void onPlayerTurnStarted() {
 		updateMapWithReachableSectors();
