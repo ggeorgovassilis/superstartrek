@@ -5,17 +5,15 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
-import superstartrek.client.bus.Commands;
 import superstartrek.client.model.Setting;
 
 public class AppMenuPresenter extends BasePresenter<IAppMenuView>
-		implements PopupViewPresenter<IAppMenuView>, AppMenuHandler, ValueChangeHandler<String> {
+		implements PopupViewPresenter<IAppMenuView>, ValueChangeHandler<String> {
 
 	String gotoStateAfterMenuHidden;
 
 	public AppMenuPresenter(Application application) {
 		super(application);
-		addHandler(Commands.APP_MENU_SHOW, this);
 		application.browserAPI.addHistoryListener(this);
 
 	}
@@ -25,7 +23,6 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 		view.setMenuEntryEnabled("cmd_autoaim", autoAim.isOperational());
 	}
 
-	@Override
 	public void showMenu() {
 		if (view.isVisible())
 			return;
@@ -34,7 +31,6 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 		view.show();
 	}
 
-	@Override
 	public void hideMenu() {
 		if (view.isVisible())
 			view.hide();

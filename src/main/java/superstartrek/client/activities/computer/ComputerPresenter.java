@@ -10,7 +10,6 @@ import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.sector.contextmenu.ContextMenuHideHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
-import superstartrek.client.bus.Commands;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
