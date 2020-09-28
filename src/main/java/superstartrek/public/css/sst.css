@@ -1082,7 +1082,7 @@ outline:solid transparent 1px;
 
 /* high constrast theme */
 .ui-theme-highcontrast a, .ui-theme-highcontrast button{
-	background-color: #11509f;
+	background-color:darkblue;
 }
 
 .ui-theme-highcontrast #messages-content>li.klingon-damaged, .ui-theme-highcontrast .entry.klingon-destroyed {
