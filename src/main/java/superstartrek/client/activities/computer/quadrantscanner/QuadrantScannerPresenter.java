@@ -170,11 +170,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 			String colour = (actor == application.starMap.enterprise) ? "yellow" : "red";
 			view.drawBeamBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
 					target.getLocation().y, colour);
-			break;
-		case torpedo:
-			view.animateTorpedoFireBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
-					target.getLocation().y, (v) -> {
-					});
+		default:
 		}
 	}
 

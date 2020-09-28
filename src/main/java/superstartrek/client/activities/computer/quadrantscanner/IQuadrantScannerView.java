@@ -1,7 +1,6 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
 import superstartrek.client.activities.View;
-import superstartrek.client.activities.pwa.Callback;
 
 public interface IQuadrantScannerView extends View<QuadrantScannerPresenter>{
 
@@ -20,6 +19,5 @@ public interface IQuadrantScannerView extends View<QuadrantScannerPresenter>{
 	
 	void drawBeamBetween(int x1, int y1, int x2, int y2, String colour);
 	void clearBeamMarks();
-	void animateTorpedoFireBetween(int x1, int y1, int x2, int y2, Callback<Void> callback);
 	
 }

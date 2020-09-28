@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.DomEvent;
@@ -15,11 +14,9 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.model.Constants;
 import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
-import superstartrek.client.utils.Timer;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
 
@@ -152,37 +149,6 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		for (Element e : beamElements)
 			e.removeFromParent();
 		beamElements.clear();
-	}
-
-	@Override
-	public void animateTorpedoFireBetween(int x1, int y1, int x2, int y2, Callback<Void> callback) {
-		Element e1 = buckets[x1][y1].getElement();
-		Element e2 = buckets[x2][y2].getElement();
-
-		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
-		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
-
-		int x2px = e2.getOffsetLeft() + e2.getClientWidth() / 2;
-		int y2px = e2.getOffsetTop() + e2.getClientHeight() / 2;
-
-		Element eTorpedo = DOM.createSpan();
-		Style s = eTorpedo.getStyle();
-		s.setLeft(x1px, Unit.PX);
-		s.setTop(y1px, Unit.PX);
-		eTorpedo.setClassName("torpedo-dot");
-		getElement().appendChild(eTorpedo);
-		int dx = x2px - x1px;
-		int dy = y2px - y1px;
-		int gap_ms = 100;
-		int animation_duration_ms = 100;
-		Timer.postpone(() -> {
-			s.setProperty("transform", "translate(" + dx + "px," + dy + "px)");
-			s.setProperty("transition", "linear " + (animation_duration_ms / 1000) + "s");
-		}, gap_ms);
-		Timer.postpone(() -> {
-			eTorpedo.removeFromParent();
-			callback.onSuccess(null);
-		}, gap_ms + animation_duration_ms);
 	}
 
 	@Override
