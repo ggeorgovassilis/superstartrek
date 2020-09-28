@@ -53,6 +53,7 @@ public class TestPWA extends BaseTest{
 		when(requestFactory.create()).thenReturn(request);
 		application.browserAPI = mock(BrowserAPI.class);
 		when(application.browserAPI.nextInt(any(int.class))).thenReturn(222);
+		when(application.browserAPI.getAppBuildNr()).thenReturn("12345");
 		when(request.request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt"), any(RequestCallback.class))).then(new Answer<Void>() {
 
 			@Override
@@ -83,7 +84,7 @@ public class TestPWA extends BaseTest{
 		AtomicBoolean newVersionAvailable = new AtomicBoolean(false);
 		bus.addHandler(Events.INFORMING_OF_INSTALLED_VERSION, new ApplicationLifecycleHandler() {
 			@Override
-			public void installedAppVersionIs(String version, String timestamp) {
+			public void installedAppVersionIs(String version) {
 				assertEquals("12345", version);
 			}
 		});
@@ -95,7 +96,6 @@ public class TestPWA extends BaseTest{
 			}
 		});
 		pwa.checkForNewVersion();
-		verify(request).request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt"), any(RequestCallback.class));
 		verify(request).request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt?rnd=222"), any(RequestCallback.class));
 		assertEquals(1, bus.getFiredCount(Events.INFORMING_OF_INSTALLED_VERSION));
 		assertEquals(1, bus.getFiredCount(Events.NEW_VERSION_AVAILABLE));

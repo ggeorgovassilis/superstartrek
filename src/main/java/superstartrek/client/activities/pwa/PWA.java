@@ -4,10 +4,14 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.ui.RootPanel;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
@@ -38,25 +42,25 @@ public class PWA {
 		cache.clearCache(CACHE_NAME, application.requestFactory, callback);
 	}
 
-	//@formatter:off
+	// @formatter:off
 	public static native boolean supportsServiceWorker() /*-{
-		return $wnd.navigator.serviceWorker!=null;
-	}-*/;
+															return $wnd.navigator.serviceWorker!=null;
+															}-*/;
 
 	public static native void log(Throwable t) /*-{
-		console.log(t.message, t);
-	}-*/;
+												console.log(t.message, t);
+												}-*/;
 
 	/*
 	 * Tricky thing to remember: if the user dismisses the native installation
 	 * prompt, the "beforeinstallprompt" event fires again!
 	 */
 	public native void addInstallationListener(Callback<AppInstallationEvent> callback) /*-{
-		$wnd.addEventListener('beforeinstallprompt', function (e){
-			callback.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(e);
-		});
-	}-*/;
-	//@formatter:on
+																						$wnd.addEventListener('beforeinstallprompt', function (e){
+																						callback.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(e);
+																						});
+																						}-*/;
+	// @formatter:on
 
 	public void installApplication() {
 		log.info("invoking deferred installation prompt");
@@ -113,33 +117,24 @@ public class PWA {
 		});
 	}
 
+	String getBuildNumber() {
+		return application.browserAPI.getAppBuildNr();
+	}
+
 	public void checkForNewVersion() {
 		log.info("Checking for new version");
 		Application app = application;
-		getFileContent(CHECKSUM_URL, new Callback<String[]>() {
-
-			@Override
-			public void onSuccess(String[] result) {
-				String checksumOfInstalledApplication = result[0];
-				String dateOfInstalledApplication = result[1];
-				log.info("Installed app version " + checksumOfInstalledApplication);
-				application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
-						(h) -> h.installedAppVersionIs(checksumOfInstalledApplication, dateOfInstalledApplication));
-				getLatestVersionFromServer((latestVersion) -> {
-					boolean isSame = checksumOfInstalledApplication.equals(latestVersion);
-					log.info("is same: " + isSame);
-					if (isSame)
-						app.eventBus.fireEvent(Events.VERSION_IS_CURRENT, (h) -> h.versionIsCurrent());
-					else
-						app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE, (h) -> h.newVersionAvailable());
-				});
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				log.severe("Update check failed");
-				application.eventBus.fireEvent(Events.VERSION_CHECK_FAILED, (h) -> h.checkFailed());
-			}
+		String checksumOfInstalledApplication = app.browserAPI.getAppBuildNr();
+		log.info("Installed app version " + checksumOfInstalledApplication);
+		application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
+				(h) -> h.installedAppVersionIs(checksumOfInstalledApplication));
+		getLatestVersionFromServer((latestVersion) -> {
+			boolean isSame = checksumOfInstalledApplication.equals(latestVersion);
+			log.info("is same: " + isSame);
+			if (isSame)
+				app.eventBus.fireEvent(Events.VERSION_IS_CURRENT, (h) -> h.versionIsCurrent());
+			else
+				app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE, (h) -> h.newVersionAvailable());
 		});
 
 	}

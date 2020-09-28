@@ -23,6 +23,7 @@
 		<gwt.disableCastChecking>false</gwt.disableCastChecking>
 		<gwt.optimizationLevel>-1</gwt.optimizationLevel>
 		<gwt-maven-plugin.version>2.9.0</gwt-maven-plugin.version>
+		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 
 	<scm>
@@ -266,53 +267,13 @@
 									<fileset
 										dir="${project.basedir}/site/superstartrek.superstartrek" />
 								</move>
+								<replace token="__APPBUILDNR"
+									value="${maven.build.timestamp}" dir="${project.basedir}/site">
+									<include name="index.html" />
+								</replace>
+								<echo file="${project.basedir}/site/package.txt" append="false">${maven.build.timestamp}</echo>
 							</tasks>
 							<skip>${skip.ant-copy}</skip>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>net.nicoulaj.maven.plugins</groupId>
-				<artifactId>checksum-maven-plugin</artifactId>
-				<version>1.8</version>
-				<executions>
-					<execution>
-						<id>checksum-files</id>
-						<goals>
-							<goal>files</goal>
-						</goals>
-						<phase>package</phase>
-						<configuration>
-							<fileSets>
-								<fileSet>
-									<directory>${project.basedir}/site</directory>
-									<exclude>*.md5</exclude>
-								</fileSet>
-							</fileSets>
-							<algorithms>MD5</algorithms>
-							<shasumSummary>true</shasumSummary>
-							<individualFiles>false</individualFiles>
-							<shasumSummaryFile>${project.basedir}/site/checksum.sha</shasumSummaryFile>
-						</configuration>
-					</execution>
-					<execution>
-						<id>checksum-deployment</id>
-						<goals>
-							<goal>files</goal>
-						</goals>
-						<phase>package</phase>
-						<configuration>
-							<fileSets>
-								<fileSet>
-									<directory>${project.basedir}/site</directory>
-									<include>checksum.sha</include>
-								</fileSet>
-							</fileSets>
-							<algorithms>MD5</algorithms>
-							<individualFiles>false</individualFiles>
-							<shasumSummary>true</shasumSummary>
-							<shasumSummaryFile>${project.basedir}/site/package.txt</shasumSummaryFile>
 						</configuration>
 					</execution>
 				</executions>

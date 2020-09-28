@@ -11,7 +11,6 @@ public class FilesToCache {
 			"images/stars-background.gif", 
 			"service-worker.js",
 			"sst.webmanifest",
-			"package.txt",
 			"images/anchor.svg",
 			"images/bookmark.svg",
 			"images/cancel.svg",

@@ -8,6 +8,6 @@ public interface ApplicationLifecycleHandler extends EventHandler{
 	default void versionIsCurrent(){};
 	default void checkFailed(){};
 	default void appMustReload(){};
-	default void installedAppVersionIs(String version, String timestamp) {};
+	default void installedAppVersionIs(String version) {};
 	default void showInstallPrompt() {};
 }

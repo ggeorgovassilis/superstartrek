@@ -163,6 +163,12 @@ public class TestStarMapSerializer extends BaseTest {
 				// TODO Auto-generated method stub
 				return null;
 			}
+
+			@Override
+			public String getAppBuildNr() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		};
 		application.starMap = starMap = setup.createNewMap();
 		application.gameController = mock(GameController.class);

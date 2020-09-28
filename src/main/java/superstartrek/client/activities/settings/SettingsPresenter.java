@@ -53,9 +53,9 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	}
 
 	@Override
-	public void installedAppVersionIs(String version, String timestamp) {
+	public void installedAppVersionIs(String version) {
 		setUpdateCheckButtonEnabled(true);
-		view.showAppVersion(version +" "+timestamp);
+		view.showAppVersion(version);
 	}
 
 	@Override

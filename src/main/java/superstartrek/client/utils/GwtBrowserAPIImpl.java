@@ -3,6 +3,7 @@ package superstartrek.client.utils;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -46,8 +47,7 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 		emMetricOffsetHeight = e.getOffsetHeight();
 		emMetricOffsetWidth = e.getOffsetWidth();
 	}
-	
-	
+
 	@Override
 	public int getWindowWidthPx() {
 		return Window.getClientWidth();
@@ -100,8 +100,9 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 
 	@Override
 	public boolean hasKeyboard() {
-		//TODO: this is a bad heuristic. maybe listen for key press events; is there are any, this 
-		//device has a keyboard?
+		// TODO: this is a bad heuristic. maybe listen for key press events; is there
+		// are any, this
+		// device has a keyboard?
 		return getWindowWidthPx() > 400;
 	}
 
@@ -136,14 +137,16 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 
 	@Override
 	public void onResize(ResizeEvent event) {
-		//metrics change only when document zoom changes (in that case this method is invoked).
-		//TODO: it's possible that metrics don't change even then as zooming is transparent to the app.
+		// metrics change only when document zoom changes (in that case this method is
+		// invoked).
+		// TODO: it's possible that metrics don't change even then as zooming is
+		// transparent to the app.
 		updateMetrics();
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public<P extends Presenter> void addToPage(View<P> view) {
+	public <P extends Presenter> void addToPage(View<P> view) {
 		_page.add(view);
 	}
 
@@ -179,7 +182,7 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 
 	@Override
 	public native Element createElementNs(String nameSpace, String tag)/*-{
-	return document.createElementNS(nameSpace,tag);
+			return document.createElementNS(nameSpace,tag);
 	}-*/;
 
 	@Override
@@ -203,6 +206,11 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	public Void alert(String message) {
 		Window.alert(message);
 		return null;
+	}
+
+	@Override
+	public String getAppBuildNr() {
+		return Document.get().getElementById("appBuildNr").getAttribute("content");
 	}
 
 }

@@ -47,5 +47,6 @@ public interface BrowserAPI {
 	Void addGlobalCss(String css);
 	Void removeGlobalCss(String css);
 	HandlerRegistration addWindowResizeHandler(ResizeHandler handler);
+	String getAppBuildNr();
 
 }
