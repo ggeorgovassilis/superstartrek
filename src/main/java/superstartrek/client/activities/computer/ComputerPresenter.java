@@ -28,7 +28,7 @@ import superstartrek.client.model.Weapon;
 import superstartrek.client.model.Enterprise.ShieldDirection;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
-		implements ComputerHandler, GamePhaseHandler, CombatHandler, ValueChangeHandler<String>,
+		implements GamePhaseHandler, CombatHandler, ValueChangeHandler<String>,
 		KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
 
 	ScoreKeeper scoreKeeper;
@@ -39,7 +39,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		super(application);
  		this.scoreKeeper = scoreKeeper;
 		application.browserAPI.addHistoryListener(this);
-		addHandler(Commands.SHOW_COMPUTER, this);
 		addHandler(Events.PLAYER_TURN_STARTED, this);
 		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
@@ -57,7 +56,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		this.starMap = starMap;
 	}
 
-	@Override
 	public void showScreen() {
 		updateStarDateView();
 		view.show();
@@ -71,7 +69,6 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		view.showScore("" + scoreKeeper.getScore());
 	}
 
-	@Override
 	public void hideScreen() {
 		view.hide();
 	}
