@@ -2,7 +2,6 @@ package superstartrek.client.activities;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -51,7 +50,7 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 	// bottom alignment is required
 	protected void layoutForEasyHandlingOnMobileDevices() {
 		int contentHeight = getOffsetHeight();
-		int windowHeight = Window.getClientHeight();
+		int windowHeight = presenter.getApplication().browserAPI.getWindowHeightPx();
 		int margin = Math.max(0, windowHeight - contentHeight);
 		getElement().getStyle().setMarginTop(margin, Unit.PX);
 	}

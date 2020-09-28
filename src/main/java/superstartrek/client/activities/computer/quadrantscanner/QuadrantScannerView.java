@@ -26,6 +26,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	ElementWrapper[][] buckets = new ElementWrapper[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	ElementWrapper bSelectedSector;
 	List<Element> beamElements = new ArrayList<>();
+	Element eSvgProto;
 
 	@Override
 	public void deselectSectors() {
@@ -77,6 +78,14 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		widgetImpl.addDomHandler((event) -> handleClick(event), MouseDownEvent.getType());
 		widgetImpl.addDomHandler((event) -> handleClick(event), TouchStartEvent.getType());
 		bSelectedSector = buckets[0][0];
+		eSvgProto = presenter.getApplication().browserAPI.createElementNs("http://www.w3.org/2000/svg", "svg");
+		eSvgProto.setAttribute("width", "100%");
+		eSvgProto.setAttribute("height", "100%");
+		eSvgProto.getStyle().setLeft(0, Unit.PX);
+		eSvgProto.getStyle().setTop(0, Unit.PX);
+		eSvgProto.getStyle().setProperty("pointerEvents", "none");
+		eSvgProto.getStyle().setPosition(Position.ABSOLUTE);
+
 	}
 
 	protected void handleClick(DomEvent<?> event) {
@@ -131,15 +140,9 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		int x2px = e2.getOffsetLeft() + e2.getClientWidth() / 2;
 		int y2px = e2.getOffsetTop() + e2.getClientHeight() / 2;
 
-		Element eSvg = presenter.getApplication().browserAPI.createElementNs("http://www.w3.org/2000/svg", "svg");
-		eSvg.setAttribute("width", "100%");
-		eSvg.setAttribute("height", "100%");
-		eSvg.getStyle().setLeft(0, Unit.PX);
-		eSvg.getStyle().setTop(0, Unit.PX);
-		eSvg.getStyle().setProperty("pointerEvents", "none");
+		Element eSvg = eSvgProto.cloneNode(false).cast();
 		eSvg.setInnerHTML("<line x1='" + x1px + "px' y1='" + y1px + "px' x2='" + x2px + "px' y2='" + y2px
 				+ "px' stroke='" + colour + "'/>");
-		eSvg.getStyle().setPosition(Position.ABSOLUTE);
 		getElement().appendChild(eSvg);
 		beamElements.add(eSvg);
 	}
