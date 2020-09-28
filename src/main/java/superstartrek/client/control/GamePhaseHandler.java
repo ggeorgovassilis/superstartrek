@@ -15,8 +15,6 @@ public interface GamePhaseHandler extends EventHandler {
 
 	default void onKlingonTurnStarted() {};
 
-	default void onKlingonTurnEnded() {};
-
 	default void gameOver() {};
 	
 	default void gameLost() {};

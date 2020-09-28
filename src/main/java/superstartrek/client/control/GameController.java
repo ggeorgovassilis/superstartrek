@@ -165,7 +165,6 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 	protected void endTurn() {
 		fireEvent(TURN_ENDED, (h)->h.onTurnEnded());
 		fireEvent(KLINGON_TURN_STARTED, (h)->h.onKlingonTurnStarted());
-		fireEvent(KLINGON_TURN_ENDED, (h)->h.onKlingonTurnEnded());
 		// release resources so that it can be (hopefully) garbage collected; at this
 		// point, everyone who needs resources should have them
 	}

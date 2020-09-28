@@ -32,7 +32,6 @@ public class TestGameController extends BaseTest {
 				new Klingon(ShipClass.BirdOfPrey), Weapon.phaser, 1, false));
 		assertEquals(1, bus.getFiredCount(Events.TURN_ENDED));
 		assertEquals(1, bus.getFiredCount(Events.KLINGON_TURN_STARTED));
-		assertEquals(1, bus.getFiredCount(Events.KLINGON_TURN_ENDED));
 		assertEquals(1, bus.getFiredCount(Events.TURN_STARTED));
 	}
 
