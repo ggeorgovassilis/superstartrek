@@ -13,7 +13,7 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 	}
 
 	@Override
-	public void newVersionAvailable() {
+	public void newVersionAvailable(String currentVersion, String newVersion) {
 		view.show();
 	}
 

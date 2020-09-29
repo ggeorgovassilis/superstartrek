@@ -65,13 +65,13 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	}
 	
 	@Override
-	public void versionIsCurrent() {
+	public void versionIsCurrent(String currentVersion) {
 		setUpdateCheckButtonEnabled(true);
-		application.message("No updates found","info");
+		application.message("No updates found. Current build is "+currentVersion,"info");
 	}
 	
 	@Override
-	public void newVersionAvailable() {
+	public void newVersionAvailable(String currentVersion, String newVersion) {
 		setUpdateCheckButtonEnabled(true);
 	}
 	

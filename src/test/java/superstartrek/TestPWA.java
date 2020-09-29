@@ -91,7 +91,7 @@ public class TestPWA extends BaseTest{
 		bus.addHandler(Events.NEW_VERSION_AVAILABLE, new ApplicationLifecycleHandler() {
 			
 			@Override
-			public void newVersionAvailable() {
+			public void newVersionAvailable(String currentVersion, String newVersion) {
 				newVersionAvailable.set(true);
 			}
 		});
