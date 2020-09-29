@@ -81,10 +81,10 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 		getElement().getStyle().setMarginTop(0, Unit.PX);
 	}
 
+	// only called if handler has been registered in constructor
 	@Override
 	public void onAfterScreenResize(int widthPx, int heightPx) {
 		layoutForEasyHandlingOnMobileDevices();
-//		Timer.postpone(()->);
 	}
 
 }

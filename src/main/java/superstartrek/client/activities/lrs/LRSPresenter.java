@@ -59,7 +59,6 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ValueChan
 		updateLrsView();
 		view.show();
 		Quadrant loc = getActiveQuadrant();
-		view.focusCell(loc.x, loc.y);
 	}
 
 	@Override

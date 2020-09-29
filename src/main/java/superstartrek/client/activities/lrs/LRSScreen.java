@@ -61,11 +61,6 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	}
 
 	@Override
-	public void focusCell(int x, int y) {
-		cells[x][y].focus();
-	}
-
-	@Override
 	public void removeCss(int x, int y, String css) {
 		cells[x][y].removeClassName(css);
 	}
