@@ -38,25 +38,25 @@ public class PWA {
 		cache.clearCache(CACHE_NAME, application.requestFactory, callback);
 	}
 
-	// @formatter:off
+	//@formatter:off
 	public static native boolean supportsServiceWorker() /*-{
-															return $wnd.navigator.serviceWorker!=null;
-															}-*/;
+		return $wnd.navigator.serviceWorker!=null;
+	}-*/;
 
 	public static native void log(Throwable t) /*-{
-												console.log(t.message, t);
-												}-*/;
+	console.log(t.message, t);
+	}-*/;
 
 	/*
 	 * Tricky thing to remember: if the user dismisses the native installation
 	 * prompt, the "beforeinstallprompt" event fires again!
 	 */
 	public native void addInstallationListener(Callback<AppInstallationEvent> callback) /*-{
-																						$wnd.addEventListener('beforeinstallprompt', function (e){
-																						callback.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(e);
-																						});
-																						}-*/;
-	// @formatter:on
+	$wnd.addEventListener('beforeinstallprompt', function (e){
+	callback.@superstartrek.client.activities.pwa.Callback::onSuccess(Ljava/lang/Object;)(e);
+	});
+	}-*/;
+	//@formatter:on
 
 	public void installApplication() {
 		log.info("invoking deferred installation prompt");
@@ -72,41 +72,40 @@ public class PWA {
 		deferredInstallationPrompt = null;
 	}
 
-	public void getFileContent(String url, Callback<String[]> success) {
+	public void getFileContent(String url, Callback<String> callback) {
 		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
 		r.request(RequestBuilder.GET, url, new RequestCallback() {
 
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				if (response.getStatusCode() == 200 || response.getStatusCode() == 304) {
-					String checksumOfInstalledApplication = response.getText();
-					String dateOfInstalledApplication = response.getHeader("last-modified");
-					success.onSuccess(new String[] { checksumOfInstalledApplication, dateOfInstalledApplication });
-				} else
-					log.severe("Wrong response code " + response.getStatusCode());
+					String responseText = response.getText();
+					callback.onSuccess(responseText);
+				} else 
+					onError(request, new Exception("Wrong response code " + response.getStatusCode()));
 			}
 
 			@Override
 			public void onError(Request request, Throwable exception) {
 				log.severe("getFileContent.onError: " + exception.getMessage());
-				success.onFailure(exception);
+				callback.onFailure(exception);
 			}
 		});
 	}
 
 	public void getLatestVersionFromServer(Callback<String> callback) {
-		getFileContent(CHECKSUM_URL + "?rnd=" + application.browserAPI.nextInt(10000), new Callback<String[]>() {
+		//append random string to URL to bypass potential caching
+		getFileContent(CHECKSUM_URL + "?rnd=" + application.browserAPI.nextInt(10000), new Callback<String>() {
 
 			@Override
-			public void onSuccess(String[] result) {
-				String checksumOfNewestVersion = result[0];
+			public void onSuccess(String result) {
+				String checksumOfNewestVersion = result;
 				log.info("Checksum of latest package : " + checksumOfNewestVersion);
 				callback.onSuccess(checksumOfNewestVersion);
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
-				log.info("There you have it. error");
 				application.eventBus.fireEvent(Events.VERSION_CHECK_FAILED, (h) -> h.checkFailed());
 
 			}
@@ -122,6 +121,9 @@ public class PWA {
 		Application app = application;
 		String checksumOfInstalledApplication = app.browserAPI.getAppBuildNr();
 		log.info("Installed app version " + checksumOfInstalledApplication);
+		clearCache(()->{
+			log.info("clearCache returned");
+		});
 		application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
 				(h) -> h.installedAppVersionIs(checksumOfInstalledApplication));
 		getLatestVersionFromServer((latestVersion) -> {

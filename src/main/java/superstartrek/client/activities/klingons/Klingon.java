@@ -199,7 +199,7 @@ public class Klingon extends Vessel
 
 	@Override
 	public void onKlingonTurnStarted() {
-		// Reminder: only klingons in the active sector receive this event
+		// Reminder: only Klingons in the active sector receive this event
 		Quadrant q = getActiveQuadrant();
 		if (getDisruptor().isBroken())
 			flee(q);
