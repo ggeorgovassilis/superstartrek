@@ -216,6 +216,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 	@Override
 	public void onEnterpriseDocked(Enterprise enterprise, StarBase starBase, int items, int torpedos, int antimatter) {
 		getScoreKeeper().addScore(ScoreKeeper.POINTS_ENTERPRISE_REPAIR*(items+torpedos+(antimatter/100)));
+		endTurnAfterThis();
 	}
 	
 	@Override

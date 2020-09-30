@@ -360,7 +360,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		boolean inRange = StarMap.within_distance(this, quadrant.getStarBase(), 1.1);
 		boolean hasKlingons = quadrant.hasKlingons();
 		if (!inRange && hasKlingons) {
-			application.message("Navigate manually when enemies present.");
+			application.message("Navigate manually when enemies are present.");
 			return;
 		}
 		if (!inRange && !hasKlingons) {
