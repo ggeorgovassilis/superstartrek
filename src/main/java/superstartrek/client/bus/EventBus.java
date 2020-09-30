@@ -48,6 +48,8 @@ public class EventBus {
 	public <T extends EventHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
 		@SuppressWarnings("unchecked")
 		List<T> protoList = (List<T>) handlers.get(type);
+		//regarding null check: once the game is fully loaded it's unlikely that there will be no handlers
+		//for any event. But during setup this is quite likely.
 		if (protoList == null)
 			return;
 		// TODO: should we use protoList directly and instead queue add/remove handlers?
