@@ -174,4 +174,9 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eToggleShields.addClassName(css);
 	}
 
+	@Override
+	public void updateTorpedoLabel(String value) {
+		eStatusIconTorpedos.setInnerText(value);
+	}
+
 }

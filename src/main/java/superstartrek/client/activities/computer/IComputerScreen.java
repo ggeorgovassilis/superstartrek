@@ -5,6 +5,8 @@ import superstartrek.client.activities.View;
 public interface IComputerScreen extends View<ComputerPresenter>{
 
 	void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos);
+	
+	void updateTorpedoLabel(String value);
 
 	void updateShields(double value, double currentUpperBound, double maximum);
 	

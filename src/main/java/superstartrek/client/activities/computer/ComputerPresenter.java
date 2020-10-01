@@ -86,6 +86,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		String cssPhasers = damageClass(enterprise.getPhasers(), true);
 		String cssTorpedos = damageClass(enterprise.getTorpedos(), enterprise.getTorpedos().getValue()>=1);
 		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
+		view.updateTorpedoLabel("Torpedos "+enterprise.getTorpedos().getValue());
 		if (enterprise.getLrs().isOperational())
 			view.enableLlrsButton();
 		else
