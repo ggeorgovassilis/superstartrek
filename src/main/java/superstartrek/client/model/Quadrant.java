@@ -30,7 +30,7 @@ public class Quadrant{
 	
 	public void setStarBase(StarBase starBase) {
 		this.starBase = starBase;
-		things[starBase.getLocation().x][starBase.getLocation().y] = starBase;
+		mark(starBase);
 	}
 
 	public boolean isExplored() {

@@ -85,7 +85,6 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 			Enterprise enterprise = target.as();
 			if (enterprise.getShields().getValue() <= 0)
 				gameOver(GameOutcome.lost, "shields");
-
 		} else if (Star.is(target)) {
 			Star star = target.as();
 			message(weapon + " hit " + star.getName() + " at " + star.getLocation());
