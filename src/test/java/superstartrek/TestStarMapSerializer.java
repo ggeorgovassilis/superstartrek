@@ -28,7 +28,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import java.util.Random;
-import java.util.Set;
 
 public class TestStarMapSerializer extends BaseTest {
 
@@ -106,10 +105,6 @@ public class TestStarMapSerializer extends BaseTest {
 				return null;
 			}
 
-			@Override
-			public Set<String> getFlags() {
-				return null;
-			}
 
 			@Override
 			public String getCookie(String name) {

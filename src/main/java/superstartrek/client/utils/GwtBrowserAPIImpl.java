@@ -1,6 +1,5 @@
 package superstartrek.client.utils;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import com.google.gwt.dom.client.Document;
@@ -36,7 +35,7 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	public GwtBrowserAPIImpl(EventBus bus) {
 		Window.addResizeHandler(this);
 		updateMetrics();
-		rootPanel = RootPanel.get("container");
+		rootPanel = RootPanel.get();
 		this.bus = bus;
 		rootPanel.addDomHandler(this, KeyDownEvent.getType());
 
@@ -109,20 +108,6 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	@Override
 	public String getParameter(String param) {
 		return Window.Location.getParameter(param);
-	}
-
-	@Override
-	public Set<String> getFlags() {
-		if (flags != null)
-			return flags;
-		String sflags = getParameter("flags");
-		if (sflags == null)
-			sflags = "";
-		String[] split = sflags.split(",");
-		flags = new HashSet<>();
-		for (String s : split)
-			flags.add(s);
-		return flags;
 	}
 
 	@Override

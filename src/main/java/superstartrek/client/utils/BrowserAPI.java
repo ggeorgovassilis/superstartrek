@@ -1,7 +1,5 @@
 package superstartrek.client.utils;
 
-import java.util.Set;
-
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -34,7 +32,6 @@ public interface BrowserAPI {
 	Void alert(String message);
 	Void reloadApplication();
 	String getParameter(String param);
-	Set<String> getFlags();
 	
 	@SuppressWarnings("rawtypes")
 	<P extends Presenter> void addToPage(View<P> view);
