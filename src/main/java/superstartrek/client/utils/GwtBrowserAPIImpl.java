@@ -30,15 +30,15 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	Set<String> flags;
 	int emMetricOffsetWidth;
 	int emMetricOffsetHeight;
-	RootPanel _page;
+	RootPanel rootPanel;
 	EventBus bus;
 
 	public GwtBrowserAPIImpl(EventBus bus) {
 		Window.addResizeHandler(this);
 		updateMetrics();
-		_page = RootPanel.get("container");
+		rootPanel = RootPanel.get("container");
 		this.bus = bus;
-		_page.addDomHandler(this, KeyDownEvent.getType());
+		rootPanel.addDomHandler(this, KeyDownEvent.getType());
 
 	}
 
@@ -147,7 +147,7 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	@SuppressWarnings("rawtypes")
 	@Override
 	public <P extends Presenter> void addToPage(View<P> view) {
-		_page.add(view);
+		rootPanel.add(view);
 	}
 
 	@Override
@@ -187,13 +187,13 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 
 	@Override
 	public Void addGlobalCss(String css) {
-		RootPanel.get().addStyleName(css);
+		rootPanel.addStyleName(css);
 		return null;
 	}
 
 	@Override
 	public Void removeGlobalCss(String css) {
-		RootPanel.get().removeStyleName(css);
+		rootPanel.removeStyleName(css);
 		return null;
 	}
 
