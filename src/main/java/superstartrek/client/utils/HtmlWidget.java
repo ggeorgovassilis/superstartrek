@@ -4,28 +4,12 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 //framework requirement that this implements HasWidgets
 public abstract class HtmlWidget extends Widget {
 	
 	public HtmlWidget() {
-	}
-	
-	public HtmlWidget(Element e) {
-		this(e, RootPanel.getBodyElement().isOrHasChild(e));
-	}
-
-	public HtmlWidget(Element e, boolean attach) {
-		setElement(e);
-		if (attach)
-			onAttach();
-	}
-
-	public HtmlWidget(Element e, String html) {
-		this(e);
-		e.setInnerHTML(html);
 	}
 	
 	//GWT's HtmlPanel implements this by attaching the element to the running document, using document.getElementById and removing it again
