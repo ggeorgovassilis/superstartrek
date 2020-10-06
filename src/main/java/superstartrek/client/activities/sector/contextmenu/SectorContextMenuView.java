@@ -11,11 +11,9 @@ import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.CSS;
-import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 import superstartrek.client.utils.Timer;
 
@@ -27,11 +25,14 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	public SectorContextMenuView(SectorContextMenuPresenter presenter) {
 		super(presenter);
 	}
+	
 
 	@Override
-	protected Widget createWidgetImplementation() {
+	protected void createWidgetImplementation() {
 		String html = presenter.getApplication().getScreenTemplates().sectorContextMenu().getText();
-		return new HtmlWidget(DOM.createDiv(), html);
+		Element e = DOM.createDiv();
+		e.setInnerHTML(html);
+		setElement(e);
 	}
 
 	@Override

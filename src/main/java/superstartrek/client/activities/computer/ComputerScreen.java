@@ -6,9 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Widget;
-
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
@@ -17,6 +14,7 @@ import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
+import superstartrek.client.utils.HtmlWidget;
 
 public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
 
@@ -55,7 +53,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(),
 				sectorMenuPresenter);
-		HTMLPanel panel = getWidgetAs();
+		HtmlWidget panel = (HtmlWidget)this;
 		panel.addAndReplaceElement(new QuadrantScannerView(quadrantScannerPresenter), "quadrantscancontainer");
 
 		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
@@ -68,7 +66,7 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		eMaxAntimatter = CSS.querySelectorAll("#cmd_showStatusReport .progress-indicator").getItem(0);
 		eMaxShields = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		eValueShields = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
-		eQuadrantName = ((HTMLPanel) getWidget()).getElementById("quadrant_name");
+		eQuadrantName = getElementById("quadrant_name");
 		eSkip = panel.getElementById("cmd_skip");
 		eStarDate = DOM.getElementById("stardate");
 		eScore = DOM.getElementById("score");
@@ -98,11 +96,6 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	public void setQuadrantName(String name, String css) {
 		eQuadrantName.setInnerText(name);
 		eQuadrantName.setClassName(css);
-	}
-
-	@Override
-	protected Widget createWidgetImplementation() {
-		return new HTMLPanel("");
 	}
 
 	@Override

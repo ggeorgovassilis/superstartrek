@@ -6,10 +6,8 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.model.Constants;
-import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Timer;
 
 @SuppressWarnings("rawtypes")
@@ -26,8 +24,9 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	protected abstract String getContentForHtmlPanel();
 
 	@Override
-	protected Widget createWidgetImplementation() {
-		return new HtmlWidget(DOM.createDiv(), getContentForHtmlPanel());
+	protected void createWidgetImplementation() {
+		super.createWidgetImplementation();
+		getElement().setInnerHTML(getContentForHtmlPanel());
 	}
 
 	@Override

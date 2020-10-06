@@ -4,10 +4,8 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
 public class SRSView extends BaseView<SRSPresenter> implements ISRSView, ClickHandler {
@@ -15,11 +13,12 @@ public class SRSView extends BaseView<SRSPresenter> implements ISRSView, ClickHa
 	Element[][] eCells;
 
 	@Override
-	protected Widget createWidgetImplementation() {
+	protected void createWidgetImplementation() {
 		eCells = new Element[3][3];
-		HtmlWidget table = new HtmlWidget(DOM.createTable(), "<tbody></tbody>");
-		table.getElement().setId("shortrangescan");
-		Element e = table.getElement().getElementsByTagName("tbody").getItem(0);
+		Element eTable = DOM.createTable();
+		eTable.setId("shortrangescan");
+		eTable.appendChild(DOM.createTBody());
+		Element e = eTable.getElementsByTagName("tbody").getItem(0);
 		for (int y = 0; y < 3; y++) {
 			Element eTR = DOM.createTR();
 			for (int x = 0; x < 3; x++) {
@@ -31,7 +30,7 @@ public class SRSView extends BaseView<SRSPresenter> implements ISRSView, ClickHa
 			}
 			e.appendChild(eTR);
 		}
-		return table;
+		setElement(eTable);
 	}
 
 	@Override

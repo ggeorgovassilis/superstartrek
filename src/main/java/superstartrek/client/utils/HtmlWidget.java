@@ -8,8 +8,11 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 //framework requirement that this implements HasWidgets
-public class HtmlWidget extends Widget {
-
+public abstract class HtmlWidget extends Widget {
+	
+	public HtmlWidget() {
+	}
+	
 	public HtmlWidget(Element e) {
 		this(e, RootPanel.getBodyElement().isOrHasChild(e));
 	}
@@ -50,6 +53,13 @@ public class HtmlWidget extends Widget {
 		if (isAttached())
 			return DOM.getElementById(id);
 		return getChildWithId(getElement(), id).cast();
+	}
+	
+	public void addAndReplaceElement(HtmlWidget widget, String elementId) {
+		Element e = getElementById(elementId);
+		widget.removeFromParent();
+		e.appendChild(widget.getElement());
+		widget.onAttach();
 	}
 
 }

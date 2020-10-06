@@ -11,11 +11,8 @@ import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Widget;
-
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.model.Constants;
-import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
@@ -49,16 +46,14 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	}
 
 	@Override
-	protected HtmlWidget createWidgetImplementation() {
-		HtmlWidget p = new HtmlWidget(DOM.createDiv());
-		p.getElement().setId("quadrantscan");
-		return p;
+	protected void createWidgetImplementation() {
+		super.createWidgetImplementation();
+		getElement().setId("quadrantscan");
 	}
 
 	public QuadrantScannerView(QuadrantScannerPresenter presenter) {
 		super(presenter);
-		Widget widgetImpl = getWidget();
-		Element eMatrix = widgetImpl.getElement();
+		Element eMatrix = getElement();
 		final double RELATIVE_WIDTH = 100.0 / Constants.SECTORS_EDGE;
 		final double RELATIVE_HEIGHT = 100.0 / Constants.SECTORS_EDGE;
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
@@ -72,8 +67,8 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 				eMatrix.appendChild(eSector);
 			}
 		}
-		widgetImpl.addDomHandler((event) -> handleClick(event), MouseDownEvent.getType());
-		widgetImpl.addDomHandler((event) -> handleClick(event), TouchStartEvent.getType());
+		addDomHandler((event) -> handleClick(event), MouseDownEvent.getType());
+		addDomHandler((event) -> handleClick(event), TouchStartEvent.getType());
 		bSelectedSector = buckets[0][0];
 		eSvgProto = presenter.getApplication().browserAPI.createElementNs("http://www.w3.org/2000/svg", "svg");
 		eSvgProto.setAttribute("width", "100%");

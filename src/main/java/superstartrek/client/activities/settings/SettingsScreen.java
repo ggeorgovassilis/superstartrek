@@ -9,11 +9,8 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Widget;
 
 import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.utils.HtmlWidget;
-
 
 public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISettingsScreen {
 
@@ -51,10 +48,11 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 		NativeEvent ne = event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
 		String value = e.getAttribute("value");
-		
+
 		if (uiScales.contains(e)) {
 			presenter.onUIScaleSettingClicked(value);
-		};
+		}
+		;
 		if (uiThemes.contains(e)) {
 			presenter.onUIThemeSettingClicked(value);
 		}
@@ -63,16 +61,16 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	protected void handleClick(DomEvent<?> event) {
 		NativeEvent ne = event.getNativeEvent();
 		Element e = ne.getEventTarget().cast();
-		
+
 		if (eCheckForUpdates.isOrHasChild(e)) {
 			presenter.onCheckForUpdatesButtonClicked();
 		}
 	}
 
-	
 	@Override
-	protected Widget createWidgetImplementation() {
-		return new HtmlWidget(DOM.createDiv(), presenter.getApplication().getScreenTemplates().settingsScreen().getText());
+	protected void createWidgetImplementation() {
+		super.createWidgetImplementation();
+		getElement().setInnerHTML(presenter.getApplication().getScreenTemplates().settingsScreen().getText());
 	}
 
 	@Override
@@ -82,18 +80,18 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 
 	@Override
 	public void selectUIScale(String scale) {
-		for (Element e:uiScales)
-			e.setPropertyString("checked", scale.equals(e.getAttribute("value"))?"true":null);
+		for (Element e : uiScales)
+			e.setPropertyString("checked", scale.equals(e.getAttribute("value")) ? "true" : null);
 	}
 
 	@Override
 	public void selectTheme(String theme) {
-		for (Element e:uiThemes)
-			e.setPropertyString("checked", theme.equals(e.getAttribute("value"))?"true":null);
+		for (Element e : uiThemes)
+			e.setPropertyString("checked", theme.equals(e.getAttribute("value")) ? "true" : null);
 	}
-	
-	public void showAppVersion(String version){
-		DOM.getElementById("app-version").setInnerText("app version "+version);
+
+	public void showAppVersion(String version) {
+		DOM.getElementById("app-version").setInnerText("app version " + version);
 	}
 
 	@Override

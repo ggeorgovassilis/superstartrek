@@ -5,7 +5,6 @@ import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.model.Constants;
-import superstartrek.client.utils.HtmlWidget;
 import superstartrek.client.utils.Strings;
 
 import com.google.gwt.dom.client.Element;
@@ -16,10 +15,11 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	Element[][] cells;
 	
 	@Override
-	protected HtmlWidget createWidgetImplementation() {
-		HtmlWidget widget = new HtmlWidget(DOM.createTable(),presenter.getApplication().getScreenTemplates().lrsScreen().getText());
-		widget.getElement().setId("longrangescan");
-		return widget;
+	protected void createWidgetImplementation() {
+		Element e = DOM.createTable();
+		e.setInnerHTML(presenter.getApplication().getScreenTemplates().lrsScreen().getText());
+		e.setId("longrangescan");
+		setElement(e);
 	}
 	
 	@Override

@@ -1,22 +1,19 @@
 package superstartrek.client.activities;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
-
+import com.google.gwt.user.client.DOM;
 import superstartrek.client.bus.Events;
+import superstartrek.client.utils.HtmlWidget;
 
 @SuppressWarnings("rawtypes")
-public abstract class BaseView<P extends Presenter> extends Composite implements View<P>, ScreenResizeHandler {
+public abstract class BaseView<P extends Presenter> extends HtmlWidget implements View<P>, ScreenResizeHandler {
 
 	protected final P presenter;
 
-	protected abstract Widget createWidgetImplementation();
-
-	@SuppressWarnings("unchecked")
-	protected <T> T getWidgetAs() {
-		return (T) getWidget();
+	protected void createWidgetImplementation() {
+		setElement((Element)DOM.createDiv());
 	}
 
 	protected void decorateWidget() {
@@ -32,12 +29,11 @@ public abstract class BaseView<P extends Presenter> extends Composite implements
 	protected boolean alignsOnItsOwn() {
 		return true;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	protected BaseView(P presenter) {
 		this.presenter = presenter;
-		Widget widgetImpl = createWidgetImplementation();
-		initWidget(widgetImpl);
+		createWidgetImplementation();
 		decorateWidget();
 		presenter.setView(this);
 		if (!alignsOnItsOwn())
