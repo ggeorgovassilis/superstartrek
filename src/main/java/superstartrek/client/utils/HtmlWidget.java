@@ -11,9 +11,9 @@ public abstract class HtmlWidget extends Widget {
 	}
 
 	public void addAndReplaceElement(HtmlWidget widget, String elementId) {
-		Element e = DOM.getElementById(elementId);
-		widget.removeFromParent();
-		e.appendChild(widget.getElement());
+		Element eToBeReplaced = DOM.getElementById(elementId);
+		Element parent = eToBeReplaced.getParentElement();
+		parent.replaceChild(widget.getElement(), eToBeReplaced);
 		widget.onAttach();
 	}
 

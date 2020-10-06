@@ -2,6 +2,7 @@ package superstartrek.client.activities.sector.contextmenu;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -34,11 +35,9 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	
 	@Override
 	public void decorateWidget() {
-		String html = presenter.getApplication().getScreenTemplates().sectorContextMenu().getText();
-		Element e = getElement();
-		e.setInnerHTML(html);
-		addStyleName("sector-context-menu");
 		hide();
+		getElement().setInnerHTML(presenter.getApplication().getScreenTemplates().sectorContextMenu().getText());
+		addStyleName("sector-context-menu");
 		addDomHandler(this, MouseDownEvent.getType());
 		addDomHandler(this, ClickEvent.getType());
 		addDomHandler(this, TouchStartEvent.getType());
@@ -47,9 +46,9 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 
 	@Override
 	public void setLocation(int x, int y) {
-		Element e = getElement();
-		e.getStyle().setLeft(x, Unit.PX);
-		e.getStyle().setTop(y, Unit.PX);
+		Style s = getElement().getStyle();
+		s.setLeft(x, Unit.PX);
+		s.setTop(y, Unit.PX);
 	}
 
 	@Override

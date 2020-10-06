@@ -51,15 +51,15 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
 		SectorContextMenuPresenter.this.quadrant = quadrant;
-		Enterprise e = getEnterprise();
+		Enterprise enterprise = getEnterprise();
 		// read dimensions before modifying the DOM to avoid re-layout
 
-		boolean canFirePhaserAt = e.canFirePhaserAt(sector) == null;
-		buttonsEnabled.put(cmd_navigate, e.canNavigateTo(sector));
+		boolean canFirePhaserAt = enterprise.canFirePhaserAt(sector) == null;
+		buttonsEnabled.put(cmd_navigate, enterprise.canNavigateTo(sector));
 		buttonsEnabled.put(cmd_firePhasers, canFirePhaserAt);
 		buttonsEnabled.put(cmd_precision_weapons, canFirePhaserAt);
 		buttonsEnabled.put(cmd_precision_propulsion, canFirePhaserAt);
-		buttonsEnabled.put(cmd_fireTorpedos, e.getTorpedos().isOperational() && e.getTorpedos().getValue()>=1);
+		buttonsEnabled.put(cmd_fireTorpedos, enterprise.getTorpedos().isOperational() && enterprise.getTorpedos().getValue()>=1);
 		for (String cmd : buttonsEnabled.keySet())
 			view.enableButton(cmd, buttonsEnabled.get(cmd));
 		// if the menu is too close to the screen borders it might be cut off and not
