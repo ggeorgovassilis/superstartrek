@@ -14,7 +14,6 @@ import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
-import superstartrek.client.utils.HtmlWidget;
 
 public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
 
@@ -53,28 +52,27 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(),
 				sectorMenuPresenter);
-		HtmlWidget panel = (HtmlWidget)this;
-		panel.addAndReplaceElement(new QuadrantScannerView(quadrantScannerPresenter), "quadrantscancontainer");
+		addAndReplaceElement(new QuadrantScannerView(quadrantScannerPresenter), "quadrantscancontainer");
 
 		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
 		SRSView srsView = new SRSView(srsPresenter);
-		panel.addAndReplaceElement(srsView, "shortrangescan");
-		eStatusIconImpulse = panel.getElementById("short-status-impulse");
-		eStatusIconTactical = panel.getElementById("short-status-tactical-computer");
-		eStatusIconTorpedos = panel.getElementById("short-status-torpedo-bay");
-		eStatusIconPhasers = panel.getElementById("short-status-phasers");
+		addAndReplaceElement(srsView, "shortrangescan");
+		eStatusIconImpulse = getElementById("short-status-impulse");
+		eStatusIconTactical = getElementById("short-status-tactical-computer");
+		eStatusIconTorpedos = getElementById("short-status-torpedo-bay");
+		eStatusIconPhasers = getElementById("short-status-phasers");
 		eMaxAntimatter = CSS.querySelectorAll("#cmd_showStatusReport .progress-indicator").getItem(0);
 		eMaxShields = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		eValueShields = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
 		eQuadrantName = getElementById("quadrant_name");
-		eSkip = panel.getElementById("cmd_skip");
+		eSkip = getElementById("cmd_skip");
 		eStarDate = DOM.getElementById("stardate");
 		eScore = DOM.getElementById("score");
 		eLrsButton = DOM.getElementById("lrs-button");
 		eAboveRadarSlot = DOM.getElementById("above-radar-slot");
 		eToggleShields = DOM.getElementById("cmd_toggleShields");
 		addHandler(this, ClickEvent.getType());
-		DOM.sinkEvents(panel.getElement(), Event.ONCLICK);
+		DOM.sinkEvents(getElement(), Event.ONCLICK);
 	}
 
 	@Override
