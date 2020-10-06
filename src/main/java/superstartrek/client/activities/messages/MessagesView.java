@@ -14,8 +14,8 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 	@Override
 	public void decorateWidget() {
 		super.decorateWidget();
-		eContent = getElementById("messages-content");
-		eButton = getElementById("dismiss-message-button");
+		eContent = DOM.getElementById("messages-content");
+		eButton = DOM.getElementById("dismiss-message-button");
 		getElement().setId("messages");
 		DOM.sinkEvents(eButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		DOM.setEventListener(eButton, (Event event) -> presenter.userWantsToDismissPopup());
