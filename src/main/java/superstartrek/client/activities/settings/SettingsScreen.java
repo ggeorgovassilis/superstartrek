@@ -68,11 +68,10 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	}
 
 	@Override
-	protected void createWidgetImplementation() {
-		super.createWidgetImplementation();
+	protected void decorateScreen() {
 		getElement().setInnerHTML(presenter.getApplication().getScreenTemplates().settingsScreen().getText());
 	}
-
+	
 	@Override
 	protected boolean alignsOnItsOwn() {
 		return false;

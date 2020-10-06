@@ -24,14 +24,8 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	protected abstract String getContentForHtmlPanel();
 
 	@Override
-	protected void createWidgetImplementation() {
-		super.createWidgetImplementation();
-		getElement().setInnerHTML(getContentForHtmlPanel());
-	}
-
-	@Override
 	public void decorateWidget() {
-		super.decorateWidget();
+		getElement().setInnerHTML(getContentForHtmlPanel());
 		addStyleName("PopupView");
 		addDomHandler((event) -> {
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {

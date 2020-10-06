@@ -46,8 +46,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	}
 
 	@Override
-	protected void createWidgetImplementation() {
-		super.createWidgetImplementation();
+	protected void decorateWidget() {
 		getElement().setId("quadrantscan");
 	}
 

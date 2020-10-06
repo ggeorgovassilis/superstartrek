@@ -28,22 +28,16 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	
 
 	@Override
-	protected void createWidgetImplementation() {
-		String html = presenter.getApplication().getScreenTemplates().sectorContextMenu().getText();
-		Element e = DOM.createDiv();
-		e.setInnerHTML(html);
-		setElement(e);
-	}
-
-	@Override
 	protected boolean alignsOnItsOwn() {
 		return true;
 	}
 	
 	@Override
 	public void decorateWidget() {
+		String html = presenter.getApplication().getScreenTemplates().sectorContextMenu().getText();
+		Element e = getElement();
+		e.setInnerHTML(html);
 		addStyleName("sector-context-menu");
-		super.decorateWidget();
 		hide();
 		addDomHandler(this, MouseDownEvent.getType());
 		addDomHandler(this, ClickEvent.getType());

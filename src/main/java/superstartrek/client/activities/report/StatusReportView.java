@@ -7,14 +7,14 @@ import superstartrek.client.activities.CSS;
 
 public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 
+	
 	@Override
-	protected void createWidgetImplementation() {
-		super.createWidgetImplementation();
+	protected void decorateScreen() {
 		Element e = getElement();
 		e.setId("screen-statusreport");
 		e.setInnerHTML(presenter.getApplication().getScreenTemplates().statusReport().getText());
 	}
-	
+
 	public StatusReportView(StatusReportPresenter p) {
 		super(p);
 	}
