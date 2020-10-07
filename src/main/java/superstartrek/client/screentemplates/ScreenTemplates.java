@@ -1,44 +1,45 @@
 package superstartrek.client.screentemplates;
 
 import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.TextResource;
+
+import superstartrek.client.utils.htmlresource.HtmlResource;
 
 public interface ScreenTemplates extends ClientBundle {
 
 	@Source("install-app-prompt.html")
-	public TextResource appInstallPrompt();
+	public HtmlResource appInstallPrompt();
 
 	@Source("update-app-prompt.html")
-	public TextResource updateAppPrompt();
+	public HtmlResource updateAppPrompt();
 
 	@Source("intro.html")
-	public TextResource introScreen();
+	public HtmlResource introScreen();
 
 	@Source("computer.html")
-	public TextResource computerScreen();
+	public HtmlResource computerScreen();
 
 	@Source("manual.html")
-	public TextResource manualScreen();
+	public HtmlResource manualScreen();
 
 	@Source("sector-context-menu.html")
-	public TextResource sectorContextMenu();
+	public HtmlResource sectorContextMenu();
 
 	@Source("lrs.html")
-	public TextResource lrsScreen();
+	public HtmlResource lrsScreen();
 
 	@Source("status-report.html")
-	public TextResource statusReport();
+	public HtmlResource statusReport();
 
 	@Source("messages.html")
-	public TextResource messages();
+	public HtmlResource messages();
 
 	@Source("app-menu.html")
-	public TextResource appMenu();
+	public HtmlResource appMenu();
 
 	@Source("settings.html")
-	public TextResource settingsScreen();
+	public HtmlResource settingsScreen();
 
 	@Source("credits.html")
-	public TextResource creditsScreen();
+	public HtmlResource creditsScreen();
 
 }

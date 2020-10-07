@@ -70,18 +70,6 @@
 			</build>
 		</profile>
 		<profile>
-			<id>profile</id>
-			<properties>
-				<gwt.draftCompile>true</gwt.draftCompile>
-				<gwt.module>superstartrek.sst-profile</gwt.module>
-				<gwt.methodNameDisplayMode>FULL</gwt.methodNameDisplayMode>
-				<gwt.saveSource>true</gwt.saveSource>
-				<gwt.style>DETAILED</gwt.style>
-				<skip.deploy>true</skip.deploy>
-				<skip.tests>false</skip.tests>
-			</properties>
-		</profile>
-		<profile>
 			<id>production</id>
 			<properties>
 				<gwt.draftCompile>false</gwt.draftCompile>
@@ -159,7 +147,11 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
 			<version>${gwt.version}</version>
-			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.htmlcompressor</groupId>
+			<artifactId>htmlcompressor</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -249,6 +241,7 @@
 					<disableCastChecking>${gwt.disableCastChecking}</disableCastChecking>
 					<optimizationLevel>${gwt.optimizationLevel}</optimizationLevel>
 					<compileReport>true</compileReport>
+					<strict>true</strict>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -271,7 +264,8 @@
 									value="${maven.build.timestamp}" dir="${project.basedir}/site">
 									<include name="index.html" />
 								</replace>
-								<echo file="${project.basedir}/site/package.txt" append="false">${maven.build.timestamp}</echo>
+								<echo file="${project.basedir}/site/package.txt"
+									append="false">${maven.build.timestamp}</echo>
 							</tasks>
 							<skip>${skip.ant-copy}</skip>
 						</configuration>

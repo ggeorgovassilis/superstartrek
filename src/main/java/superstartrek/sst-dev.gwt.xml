@@ -3,14 +3,15 @@
 <module rename-to="superstartrek.superstartrek">
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.google.gwt.json.JSON" />
-	<inherits name="com.google.gwt.http.HTTP" />
-	<inherits name="com.google.gwt.resources.Resources" />
+	<inherits name="com.google.gwt.core.Core" />
+	<inherits name="com.google.gwt.logging.Logging" />
+	<inherits name="com.google.gwt.storage.Storage" />
+
+	<public path="public" />
 	<source path="client" />
 	<entry-point class="superstartrek.client.Application" />
 	<set-property name="compiler.useSourceMaps" value="true" />
 	<set-configuration-property
 		name="compiler.emulatedStack.recordLineNumbers" value="true" />
-	<!-- doesn't work with lambdas
-	<set-property name="compiler.stackMode" value="emulated" />
-		 -->
+
 </module>
