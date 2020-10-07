@@ -5,6 +5,8 @@
 	<inherits name="com.google.gwt.http.HTTP" />
 	<inherits name="com.google.gwt.jsonp.Jsonp" />
 	<inherits name="com.google.gwt.storage.Storage" />
+	<inherits name="com.georgovassilis.gwthtmlresource.htmlresource" />
+
 	<source path="client" />
 	<public path="public" />
 

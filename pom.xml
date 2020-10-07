@@ -32,6 +32,17 @@
 		<url>https://github.com/ggeorgovassilis/superstartrek/</url>
 	</scm>
 
+	<repositories>
+		<repository>
+			<id>gwt-sl-mvn-repo</id>
+			<url>https://raw.github.com/ggeorgovassilis/gwt-htmlresource/mvn-repo/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<profiles>
 		<profile>
 			<id>refresh-resources</id>
@@ -144,14 +155,15 @@
 			<version>${gwt.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.georgovassilis</groupId>
+			<artifactId>gwt-htmlresource</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
 			<version>${gwt.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.googlecode.htmlcompressor</groupId>
-			<artifactId>htmlcompressor</artifactId>
-			<version>1.4</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

@@ -1,8 +1,7 @@
 package superstartrek.client.screentemplates;
 
+import com.georgovassilis.gwthtmlresource.client.HtmlResource;
 import com.google.gwt.resources.client.ClientBundle;
-
-import superstartrek.client.utils.htmlresource.HtmlResource;
 
 public interface ScreenTemplates extends ClientBundle {
 
