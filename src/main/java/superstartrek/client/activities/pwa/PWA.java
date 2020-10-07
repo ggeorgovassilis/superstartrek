@@ -121,9 +121,6 @@ public class PWA {
 		Application app = application;
 		String currentBuildNr = app.browserAPI.getAppBuildNr();
 		log.info("Installed app version " + currentBuildNr);
-		clearCache(()->{
-			log.info("clearCache returned");
-		});
 		application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
 				(h) -> h.installedAppVersionIs(currentBuildNr));
 		getLatestVersionFromServer((latestBuildVersion) -> {
