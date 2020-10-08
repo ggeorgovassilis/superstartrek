@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
@@ -88,10 +89,11 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		view.setLocation(target_x_px, target_y_px);
 		view.show();
 		addHandler(Events.KEY_PRESSED, this);
-
 	}
 
 	public void showMenu(int screenX, int screenY, Location sector, Quadrant quadrant) {
+		// in case the menu is visible already, this call will hide it first and then show it again (with animations)
+		// at the new location
 		hideMenu(() -> showMenuImmediatelly(screenX, screenY, sector, quadrant));
 	}
 
@@ -113,8 +115,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	protected void hideMenu(ScheduledCommand callback) {
 		if (view.isVisible())
 			getEvents().fireEvent(Events.CONTEXT_MENU_HIDE, (h) -> h.onStartToHideMenu());
-		view.hide(callback);
 		removeHandler(Events.KEY_PRESSED, this);
+		view.hide(callback);
 	}
 
 	public void onMenuClicked() {
@@ -181,6 +183,8 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		case 'T':
 			onCommandClicked(cmd_fireTorpedos);
 			break;
+		case KeyCodes.KEY_ESCAPE:
+			hideMenu(null);
 		}
 	}
 
