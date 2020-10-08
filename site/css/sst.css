@@ -852,24 +852,22 @@ outline:solid transparent 1px;
 /* sector context menu */
 .sector-context-menu {
 	position: absolute;
-	transform: translateZ(0);
 	z-index: 2;
 }
 
-.sector-context-menu .cell {
+.cell {
 	width: 4em;
 	height: 4em;
 	background-image: url('../images/hexagon_filled.svg');
 	background-size: cover;
-	text-align: center;
 	position: absolute;
-	line-height: 4em;
+	overflow:hidden;
 	transition: transform 200ms ease;
 	will-change: transform;
 }
 
 .sector-context-menu .cell.disabled {
-	filter: grayscale(100%) brightness(20%) contrast(80%);
+	filter: grayscale(100%) brightness(20%) contrast(80%) opacity(80%);
 }
 
 .sector-context-menu .cell button {
@@ -887,10 +885,38 @@ outline:solid transparent 1px;
 	vertical-align: middle;
 }
 
-.sector-context-menu .cell button img {
-	width: 100%;
-	height: 100%;
+.expanded .cell.c1 {
+	transform: translate(3.45em,-2em);
 }
+
+.cell.c2 {
+	visibility:hidden;
+}
+
+.can-dock-with-starbase .cell.c2{
+	visibility:visible;
+}
+
+.expanded .cell.c2 {
+	transform: translate(0em,-4em);
+}
+
+.expanded .cell.c3 {
+	transform: translate(-3.45em,2em);
+}
+
+.expanded .cell.c4 {
+	transform: translate(-3.45em,-2em);
+}
+
+.expanded .cell.c5 {
+	transform: translate(0em, 4em);
+}
+
+.expanded .cell.c6 {
+	transform: translate(3.45em, 2em);
+}
+
 
 #cmd_navigate {
 	background-image: url('../images/navigation.svg')
@@ -926,38 +952,6 @@ outline:solid transparent 1px;
 
 #cmd_dockStarbase {
 	background-image: url('../images/dock.svg')
-}
-
-.expanded .cell.c1 {
-	transform: translate(3.45em,-2em);
-}
-
-.cell.c2 {
-	visibility:hidden;
-}
-
-.can-dock-with-starbase .cell.c2{
-	visibility:visible;
-}
-
-.expanded .cell.c2 {
-	transform: translate(0em,-4em);
-}
-
-.expanded .cell.c3 {
-	transform: translate(-3.45em,2em);
-}
-
-.expanded .cell.c4 {
-	transform: translate(-3.45em,-2em);
-}
-
-.expanded .cell.c5 {
-	transform: translate(0em, 4em);
-}
-
-.expanded .cell.c6 {
-	transform: translate(3.45em, 2em);
 }
 
 #em-metric {
