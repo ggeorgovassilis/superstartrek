@@ -309,13 +309,6 @@ a.progress-bar {
     z-index:1;
 }
 
-.has-repair{
-	background-image: url('../images/repair.svg');
-	background-size: 2.5em;
-	background-position: 0.2em;
-	background-repeat: no-repeat;
-}
-
 @media ( max-width : 400px) {
 	#cmd_repair {
 		padding-left: 2em;
