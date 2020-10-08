@@ -3,6 +3,7 @@ package superstartrek.client.activities.pwa;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import superstartrek.client.activities.PopupView;
+import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> implements IAppInstallPromptView {
 
@@ -12,7 +13,8 @@ public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> i
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return presenter.getApplication().getScreenTemplates().appInstallPrompt().getText();
+		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
+		return screenTemplates.appInstallPrompt().getText();
 	}
 
 	@Override

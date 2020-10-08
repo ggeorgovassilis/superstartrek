@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.PopupView;
+import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class MessagesView extends PopupView<MessagesPresenter> implements IMessagesView {
 
@@ -56,6 +57,7 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return presenter.getApplication().getScreenTemplates().messages().getText();
+		ScreenTemplates templates = presenter.getApplication().getScreenTemplates();
+		return templates.messages().getText();
 	}
 }

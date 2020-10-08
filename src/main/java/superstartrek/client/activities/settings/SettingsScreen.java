@@ -11,6 +11,7 @@ import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.activities.BaseScreen;
+import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISettingsScreen {
 
@@ -69,7 +70,8 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 
 	@Override
 	protected void decorateScreen() {
-		getElement().setInnerHTML(presenter.getApplication().getScreenTemplates().settingsScreen().getText());
+		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
+		getElement().setInnerHTML(screenTemplates.settingsScreen().getText());
 	}
 	
 	@Override

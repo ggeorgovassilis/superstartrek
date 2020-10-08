@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.CSS;
+import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 
@@ -12,7 +13,8 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 	protected void decorateScreen() {
 		Element e = getElement();
 		e.setId("screen-statusreport");
-		e.setInnerHTML(presenter.getApplication().getScreenTemplates().statusReport().getText());
+		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
+		e.setInnerHTML(screenTemplates.statusReport().getText());
 	}
 
 	public StatusReportView(StatusReportPresenter p) {

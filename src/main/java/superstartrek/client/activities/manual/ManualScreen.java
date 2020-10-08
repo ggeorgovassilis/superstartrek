@@ -1,6 +1,7 @@
 package superstartrek.client.activities.manual;
 
 import superstartrek.client.activities.BaseScreen;
+import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class ManualScreen extends BaseScreen<ManualPresenter>{
 
@@ -11,7 +12,9 @@ public class ManualScreen extends BaseScreen<ManualPresenter>{
 	
 	@Override
 	protected void decorateScreen() {
-		getElement().setInnerHTML(presenter.getApplication().getScreenTemplates().manualScreen().getText());
+		ScreenTemplates templates = presenter.getApplication().getScreenTemplates();
+		String html = templates.manualScreen().getText(); 
+		getElement().setInnerHTML(html);
 	}
 	
 }

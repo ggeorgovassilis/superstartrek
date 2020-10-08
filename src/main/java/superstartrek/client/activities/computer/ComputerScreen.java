@@ -14,6 +14,7 @@ import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
+import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
 
@@ -45,7 +46,8 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 	protected void decorateScreen() {
 		super.decorateScreen();
 		addStyleName("computer-screen");
-		getElement().setInnerHTML(presenter.getApplication().getScreenTemplates().computerScreen().getText());
+		ScreenTemplates templates = presenter.getApplication().getScreenTemplates();
+		getElement().setInnerHTML(templates.computerScreen().getText());
 
 		SectorContextMenuPresenter sectorMenuPresenter = new SectorContextMenuPresenter(presenter.getApplication());
 		sectorMenuPresenter.setView(new SectorContextMenuView(sectorMenuPresenter));

@@ -6,6 +6,7 @@ import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.PopupView;
+import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
 
@@ -42,6 +43,7 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return presenter.getApplication().getScreenTemplates().updateAppPrompt().getText();
+		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
+		return screenTemplates.updateAppPrompt().getText();
 	}
 }

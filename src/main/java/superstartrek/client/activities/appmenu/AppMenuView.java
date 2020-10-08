@@ -8,6 +8,7 @@ import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.PopupView;
+import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Strings;
 
 public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHandler, IAppMenuView{
@@ -24,7 +25,8 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 
 	@Override
 	protected String getContentForHtmlPanel() {
-		return presenter.getApplication().getScreenTemplates().appMenu().getText();
+		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
+		return screenTemplates.appMenu().getText();
 	}
 	
 	@Override

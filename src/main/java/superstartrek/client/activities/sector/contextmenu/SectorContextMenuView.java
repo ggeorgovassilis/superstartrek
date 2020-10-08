@@ -15,6 +15,7 @@ import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.activities.CSS;
+import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Strings;
 import superstartrek.client.utils.Timer;
 
@@ -36,7 +37,8 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	@Override
 	public void decorateWidget() {
 		hide();
-		getElement().setInnerHTML(presenter.getApplication().getScreenTemplates().sectorContextMenu().getText());
+		ScreenTemplates templates = presenter.getApplication().getScreenTemplates();
+		getElement().setInnerHTML(templates.sectorContextMenu().getText());
 		addStyleName("sector-context-menu");
 		addDomHandler(this, MouseDownEvent.getType());
 		addDomHandler(this, ClickEvent.getType());
