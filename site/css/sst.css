@@ -309,13 +309,6 @@ a.progress-bar {
     z-index:1;
 }
 
-.has-dock{
-	background-image: url('../images/anchor.svg');
-	background-repeat: no-repeat;
-	background-size: 2.5em;
-	background-position: 0.2em;
-}
-
 .has-repair{
 	background-image: url('../images/repair.svg');
 	background-size: 2.5em;
