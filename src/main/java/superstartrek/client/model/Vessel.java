@@ -18,14 +18,6 @@ public abstract class Vessel extends Thing{
 		this.shields = shields;
 	}
 	
-	protected Vessel(){
-		this(new Setting(0), new Setting(0));
-	}
-	
-	
-	public void destroy() {
-	}
-	
 	public static boolean is(Thing thing) {
 		return thing instanceof Vessel;
 	}

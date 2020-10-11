@@ -208,12 +208,10 @@ public class Klingon extends Vessel
 		fireOnEnterprise(q);
 	}
 
-	@Override
 	public void destroy() {
 		removeHandler(this);
 		getActiveQuadrant().remove(this);
 		message(getName() + " was destroyed", "klingon-destroyed");
-		super.destroy();
 		fireEvent(KLINGON_DESTROYED, (h) -> h.onVesselDestroyed(Klingon.this));
 	}
 
