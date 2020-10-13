@@ -43,7 +43,7 @@ public class StarMapDeserialiser {
 		app.starMap = starMap;
 		JSONArray jsQuadrants = jsMap.get("quadrants").isArray();
 		for (int i = 0; i < jsQuadrants.size(); i++) {
-			JSONObject jsQuadrant = (JSONObject) jsQuadrants.get(i);
+			JSONObject jsQuadrant = jsQuadrants.get(i).isObject();
 			Quadrant quadrant = readQuadrant(jsQuadrant, starMap);
 			starMap.setQuadrant(quadrant);
 		}
@@ -67,9 +67,9 @@ public class StarMapDeserialiser {
 			else if (Klingon.is(thing))
 				q.add((Klingon) thing);
 			else if (StarBase.is(thing))
-				q.setStarBase((StarBase) thing);
+				q.setStarBase(thing.as());
 			else if (Enterprise.is(thing)) {
-				starMap.enterprise = (Enterprise) thing;
+				starMap.enterprise = thing.as();
 				starMap.enterprise.setQuadrant(q);
 				q.add(starMap.enterprise);
 			}

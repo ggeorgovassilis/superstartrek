@@ -229,8 +229,9 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		//TODO: ugly hack. For technical reasons, Enterprise always warps from nowhere into the
 		//starting quadrant which ends the turn. This would save the game on the first turn, overwriting
 		//an older saved game.
+		//postponing in timer in order to avoid UI lag
 		if (application.starMap.getStarDate() > 2100)
-			application.gameSaver.saveGame();
+			Timer.postpone(()->application.gameSaver.saveGame());
 	}
 
 }
