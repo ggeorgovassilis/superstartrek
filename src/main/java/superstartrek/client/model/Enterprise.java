@@ -494,10 +494,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			damage = damage * 0.5;
 		}
 
-		double shieldImpact = SHIELD_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
+		double shieldValue = shields.getValue();
+		double shieldImpact = SHIELD_IMPACT_MODIFIER * damage / (shieldValue + 1.0);
 
 		shields.decrease(shieldImpact);
-		double deviceImpact = DEVICE_IMPACT_MODIFIER * damage / (shields.getValue() + 1.0);
+		double deviceImpact = DEVICE_IMPACT_MODIFIER * damage / (shieldValue + 1.0);
 		BrowserAPI random = application.browserAPI;
 		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < deviceImpact)
 			damageShields(damage);
