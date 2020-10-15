@@ -234,9 +234,6 @@ public class Klingon extends Vessel
 			repair();
 			cloak.setValue(canCloak());
 			css = "klingon " + (isVisible() ? "" : "cloaked");
-			// TODO: this method is called for every klingon in the quadrant. findFreeSpot
-			// builds an index each time, which
-			// might be slow.
 			Location newLocation = getStarMap().findFreeSpot(quadrantTo);
 			jumpTo(newLocation);
 		}
