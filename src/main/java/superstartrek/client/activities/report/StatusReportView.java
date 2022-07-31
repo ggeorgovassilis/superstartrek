@@ -21,9 +21,12 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 		super(p);
 	}
 	
-	public void setProperty(String property, String value) {
+	public void setProperty(String property, String value, boolean highlight) {
 		Element e = DOM.getElementById(property);
 		e.setInnerText(value);
+		e.removeClassName("highlight");
+		if (highlight)
+			e.addClassName("highlight");
 	}
 	
 	public void setOverlay(String overlay, String status) {

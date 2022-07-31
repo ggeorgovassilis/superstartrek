@@ -26,10 +26,10 @@ table {
 }
 
 html {
-	background: black url('../images/stars-background.gif');
 	font-family: sans-serif;
 	color: white;
 	font-size: 100%;
+	background-image:url("../images/stars-background.gif");
 }
 
 ul, ol {
@@ -52,7 +52,7 @@ a, a:visited, button, .button {
 	line-height: 3em;
 	height:3em;
 	font-size: 100%;
-	background-color: #2d91c5;
+	background-color: #3755ae;
 	appearance: none;
 	float: left;
 	width: 100%;
@@ -362,8 +362,8 @@ a.progress-bar {
 }
 
 #quadrantscan>div {
-	border-right: solid gray 1px;
-	border-bottom: solid #505050 1px;
+	border-right: solid green 1px;
+	border-bottom: solid darkgreen 1px;
 	text-align: center;
 	width: 12.5%;
 	margin: 0;
@@ -421,6 +421,8 @@ a.progress-bar {
 	max-height: 6em;
 	overflow: visible;
 	border-collapse: collapse;
+	outline:solid gray 1px;
+	background-color:rgba(0,0,0,0.5);
 }
 
 #shortrangescan tr {
@@ -428,6 +430,7 @@ a.progress-bar {
 	min-height: 2em;
 	max-height: 2em;
 	overflow: visible;
+	border-bottom:solid gray 1px;
 }
 
 #shortrangescan td {
@@ -435,6 +438,8 @@ a.progress-bar {
 	text-align: center;
 	cursor: pointer;
 	padding: 5px 0 5px 0;
+	border-left:solid gray 1px;
+	border-bottom:solid gray 1px;
 }
 
 /*
@@ -622,6 +627,7 @@ outline:solid transparent 1px;
 	white-space: pre;
 	font-family: monospace;
 	top: 0;
+	margin:0;
 }
 
 /*
@@ -646,6 +652,10 @@ outline:solid transparent 1px;
 	max-width: 20em;
 	padding: 5px;
 	font-weight: bold;
+}
+
+#screen-statusreport .highlight{
+	color:red;
 }
 
 #screen-statusreport dd {
@@ -706,9 +716,9 @@ outline:solid transparent 1px;
 	display: block;
 	margin-left: 0em;
 	overflow: hidden;
-	background-color: darkolivegreen;
 	font-size: 0.8em;
 	text-align:center;
+	background-color:darkgreen;
 }
 
 .status-flag {
@@ -931,7 +941,7 @@ outline:solid transparent 1px;
 }
 
 #cmd_precision_weapons{
-	background-image: url('../images/target.svg'), url('../images/spark.svg');
+	background-image: url('../images/target.svg');
 }
 
 #cmd_precision_propulsion{
