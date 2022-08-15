@@ -46,6 +46,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
 	Setting warpDrive = new Setting(1);
+	Setting evasiveManeuvers = new Setting(1,0);
 	boolean toggledShieldsThisTurn = false;
 
 	Application application;
@@ -85,6 +86,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public Setting getWarpDrive() {
 		return warpDrive;
+	}
+	
+	public Setting getEvasiveManeuvers() {
+		return evasiveManeuvers;
 	}
 
 	public Enterprise(Application app, StarMap map) {
@@ -385,6 +390,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		repairCount += lrs.repair() ? 1 : 0;
 		repairCount += reactor.repair() ? 1 : 0;
 		final int fRepairCount = repairCount;
+		
+		evasiveManeuvers.setValue(false);
 		fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount,
 				torpedosRestocked, antimatterRefuelled));
@@ -495,6 +502,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 
 		double shieldValue = shields.getValue();
+		double baseModifier = evasiveManeuvers.getBooleanValue()?0.7:1.0;
+		
+		damage*=baseModifier;
 		double shieldImpact = SHIELD_IMPACT_MODIFIER * damage / (shieldValue + 1.0);
 
 		shields.decrease(shieldImpact);
@@ -532,7 +542,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public double computeEnergyConsumption() {
-		return (getShields().getValue() + 1.0) * 0.08;
+		double consumptionFromEvasiveManeuvers = getEvasiveManeuvers().getBooleanValue()?1:0;
+		double consumptionFromShields = (getShields().getValue() + 1.0) * 0.08;
+		double consumption = consumptionFromEvasiveManeuvers + consumptionFromShields;
+		return consumption;
 	}
 
 	public void autoAim() {

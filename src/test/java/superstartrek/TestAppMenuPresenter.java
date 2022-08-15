@@ -8,6 +8,8 @@ import static org.mockito.Mockito.*;
 import superstartrek.client.activities.appmenu.AppMenuPresenter;
 import superstartrek.client.activities.appmenu.IAppMenuView;
 import superstartrek.client.activities.pwa.Callback;
+import superstartrek.client.model.Enterprise;
+import superstartrek.client.model.Setting;
 
 import static org.junit.Assert.*;
 
@@ -44,6 +46,21 @@ public class TestAppMenuPresenter extends BaseTest {
 		presenter.onMenuItemClicked("cmd_restart");
 		verify(view).hide();
 		verify(application.browserAPI).confirm(any(String.class), any(Callback.class));
+	}
+
+	@Test
+	public void test_onMenuItemClicked_evasiveManeuvers() {
+
+		when(view.isVisible()).thenReturn(true);
+
+		Enterprise enterprise = application.starMap.enterprise;
+		Setting evasiveManeuvers = enterprise.getEvasiveManeuvers();
+		assertFalse(evasiveManeuvers.getBooleanValue());
+		presenter.onMenuItemClicked("cmd_evasive_maneuvers");
+		assertTrue(evasiveManeuvers.isOperational());
+		verify(view).hide();
+		verify(view).setMenuEntryEnabled("cmd_evasive_maneuvers", true);
+		
 	}
 
 }

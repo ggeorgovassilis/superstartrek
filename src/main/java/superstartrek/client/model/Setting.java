@@ -14,7 +14,12 @@ public class Setting {
 		this.value = maximum;
 		this.broken = false;
 	}
-	
+
+	public Setting(double maximum, double defaultValue) {
+		this(maximum);
+		setValue(defaultValue);
+	}
+
 	public void setMaximum(double maximum) {
 		this.maximum = maximum;
 	}

@@ -33,7 +33,7 @@ import java.util.List;
 public class TestEnterprise extends BaseTest {
 
 	@Test
-	public void testDamageTorpedos() {
+	public void test_damage_to_torpedos() {
 		MessageHandler handler = mock(MessageHandler.class);
 		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
@@ -44,7 +44,7 @@ public class TestEnterprise extends BaseTest {
 	}
 
 	@Test
-	public void testDamagePhasers() {
+	public void test_damage_Phasers() {
 		MessageHandler handler = mock(MessageHandler.class);
 		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
@@ -64,7 +64,7 @@ public class TestEnterprise extends BaseTest {
 	}
 
 	@Test
-	public void testDamageImpulse() {
+	public void test_damage_to_impulse() {
 		MessageHandler handler = mock(MessageHandler.class);
 		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
@@ -85,7 +85,7 @@ public class TestEnterprise extends BaseTest {
 	}
 
 	@Test
-	public void testNavigateTo() {
+	public void test_navigate_to() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
@@ -110,7 +110,7 @@ public class TestEnterprise extends BaseTest {
 	}
 
 	@Test
-	public void testWarpTo() {
+	public void test_warp_to() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
@@ -143,7 +143,7 @@ public class TestEnterprise extends BaseTest {
 	}
 
 	@Test
-	public void testFirePhasers() {
+	public void test_fire_Phasers() {
 		application.browserAPI = mock(BrowserAPI.class);
 		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
@@ -171,7 +171,7 @@ public class TestEnterprise extends BaseTest {
 	}
 
 	@Test
-	public void testFirePhasers_precision_shot() {
+	public void test_fire_phasers_precision_shot() {
 		application.browserAPI = mock(BrowserAPI.class);
 		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
@@ -234,7 +234,7 @@ public class TestEnterprise extends BaseTest {
 	}
 
 	@Test
-	public void testFireTorpedos() {
+	public void test_fire_torpedos() {
 
 		application.browserAPI = mock(BrowserAPI.class);
 		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
@@ -358,13 +358,14 @@ public class TestEnterprise extends BaseTest {
 	}
 
 	@Test
-	public void testDockWithStarbase() {
+	public void test_dock_with_starbase() {
 		enterprise.setLocation(Location.location(1, 1));
 		enterprise.getPhasers().damage(10, starMap.getStarDate());
 		enterprise.getAntimatter().decrease(10);
 		enterprise.getTorpedos().damage(1, starMap.getStarDate());
 		enterprise.getImpulse().damage(1, starMap.getStarDate());
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
+		enterprise.getEvasiveManeuvers().setValue(true);
 
 		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
 
@@ -386,14 +387,26 @@ public class TestEnterprise extends BaseTest {
 
 		assertEquals(1, bus.getFiredCount(Events.ENTERPRISE_REPAIRED));
 		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
+		assertFalse(enterprise.getEvasiveManeuvers().getBooleanValue());
 	}
 
 	@Test
 	public void test_applyDamage() {
+		assertFalse(enterprise.getEvasiveManeuvers().getBooleanValue());
 		when(browser.nextDouble()).thenReturn(1.0);
 		assertEquals(60, enterprise.getShields().getValue(), 0.1);
 		enterprise.applyDamage(30);
 		assertEquals(50.1, enterprise.getShields().getValue(), 0.1);
+	}
+
+	@Test
+	public void test_applyDamage_with_evasive_maneuvers() {
+		enterprise.getEvasiveManeuvers().setValue(true);
+		assertTrue(enterprise.getEvasiveManeuvers().getBooleanValue());
+		when(browser.nextDouble()).thenReturn(1.0);
+		assertEquals(60, enterprise.getShields().getValue(), 0.1);
+		enterprise.applyDamage(30);
+		assertEquals(53.1, enterprise.getShields().getValue(), 0.1);
 	}
 
 	@Test
@@ -527,5 +540,13 @@ public class TestEnterprise extends BaseTest {
 		assertEquals(ShieldDirection.north, enterprise.getShieldDirection());
 		enterprise.toggleShields();
 		assertEquals(ShieldDirection.east, enterprise.getShieldDirection());
+	}
+	
+	@Test
+	public void test_energy_consumption() {
+		assertEquals(50.0, enterprise.getReactor().getValue(), 1.0);
+		assertEquals(4.88, enterprise.computeEnergyConsumption(), 1.0);
+		enterprise.getEvasiveManeuvers().setValue(true);
+		assertEquals(5.8, enterprise.computeEnergyConsumption(), 1.0);
 	}
 }

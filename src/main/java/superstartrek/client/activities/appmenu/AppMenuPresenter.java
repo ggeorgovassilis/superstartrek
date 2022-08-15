@@ -21,6 +21,9 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	public void updateCommands() {
 		Setting autoAim = getEnterprise().getAutoAim();
 		view.setMenuEntryEnabled("cmd_autoaim", autoAim.isOperational());
+		
+		Setting evasiveManeuvers = getEnterprise().getEvasiveManeuvers();
+		view.setMenuEntryEnabled("cmd_evasive_maneuvers", evasiveManeuvers.isOperational());
 	}
 
 	public void showMenu() {
@@ -44,6 +47,13 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	public void toggleAutoAim() {
 		Setting autoaim = getEnterprise().getAutoAim();
 		autoaim.setValue(!autoaim.isBroken() && !autoaim.getBooleanValue());
+	}
+	
+	public void toggleEvasiveManeuvers() {
+		Setting evasiveManeuvers = getEnterprise().getEvasiveManeuvers();
+		boolean b1 = !evasiveManeuvers.isBroken();
+		boolean b2 = !evasiveManeuvers.getBooleanValue();
+		evasiveManeuvers.setValue(b1 && b2);
 	}
 
 	public void restart() {
@@ -70,6 +80,11 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 		case "cmd_manual":
 			// hideMenu called implicitly through history change event
 			gotoStateAfterMenuHidden = "manual";
+			break;
+		case "cmd_evasive_maneuvers":
+			toggleEvasiveManeuvers();
+			updateCommands();
+			hideMenu();
 			break;
 		}
 
