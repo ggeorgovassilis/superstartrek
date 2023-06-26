@@ -10,11 +10,13 @@ public abstract class HtmlWidget extends Widget {
 	public HtmlWidget() {
 	}
 
-	public void addAndReplaceElement(HtmlWidget widget, String elementId) {
+	public void replaceElementWithMyself(String elementId) {
+		if (isAttached())
+			throw new RuntimeException("Widget already attached");
 		Element eToBeReplaced = DOM.getElementById(elementId);
 		Element parent = eToBeReplaced.getParentElement();
-		parent.replaceChild(widget.getElement(), eToBeReplaced);
-		widget.onAttach();
+		parent.replaceChild(getElement(), eToBeReplaced);
+		onAttach();
 	}
 
 }

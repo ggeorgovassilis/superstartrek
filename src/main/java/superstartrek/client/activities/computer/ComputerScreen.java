@@ -54,11 +54,11 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(),
 				sectorMenuPresenter);
-		addAndReplaceElement(new QuadrantScannerView(quadrantScannerPresenter), "quadrantscancontainer");
+		new QuadrantScannerView(quadrantScannerPresenter).replaceElementWithMyself("quadrantscancontainer");
 
 		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
 		SRSView srsView = new SRSView(srsPresenter);
-		addAndReplaceElement(srsView, "shortrangescan");
+		srsView.replaceElementWithMyself("shortrangescan");
 		eStatusIconImpulse = DOM.getElementById("short-status-impulse");
 		eStatusIconTactical = DOM.getElementById("short-status-tactical-computer");
 		eStatusIconTorpedos = DOM.getElementById("short-status-torpedo-bay");
