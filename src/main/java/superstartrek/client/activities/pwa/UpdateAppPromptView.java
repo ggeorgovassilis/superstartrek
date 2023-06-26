@@ -35,7 +35,7 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
 				presenter.acceptUpdateButtonClicked();
 				break;
 			case "update-no":
-				presenter.userWantsToDismissPopup();
+				presenter.cancelButtonClicked();
 				break;
 			}
 		}, ClickEvent.getType());

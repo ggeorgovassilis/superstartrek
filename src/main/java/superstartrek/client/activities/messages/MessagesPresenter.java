@@ -39,7 +39,7 @@ public class MessagesPresenter extends BasePresenter<IMessagesView>
 	}
 
 	@Override
-	public void userWantsToDismissPopup() {
+	public void cancelButtonClicked() {
 		hideMessages();
 	}
 

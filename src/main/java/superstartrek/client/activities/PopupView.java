@@ -31,7 +31,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
 				event.preventDefault();
 				event.stopPropagation();
-				presenter.userWantsToDismissPopup();
+				presenter.cancelButtonClicked();
 			}
 		}, KeyDownEvent.getType());
 		Event.sinkEvents(getElement(), Event.ONKEYDOWN | Event.ONCLICK);
@@ -44,7 +44,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		Event.setEventListener(glassPanel, (event) -> {
 			event.preventDefault();
 			event.stopPropagation();
-			presenter.userWantsToDismissPopup();
+			presenter.cancelButtonClicked();
 		});
 		Event.sinkEvents(glassPanel, Event.ONCLICK | Event.ONMOUSEDOWN | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		glassPanel.addClassName("fadein");

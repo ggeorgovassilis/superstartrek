@@ -57,7 +57,7 @@ public class TestAppInstallPrompt extends BaseTest{
 
 	@Test
 	public void test_userWantsDoDismissPopup() {
-		presenter.userWantsToDismissPopup();
+		presenter.cancelButtonClicked();
 		verify(view).hide();
 	}
 

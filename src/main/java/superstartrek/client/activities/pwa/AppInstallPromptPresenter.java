@@ -30,7 +30,7 @@ public class AppInstallPromptPresenter extends BasePresenter<IAppInstallPromptVi
 	}
 
 	@Override
-	public void userWantsToDismissPopup() {
+	public void cancelButtonClicked() {
 		view.hide();
 	}
 	

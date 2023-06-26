@@ -18,12 +18,12 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 	}
 
 	public void acceptUpdateButtonClicked() {
-		view.disableButtons();
+		view.hide();
 		application.pwa.clearCache(() ->application.reload());
 	}
 
 	@Override
-	public void userWantsToDismissPopup() {
+	public void cancelButtonClicked() {
 		view.hide();
 	}
 }

@@ -19,7 +19,7 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 		eButton = DOM.getElementById("dismiss-message-button");
 		getElement().setId("messages");
 		DOM.sinkEvents(eButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONKEYPRESS);
-		DOM.setEventListener(eButton, (Event event) -> presenter.userWantsToDismissPopup());
+		DOM.setEventListener(eButton, (Event event) -> presenter.cancelButtonClicked());
 	}
 
 	public MessagesView(MessagesPresenter presenter) {

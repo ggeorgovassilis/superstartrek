@@ -28,7 +28,7 @@ public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> i
 				presenter.userClickedInstallButton();
 				break;
 			case "install-no":
-				presenter.userWantsToDismissPopup();
+				presenter.cancelButtonClicked();
 				break;
 			case "install-never":
 				presenter.userDoesntWantToInstallAppEver();

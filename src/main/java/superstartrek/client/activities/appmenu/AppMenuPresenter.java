@@ -99,7 +99,7 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	}
 
 	@Override
-	public void userWantsToDismissPopup() {
+	public void cancelButtonClicked() {
 		hideMenu();
 	}
 
