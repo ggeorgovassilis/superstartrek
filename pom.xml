@@ -11,9 +11,9 @@
 	<description>Super Star Trek</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>1.17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gwt.version>2.9.0</gwt.version>
+		<gwt.version>2.10.0</gwt.version>
 		<skip.tests>false</skip.tests>
 		<skip.deploy>true</skip.deploy>
 		<skip.gwt>false</skip.gwt>

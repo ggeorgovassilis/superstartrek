@@ -14,8 +14,6 @@ public interface IQuadrantScannerView extends View<QuadrantScannerPresenter>{
 	
 	void removeCssFromCell(int x, int y, String css);
 	void addCssToCell(int x, int y, String css);
-	int getHorizontalOffsetOfSector(int x, int y);
-	int getVerticalOffsetOfSector(int x, int y);
 	
 	void drawBeamBetween(int x1, int y1, int x2, int y2, String colour);
 	void clearBeamMarks();

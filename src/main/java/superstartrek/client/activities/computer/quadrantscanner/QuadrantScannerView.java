@@ -17,8 +17,8 @@ import superstartrek.client.utils.Strings;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
 
-	ElementWrapper[][] buckets = new ElementWrapper[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-	ElementWrapper bSelectedSector;
+	Element[][] buckets = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
+	Element bSelectedSector;
 	List<Element> beamElements = new ArrayList<>();
 	Element eSvgProto;
 
@@ -40,7 +40,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void updateSector(int x, int y, String content, String css) {
-		ElementWrapper b = buckets[x][y];
+		Element b = buckets[x][y];
 		b.setInnerHTML(content);
 		b.setClassName(css);
 	}
@@ -62,7 +62,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 				eSector.setAttribute("data-y", "" + y);
 				eSector.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);
 				eSector.getStyle().setTop(RELATIVE_HEIGHT * (double) y, Unit.PCT);
-				buckets[x][y] = ElementWrapper.create(eSector);
+				buckets[x][y] = eSector;
 				eMatrix.appendChild(eSector);
 			}
 		}
@@ -111,19 +111,9 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	}
 
 	@Override
-	public int getHorizontalOffsetOfSector(int x, int y) {
-		return buckets[x][y].getElement().getAbsoluteLeft();
-	}
-
-	@Override
-	public int getVerticalOffsetOfSector(int x, int y) {
-		return buckets[x][y].getElement().getAbsoluteTop();
-	}
-
-	@Override
 	public void drawBeamBetween(int x1, int y1, int x2, int y2, String colour) {
-		Element e1 = buckets[x1][y1].getElement();
-		Element e2 = buckets[x2][y2].getElement();
+		Element e1 = buckets[x1][y1];
+		Element e2 = buckets[x2][y2];
 
 		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
 		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
@@ -147,8 +137,9 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 
 	@Override
 	public void clearSector(int x, int y) {
-		ElementWrapper b = buckets[x][y];
-		b.clear();
+		Element b = buckets[x][y];
+		b.setInnerHTML("");
+		b.setClassName("");
 	}
 
 }
