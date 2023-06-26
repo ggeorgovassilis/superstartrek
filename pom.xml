@@ -11,7 +11,7 @@
 	<description>Super Star Trek</description>
 
 	<properties>
-		<java.version>1.17</java.version>
+		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gwt.version>2.10.0</gwt.version>
 		<skip.tests>false</skip.tests>
@@ -21,7 +21,7 @@
 		<gwt.disableClassMetadata>false</gwt.disableClassMetadata>
 		<gwt.disableCastChecking>false</gwt.disableCastChecking>
 		<gwt.optimizationLevel>-1</gwt.optimizationLevel>
-		<gwt-maven-plugin.version>2.9.0</gwt-maven-plugin.version>
+		<gwt-maven-plugin.version>2.10.0</gwt-maven-plugin.version>
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 
