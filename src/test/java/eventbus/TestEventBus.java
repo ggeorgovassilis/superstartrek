@@ -115,14 +115,15 @@ public class TestEventBus {
 
 		Handler1 handler1b = mock(Handler1.class);
 		eventBus.addHandler(Events.E1, handler1b);
+		List<String> arr = new ArrayList<String>();
 
 		try {
-			eventBus.fireEvent(Events.E1, (h) -> h.method1(1, "2", null));
+			eventBus.fireEvent(Events.E1, (h) -> h.method1(1, "2", arr));
 			fail("Excpected exception");
 		} catch (UmbrellaException ue) {
 		}
 
-		verify(handler1b).method1(1, "2", null);
+		verify(handler1b).method1(1, "2", arr);
 	}
 
 }

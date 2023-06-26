@@ -35,9 +35,8 @@ public class TestPWA extends BaseTest{
 	public void setup() {
 		pwa = new PWA(application);
 		cache = mock(LocalCache.class);
-		requestFactory = mock(RequestFactory.class);
+		application.requestFactory = requestFactory = mock(RequestFactory.class);
 		pwa.setCacheImplementation(cache);
-		pwa.setRequestFactory(requestFactory);
 	}
 	
 	@Test
@@ -58,7 +57,7 @@ public class TestPWA extends BaseTest{
 
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {
-				RequestCallback rc = invocation.getArgumentAt(2, RequestCallback.class);
+				RequestCallback rc = invocation.getArgument(2, RequestCallback.class);
 				Response response = mock(Response.class);
 				when(response.getStatusCode()).thenReturn(200);
 				when(response.getText()).thenReturn("12345");
@@ -71,7 +70,7 @@ public class TestPWA extends BaseTest{
 
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {
-				RequestCallback rc = invocation.getArgumentAt(2, RequestCallback.class);
+				RequestCallback rc = invocation.getArgument(2, RequestCallback.class);
 				Response response = mock(Response.class);
 				when(response.getStatusCode()).thenReturn(200);
 				when(response.getText()).thenReturn("12346");

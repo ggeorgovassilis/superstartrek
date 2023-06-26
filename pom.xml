@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                        http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.ggeorgovassilis</groupId>
@@ -28,14 +27,16 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/ggeorgovassilis/superstartrek/</connection>
-		<developerConnection>scm:git:https://github.com/ggeorgovassilis/superstartrek/</developerConnection>
+		<developerConnection>
+			scm:git:https://github.com/ggeorgovassilis/superstartrek/</developerConnection>
 		<url>https://github.com/ggeorgovassilis/superstartrek/</url>
 	</scm>
 
 	<repositories>
 		<repository>
 			<id>gwt-sl-mvn-repo</id>
-			<url>https://raw.github.com/ggeorgovassilis/gwt-htmlresource/mvn-repo/</url>
+			<url>
+				https://raw.github.com/ggeorgovassilis/gwt-htmlresource/mvn-repo/</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -173,8 +174,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.10.19</version>
+			<artifactId>mockito-core</artifactId>
+			<version>5.4.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -273,7 +274,8 @@
 										dir="${project.basedir}/site/superstartrek.superstartrek" />
 								</move>
 								<replace token="__APPBUILDNR"
-									value="${maven.build.timestamp}" dir="${project.basedir}/site">
+									value="${maven.build.timestamp}"
+									dir="${project.basedir}/site">
 									<include name="index.html" />
 								</replace>
 								<echo file="${project.basedir}/site/package.txt"

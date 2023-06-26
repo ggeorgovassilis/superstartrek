@@ -35,7 +35,7 @@ public class TestSectorContextMenuPresenter extends BaseTest{
 
 			@Override
 			public Void answer(InvocationOnMock invocation) throws Throwable {
-				ScheduledCommand cmd = invocation.getArgumentAt(0, ScheduledCommand.class);
+				ScheduledCommand cmd = invocation.getArgument(0, ScheduledCommand.class);
 				cmd.execute();
 				return null;
 			}

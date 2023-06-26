@@ -189,7 +189,6 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	public void setupPwa(Callback<Void> callback) {
 		pwa = new PWA(this);
-		pwa.setRequestFactory(requestFactory);
 		pwa.run(callback);
 	}
 

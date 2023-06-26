@@ -22,13 +22,8 @@ public class PWA {
 	AppInstallationEvent deferredInstallationPrompt;
 	Application application;
 	LocalCache cache;
-	RequestFactory requestFactory;
 
 	private static Logger log = Logger.getLogger("");
-
-	public void setRequestFactory(RequestFactory rf) {
-		this.requestFactory = rf;
-	}
 
 	public void setCacheImplementation(LocalCache cache) {
 		this.cache = cache;
@@ -73,7 +68,7 @@ public class PWA {
 	}
 
 	public void getFileContent(String url, Callback<String> callback) {
-		superstartrek.client.activities.pwa.http.Request r = requestFactory.create();
+		superstartrek.client.activities.pwa.http.Request r = application.requestFactory.create();
 		r.request(RequestBuilder.GET, url, new RequestCallback() {
 
 			@Override

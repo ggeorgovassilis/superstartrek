@@ -24,7 +24,6 @@ import superstartrek.client.model.Enterprise.ShieldDirection;
 import superstartrek.client.model.Star.StarClass;
 import superstartrek.client.utils.BrowserAPI;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.HashSet;

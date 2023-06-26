@@ -8,7 +8,7 @@ import superstartrek.client.model.Constants;
 import superstartrek.client.model.Location;
 import superstartrek.client.model.Setup;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
