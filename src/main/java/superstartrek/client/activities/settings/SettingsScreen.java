@@ -87,24 +87,25 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	protected boolean alignsOnItsOwn() {
 		return false;
 	}
+	
+	void selectElementInSet(Set<Element> set, String value) {
+		for (Element e : set)
+			e.setPropertyString("checked", value.equals(e.getAttribute("value")) ? "true" : null);
+	}
 
 	@Override
 	public void selectUIScale(String scale) {
-		for (Element e : uiScales)
-			e.setPropertyString("checked", scale.equals(e.getAttribute("value")) ? "true" : null);
+		selectElementInSet(uiScales, scale);
 	}
 
 	@Override
 	public void selectTheme(String theme) {
-		for (Element e : uiThemes)
-			e.setPropertyString("checked", theme.equals(e.getAttribute("value")) ? "true" : null);
+		selectElementInSet(uiThemes, theme);
 	}
 
-	//TODO: selectUIScale and selectTheme use similar mechanisms. Refactor for smth common?
 	@Override
 	public void selectNavigationAlignment(String alignment) {
-		for (Element e : uiNav)
-			e.setPropertyString("checked", alignment.equals(e.getAttribute("value")) ? "true" : null);
+		selectElementInSet(uiNav, alignment);
 	}
 
 	public void showAppVersion(String version) {
