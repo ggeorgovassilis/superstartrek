@@ -37,11 +37,20 @@ public class TestSettingsPresenter extends BaseTest{
 	public void test_change_theme() {
 		when(browser.getLocallyStoredValue(Application.UI_THEME_KEY)).thenReturn("high-contrast");
 		ValueChangeEvent<String> event = new ValueChangeEvent<String>("settings") {
-			
 		};
 		presenter.onValueChange(event);
 		verify(view).show();
 		verify(view).selectTheme("high-contrast");
+	}
+
+	@Test
+	public void test_change_navigation_element_alignment() {
+		when(browser.getLocallyStoredValue(Application.NAV_ELEMENT_ALIGNMENT_PREFERENCE)).thenReturn("default");
+		ValueChangeEvent<String> event = new ValueChangeEvent<String>("settings") {
+		};
+		presenter.onValueChange(event);
+		verify(view).show();
+		verify(view).selectNavigationAlignment("default");
 	}
 
 }
