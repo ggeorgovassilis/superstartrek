@@ -26,6 +26,7 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 		if ("settings".equals(event.getValue())) {
 			view.selectUIScale(application.getUIScale());
 			view.selectTheme(application.getUITheme());
+			view.selectNavigationAlignment(application.getNavigationElementAlignmentPreference());
 			view.show();
 		} else
 			view.hide();
@@ -37,6 +38,10 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	
 	public void onUIThemeSettingClicked(String theme) {
 		application.setUITheme(theme);
+	}
+	
+	public void onNavigationAlignmentChanged(String alignment) {
+		application.setNavigationElementAlignmentPreference(alignment);
 	}
 	
 	void setUpdateCheckButtonEnabled(boolean v) {

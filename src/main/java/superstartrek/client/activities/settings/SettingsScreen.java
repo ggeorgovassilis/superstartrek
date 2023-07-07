@@ -22,8 +22,11 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	Element eCheckForUpdates;
 	Element eDefaultTheme;
 	Element eHighContrastTheme;
+	Element eNavDefault;
+	Element eNavBottom;
 	Set<Element> uiScales = new HashSet<Element>();
 	Set<Element> uiThemes = new HashSet<Element>();
+	Set<Element> uiNav = new HashSet<Element>();
 
 	public SettingsScreen(SettingsPresenter p) {
 		super(p);
@@ -35,6 +38,8 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 		eCheckForUpdates = DOM.getElementById("cmd_check_for_updates_2");
 		eDefaultTheme = DOM.getElementById("ui-theme-default");
 		eHighContrastTheme = DOM.getElementById("ui-theme-highcontrast");
+		eNavDefault = DOM.getElementById("nav-default");
+		eNavBottom = DOM.getElementById("nav-bottom");
 		addDomHandler((event) -> handleChange(event), ChangeEvent.getType());
 		addDomHandler((event) -> handleClick(event), ClickEvent.getType());
 		uiScales.add(eSmall);
@@ -43,6 +48,8 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 		uiScales.add(eXL);
 		uiThemes.add(eDefaultTheme);
 		uiThemes.add(eHighContrastTheme);
+		uiNav.add(eNavDefault);
+		uiNav.add(eNavBottom);
 	}
 
 	protected void handleChange(DomEvent<?> event) {
@@ -52,10 +59,12 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 
 		if (uiScales.contains(e)) {
 			presenter.onUIScaleSettingClicked(value);
-		}
-		;
+		} else
 		if (uiThemes.contains(e)) {
 			presenter.onUIThemeSettingClicked(value);
+		} else
+		if (uiNav.contains(e)) {
+			presenter.onNavigationAlignmentChanged(value);
 		}
 	}
 
@@ -89,6 +98,13 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	public void selectTheme(String theme) {
 		for (Element e : uiThemes)
 			e.setPropertyString("checked", theme.equals(e.getAttribute("value")) ? "true" : null);
+	}
+
+	//TODO: selectUIScale and selectTheme use similar mechanisms. Refactor for smth common?
+	@Override
+	public void selectNavigationAlignment(String alignment) {
+		for (Element e : uiNav)
+			e.setPropertyString("checked", alignment.equals(e.getAttribute("value")) ? "true" : null);
 	}
 
 	public void showAppVersion(String version) {

@@ -35,6 +35,7 @@ import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.credits.CreditsPresenter;
 import superstartrek.client.credits.CreditsScreen;
 import superstartrek.client.model.Quadrant;
+import superstartrek.client.model.Setting;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.persistence.GameSaver;
@@ -57,6 +58,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	public final static String UI_SCALE_KEY = "UI_SCALE";
 	public final static String UI_THEME_KEY = "UI_THEME";
+	public final static String NAV_ELEMENT_ALIGNMENT_PREFERENCE = "NAV_ELEM_ALGN_PREF";
 	private static Logger log = Logger.getLogger("");
 
 	public EventBus eventBus = new EventBus();
@@ -237,6 +239,20 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		browserAPI.removeGlobalCss("ui-theme-highcontrast");
 		browserAPI.removeGlobalCss("ui-theme-default");
 		browserAPI.addGlobalCss("ui-theme-"+theme);
+	}
+	
+	public void setNavigationElementAlignmentPreference(String alignment) {
+		browserAPI.storeValueLocally(NAV_ELEMENT_ALIGNMENT_PREFERENCE, alignment);
+		browserAPI.removeGlobalCss("navigation-elements-alignment-default");
+		browserAPI.removeGlobalCss("navigation-elements-alignment-bottom");
+		browserAPI.addGlobalCss("navigation-elements-alignment-"+alignment);
+	}
+	
+	public String getNavigationElementAlignmentPreference() {
+		String setting = browserAPI.getLocallyStoredValue(NAV_ELEMENT_ALIGNMENT_PREFERENCE);
+		if (Strings.isEmpty(setting))
+			setting = "bottom";
+		return setting;
 	}
 	
 	public String getUITheme() {

@@ -3,8 +3,8 @@
 </header>
 <div>
 <section class="setting">
-<span class="label">UI scaling</span>
-
+<div class="label">UI scaling</div>
+<br/>
 <label for="ui-scaling-small" class="label-small">A-
 <input type="radio" id="ui-scaling-small" name="ui-scaling" value="small"/>
 </label>
@@ -25,8 +25,8 @@
 </section>
 
 <section class="setting">
-<span class="label">Theme</span>
-
+<div class="label">Theme</div>
+<br/>
 <label for="ui-theme-default"><input type="radio" id="ui-theme-default" name="ui-theme" value="default"/>
 default</label>
 
@@ -34,10 +34,20 @@ default</label>
 </label>
 </section>
 
+<section class="setting">
+<div class="label">UI alignment</div>
+<br/>
+<label for="nav-default"><input type="radio" id="nav-default" name="nav-setting" value="default"/>
+default (best for PC)</label>
+
+<label for="nav-bottom"><input type="radio" id="nav-bottom" name="nav-setting" value="bottom"/>bottom (best for mobile)
+</label>
+</section>
 
 <section class="setting">
 <button id="cmd_check_for_updates_2" class="full-width">Check for updates</button>
 </section>
+
 </div>
 <br/>
 <a href="javascript:history.back()">Back</a>

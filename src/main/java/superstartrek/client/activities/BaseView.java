@@ -1,5 +1,6 @@
 package superstartrek.client.activities;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
@@ -13,7 +14,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	protected final P presenter;
 
 	protected void createWidgetImplementation() {
-		setElement((Element)DOM.createDiv());
+		setElement((Element) DOM.createDiv());
 	}
 
 	protected void decorateWidget() {
@@ -29,7 +30,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	protected boolean alignsOnItsOwn() {
 		return true;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected BaseView(P presenter) {
 		this.presenter = presenter;
@@ -45,10 +46,14 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	// TODO: there should be a feature detection or setting to determine whether
 	// bottom alignment is required
 	protected void layoutForEasyHandlingOnMobileDevices() {
-		int contentHeight = getOffsetHeight();
-		int windowHeight = presenter.getApplication().browserAPI.getWindowHeightPx();
-		int margin = Math.max(0, windowHeight - contentHeight);
-		getElement().getStyle().setMarginTop(margin, Unit.PX);
+		String pref = presenter.getApplication().getNavigationElementAlignmentPreference();
+		GWT.log("pref "+pref);
+		if ("bottom".equals(pref)) {
+			int contentHeight = getOffsetHeight();
+			int windowHeight = presenter.getApplication().browserAPI.getWindowHeightPx();
+			int margin = Math.max(0, windowHeight - contentHeight);
+			getElement().getStyle().setMarginTop(margin, Unit.PX);
+		}
 	}
 
 	@Override
@@ -71,9 +76,12 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 
 	@Override
 	public void onScreenResize() {
-		//layouting depends on computing the space existing components take. Because of a previous layout, this would
-		//result in a much larger height than actually needed, creating unnecessary scroll.
-		//First Reset top margin to 0, then allowing reflow, _then_ computing the required space
+		// layouting depends on computing the space existing components take. Because of
+		// a previous layout, this would
+		// result in a much larger height than actually needed, creating unnecessary
+		// scroll.
+		// First Reset top margin to 0, then allowing reflow, _then_ computing the
+		// required space
 		getElement().getStyle().setMarginTop(0, Unit.PX);
 	}
 
