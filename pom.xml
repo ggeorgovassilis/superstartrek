@@ -22,6 +22,7 @@
 		<gwt.disableCastChecking>false</gwt.disableCastChecking>
 		<gwt.optimizationLevel>-1</gwt.optimizationLevel>
 		<gwt-maven-plugin.version>2.10.0</gwt-maven-plugin.version>
+		<gwt.methodNameDisplayMode></gwt.methodNameDisplayMode> <!-- use "full" for diagnostings -->
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 
@@ -255,6 +256,7 @@
 					<optimizationLevel>${gwt.optimizationLevel}</optimizationLevel>
 					<compileReport>true</compileReport>
 					<strict>true</strict>
+					<persistentunitcache>false</persistentunitcache>
 				</configuration>
 			</plugin>
 			<plugin>
