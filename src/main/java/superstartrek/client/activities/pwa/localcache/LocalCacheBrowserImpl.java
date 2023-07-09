@@ -13,6 +13,9 @@ import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.promise.Promise;
 import superstartrek.client.activities.pwa.promise.PromiseBrowserImpl;
 
+/**
+ * A wrapper around CacheStorage https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/
+ */
 public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCache {
 
 	private static Logger log = Logger.getLogger("");
