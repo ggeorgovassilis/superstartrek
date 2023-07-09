@@ -129,8 +129,12 @@ public class PWA {
 	}
 
 	public void setupCache(Callback<Void> callback) {
-		if (cache == null)
+		if (cache == null) {
 			cache = LocalCacheBrowserImpl.getInstance();
+			if (cache == null)
+				throw new RuntimeException("No cache implementation found. maybe you are visiting this site over http and it isn't localhost?");
+			setCacheImplementation(cache);
+		}
 		log.info("Querying cache existence");
 		cache.queryCacheExistence(CACHE_NAME).then((exists) -> {
 
