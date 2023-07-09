@@ -871,8 +871,13 @@ outline:solid transparent 1px;
 	background-size: cover;
 	position: absolute;
 	overflow:hidden;
-	transition: transform 200ms ease;
+	opacity: 0;
+	transition: transform 200ms ease, opacity 200ms ease, visibility 200ms ease;
 	will-change: transform;
+}
+
+.sector-context-menu.expanded .cell{
+	opacity: 1;
 }
 
 .sector-context-menu .cell.disabled {
