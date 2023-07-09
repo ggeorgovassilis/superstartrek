@@ -47,7 +47,6 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	// bottom alignment is required
 	protected void layoutForEasyHandlingOnMobileDevices() {
 		String pref = presenter.getApplication().getNavigationElementAlignmentPreference();
-		GWT.log("pref "+pref);
 		if ("bottom".equals(pref)) {
 			int contentHeight = getOffsetHeight();
 			int windowHeight = presenter.getApplication().browserAPI.getWindowHeightPx();
