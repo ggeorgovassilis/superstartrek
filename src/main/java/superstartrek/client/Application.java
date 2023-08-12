@@ -35,7 +35,6 @@ import superstartrek.client.control.ScoreKeeperImpl;
 import superstartrek.client.credits.CreditsPresenter;
 import superstartrek.client.credits.CreditsScreen;
 import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Setting;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
 import superstartrek.client.persistence.GameSaver;

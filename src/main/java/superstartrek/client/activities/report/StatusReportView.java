@@ -10,11 +10,9 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 
 	
 	@Override
-	protected void decorateScreen() {
-		Element e = getElement();
-		e.setId("screen-statusreport");
-		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
-		e.setInnerHTML(screenTemplates.statusReport().getText());
+	protected void decorateScreen(ScreenTemplates templates, Element element) {
+		element.setId("screen-statusreport");
+		element.setInnerHTML(templates.statusReport().getText());
 	}
 
 	public StatusReportView(StatusReportPresenter p) {

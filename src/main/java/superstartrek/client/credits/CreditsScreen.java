@@ -1,5 +1,7 @@
 package superstartrek.client.credits;
 
+import com.google.gwt.dom.client.Element;
+
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.screentemplates.ScreenTemplates;
 
@@ -11,9 +13,8 @@ public class CreditsScreen extends BaseScreen<CreditsPresenter>{
 	}
 
 	@Override
-	protected void decorateScreen() {
-		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
-		getElement().setInnerHTML(screenTemplates.creditsScreen().getText());
+	protected void decorateScreen(ScreenTemplates templates, Element element) {
+		element.setInnerHTML(templates.creditsScreen().getText());
 	}
 	
 }

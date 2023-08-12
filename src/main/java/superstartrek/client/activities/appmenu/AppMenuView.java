@@ -18,15 +18,14 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 	}
 
 	@Override
-	public void decorateWidget() {
-		super.decorateWidget();
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
+		super.decorateWidget(templates, element);
 		addDomHandler(this, ClickEvent.getType());
 	}
 
 	@Override
-	protected String getContentForHtmlPanel() {
-		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
-		return screenTemplates.appMenu().getText();
+	protected String getContentForHtmlPanel(ScreenTemplates templates) {
+		return templates.appMenu().getText();
 	}
 	
 	@Override

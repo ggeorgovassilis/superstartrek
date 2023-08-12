@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.activities.BaseView;
+import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Strings;
 
 public class SRSView extends BaseView<SRSPresenter> implements ISRSView, ClickHandler {
@@ -34,8 +35,8 @@ public class SRSView extends BaseView<SRSPresenter> implements ISRSView, ClickHa
 	}
 
 	@Override
-	public void decorateWidget() {
-		super.decorateWidget();
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
+		super.decorateWidget(templates, element);
 		addDomHandler(this, ClickEvent.getType());
 	}
 

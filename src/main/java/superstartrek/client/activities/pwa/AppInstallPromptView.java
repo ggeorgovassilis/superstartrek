@@ -12,15 +12,14 @@ public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> i
 	}
 
 	@Override
-	protected String getContentForHtmlPanel() {
-		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
-		return screenTemplates.appInstallPrompt().getText();
+	protected String getContentForHtmlPanel(ScreenTemplates templates) {
+		return templates.appInstallPrompt().getText();
 	}
 
 	@Override
-	public void decorateWidget() {
-		super.decorateWidget();
-		getElement().setId("app-install-prompt");
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
+		super.decorateWidget(templates, element);
+		element.setId("app-install-prompt");
 		addDomHandler((event) -> {
 			Element e = event.getNativeEvent().getEventTarget().cast();
 			switch (e.getId()) {

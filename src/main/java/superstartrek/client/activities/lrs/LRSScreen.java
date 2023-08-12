@@ -18,14 +18,13 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	@Override
 	protected void createWidgetImplementation() {
 		Element e = DOM.createTable();
-		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
-		e.setInnerHTML(screenTemplates.lrsScreen().getText());
-		e.setId("longrangescan");
 		setElement(e);
 	}
 	
 	@Override
-	public void decorateScreen() {
+	protected void decorateScreen(ScreenTemplates templates, Element element) {
+		element.setInnerHTML(templates.lrsScreen().getText());
+		element.setId("longrangescan");
 		cells = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 		NodeList<Element> tds = CSS.querySelectorAll("#longrangescan .quadrants td");
 		for (int i=tds.getLength()-1;i>=0;i--) {

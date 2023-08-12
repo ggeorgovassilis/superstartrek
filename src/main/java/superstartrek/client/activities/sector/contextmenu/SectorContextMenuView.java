@@ -35,10 +35,9 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	}
 	
 	@Override
-	public void decorateWidget() {
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
 		hide();
-		ScreenTemplates templates = presenter.getApplication().getScreenTemplates();
-		getElement().setInnerHTML(templates.sectorContextMenu().getText());
+		element.setInnerHTML(templates.sectorContextMenu().getText());
 		addStyleName("sector-context-menu");
 		addDomHandler(this, MouseDownEvent.getType());
 		addDomHandler(this, ClickEvent.getType());

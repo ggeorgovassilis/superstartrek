@@ -7,7 +7,9 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 
+import superstartrek.client.Application;
 import superstartrek.client.model.Constants;
+import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Timer;
 
 @SuppressWarnings("rawtypes")
@@ -21,11 +23,13 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		super(presenter);
 	}
 
-	protected abstract String getContentForHtmlPanel();
+	protected abstract String getContentForHtmlPanel(ScreenTemplates templates);
 
 	@Override
-	public void decorateWidget() {
-		getElement().setInnerHTML(getContentForHtmlPanel());
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
+		Application application = presenter.getApplication();
+		String html = getContentForHtmlPanel(templates);
+		element.setInnerHTML(html);
 		addStyleName("PopupView");
 		addDomHandler((event) -> {
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ESCAPE) {
@@ -36,7 +40,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		}, KeyDownEvent.getType());
 		Event.sinkEvents(getElement(), Event.ONKEYDOWN | Event.ONCLICK);
 		hide();
-		presenter.getApplication().browserAPI.addToPage(this);
+		application.browserAPI.addToPage(this);
 	}
 
 	protected void showGlassPanel() {

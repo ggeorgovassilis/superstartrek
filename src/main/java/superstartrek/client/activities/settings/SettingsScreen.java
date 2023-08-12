@@ -78,9 +78,8 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	}
 
 	@Override
-	protected void decorateScreen() {
-		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
-		getElement().setInnerHTML(screenTemplates.settingsScreen().getText());
+	protected void decorateScreen(ScreenTemplates templates, Element element) {
+		element.setInnerHTML(templates.settingsScreen().getText());
 	}
 	
 	@Override

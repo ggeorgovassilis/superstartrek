@@ -1,11 +1,11 @@
 package superstartrek.client.activities;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
 import superstartrek.client.bus.Events;
+import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.HtmlWidget;
 
 @SuppressWarnings("rawtypes")
@@ -17,7 +17,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 		setElement((Element) DOM.createDiv());
 	}
 
-	protected void decorateWidget() {
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
 	}
 
 	/**
@@ -35,7 +35,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	protected BaseView(P presenter) {
 		this.presenter = presenter;
 		createWidgetImplementation();
-		decorateWidget();
+		decorateWidget(presenter.getApplication().getScreenTemplates(), getElement());
 		presenter.setView(this);
 		if (!alignsOnItsOwn())
 			presenter.getApplication().eventBus.addHandler(Events.SCREEN_RESIZES, this);
@@ -89,5 +89,5 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	public void onAfterScreenResize(int widthPx, int heightPx) {
 		layoutForEasyHandlingOnMobileDevices();
 	}
-
+	
 }

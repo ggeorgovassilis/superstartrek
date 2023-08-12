@@ -25,9 +25,9 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
 	}
 
 	@Override
-	public void decorateWidget() {
-		super.decorateWidget();
-		getElement().setId("update-app-prompt");
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
+		super.decorateWidget(templates, element);
+		element.setId("update-app-prompt");
 		addHandler((event) -> {
 			Element target = event.getNativeEvent().getEventTarget().cast();
 			switch (target.getId()) {
@@ -42,8 +42,7 @@ public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
 	}
 
 	@Override
-	protected String getContentForHtmlPanel() {
-		ScreenTemplates screenTemplates = presenter.getApplication().getScreenTemplates();
-		return screenTemplates.updateAppPrompt().getText();
+	protected String getContentForHtmlPanel(ScreenTemplates templates) {
+		return templates.updateAppPrompt().getText();
 	}
 }

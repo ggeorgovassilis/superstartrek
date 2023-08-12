@@ -13,6 +13,7 @@ import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.user.client.DOM;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.model.Constants;
+import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Strings;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {
@@ -46,8 +47,8 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 	}
 
 	@Override
-	protected void decorateWidget() {
-		getElement().setId("quadrantscan");
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
+		element.setId("quadrantscan");
 	}
 
 	public QuadrantScannerView(QuadrantScannerPresenter presenter) {

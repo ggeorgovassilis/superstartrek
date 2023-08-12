@@ -13,11 +13,11 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 	boolean inTransition = false;
 
 	@Override
-	public void decorateWidget() {
-		super.decorateWidget();
+	protected void decorateWidget(ScreenTemplates templates, Element element) {
+		super.decorateWidget(templates, element);
 		eContent = DOM.getElementById("messages-content");
 		eButton = DOM.getElementById("dismiss-message-button");
-		getElement().setId("messages");
+		element.setId("messages");
 		DOM.sinkEvents(eButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		DOM.setEventListener(eButton, (Event event) -> presenter.cancelButtonClicked());
 	}
@@ -56,8 +56,7 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 	}
 
 	@Override
-	protected String getContentForHtmlPanel() {
-		ScreenTemplates templates = presenter.getApplication().getScreenTemplates();
+	protected String getContentForHtmlPanel(ScreenTemplates templates) {
 		return templates.messages().getText();
 	}
 }
