@@ -132,7 +132,7 @@ a:hover, button:hover {
 
 .quadrants > td {
 	border-right: solid DarkViolet 1px;
-	padding: 4px 10px 4px 10px;
+	padding: unset;
 	cursor: pointer;
 	text-align: center;
 }
