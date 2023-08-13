@@ -7,7 +7,6 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 
-import superstartrek.client.Application;
 import superstartrek.client.model.Constants;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Timer;
@@ -27,7 +26,6 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 
 	@Override
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
-		Application application = presenter.getApplication();
 		String html = getContentForHtmlPanel(templates);
 		element.setInnerHTML(html);
 		addStyleName("PopupView");
@@ -40,7 +38,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		}, KeyDownEvent.getType());
 		Event.sinkEvents(getElement(), Event.ONKEYDOWN | Event.ONCLICK);
 		hide();
-		application.browserAPI.addToPage(this);
+		application().browserAPI.addToPage(this);
 	}
 
 	protected void showGlassPanel() {

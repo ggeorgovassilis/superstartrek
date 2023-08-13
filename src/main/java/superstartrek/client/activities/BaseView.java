@@ -4,6 +4,8 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
+
+import superstartrek.client.Application;
 import superstartrek.client.bus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.HtmlWidget;
@@ -19,7 +21,10 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
 	}
-
+	
+	protected Application application() {
+		return presenter.getApplication();
+	}
 	/**
 	 * Indicates whether the component aligns by HTML/CSS or requires "assistance"
 	 * by computation
@@ -35,10 +40,10 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	protected BaseView(P presenter) {
 		this.presenter = presenter;
 		createWidgetImplementation();
-		decorateWidget(presenter.getApplication().getScreenTemplates(), getElement());
+		decorateWidget(application().getScreenTemplates(), getElement());
 		presenter.setView(this);
 		if (!alignsOnItsOwn())
-			presenter.getApplication().eventBus.addHandler(Events.SCREEN_RESIZES, this);
+			application().eventBus.addHandler(Events.SCREEN_RESIZES, this);
 	}
 
 	// aligns screens to the bottom of the screen for easier interactions with the
@@ -46,10 +51,10 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	// TODO: there should be a feature detection or setting to determine whether
 	// bottom alignment is required
 	protected void layoutForEasyHandlingOnMobileDevices() {
-		String pref = presenter.getApplication().getNavigationElementAlignmentPreference();
+		String pref = application().getNavigationElementAlignmentPreference();
 		if ("bottom".equals(pref)) {
 			int contentHeight = getOffsetHeight();
-			int windowHeight = presenter.getApplication().browserAPI.getWindowHeightPx();
+			int windowHeight = application().browserAPI.getWindowHeightPx();
 			int margin = Math.max(0, windowHeight - contentHeight);
 			getElement().getStyle().setMarginTop(margin, Unit.PX);
 		}
