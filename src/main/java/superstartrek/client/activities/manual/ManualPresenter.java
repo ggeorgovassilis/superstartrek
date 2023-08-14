@@ -1,20 +1,20 @@
 package superstartrek.client.activities.manual;
 
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
+import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.bus.Events;
 
-public class ManualPresenter extends BasePresenter<ManualScreen> implements ValueChangeHandler<String>{
+public class ManualPresenter extends BasePresenter<ManualScreen> implements ActivityChangedHandler{
 
 	public ManualPresenter(Application application) {
 		super(application);
-		application.browserAPI.addHistoryListener(this);
+		addHandler(Events.ACTIVITY_CHANGED, this);
 	}
 
 	@Override
-	public void onValueChange(ValueChangeEvent<String> event) {
-		if ("manual".equals(event.getValue())) {
+	public void onActivityChanged(String activity) {
+		if ("manual".equals(activity)) {
 			view.show();
 		} else
 			view.hide();

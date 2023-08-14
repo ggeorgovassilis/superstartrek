@@ -11,6 +11,8 @@ import superstartrek.client.activities.appmenu.AppMenuPresenter;
 import superstartrek.client.activities.appmenu.AppMenuView;
 import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.ComputerScreen;
+import superstartrek.client.activities.credits.CreditsPresenter;
+import superstartrek.client.activities.credits.CreditsScreen;
 import superstartrek.client.activities.intro.IntroPresenter;
 import superstartrek.client.activities.intro.IntroView;
 import superstartrek.client.activities.loading.LoadingPresenter;
@@ -32,8 +34,6 @@ import superstartrek.client.control.GameController;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
-import superstartrek.client.credits.CreditsPresenter;
-import superstartrek.client.credits.CreditsScreen;
 import superstartrek.client.model.Quadrant;
 import superstartrek.client.model.Setup;
 import superstartrek.client.model.StarMap;
@@ -200,6 +200,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 			eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onScreenResize());
 			eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onAfterScreenResize(e.getWidth(), e.getHeight()));
 		});
+		browserAPI.addHistoryHandler(event->eventBus.fireEvent(Events.ACTIVITY_CHANGED, h->h.onActivityChanged(event.getValue())));
 	}
 
 	public void setupGameSaver() {

@@ -25,7 +25,7 @@ public interface BrowserAPI {
 	int nextInt(int upperBound);
 	double nextDouble();
 	
-	HandlerRegistration addHistoryListener(ValueChangeHandler<String> handler);
+	HandlerRegistration addHistoryHandler(ValueChangeHandler<String> handler);
 	Void postHistoryChange(String token);
 	Void postHistoryChange(String token, boolean issueEvent);
 	Void confirm(String message, Callback<Boolean> answer);

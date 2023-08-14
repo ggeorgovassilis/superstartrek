@@ -131,7 +131,7 @@ public class TestStarMapSerializer extends BaseTest {
 			}
 
 			@Override
-			public HandlerRegistration addHistoryListener(ValueChangeHandler<String> handler) {
+			public HandlerRegistration addHistoryHandler(ValueChangeHandler<String> handler) {
 				return null;
 			}
 

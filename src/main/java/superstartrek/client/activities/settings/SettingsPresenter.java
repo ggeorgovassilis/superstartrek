@@ -1,20 +1,18 @@
 package superstartrek.client.activities.settings;
 
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-
 import superstartrek.client.Application;
+import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.bus.Events;
 
-public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements ApplicationLifecycleHandler, ValueChangeHandler<String>{
+public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements ApplicationLifecycleHandler, ActivityChangedHandler{
 	
 	boolean updateButtonEnabled = true;
 	
 	public SettingsPresenter(Application application) {
 		super(application);
-		application.browserAPI.addHistoryListener(this);
+		addHandler(Events.ACTIVITY_CHANGED, this);
 		addHandler(Events.VERSION_CHECK_FAILED, this);
 		addHandler(Events.VERSION_IS_CURRENT, this);
 		addHandler(Events.NEW_VERSION_AVAILABLE, this);
@@ -22,8 +20,8 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	}
 	
 	@Override
-	public void onValueChange(ValueChangeEvent<String> event) {
-		if ("settings".equals(event.getValue())) {
+	public void onActivityChanged(String activity) {
+		if ("settings".equals(activity)) {
 			view.selectUIScale(application.getUIScale());
 			view.selectTheme(application.getUITheme());
 			view.selectNavigationAlignment(application.getNavigationElementAlignmentPreference());
@@ -31,7 +29,7 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 		} else
 			view.hide();
 	}
-	
+
 	public void onUIScaleSettingClicked(String scale) {
 		application.setUIScale(scale);
 	}

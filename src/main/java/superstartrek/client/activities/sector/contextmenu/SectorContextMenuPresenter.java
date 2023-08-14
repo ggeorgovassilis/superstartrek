@@ -5,9 +5,8 @@ import java.util.Map;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
+import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.combat.CombatHandler.partTarget;
@@ -20,7 +19,7 @@ import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 
 public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView> implements SectorSelectedHandler,
-		GamePhaseHandler, ValueChangeHandler<String>, ContextMenuHideHandler, KeyPressedEventHandler {
+		GamePhaseHandler, ActivityChangedHandler, ContextMenuHideHandler, KeyPressedEventHandler {
 
 	Location sector;
 	Quadrant quadrant;
@@ -40,7 +39,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.CONTEXT_MENU_HIDDEN, this);
-		application.browserAPI.addHistoryListener(this);
+		addHandler(Events.ACTIVITY_CHANGED, this);
 		buttonsEnabled.put(cmd_navigate, false);
 		buttonsEnabled.put(cmd_firePhasers, false);
 		buttonsEnabled.put(cmd_fireTorpedos, false);
@@ -156,7 +155,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	}
 
 	@Override
-	public void onValueChange(ValueChangeEvent<String> event) {
+	public void onActivityChanged(String activity) {
 		hideMenu(null);
 	}
 

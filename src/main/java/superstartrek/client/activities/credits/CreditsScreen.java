@@ -1,4 +1,4 @@
-package superstartrek.client.credits;
+package superstartrek.client.activities.credits;
 
 import com.google.gwt.dom.client.Element;
 

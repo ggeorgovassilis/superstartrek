@@ -68,7 +68,7 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	}
 
 	@Override
-	public HandlerRegistration addHistoryListener(ValueChangeHandler<String> handler) {
+	public HandlerRegistration addHistoryHandler(ValueChangeHandler<String> handler) {
 		return History.addValueChangeHandler(handler);
 	}
 

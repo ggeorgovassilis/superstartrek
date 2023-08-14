@@ -1,9 +1,8 @@
 package superstartrek.client.activities.computer;
 
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
+import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.CombatHandler;
@@ -27,7 +26,7 @@ import superstartrek.client.model.Weapon;
 import superstartrek.client.model.Enterprise.ShieldDirection;
 
 public class ComputerPresenter extends BasePresenter<IComputerScreen>
-		implements GamePhaseHandler, CombatHandler, ValueChangeHandler<String>,
+		implements GamePhaseHandler, CombatHandler, ActivityChangedHandler,
 		KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
 
 	ScoreKeeper scoreKeeper;
@@ -37,7 +36,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super(application);
  		this.scoreKeeper = scoreKeeper;
-		application.browserAPI.addHistoryListener(this);
+ 		addHandler(Events.ACTIVITY_CHANGED, this);
 		addHandler(Events.PLAYER_TURN_STARTED, this);
 		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
@@ -166,8 +165,8 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	@Override
-	public void onValueChange(ValueChangeEvent<String> event) {
-		switch (event.getValue()) {
+	public void onActivityChanged(String activity) {
+		switch (activity) {
 		case "computer":
 			showScreen();
 			break;

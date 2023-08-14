@@ -1,20 +1,20 @@
 package superstartrek.client.activities.appmenu;
 
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import superstartrek.client.Application;
+import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.bus.Events;
 import superstartrek.client.model.Setting;
 
 public class AppMenuPresenter extends BasePresenter<IAppMenuView>
-		implements PopupViewPresenter<IAppMenuView>, ValueChangeHandler<String> {
+		implements PopupViewPresenter<IAppMenuView>, ActivityChangedHandler{
 
 	String gotoStateAfterMenuHidden;
 
 	public AppMenuPresenter(Application application) {
 		super(application);
-		application.browserAPI.addHistoryListener(this);
+		addHandler(Events.ACTIVITY_CHANGED, this);
 
 	}
 
@@ -91,8 +91,8 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	}
 
 	@Override
-	public void onValueChange(ValueChangeEvent<String> event) {
-		if (event.getValue().equals("appmenu"))
+	public void onActivityChanged(String activity) {
+		if (activity.equals("appmenu"))
 			showMenu();
 		else
 			hideMenu();
@@ -102,5 +102,6 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	public void cancelButtonClicked() {
 		hideMenu();
 	}
+
 
 }
