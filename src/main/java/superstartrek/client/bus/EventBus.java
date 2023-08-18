@@ -9,8 +9,6 @@ import java.util.Set;
 
 import com.google.gwt.event.shared.UmbrellaException;
 
-import superstartrek.client.utils.Timer;
-
 public class EventBus {
 
 	Map<Event<? extends EventHandler>, List<? extends EventHandler>> handlers = new HashMap<Event<? extends EventHandler>, List<? extends EventHandler>>();
@@ -41,10 +39,6 @@ public class EventBus {
 		}
 	}
 
-	public <T extends EventHandler> void postponeEvent(Event<T> type, EventCallback<T> callback) {
-		Timer.postpone(()->fireEvent(type, callback));
-	}
-
 	public <T extends EventHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
 		@SuppressWarnings("unchecked")
 		List<T> protoList = (List<T>) handlers.get(type);
@@ -52,9 +46,8 @@ public class EventBus {
 		//for any event. But during setup this is quite likely.
 		if (protoList == null)
 			return;
-		// TODO: should we use protoList directly and instead queue add/remove handlers?
-		// pro: firing events is much more common than modifying listeners
-		// con: array lists are backed by js native arrays, cloning should be very fast.
+		//A copy makes sure handlers which add/remove other handlers during their invocation
+		//don't mess with invocation order
 		List<T> copy = new ArrayList<T>(protoList);
 		Set<Throwable> errors = null;
 		for (T h : copy)
