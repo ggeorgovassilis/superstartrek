@@ -8,8 +8,7 @@ import superstartrek.client.model.StarMap;
 
 public class LoadingPresenter extends BasePresenter<LoadingScreen> implements GamePhaseHandler{
 
-	public LoadingPresenter(Application application) {
-		super(application);
+	public LoadingPresenter() {
 		addHandler(Events.GAME_STARTED, this);
 	}
 

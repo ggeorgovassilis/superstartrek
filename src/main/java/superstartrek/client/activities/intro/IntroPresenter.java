@@ -13,8 +13,7 @@ import superstartrek.client.model.StarMap;
 public class IntroPresenter extends BasePresenter<IntroView>
 		implements ApplicationLifecycleHandler, GamePhaseHandler, ActivityChangedHandler {
 
-	public IntroPresenter(Application application) {
-		super(application);
+	public IntroPresenter() {
 		addHandler(GAME_STARTED, this);
 		addHandler(INFORMING_OF_INSTALLED_VERSION, this);
 		addHandler(Events.ACTIVITY_CHANGED, this);
@@ -23,7 +22,7 @@ public class IntroPresenter extends BasePresenter<IntroView>
 	@Override
 	public void onGameStarted(StarMap map) {
 		view.show();
-		application.browserAPI.postHistoryChange("intro");
+		getApplication().browserAPI.postHistoryChange("intro");
 	}
 
 	@Override

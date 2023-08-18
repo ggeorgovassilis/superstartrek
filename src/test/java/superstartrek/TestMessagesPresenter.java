@@ -14,7 +14,7 @@ public class TestMessagesPresenter extends BaseTest{
 	
 	@Before
 	public void setup() {
-		presenter = new MessagesPresenter(application);
+		presenter = new MessagesPresenter();
 		view = mock(IMessagesView.class);
 		presenter.setView(view);
 	}

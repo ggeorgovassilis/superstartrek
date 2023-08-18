@@ -12,8 +12,7 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 
 	String gotoStateAfterMenuHidden;
 
-	public AppMenuPresenter(Application application) {
-		super(application);
+	public AppMenuPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED, this);
 
 	}
@@ -41,7 +40,7 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 
 	public void onMenuHidden() {
 		if (gotoStateAfterMenuHidden != null)
-			application.browserAPI.postHistoryChange(gotoStateAfterMenuHidden);
+			getApplication().browserAPI.postHistoryChange(gotoStateAfterMenuHidden);
 	}
 
 	public void toggleAutoAim() {
@@ -57,9 +56,9 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	}
 
 	public void restart() {
-		application.browserAPI.confirm("All progress will be lost. Continue?", (result) -> {
+		getApplication().browserAPI.confirm("All progress will be lost. Continue?", (result) -> {
 			if (result)
-				application.restart();
+				getApplication().restart();
 		});
 	}
 

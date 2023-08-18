@@ -32,7 +32,7 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 	@Before
 	public void setup() {
 		sectorMenuPresenter = mock(SectorContextMenuPresenter.class);
-		presenter = new QuadrantScannerPresenter(application, sectorMenuPresenter);
+		presenter = new QuadrantScannerPresenter(sectorMenuPresenter);
 		view = mock(IQuadrantScannerView.class);
 		presenter.setView(view);
 	}

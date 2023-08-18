@@ -11,8 +11,8 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 
 	public void updateView() {
 		Enterprise enterprise = getEnterprise();
-		view.setProperty("report_stardate", "" + application.starMap.getStarDate(), false);
-		view.setProperty("report_score", "" + application.scoreKeeper.getScore(), false);
+		view.setProperty("report_stardate", "" + getApplication().starMap.getStarDate(), false);
+		view.setProperty("report_score", "" + getApplication().scoreKeeper.getScore(), false);
 		view.setProperty("report_location", enterprise.getQuadrant().getName(), false);
 		view.setProperty("report_max_impulse", "%" + Math.floor(enterprise.getImpulse().percentageHealth()),
 				enterprise.getImpulse().percentageHealth() < 100);
@@ -42,8 +42,7 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 		view.setOverlay("warp", CSS.damageClass(enterprise.getWarpDrive()));
 	}
 
-	public StatusReportPresenter(Application application) {
-		super(application);
+	public StatusReportPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED, this);
 	}
 

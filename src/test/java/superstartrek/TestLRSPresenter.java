@@ -21,7 +21,7 @@ public class TestLRSPresenter extends BaseTest{
 	
 	@Before
 	public void setup() {
-		presenter = new LRSPresenter(application);
+		presenter = new LRSPresenter();
 		view = mock(ILRSScreen.class);
 		presenter.setView(view);
 	}

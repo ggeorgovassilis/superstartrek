@@ -31,7 +31,7 @@ public class TestSRSPresenter {
 	public void setup() {
 		app = new Application();
 		app.starMap = new StarMap();
-		presenter = new SRSPresenter(app);
+		presenter = new SRSPresenter();
 		view = mock(ISRSView.class);
 		presenter.setView(view);
 	}

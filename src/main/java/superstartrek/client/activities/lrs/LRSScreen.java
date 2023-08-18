@@ -57,8 +57,9 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	
 	@Override
 	public void updateCell(int x, int y, String text, String css){
-		cells[x][y].setInnerText(text);
-		cells[x][y].setClassName(css);
+		Element e = cells[x][y];
+		e.setInnerText(text);
+		e.setClassName(css);
 	}
 
 	@Override

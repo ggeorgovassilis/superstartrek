@@ -34,8 +34,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		
 
 
-	public SectorContextMenuPresenter(Application application) {
-		super(application);
+	public SectorContextMenuPresenter() {
 		addHandler(Events.SECTOR_SELECTED, this);
 		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.CONTEXT_MENU_HIDDEN, this);
@@ -70,7 +69,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 		int menuWidthEm = 8;
 		int menuHeightEm = 5;
 
-		BrowserAPI browserAPI = application.browserAPI;
+		BrowserAPI browserAPI = getApplication().browserAPI;
 		int horizEmToPx = browserAPI.getMetricWidthInPx();
 		int vertEmToPx = browserAPI.getMetricHeightInPx();
 		int screen_width_em = browserAPI.getWindowWidthPx() / horizEmToPx;

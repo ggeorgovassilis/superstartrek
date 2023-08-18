@@ -13,8 +13,7 @@ import superstartrek.client.model.StarMap;
 public class MessagesPresenter extends BasePresenter<IMessagesView>
 		implements MessageHandler, PopupViewPresenter<IMessagesView>, KeyPressedEventHandler, GamePhaseHandler{
 
-	public MessagesPresenter(Application application) {
-		super(application);
+	public MessagesPresenter() {
 		addHandler(Events.GAME_STARTED, this);
 		addHandler(Events.GAME_OVER, this);
 		addHandler(Events.MESSAGE_POSTED, this);

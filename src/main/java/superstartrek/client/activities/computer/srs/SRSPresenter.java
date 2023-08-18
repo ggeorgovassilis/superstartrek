@@ -15,15 +15,14 @@ import superstartrek.client.utils.Maps;
 public class SRSPresenter extends BasePresenter<ISRSView>
 		implements GamePhaseHandler, CombatHandler, QuadrantActivationHandler{
 
-	public SRSPresenter(Application application) {
-		super(application);
+	public SRSPresenter() {
 		addHandler(Events.GAME_STARTED, this);
 		addHandler(Events.QUADRANT_ACTIVATED, this);
 		addHandler(Events.KLINGON_DESTROYED, this);
 	}
 
 	public void updateRadar() {
-		StarMap map = application.starMap;
+		StarMap map = getApplication().starMap;
 		Quadrant q0 = getActiveQuadrant();
 		for (int y = 0; y < 3; y++) {
 			int qy = q0.y + y - 1;
@@ -39,13 +38,13 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 	}
 	
 	public void updateCenterQuadrant() {
-		StarMap map = application.starMap;
+		StarMap map = getApplication().starMap;
 		Quadrant q = getActiveQuadrant();
 		Maps.renderCell(1, 1, map, q, "", view);
 	}
 
 	public void quadrantWasClicked(int dx, int dy) {
-		StarMap map = application.starMap;
+		StarMap map = getApplication().starMap;
 		Quadrant q = getActiveQuadrant();
 		int x = q.x + dx;
 		int y = q.y + dy;

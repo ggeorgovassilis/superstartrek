@@ -33,14 +33,13 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
-		Quadrant quadrant = application.getActiveQuadrant();
+		Quadrant quadrant = getApplication().getActiveQuadrant();
 		// this is an event instead of directly calling #onSectorSelected(...) because
 		// others fire this event too in order to update the view
 		fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
 	}
 
-	public QuadrantScannerPresenter(Application application, SectorContextMenuPresenter sectorMenuPresenter) {
-		super(application);
+	public QuadrantScannerPresenter(SectorContextMenuPresenter sectorMenuPresenter) {
 		this.sectorMenuPresenter = sectorMenuPresenter;
 		addHandler(SECTOR_SELECTED, this);
 		addHandler(GAME_STARTED, this);

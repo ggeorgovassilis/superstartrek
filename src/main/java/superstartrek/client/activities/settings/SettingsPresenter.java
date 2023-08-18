@@ -10,8 +10,7 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	
 	boolean updateButtonEnabled = true;
 	
-	public SettingsPresenter(Application application) {
-		super(application);
+	public SettingsPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED, this);
 		addHandler(Events.VERSION_CHECK_FAILED, this);
 		addHandler(Events.VERSION_IS_CURRENT, this);
@@ -22,24 +21,24 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	@Override
 	public void onActivityChanged(String activity) {
 		if ("settings".equals(activity)) {
-			view.selectUIScale(application.getUIScale());
-			view.selectTheme(application.getUITheme());
-			view.selectNavigationAlignment(application.getNavigationElementAlignmentPreference());
+			view.selectUIScale(getApplication().getUIScale());
+			view.selectTheme(getApplication().getUITheme());
+			view.selectNavigationAlignment(getApplication().getNavigationElementAlignmentPreference());
 			view.show();
 		} else
 			view.hide();
 	}
 
 	public void onUIScaleSettingClicked(String scale) {
-		application.setUIScale(scale);
+		getApplication().setUIScale(scale);
 	}
 	
 	public void onUIThemeSettingClicked(String theme) {
-		application.setUITheme(theme);
+		getApplication().setUITheme(theme);
 	}
 	
 	public void onNavigationAlignmentChanged(String alignment) {
-		application.setNavigationElementAlignmentPreference(alignment);
+		getApplication().setNavigationElementAlignmentPreference(alignment);
 	}
 	
 	void setUpdateCheckButtonEnabled(boolean v) {
@@ -52,7 +51,7 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 		if (!updateButtonEnabled)
 			return;
 		setUpdateCheckButtonEnabled(false);
-		application.pwa.checkForNewVersion();
+		getApplication().pwa.checkForNewVersion();
 	}
 
 	@Override
@@ -64,13 +63,13 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	@Override
 	public void checkFailed() {
 		setUpdateCheckButtonEnabled(true);
-		application.message("Update check failed","error");
+		getApplication().message("Update check failed","error");
 	}
 	
 	@Override
 	public void versionIsCurrent(String currentVersion) {
 		setUpdateCheckButtonEnabled(true);
-		application.message("No updates found. Current build is "+currentVersion,"info");
+		getApplication().message("No updates found. Current build is "+currentVersion,"info");
 	}
 	
 	@Override

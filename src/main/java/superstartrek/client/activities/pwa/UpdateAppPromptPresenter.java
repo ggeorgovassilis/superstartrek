@@ -7,8 +7,7 @@ import superstartrek.client.bus.Events;
 
 public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView> implements PopupViewPresenter<UpdateAppPromptView>, ApplicationLifecycleHandler{
 
-	public UpdateAppPromptPresenter(Application application) {
-		super(application);
+	public UpdateAppPromptPresenter() {
 		addHandler(Events.NEW_VERSION_AVAILABLE, this);
 	}
 
@@ -19,7 +18,7 @@ public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView>
 
 	public void acceptUpdateButtonClicked() {
 		view.hide();
-		application.pwa.clearCache(() ->application.reload());
+		getApplication().pwa.clearCache(() ->getApplication().reload());
 	}
 
 	@Override

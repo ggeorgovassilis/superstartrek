@@ -17,7 +17,7 @@ public class TestAppInstallPrompt extends BaseTest{
 	
 	@Before
 	public void setup() {
-		presenter = new AppInstallPromptPresenter(application);
+		presenter = new AppInstallPromptPresenter();
 		view = mock(IAppInstallPromptView.class);
 		application.browserAPI = mock(BrowserAPI.class);
 		presenter.setView(view);

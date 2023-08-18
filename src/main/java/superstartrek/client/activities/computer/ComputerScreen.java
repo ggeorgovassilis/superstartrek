@@ -47,14 +47,13 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		addStyleName("computer-screen");
 		getElement().setInnerHTML(templates.computerScreen().getText());
 
-		SectorContextMenuPresenter sectorMenuPresenter = new SectorContextMenuPresenter(presenter.getApplication());
+		SectorContextMenuPresenter sectorMenuPresenter = new SectorContextMenuPresenter();
 		sectorMenuPresenter.setView(new SectorContextMenuView(sectorMenuPresenter));
 
-		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(presenter.getApplication(),
-				sectorMenuPresenter);
+		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(sectorMenuPresenter);
 		new QuadrantScannerView(quadrantScannerPresenter).replaceElementWithMyself("quadrantscancontainer");
 
-		SRSPresenter srsPresenter = new SRSPresenter(presenter.getApplication());
+		SRSPresenter srsPresenter = new SRSPresenter();
 		SRSView srsView = new SRSView(srsPresenter);
 		srsView.replaceElementWithMyself("shortrangescan");
 		eStatusIconImpulse = DOM.getElementById("short-status-impulse");

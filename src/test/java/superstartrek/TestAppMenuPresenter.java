@@ -21,7 +21,7 @@ public class TestAppMenuPresenter extends BaseTest {
 	@Before
 	public void setup() {
 		view = mock(IAppMenuView.class);
-		presenter = new AppMenuPresenter(application);
+		presenter = new AppMenuPresenter();
 		presenter.setView(view);
 	}
 

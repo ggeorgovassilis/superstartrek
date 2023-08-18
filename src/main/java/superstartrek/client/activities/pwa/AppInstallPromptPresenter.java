@@ -8,8 +8,7 @@ import superstartrek.client.utils.Strings;
 
 public class AppInstallPromptPresenter extends BasePresenter<IAppInstallPromptView> implements ApplicationLifecycleHandler, PopupViewPresenter<IAppInstallPromptView>{
 
-	public AppInstallPromptPresenter(Application application) {
-		super(application);
+	public AppInstallPromptPresenter() {
 		addHandler(Events.SHOW_APP_INSTALL_PROMPT, this);
 	}
 	
@@ -41,7 +40,7 @@ public class AppInstallPromptPresenter extends BasePresenter<IAppInstallPromptVi
 	
 	public void userClickedInstallButton(){
 		view.hide();
-		application.pwa.installApplication();
+		getApplication().pwa.installApplication();
 	}
 
 }

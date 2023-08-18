@@ -104,18 +104,18 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		// garbage-collected, so we don't need to keep references to them
 		setUIScale(getUIScale());
 		setUITheme(getUITheme());
-		new LoadingScreen(new LoadingPresenter(this));
-		new IntroView(new IntroPresenter(this));
-		new ManualScreen(new ManualPresenter(this));
+		new LoadingScreen(new LoadingPresenter());
+		new IntroView(new IntroPresenter());
+		new ManualScreen(new ManualPresenter());
 		new ComputerScreen(new ComputerPresenter(this, scoreKeeper));
-		new MessagesView(new MessagesPresenter(this));
-		new LRSScreen(new LRSPresenter(this));
-		new StatusReportView(new StatusReportPresenter(this));
-		new UpdateAppPromptView(new UpdateAppPromptPresenter(this));
-		new AppMenuView(new AppMenuPresenter(this));
-		new AppInstallPromptView(new AppInstallPromptPresenter(this));
-		new SettingsScreen(new SettingsPresenter(this));
-		new CreditsScreen(new CreditsPresenter(this));
+		new MessagesView(new MessagesPresenter());
+		new LRSScreen(new LRSPresenter());
+		new StatusReportView(new StatusReportPresenter());
+		new UpdateAppPromptView(new UpdateAppPromptPresenter());
+		new AppMenuView(new AppMenuPresenter());
+		new AppInstallPromptView(new AppInstallPromptPresenter());
+		new SettingsScreen(new SettingsPresenter());
+		new CreditsScreen(new CreditsPresenter());
 	}
 
 	public void message(String formattedMessage) {

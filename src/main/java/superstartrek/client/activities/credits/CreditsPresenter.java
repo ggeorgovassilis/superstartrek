@@ -11,8 +11,7 @@ import superstartrek.client.control.GamePhaseHandler;
 public class CreditsPresenter extends BasePresenter<CreditsScreen>
 		implements ApplicationLifecycleHandler, GamePhaseHandler, ActivityChangedHandler {
 
-	public CreditsPresenter(Application application) {
-		super(application);
+	public CreditsPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED, this);
 	}
 

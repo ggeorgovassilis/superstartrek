@@ -12,14 +12,14 @@ import superstartrek.client.utils.Maps;
 
 public class LRSPresenter extends BasePresenter<ILRSScreen> implements ActivityChangedHandler {
 
-	public LRSPresenter(Application application) {
-		super(application);
+	public LRSPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED, this);
 	}
 
 	public void quadrantWasClicked(int x, int y) {
-		Quadrant qTo = application.starMap.getQuadrant(x, y);
-		Enterprise enterprise = application.starMap.enterprise;
+		StarMap starMap = getApplication().starMap;
+		Quadrant qTo = starMap.getQuadrant(x, y);
+		Enterprise enterprise = starMap.enterprise;
 		if (enterprise.getQuadrant() == qTo)
 			return;
 		// there's a significant benefit in hiding LRS before going through the CPU
@@ -27,11 +27,11 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ActivityC
 		// warping event cascade
 		// invoked only before successful warp
 		if (enterprise.warpTo(qTo, () -> view.hide()))
-			application.browserAPI.postHistoryChange("computer");
+			getApplication().browserAPI.postHistoryChange("computer");
 	}
 
 	protected void updateQuadrant(int x, int y, boolean isReachable) {
-		StarMap map = application.starMap;
+		StarMap map = getApplication().starMap;
 		Quadrant q = map.getQuadrant(x, y);
 		Maps.renderCell(x, y, map, q, isReachable ? "navigation-target " : "", view);
 	}
@@ -43,7 +43,7 @@ public class LRSPresenter extends BasePresenter<ILRSScreen> implements ActivityC
 	}
 
 	public void updateLrsView() {
-		StarMap starMap = application.starMap;
+		StarMap starMap = getApplication().starMap;
 		Enterprise enterprise = starMap.enterprise;
 		Quadrant qEnterprise = enterprise.getQuadrant();
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++)

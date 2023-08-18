@@ -7,16 +7,6 @@ import superstartrek.client.utils.BaseMixin;
 public abstract class BasePresenter<V extends View> implements Presenter<V>, BaseMixin{
 
 	protected V view;
-	protected final Application application;
-	
-	protected BasePresenter(Application application) {
-		this.application = application;
-	}
-	
-	@Override
-	public Application getApplication() {
-		return application;
-	}
 	
 	@Override
 	public void setView(V view) {
@@ -25,7 +15,12 @@ public abstract class BasePresenter<V extends View> implements Presenter<V>, Bas
 	
 	@SuppressWarnings("unchecked")
 	protected void addViewToRoot() {
-		application.browserAPI.addToPage(view);
+		getApplication().browserAPI.addToPage(view);
+	}
+	
+	@Override
+	public Application getApplication() {
+		return BaseMixin.super.getApplication();
 	}
 	
 }

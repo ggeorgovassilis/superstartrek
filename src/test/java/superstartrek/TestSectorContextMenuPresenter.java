@@ -20,7 +20,7 @@ public class TestSectorContextMenuPresenter extends BaseTest{
 	
 	@Before
 	public void setup() {
-		presenter = new SectorContextMenuPresenter(application);
+		presenter = new SectorContextMenuPresenter();
 		view = mock(ISectorContextMenuView.class);
 		presenter.setView(view);
 	}

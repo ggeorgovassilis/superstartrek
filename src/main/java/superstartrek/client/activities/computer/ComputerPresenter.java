@@ -34,7 +34,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	StarMap starMap;
 
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
-		super(application);
+		super();
  		this.scoreKeeper = scoreKeeper;
  		addHandler(Events.ACTIVITY_CHANGED, this);
 		addHandler(Events.PLAYER_TURN_STARTED, this);
@@ -134,7 +134,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	}
 
 	public void onSkipButtonClicked() {
-		application.eventBus.fireEvent(Events.TURN_YIELDED, (h)->h.onTurnYielded());
+		getApplication().eventBus.fireEvent(Events.TURN_YIELDED, (h)->h.onTurnYielded());
 	}
 
 	@Override
@@ -196,7 +196,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		case 'l':
 		case 'L':
 			if (getEnterprise().getLrs().isOperational())
-				application.browserAPI.postHistoryChange("longrangescan");
+				getApplication().browserAPI.postHistoryChange("longrangescan");
 			break;
 		case 's':
 		case 'S':
@@ -205,7 +205,7 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 		case KeyCodes.KEY_BACKSPACE:
 		case 'b':
 		case 'B':
-			application.browserAPI.postHistoryChange("computer");
+			getApplication().browserAPI.postHistoryChange("computer");
 			break;
 		}
 	}

@@ -35,6 +35,8 @@ public interface BaseMixin {
 		getEvents().fireEvent(type, callback);
 	}
 
+	//TODO: all invocations I could find are addHandler(Event, this). Can the "handler" parameter
+	//be omitted?
 	default <T extends EventHandler> void addHandler(Event<T> type, T handler) {
 		getEvents().addHandler(type, handler);
 	}

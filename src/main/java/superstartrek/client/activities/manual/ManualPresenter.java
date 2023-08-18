@@ -7,8 +7,7 @@ import superstartrek.client.bus.Events;
 
 public class ManualPresenter extends BasePresenter<ManualScreen> implements ActivityChangedHandler{
 
-	public ManualPresenter(Application application) {
-		super(application);
+	public ManualPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED, this);
 	}
 
