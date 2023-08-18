@@ -1,6 +1,5 @@
 package superstartrek.client.activities.loading;
 
-import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;

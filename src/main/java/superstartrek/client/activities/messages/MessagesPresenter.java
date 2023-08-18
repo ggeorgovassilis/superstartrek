@@ -2,7 +2,6 @@ package superstartrek.client.activities.messages;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 
-import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.bus.Events;

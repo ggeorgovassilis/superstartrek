@@ -1,7 +1,6 @@
 
 package superstartrek.client.activities.credits;
 
-import superstartrek.client.Application;
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;

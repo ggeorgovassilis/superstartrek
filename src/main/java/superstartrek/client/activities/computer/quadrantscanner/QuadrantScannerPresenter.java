@@ -2,7 +2,6 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import java.util.List;
 
-import superstartrek.client.Application;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.combat.CombatHandler;
@@ -62,7 +61,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	void updateSector(Thing thing) {
-		if (Thing.isVisible(thing)) {
+		if (thing.isVisible()) {
 			String content = thing.getSymbol();
 			String css = thing.getCss();
 			if (Vessel.is(thing)) {

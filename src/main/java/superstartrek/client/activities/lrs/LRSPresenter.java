@@ -1,6 +1,5 @@
 package superstartrek.client.activities.lrs;
 
-import superstartrek.client.Application;
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.bus.Events;
