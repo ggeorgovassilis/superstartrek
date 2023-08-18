@@ -27,10 +27,6 @@ public interface BaseMixin {
 		getApplication().message(message);
 	}
 
-	default <T extends EventHandler> void postponeEvent(Event<T> type, EventCallback<T> callback) {
-		getEvents().postponeEvent(type, callback);
-	}
-
 	default <T extends EventHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
 		getEvents().fireEvent(type, callback);
 	}
