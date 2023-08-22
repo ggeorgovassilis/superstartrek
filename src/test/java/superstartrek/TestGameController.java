@@ -5,16 +5,16 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.Klingon.ShipClass;
-import superstartrek.client.bus.Events;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.Weapon;
-import superstartrek.client.model.Star.StarClass;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Star;
+import superstartrek.client.space.Star.StarClass;
+import superstartrek.client.vessels.Klingon;
+import superstartrek.client.vessels.Weapon;
+import superstartrek.client.vessels.Klingon.ShipClass;
 
 public class TestGameController extends BaseTest {
 

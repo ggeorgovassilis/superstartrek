@@ -1,4 +1,4 @@
-package superstartrek.client.bus;
+package superstartrek.client.eventbus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

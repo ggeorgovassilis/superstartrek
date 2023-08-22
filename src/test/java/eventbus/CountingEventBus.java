@@ -3,10 +3,10 @@ package eventbus;
 import java.util.HashMap;
 import java.util.Map;
 
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.bus.EventBus;
-import superstartrek.client.bus.EventCallback;
-import superstartrek.client.bus.Event;
+import superstartrek.client.eventbus.Event;
+import superstartrek.client.eventbus.EventBus;
+import superstartrek.client.eventbus.EventCallback;
+import superstartrek.client.eventbus.EventHandler;
 
 public class CountingEventBus extends EventBus{
 

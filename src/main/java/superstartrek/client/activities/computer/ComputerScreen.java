@@ -7,7 +7,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.activities.CSS;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerView;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
@@ -15,6 +14,7 @@ import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
 import superstartrek.client.screentemplates.ScreenTemplates;
+import superstartrek.client.utils.CSS;
 
 public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
 

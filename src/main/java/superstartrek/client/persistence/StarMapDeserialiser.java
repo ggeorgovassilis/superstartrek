@@ -7,17 +7,17 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Setting;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.StarBase;
-import superstartrek.client.model.StarMap;
-import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
-import superstartrek.client.model.Enterprise.ShieldDirection;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Setting;
+import superstartrek.client.space.Star;
+import superstartrek.client.space.StarBase;
+import superstartrek.client.space.StarMap;
+import superstartrek.client.space.Thing;
+import superstartrek.client.vessels.Enterprise;
+import superstartrek.client.vessels.Klingon;
+import superstartrek.client.vessels.Vessel;
+import superstartrek.client.vessels.Enterprise.ShieldDirection;
 
 public class StarMapDeserialiser {
 	

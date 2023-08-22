@@ -12,16 +12,16 @@ import org.junit.Test;
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.quadrantscanner.IQuadrantScannerView;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
-import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
-import superstartrek.client.bus.Events;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.StarBase;
-import superstartrek.client.model.Star.StarClass;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Star;
+import superstartrek.client.space.StarBase;
+import superstartrek.client.space.Star.StarClass;
+import superstartrek.client.vessels.Klingon;
+import superstartrek.client.vessels.Klingon.ShipClass;
 
 public class TestQuadrantScannerPresenter extends BaseTest{
 

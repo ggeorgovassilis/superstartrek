@@ -12,8 +12,8 @@ import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.model.Constants;
 import superstartrek.client.screentemplates.ScreenTemplates;
+import superstartrek.client.space.Constants;
 import superstartrek.client.utils.Strings;
 
 public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> implements IQuadrantScannerView {

@@ -1,7 +1,7 @@
 package superstartrek.client.activities.navigation;
 
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.model.Enterprise;
+import superstartrek.client.eventbus.EventHandler;
+import superstartrek.client.vessels.Enterprise;
 
 public interface EnterpriseRepairedHandler extends EventHandler{
 

@@ -1,6 +1,6 @@
-package superstartrek.client.activities.klingons;
+package superstartrek.client.vessels;
 
-import superstartrek.client.bus.EventHandler;
+import superstartrek.client.eventbus.EventHandler;
 
 public interface KlingonCloakingHandler extends EventHandler{
 

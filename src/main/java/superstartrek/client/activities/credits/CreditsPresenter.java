@@ -4,8 +4,8 @@ package superstartrek.client.activities.credits;
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
-import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
+import superstartrek.client.eventbus.Events;
 
 public class CreditsPresenter extends BasePresenter<CreditsScreen>
 		implements ApplicationLifecycleHandler, GamePhaseHandler, ActivityChangedHandler {

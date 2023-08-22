@@ -7,15 +7,15 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.KeyCodes;
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.combat.CombatHandler;
-import superstartrek.client.activities.combat.CombatHandler.partTarget;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
 import superstartrek.client.utils.BrowserAPI;
-import superstartrek.client.bus.Events;
+import superstartrek.client.vessels.CombatHandler;
+import superstartrek.client.vessels.Enterprise;
+import superstartrek.client.vessels.CombatHandler.partTarget;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
 
 public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView> implements SectorSelectedHandler,
 		GamePhaseHandler, ActivityChangedHandler, ContextMenuHideHandler, KeyPressedEventHandler {

@@ -1,11 +1,12 @@
-package superstartrek.client.model;
+package superstartrek.client.space;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.klingons.Klingon;
+import superstartrek.client.vessels.Enterprise;
+import superstartrek.client.vessels.Klingon;
 
 public class Quadrant{
 

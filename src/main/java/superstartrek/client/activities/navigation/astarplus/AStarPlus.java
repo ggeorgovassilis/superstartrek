@@ -3,10 +3,10 @@ package superstartrek.client.activities.navigation.astarplus;
 import java.util.ArrayList;
 import java.util.List;
 
-import superstartrek.client.model.Constants;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Thing;
+import superstartrek.client.space.Constants;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Thing;
 
 /**
  * Short explanation of the implementation: normal a* is based on a graph which

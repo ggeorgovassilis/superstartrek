@@ -1,7 +1,7 @@
 package superstartrek.client.control;
 
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.eventbus.EventHandler;
+import superstartrek.client.space.StarMap;
 
 public interface GamePhaseHandler extends EventHandler {
 	

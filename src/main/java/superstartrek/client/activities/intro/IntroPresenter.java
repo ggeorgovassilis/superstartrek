@@ -1,13 +1,13 @@
 package superstartrek.client.activities.intro;
 
+import static superstartrek.client.eventbus.Events.*;
+
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
-import superstartrek.client.bus.Events;
-
-import static superstartrek.client.bus.Events.*;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.StarMap;
 
 public class IntroPresenter extends BasePresenter<IntroView>
 		implements ApplicationLifecycleHandler, GamePhaseHandler, ActivityChangedHandler {

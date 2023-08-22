@@ -1,9 +1,10 @@
-package superstartrek.client.model;
+package superstartrek.client.space;
 
 import java.util.ArrayList;
 import java.util.List;
 import superstartrek.client.Application;
 import superstartrek.client.utils.BrowserAPI;
+import superstartrek.client.vessels.Enterprise;
 
 public class StarMap {
 

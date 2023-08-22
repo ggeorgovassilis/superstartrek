@@ -10,8 +10,8 @@ import org.mockito.stubbing.Answer;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import superstartrek.client.activities.sector.contextmenu.ISectorContextMenuView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
 
 public class TestSectorContextMenuPresenter extends BaseTest{
 

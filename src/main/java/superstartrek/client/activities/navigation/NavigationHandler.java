@@ -1,11 +1,11 @@
 package superstartrek.client.activities.navigation;
 
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarBase;
-import superstartrek.client.model.Thing;
+import superstartrek.client.eventbus.EventHandler;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.StarBase;
+import superstartrek.client.space.Thing;
+import superstartrek.client.vessels.Enterprise;
 
 public interface NavigationHandler extends EventHandler {
 

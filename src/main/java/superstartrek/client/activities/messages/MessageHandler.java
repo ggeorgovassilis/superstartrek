@@ -1,6 +1,6 @@
 package superstartrek.client.activities.messages;
 
-import superstartrek.client.bus.EventHandler;
+import superstartrek.client.eventbus.EventHandler;
 
 public interface MessageHandler extends EventHandler{
 

@@ -2,7 +2,7 @@ package superstartrek.client.activities.manual;
 
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.bus.Events;
+import superstartrek.client.eventbus.Events;
 
 public class ManualPresenter extends BasePresenter<ManualScreen> implements ActivityChangedHandler{
 

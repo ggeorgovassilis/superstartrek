@@ -1,13 +1,13 @@
 package superstartrek.client.utils;
 
 import superstartrek.client.Application;
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.bus.Event;
-import superstartrek.client.bus.EventBus;
-import superstartrek.client.bus.EventCallback;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.eventbus.Event;
+import superstartrek.client.eventbus.EventBus;
+import superstartrek.client.eventbus.EventCallback;
+import superstartrek.client.eventbus.EventHandler;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.StarMap;
+import superstartrek.client.vessels.Enterprise;
 
 public interface BaseMixin {
 	

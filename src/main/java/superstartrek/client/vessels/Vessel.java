@@ -1,4 +1,7 @@
-package superstartrek.client.model;
+package superstartrek.client.vessels;
+
+import superstartrek.client.space.Setting;
+import superstartrek.client.space.Thing;
 
 public abstract class Vessel extends Thing{
 

@@ -3,7 +3,7 @@ package superstartrek.client.activities.settings;
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
-import superstartrek.client.bus.Events;
+import superstartrek.client.eventbus.Events;
 
 public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements ApplicationLifecycleHandler, ActivityChangedHandler{
 	

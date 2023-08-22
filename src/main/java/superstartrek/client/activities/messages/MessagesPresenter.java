@@ -4,10 +4,10 @@ import com.google.gwt.event.dom.client.KeyCodes;
 
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
-import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.StarMap;
 
 public class MessagesPresenter extends BasePresenter<IMessagesView>
 		implements MessageHandler, PopupViewPresenter<IMessagesView>, KeyPressedEventHandler, GamePhaseHandler{

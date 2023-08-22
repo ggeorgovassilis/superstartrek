@@ -1,6 +1,6 @@
 package superstartrek.client.activities.sector.contextmenu;
 
-import superstartrek.client.bus.EventHandler;
+import superstartrek.client.eventbus.EventHandler;
 
 public interface ContextMenuHideHandler extends EventHandler{
 	default void onMenuHidden(){};

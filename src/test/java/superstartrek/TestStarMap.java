@@ -5,10 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.Star.StarClass;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Star;
+import superstartrek.client.space.Star.StarClass;
+
 import static org.mockito.Mockito.*;
 public class TestStarMap extends BaseTest{
 

@@ -1,6 +1,6 @@
 package superstartrek.client.control;
 
-import superstartrek.client.bus.EventHandler;
+import superstartrek.client.eventbus.EventHandler;
 
 public interface KeyPressedEventHandler extends EventHandler{
 

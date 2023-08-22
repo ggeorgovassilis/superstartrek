@@ -2,7 +2,7 @@ package superstartrek.client.activities.pwa;
 
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
-import superstartrek.client.bus.Events;
+import superstartrek.client.eventbus.Events;
 
 public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView> implements PopupViewPresenter<UpdateAppPromptView>, ApplicationLifecycleHandler{
 

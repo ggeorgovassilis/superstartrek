@@ -3,10 +3,11 @@ package superstartrek;
 import org.junit.Before;
 import org.junit.Test;
 
-import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.model.Constants;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Setup;
+import superstartrek.client.space.Constants;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Setup;
+import superstartrek.client.vessels.Klingon;
+
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

@@ -1,15 +1,15 @@
 package superstartrek.client.activities.computer.srs;
 
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.combat.CombatHandler;
-import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
-import superstartrek.client.model.Constants;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
-import superstartrek.client.model.Vessel;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.Constants;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.StarMap;
 import superstartrek.client.utils.Maps;
+import superstartrek.client.vessels.CombatHandler;
+import superstartrek.client.vessels.Vessel;
 
 public class SRSPresenter extends BasePresenter<ISRSView>
 		implements GamePhaseHandler, CombatHandler, QuadrantActivationHandler{

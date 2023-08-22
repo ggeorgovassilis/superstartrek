@@ -2,7 +2,7 @@ package eventbus;
 
 import java.util.List;
 
-import superstartrek.client.bus.EventHandler;
+import superstartrek.client.eventbus.EventHandler;
 
 public interface Handler1 extends EventHandler{
 

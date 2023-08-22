@@ -2,8 +2,8 @@ package superstartrek.client.activities.navigation;
 
 import java.util.List;
 import superstartrek.client.activities.navigation.astarplus.AStarPlus;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
 
 public class PathFinderImpl implements PathFinder{
 	

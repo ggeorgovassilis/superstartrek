@@ -1,23 +1,20 @@
-package superstartrek.client.activities.klingons;
+package superstartrek.client.vessels;
+
+import static superstartrek.client.eventbus.Events.*;
 
 import java.util.List;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
-import static superstartrek.client.bus.Events.*;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Setting;
-import superstartrek.client.model.StarMap;
-import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
-import superstartrek.client.model.Weapon;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Setting;
+import superstartrek.client.space.StarMap;
+import superstartrek.client.space.Thing;
 import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 

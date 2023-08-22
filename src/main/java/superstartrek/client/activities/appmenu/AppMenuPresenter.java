@@ -3,8 +3,8 @@ package superstartrek.client.activities.appmenu;
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
-import superstartrek.client.bus.Events;
-import superstartrek.client.model.Setting;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.Setting;
 
 public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 		implements PopupViewPresenter<IAppMenuView>, ActivityChangedHandler{

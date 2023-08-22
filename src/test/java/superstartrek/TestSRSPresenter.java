@@ -11,13 +11,13 @@ import com.google.gwt.event.shared.testing.CountingEventBus;
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.srs.ISRSView;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.StarBase;
-import superstartrek.client.model.StarMap;
-import superstartrek.client.model.Star.StarClass;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Star;
+import superstartrek.client.space.StarBase;
+import superstartrek.client.space.StarMap;
+import superstartrek.client.space.Star.StarClass;
+import superstartrek.client.vessels.Enterprise;
 
 public class TestSRSPresenter {
 

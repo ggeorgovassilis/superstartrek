@@ -8,8 +8,8 @@ import static org.mockito.Mockito.*;
 import superstartrek.client.activities.appmenu.AppMenuPresenter;
 import superstartrek.client.activities.appmenu.IAppMenuView;
 import superstartrek.client.activities.pwa.Callback;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Setting;
+import superstartrek.client.space.Setting;
+import superstartrek.client.vessels.Enterprise;
 
 import static org.junit.Assert.*;
 

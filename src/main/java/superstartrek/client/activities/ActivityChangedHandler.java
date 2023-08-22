@@ -1,6 +1,6 @@
 package superstartrek.client.activities;
 
-import superstartrek.client.bus.EventHandler;
+import superstartrek.client.eventbus.EventHandler;
 
 public interface ActivityChangedHandler extends EventHandler{
 

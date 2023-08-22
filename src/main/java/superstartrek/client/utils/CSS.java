@@ -1,9 +1,9 @@
-package superstartrek.client.activities;
+package superstartrek.client.utils;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 
-import superstartrek.client.model.Setting;
+import superstartrek.client.space.Setting;
 
 public class CSS {
 

@@ -2,9 +2,9 @@ package superstartrek.client.activities.report;
 
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.CSS;
-import superstartrek.client.bus.Events;
-import superstartrek.client.model.Enterprise;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.utils.CSS;
+import superstartrek.client.vessels.Enterprise;
 
 public class StatusReportPresenter extends BasePresenter<StatusReportView> implements ActivityChangedHandler {
 

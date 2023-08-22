@@ -12,8 +12,8 @@ import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.activities.CSS;
 import superstartrek.client.screentemplates.ScreenTemplates;
+import superstartrek.client.utils.CSS;
 import superstartrek.client.utils.Strings;
 import superstartrek.client.utils.Timer;
 

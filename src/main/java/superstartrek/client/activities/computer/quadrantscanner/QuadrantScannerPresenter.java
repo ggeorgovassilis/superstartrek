@@ -1,27 +1,28 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import static superstartrek.client.eventbus.Events.*;
+
 import java.util.List;
 
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.CSS;
-import superstartrek.client.activities.combat.CombatHandler;
-import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.KlingonCloakingHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
-import static superstartrek.client.bus.Events.*;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
-import superstartrek.client.model.Constants;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
-import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
-import superstartrek.client.model.Weapon;
+import superstartrek.client.space.Constants;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.StarMap;
+import superstartrek.client.space.Thing;
+import superstartrek.client.utils.CSS;
+import superstartrek.client.vessels.CombatHandler;
+import superstartrek.client.vessels.Enterprise;
+import superstartrek.client.vessels.Klingon;
+import superstartrek.client.vessels.KlingonCloakingHandler;
+import superstartrek.client.vessels.Vessel;
+import superstartrek.client.vessels.Weapon;
 
 public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,

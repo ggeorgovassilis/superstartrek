@@ -1,11 +1,8 @@
-package superstartrek.client.activities.combat;
+package superstartrek.client.vessels;
 
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
-import superstartrek.client.model.Weapon;
+import superstartrek.client.eventbus.EventHandler;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Thing;
 
 public interface CombatHandler extends EventHandler {
 

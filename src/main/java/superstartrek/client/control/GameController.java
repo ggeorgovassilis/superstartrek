@@ -1,25 +1,25 @@
 package superstartrek.client.control;
 
+import static superstartrek.client.eventbus.Events.*;
+
 import superstartrek.client.Application;
-import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
-import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
-import superstartrek.client.bus.EventBus;
-import static superstartrek.client.bus.Events.*;
-
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.StarBase;
-import superstartrek.client.model.StarMap;
-import superstartrek.client.model.Thing;
-import superstartrek.client.model.Vessel;
-import superstartrek.client.model.Weapon;
+import superstartrek.client.eventbus.EventBus;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Star;
+import superstartrek.client.space.StarBase;
+import superstartrek.client.space.StarMap;
+import superstartrek.client.space.Thing;
 import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.Timer;
+import superstartrek.client.vessels.CombatHandler;
+import superstartrek.client.vessels.Enterprise;
+import superstartrek.client.vessels.Klingon;
+import superstartrek.client.vessels.Vessel;
+import superstartrek.client.vessels.Weapon;
 
 public class GameController implements GamePhaseHandler, CombatHandler, NavigationHandler,
 		MessageHandler, EnergyConsumptionHandler, BaseMixin{

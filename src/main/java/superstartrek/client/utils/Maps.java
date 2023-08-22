@@ -1,8 +1,8 @@
 package superstartrek.client.utils;
 
 import superstartrek.client.activities.computer.srs.MapCellRenderer;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.StarMap;
 
 public class Maps {
 

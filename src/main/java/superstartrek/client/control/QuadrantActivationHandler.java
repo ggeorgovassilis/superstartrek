@@ -1,7 +1,7 @@
 package superstartrek.client.control;
 
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.model.Quadrant;
+import superstartrek.client.eventbus.EventHandler;
+import superstartrek.client.space.Quadrant;
 
 public interface QuadrantActivationHandler extends EventHandler{
 

@@ -1,9 +1,9 @@
 package superstartrek.client.activities.loading;
 
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.bus.Events;
 import superstartrek.client.control.GamePhaseHandler;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.StarMap;
 
 public class LoadingPresenter extends BasePresenter<LoadingScreen> implements GamePhaseHandler{
 

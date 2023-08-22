@@ -20,8 +20,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import superstartrek.client.activities.Presenter;
 import superstartrek.client.activities.View;
 import superstartrek.client.activities.pwa.Callback;
-import superstartrek.client.bus.EventBus;
-import superstartrek.client.bus.Events;
+import superstartrek.client.eventbus.EventBus;
+import superstartrek.client.eventbus.Events;
 
 public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHandler {
 

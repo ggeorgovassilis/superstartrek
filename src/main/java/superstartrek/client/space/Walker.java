@@ -1,4 +1,4 @@
-package superstartrek.client.model;
+package superstartrek.client.space;
 
 public interface Walker {
 

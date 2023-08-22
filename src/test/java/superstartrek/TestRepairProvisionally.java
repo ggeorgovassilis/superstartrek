@@ -3,8 +3,8 @@ package superstartrek;
 import org.junit.Before;
 import org.junit.Test;
 
-import superstartrek.client.bus.Events;
-import superstartrek.client.model.Enterprise;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.vessels.Enterprise;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;

@@ -1,4 +1,4 @@
-package superstartrek.client.bus;
+package superstartrek.client.eventbus;
 
 public final class Event<T extends EventHandler> {
 

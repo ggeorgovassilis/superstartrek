@@ -2,9 +2,10 @@ package superstartrek.client.activities.pwa;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
-import superstartrek.client.activities.CSS;
+
 import superstartrek.client.activities.PopupView;
 import superstartrek.client.screentemplates.ScreenTemplates;
+import superstartrek.client.utils.CSS;
 
 public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
 

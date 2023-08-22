@@ -2,12 +2,12 @@ package superstartrek.client.activities.lrs;
 
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.bus.Events;
-import superstartrek.client.model.Constants;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.Constants;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.StarMap;
 import superstartrek.client.utils.Maps;
+import superstartrek.client.vessels.Enterprise;
 
 public class LRSPresenter extends BasePresenter<ILRSScreen> implements ActivityChangedHandler {
 

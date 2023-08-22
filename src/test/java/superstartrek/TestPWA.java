@@ -16,7 +16,7 @@ import superstartrek.client.activities.pwa.http.Request;
 import superstartrek.client.activities.pwa.http.RequestFactory;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.promise.Promise;
-import superstartrek.client.bus.Events;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.utils.BrowserAPI;
 
 import static org.mockito.Mockito.*;

@@ -1,6 +1,6 @@
 package eventbus;
 
-import superstartrek.client.bus.Event;
+import superstartrek.client.eventbus.Event;
 
 public class Events {
 

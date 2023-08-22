@@ -11,7 +11,7 @@ import com.google.gwt.http.client.Response;
 import superstartrek.client.Application;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
-import superstartrek.client.bus.Events;
+import superstartrek.client.eventbus.Events;
 
 public class PWA {
 

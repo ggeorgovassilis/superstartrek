@@ -1,7 +1,7 @@
 package superstartrek.client.activities.computer;
 
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.model.Thing;
+import superstartrek.client.eventbus.EventHandler;
+import superstartrek.client.space.Thing;
 
 public interface EnergyConsumptionHandler extends EventHandler{
 

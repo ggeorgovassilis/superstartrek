@@ -1,4 +1,4 @@
-package superstartrek.client.model;
+package superstartrek.client.vessels;
 
 public enum Weapon {
 

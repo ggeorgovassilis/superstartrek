@@ -6,8 +6,8 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.Event;
 
-import superstartrek.client.model.Constants;
 import superstartrek.client.screentemplates.ScreenTemplates;
+import superstartrek.client.space.Constants;
 import superstartrek.client.utils.Timer;
 
 @SuppressWarnings("rawtypes")

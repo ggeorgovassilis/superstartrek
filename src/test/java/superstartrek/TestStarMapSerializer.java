@@ -11,17 +11,17 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 import superstartrek.client.activities.Presenter;
 import superstartrek.client.activities.View;
-import superstartrek.client.activities.klingons.Klingon;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.control.GameController;
 import superstartrek.client.control.ScoreKeeper;
-import superstartrek.client.model.Constants;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Setting;
-import superstartrek.client.model.Setup;
-import superstartrek.client.model.Thing;
 import superstartrek.client.persistence.StarMapSerialiser;
+import superstartrek.client.space.Constants;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Setting;
+import superstartrek.client.space.Setup;
+import superstartrek.client.space.Thing;
 import superstartrek.client.utils.BrowserAPI;
+import superstartrek.client.vessels.Klingon;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

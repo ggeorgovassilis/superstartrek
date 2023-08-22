@@ -1,8 +1,8 @@
 package superstartrek.client.activities.sector.contextmenu;
 
-import superstartrek.client.bus.EventHandler;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Quadrant;
+import superstartrek.client.eventbus.EventHandler;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Quadrant;
 
 public interface SectorSelectedHandler extends EventHandler{
 

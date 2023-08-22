@@ -3,8 +3,8 @@ package superstartrek.client.persistence;
 import com.google.gwt.core.client.GWT;
 
 import superstartrek.client.Application;
-import superstartrek.client.bus.Events;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.space.StarMap;
 import superstartrek.client.utils.Strings;
 
 public class GameSaver {

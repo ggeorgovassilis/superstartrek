@@ -1,10 +1,8 @@
-package superstartrek.client.bus;
+package superstartrek.client.eventbus;
 
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.ScreenResizeHandler;
-import superstartrek.client.activities.combat.CombatHandler;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
-import superstartrek.client.activities.klingons.KlingonCloakingHandler;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
@@ -14,6 +12,8 @@ import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
+import superstartrek.client.vessels.CombatHandler;
+import superstartrek.client.vessels.KlingonCloakingHandler;
 
 /* We could reduce the number of events significantly if we wanted to because the caller specifies
  * which handler method to invoke. Reducing the number of events would have no functional impact, but

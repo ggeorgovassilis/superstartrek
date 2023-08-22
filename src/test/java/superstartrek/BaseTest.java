@@ -7,10 +7,10 @@ import org.junit.Before;
 
 import eventbus.CountingEventBus;
 import superstartrek.client.Application;
-import superstartrek.client.model.Enterprise;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.StarMap;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.StarMap;
 import superstartrek.client.utils.BrowserAPI;
+import superstartrek.client.vessels.Enterprise;
 
 public abstract class BaseTest {
 

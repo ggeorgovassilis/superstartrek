@@ -6,13 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.IComputerScreen;
-import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.control.ScoreKeeper;
-import superstartrek.client.model.Location;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.Star.StarClass;
-import superstartrek.client.model.StarBase;
+import superstartrek.client.space.Location;
+import superstartrek.client.space.Star;
+import superstartrek.client.space.StarBase;
+import superstartrek.client.space.Star.StarClass;
+import superstartrek.client.vessels.Klingon;
+import superstartrek.client.vessels.Klingon.ShipClass;
 
 public class TestComputerPresenter extends BaseTest{
 

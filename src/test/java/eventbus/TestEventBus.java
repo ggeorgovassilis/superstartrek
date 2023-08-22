@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.google.gwt.event.shared.UmbrellaException;
 
-import superstartrek.client.bus.EventBus;
+import superstartrek.client.eventbus.EventBus;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

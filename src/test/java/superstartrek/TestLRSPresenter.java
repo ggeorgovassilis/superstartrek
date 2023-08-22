@@ -4,14 +4,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import superstartrek.client.Application;
-import superstartrek.client.activities.klingons.Klingon;
-import superstartrek.client.activities.klingons.Klingon.ShipClass;
 import superstartrek.client.activities.lrs.ILRSScreen;
 import superstartrek.client.activities.lrs.LRSPresenter;
-import superstartrek.client.model.Constants;
-import superstartrek.client.model.Quadrant;
-import superstartrek.client.model.Star;
-import superstartrek.client.model.Star.StarClass;
+import superstartrek.client.space.Constants;
+import superstartrek.client.space.Quadrant;
+import superstartrek.client.space.Star;
+import superstartrek.client.space.Star.StarClass;
+import superstartrek.client.vessels.Klingon;
+import superstartrek.client.vessels.Klingon.ShipClass;
+
 import static org.mockito.Mockito.*;
 
 public class TestLRSPresenter extends BaseTest{
