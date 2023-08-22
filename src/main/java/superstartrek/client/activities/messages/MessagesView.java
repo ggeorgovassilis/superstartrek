@@ -1,5 +1,6 @@
 package superstartrek.client.activities.messages;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -15,8 +16,8 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 	@Override
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
 		super.decorateWidget(templates, element);
-		eContent = DOM.getElementById("messages-content");
-		eButton = DOM.getElementById("dismiss-message-button");
+		eContent = getElementById("messages-content");
+		eButton = getElementById("dismiss-message-button");
 		element.setId("messages");
 		DOM.sinkEvents(eButton, Event.ONCLICK | Event.ONKEYDOWN | Event.ONKEYPRESS);
 		DOM.setEventListener(eButton, (Event event) -> presenter.cancelButtonClicked());
@@ -33,7 +34,7 @@ public class MessagesView extends PopupView<MessagesPresenter> implements IMessa
 
 	@Override
 	public void showMessage(String formattedMessage, String category) {
-		Element line = DOM.createElement("li");
+		Element line = Document.get().createLIElement();
 		line.setInnerHTML(formattedMessage);
 		line.setClassName(category);
 		eContent.appendChild(line);

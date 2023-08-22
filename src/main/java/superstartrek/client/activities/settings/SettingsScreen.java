@@ -31,15 +31,15 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	public SettingsScreen(SettingsPresenter p) {
 		super(p);
 		addStyleName("settings-screen");
-		eSmall = DOM.getElementById("ui-scaling-small");
-		eMedium = DOM.getElementById("ui-scaling-medium");
-		eLarge = DOM.getElementById("ui-scaling-large");
-		eXL = DOM.getElementById("ui-scaling-xl");
-		eCheckForUpdates = DOM.getElementById("cmd_check_for_updates_2");
-		eDefaultTheme = DOM.getElementById("ui-theme-default");
-		eHighContrastTheme = DOM.getElementById("ui-theme-highcontrast");
-		eNavDefault = DOM.getElementById("nav-default");
-		eNavBottom = DOM.getElementById("nav-bottom");
+		eSmall = getElementById("ui-scaling-small");
+		eMedium = getElementById("ui-scaling-medium");
+		eLarge = getElementById("ui-scaling-large");
+		eXL = getElementById("ui-scaling-xl");
+		eCheckForUpdates = getElementById("cmd_check_for_updates_2");
+		eDefaultTheme = getElementById("ui-theme-default");
+		eHighContrastTheme = getElementById("ui-theme-highcontrast");
+		eNavDefault = getElementById("nav-default");
+		eNavBottom = getElementById("nav-bottom");
 		addDomHandler((event) -> handleChange(event), ChangeEvent.getType());
 		addDomHandler((event) -> handleClick(event), ClickEvent.getType());
 		uiScales.add(eSmall);
@@ -108,7 +108,7 @@ public class SettingsScreen extends BaseScreen<SettingsPresenter> implements ISe
 	}
 
 	public void showAppVersion(String version) {
-		DOM.getElementById("app-version").setInnerText("app version " + version);
+		getElementById("app-version").setInnerText("app version " + version);
 	}
 
 	@Override

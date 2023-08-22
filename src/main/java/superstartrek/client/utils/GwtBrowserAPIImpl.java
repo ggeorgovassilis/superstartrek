@@ -42,7 +42,7 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	}
 
 	void updateMetrics() {
-		Element e = DOM.getElementById("em-metric");
+		Element e = Document.get().getElementById("em-metric");
 		emMetricOffsetHeight = e.getOffsetHeight();
 		emMetricOffsetWidth = e.getOffsetWidth();
 	}

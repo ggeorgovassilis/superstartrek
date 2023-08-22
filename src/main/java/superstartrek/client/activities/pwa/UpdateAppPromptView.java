@@ -11,7 +11,7 @@ import superstartrek.client.screentemplates.ScreenTemplates;
 public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
 
 	protected void disable(String id) {
-		Element e = DOM.getElementById(id);
+		Element e = getElementById(id);
 		CSS.setEnabled(e, false);
 	}
 

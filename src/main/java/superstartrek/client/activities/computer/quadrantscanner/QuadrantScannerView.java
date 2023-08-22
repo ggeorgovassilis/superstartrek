@@ -3,6 +3,8 @@ package superstartrek.client.activities.computer.quadrantscanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Position;
@@ -58,7 +60,7 @@ public class QuadrantScannerView extends BaseView<QuadrantScannerPresenter> impl
 		final double RELATIVE_HEIGHT = 100.0 / Constants.SECTORS_EDGE;
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
-				Element eSector = DOM.createDiv();
+				Element eSector = Document.get().createDivElement();
 				eSector.setAttribute("data-x", "" + x);
 				eSector.setAttribute("data-y", "" + y);
 				eSector.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);

@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer.srs;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -16,14 +17,15 @@ public class SRSView extends BaseView<SRSPresenter> implements ISRSView, ClickHa
 	@Override
 	protected void createWidgetImplementation() {
 		eCells = new Element[3][3];
-		Element eTable = DOM.createTable();
+		Document d = Document.get();
+		Element eTable = d.createTableElement();
 		eTable.setId("shortrangescan");
-		eTable.appendChild(DOM.createTBody());
+		eTable.appendChild(d.createTBodyElement());
 		Element e = eTable.getElementsByTagName("tbody").getItem(0);
 		for (int y = 0; y < 3; y++) {
-			Element eTR = DOM.createTR();
+			Element eTR = d.createTRElement();
 			for (int x = 0; x < 3; x++) {
-				Element eTD = DOM.createTD();
+				Element eTD = d.createTDElement();
 				eCells[x][y] = eTD;
 				eTD.setAttribute("data-dx", "" + (x - 1));
 				eTD.setAttribute("data-dy", "" + (y - 1));

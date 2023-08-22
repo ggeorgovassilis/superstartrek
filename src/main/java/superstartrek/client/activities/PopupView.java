@@ -42,7 +42,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 	}
 
 	protected void showGlassPanel() {
-		Element glassPanel = DOM.getElementById("glasspanel");
+		Element glassPanel = getElementById("glasspanel");
 		Event.setEventListener(glassPanel, (event) -> {
 			event.preventDefault();
 			event.stopPropagation();
@@ -58,7 +58,7 @@ public abstract class PopupView<P extends PopupViewPresenter> extends BaseView<P
 		//is shared with all classes which extends PopupView: if each class
 		//registered its own handler, they would all receive copies of the
 		//same event.
-		Element glassPanel = DOM.getElementById("glasspanel");
+		Element glassPanel = getElementById("glasspanel");
 		Event.setEventListener(glassPanel, null);
 		Event.sinkEvents(glassPanel, 0);
 		glassPanel.removeClassName("fadein");

@@ -1,6 +1,7 @@
 package superstartrek.client.activities;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
@@ -16,7 +17,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	protected final P presenter;
 
 	protected void createWidgetImplementation() {
-		setElement((Element) DOM.createDiv());
+		setElement(Document.get().createDivElement());
 	}
 
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
@@ -93,6 +94,10 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	@Override
 	public void onAfterScreenResize(int widthPx, int heightPx) {
 		layoutForEasyHandlingOnMobileDevices();
+	}
+	
+	protected Element getElementById(String id) {
+		return Document.get().getElementById(id);
 	}
 	
 }

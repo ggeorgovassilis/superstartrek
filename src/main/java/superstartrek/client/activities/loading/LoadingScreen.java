@@ -8,7 +8,7 @@ public class LoadingScreen extends BaseScreen<LoadingPresenter> {
 
 	@Override
 	protected void createWidgetImplementation() {
-		Element e = DOM.getElementById("screen-loading");
+		Element e = getElementById("screen-loading");
 		setElement(e);
 	}
 

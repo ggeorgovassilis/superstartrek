@@ -1,5 +1,6 @@
 package superstartrek.client.activities.computer;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -51,25 +52,25 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 		sectorMenuPresenter.setView(new SectorContextMenuView(sectorMenuPresenter));
 
 		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(sectorMenuPresenter);
-		new QuadrantScannerView(quadrantScannerPresenter).replaceElementWithMyself("quadrantscancontainer");
+		new QuadrantScannerView(quadrantScannerPresenter).replaceElementWithThis("quadrantscancontainer");
 
 		SRSPresenter srsPresenter = new SRSPresenter();
 		SRSView srsView = new SRSView(srsPresenter);
-		srsView.replaceElementWithMyself("shortrangescan");
-		eStatusIconImpulse = DOM.getElementById("short-status-impulse");
-		eStatusIconTactical = DOM.getElementById("short-status-tactical-computer");
-		eStatusIconTorpedos = DOM.getElementById("short-status-torpedo-bay");
-		eStatusIconPhasers = DOM.getElementById("short-status-phasers");
+		srsView.replaceElementWithThis("shortrangescan");
+		eStatusIconImpulse = getElementById("short-status-impulse");
+		eStatusIconTactical = getElementById("short-status-tactical-computer");
+		eStatusIconTorpedos = getElementById("short-status-torpedo-bay");
+		eStatusIconPhasers = getElementById("short-status-phasers");
 		eMaxAntimatter = CSS.querySelectorAll("#cmd_showStatusReport .progress-indicator").getItem(0);
 		eMaxShields = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		eValueShields = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
-		eQuadrantName = DOM.getElementById("quadrant_name");
-		eSkip = DOM.getElementById("cmd_skip");
-		eStarDate = DOM.getElementById("stardate");
-		eScore = DOM.getElementById("score");
-		eLrsButton = DOM.getElementById("lrs-button");
-		eAboveRadarSlot = DOM.getElementById("above-radar-slot");
-		eToggleShields = DOM.getElementById("cmd_toggleShields");
+		eQuadrantName = getElementById("quadrant_name");
+		eSkip = getElementById("cmd_skip");
+		eStarDate = getElementById("stardate");
+		eScore = getElementById("score");
+		eLrsButton = getElementById("lrs-button");
+		eAboveRadarSlot = getElementById("above-radar-slot");
+		eToggleShields = getElementById("cmd_toggleShields");
 		addHandler(this, ClickEvent.getType());
 		DOM.sinkEvents(getElement(), Event.ONCLICK);
 	}
@@ -144,8 +145,8 @@ public class ComputerScreen extends BaseScreen<ComputerPresenter> implements ICo
 
 	@Override
 	public void setScanProperty(String rowId, String cellId, String rowCss, String value) {
-		DOM.getElementById(rowId).setClassName(rowCss);
-		Element e = DOM.getElementById(cellId);
+		getElementById(rowId).setClassName(rowCss);
+		Element e = getElementById(cellId);
 		if (e!=null) e.setInnerText(value);
 	}
 	

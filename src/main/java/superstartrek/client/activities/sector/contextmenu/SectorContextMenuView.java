@@ -73,7 +73,7 @@ public class SectorContextMenuView extends BaseView<SectorContextMenuPresenter>
 	public void enableButton(String id, boolean status) {
 		//button's parent is the cell.
 		//TODO: should we keep a reference to the cell elements instead of looking them up?
-		Element e = DOM.getElementById(id);
+		Element e = getElementById(id);
 		Element parent = e.getParentElement();
 		CSS.setEnabledCSS(parent , status);
 	}

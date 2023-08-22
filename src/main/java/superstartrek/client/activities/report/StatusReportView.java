@@ -20,7 +20,7 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 	}
 	
 	public void setProperty(String property, String value, boolean highlight) {
-		Element e = DOM.getElementById(property);
+		Element e = getElementById(property);
 		e.setInnerText(value);
 		e.removeClassName("highlight");
 		if (highlight)

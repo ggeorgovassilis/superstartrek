@@ -8,6 +8,7 @@ import superstartrek.client.model.Constants;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Strings;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
 
@@ -17,7 +18,7 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 	
 	@Override
 	protected void createWidgetImplementation() {
-		Element e = DOM.createTable();
+		Element e = Document.get().createTableElement();
 		setElement(e);
 	}
 	
@@ -34,7 +35,7 @@ public class LRSScreen extends BaseScreen<LRSPresenter> implements ILRSScreen{
 			eTd.setAttribute("tabindex", ""+i);
 			cells[x][y] = eTd;
 		}
-		Element eLrs = DOM.getElementById("longrangescan");
+		Element eLrs = getElementById("longrangescan");
 		DOM.sinkEvents(eLrs, Event.ONCLICK);
 		DOM.setEventListener(eLrs, (Event event)-> {
 				Element eTd = event.getEventTarget().cast();

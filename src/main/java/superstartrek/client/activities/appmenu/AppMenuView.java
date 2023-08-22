@@ -30,7 +30,7 @@ public class AppMenuView extends PopupView<AppMenuPresenter> implements ClickHan
 	
 	@Override
 	public void setMenuEntryEnabled(String cmd, boolean enabled) {
-		Element e = DOM.getElementById(cmd);
+		Element e = getElementById(cmd);
 		CSS.setEnabled(e, enabled);
 	}
 	
