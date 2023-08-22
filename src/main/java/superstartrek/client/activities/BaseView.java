@@ -4,8 +4,6 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.DOM;
-
 import superstartrek.client.Application;
 import superstartrek.client.bus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;

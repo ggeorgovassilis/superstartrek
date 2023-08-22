@@ -4,8 +4,6 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
-
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Strings;
