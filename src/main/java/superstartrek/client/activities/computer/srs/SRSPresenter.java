@@ -15,9 +15,9 @@ public class SRSPresenter extends BasePresenter<ISRSView>
 		implements GamePhaseHandler, CombatHandler, QuadrantActivationHandler{
 
 	public SRSPresenter() {
-		addHandler(Events.GAME_STARTED, this);
-		addHandler(Events.QUADRANT_ACTIVATED, this);
-		addHandler(Events.KLINGON_DESTROYED, this);
+		addHandler(Events.GAME_STARTED);
+		addHandler(Events.QUADRANT_ACTIVATED);
+		addHandler(Events.KLINGON_DESTROYED);
 	}
 
 	public void updateRadar() {

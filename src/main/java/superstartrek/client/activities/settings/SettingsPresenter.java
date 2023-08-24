@@ -10,10 +10,10 @@ public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements
 	boolean updateButtonEnabled = true;
 	
 	public SettingsPresenter() {
-		addHandler(Events.ACTIVITY_CHANGED, this);
-		addHandler(Events.VERSION_CHECK_FAILED, this);
-		addHandler(Events.VERSION_IS_CURRENT, this);
-		addHandler(Events.NEW_VERSION_AVAILABLE, this);
+		addHandler(Events.ACTIVITY_CHANGED);
+		addHandler(Events.VERSION_CHECK_FAILED);
+		addHandler(Events.VERSION_IS_CURRENT);
+		addHandler(Events.NEW_VERSION_AVAILABLE);
 
 	}
 	

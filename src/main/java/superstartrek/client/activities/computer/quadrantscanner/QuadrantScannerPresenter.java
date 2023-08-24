@@ -41,17 +41,17 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 
 	public QuadrantScannerPresenter(SectorContextMenuPresenter sectorMenuPresenter) {
 		this.sectorMenuPresenter = sectorMenuPresenter;
-		addHandler(SECTOR_SELECTED, this);
-		addHandler(GAME_STARTED, this);
-		addHandler(THING_MOVED, this);
-		addHandler(QUADRANT_ACTIVATED, this);
-		addHandler(AFTER_FIRE, this);
-		addHandler(ENTERPRISE_REPAIRED, this);
-		addHandler(KLINGON_DESTROYED, this);
-		addHandler(KLINGON_CLOAKED, this);
-		addHandler(KLINGON_UNCLOAKED, this);
-		addHandler(KLINGON_TURN_STARTED, this);
-		addHandler(PLAYER_TURN_STARTED, this);
+		addHandler(SECTOR_SELECTED);
+		addHandler(GAME_STARTED);
+		addHandler(THING_MOVED);
+		addHandler(QUADRANT_ACTIVATED);
+		addHandler(AFTER_FIRE);
+		addHandler(ENTERPRISE_REPAIRED);
+		addHandler(KLINGON_DESTROYED);
+		addHandler(KLINGON_CLOAKED);
+		addHandler(KLINGON_UNCLOAKED);
+		addHandler(KLINGON_TURN_STARTED);
+		addHandler(PLAYER_TURN_STARTED);
 	}
 
 	@Override

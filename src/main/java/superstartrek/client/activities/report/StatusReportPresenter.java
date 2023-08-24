@@ -42,7 +42,7 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 	}
 
 	public StatusReportPresenter() {
-		addHandler(Events.ACTIVITY_CHANGED, this);
+		addHandler(Events.ACTIVITY_CHANGED);
 	}
 
 	@Override

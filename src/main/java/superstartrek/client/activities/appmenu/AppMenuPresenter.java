@@ -12,8 +12,7 @@ public class AppMenuPresenter extends BasePresenter<IAppMenuView>
 	String gotoStateAfterMenuHidden;
 
 	public AppMenuPresenter() {
-		addHandler(Events.ACTIVITY_CHANGED, this);
-
+		addHandler(Events.ACTIVITY_CHANGED);
 	}
 
 	public void updateCommands() {

@@ -36,14 +36,14 @@ public class ComputerPresenter extends BasePresenter<IComputerScreen>
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super();
  		this.scoreKeeper = scoreKeeper;
- 		addHandler(Events.ACTIVITY_CHANGED, this);
-		addHandler(Events.PLAYER_TURN_STARTED, this);
-		addHandler(Events.TURN_ENDED, this);
-		addHandler(Events.KLINGON_DESTROYED, this);
-		addHandler(Events.GAME_STARTED, this);
-		addHandler(Events.KEY_PRESSED, this);
-		addHandler(Events.SECTOR_SELECTED, this);
-		addHandler(Events.CONTEXT_MENU_HIDE, this);
+ 		addHandler(Events.ACTIVITY_CHANGED);
+		addHandler(Events.PLAYER_TURN_STARTED);
+		addHandler(Events.TURN_ENDED);
+		addHandler(Events.KLINGON_DESTROYED);
+		addHandler(Events.GAME_STARTED);
+		addHandler(Events.KEY_PRESSED);
+		addHandler(Events.SECTOR_SELECTED);
+		addHandler(Events.CONTEXT_MENU_HIDE);
 	}
 
 	public void setEnterprise(Enterprise enterprise) {

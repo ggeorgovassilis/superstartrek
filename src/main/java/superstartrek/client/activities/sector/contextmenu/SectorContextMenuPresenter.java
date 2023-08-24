@@ -34,10 +34,10 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 
 	public SectorContextMenuPresenter() {
-		addHandler(Events.SECTOR_SELECTED, this);
-		addHandler(Events.TURN_ENDED, this);
-		addHandler(Events.CONTEXT_MENU_HIDDEN, this);
-		addHandler(Events.ACTIVITY_CHANGED, this);
+		addHandler(Events.SECTOR_SELECTED);
+		addHandler(Events.TURN_ENDED);
+		addHandler(Events.CONTEXT_MENU_HIDDEN);
+		addHandler(Events.ACTIVITY_CHANGED);
 		buttonsEnabled.put(cmd_navigate, false);
 		buttonsEnabled.put(cmd_firePhasers, false);
 		buttonsEnabled.put(cmd_fireTorpedos, false);
@@ -85,7 +85,7 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 
 		view.setLocation(target_x_px, target_y_px);
 		view.show();
-		addHandler(Events.KEY_PRESSED, this);
+		addHandler(Events.KEY_PRESSED);
 	}
 
 	public void showMenu(int screenX, int screenY, Location sector, Quadrant quadrant) {

@@ -7,7 +7,7 @@ import superstartrek.client.eventbus.Events;
 public class UpdateAppPromptPresenter extends BasePresenter<UpdateAppPromptView> implements PopupViewPresenter<UpdateAppPromptView>, ApplicationLifecycleHandler{
 
 	public UpdateAppPromptPresenter() {
-		addHandler(Events.NEW_VERSION_AVAILABLE, this);
+		addHandler(Events.NEW_VERSION_AVAILABLE);
 	}
 
 	@Override

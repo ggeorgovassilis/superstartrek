@@ -8,7 +8,7 @@ import superstartrek.client.utils.Strings;
 public class AppInstallPromptPresenter extends BasePresenter<IAppInstallPromptView> implements ApplicationLifecycleHandler, PopupViewPresenter<IAppInstallPromptView>{
 
 	public AppInstallPromptPresenter() {
-		addHandler(Events.SHOW_APP_INSTALL_PROMPT, this);
+		addHandler(Events.SHOW_APP_INSTALL_PROMPT);
 	}
 	
 	public boolean didUserForbidInstallation() {

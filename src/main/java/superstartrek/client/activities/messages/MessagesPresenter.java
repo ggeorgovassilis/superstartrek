@@ -13,15 +13,15 @@ public class MessagesPresenter extends BasePresenter<IMessagesView>
 		implements MessageHandler, PopupViewPresenter<IMessagesView>, KeyPressedEventHandler, GamePhaseHandler{
 
 	public MessagesPresenter() {
-		addHandler(Events.GAME_STARTED, this);
-		addHandler(Events.GAME_OVER, this);
-		addHandler(Events.MESSAGE_POSTED, this);
+		addHandler(Events.GAME_STARTED);
+		addHandler(Events.GAME_OVER);
+		addHandler(Events.MESSAGE_POSTED);
 	}
 
 	@Override
 	public void messagePosted(String formattedMessage, String category) {
 		if (!view.isVisible())
-			addHandler(Events.KEY_PRESSED, this);
+			addHandler(Events.KEY_PRESSED);
 		view.showMessage(formattedMessage, category);
 		view.show();
 	}
@@ -53,7 +53,7 @@ public class MessagesPresenter extends BasePresenter<IMessagesView>
 	@Override
 	public void onGameStarted(StarMap map) {
 		removeHandler(Events.MESSAGE_POSTED, this);
-		addHandler(Events.MESSAGE_POSTED, this);
+		addHandler(Events.MESSAGE_POSTED);
 	}
 	
 	@Override

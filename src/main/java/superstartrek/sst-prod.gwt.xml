@@ -16,6 +16,7 @@
 	<source path="client" />
 	<entry-point class="superstartrek.client.Application" />
 	<set-property name="compiler.useSourceMaps" value="false" />
+	<set-property name="compiler.stackMode" value="strip" />
 	<collapse-all-properties value="true" /> <!-- produces only one JS output, makes service worker offline manifest generation 
 		much easier at the expense of a bit increased size -->
 	<add-linker name="sso" /> <!-- JS output names not random anymore -->

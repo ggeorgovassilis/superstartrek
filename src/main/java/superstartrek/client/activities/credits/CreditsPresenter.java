@@ -11,7 +11,7 @@ public class CreditsPresenter extends BasePresenter<CreditsScreen>
 		implements ApplicationLifecycleHandler, GamePhaseHandler, ActivityChangedHandler {
 
 	public CreditsPresenter() {
-		addHandler(Events.ACTIVITY_CHANGED, this);
+		addHandler(Events.ACTIVITY_CHANGED);
 	}
 
 	@Override

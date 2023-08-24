@@ -12,7 +12,7 @@ import superstartrek.client.vessels.Enterprise;
 public class LRSPresenter extends BasePresenter<ILRSScreen> implements ActivityChangedHandler {
 
 	public LRSPresenter() {
-		addHandler(Events.ACTIVITY_CHANGED, this);
+		addHandler(Events.ACTIVITY_CHANGED);
 	}
 
 	public void quadrantWasClicked(int x, int y) {

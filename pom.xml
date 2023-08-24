@@ -18,11 +18,13 @@
 		<skip.deploy>true</skip.deploy>
 		<skip.gwt>false</skip.gwt>
 		<skip.ant-copy>false</skip.ant-copy>
+		<pushToGit>false</pushToGit>
 		<gwt.disableClassMetadata>false</gwt.disableClassMetadata>
 		<gwt.disableCastChecking>false</gwt.disableCastChecking>
 		<gwt.optimizationLevel>-1</gwt.optimizationLevel>
 		<gwt-maven-plugin.version>2.10.0</gwt-maven-plugin.version>
-		<gwt.methodNameDisplayMode></gwt.methodNameDisplayMode> <!-- use "full" for diagnostings -->
+		<gwt.methodNameDisplayMode></gwt.methodNameDisplayMode> <!-- use "full"
+		for diagnostings -->
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 
@@ -90,7 +92,8 @@
 				<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
 				<gwt.saveSource>false</gwt.saveSource>
 				<gwt.style>OBFUSCATED</gwt.style>
-				<skip.deploy>true</skip.deploy>
+				<skip.deploy>false</skip.deploy>
+				<pushToGit>true</pushToGit>
 				<gwt.disableClassMetadata>true</gwt.disableClassMetadata>
 				<gwt.disableCastChecking>true</gwt.disableCastChecking>
 				<gwt.optimizationLevel>9</gwt.optimizationLevel>
@@ -121,7 +124,7 @@
 								<configuration>
 									<includes>/site/**</includes>
 									<workItem>auto deploy</workItem>
-									<pushChanges>true</pushChanges>
+									<pushChanges>${pushToGit}</pushChanges>
 								</configuration>
 							</execution>
 							<execution>
@@ -132,7 +135,7 @@
 								</goals>
 								<configuration>
 									<includes>/site/**</includes>
-									<pushChanges>true</pushChanges>
+									<pushChanges>false</pushChanges>
 									<message>Commiting new deployment</message>
 								</configuration>
 							</execution>
