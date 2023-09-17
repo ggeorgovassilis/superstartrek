@@ -31,7 +31,7 @@ public class TestSetup extends BaseTest{
 		when(browser.nextInt(any(int.class))).thenReturn(
 				//@formatter:off
 				// stars
-										NUMBER_OF_STARS-Constants.MIN_STARS_IN_QUADRANT,
+										NUMBER_OF_STARS-4 /*Constants.MIN_STARS_IN_QUADRANT*/,
 										2,3,1,
 										1,1,2,
 										3,1,0,

@@ -19,7 +19,7 @@ import superstartrek.client.vessels.Klingon;
 import superstartrek.client.vessels.Vessel;
 import superstartrek.client.vessels.Enterprise.ShieldDirection;
 
-public class StarMapDeserialiser {
+class StarMapDeserialiser {
 	
 	Application app;
 	// many strings (eg. star names) are frequently replicated. Internalising them

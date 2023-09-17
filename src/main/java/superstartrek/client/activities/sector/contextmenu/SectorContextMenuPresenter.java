@@ -24,12 +24,12 @@ public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenu
 	Quadrant quadrant;
 	Map<String, Boolean> buttonsEnabled = new HashMap<>();
 	
-	public final static String cmd_navigate = "cmd_navigate";
-	public final static String cmd_firePhasers = "cmd_firePhasers";
-	public final static String cmd_fireTorpedos = "cmd_fireTorpedos";
-	public final static String cmd_dockStarbase = "cmd_dockStarbase";
-	public final static String cmd_precision_weapons = "cmd_precision_weapons";
-	public final static String cmd_precision_propulsion = "cmd_precision_propulsion";
+	final static String cmd_navigate = "cmd_navigate";
+	final static String cmd_firePhasers = "cmd_firePhasers";
+	final static String cmd_fireTorpedos = "cmd_fireTorpedos";
+	final static String cmd_dockStarbase = "cmd_dockStarbase";
+	final static String cmd_precision_weapons = "cmd_precision_weapons";
+	final static String cmd_precision_propulsion = "cmd_precision_propulsion";
 		
 
 

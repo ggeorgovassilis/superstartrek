@@ -20,11 +20,6 @@ public abstract class BasePresenter<V extends View> implements Presenter<V>, Bas
 		this.view = view;
 	}
 	
-	@SuppressWarnings("unchecked")
-	protected void addViewToRoot() {
-		getApplication().browserAPI.addToPage(view);
-	}
-	
 	@Override
 	public Application getApplication() {
 		return BaseMixin.super.getApplication();

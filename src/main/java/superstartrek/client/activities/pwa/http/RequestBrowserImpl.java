@@ -6,7 +6,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 
-public class RequestBrowserImpl implements Request{
+class RequestBrowserImpl implements Request{
 
 	@Override
 	public Void request(Method method, String url, RequestCallback callback) {

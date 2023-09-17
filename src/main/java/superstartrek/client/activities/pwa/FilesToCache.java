@@ -1,6 +1,6 @@
 package superstartrek.client.activities.pwa;
 
-public class FilesToCache {
+class FilesToCache {
 
 	public static final String[] fileNames = new String[] {//@formatter:off
 			".", 

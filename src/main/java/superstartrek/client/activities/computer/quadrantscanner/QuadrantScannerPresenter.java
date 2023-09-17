@@ -62,6 +62,7 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 	}
 
 	void updateSector(Thing thing) {
+		Location location = thing.getLocation();
 		if (thing.isVisible()) {
 			String content = thing.getSymbol();
 			String css = thing.getCss();
@@ -74,9 +75,9 @@ public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView
 					css += " disruptor-disabled";
 				}
 			}
-			view.updateSector(thing.getLocation().x, thing.getLocation().y, content, css);
+			view.updateSector(location.x, location.y, content, css);
 		} else
-			view.clearSector(thing.getLocation().x, thing.getLocation().y);
+			view.clearSector(location.x, location.y);
 	}
 
 	void clearSector(int x, int y) {

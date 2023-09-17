@@ -19,13 +19,13 @@ import superstartrek.client.utils.BrowserAPI;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandler, BaseMixin {
 
-	public final static double PHASER_RANGE = 3;
-	public final static double ANTIMATTER_CONSUMPTION_WARP = 2;
-	public final static double IMPULSE_CONSUMPTION = 2;
-	public final static double DEVICE_IMPACT_MODIFIER = 0.3;
+	final static double PHASER_RANGE = 3;
+	final static double ANTIMATTER_CONSUMPTION_WARP = 2;
+	final static double IMPULSE_CONSUMPTION = 2;
+	final static double DEVICE_IMPACT_MODIFIER = 0.3;
 	public final static double SHIELD_IMPACT_MODIFIER = 40.0;
 	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
-	public final static int TIME_TO_REPAIR_SETTING = 3;
+	final static int TIME_TO_REPAIR_SETTING = 3;
 	public final static double PRECISION_SHOT_EFFICIENCY = 0.2;
 	public final static double PHASER_EFFICIENCY = 0.4;
 	public final static double SHIELD_DIRECTIONAL_COEFFICIENT = 0.4;

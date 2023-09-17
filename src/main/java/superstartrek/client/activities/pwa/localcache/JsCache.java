@@ -4,7 +4,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 import superstartrek.client.activities.pwa.promise.Promise;
 
-public class JsCache extends JavaScriptObject{
+class JsCache extends JavaScriptObject{
 
 	protected JsCache() {
 	}
