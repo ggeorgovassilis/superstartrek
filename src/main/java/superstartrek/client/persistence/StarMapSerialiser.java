@@ -14,12 +14,13 @@ import superstartrek.client.vessels.Vessel;
 
 public class StarMapSerialiser {
 
-	StringBuffer sb = new StringBuffer();
+	StringFactory sb = new StringFactory();
 	Application app;
 
 	void closeScope(String suffix) {
-		if (sb.charAt(sb.length() - 1) == ',')
-			sb.deleteCharAt(sb.length() - 1);
+		//TODO: profiling (FF, 2023) showed that sb.deleteChar kills performance
+		if (sb.getLastCharacter() == ',')
+			sb.deleteLastCharacter();
 		sb.append(suffix);
 	}
 
@@ -122,7 +123,7 @@ public class StarMapSerialiser {
 		// the last "," is syntactically incorrect so we're removing it ONLY if the loop
 		// above ran.
 		if (length < sb.length())
-			sb.delete(sb.length() - 1, sb.length());
+			sb.deleteLastCharacter();
 		sb.append("]");
 		closeScope("}");
 	}
