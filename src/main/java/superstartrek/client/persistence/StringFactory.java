@@ -44,16 +44,10 @@ public class StringFactory {
 	
 	
 	
-	//@formatter:off
-	private final native String _toString() /*-{ 
-		return this.@superstartrek.client.persistence.StringFactory::arr.join("");
-	}-*/;
-	//@formatter:on
-
 	@Override
 	public String toString() {
-		if (GWT.isClient())
-			return _toString();
-		else return String.join("", arr);
+		String[] copy = new String[index];
+		System.arraycopy(arr, 0, copy, 0, index);
+		return String.join("", copy);
 	}
 }
