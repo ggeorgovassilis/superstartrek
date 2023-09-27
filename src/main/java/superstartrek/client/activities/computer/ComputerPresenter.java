@@ -71,8 +71,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		view.hide();
 	}
 
-	String damageClass(Setting setting, boolean load) {
-		String css = load?CSS.damageClass(setting):CSS.getOfflineDamageClass();
+	String damageClass(Setting setting, boolean damage) {
+		String css = damage?CSS.damageClass(setting):CSS.getOfflineDamageClass();
 		if (setting.health()<1)
 			css="damaged "+css;
 		return css;
