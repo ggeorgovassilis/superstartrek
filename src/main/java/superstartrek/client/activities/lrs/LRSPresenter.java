@@ -29,19 +29,19 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 			getApplication().browserAPI.postHistoryChange("computer");
 	}
 
-	protected void updateQuadrant(int x, int y, boolean isReachable) {
+	void updateQuadrant(int x, int y, boolean isReachable) {
 		StarMap map = getApplication().starMap;
 		Quadrant q = map.getQuadrant(x, y);
 		Maps.renderCell(x, y, map, q, isReachable ? "navigation-target " : "", view);
 	}
 
-	protected void updateEnterpriseLocation() {
+	void updateEnterpriseLocation() {
 		Enterprise enterprise = getEnterprise();
 		Quadrant q = enterprise.getQuadrant();
 		view.addCss(q.x, q.y, "has-enterprise");
 	}
 
-	public void updateLrsView() {
+	void updateLrsView() {
 		StarMap starMap = getApplication().starMap;
 		Enterprise enterprise = starMap.enterprise;
 		Quadrant qEnterprise = enterprise.getQuadrant();
