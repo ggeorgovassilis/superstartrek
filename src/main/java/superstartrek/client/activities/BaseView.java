@@ -79,7 +79,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 
 	@Override
 	public void onScreenResize() {
-		// layouting depends on computing the space existing components take. Because of
+		// layouting depends on computing the space existing components occupy. Because of
 		// a previous layout, this would
 		// result in a much larger height than actually needed, creating unnecessary
 		// scroll.
