@@ -8,7 +8,7 @@ public abstract class Thing {
 	protected Location location = Location.location(0,0);
 	
 	@SuppressWarnings("unchecked")
-	public <T> T as() {
+	public <T extends Thing> T as() {
 		return (T)this;
 	}
 	
