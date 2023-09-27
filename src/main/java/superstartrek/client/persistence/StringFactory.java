@@ -1,9 +1,9 @@
 package superstartrek.client.persistence;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NodeList;
-
+/**
+ * Helper class for constructing large strings quickly with
+ * functionality needed by {@link StarMapSerialiser} 
+ */
 public class StringFactory {
 
 	// Since the StarMap is fixed size, there's an upper limit of objects in it
