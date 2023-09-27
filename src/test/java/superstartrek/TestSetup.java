@@ -3,7 +3,6 @@ package superstartrek;
 import org.junit.Before;
 import org.junit.Test;
 
-import superstartrek.client.space.Constants;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Setup;
 import superstartrek.client.vessels.Klingon;

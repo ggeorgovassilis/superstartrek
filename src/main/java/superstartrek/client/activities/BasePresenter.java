@@ -10,6 +10,7 @@ public abstract class BasePresenter<V extends View> implements Presenter<V>, Bas
 
 	protected V view;
 	
+	@SuppressWarnings("unchecked")
 	protected <T extends EventHandler> void addHandler(Event<T> type) {
 		getEvents().addHandler(type, (T)this);
 	}

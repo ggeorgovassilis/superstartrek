@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import superstartrek.client.eventbus.Events;
-import superstartrek.client.vessels.Enterprise;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
