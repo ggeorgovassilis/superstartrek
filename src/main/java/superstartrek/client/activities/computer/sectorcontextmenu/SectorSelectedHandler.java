@@ -1,4 +1,4 @@
-package superstartrek.client.activities.sector.contextmenu;
+package superstartrek.client.activities.computer.sectorcontextmenu;
 
 import superstartrek.client.eventbus.EventHandler;
 import superstartrek.client.space.Location;

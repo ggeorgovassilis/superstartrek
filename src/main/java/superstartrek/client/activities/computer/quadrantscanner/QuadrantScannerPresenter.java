@@ -5,10 +5,10 @@ import static superstartrek.client.eventbus.Events.*;
 import java.util.List;
 
 import superstartrek.client.activities.BasePresenter;
+import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuPresenter;
+import superstartrek.client.activities.computer.sectorcontextmenu.SectorSelectedHandler;
 import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
-import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
-import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
 import superstartrek.client.space.Constants;

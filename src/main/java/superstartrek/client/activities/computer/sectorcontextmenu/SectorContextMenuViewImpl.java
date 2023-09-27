@@ -1,4 +1,4 @@
-package superstartrek.client.activities.sector.contextmenu;
+package superstartrek.client.activities.computer.sectorcontextmenu;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;

@@ -1,4 +1,4 @@
-package superstartrek.client.activities.sector.contextmenu;
+package superstartrek.client.activities.computer.sectorcontextmenu;
 
 import java.util.HashMap;
 import java.util.Map;

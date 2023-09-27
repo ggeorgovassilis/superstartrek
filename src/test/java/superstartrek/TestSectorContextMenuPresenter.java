@@ -8,8 +8,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
-import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
+
+import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuPresenter;
+import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuView;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 

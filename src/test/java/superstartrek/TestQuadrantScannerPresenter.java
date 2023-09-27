@@ -11,9 +11,9 @@ import org.junit.Test;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerView;
+import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuPresenter;
+import superstartrek.client.activities.computer.sectorcontextmenu.SectorSelectedHandler;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
-import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
-import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;

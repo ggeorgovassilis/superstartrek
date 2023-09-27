@@ -9,10 +9,10 @@ import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerViewImpl;
+import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuPresenter;
+import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuViewImpl;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSViewImpl;
-import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
-import superstartrek.client.activities.sector.contextmenu.SectorContextMenuViewImpl;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 
