@@ -11,7 +11,7 @@ import superstartrek.client.utils.Maps;
 import superstartrek.client.vessels.CombatHandler;
 import superstartrek.client.vessels.Vessel;
 
-public class SRSPresenter extends BasePresenter<ISRSView>
+public class SRSPresenter extends BasePresenter<SRSView>
 		implements GamePhaseHandler, CombatHandler, QuadrantActivationHandler{
 
 	public SRSPresenter() {

@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 
 import superstartrek.client.activities.appmenu.AppMenuPresenter;
-import superstartrek.client.activities.appmenu.IAppMenuView;
+import superstartrek.client.activities.appmenu.AppMenuView;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.space.Setting;
 import superstartrek.client.vessels.Enterprise;
@@ -16,11 +16,11 @@ import static org.junit.Assert.*;
 public class TestAppMenuPresenter extends BaseTest {
 
 	AppMenuPresenter presenter;
-	IAppMenuView view;
+	AppMenuView view;
 
 	@Before
 	public void setup() {
-		view = mock(IAppMenuView.class);
+		view = mock(AppMenuView.class);
 		presenter = new AppMenuPresenter();
 		presenter.setView(view);
 	}

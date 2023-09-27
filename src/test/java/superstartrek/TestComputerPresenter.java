@@ -5,7 +5,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 import superstartrek.client.activities.computer.ComputerPresenter;
-import superstartrek.client.activities.computer.IComputerScreen;
+import superstartrek.client.activities.computer.ComputerScreen;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Star;
@@ -17,14 +17,14 @@ import superstartrek.client.vessels.Klingon.ShipClass;
 public class TestComputerPresenter extends BaseTest{
 
 	ComputerPresenter presenter;
-	IComputerScreen view;
+	ComputerScreen view;
 	ScoreKeeper scoreKeeper;
 
 	@Before
 	public void setup() {
 		scoreKeeper = mock(ScoreKeeper.class);
 		presenter = new ComputerPresenter(application, scoreKeeper);
-		view = mock(IComputerScreen.class);
+		view = mock(ComputerScreen.class);
 		presenter.setView(view);
 		presenter.setEnterprise(enterprise);
 		presenter.setStarMap(starMap);

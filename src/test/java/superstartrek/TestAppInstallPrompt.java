@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
-import superstartrek.client.activities.pwa.AppInstallPromptPresenter;
-import superstartrek.client.activities.pwa.IAppInstallPromptView;
+
+import superstartrek.client.activities.appinstallation.AppInstallPromptPresenter;
+import superstartrek.client.activities.appinstallation.AppInstallPromptView;
 import superstartrek.client.activities.pwa.PWA;
 import superstartrek.client.utils.BrowserAPI;
 import static org.junit.Assert.*;
@@ -13,12 +14,12 @@ import static org.junit.Assert.*;
 public class TestAppInstallPrompt extends BaseTest{
 
 	AppInstallPromptPresenter presenter;
-	IAppInstallPromptView view;
+	AppInstallPromptView view;
 	
 	@Before
 	public void setup() {
 		presenter = new AppInstallPromptPresenter();
-		view = mock(IAppInstallPromptView.class);
+		view = mock(AppInstallPromptView.class);
 		application.browserAPI = mock(BrowserAPI.class);
 		presenter.setView(view);
 	}

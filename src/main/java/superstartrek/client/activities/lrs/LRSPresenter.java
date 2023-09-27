@@ -9,7 +9,7 @@ import superstartrek.client.space.StarMap;
 import superstartrek.client.utils.Maps;
 import superstartrek.client.vessels.Enterprise;
 
-public class LRSPresenter extends BasePresenter<ILRSScreen> implements ActivityChangedHandler {
+public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityChangedHandler {
 
 	public LRSPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED);

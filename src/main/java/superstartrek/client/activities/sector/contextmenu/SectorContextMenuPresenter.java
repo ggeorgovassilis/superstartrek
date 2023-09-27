@@ -17,7 +17,7 @@ import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 
-public class SectorContextMenuPresenter extends BasePresenter<ISectorContextMenuView> implements SectorSelectedHandler,
+public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuView> implements SectorSelectedHandler,
 		GamePhaseHandler, ActivityChangedHandler, ContextMenuHideHandler, KeyPressedEventHandler {
 
 	Location sector;

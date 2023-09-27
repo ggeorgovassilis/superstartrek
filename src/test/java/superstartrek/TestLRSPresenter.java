@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import superstartrek.client.Application;
-import superstartrek.client.activities.lrs.ILRSScreen;
+import superstartrek.client.activities.lrs.LRSScreen;
 import superstartrek.client.activities.lrs.LRSPresenter;
 import superstartrek.client.space.Constants;
 import superstartrek.client.space.Quadrant;
@@ -18,12 +18,12 @@ import static org.mockito.Mockito.*;
 public class TestLRSPresenter extends BaseTest{
 
 	LRSPresenter presenter;
-	ILRSScreen view;
+	LRSScreen view;
 	
 	@Before
 	public void setup() {
 		presenter = new LRSPresenter();
-		view = mock(ILRSScreen.class);
+		view = mock(LRSScreen.class);
 		presenter.setView(view);
 	}
 	

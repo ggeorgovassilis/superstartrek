@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.computer.srs.ISRSView;
+import superstartrek.client.activities.computer.srs.SRSView;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
@@ -25,14 +25,14 @@ public class TestSRSPresenter {
 	Application app;
 	CountingEventBus events;
 	StarMap map;
-	ISRSView view;
+	SRSView view;
 	
 	@Before
 	public void setup() {
 		app = new Application();
 		app.starMap = new StarMap();
 		presenter = new SRSPresenter();
-		view = mock(ISRSView.class);
+		view = mock(SRSView.class);
 		presenter.setView(view);
 	}
 	

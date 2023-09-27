@@ -3,11 +3,11 @@ package superstartrek.client.activities.pwa;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 
-import superstartrek.client.activities.PopupView;
+import superstartrek.client.activities.PopupViewImpl;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 
-public class UpdateAppPromptView extends PopupView<UpdateAppPromptPresenter> {
+public class UpdateAppPromptView extends PopupViewImpl<UpdateAppPromptPresenter> {
 
 	protected void disable(String id) {
 		Element e = getElementById(id);

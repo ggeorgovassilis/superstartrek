@@ -1,172 +1,36 @@
 package superstartrek.client.activities.computer;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
-import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerView;
-import superstartrek.client.activities.computer.srs.SRSPresenter;
-import superstartrek.client.activities.computer.srs.SRSView;
-import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
-import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
-import superstartrek.client.screentemplates.ScreenTemplates;
-import superstartrek.client.utils.CSS;
+import superstartrek.client.activities.View;
 
-public class ComputerScreen extends BaseScreen<ComputerPresenter> implements IComputerScreen, ClickHandler {
+public interface ComputerScreen extends View<ComputerPresenter>{
 
-	Element eSkip;
-	Element eStatusIconImpulse;
-	Element eStatusIconTactical;
-	Element eStatusIconPhasers;
-	Element eStatusIconTorpedos;
-	Element eStarDate;
-	Element eScore;
-	Element eLrsButton;
-	Element eMaxAntimatter;
-	Element eMaxShields;
-	Element eValueShields;
-	Element eQuadrantName;
-	Element eAboveRadarSlot;
-	Element eToggleShields;
-
-	@Override
-	public void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos) {
-		final String sf = "status-flag ";
-		eStatusIconImpulse.setClassName(sf+cssImpulse);
-		eStatusIconTactical.setClassName(sf+cssTactical);
-		eStatusIconPhasers.setClassName(sf+cssPhasers);
-		eStatusIconTorpedos.setClassName(sf+cssTorpedos);
-	}
-
-	@Override
-	protected void decorateScreen(ScreenTemplates templates, Element element) {
-		addStyleName("computer-screen");
-		getElement().setInnerHTML(templates.computerScreen().getText());
-
-		SectorContextMenuPresenter sectorMenuPresenter = new SectorContextMenuPresenter();
-		sectorMenuPresenter.setView(new SectorContextMenuView(sectorMenuPresenter));
-
-		QuadrantScannerPresenter quadrantScannerPresenter = new QuadrantScannerPresenter(sectorMenuPresenter);
-		new QuadrantScannerView(quadrantScannerPresenter).replaceElementWithThis("quadrantscancontainer");
-
-		SRSPresenter srsPresenter = new SRSPresenter();
-		SRSView srsView = new SRSView(srsPresenter);
-		srsView.replaceElementWithThis("shortrangescan");
-		eStatusIconImpulse = getElementById("short-status-impulse");
-		eStatusIconTactical = getElementById("short-status-tactical-computer");
-		eStatusIconTorpedos = getElementById("short-status-torpedo-bay");
-		eStatusIconPhasers = getElementById("short-status-phasers");
-		eMaxAntimatter = CSS.querySelectorAll("#cmd_showStatusReport .progress-indicator").getItem(0);
-		eMaxShields = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
-		eValueShields = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
-		eQuadrantName = getElementById("quadrant_name");
-		eSkip = getElementById("cmd_skip");
-		eStarDate = getElementById("stardate");
-		eScore = getElementById("score");
-		eLrsButton = getElementById("lrs-button");
-		eAboveRadarSlot = getElementById("above-radar-slot");
-		eToggleShields = getElementById("cmd_toggleShields");
-		addHandler(this, ClickEvent.getType());
-		DOM.sinkEvents(getElement(), Event.ONCLICK);
-	}
-
-	@Override
-	public void updateShields(double value, double currentUpperBound, double maximum) {
-		eMaxShields.getStyle().setWidth(100.0 * currentUpperBound / maximum, Unit.PCT);
-		eValueShields.getStyle().setWidth(100.0 * value / maximum, Unit.PCT);
-	}
-
-	public ComputerScreen(ComputerPresenter presenter) {
-		super(presenter);
-	}
-
-	@Override
-	public void showStarDate(String sd) {
-		eStarDate.setInnerText(sd);
-	}
-
-	@Override
-	public void setQuadrantName(String name, String css) {
-		eQuadrantName.setInnerText(name);
-		eQuadrantName.setClassName(css);
-	}
-
-	@Override
-	public void updateAntimatter(double value, double maximum) {
-		eMaxAntimatter.getStyle().setWidth(100.0 * value / maximum, Unit.PCT);
-	}
-
-	@Override
-	public void onClick(ClickEvent event) {
-		Element target = event.getNativeEvent().getEventTarget().cast();
-		if (eSkip.isOrHasChild(target))
-			presenter.onSkipButtonClicked();
-		else
-		if (eToggleShields.isOrHasChild(target))
-			presenter.onToggleShieldsButtonClicked();
-	}
-
-	@Override
-	public void enableLlrsButton() {
-		CSS.setEnabled(eLrsButton, true);
-		eLrsButton.setAttribute("href", "#longrangescan");
-	}
-
-	@Override
-	public void disableLrsButton() {
-		CSS.setEnabled(eLrsButton, false);
-		eLrsButton.setAttribute("href", "#computer");
-	}
-
-	@Override
-	public void showScore(String score) {
-		eScore.setInnerText(score);
-	}
-
-	@Override
-	public void addAntimatterCss(String css) {
-		eMaxAntimatter.addClassName(css);
-	}
-
-	@Override
-	public void removeAntimatterCss(String css) {
-		eMaxAntimatter.removeClassName(css);
-	}
-
-	@Override
-	public void setCommandBarMode(String mode) {
-		eAboveRadarSlot.setClassName(mode);
-	}
-
-	@Override
-	public void setScanProperty(String rowId, String cellId, String rowCss, String value) {
-		getElementById(rowId).setClassName(rowCss);
-		Element e = getElementById(cellId);
-		if (e!=null) e.setInnerText(value);
-	}
+	void updateShortStatus(String cssImpulse, String cssTactical, String cssPhasers, String cssTorpedos);
 	
-	@Override
-	protected boolean alignsOnItsOwn() {
-		return false;
-	}
+	void updateTorpedoLabel(String value);
 
-	@Override
-	public void removeShieldCss(String css) {
-		eToggleShields.removeClassName(css);
-	}
+	void updateShields(double value, double currentUpperBound, double maximum);
 	
-	@Override
-	public void addShieldCss(String css) {
-		eToggleShields.addClassName(css);
-	}
+	void updateAntimatter(double value, double maximum);
+	
+	void addAntimatterCss(String css);	
 
-	@Override
-	public void updateTorpedoLabel(String value) {
-		eStatusIconTorpedos.setInnerText(value);
-	}
+	void removeAntimatterCss(String css);	
 
+	void showStarDate(String sd);
+
+	void showScore(String score);
+
+	void setQuadrantName(String name, String css);
+	
+	void enableLlrsButton();
+	
+	void disableLrsButton();
+
+	void setCommandBarMode(String mode);
+	
+	void setScanProperty(String rowId, String cellId, String rowCss, String value);
+	
+	void removeShieldCss(String css);
+	
+	void addShieldCss(String css);
 }

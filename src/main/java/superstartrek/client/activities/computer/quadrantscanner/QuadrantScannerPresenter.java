@@ -24,7 +24,7 @@ import superstartrek.client.vessels.KlingonCloakingHandler;
 import superstartrek.client.vessels.Vessel;
 import superstartrek.client.vessels.Weapon;
 
-public class QuadrantScannerPresenter extends BasePresenter<IQuadrantScannerView>
+public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,
 		KlingonCloakingHandler, QuadrantActivationHandler {
 

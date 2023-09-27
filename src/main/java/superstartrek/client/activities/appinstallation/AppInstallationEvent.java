@@ -1,8 +1,8 @@
-package superstartrek.client.activities.pwa;
+package superstartrek.client.activities.appinstallation;
 
 import com.google.gwt.dom.client.NativeEvent;
 
-class AppInstallationEvent extends NativeEvent {
+public class AppInstallationEvent extends NativeEvent {
 
 	protected AppInstallationEvent() {
 	}

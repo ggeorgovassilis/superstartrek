@@ -6,9 +6,9 @@ import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.screentemplates.ScreenTemplates;
 
-public class IntroView extends BaseScreen<IntroPresenter>{
+public class IntroScreen extends BaseScreen<IntroPresenter>{
 	
-	public IntroView(IntroPresenter presenter) {
+	public IntroScreen(IntroPresenter presenter) {
 		super(presenter);
 	}
 	

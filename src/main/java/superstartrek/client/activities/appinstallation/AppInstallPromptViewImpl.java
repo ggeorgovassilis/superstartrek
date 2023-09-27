@@ -1,13 +1,13 @@
-package superstartrek.client.activities.pwa;
+package superstartrek.client.activities.appinstallation;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
-import superstartrek.client.activities.PopupView;
+import superstartrek.client.activities.PopupViewImpl;
 import superstartrek.client.screentemplates.ScreenTemplates;
 
-public class AppInstallPromptView extends PopupView<AppInstallPromptPresenter> implements IAppInstallPromptView {
+public class AppInstallPromptViewImpl extends PopupViewImpl<AppInstallPromptPresenter> implements AppInstallPromptView {
 
-	public AppInstallPromptView(AppInstallPromptPresenter presenter) {
+	public AppInstallPromptViewImpl(AppInstallPromptPresenter presenter) {
 		super(presenter);
 	}
 

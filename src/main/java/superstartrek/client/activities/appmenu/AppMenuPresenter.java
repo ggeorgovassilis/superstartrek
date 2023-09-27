@@ -6,8 +6,8 @@ import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Setting;
 
-public class AppMenuPresenter extends BasePresenter<IAppMenuView>
-		implements PopupViewPresenter<IAppMenuView>, ActivityChangedHandler{
+public class AppMenuPresenter extends BasePresenter<AppMenuView>
+		implements PopupViewPresenter<AppMenuView>, ActivityChangedHandler{
 
 	String gotoStateAfterMenuHidden;
 

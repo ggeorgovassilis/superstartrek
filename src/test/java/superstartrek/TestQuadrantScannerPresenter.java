@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.computer.quadrantscanner.IQuadrantScannerView;
+import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerView;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.sector.contextmenu.SectorSelectedHandler;
@@ -27,13 +27,13 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 
 	QuadrantScannerPresenter presenter;
 	SectorContextMenuPresenter sectorMenuPresenter;
-	IQuadrantScannerView view;
+	QuadrantScannerView view;
 	
 	@Before
 	public void setup() {
 		sectorMenuPresenter = mock(SectorContextMenuPresenter.class);
 		presenter = new QuadrantScannerPresenter(sectorMenuPresenter);
-		view = mock(IQuadrantScannerView.class);
+		view = mock(QuadrantScannerView.class);
 		presenter.setView(view);
 	}
 

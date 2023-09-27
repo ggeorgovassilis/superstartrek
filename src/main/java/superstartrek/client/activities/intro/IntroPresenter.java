@@ -8,7 +8,7 @@ import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.space.StarMap;
 
-public class IntroPresenter extends BasePresenter<IntroView>
+public class IntroPresenter extends BasePresenter<IntroScreen>
 		implements ApplicationLifecycleHandler, GamePhaseHandler, ActivityChangedHandler {
 
 	public IntroPresenter() {

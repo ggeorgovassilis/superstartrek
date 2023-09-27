@@ -5,17 +5,17 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 
 import superstartrek.client.Application;
-import superstartrek.client.activities.settings.ISettingsScreen;
+import superstartrek.client.activities.settings.SettingsScreen;
 import superstartrek.client.activities.settings.SettingsPresenter;
 
 public class TestSettingsPresenter extends BaseTest{
 
 	SettingsPresenter presenter;
-	ISettingsScreen view;
+	SettingsScreen view;
 	
 	@Before
 	public void setup() {
-		view = mock(ISettingsScreen.class);
+		view = mock(SettingsScreen.class);
 		presenter = new SettingsPresenter();
 		presenter.setView(view);
 	}

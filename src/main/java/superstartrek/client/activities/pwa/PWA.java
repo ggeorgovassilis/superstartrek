@@ -9,6 +9,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import superstartrek.client.Application;
+import superstartrek.client.activities.appinstallation.AppInstallationEvent;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
 import superstartrek.client.eventbus.Events;

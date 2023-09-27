@@ -5,7 +5,7 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.eventbus.Events;
 
-public class SettingsPresenter extends BasePresenter<ISettingsScreen> implements ApplicationLifecycleHandler, ActivityChangedHandler{
+public class SettingsPresenter extends BasePresenter<SettingsScreen> implements ApplicationLifecycleHandler, ActivityChangedHandler{
 	
 	boolean updateButtonEnabled = true;
 	

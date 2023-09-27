@@ -25,7 +25,7 @@ import superstartrek.client.vessels.Vessel;
 import superstartrek.client.vessels.Weapon;
 import superstartrek.client.vessels.Enterprise.ShieldDirection;
 
-public class ComputerPresenter extends BasePresenter<IComputerScreen>
+public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		implements GamePhaseHandler, CombatHandler, ActivityChangedHandler,
 		KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
 

@@ -1,11 +1,12 @@
-package superstartrek.client.activities.pwa;
+package superstartrek.client.activities.appinstallation;
 
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.utils.Strings;
 
-public class AppInstallPromptPresenter extends BasePresenter<IAppInstallPromptView> implements ApplicationLifecycleHandler, PopupViewPresenter<IAppInstallPromptView>{
+public class AppInstallPromptPresenter extends BasePresenter<AppInstallPromptView> implements ApplicationLifecycleHandler, PopupViewPresenter<AppInstallPromptView>{
 
 	public AppInstallPromptPresenter() {
 		addHandler(Events.SHOW_APP_INSTALL_PROMPT);

@@ -8,7 +8,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import superstartrek.client.activities.sector.contextmenu.ISectorContextMenuView;
+import superstartrek.client.activities.sector.contextmenu.SectorContextMenuView;
 import superstartrek.client.activities.sector.contextmenu.SectorContextMenuPresenter;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
@@ -16,12 +16,12 @@ import superstartrek.client.space.Quadrant;
 public class TestSectorContextMenuPresenter extends BaseTest{
 
 	SectorContextMenuPresenter presenter;
-	ISectorContextMenuView view;
+	SectorContextMenuView view;
 	
 	@Before
 	public void setup() {
 		presenter = new SectorContextMenuPresenter();
-		view = mock(ISectorContextMenuView.class);
+		view = mock(SectorContextMenuView.class);
 		presenter.setView(view);
 	}
 	
