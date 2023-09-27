@@ -42,8 +42,9 @@ public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView, Clic
 
 	@Override
 	public void updateCell(int x, int y, String symbol, String css) {
-		eCells[x][y].setInnerText(symbol);
-		eCells[x][y].setClassName(css);
+		Element eCell = eCells[x][y];
+		eCell.setInnerText(symbol);
+		eCell.setClassName(css);
 	}
 
 	public SRSViewImpl(SRSPresenter presenter) {
