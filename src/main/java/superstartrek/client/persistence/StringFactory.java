@@ -13,8 +13,7 @@ public class StringFactory {
 	String lastString = "";
 	
 	public StringFactory append(String s) {
-		arr[index++] = s;
-		lastString = s;
+		arr[index++] = lastString = s;
 		length+=s.length();
 		return this;
 	}
@@ -36,8 +35,7 @@ public class StringFactory {
 	}
 	
 	public StringFactory deleteLastCharacter() {
-		lastString = lastString.substring(0, lastString.length()-1);
-		arr[index-1] = lastString;
+		arr[index-1] = lastString = lastString.substring(0, lastString.length()-1);
 		length--;
 		return this;
 	}
