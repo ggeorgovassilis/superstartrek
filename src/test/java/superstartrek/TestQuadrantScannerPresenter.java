@@ -84,7 +84,8 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		quadrant.add(new Star(6,6,StarClass.A));
 		quadrant.add(new Star(7,6,StarClass.A));
 		quadrant.add(new Star(4,3,StarClass.A));
-		List<Location> targets = enterprise.findReachableSectors();
+		enterprise.updateReachableSectors();
+		List<Location> targets = enterprise.getLastReachableSectors();
 		assertFalse(targets.isEmpty());
 		presenter.updateMapWithReachableSectors();
 		for (Location loc:targets)

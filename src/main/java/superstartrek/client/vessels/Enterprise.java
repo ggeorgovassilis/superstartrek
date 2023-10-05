@@ -166,11 +166,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		return reachableSectors;
 	}
 
-	public List<Location> findReachableSectors() {
+	public void updateReachableSectors() {
 		reachableSectors.clear();
 		double range = computeImpulseNavigationRange();
 		if (range < 1)
-			return reachableSectors;
+			return;
 		double range_squared = range * range;
 		int lx = getLocation().x;
 		int ly = getLocation().y;
@@ -203,7 +203,6 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 					return true;
 				});
 			}
-		return reachableSectors;
 	}
 
 	// only for internal use, bypasses checks
@@ -255,8 +254,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public double computeImpulseNavigationRange() {
 		// The sqrt models more accurately the physics of E=0.5*m*v²
 		// Also, a game-play-friendly side effect is that a minimum of maneuverability
-		// even
-		// with a damaged reactor is possible.
+		// even with a damaged reactor is possible.
 		double vimp = impulse.isOperational() ? impulse.getValue() : 0;
 		return Math.min(vimp, Math.sqrt(getReactor().getValue() / IMPULSE_CONSUMPTION));
 	}

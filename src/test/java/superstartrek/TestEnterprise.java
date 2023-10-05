@@ -100,7 +100,7 @@ public class TestEnterprise extends BaseTest {
 			}
 		});
 		// necessary call to findReachableSectors in order to populate reachability map
-		enterprise.findReachableSectors();
+		enterprise.updateReachableSectors();
 		enterprise.navigateTo(Location.location(2, 2));
 
 		assertEquals(0, enterprise.getImpulse().getValue(), 0.5);
@@ -278,7 +278,8 @@ public class TestEnterprise extends BaseTest {
 		quadrant.add(new Star(6, 6, StarClass.A));
 		quadrant.add(new Star(7, 6, StarClass.A));
 		quadrant.add(new Star(4, 3, StarClass.A));
-		List<Location> list = enterprise.findReachableSectors();
+		enterprise.updateReachableSectors();
+		List<Location> list = enterprise.getLastReachableSectors();
 		assertTrue(list.contains(Location.location(4, 5)));
 		assertTrue(list.contains(Location.location(4, 6)));
 		assertTrue(list.contains(Location.location(5, 5)));

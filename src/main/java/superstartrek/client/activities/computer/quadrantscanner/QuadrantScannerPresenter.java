@@ -182,7 +182,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	public void updateMapWithReachableSectors() {
 		Enterprise enterprise = getEnterprise();
 		clearNavigationTargets(enterprise.getLastReachableSectors());
-		List<Location> sectors = enterprise.findReachableSectors();
+		enterprise.updateReachableSectors();
+		List<Location> sectors = enterprise.getLastReachableSectors();
 		for (Location l : sectors)
 			markSectorAsNavigationTarget(l.x, l.y);
 	}
