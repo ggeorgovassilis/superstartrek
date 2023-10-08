@@ -16,7 +16,7 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 	}
 
 	public void quadrantWasClicked(int x, int y) {
-		StarMap starMap = getApplication().starMap;
+		StarMap starMap = getStarMap();
 		Quadrant qTo = starMap.getQuadrant(x, y);
 		Enterprise enterprise = starMap.enterprise;
 		if (enterprise.getQuadrant() == qTo)
@@ -29,10 +29,8 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 			getApplication().browserAPI.postHistoryChange("computer");
 	}
 
-	void updateQuadrant(int x, int y, boolean isReachable) {
-		StarMap map = getApplication().starMap;
-		Quadrant q = map.getQuadrant(x, y);
-		Maps.renderCell(x, y, map, q, isReachable ? "navigation-target " : "", view);
+	void updateQuadrant(Quadrant quadrant, boolean isReachable) {
+		Maps.renderCell(quadrant.x, quadrant.y, getStarMap(), quadrant, isReachable ? "navigation-target " : "", view);
 	}
 
 	void updateEnterpriseLocation() {
@@ -42,14 +40,17 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 	}
 
 	void updateLrsView() {
-		StarMap starMap = getApplication().starMap;
+		StarMap starMap = getStarMap();
 		Enterprise enterprise = starMap.enterprise;
 		Quadrant qEnterprise = enterprise.getQuadrant();
+		boolean doesWarpdriveWork = enterprise.getWarpDrive().isOperational();
+		double reactor = enterprise.getReactor().getValue();
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
-				double requiredEnergy = enterprise.computeConsumptionForWarp(qEnterprise, starMap.getQuadrant(x, y));
-				boolean isReachable = enterprise.getWarpDrive().isOperational() && (requiredEnergy <= enterprise.getReactor().getValue());
-				updateQuadrant(x, y, isReachable);
+				Quadrant quadrant = starMap.getQuadrant(x, y);
+				double requiredEnergy = enterprise.computeConsumptionForWarp(qEnterprise, quadrant);
+				boolean isReachable =  doesWarpdriveWork && (requiredEnergy <= reactor);
+				updateQuadrant(quadrant, isReachable);
 			}
 		updateEnterpriseLocation();
 	}

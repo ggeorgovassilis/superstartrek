@@ -89,8 +89,8 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 		try {
 			int x = Integer.parseInt(e.getAttribute("data-x"));
 			int y = Integer.parseInt(e.getAttribute("data-y"));
-			int dy = getElement().getAbsoluteTop();
-			int dx = getElement().getAbsoluteLeft();
+			int dy = getAbsoluteTop();
+			int dx = getAbsoluteLeft();
 			presenter.onSectorSelected(x, y, dx + e.getOffsetLeft(), dy + e.getOffsetTop());
 			event.stopPropagation();
 			event.preventDefault();

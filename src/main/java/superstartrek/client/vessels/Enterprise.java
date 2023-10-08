@@ -39,7 +39,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
 	Setting warpDrive = new Setting(1);
-	Setting evasiveManeuvers = new Setting(1,0);
+	Setting evasiveManeuvers = new Setting(1, 0);
 	boolean toggledShieldsThisTurn = false;
 
 	Application application;
@@ -80,7 +80,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public Setting getWarpDrive() {
 		return warpDrive;
 	}
-	
+
 	public Setting getEvasiveManeuvers() {
 		return evasiveManeuvers;
 	}
@@ -169,11 +169,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		final int NOT_REACHABLE = -1;
 		final int REACHABLE = 1;
 		final int UNKNOWN = 0;
-		int[][] visitLog = new int[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE]; // -1= not reachable, 0 = not
-																					// visited yet, 1 = reachable
-		visitLog[lx][ly] = 1;
-		for (int x = minX; x <= maxX; x++)
-			for (int y = minY; y <= maxY; y++) {
+		int[][] visitLog = new int[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
+		visitLog[lx][ly] = REACHABLE;
+		Quadrant quadrant = getQuadrant();
+		for (int y = minY; y <= maxY; y++)
+			for (int x = minX; x <= maxX; x++) {
 				if (visitLog[x][y] != UNKNOWN)
 					continue;
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
@@ -182,7 +182,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 					if (visitLog[x1][y1] != UNKNOWN)
 						return visitLog[x1][y1] == REACHABLE;
 					// from here on, visitLog is known to be 0
-					if (Thing.isVisible(getQuadrant().findThingAt(x1, y1))) {
+					if (Thing.isVisible(quadrant.findThingAt(x1, y1))) {
 						visitLog[x1][y1] = NOT_REACHABLE;
 						return false;
 					}
@@ -205,7 +205,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void navigateTo(Location loc) {
 		if (!canNavigateTo(loc)) {
 			// This should never be the case; navigation constraints are already
-			// checked earlier by reachable sectors. This assumes that cloaked Klingons are "reachable"
+			// checked earlier by reachable sectors. This assumes that cloaked Klingons are
+			// "reachable"
 			application.message("Can't go there");
 			return;
 		}
@@ -248,7 +249,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {
-		return Constants.ENTERPRISE_ANTIMATTER_CONSUMPTION_WARP * (5.0 + StarMap.distance_squared(from.x, from.y, to.x, to.y));
+		return Constants.ENTERPRISE_ANTIMATTER_CONSUMPTION_WARP
+				* (Constants.ENTERPRISE_MIN_WARP_CONSUMPTION + StarMap.distance_squared(from.x, from.y, to.x, to.y));
 	}
 
 	public void fireTorpedosAt(Location sector) {
@@ -340,7 +342,8 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		Klingon klingon = (Klingon) thing;
 		double distance = StarMap.distance(this, thing);
-		double efficiency = isPrecisionShot ? Constants.ENTERPRISE_PRECISION_SHOT_EFFICIENCY : Constants.ENTERPRISE_PHASER_EFFICIENCY;
+		double efficiency = isPrecisionShot ? Constants.ENTERPRISE_PRECISION_SHOT_EFFICIENCY
+				: Constants.ENTERPRISE_PHASER_EFFICIENCY;
 		double damage = efficiency * phaserEnergy / distance;
 		phasers.setValue(phasers.getValue() - phaserEnergy);
 		fireEvent(Events.BEFORE_FIRE, (h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage,
@@ -381,7 +384,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		repairCount += lrs.repair() ? 1 : 0;
 		repairCount += reactor.repair() ? 1 : 0;
 		final int fRepairCount = repairCount;
-		
+
 		evasiveManeuvers.setValue(false);
 		fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount,
@@ -397,10 +400,14 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
-		if (starMap.getStarDate() - setting.getTimeOfDamage() < Constants.ENTERPRISE_TIME_TO_REPAIR_SETTING )
+		if (starMap.getStarDate() - setting.getTimeOfDamage() < Constants.ENTERPRISE_TIME_TO_REPAIR_SETTING)
 			return false;
-		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * Constants.ENTERPRISE_CHANCE_OF_AUTOREPAIR)); // boolean settings can be repaired
-																				// fully
+		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * Constants.ENTERPRISE_CHANCE_OF_AUTOREPAIR)); // boolean
+																														// settings
+																														// can
+																														// be
+																														// repaired
+		// fully
 		setting.setValue(setting.getCurrentUpperBound());
 		setting.setBroken(false);
 		application.message("Repaired " + name, "enterprise-repaired");
@@ -493,13 +500,13 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 
 		double shieldValue = shields.getValue();
-		double baseModifier = evasiveManeuvers.getBooleanValue()?0.7:1.0;
-		
-		damage*=baseModifier;
+		double baseModifier = evasiveManeuvers.getBooleanValue() ? 0.7 : 1.0;
+
+		damage *= baseModifier;
 		double shieldImpact = Constants.ENTERPRISE_APPLY_SHIELD_DAMAGE(damage, shieldValue);
 
 		shields.decrease(shieldImpact);
-		double deviceImpact = Constants.ENTERPRISE_APPLY_DEVICE_DAMAGE(damage,shieldValue);
+		double deviceImpact = Constants.ENTERPRISE_APPLY_DEVICE_DAMAGE(damage, shieldValue);
 		BrowserAPI random = application.browserAPI;
 		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < deviceImpact)
 			damageShields(damage);
@@ -533,7 +540,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public double computeEnergyConsumption() {
-		double consumptionFromEvasiveManeuvers = getEvasiveManeuvers().getBooleanValue()?1:0;
+		double consumptionFromEvasiveManeuvers = getEvasiveManeuvers().getBooleanValue() ? 1 : 0;
 		double consumptionFromShields = (getShields().getValue() + 1.0) * 0.08;
 		double consumption = consumptionFromEvasiveManeuvers + consumptionFromShields;
 		return consumption;
@@ -657,7 +664,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			nextDir = ShieldDirection.values()[nextIndex];
 		} else {
 			ShieldDirection optimalDir = computeOptimalShieldDirection();
-			if (optimalDir == dir && optimalDir!=ShieldDirection.omni) {
+			if (optimalDir == dir && optimalDir != ShieldDirection.omni) {
 				int nextIndex = (dir.ordinal() + 1) % ShieldDirection.values().length;
 				nextDir = ShieldDirection.values()[nextIndex];
 			} else
