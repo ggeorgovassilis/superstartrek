@@ -12,7 +12,7 @@ public class StarMap {
 	public Enterprise enterprise;
 	protected int starDate = Constants.START_DATE;
 
-	public static boolean within_distance(int x1, int y1, int x2, int y2, double range) {
+	static boolean within_distance(int x1, int y1, int x2, int y2, double range) {
 		int dx = x1 - x2;
 		int dy = y1 - y2;
 		return dx * dx + dy * dy <= range * range;
