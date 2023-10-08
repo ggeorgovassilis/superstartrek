@@ -28,14 +28,12 @@ public class Quadrant{
 	}
 	
 	public void dehydrate() {
-		GWT.log("Dehydrating "+x+","+y);
 		things = null;
 	}
 	
 	public void hydrate() {
 		if (things !=null)
 			return;
-		GWT.log("Hydrating "+x+","+y);
 		things = new Thing[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 		doWithThings(t->things[t.location.x][t.location.y]=t);
 	}
