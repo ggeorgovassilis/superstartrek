@@ -10,7 +10,7 @@ public class StarMap {
 
 	protected Quadrant[][] quadrants = new Quadrant[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	public Enterprise enterprise;
-	protected int starDate = 2100;
+	protected int starDate = Constants.START_DATE;
 
 	public static boolean within_distance(int x1, int y1, int x2, int y2, double range) {
 		int dx = x1 - x2;

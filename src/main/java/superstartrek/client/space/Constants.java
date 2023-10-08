@@ -26,6 +26,7 @@ public class Constants {
 	public final static int ENTERPRISE_TORPEDO_COUNT = 10;
 	public final static int ENTERPRISE_ANTIMATTER = 1000;
 	public final static int ENTERPRISE_REACTOR_CAPACITY = 50;
+	public final static int START_DATE = 2100;
 	
 	public static double ENTERPRISE_PHASER_PRECISION(boolean autoAim) {
 		return 2.0 * (autoAim ? 1 : 0.7);	
