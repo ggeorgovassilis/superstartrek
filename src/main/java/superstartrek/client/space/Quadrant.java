@@ -88,6 +88,7 @@ public class Quadrant{
 	}
 	
 	private void clear(Location location) {
+		// no need to hydrate if something is removed
 		if (things!=null)
 			things[location.x][location.y] = null;
 	}
