@@ -21,7 +21,7 @@ public class SRSPresenter extends BasePresenter<SRSView>
 	}
 
 	public void updateRadar() {
-		StarMap map = getApplication().starMap;
+		StarMap map = getStarMap();
 		Quadrant q0 = getActiveQuadrant();
 		for (int y = 0; y < 3; y++) {
 			int qy = q0.y + y - 1;
@@ -37,18 +37,18 @@ public class SRSPresenter extends BasePresenter<SRSView>
 	}
 	
 	public void updateCenterQuadrant() {
-		StarMap map = getApplication().starMap;
+		StarMap map = getStarMap();
 		Quadrant q = getActiveQuadrant();
 		Maps.renderCell(1, 1, map, q, "", view);
 	}
 
 	public void quadrantWasClicked(int dx, int dy) {
-		StarMap map = getApplication().starMap;
+		StarMap map = getStarMap();
 		Quadrant q = getActiveQuadrant();
 		int x = q.x + dx;
 		int y = q.y + dy;
 		if (map.isOnMap(x, y))
-			map.enterprise.warpTo(map.getQuadrant(x, y), null);
+			getEnterprise().warpTo(map.getQuadrant(x, y), null);
 	}
 
 	@Override
