@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.vessels.Enterprise;
 import superstartrek.client.vessels.Klingon;
@@ -17,12 +19,25 @@ public class Quadrant{
 	private List<Star> stars = new ArrayList<>();
 	private StarBase starBase;
 	private List<Klingon> klingons = new ArrayList<>();
-	private Thing[][] things = new Thing[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-
+	private Thing[][] things;
+	
 	public Quadrant(String name, int x, int y) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void dehydrate() {
+		GWT.log("Dehydrating "+x+","+y);
+		things = null;
+	}
+	
+	public void hydrate() {
+		if (things !=null)
+			return;
+		GWT.log("Hydrating "+x+","+y);
+		things = new Thing[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
+		doWithThings(t->things[t.location.x][t.location.y]=t);
 	}
 
 	public boolean contains(Klingon klingon) {
@@ -63,6 +78,7 @@ public class Quadrant{
 	}
 
 	public Thing findThingAt(int x, int y) {
+		hydrate();
 		return things[x][y];
 	}
 
@@ -71,11 +87,13 @@ public class Quadrant{
 	}
 	
 	private void mark(Thing thing) {
+		hydrate();
 		things[thing.getLocation().x][thing.getLocation().y] = thing;
 	}
 	
 	private void clear(Location location) {
-		things[location.x][location.y] = null;
+		if (things!=null)
+			things[location.x][location.y] = null;
 	}
 	
 	public void add(Klingon klingon) {
@@ -109,7 +127,8 @@ public class Quadrant{
 		if (starBase!=null)
 			consumer.accept(starBase);
 		Enterprise enterprise = Application.get().starMap.enterprise;
-		if (enterprise.getQuadrant() == this)
+		//enterprise can be null during map de-serialization
+		if (enterprise!=null && enterprise.getQuadrant() == this)
 			consumer.accept(enterprise);
 		
 	};

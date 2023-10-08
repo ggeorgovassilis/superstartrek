@@ -22,7 +22,7 @@ import superstartrek.client.vessels.Vessel;
 import superstartrek.client.vessels.Weapon;
 
 public class GameController implements GamePhaseHandler, CombatHandler, NavigationHandler,
-		MessageHandler, EnergyConsumptionHandler, BaseMixin{
+		MessageHandler, EnergyConsumptionHandler, BaseMixin, QuadrantActivationHandler{
 
 	Application application;
 	EventBus events;
@@ -61,6 +61,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		addHandler(ENTERPRISE_DOCKED, this);
 		addHandler(GAME_RESTART, this);
 		addHandler(ENTERPRISE_DAMAGED, this);
+		addHandler(QUADRANT_ACTIVATED, this);
 	}
 	
 	@Override
@@ -232,6 +233,12 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		//postponing in timer in order to avoid UI lag
 		if (application.starMap.getStarDate() > 2100)
 			Timer.postpone(()->application.gameSaver.saveGame());
+	}
+
+	@Override
+	public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
+		oldQuadrant.dehydrate();
+		newQuadrant.hydrate();
 	}
 
 }

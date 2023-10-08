@@ -58,6 +58,8 @@ public class TestQuadrant extends BaseTest{
 		Quadrant q2 = new Quadrant("test2", 7, 7);
 		starMap.setQuadrant(q2);
 		enterprise.setQuadrant(q2);
+		
+		quadrant.remove(enterprise);
 
 		assertTrue(quadrant.findThingAt(2, 3) instanceof Klingon);
 		assertTrue(quadrant.findThingAt(1, 1) instanceof Klingon);

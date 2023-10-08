@@ -58,6 +58,7 @@ public class TestSRSPresenter {
 	@Test
 	public void test() {
 		app.starMap = map = new StarMap();
+		map.enterprise = new Enterprise(app, map);
 		map.setQuadrant(makeQuadrant(0,0, true, 0, 0));
 		map.setQuadrant(makeQuadrant(1,0, false, 0, 1));
 		map.setQuadrant(makeQuadrant(2,0, false, 0, 2));

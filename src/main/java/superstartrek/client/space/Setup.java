@@ -124,6 +124,7 @@ public class Setup {
 		StarMap map = new StarMap();
 		Enterprise enterprise = new Enterprise(application, map);
 		map.enterprise = enterprise;
+		application.starMap = map;
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Quadrant q = makeQuadrant(map, x, y);
