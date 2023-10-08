@@ -4,6 +4,8 @@ import static superstartrek.client.eventbus.Events.*;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.computer.sectorcontextmenu.SectorSelectedHandler;
@@ -96,25 +98,21 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 			updateSector(thing);
 	}
 
-	void mark(Thing thing, Thing[][] array) {
-		Location location = thing.getLocation();
-		array[location.x][location.y] = thing;
-	}
-
 	void updateScreen() {
 		Quadrant q = getActiveQuadrant();
 		// we could just erase all sectors first and paint things over it, but that
 		// would increase DOM interactions.
 		// this approach (render into an array first, paint each sector only once)
 		// minimises DOM interactions.
-		Thing[][] arr = new Thing[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-		q.doWithThings(t -> mark(t, arr));
-		for (int x = 0; x < arr.length; x++)
-			for (int y = 0; y < arr[x].length; y++) {
-				Thing t = arr[x][y];
-				if (t != null)
-					updateSector(t);
-				else
+		boolean[][] sectorIsOccupied = new boolean[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
+		q.doWithThings(thing -> {
+			updateSector(thing);
+			Location location = thing.getLocation();
+			sectorIsOccupied[location.x][location.y] = true;
+		});
+		for (int x = 0; x < sectorIsOccupied.length; x++)
+			for (int y = 0; y < sectorIsOccupied[x].length; y++) {
+				if (!sectorIsOccupied[x][y])
 					clearSector(x, y);
 			}
 	}
