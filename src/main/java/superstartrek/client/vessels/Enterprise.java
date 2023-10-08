@@ -19,18 +19,6 @@ import superstartrek.client.utils.BrowserAPI;
 
 public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandler, BaseMixin {
 
-	final static double PHASER_RANGE = 3;
-	final static double ANTIMATTER_CONSUMPTION_WARP = 2;
-	final static double IMPULSE_CONSUMPTION = 2;
-	final static double DEVICE_IMPACT_MODIFIER = 0.3;
-	public final static double SHIELD_IMPACT_MODIFIER = 40.0;
-	public final static double CHANCE_OF_AUTOREPAIR = 0.3;
-	final static int TIME_TO_REPAIR_SETTING = 3;
-	public final static double PRECISION_SHOT_EFFICIENCY = 0.2;
-	public final static double PHASER_EFFICIENCY = 0.4;
-	public final static double SHIELD_DIRECTIONAL_COEFFICIENT = 0.4;
-	public final static double SHIELD_BASE_COEFFICIENT = 0.75;
-
 	public enum ShieldDirection {
 
 		omni(0), north(90), east(0), south(270), west(180);
@@ -44,10 +32,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	ShieldDirection shieldDirection = ShieldDirection.omni;
-	Setting phasers = new Setting(30);
-	Setting torpedos = new Setting(10);
-	Setting antimatter = new Setting(1000);
-	Setting reactor = new Setting(50);
+	Setting phasers = new Setting(Constants.ENTERPRISE_PHASER_CAPACITY);
+	Setting torpedos = new Setting(Constants.ENTERPRISE_TORPEDO_COUNT);
+	Setting antimatter = new Setting(Constants.ENTERPRISE_ANTIMATTER);
+	Setting reactor = new Setting(Constants.ENTERPRISE_REACTOR_CAPACITY);
 	Setting autoAim = new Setting(1);
 	Setting lrs = new Setting(1);
 	Setting warpDrive = new Setting(1);
@@ -248,7 +236,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public double computeConsumptionForImpulseNavigation(double distance) {
-		return distance * distance * IMPULSE_CONSUMPTION;
+		return distance * distance * Constants.ENTERPRISE_IMPULSE_CONSUMPTION;
 	}
 
 	public double computeImpulseNavigationRange() {
@@ -256,11 +244,11 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		// Also, a game-play-friendly side effect is that a minimum of maneuverability
 		// even with a damaged reactor is possible.
 		double vimp = impulse.isOperational() ? impulse.getValue() : 0;
-		return Math.min(vimp, Math.sqrt(getReactor().getValue() / IMPULSE_CONSUMPTION));
+		return Math.min(vimp, Math.sqrt(getReactor().getValue() / Constants.ENTERPRISE_IMPULSE_CONSUMPTION));
 	}
 
 	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {
-		return ANTIMATTER_CONSUMPTION_WARP * (5.0 + StarMap.distance_squared(from.x, from.y, to.x, to.y));
+		return Constants.ENTERPRISE_ANTIMATTER_CONSUMPTION_WARP * (5.0 + StarMap.distance_squared(from.x, from.y, to.x, to.y));
 	}
 
 	public void fireTorpedosAt(Location sector) {
@@ -278,7 +266,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		Thing target = null;
 		double damage = 50;
 		BrowserAPI browser = application.browserAPI;
-		double precision = 2.0 * (autoAim.isOperational() ? 1 : 0.7);
+		double precision = Constants.ENTERPRISE_PHASER_PRECISION(autoAim.isOperational());
 		for (Thing thing : things) {
 			boolean hit = false;
 			if (Klingon.is(thing)) {
@@ -296,7 +284,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (Klingon.is(target)) {
 			double shields = ((Klingon) target).getShields().getValue();
 			double maxShields = ((Klingon) target).getShields().getMaximum();
-			damage = damage * (1.0 - (0.5 * (shields / maxShields) * (shields / maxShields)));
+			damage = Constants.ENTERPRISE_TORPEDO_DAMAGE_ON_KLINGONS(damage, shields, maxShields);
 		}
 		Thing eventTarget = target;
 		double eventDamage = damage;
@@ -317,7 +305,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 			return "Phasers can target only enemy vessels";
 		}
 		double distance = StarMap.distance(this, thing);
-		if (distance > PHASER_RANGE) {
+		if (distance > Constants.ENTERPRISE_PHASER_RANGE) {
 			return "Target is too far away.";
 		}
 		if (!phasers.isOperational()) {
@@ -352,7 +340,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		}
 		Klingon klingon = (Klingon) thing;
 		double distance = StarMap.distance(this, thing);
-		double efficiency = isPrecisionShot ? PRECISION_SHOT_EFFICIENCY : PHASER_EFFICIENCY;
+		double efficiency = isPrecisionShot ? Constants.ENTERPRISE_PRECISION_SHOT_EFFICIENCY : Constants.ENTERPRISE_PHASER_EFFICIENCY;
 		double damage = efficiency * phaserEnergy / distance;
 		phasers.setValue(phasers.getValue() - phaserEnergy);
 		fireEvent(Events.BEFORE_FIRE, (h) -> h.onFire(getQuadrant(), Enterprise.this, klingon, Weapon.phaser, damage,
@@ -409,9 +397,9 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
-		if (starMap.getStarDate() - setting.getTimeOfDamage() < TIME_TO_REPAIR_SETTING)
+		if (starMap.getStarDate() - setting.getTimeOfDamage() < Constants.ENTERPRISE_TIME_TO_REPAIR_SETTING )
 			return false;
-		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * 0.75)); // boolean settings can be repaired
+		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * Constants.ENTERPRISE_CHANCE_OF_AUTOREPAIR)); // boolean settings can be repaired
 																				// fully
 		setting.setValue(setting.getCurrentUpperBound());
 		setting.setBroken(false);
@@ -508,10 +496,10 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		double baseModifier = evasiveManeuvers.getBooleanValue()?0.7:1.0;
 		
 		damage*=baseModifier;
-		double shieldImpact = SHIELD_IMPACT_MODIFIER * damage / (shieldValue + 1.0);
+		double shieldImpact = Constants.ENTERPRISE_APPLY_SHIELD_DAMAGE(damage, shieldValue);
 
 		shields.decrease(shieldImpact);
-		double deviceImpact = DEVICE_IMPACT_MODIFIER * damage / (shieldValue + 1.0);
+		double deviceImpact = Constants.ENTERPRISE_APPLY_DEVICE_DAMAGE(damage,shieldValue);
 		BrowserAPI random = application.browserAPI;
 		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < deviceImpact)
 			damageShields(damage);
@@ -554,7 +542,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public void autoAim() {
 		List<Klingon> potentialTargets = new ArrayList<Klingon>();
 		for (Klingon k : getQuadrant().getKlingons())
-			if (k.isVisible() && StarMap.within_distance(this, k, PHASER_RANGE)) {
+			if (k.isVisible() && StarMap.within_distance(this, k, Constants.ENTERPRISE_PHASER_RANGE)) {
 				potentialTargets.add(k);
 			}
 		if (potentialTargets.isEmpty())
@@ -587,7 +575,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 
 	public double computeDirectionalShieldEfficiency(ShieldDirection sd, Location location) {
 		if (sd == ShieldDirection.omni)
-			return SHIELD_BASE_COEFFICIENT;
+			return Constants.ENTERPRISE_SHIELD_BASE_COEFFICIENT;
 		int dx = this.location.x - location.x;
 		// reverse direction because higher Y mean going south, while atan2 uses the
 		// opposite notation
@@ -607,7 +595,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		if (target != this)
 			return;
 		application.message(actor.getName() + " at " + actor.getLocation() + " fired on us", "damage");
-		double directionalImpact = 0.5 + SHIELD_DIRECTIONAL_COEFFICIENT
+		double directionalImpact = 0.5 + Constants.ENTERPRISE_SHIELD_DIRECTIONAL_COEFFICIENT
 				* (1.0 - computeDirectionalShieldEfficiency(shieldDirection, actor.getLocation()));
 		applyDamage(damage * directionalImpact);
 	}

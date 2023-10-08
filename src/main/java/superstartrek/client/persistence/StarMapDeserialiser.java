@@ -7,7 +7,6 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 
 import superstartrek.client.Application;
-import superstartrek.client.space.Constants;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.Setting;
