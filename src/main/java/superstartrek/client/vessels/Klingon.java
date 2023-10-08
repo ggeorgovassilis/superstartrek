@@ -178,12 +178,13 @@ public class Klingon extends Vessel
 		if (!getImpulse().isOperational() || getImpulse().getValue() < 1)
 			return;
 		Application app = getApplication();
-		Enterprise enterprise = app.starMap.enterprise;
+		StarMap starMap = app.starMap;
+		Enterprise enterprise = starMap.enterprise;
 		Location enterpriseLocation = enterprise.getLocation();
 		double distance = StarMap.distance(getLocation(), enterpriseLocation);
 		int triesLeft = 3;
 		while (triesLeft-- > 0) {
-			Location loc = app.starMap.findFreeSpotAround(index, getLocation(), 1 + (int) getImpulse().getValue());
+			Location loc = starMap.findFreeSpotAround(index, getLocation(), 1 + (int) getImpulse().getValue());
 			if (loc != null) {
 				double newDistance = StarMap.distance(enterpriseLocation, loc);
 				if (newDistance > distance) {

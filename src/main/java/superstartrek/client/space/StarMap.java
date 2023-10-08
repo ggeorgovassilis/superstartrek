@@ -161,13 +161,16 @@ public class StarMap {
 
 	public Location findFreeSpotAround(Quadrant index, Location loc, int maxRadius) {
 		BrowserAPI random = Application.get().browserAPI;
+		final int SECTORS_EDGE_DEC = Constants.SECTORS_EDGE-1;
 		for (int radius = 1; radius <= maxRadius; radius++) {
 			//While this may seem unnecessarily heuristic and wasteful, it is not:
 			//1. quadrants are sparsely populated, the chance of finding a free spot is high
 			//2. game play relies on randomness, eg. retreating Klingons would become predictable
+			int incrementedRadius = radius + 1;
+			int halfRadius = radius/2;
 			for (int remainingTries = radius*radius ; remainingTries > 0; remainingTries--) {
-				int x = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.x + (random.nextInt(1 + radius)) - (radius / 2)));
-				int y = Math.min(Constants.SECTORS_EDGE-1, Math.max(0, loc.y + (random.nextInt(1 + radius)) - (radius / 2)));
+				int x = Math.min(SECTORS_EDGE_DEC, Math.max(0, loc.x + (random.nextInt(incrementedRadius)) - halfRadius));
+				int y = Math.min(SECTORS_EDGE_DEC, Math.max(0, loc.y + (random.nextInt(incrementedRadius)) - halfRadius));
 				if (null == index.findThingAt(x, y))
 					return Location.location(x, y);
 			}
