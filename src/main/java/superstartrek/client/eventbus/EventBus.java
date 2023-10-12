@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.UmbrellaException;
 
 public class EventBus {
@@ -51,10 +50,8 @@ public class EventBus {
 		//don't mess with invocation order
 		List<T> copy = new ArrayList<T>(protoList);
 		Set<Throwable> errors = null;
-		GWT.log("Firing "+type);
 		for (T h : copy)
 			try {
-				GWT.log("Callback "+callback);
 				callback.call(h);
 			} catch (Throwable e) {
 				if (errors == null)
