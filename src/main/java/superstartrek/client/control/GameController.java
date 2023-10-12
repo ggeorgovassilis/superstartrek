@@ -7,6 +7,7 @@ import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.eventbus.EventBus;
+import superstartrek.client.space.Constants;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.Star;
@@ -231,7 +232,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		//starting quadrant which ends the turn. This would save the game on the first turn, overwriting
 		//an older saved game.
 		//postponing in timer in order to avoid UI lag
-		if (application.starMap.getStarDate() > 2100)
+		if (application.starMap.getStarDate() > Constants.START_DATE)
 			Timer.postpone(()->application.gameSaver.saveGame());
 	}
 
