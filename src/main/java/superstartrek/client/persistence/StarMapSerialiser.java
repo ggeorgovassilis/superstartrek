@@ -18,7 +18,6 @@ public class StarMapSerialiser {
 	Application app;
 
 	void closeScope(String suffix) {
-		//TODO: profiling (FF, 2023) showed that sb.deleteChar kills performance
 		if (sb.getLastCharacter() == ',')
 			sb.deleteLastCharacter();
 		sb.append(suffix);
