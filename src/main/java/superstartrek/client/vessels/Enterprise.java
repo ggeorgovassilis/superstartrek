@@ -170,23 +170,23 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 		final int REACHABLE = 1;
 		final int UNKNOWN = 0;
 		int[][] visitLog = new int[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
-		visitLog[lx][ly] = REACHABLE;
+		visitLog[ly][lx] = REACHABLE;
 		Quadrant quadrant = getQuadrant();
 		for (int y = minY; y <= maxY; y++)
 			for (int x = minX; x <= maxX; x++) {
-				if (visitLog[x][y] != UNKNOWN)
+				if (visitLog[y][x] != UNKNOWN)
 					continue;
 				if (StarMap.distance_squared(lx, ly, x, y) > range_squared)
 					continue;
 				StarMap.walkLine(lx, ly, x, y, (x1, y1) -> {
-					if (visitLog[x1][y1] != UNKNOWN)
-						return visitLog[x1][y1] == REACHABLE;
+					if (visitLog[y1][x1] != UNKNOWN)
+						return visitLog[y1][x1] == REACHABLE;
 					// from here on, visitLog is known to be 0
 					if (Thing.isVisible(quadrant.findThingAt(x1, y1))) {
-						visitLog[x1][y1] = NOT_REACHABLE;
+						visitLog[y1][x1] = NOT_REACHABLE;
 						return false;
 					}
-					visitLog[x1][y1] = REACHABLE;
+					visitLog[y1][x1] = REACHABLE;
 					reachableSectors.add(Location.location(x1, y1));
 					return true;
 				});

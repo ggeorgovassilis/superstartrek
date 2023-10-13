@@ -199,11 +199,11 @@ public class Klingon extends Vessel
 	public void onKlingonTurnStarted() {
 		// Reminder: only Klingons in the active sector receive this event
 		Quadrant q = getActiveQuadrant();
-		if (getDisruptor().isBroken())
-			flee(q);
-		else
+		if (!getDisruptor().isBroken()) {
 			repositionKlingon(q);
-		fireOnEnterprise(q);
+			fireOnEnterprise(q);
+		} else
+			flee(q);
 	}
 
 	public void destroy() {
@@ -218,7 +218,8 @@ public class Klingon extends Vessel
 		getDisruptor().setBroken(false);
 		getCloak().setBroken(false);
 		getCloak().setValue(true);
-		getShields().setCurrentUpperBound(Math.max(getShields().getMaximum()*0.5, getShields().getCurrentUpperBound()));
+		getShields()
+				.setCurrentUpperBound(Math.max(getShields().getMaximum() * 0.5, getShields().getCurrentUpperBound()));
 		getShields().setValue(getShields().getCurrentUpperBound());
 	}
 
@@ -252,13 +253,10 @@ public class Klingon extends Vessel
 		BrowserAPI random = getApplication().browserAPI;
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
 		if (part == partTarget.none) {
-			if (getImpulse().isOperational() && random.nextDouble() < impact)
-				getImpulse().setBroken(true);
-			if (getDisruptor().isOperational() && random.nextDouble() < impact)
-				getDisruptor().setBroken(true);
-			if (!getCloak().isBroken() && random.nextDouble() < impact) {
+			getImpulse().setBroken((getImpulse().isOperational() && random.nextDouble() < impact));
+			getDisruptor().setBroken((getDisruptor().isOperational() && random.nextDouble() < impact));
+			if (!getCloak().isBroken() && random.nextDouble() < impact)
 				getCloak().damageAndTurnOff(getStarMap().getStarDate());
-			}
 		}
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
 		if ((part != partTarget.none) && (random.nextDouble() < PRECISION_SHOT_CHANCE_DAMAGE)) {
@@ -272,12 +270,10 @@ public class Klingon extends Vessel
 				message(weapon + " disabled " + target.getName() + " propulsion.", "klingon-damaged");
 				break;
 			default:
-
 			}
 		}
-		if (shields.getValue() <= 0) {
+		if (shields.getValue() <= 0)
 			destroy();
-		}
 	}
 
 	@Override

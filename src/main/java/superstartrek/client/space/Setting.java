@@ -2,11 +2,11 @@ package superstartrek.client.space;
 
 public class Setting {
 
-	protected double maximum;
-	protected double currentUpperBound;
-	protected double value;
-	protected int timeOfDamage;
-	protected boolean broken;
+	double maximum;
+	double currentUpperBound;
+	double value;
+	int timeOfDamage;
+	boolean broken;
 	
 	public Setting(double maximum) {
 		this.maximum = maximum;

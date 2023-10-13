@@ -11,6 +11,7 @@ import com.google.gwt.event.shared.UmbrellaException;
 
 public class EventBus {
 
+	// List vs Set: Lists guarantees constant handler order
 	Map<Event<? extends EventHandler>, List<? extends EventHandler>> handlers = new HashMap<Event<? extends EventHandler>, List<? extends EventHandler>>();
 
 	public <T extends EventHandler> void addHandler(Event<T> type, T handler) {
@@ -32,11 +33,8 @@ public class EventBus {
 	}
 
 	public <T extends EventHandler> void removeHandler(T handler) {
-		for (Event<?> type : handlers.keySet()) {
-			@SuppressWarnings("unchecked")
-			List<T> list = (List<T>) handlers.get(type);
-			list.remove(handler);
-		}
+		for (Event<?> type : handlers.keySet())
+			handlers.get(type).remove(handler);
 	}
 
 	public <T extends EventHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
