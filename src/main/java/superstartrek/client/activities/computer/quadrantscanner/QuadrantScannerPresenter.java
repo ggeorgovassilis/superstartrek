@@ -2,6 +2,7 @@ package superstartrek.client.activities.computer.quadrantscanner;
 
 import static superstartrek.client.eventbus.Events.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -35,7 +36,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 
 	public void onSectorSelected(int x, int y, int screenX, int screenY) {
 		Location location = Location.location(x, y);
-		Quadrant quadrant = getApplication().getActiveQuadrant();
+		Quadrant quadrant = getActiveQuadrant();
 		// this is an event instead of directly calling #onSectorSelected(...) because
 		// others fire this event too in order to update the view
 		fireEvent(SECTOR_SELECTED, (h) -> h.onSectorSelected(location, quadrant, screenX, screenY));
@@ -87,6 +88,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	}
 
 	void markSectorAsNavigationTarget(int x, int y) {
+		System.out.println(x+" "+y);
 		view.addCssToCell(x, y, "navigation-target");
 	}
 
@@ -152,7 +154,11 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 
 	@Override
 	public void onVesselDestroyed(Vessel vessel) {
-		clearSector(vessel.getLocation().x, vessel.getLocation().y);
+		Location location = vessel.getLocation();
+		clearSector(location.x, location.y);
+		if (getEnterprise().getLastReachableSectors().contains(location)) {
+			markSectorAsNavigationTarget(location.x, location.y);
+		}
 	}
 
 	@Override
@@ -172,17 +178,25 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		}
 	}
 
-	public void clearNavigationTargets(List<Location> locations) {
+	void clearNavigationTargets(List<Location> locations) {
 		for (Location l : locations)
 			view.removeCssFromCell(l.x, l.y, "navigation-target");
 	}
 
 	public void updateMapWithReachableSectors() {
 		Enterprise enterprise = getEnterprise();
-		clearNavigationTargets(enterprise.getLastReachableSectors());
+		//Sets are, in theory, faster, but Lists are backed by native JS arrays which is (probably) faster
+		List<Location> oldReachableSectors = new ArrayList<Location>(enterprise.getLastReachableSectors());
 		enterprise.updateReachableSectors();
-		List<Location> sectors = enterprise.getLastReachableSectors();
-		for (Location l : sectors)
+		List<Location> newReachableSectors = enterprise.getLastReachableSectors();
+		List<Location> oldButNotNewSectors = new ArrayList<Location>(oldReachableSectors);
+		oldButNotNewSectors.removeAll(newReachableSectors);
+		List<Location> newButNotOldSectors = new ArrayList<Location>(newReachableSectors);
+		newButNotOldSectors.removeAll(oldReachableSectors);
+		//oldReachableSectors is now all old reachable sectors which are not in the new reachable sectors
+		clearNavigationTargets(oldButNotNewSectors);
+		//TODO: mark only new sectors which are not in the old sectors
+		for (Location l : newButNotOldSectors)
 			markSectorAsNavigationTarget(l.x, l.y);
 	}
 

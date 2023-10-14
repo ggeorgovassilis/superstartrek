@@ -75,8 +75,6 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 	public void test_mark_navigatable_sectors() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
-		enterprise.setQuadrant(quadrant);
-		enterprise.setLocation(Location.location(4, 4));
 		quadrant.add(new Star(1,6,StarClass.A));
 		quadrant.add(new Star(2,6,StarClass.A));
 		quadrant.add(new Star(3,6,StarClass.A));
@@ -84,14 +82,25 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		quadrant.add(new Star(6,6,StarClass.A));
 		quadrant.add(new Star(7,6,StarClass.A));
 		quadrant.add(new Star(4,3,StarClass.A));
+		enterprise.setQuadrant(quadrant);
+		enterprise.setLocation(Location.location(4, 4));
 		enterprise.updateReachableSectors();
+		enterprise.setLocation(Location.location(5, 4));
 		List<Location> targets = enterprise.getLastReachableSectors();
 		assertFalse(targets.isEmpty());
 		presenter.updateMapWithReachableSectors();
-		for (Location loc:targets)
-			verify(view).addCssToCell(loc.x, loc.y, "navigation-target");
+		Location[] expectedRemoves = {Location.location(2, 2), Location.location(2, 3), Location.location(5, 4),
+				Location.location(1, 4), Location.location(2, 5), Location.location(4, 7)};
+		Location[] expectedAdds = {Location.location(5, 2), Location.location(5, 1),
+				Location.location(4, 2), Location.location(7, 2), Location.location(4, 4), Location.location(7, 3),
+				Location.location(7, 5)};
+		for (Location l:expectedRemoves)
+			verify(view).removeCssFromCell(l.x, l.y, "navigation-target");
+		for (Location l:expectedAdds)
+			verify(view).addCssToCell(l.x, l.y, "navigation-target");
 		for (Star star:quadrant.getStars())
 			verify(view, never()).addCssToCell(star.getLocation().x, star.getLocation().y, "navigation-target");
+		verifyNoMoreInteractions(view);
 	}
 	
 	@Test
