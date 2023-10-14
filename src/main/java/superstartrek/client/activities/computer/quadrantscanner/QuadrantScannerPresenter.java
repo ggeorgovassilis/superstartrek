@@ -5,8 +5,6 @@ import static superstartrek.client.eventbus.Events.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.computer.sectorcontextmenu.SectorSelectedHandler;
