@@ -88,7 +88,6 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	}
 
 	void markSectorAsNavigationTarget(int x, int y) {
-		System.out.println(x+" "+y);
 		view.addCssToCell(x, y, "navigation-target");
 	}
 
