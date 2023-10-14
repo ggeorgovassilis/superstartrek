@@ -16,7 +16,7 @@ A mobile friendly web remake of [Super Star Trek](https://en.wikipedia.org/wiki/
 
 **Important note**: the main development branch is gh-pages
 
-gwt devmode configuration for ecplipse: `-startupUrl index.html -war target/sst -noserver superstartrek.superstartrek`
+GWT devmode configuration for Eclipse: `-startupUrl index.html -war target/sst -noserver -style PRETTY -XmethodNameDisplayMode ONLY_METHOD_NAME superstartrek.sst-dev`
 
 Build locally:
 `mvn install`
