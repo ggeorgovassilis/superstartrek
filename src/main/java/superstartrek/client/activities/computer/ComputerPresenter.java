@@ -88,11 +88,11 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		else view.removeAntimatterCss("antimatter-low");
 	}
 
-	public void updateQuadrantHeaderView() {
-		String alert = "";
+	String getAlertCss() {
 		Quadrant quadrant = getEnterprise().getQuadrant();
 		Location enterprisePosition = getEnterprise().getLocation();
-		final double distanceOfRedAlertSquared = 3 * 3;
+		String alert="";
+		final double distanceOfRedAlertSquared = Constants.RED_ALERT_DISTANCE*Constants.RED_ALERT_DISTANCE;
 		if (quadrant.hasKlingons()) {
 			double minDistanceSquared = distanceOfRedAlertSquared;
 			for (Klingon k : quadrant.getKlingons()) {
@@ -103,8 +103,12 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 			}
 			alert = minDistanceSquared < distanceOfRedAlertSquared ? "red-alert" : "yellow-alert";
 		}
-
-		view.setQuadrantName(quadrant.getName(), alert);
+		return alert;
+	}
+	
+	public void updateQuadrantHeaderView() {
+		String alert = getAlertCss();
+		view.setQuadrantName(getEnterprise().getQuadrant().getName(), alert);
 	}
 
 	public void updateShieldsView() {

@@ -28,6 +28,7 @@ public class Constants {
 	public final static int ENTERPRISE_REACTOR_CAPACITY = 50;
 	public final static int START_DATE = 2100;
 	public final static double ENTERPRISE_MIN_WARP_CONSUMPTION = 5;
+	public final static double RED_ALERT_DISTANCE=3;
 	
 	public static double ENTERPRISE_PHASER_PRECISION(boolean autoAim) {
 		return 2.0 * (autoAim ? 1 : 0.7);	
