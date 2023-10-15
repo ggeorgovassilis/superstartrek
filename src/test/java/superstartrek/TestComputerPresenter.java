@@ -26,8 +26,6 @@ public class TestComputerPresenter extends BaseTest{
 		presenter = new ComputerPresenter(application, scoreKeeper);
 		view = mock(ComputerScreen.class);
 		presenter.setView(view);
-		presenter.setEnterprise(enterprise);
-		presenter.setStarMap(starMap);
 	}
 	
 	@Test

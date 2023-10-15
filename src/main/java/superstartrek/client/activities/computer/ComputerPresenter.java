@@ -14,7 +14,6 @@ import superstartrek.client.space.Constants;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.Setting;
-import superstartrek.client.space.StarBase;
 import superstartrek.client.space.StarMap;
 import superstartrek.client.space.Thing;
 import superstartrek.client.utils.CSS;
@@ -30,44 +29,32 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
 
 	ScoreKeeper scoreKeeper;
-	Enterprise enterprise;
-	StarMap starMap;
 
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super();
  		this.scoreKeeper = scoreKeeper;
  		addHandler(Events.ACTIVITY_CHANGED);
 		addHandler(Events.PLAYER_TURN_STARTED);
-		addHandler(Events.TURN_ENDED);
 		addHandler(Events.KLINGON_DESTROYED);
-		addHandler(Events.GAME_STARTED);
 		addHandler(Events.KEY_PRESSED);
 		addHandler(Events.SECTOR_SELECTED);
 		addHandler(Events.CONTEXT_MENU_HIDE);
 	}
 
-	public void setEnterprise(Enterprise enterprise) {
-		this.enterprise = enterprise;
-	}
-
-	public void setStarMap(StarMap starMap) {
-		this.starMap = starMap;
-	}
-
-	public void showScreen() {
+	void showScreen() {
 		updateStarDateView();
 		view.show();
 	}
 
-	public void updateStarDateView() {
-		view.showStarDate("" + starMap.getStarDate());
+	void updateStarDateView() {
+		view.showStarDate("" + getStarMap().getStarDate());
 	}
 
-	public void updateScoreView() {
+	void updateScoreView() {
 		view.showScore("" + scoreKeeper.getScore());
 	}
 
-	public void hideScreen() {
+	void hideScreen() {
 		view.hide();
 	}
 
@@ -80,6 +67,7 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 
 	
 	public void updateStatusButtonView() {
+		Enterprise enterprise = getEnterprise();
 		String cssImpulse = damageClass(enterprise.getImpulse(), true);
 		String cssTactical = damageClass(enterprise.getAutoAim(), true);
 		String cssPhasers = damageClass(enterprise.getPhasers(), true);
@@ -92,8 +80,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 			view.disableLrsButton();
 	}
 
-	public void updateAntimatterView() {
-		Setting antimatter = enterprise.getAntimatter();
+	void updateAntimatterView() {
+		Setting antimatter = getEnterprise().getAntimatter();
 		view.updateAntimatter(antimatter.getValue(), antimatter.getMaximum());
 		if (antimatter.getValue()<antimatter.getMaximum()*Constants.ANTIMATTER_WARNING_THRESHOLD)
 			view.addAntimatterCss("antimatter-low");
@@ -102,8 +90,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 
 	public void updateQuadrantHeaderView() {
 		String alert = "";
-		Quadrant quadrant = enterprise.getQuadrant();
-		Location enterprisePosition = enterprise.getLocation();
+		Quadrant quadrant = getEnterprise().getQuadrant();
+		Location enterprisePosition = getEnterprise().getLocation();
 		final double distanceOfRedAlertSquared = 3 * 3;
 		if (quadrant.hasKlingons()) {
 			double minDistanceSquared = distanceOfRedAlertSquared;
@@ -120,17 +108,11 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	}
 
 	public void updateShieldsView() {
-		Setting shields = enterprise.getShields();
+		Setting shields = getEnterprise().getShields();
 		view.updateShields(shields.getValue(), shields.getCurrentUpperBound(), shields.getMaximum());
-		updateShieldsDirectionCss(enterprise.getShieldDirection());
-	}
-
-	public boolean canShowDockButton() {
-		Quadrant q = enterprise.getQuadrant();
-		StarBase starBase = q.getStarBase();
-		boolean visible = starBase != null
-				&& (!q.hasKlingons() || StarMap.within_distance(enterprise, starBase, 2));
-		return visible;
+		//TODO: updateShieldsView is called when player turn starts, but shields directions change only when 
+		//the user toggles them or after a starbase dock. 
+		updateShieldsDirectionCss(getEnterprise().getShieldDirection());
 	}
 
 	public void onSkipButtonClicked() {
@@ -148,13 +130,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	}
 
 	@Override
-	public void onTurnEnded() {
-		updateButtonViews();
-	}
-
-	@Override
 	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage, boolean wasAutoFire) {
-		if (target == starMap.enterprise) {
+		if (target == getEnterprise()) {
 			updateShieldsView();
 		}
 	}
@@ -178,16 +155,9 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		}
 	}
 	
-	protected void updateButtonViews() {
+	void updateButtonViews() {
 		updateStatusButtonView();
 		view.setCommandBarMode("mode-command");
-	}
-
-	@Override
-	public void onGameStarted(StarMap starMap) {
-		this.enterprise = starMap.enterprise;
-		this.starMap = starMap;
-		updateButtonViews();
 	}
 
 	@Override
@@ -262,8 +232,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	}
 	
 	public void onToggleShieldsButtonClicked() {
-		enterprise.toggleShields();
-		updateShieldsDirectionCss(enterprise.getShieldDirection());
+		getEnterprise().toggleShields();
+		updateShieldsDirectionCss(getEnterprise().getShieldDirection());
 	}
 
 }

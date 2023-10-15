@@ -77,23 +77,31 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 				}
 			}
 			view.updateSector(location.x, location.y, content, css);
-		} else
-			view.clearSector(location.x, location.y);
+		} else {
+			clearAndMaybeRepaintSector(location);
+		}
 	}
 
 	void clearSector(int x, int y) {
 		view.clearSector(x, y);
+	}
+	
+	void clearAndMaybeRepaintSector(Location location) {
+		clearSector(location.x, location.y);
+		if (getEnterprise().getLastReachableSectors().contains(location)) {
+			markSectorAsNavigationTarget(location.x, location.y);
+		}
 	}
 
 	void markSectorAsNavigationTarget(int x, int y) {
 		view.addCssToCell(x, y, "navigation-target");
 	}
 
-	void updateSector(Quadrant q, int x, int y) {
-		Thing thing = q.findThingAt(x, y);
-		if (thing == null)
-			clearSector(x, y);
-		else
+	void updateSector(Quadrant q, Location location) {
+		Thing thing = q.findThingAt(location.x, location.y);
+		if (thing == null) {
+			clearAndMaybeRepaintSector(location);
+		} else
 			updateSector(thing);
 	}
 
@@ -125,7 +133,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	public void thingMoved(Thing thing, Quadrant qFrom, Location lFrom, Quadrant qTo, Location lTo) {
 		// can't just clear sector, because the "from" location may refer to a different
 		// quadrant when eg. Enterprise warps
-		updateSector(qTo, lFrom.x, lFrom.y);
+		updateSector(qTo, lFrom);
 		updateSector(thing);
 	}
 
@@ -136,7 +144,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 
 	@Override
 	public void onEnterpriseRepaired(Enterprise enterprise) {
-		updateSector(enterprise.getQuadrant(), enterprise.getLocation().x, enterprise.getLocation().y);
+		updateSector(enterprise.getQuadrant(), enterprise.getLocation());
 	}
 
 	@Override
@@ -164,7 +172,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		// target might have been destroyed (so not on map anymore) and thus null
 		if (target == null)
 			return;
-		updateSector(quadrant, target.getLocation().x, target.getLocation().y);
+		updateSector(quadrant, target.getLocation());
 		switch (weapon) {
 		case disruptor:
 		case phaser:
@@ -175,14 +183,10 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		}
 	}
 
-	void clearNavigationTargets(List<Location> locations) {
-		for (Location l : locations)
-			view.removeCssFromCell(l.x, l.y, "navigation-target");
-	}
-
 	public void updateMapWithReachableSectors() {
 		Enterprise enterprise = getEnterprise();
-		//Sets are, in theory, faster, but Lists are backed by native JS arrays which is (probably) faster
+		// Sets are, in theory, faster, but Lists are backed by native JS arrays which
+		// is (probably) faster
 		List<Location> oldReachableSectors = new ArrayList<Location>(enterprise.getLastReachableSectors());
 		enterprise.updateReachableSectors();
 		List<Location> newReachableSectors = enterprise.getLastReachableSectors();
@@ -190,9 +194,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		oldButNotNewSectors.removeAll(newReachableSectors);
 		List<Location> newButNotOldSectors = new ArrayList<Location>(newReachableSectors);
 		newButNotOldSectors.removeAll(oldReachableSectors);
-		//oldReachableSectors is now all old reachable sectors which are not in the new reachable sectors
-		clearNavigationTargets(oldButNotNewSectors);
-		//TODO: mark only new sectors which are not in the old sectors
+		for (Location l : oldButNotNewSectors)
+			view.removeCssFromCell(l.x, l.y, "navigation-target");
 		for (Location l : newButNotOldSectors)
 			markSectorAsNavigationTarget(l.x, l.y);
 	}

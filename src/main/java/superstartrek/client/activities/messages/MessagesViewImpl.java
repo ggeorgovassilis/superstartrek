@@ -45,6 +45,9 @@ public class MessagesViewImpl extends PopupViewImpl<MessagesPresenter> implement
 		if (inTransition || isVisible())
 			return;
 		inTransition = true;
+		//Most (all?) messages arrive within the same slot between user interactions on the main js thread.
+		//Modifying the view with messages during the popup animation would slow it down considerably.
+		//Deferring the apparence ensures all DOM modifications have finished before the animation.
 		superstartrek.client.utils.Timer.postpone(()->{
 			super.show();
 			inTransition = false;
