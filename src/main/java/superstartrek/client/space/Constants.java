@@ -26,6 +26,8 @@ public class Constants {
 	public final static int ENTERPRISE_TORPEDO_COUNT = 10;
 	public final static int ENTERPRISE_ANTIMATTER = 1000;
 	public final static int ENTERPRISE_REACTOR_CAPACITY = 50;
+	public final static int ENTERPRISE_IMPULSE=3;
+	public final static int ENTERPRISE_SHIELDS=60;
 	public final static int START_DATE = 2100;
 	public final static double ENTERPRISE_MIN_WARP_CONSUMPTION = 5;
 	public final static double RED_ALERT_DISTANCE=3;

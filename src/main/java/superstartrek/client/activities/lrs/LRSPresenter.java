@@ -41,7 +41,7 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 
 	void updateLrsView() {
 		StarMap starMap = getStarMap();
-		Enterprise enterprise = starMap.enterprise;
+		Enterprise enterprise = getEnterprise();
 		Quadrant qEnterprise = enterprise.getQuadrant();
 		boolean doesWarpdriveWork = enterprise.getWarpDrive().isOperational();
 		double reactor = enterprise.getReactor().getValue();

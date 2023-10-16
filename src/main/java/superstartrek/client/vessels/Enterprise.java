@@ -86,7 +86,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	}
 
 	public Enterprise(Application app, StarMap map) {
-		super(new Setting(3), new Setting(60));
+		super(new Setting(Constants.ENTERPRISE_IMPULSE), new Setting(Constants.ENTERPRISE_SHIELDS));
 		this.application = app;
 		this.starMap = map;
 		setName("NCC 1701 USS Enterprise");
