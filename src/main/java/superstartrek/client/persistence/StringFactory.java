@@ -1,8 +1,13 @@
 package superstartrek.client.persistence;
 
+import com.google.gwt.core.client.JsArray;
+
 /**
  * Helper class for constructing large strings quickly with
- * functionality needed by {@link StarMapSerialiser} 
+ * functionality needed by {@link StarMapSerialiser}.
+ * 
+ * A much faster implementation would be backed by {@link JsArray} which 
+ * can grow as needed. However that's not unit-testable anymore.
  */
 public class StringFactory {
 
@@ -39,8 +44,6 @@ public class StringFactory {
 		length--;
 		return this;
 	}
-	
-	
 	
 	@Override
 	public String toString() {
