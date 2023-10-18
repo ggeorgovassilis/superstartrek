@@ -1,18 +1,18 @@
 superstartrek
 =============
 
-Super Star Trek revived as an HTML 5 app.
-
 &gt;&gt;&gt;&gt;[Click to play](https://ggeorgovassilis.github.io/superstartrek/site/index.html)&lt;&lt;&lt;&lt;
 
-A mobile friendly web remake of [Super Star Trek](https://en.wikipedia.org/wiki/Star_Trek_\(1971_video_game\))
+Super Star Trek revived as an HTML 5 app.
+
+A mobile friendly web remake of [Super Star Trek](https://en.wikipedia.org/wiki/Star_Trek_\(1971_video_game\)
 
 
 ![Screenshot 1](https://github.com/ggeorgovassilis/superstartrek/raw/gh-pages/images-for-README/screenshot1.png "Screenshot 1")
 
 ![Screenshot 2](https://github.com/ggeorgovassilis/superstartrek/raw/gh-pages/images-for-README/screenshot2.png "Screenshot 2")
 
-## developing
+## Developing
 
 **Important note**: the main development branch is gh-pages
 
@@ -21,7 +21,7 @@ GWT devmode configuration for Eclipse: `-startupUrl index.html -war target/sst -
 Build locally:
 `mvn install`
 
-## software architecture
+## Software architecture
 
 This chapter records random considerations regarding software architecture.
 
@@ -39,7 +39,7 @@ Java ecosystem than the Javascript ecosystem.
 ###  Why did superstartrek not stick to the original user interface?
 
 The original user interface was conceived in the 70s and optimised for terminals with keyboards. The game falls clearly into
-the strategy genre and thus is best played with either a mouse or a touch screen. Also, because it is 50 years later now and technology and user expectations have changed. The graphically, map-centred UI of superstartrek is more intuitive and easier to interact with.
+the strategy genre and thus is best played with either a mouse or a touch screen. Also, because it is 50 years later now and technology and user expectations have changed. The graphically, map-centred UI of superstartrek is more intuitive and easier to interact with on mobile devices.
 
 ### The Model-View-Presenter-Controller pattern
 
@@ -57,6 +57,6 @@ Controllers take care of overarching concerns, mainly control transitions betwee
 
 Domain events extends the `Event` class and represent events that happen in the game such as a Klingon firing or the Enterprise consuming energy. Presenters register listeners and broadcast events with the `EventBus`. An event-based design
 has the benefit of decoupling events from actions, so that the component which generates an event isn't concerned with who
-reacts to it. Also event-based code is easier to unit test. The main drawback are unintended side effects when a component modifies, as a reaction to an event, shared data structures - other components accessing those data structures may or may not change behaviour based on the change in the shared data structures which makes the event processing order important.  
+reacts to it. Also event-based code is easier to unit test. The main drawback are unintended side effects when a component modifies, as a reaction to an event, shared data structures - other components accessing those data structures may change behaviour based on the change in the shared data structures which makes the event processing order important.  
 
 
