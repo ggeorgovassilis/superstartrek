@@ -10,6 +10,7 @@ import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
+import superstartrek.client.space.Constants;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.Setting;
@@ -44,10 +45,6 @@ public class Klingon extends Vessel
 		public final int disruptor;
 		public final int xp;
 	}
-
-	public final static int MAX_SECTOR_SPEED = 1;
-	public final static int DISRUPTOR_RANGE_SECTORS = 2;
-	final static double PRECISION_SHOT_CHANCE_DAMAGE = 0.5;
 
 	Setting disruptor;
 	Setting cloak;
@@ -109,7 +106,7 @@ public class Klingon extends Vessel
 	}
 
 	public boolean hasClearShotAt(Quadrant index, Location target, Enterprise enterprise, StarMap map) {
-		if (StarMap.within_distance(target, getLocation(), DISRUPTOR_RANGE_SECTORS)) {
+		if (StarMap.within_distance(target, getLocation(), Constants.KLINGON_DISRUPTOR_RANGE_SECTORS)) {
 			List<Thing> obstacles = StarMap.findObstaclesInLine(index, getLocation(), target, 2);
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
@@ -135,7 +132,7 @@ public class Klingon extends Vessel
 			return;
 		// path used to contain origin sector (old a* impl); it doesn't anymore, that's
 		// why MAX_SECTOR_SPEED-1
-		Location sector = path.get(Math.max(0, Math.min(MAX_SECTOR_SPEED - 1, path.size() - 2)));
+		Location sector = path.get(Math.max(0, Math.min(Constants.KLINGON_MAX_SECTOR_SPEED - 1, path.size() - 2)));
 		jumpTo(sector);
 	}
 
@@ -154,7 +151,7 @@ public class Klingon extends Vessel
 			return;
 		StarMap map = getStarMap();
 		Enterprise enterprise = map.enterprise;
-		if (!StarMap.within_distance(this, enterprise, DISRUPTOR_RANGE_SECTORS))
+		if (!StarMap.within_distance(this, enterprise, Constants.KLINGON_DISRUPTOR_RANGE_SECTORS))
 			return;
 		if (!hasClearShotAt(index, enterprise.getLocation(), enterprise, map))
 			return;
@@ -259,7 +256,7 @@ public class Klingon extends Vessel
 				getCloak().damageAndTurnOff(getStarMap().getStarDate());
 		}
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
-		if ((part != partTarget.none) && (random.nextDouble() < PRECISION_SHOT_CHANCE_DAMAGE)) {
+		if ((part != partTarget.none) && (random.nextDouble() < Constants.KLINGON_PRECISION_SHOT_CHANCE_DAMAGE)) {
 			switch (part) {
 			case weapons:
 				disruptor.setBroken(true);
@@ -299,12 +296,13 @@ public class Klingon extends Vessel
 
 	@Override
 	public void beforeGameRestart() {
-		getEvents().removeHandler(this);
+		//TODO: is this necessary? the game reloads
+		removeHandler(this);
 	}
 
 	@Override
 	public void onGameStarted(StarMap map) {
-		if (getApplication().getActiveQuadrant().contains(this))
+		if (getActiveQuadrant().contains(this))
 			registerActionHandlers();
 	}
 

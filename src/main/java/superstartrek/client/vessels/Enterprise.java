@@ -637,7 +637,7 @@ public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandle
 	public ShieldDirection computeOptimalShieldDirection() {
 		List<Klingon> threats = getQuadrant().getKlingons().stream()
 				.filter(k -> k.isVisible() && k.getDisruptor().isOperational()
-						&& StarMap.within_distance(getLocation(), k.getLocation(), Klingon.DISRUPTOR_RANGE_SECTORS))
+						&& StarMap.within_distance(getLocation(), k.getLocation(), Constants.KLINGON_DISRUPTOR_RANGE_SECTORS))
 				.sorted((k1,
 						k2) -> ((int) Math.signum(k2.getDisruptor().getMaximum() - k1.getDisruptor().getMaximum())))
 				.collect(Collectors.toList());

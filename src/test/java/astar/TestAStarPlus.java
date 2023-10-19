@@ -185,14 +185,14 @@ public class TestAStarPlus extends BaseTest {
 			}
 
 			AStarPlus asp = new AStarPlus();
-			List<Location> pathAsp = asp.findPathBetween(from, to, q, Klingon.MAX_SECTOR_SPEED);
+			List<Location> pathAsp = asp.findPathBetween(from, to, q, Constants.KLINGON_MAX_SECTOR_SPEED);
 			String log = "--------------\n";
 			log += ("a*+ " + pathAsp + "\n");
 			log += printMap(q, from, to, pathAsp) + "\n";
 
 			AStarPlus reference = new AStarPlus();
 			List<Location> fullPath = reference.findPathBetween(from, to, q, 100);
-			for (int s=0;s<Math.min(Klingon.MAX_SECTOR_SPEED, fullPath.size());s++)
+			for (int s=0;s<Math.min(Constants.KLINGON_MAX_SECTOR_SPEED, fullPath.size());s++)
 				assertEquals(log, fullPath.get(s), pathAsp.get(s));
 
 			Application.set(null);

@@ -31,6 +31,10 @@ public class Constants {
 	public final static int START_DATE = 2100;
 	public final static double ENTERPRISE_MIN_WARP_CONSUMPTION = 5;
 	public final static double RED_ALERT_DISTANCE=3;
+	public final static int KLINGON_MAX_SECTOR_SPEED = 1;
+	public final static int KLINGON_DISRUPTOR_RANGE_SECTORS = 2;
+	public final static double KLINGON_PRECISION_SHOT_CHANCE_DAMAGE = 0.5;
+
 	
 	public static double ENTERPRISE_PHASER_PRECISION(boolean autoAim) {
 		return 2.0 * (autoAim ? 1 : 0.7);	
