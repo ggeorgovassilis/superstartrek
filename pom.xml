@@ -259,6 +259,7 @@
 					<optimizationLevel>${gwt.optimizationLevel}</optimizationLevel>
 					<compileReport>true</compileReport>
 					<strict>true</strict>
+					<removeDuplicateFunctions>true</removeDuplicateFunctions>
 					<persistentunitcache>false</persistentunitcache>
 				</configuration>
 			</plugin>

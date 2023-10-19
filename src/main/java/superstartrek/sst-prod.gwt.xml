@@ -3,7 +3,6 @@
 <module rename-to="superstartrek.superstartrek">
 	<inherits name="com.google.gwt.logging.Logging" />
 	<inherits name="com.google.gwt.http.HTTP" />
-	<inherits name="com.google.gwt.jsonp.Jsonp" />
 	<inherits name="com.google.gwt.storage.Storage" />
 	<inherits name="com.georgovassilis.gwthtmlresource.htmlresource" />
 
@@ -12,7 +11,7 @@
 
 	<!-- Enable log -->
 	<set-property name="gwt.logging.logLevel" value="INFO" />
-	<set-property name="gwt.logging.enabled" value="TRUE" />
+	<set-property name="gwt.logging.enabled" value="FALSE" />
 	<source path="client" />
 	<entry-point class="superstartrek.client.Application" />
 	<set-property name="compiler.useSourceMaps" value="false" />
