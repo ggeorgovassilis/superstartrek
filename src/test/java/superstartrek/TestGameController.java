@@ -38,7 +38,7 @@ public class TestGameController extends BaseTest {
 	@Test
 	public void test_that_message_is_printed_when_star_is_hit() {
 		bus.fireEvent(Events.AFTER_FIRE, (h) -> h.afterFire(quadrant, enterprise,
-				new Star(1, 2, StarClass.A), Weapon.phaser, 1, false));
+				new Star(Location.location(1, 2), StarClass.A), Weapon.phaser, 1, false));
 		assertEquals(1, bus.getFiredCount(Events.MESSAGE_POSTED));
 	}
 

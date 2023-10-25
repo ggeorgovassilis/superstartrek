@@ -7,6 +7,7 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.lrs.LRSScreen;
 import superstartrek.client.activities.lrs.LRSPresenter;
 import superstartrek.client.space.Constants;
+import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.Star;
 import superstartrek.client.space.Star.StarClass;
@@ -45,7 +46,7 @@ public class TestLRSPresenter extends BaseTest{
 				}
 			}
 			for (int i=0;i<(x+y)%(Constants.SECTORS_EDGE-1);i++) {
-				Star star = new Star(x, y, StarClass.A);
+				Star star = new Star(Location.location(x, y), StarClass.A);
 				q.add(star);
 			}
 			if (x<3&&y<3)

@@ -49,7 +49,7 @@ public class TestAStarPlus extends BaseTest {
 			for (int l = 0; l < obstacles; l++) {
 				int x = random.nextInt(Constants.SECTORS_EDGE);
 				int y = random.nextInt(Constants.SECTORS_EDGE);
-				q.add(new Star(x, y, false, StarClass.A));
+				q.add(new Star(Location.location(x, y), false, StarClass.A));
 			}
 
 			for (int innerTurn = 0; innerTurn < TURNS_WITH_SAME_MAP; innerTurn++) {
@@ -142,7 +142,7 @@ public class TestAStarPlus extends BaseTest {
 			for (int l = 0; l < obstacles; l++) {
 				int x = random.nextInt(Constants.SECTORS_EDGE);
 				int y = random.nextInt(Constants.SECTORS_EDGE);
-				q.add(new Star(x, y, false, StarClass.A));
+				q.add(new Star(Location.location(x, y), false, StarClass.A));
 			}
 
 			AStarPlus asp = new AStarPlus();
@@ -181,7 +181,7 @@ public class TestAStarPlus extends BaseTest {
 			for (int l = 0; l < obstacles; l++) {
 				int x = random.nextInt(Constants.SECTORS_EDGE);
 				int y = random.nextInt(Constants.SECTORS_EDGE);
-				q.add(new Star(x, y, false, StarClass.A));
+				q.add(new Star(Location.location(x, y), false, StarClass.A));
 			}
 
 			AStarPlus asp = new AStarPlus();

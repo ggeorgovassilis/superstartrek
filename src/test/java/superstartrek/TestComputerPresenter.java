@@ -145,8 +145,9 @@ public class TestComputerPresenter extends BaseTest{
 
 	@Test
 	public void test_scanSector_star() {
-		quadrant.add(new Star(3,3, StarClass.B));
-		presenter.scanSector(Location.location(3, 3), quadrant);
+		Location l3_3 = Location.location(3, 3);
+		quadrant.add(new Star(l3_3, StarClass.B));
+		presenter.scanSector(l3_3, quadrant);
 		verify(view).setScanProperty("scan-report-name", "scan-report-name-value", "", "Class B star at 3:3");
 		verify(view).setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
 		verify(view).setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden","");

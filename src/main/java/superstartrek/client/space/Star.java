@@ -23,18 +23,18 @@ public class Star extends Thing{
 		public final double probability;
 	}
 
-	public Star(int x, int y, boolean registerEvents, StarClass sc) {
+	public Star(Location location, boolean registerEvents, StarClass sc) {
 		setName(sc.typeName);
 		setSymbol(sc.symbol);
 		setCss("star " + sc.css);
-		setLocation(Location.location(x, y));
+		setLocation(location);
 	}
 	
 	public Star() {
 	}
 
-	public Star(int x, int y, StarClass sc) {
-		this(x, y, true, sc);
+	public Star(Location location, StarClass sc) {
+		this(location, true, sc);
 	}
 	
 	public static boolean is(Thing thing) {

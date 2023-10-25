@@ -271,13 +271,13 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
 		starMap.enterprise = enterprise;
-		quadrant.add(new Star(1, 6, StarClass.A));
-		quadrant.add(new Star(2, 6, StarClass.A));
-		quadrant.add(new Star(3, 6, StarClass.A));
-		quadrant.add(new Star(5, 6, StarClass.A));
-		quadrant.add(new Star(6, 6, StarClass.A));
-		quadrant.add(new Star(7, 6, StarClass.A));
-		quadrant.add(new Star(4, 3, StarClass.A));
+		quadrant.add(new Star(Location.location(1, 6), StarClass.A));
+		quadrant.add(new Star(Location.location(2, 6), StarClass.A));
+		quadrant.add(new Star(Location.location(3, 6), StarClass.A));
+		quadrant.add(new Star(Location.location(5, 6), StarClass.A));
+		quadrant.add(new Star(Location.location(6, 6), StarClass.A));
+		quadrant.add(new Star(Location.location(7, 6), StarClass.A));
+		quadrant.add(new Star(Location.location(4, 3), StarClass.A));
 		enterprise.updateReachableSectors();
 		List<Location> list = enterprise.getLastReachableSectors();
 		assertTrue(list.contains(Location.location(4, 5)));
@@ -308,7 +308,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setLocation(Location.location(4, 4));
 		quadrant.add(enterprise);
 
-		Star star = new Star(3, 3, Star.StarClass.A);
+		Star star = new Star(Location.location(3, 3), Star.StarClass.A);
 		quadrant.add(star);
 		Klingon klingon = new Klingon(Klingon.ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(5, 5));

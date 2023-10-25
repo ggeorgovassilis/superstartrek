@@ -25,7 +25,7 @@ public class TestQuadrant extends BaseTest{
 		k.setLocation(Location.location(2, 3));
 		quadrant.add(k);
 
-		Star star = new Star(4, 4, StarClass.A);
+		Star star = new Star(Location.location(4, 4), StarClass.A);
 		quadrant.add(star);
 
 		StarBase starBase = new StarBase(Location.location(5, 6));
@@ -49,7 +49,7 @@ public class TestQuadrant extends BaseTest{
 		k.setLocation(Location.location(2, 3));
 		quadrant.add(k);
 
-		Star star = new Star(4, 4, StarClass.A);
+		Star star = new Star(Location.location(4, 4), StarClass.A);
 		quadrant.add(star);
 
 		StarBase starBase = new StarBase(Location.location(5, 6));

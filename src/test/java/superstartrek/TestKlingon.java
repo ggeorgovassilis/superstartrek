@@ -111,7 +111,7 @@ public class TestKlingon extends BaseTest{
 	public void test_hasClearShotAt_obstructed() {
 		klingon.setLocation(Location.location(3, 3));
 		enterprise.setLocation(Location.location(3, 5));
-		Star star = new Star(3, 4, StarClass.A);
+		Star star = new Star(Location.location(3, 4), StarClass.A);
 		quadrant.add(star);
 		assertFalse(klingon.hasClearShotAt(enterprise.getQuadrant(), enterprise.getLocation(), enterprise, starMap));
 	}

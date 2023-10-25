@@ -87,7 +87,7 @@ public class Setup {
 					starClassForNewStar = sc;
 					break;
 				}
-			Star star = new Star(loc.x, loc.y, starClassForNewStar);
+			Star star = new Star(loc, starClassForNewStar);
 			q.add(star);
 		}
 		if ((x + y * Constants.SECTORS_EDGE)

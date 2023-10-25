@@ -55,8 +55,8 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 		sb.setLocation(Location.location(1,7));
 		qTo.setStarBase(sb);
 		
-		qTo.add(new Star(6,5, StarClass.A));
-		qTo.add(new Star(5,6, StarClass.A));
+		qTo.add(new Star(Location.location(6,5), StarClass.A));
+		qTo.add(new Star(Location.location(5,6), StarClass.A));
 		
 		Klingon k = new Klingon(ShipClass.BirdOfPrey);
 		k.setLocation(Location.location(7,7));
@@ -75,13 +75,13 @@ public class TestQuadrantScannerPresenter extends BaseTest{
 	public void test_mark_navigatable_sectors() {
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
-		quadrant.add(new Star(1,6,StarClass.A));
-		quadrant.add(new Star(2,6,StarClass.A));
-		quadrant.add(new Star(3,6,StarClass.A));
-		quadrant.add(new Star(5,6,StarClass.A));
-		quadrant.add(new Star(6,6,StarClass.A));
-		quadrant.add(new Star(7,6,StarClass.A));
-		quadrant.add(new Star(4,3,StarClass.A));
+		quadrant.add(new Star(Location.location(1,6),StarClass.A));
+		quadrant.add(new Star(Location.location(2,6),StarClass.A));
+		quadrant.add(new Star(Location.location(3,6),StarClass.A));
+		quadrant.add(new Star(Location.location(5,6),StarClass.A));
+		quadrant.add(new Star(Location.location(6,6),StarClass.A));
+		quadrant.add(new Star(Location.location(7,6),StarClass.A));
+		quadrant.add(new Star(Location.location(4,3),StarClass.A));
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(4, 4));
 		enterprise.updateReachableSectors();
