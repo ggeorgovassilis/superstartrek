@@ -1,6 +1,5 @@
 package superstartrek.client.activities;
 
-import superstartrek.client.Application;
 import superstartrek.client.eventbus.Event;
 import superstartrek.client.eventbus.EventHandler;
 import superstartrek.client.utils.BaseMixin;
@@ -19,11 +18,6 @@ public abstract class BasePresenter<V extends View> implements Presenter<V>, Bas
 	@Override
 	public void setView(V view) {
 		this.view = view;
-	}
-	
-	@Override
-	public Application getApplication() {
-		return BaseMixin.super.getApplication();
 	}
 	
 }

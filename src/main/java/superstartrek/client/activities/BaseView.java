@@ -22,7 +22,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	}
 	
 	protected Application application() {
-		return presenter.getApplication();
+		return Application.get();
 	}
 	/**
 	 * Indicates whether the component aligns by HTML/CSS or requires "assistance"
