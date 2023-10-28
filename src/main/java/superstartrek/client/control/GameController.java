@@ -8,6 +8,7 @@ import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.messages.MessagesMixin;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.eventbus.EventBus;
+import superstartrek.client.eventbus.EventsMixin;
 import superstartrek.client.space.Constants;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
@@ -24,7 +25,7 @@ import superstartrek.client.vessels.Vessel;
 import superstartrek.client.vessels.Weapon;
 
 public class GameController implements GamePhaseHandler, CombatHandler, NavigationHandler,
-		MessageHandler, EnergyConsumptionHandler, BaseMixin, QuadrantActivationHandler, MessagesMixin{
+		MessageHandler, EnergyConsumptionHandler, BaseMixin, QuadrantActivationHandler, MessagesMixin, EventsMixin{
 
 	Application application;
 	EventBus events;

@@ -7,10 +7,11 @@ import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.eventbus.Events;
+import superstartrek.client.eventbus.EventsMixin;
 import superstartrek.client.space.StarMap;
 
 public class MessagesPresenter extends BasePresenter<MessagesView>
-		implements MessageHandler, PopupViewPresenter<MessagesView>, KeyPressedEventHandler, GamePhaseHandler{
+		implements EventsMixin, MessageHandler, PopupViewPresenter<MessagesView>, KeyPressedEventHandler, GamePhaseHandler{
 
 	public MessagesPresenter() {
 		addHandler(Events.GAME_STARTED);

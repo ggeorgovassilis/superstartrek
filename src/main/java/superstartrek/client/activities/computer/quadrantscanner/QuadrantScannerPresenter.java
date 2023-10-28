@@ -12,6 +12,7 @@ import superstartrek.client.activities.navigation.EnterpriseRepairedHandler;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
+import superstartrek.client.eventbus.EventsMixin;
 import superstartrek.client.space.Constants;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
@@ -26,7 +27,7 @@ import superstartrek.client.vessels.Vessel;
 import superstartrek.client.vessels.Weapon;
 
 public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
-		implements SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,
+		implements EventsMixin, SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,
 		KlingonCloakingHandler, QuadrantActivationHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;

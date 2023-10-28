@@ -14,11 +14,12 @@ import superstartrek.client.vessels.CombatHandler.partTarget;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.eventbus.Events;
+import superstartrek.client.eventbus.EventsMixin;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 
 public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuView> implements SectorSelectedHandler,
-		GamePhaseHandler, ActivityChangedHandler, ContextMenuHideHandler, KeyPressedEventHandler {
+		GamePhaseHandler, ActivityChangedHandler, ContextMenuHideHandler, KeyPressedEventHandler, EventsMixin {
 
 	Location sector;
 	Quadrant quadrant;
