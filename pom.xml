@@ -246,21 +246,22 @@
 					</execution>
 				</executions>
 				<configuration>
-					<draftCompile>${gwt.draftCompile}</draftCompile>
+					<compileReport>true</compileReport>
 					<deploy>${project.build.directory}/deploy</deploy>
-					<outputDirectory>${project.basedir}/site</outputDirectory>
-					<module>${gwt.module}</module>
+					<disableClassMetadata>${gwt.disableClassMetadata}</disableClassMetadata>
+					<disableCastChecking>${gwt.disableCastChecking}</disableCastChecking>
+					<draftCompile>${gwt.draftCompile}</draftCompile>
 					<methodNameDisplayMode>${gwt.methodNameDisplayMode}</methodNameDisplayMode>
+					<module>${gwt.module}</module>
+					<optimizationLevel>${gwt.optimizationLevel}</optimizationLevel>
+					<outputDirectory>${project.basedir}/site</outputDirectory>
+					<persistentunitcache>false</persistentunitcache>
+					<removeDuplicateFunctions>true</removeDuplicateFunctions>
 					<saveSource>${gwt.saveSource}</saveSource>
 					<style>${gwt.style}</style>
-					<disableClassMetadata>${gwt.disableClassMetadata}</disableClassMetadata>
 					<skip>${skip.gwt}</skip>
-					<disableCastChecking>${gwt.disableCastChecking}</disableCastChecking>
-					<optimizationLevel>${gwt.optimizationLevel}</optimizationLevel>
-					<compileReport>true</compileReport>
 					<strict>true</strict>
-					<removeDuplicateFunctions>true</removeDuplicateFunctions>
-					<persistentunitcache>false</persistentunitcache>
+					<detailedSoyc>true</detailedSoyc>
 				</configuration>
 			</plugin>
 			<plugin>

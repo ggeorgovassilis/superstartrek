@@ -5,6 +5,7 @@ import static superstartrek.client.eventbus.Events.*;
 import java.util.List;
 
 import superstartrek.client.Application;
+import superstartrek.client.activities.messages.MessagesMixin;
 import superstartrek.client.activities.navigation.NavigationHandler;
 import superstartrek.client.activities.navigation.PathFinder;
 import superstartrek.client.activities.navigation.PathFinderImpl;
@@ -20,7 +21,7 @@ import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 
 public class Klingon extends Vessel
-		implements CombatHandler, GamePhaseHandler, NavigationHandler, BaseMixin, QuadrantActivationHandler {
+		implements CombatHandler, GamePhaseHandler, NavigationHandler, BaseMixin, QuadrantActivationHandler, MessagesMixin {
 
 	public static enum ShipClass {
 

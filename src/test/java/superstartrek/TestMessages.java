@@ -1,27 +1,18 @@
 package superstartrek;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import superstartrek.client.activities.messages.MessagesView;
-import superstartrek.client.activities.messages.MessagesPresenter;
+import superstartrek.client.eventbus.Events;
+import superstartrek.client.activities.messages.MessageHandler;
 import static org.mockito.Mockito.*;
 
-public class TestMessagesPresenter extends BaseTest{
+public class TestMessages extends BaseTest {
 
-	MessagesPresenter presenter;
-	MessagesView view;
-	
-	@Before
-	public void setup() {
-		presenter = new MessagesPresenter();
-		view = mock(MessagesView.class);
-		presenter.setView(view);
-	}
-	
 	@Test
 	public void test() {
-		presenter.message("test message", "test category");
-		verify(view).showMessage("test message", "test category");
+		MessageHandler mock = mock(MessageHandler.class);
+		application.eventBus.addHandler(Events.MESSAGE_POSTED, mock);
+		application.message("test message", "test category");
+		verify(mock).messagePosted("test message", "test category");
 	}
 }

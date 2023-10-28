@@ -19,14 +19,6 @@ public interface BaseMixin {
 		return getApplication().eventBus;
 	}
 
-	default void message(String message, String category) {
-		getApplication().message(message, category);
-	}
-
-	default void message(String message) {
-		getApplication().message(message);
-	}
-
 	default <T extends EventHandler> void fireEvent(Event<T> type, EventCallback<T> callback) {
 		getEvents().fireEvent(type, callback);
 	}

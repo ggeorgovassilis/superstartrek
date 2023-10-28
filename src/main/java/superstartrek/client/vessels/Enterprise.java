@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import superstartrek.client.Application;
+import superstartrek.client.activities.messages.MessagesMixin;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Constants;
@@ -17,7 +18,7 @@ import superstartrek.client.space.Thing;
 import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 
-public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandler, BaseMixin {
+public class Enterprise extends Vessel implements GamePhaseHandler, CombatHandler, BaseMixin, MessagesMixin {
 
 	public enum ShieldDirection {
 
