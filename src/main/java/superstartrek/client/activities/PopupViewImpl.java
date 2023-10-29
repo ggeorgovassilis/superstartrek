@@ -66,7 +66,6 @@ public abstract class PopupViewImpl<P extends PopupViewPresenter> extends BaseVi
 	@Override
 	public void show() {
 		showGlassPanel();
-		//super.show();
 		// deferred command (0ms) doesn't work reliably with FF.
 		addStyleName("slidein");
 		// focus popup so that ESC key can hide it (otherwise key handler won't fire).

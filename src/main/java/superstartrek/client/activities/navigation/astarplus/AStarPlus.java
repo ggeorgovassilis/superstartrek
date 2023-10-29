@@ -128,21 +128,6 @@ public class AStarPlus {
 		return path;
 	}
 
-	void printMatrix() {
-		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
-			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
-				int index = coordsToIndex(x, y);
-				if (matrix[index] == FREE)
-					System.out.print(" ");
-				else if (matrix[index] == OCCUPIED)
-					System.out.print("#");
-				else
-					System.out.print(".");
-			}
-			System.out.println();
-		}
-	}
-
 	/**
 	 * Finds path between "from" and "to".
 	 * @param from Start path here. The returned list does not contain "from"

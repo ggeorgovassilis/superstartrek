@@ -18,5 +18,4 @@ public abstract class HtmlWidget extends Widget {
 		parent.replaceChild(getElement(), eToBeReplaced);
 		onAttach();
 	}
-
 }
