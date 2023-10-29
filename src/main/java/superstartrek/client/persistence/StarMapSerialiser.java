@@ -31,8 +31,6 @@ public class StarMapSerialiser {
 		sb.append("{\"name\":\"" + thing.getName() + "\",");
 		sb.append("\"x\":" + thing.getLocation().x + ",");
 		sb.append("\"y\":" + thing.getLocation().y + ",");
-		sb.append("\"css\":\"" + thing.getCss() + "\",");
-		sb.append("\"symbol\":\"" + thing.getSymbol() + "\",");
 		if (Star.is(thing))
 			subserialise((Star) thing);
 		else if (Vessel.is(thing)) {
@@ -94,10 +92,12 @@ public class StarMapSerialiser {
 		subserialise(klingon.getCloak());
 		sb.append(",");
 		sb.append("\"xp\":" + klingon.getXp() + ",");
+		sb.append("\"shipclass\":\"" + klingon.getShipClass().name() + "\",");
 	}
 
 	public void subserialise(Star star) {
 		sb.append("\"type\":\"star\",");
+		sb.append("\"starclass\":\""+star.getStarClass()+"\",");
 	}
 
 	public void subserialise(StarBase starbase) {

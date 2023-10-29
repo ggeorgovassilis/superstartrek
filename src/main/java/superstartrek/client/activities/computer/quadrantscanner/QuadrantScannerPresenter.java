@@ -19,6 +19,7 @@ import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.StarMap;
 import superstartrek.client.space.Thing;
 import superstartrek.client.utils.CSS;
+import superstartrek.client.utils.Timer;
 import superstartrek.client.vessels.CombatHandler;
 import superstartrek.client.vessels.Enterprise;
 import superstartrek.client.vessels.Klingon;
@@ -178,8 +179,10 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		case disruptor:
 		case phaser:
 			String colour = (actor == getEnterprise()) ? "yellow" : "red";
-			view.drawBeamBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
-					target.getLocation().y, colour);
+			//postponing because drawBeamBetween reads an element offset which forces a layout and would block
+			//the main thread
+			Timer.postpone(()->view.drawBeamBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
+					target.getLocation().y, colour));
 		default:
 		}
 	}

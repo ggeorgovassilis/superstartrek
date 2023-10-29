@@ -5,6 +5,7 @@ import java.util.Map;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
 
 import superstartrek.client.Application;
 import superstartrek.client.space.Location;
@@ -14,26 +15,27 @@ import superstartrek.client.space.Star;
 import superstartrek.client.space.StarBase;
 import superstartrek.client.space.StarMap;
 import superstartrek.client.space.Thing;
+import superstartrek.client.space.Star.StarClass;
 import superstartrek.client.vessels.Enterprise;
 import superstartrek.client.vessels.Klingon;
 import superstartrek.client.vessels.Vessel;
 import superstartrek.client.vessels.Enterprise.ShieldDirection;
 
 class StarMapDeserialiser {
-	
+
 	Application app;
 	// many strings (eg. star names) are frequently replicated. Internalising them
 	// saves plenty of memory.
-	Map<String,String> internedStrings = new HashMap<String, String>();
-	
+	Map<String, String> internedStrings = new HashMap<String, String>();
+
 	public StarMapDeserialiser(Application app) {
 		this.app = app;
 	}
-	
+
 	String internalise(String s) {
 		if (internedStrings.containsKey(s))
 			return internedStrings.get(s);
-		internedStrings.put(s,s);
+		internedStrings.put(s, s);
 		return s;
 	}
 
@@ -47,9 +49,9 @@ class StarMapDeserialiser {
 			Quadrant quadrant = readQuadrant(jsQuadrant, starMap);
 			starMap.setQuadrant(quadrant);
 		}
-		starMap.setStarDate((int)jsMap.get("stardate").isNumber().doubleValue());
+		starMap.setStarDate((int) jsMap.get("stardate").isNumber().doubleValue());
 		app.gameController.getScoreKeeper().reset();
-		app.gameController.getScoreKeeper().addScore((int)jsMap.get("score").isNumber().doubleValue());
+		app.gameController.getScoreKeeper().addScore((int) jsMap.get("score").isNumber().doubleValue());
 		return starMap;
 	}
 
@@ -95,38 +97,38 @@ class StarMapDeserialiser {
 			thing = readEnterprise(jsThing);
 			break;
 		}
+		Location location = readLocation(jsThing);
+		thing.setLocation(location);
 		return thing;
 	}
-	
+
 	public void readSetting(JSONObject jsSetting, Setting setting) {
 		setting.setCurrentUpperBound(jsSetting.get("upperBound").isNumber().doubleValue());
 		setting.setValue(jsSetting.get("value").isNumber().doubleValue());
 		setting.setMaximum(jsSetting.get("max").isNumber().doubleValue());
 		setting.setBroken(jsSetting.get("broken").isBoolean().booleanValue());
 	}
-	
-	public void readThing(JSONObject jsThing, Thing thing) {
-		thing.setCss(internalise(jsThing.get("css").isString().stringValue()));
-		thing.setSymbol(internalise(jsThing.get("symbol").isString().stringValue()));
-		thing.setLocation(Location.location((int)jsThing.get("x").isNumber().doubleValue(), (int)jsThing.get("y").isNumber().doubleValue()));
-		thing.setName(internalise(jsThing.get("name").isString().stringValue()));
-	}
-	
+
 	public void readVessel(JSONObject jsThing, Vessel vessel) {
-		readThing(jsThing, vessel);
 		readSetting(jsThing.get("impulse").isObject(), vessel.getImpulse());
 		readSetting(jsThing.get("shields").isObject(), vessel.getShields());
 	}
-	
+
+	Location readLocation(JSONObject jsThing) {
+		int x = (int) jsThing.get("x").isNumber().doubleValue();
+		int y = (int) jsThing.get("y").isNumber().doubleValue();
+		return Location.location(x, y);
+	}
+
 	public Star readStar(JSONObject jsThing) {
-		Star star = new Star();
-		readThing(jsThing, star);
+		Location location = readLocation(jsThing);
+		StarClass sc = StarClass.valueOf(((JSONString) jsThing.get("starclass")).stringValue());
+		Star star = new Star(location, sc);
 		return star;
 	}
 
 	public StarBase readStarBase(JSONObject jsThing) {
 		StarBase sb = new StarBase();
-		readThing(jsThing, sb);
 		return sb;
 	}
 

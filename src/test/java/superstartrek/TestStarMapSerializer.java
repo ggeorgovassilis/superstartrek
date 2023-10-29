@@ -186,13 +186,12 @@ public class TestStarMapSerializer extends BaseTest {
 					Thing thing = q.findThingAt(thingJs.getInt("x"), thingJs.getInt("y"));
 					assertNotNull(thingJs.toString(), thing);
 					assertEquals(thing.getName(), thingJs.getString("name"));
-					assertEquals(thing.getSymbol(), thingJs.getString("symbol"));
-					assertEquals(thing.getCss(), thingJs.getString("css"));
 					if (thing instanceof Klingon) {
 						Klingon klingon = thing.as();
 						Setting disruptor = klingon.getDisruptor();
 						JSONObject disruptorJs = thingJs.getJSONObject("disruptor");
 						assertEquals(disruptor.getValue(), disruptorJs.getDouble("value"), 0.1);
+						assertEquals(klingon.getShipClass().name(), thingJs.get("shipclass").toString());
 					}
 					// TODO: check more attributes
 				}

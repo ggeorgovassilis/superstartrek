@@ -86,14 +86,26 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 	public Setting getEvasiveManeuvers() {
 		return evasiveManeuvers;
 	}
+	
+	@Override
+	public String getCss() {
+		return "enterprise";
+	}
+	
+	@Override
+	public String getName() {
+		return "NCC 1701 USS Enterprise";
+	}
+	
+	@Override
+	public String getSymbol() {
+		return "O=Ξ";
+	}
 
 	public Enterprise(Application app, StarMap map) {
 		super(new Setting(Constants.ENTERPRISE_IMPULSE), new Setting(Constants.ENTERPRISE_SHIELDS));
 		this.application = app;
 		this.starMap = map;
-		setName("NCC 1701 USS Enterprise");
-		setSymbol("O=Ξ");
-		setCss("enterprise");
 		addHandler(Events.TURN_STARTED, this);
 		addHandler(Events.TURN_ENDED, this);
 		addHandler(Events.GAME_RESTART, this);

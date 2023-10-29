@@ -51,6 +51,8 @@ public class Klingon extends Vessel
 	Setting disruptor;
 	Setting cloak;
 	int xp;
+	String css;
+	final ShipClass sc;
 
 	public Klingon() {
 		this(ShipClass.BirdOfPrey);
@@ -58,19 +60,32 @@ public class Klingon extends Vessel
 
 	public Klingon(ShipClass c) {
 		super(new Setting(1), new Setting(c.shields));
+		this.sc = c;
 		this.xp = c.xp;
 		cloak = new Setting(1);
-		setName(c.label);
-		setSymbol(c.symbol);
-		setCss("klingon cloaked");
+		setCss("klingon");
 		this.disruptor = new Setting(c.disruptor);
 		addHandler(QUADRANT_ACTIVATED, this);
 		addHandler(GAME_RESTART, this);
 		addHandler(GAME_STARTED, this);
 	}
+	
+	@Override
+	public String getName() {
+		return sc.label;
+	}
+	
+	@Override
+	public String getSymbol() {
+		return sc.symbol;
+	}
 
 	public int getXp() {
 		return xp;
+	}
+	
+	void setCss(String css) {
+		this.css = css;
 	}
 
 	/*
@@ -306,6 +321,15 @@ public class Klingon extends Vessel
 	public void onGameStarted(StarMap map) {
 		if (getActiveQuadrant().contains(this))
 			registerActionHandlers();
+	}
+
+	@Override
+	public String getCss() {
+		return css;
+	}
+	
+	public ShipClass getShipClass() {
+		return sc;
 	}
 
 }

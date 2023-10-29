@@ -6,17 +6,21 @@
 	<inherits name="com.google.gwt.storage.Storage" />
 	<inherits name="com.georgovassilis.gwthtmlresource.htmlresource" />
 
-	<source path="client" />
 	<public path="public" />
+	<source path="client" />
 
+	<entry-point class="superstartrek.client.Application" />
 	<!-- Enable log -->
 	<set-property name="gwt.logging.logLevel" value="INFO" />
 	<set-property name="gwt.logging.enabled" value="FALSE" />
 	<source path="client" />
-	<entry-point class="superstartrek.client.Application" />
 	<set-property name="compiler.useSourceMaps" value="false" />
 	<set-property name="compiler.stackMode" value="strip" />
+	<set-configuration-property
+		name="compiler.emulatedStack.recordLineNumbers" value="false" />
+	
 	<collapse-all-properties value="true" /> <!-- produces only one JS output, makes service worker offline manifest generation 
 		much easier at the expense of a bit increased size -->
 	<add-linker name="sso" /> <!-- JS output names not random anymore -->
+
 </module>

@@ -8,9 +8,21 @@
 
 	<public path="public" />
 	<source path="client" />
+	
 	<entry-point class="superstartrek.client.Application" />
+	<!-- Enable log -->
+	<set-property name="gwt.logging.logLevel" value="INFO" />
+	<set-property name="gwt.logging.enabled" value="FALSE" />
+	<source path="client" />
 	<set-property name="compiler.useSourceMaps" value="true" />
+	<set-property name="compiler.stackMode" value="strip" />
 	<set-configuration-property
 		name="compiler.emulatedStack.recordLineNumbers" value="true" />
+
+	<collapse-all-properties value="true" /> <!-- produces only one JS output, makes service worker offline manifest generation 
+		much easier at the expense of a bit increased size -->
+
+	
+
 
 </module>

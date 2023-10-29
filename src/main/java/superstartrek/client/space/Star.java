@@ -22,23 +22,39 @@ public class Star extends Thing{
 		public final String css;
 		public final double probability;
 	}
-
-	public Star(Location location, boolean registerEvents, StarClass sc) {
-		setName(sc.typeName);
-		setSymbol(sc.symbol);
-		setCss("star " + sc.css);
-		setLocation(location);
-	}
 	
-	public Star() {
-	}
+	final StarClass sc;
 
 	public Star(Location location, StarClass sc) {
 		this(location, true, sc);
 	}
+
+	public Star(Location location, boolean registerEvents, StarClass sc) {
+		this.sc = sc;
+		setLocation(location);
+	}
 	
 	public static boolean is(Thing thing) {
 		return thing instanceof Star;
+	}
+
+	@Override
+	public String getSymbol() {
+		return sc.symbol;
+	}
+
+	@Override
+	public String getName() {
+		return sc.typeName;
+	}
+	
+	@Override
+	public String getCss() {
+		return "star "+sc.css;
+	}
+	
+	public StarClass getStarClass() {
+		return sc;
 	}
 
 }
