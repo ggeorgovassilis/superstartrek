@@ -27,6 +27,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 public class TestStarMapSerializer extends BaseTest {
@@ -104,7 +108,6 @@ public class TestStarMapSerializer extends BaseTest {
 			public String getLocallyStoredValue(String key) {
 				return null;
 			}
-
 
 			@Override
 			public String getCookie(String name) {
@@ -193,8 +196,21 @@ public class TestStarMapSerializer extends BaseTest {
 						assertEquals(disruptor.getValue(), disruptorJs.getDouble("value"), 0.1);
 						assertEquals(klingon.getShipClass().name(), thingJs.get("shipclass").toString());
 					}
-					// TODO: check more attributes
 				}
 			}
+		String expectedJson = getClassPathResource("/map.json");
+		assertEquals(expectedJson, json);
+	}
+
+	String getClassPathResource(String name) {
+		try (InputStream in = getClass().getResourceAsStream(name)){
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int i;
+			while (-1 != (i = in.read()))
+				baos.write(i);
+			return new String(baos.toByteArray(), "UTF-8");
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

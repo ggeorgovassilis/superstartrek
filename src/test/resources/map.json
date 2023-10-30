@@ -1,0 +1,810 @@
+{"quadrants":[{"name":"Antares I",
+"x":0,
+"y":0,
+"explored":true,
+"things":[{"name":"Asteroid","x":1,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":3,"y":0,"type":"star","starclass":"O"}
+,{"name":"Class F star","x":0,"y":0,"type":"star","starclass":"F"}
+,{"name":"Class F star","x":3,"y":2,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":1,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"a Federation star base","x":5,"y":3,"type":"starbase"}
+,{"name":"NCC 1701 USS Enterprise","x":0,"y":7,"impulse":{"value":3.0,"max":3.0,"upperBound":3.0, "broken":false},"shields":{"value":60.0,"max":60.0,"upperBound":60.0, "broken":false},"type":"enterprise","phasers":{"value":30.0,"max":30.0,"upperBound":30.0, "broken":false},"torpedos":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"antimatter":{"value":1000.0,"max":1000.0,"upperBound":1000.0, "broken":false},"autoaim":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"lrs":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"reactor":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"shieldsDirection":"omni"}
+]},{"name":"Antares II",
+"x":1,
+"y":0,
+"explored":false,
+"things":[{"name":"Asteroid","x":7,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":2,"y":1,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":4,"type":"star","starclass":"Asteroid"}
+]},{"name":"Antares III",
+"x":2,
+"y":0,
+"explored":false,
+"things":[{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":3,"y":1,"type":"star","starclass":"O"}
+,{"name":"Class B star","x":7,"y":0,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":2,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":5,"y":1,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":5,"y":3,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":3,"y":6,"type":"star","starclass":"Asteroid"}
+]},{"name":"Antares IV",
+"x":3,
+"y":0,
+"explored":false,
+"things":[{"name":"Asteroid","x":7,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":0,"y":5,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":4,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":3,"y":3,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":3,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":0,"type":"star","starclass":"Asteroid"}
+]},{"name":"Siruis I",
+"x":4,
+"y":0,
+"explored":false,
+"things":[{"name":"Asteroid","x":2,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":5,"y":1,"type":"star","starclass":"O"}
+,{"name":"Class O star","x":1,"y":4,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":1,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":7,"y":7,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":5,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"a Bird-of-prey","x":6,"y":3,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Siruis II",
+"x":5,
+"y":0,
+"explored":false,
+"things":[{"name":"Asteroid","x":6,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":3,"y":1,"type":"star","starclass":"F"}
+,{"name":"Class B star","x":7,"y":6,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":1,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":2,"type":"star","starclass":"Asteroid"}
+]},{"name":"Siruis III",
+"x":6,
+"y":0,
+"explored":false,
+"things":[{"name":"Asteroid","x":4,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":3,"y":0,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":1,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+]},{"name":"Siruis IV",
+"x":7,
+"y":0,
+"explored":false,
+"things":[{"name":"Asteroid","x":7,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":6,"y":3,"type":"star","starclass":"O"}
+,{"name":"Class A star","x":7,"y":4,"type":"star","starclass":"A"}
+,{"name":"Class O star","x":2,"y":3,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":5,"y":3,"type":"star","starclass":"Asteroid"}
+]},{"name":"Rigel I",
+"x":0,
+"y":1,
+"explored":false,
+"things":[{"name":"Asteroid","x":5,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":1,"y":0,"type":"star","starclass":"B"}
+,{"name":"a Bird-of-prey","x":1,"y":3,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":0,"y":6,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Rigel II",
+"x":1,
+"y":1,
+"explored":false,
+"things":[{"name":"Class O star","x":2,"y":2,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":4,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":1,"y":6,"type":"star","starclass":"A"}
+,{"name":"Class F star","x":0,"y":7,"type":"star","starclass":"F"}
+]},{"name":"Rigel III",
+"x":2,
+"y":1,
+"explored":false,
+"things":[{"name":"Class O star","x":1,"y":5,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":1,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":5,"y":2,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":0,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":2,"type":"star","starclass":"Asteroid"}
+]},{"name":"Rigel IV",
+"x":3,
+"y":1,
+"explored":false,
+"things":[{"name":"Asteroid","x":6,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":3,"y":6,"type":"star","starclass":"B"}
+,{"name":"Class B star","x":7,"y":1,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":6,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":1,"y":7,"type":"star","starclass":"F"}
+,{"name":"Class A star","x":2,"y":6,"type":"star","starclass":"A"}
+]},{"name":"Deneb I",
+"x":4,
+"y":1,
+"explored":false,
+"things":[{"name":"Asteroid","x":2,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":2,"y":4,"type":"star","starclass":"A"}
+,{"name":"Class A star","x":5,"y":7,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":6,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":7,"y":0,"type":"star","starclass":"F"}
+]},{"name":"Deneb II",
+"x":5,
+"y":1,
+"explored":false,
+"things":[{"name":"Asteroid","x":0,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":7,"y":7,"type":"star","starclass":"B"}
+,{"name":"Class B star","x":2,"y":4,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":2,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":0,"y":6,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":5,"y":7,"type":"star","starclass":"Asteroid"}
+]},{"name":"Deneb III",
+"x":6,
+"y":1,
+"explored":false,
+"things":[{"name":"Class A star","x":4,"y":1,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":2,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":6,"y":1,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":7,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":0,"y":1,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":4,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":5,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+]},{"name":"Deneb IV",
+"x":7,
+"y":1,
+"explored":false,
+"things":[{"name":"Class O star","x":4,"y":0,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":6,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":1,"y":1,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":3,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":2,"type":"star","starclass":"Asteroid"}
+]},{"name":"Procyon I",
+"x":0,
+"y":2,
+"explored":false,
+"things":[{"name":"Asteroid","x":1,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":3,"y":2,"type":"star","starclass":"O"}
+,{"name":"Class F star","x":1,"y":7,"type":"star","starclass":"F"}
+,{"name":"Class O star","x":3,"y":1,"type":"star","starclass":"O"}
+,{"name":"Class O star","x":3,"y":5,"type":"star","starclass":"O"}
+,{"name":"a Klingon raider","x":7,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":5,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":3,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":6,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":0,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+]},{"name":"Procyon II",
+"x":1,
+"y":2,
+"explored":false,
+"things":[{"name":"Asteroid","x":3,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":3,"y":7,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":0,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":2,"y":6,"type":"star","starclass":"A"}
+,{"name":"Class A star","x":7,"y":6,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":7,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
+]},{"name":"Procyon III",
+"x":2,
+"y":2,
+"explored":false,
+"things":[{"name":"Class B star","x":4,"y":2,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":6,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":4,"y":0,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":0,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":7,"y":3,"type":"star","starclass":"F"}
+]},{"name":"Procyon IV",
+"x":3,
+"y":2,
+"explored":false,
+"things":[{"name":"Asteroid","x":0,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":5,"y":0,"type":"star","starclass":"B"}
+,{"name":"Class A star","x":1,"y":0,"type":"star","starclass":"A"}
+,{"name":"Class A star","x":2,"y":0,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":3,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":4,"y":6,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":0,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":5,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":4,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":6,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Bird-of-prey","x":2,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Capella I",
+"x":4,
+"y":2,
+"explored":false,
+"things":[{"name":"Class A star","x":1,"y":4,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":0,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":6,"y":7,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":7,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":7,"y":6,"type":"star","starclass":"B"}
+]},{"name":"Capella II",
+"x":5,
+"y":2,
+"explored":true,
+"things":[{"name":"Class B star","x":4,"y":5,"type":"star","starclass":"B"}
+,{"name":"Class F star","x":0,"y":0,"type":"star","starclass":"F"}
+,{"name":"Class O star","x":7,"y":6,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":6,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":3,"y":1,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":2,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":1,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Federation star base","x":3,"y":3,"type":"starbase"}
+]},{"name":"Capella III",
+"x":6,
+"y":2,
+"explored":false,
+"things":[{"name":"Asteroid","x":7,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":1,"y":0,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":2,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":5,"y":5,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":5,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":3,"y":5,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":1,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":0,"y":2,"type":"star","starclass":"A"}
+,{"name":"a Klingon raider","x":3,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+]},{"name":"Capella IV",
+"x":7,
+"y":2,
+"explored":false,
+"things":[{"name":"Class F star","x":5,"y":7,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":3,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":4,"y":2,"type":"star","starclass":"O"}
+,{"name":"Class A star","x":5,"y":4,"type":"star","starclass":"A"}
+]},{"name":"Vega I",
+"x":0,
+"y":3,
+"explored":false,
+"things":[{"name":"Asteroid","x":7,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":2,"y":3,"type":"star","starclass":"O"}
+,{"name":"Class O star","x":7,"y":5,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":5,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":0,"type":"star","starclass":"Asteroid"}
+]},{"name":"Vega II",
+"x":1,
+"y":3,
+"explored":false,
+"things":[{"name":"Asteroid","x":4,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":4,"y":0,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":0,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":1,"type":"star","starclass":"Asteroid"}
+]},{"name":"Vega III",
+"x":2,
+"y":3,
+"explored":false,
+"things":[{"name":"Asteroid","x":1,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":6,"y":7,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":3,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":4,"y":0,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":5,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":3,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+]},{"name":"Vega IV",
+"x":3,
+"y":3,
+"explored":false,
+"things":[{"name":"Asteroid","x":2,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":3,"y":0,"type":"star","starclass":"B"}
+,{"name":"Class O star","x":6,"y":1,"type":"star","starclass":"O"}
+,{"name":"Class A star","x":0,"y":6,"type":"star","starclass":"A"}
+,{"name":"a Klingon raider","x":7,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":0,"y":3,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":2,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Bird-of-prey","x":4,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Betelgeuse I",
+"x":4,
+"y":3,
+"explored":false,
+"things":[{"name":"Class F star","x":1,"y":2,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":2,"y":1,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":5,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":7,"y":2,"type":"star","starclass":"A"}
+]},{"name":"Betelgeuse II",
+"x":5,
+"y":3,
+"explored":false,
+"things":[{"name":"Class F star","x":1,"y":5,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":4,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":3,"y":6,"type":"star","starclass":"O"}
+,{"name":"Class F star","x":3,"y":3,"type":"star","starclass":"F"}
+]},{"name":"Betelgeuse III",
+"x":6,
+"y":3,
+"explored":false,
+"things":[{"name":"Asteroid","x":2,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":2,"y":3,"type":"star","starclass":"O"}
+,{"name":"Class B star","x":4,"y":7,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"a Bird-of-prey","x":2,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":7,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":3,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Betelgeuse IV",
+"x":7,
+"y":3,
+"explored":false,
+"things":[{"name":"Class B star","x":2,"y":4,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":3,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":7,"y":7,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":6,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":1,"y":4,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":6,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":1,"y":0,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":3,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":7,"type":"star","starclass":"Asteroid"}
+]},{"name":"Canopus I",
+"x":0,
+"y":4,
+"explored":false,
+"things":[{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":2,"y":0,"type":"star","starclass":"F"}
+]},{"name":"Canopus II",
+"x":1,
+"y":4,
+"explored":false,
+"things":[{"name":"Asteroid","x":2,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":2,"y":7,"type":"star","starclass":"B"}
+,{"name":"Class F star","x":0,"y":1,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":3,"y":1,"type":"star","starclass":"A"}
+,{"name":"Class O star","x":5,"y":7,"type":"star","starclass":"O"}
+]},{"name":"Canopus III",
+"x":2,
+"y":4,
+"explored":false,
+"things":[{"name":"Asteroid","x":5,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":6,"y":0,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":3,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":0,"type":"star","starclass":"Asteroid"}
+]},{"name":"Canopus IV",
+"x":3,
+"y":4,
+"explored":false,
+"things":[{"name":"Asteroid","x":2,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":7,"y":2,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":5,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":4,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":3,"y":6,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Bird-of-prey","x":2,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":1,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":1,"y":6,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Aldebaran I",
+"x":4,
+"y":4,
+"explored":false,
+"things":[{"name":"Asteroid","x":2,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":5,"type":"star","starclass":"Asteroid"}
+]},{"name":"Aldebaran II",
+"x":5,
+"y":4,
+"explored":false,
+"things":[{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":1,"type":"star","starclass":"Asteroid"}
+]},{"name":"Aldebaran III",
+"x":6,
+"y":4,
+"explored":false,
+"things":[{"name":"Asteroid","x":1,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":4,"y":6,"type":"star","starclass":"F"}
+]},{"name":"Aldebaran IV",
+"x":7,
+"y":4,
+"explored":false,
+"things":[{"name":"Asteroid","x":2,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":1,"y":6,"type":"star","starclass":"F"}
+,{"name":"Class B star","x":7,"y":5,"type":"star","starclass":"B"}
+,{"name":"Class B star","x":5,"y":0,"type":"star","starclass":"B"}
+,{"name":"Class O star","x":4,"y":0,"type":"star","starclass":"O"}
+,{"name":"Class A star","x":6,"y":1,"type":"star","starclass":"A"}
+]},{"name":"Altair I",
+"x":0,
+"y":5,
+"explored":false,
+"things":[{"name":"Class B star","x":5,"y":1,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":7,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":6,"y":1,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":5,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":0,"y":4,"type":"star","starclass":"F"}
+,{"name":"a Bird-of-prey","x":1,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":5,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":1,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Altair II",
+"x":1,
+"y":5,
+"explored":false,
+"things":[{"name":"Asteroid","x":5,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":5,"y":3,"type":"star","starclass":"O"}
+,{"name":"Class B star","x":5,"y":7,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":2,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":1,"y":0,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":2,"y":4,"type":"star","starclass":"Asteroid"}
+]},{"name":"Altair III",
+"x":2,
+"y":5,
+"explored":true,
+"things":[{"name":"Asteroid","x":0,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":2,"y":7,"type":"star","starclass":"A"}
+,{"name":"Class B star","x":0,"y":4,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":0,"y":1,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":2,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"a Federation star base","x":5,"y":7,"type":"starbase"}
+]},{"name":"Altair IV",
+"x":3,
+"y":5,
+"explored":false,
+"things":[{"name":"Class F star","x":6,"y":2,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":4,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":4,"y":1,"type":"star","starclass":"O"}
+]},{"name":"Regolus I",
+"x":4,
+"y":5,
+"explored":false,
+"things":[{"name":"Asteroid","x":4,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":2,"y":7,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":0,"y":6,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":7,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":4,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":1,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":2,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Bird-of-prey","x":6,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Regolus II",
+"x":5,
+"y":5,
+"explored":false,
+"things":[{"name":"Asteroid","x":3,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":7,"y":1,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":6,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":1,"y":3,"type":"star","starclass":"O"}
+]},{"name":"Regolus III",
+"x":6,
+"y":5,
+"explored":false,
+"things":[{"name":"Class F star","x":7,"y":5,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":4,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":6,"y":2,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":1,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":0,"type":"star","starclass":"Asteroid"}
+]},{"name":"Regolus IV",
+"x":7,
+"y":5,
+"explored":false,
+"things":[{"name":"Class O star","x":4,"y":6,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":4,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":7,"y":5,"type":"star","starclass":"B"}
+]},{"name":"Saggitarius I",
+"x":0,
+"y":6,
+"explored":false,
+"things":[{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":0,"y":1,"type":"star","starclass":"A"}
+,{"name":"Class O star","x":5,"y":7,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":2,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":5,"type":"star","starclass":"Asteroid"}
+]},{"name":"Saggitarius II",
+"x":1,
+"y":6,
+"explored":false,
+"things":[{"name":"Asteroid","x":7,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":4,"y":4,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":5,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":4,"y":7,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+]},{"name":"Saggitarius III",
+"x":2,
+"y":6,
+"explored":false,
+"things":[{"name":"Class O star","x":2,"y":6,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":4,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"a Bird-of-prey","x":7,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":1,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+]},{"name":"Saggitarius IV",
+"x":3,
+"y":6,
+"explored":false,
+"things":[{"name":"Asteroid","x":3,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":6,"type":"star","starclass":"Asteroid"}
+]},{"name":"Arcturus I",
+"x":4,
+"y":6,
+"explored":false,
+"things":[{"name":"Class O star","x":2,"y":3,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":5,"y":0,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":5,"y":2,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":2,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":7,"y":2,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":2,"y":6,"type":"star","starclass":"Asteroid"}
+]},{"name":"Arcturus II",
+"x":5,
+"y":6,
+"explored":false,
+"things":[{"name":"Class F star","x":3,"y":1,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":0,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":0,"y":2,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":2,"type":"star","starclass":"Asteroid"}
+]},{"name":"Arcturus III",
+"x":6,
+"y":6,
+"explored":false,
+"things":[{"name":"Asteroid","x":4,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":5,"y":5,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":0,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":6,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":4,"y":3,"type":"star","starclass":"F"}
+]},{"name":"Arcturus IV",
+"x":7,
+"y":6,
+"explored":false,
+"things":[{"name":"Asteroid","x":0,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":4,"y":3,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":2,"y":7,"type":"star","starclass":"O"}
+]},{"name":"Pollux I",
+"x":0,
+"y":7,
+"explored":false,
+"things":[{"name":"Asteroid","x":6,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":1,"y":5,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":5,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":6,"y":3,"type":"star","starclass":"O"}
+,{"name":"Class A star","x":2,"y":7,"type":"star","starclass":"A"}
+,{"name":"Class O star","x":3,"y":1,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":1,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":6,"type":"star","starclass":"Asteroid"}
+]},{"name":"Pollux II",
+"x":1,
+"y":7,
+"explored":false,
+"things":[{"name":"Class O star","x":1,"y":5,"type":"star","starclass":"O"}
+,{"name":"Class O star","x":5,"y":7,"type":"star","starclass":"O"}
+,{"name":"Class O star","x":2,"y":6,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":2,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":2,"y":4,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":4,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":1,"type":"star","starclass":"Asteroid"}
+]},{"name":"Pollux III",
+"x":2,
+"y":7,
+"explored":false,
+"things":[{"name":"Class O star","x":4,"y":7,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":3,"y":0,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":5,"y":7,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":1,"y":7,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":2,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":5,"y":6,"type":"star","starclass":"B"}
+]},{"name":"Pollux IV",
+"x":3,
+"y":7,
+"explored":false,
+"things":[{"name":"Class B star","x":0,"y":3,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":0,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":3,"y":5,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":4,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":2,"y":1,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":2,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Class F star","x":7,"y":6,"type":"star","starclass":"F"}
+]},{"name":"Spica I",
+"x":4,
+"y":7,
+"explored":false,
+"things":[{"name":"Asteroid","x":5,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":2,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":6,"y":3,"type":"star","starclass":"O"}
+,{"name":"Class B star","x":4,"y":3,"type":"star","starclass":"B"}
+]},{"name":"Spica II",
+"x":5,
+"y":7,
+"explored":false,
+"things":[{"name":"Asteroid","x":6,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Class O star","x":7,"y":7,"type":"star","starclass":"O"}
+,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":3,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":7,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":3,"y":5,"type":"star","starclass":"B"}
+]},{"name":"Spica III",
+"x":6,
+"y":7,
+"explored":false,
+"things":[{"name":"Class F star","x":4,"y":2,"type":"star","starclass":"F"}
+,{"name":"Class F star","x":2,"y":1,"type":"star","starclass":"F"}
+,{"name":"Asteroid","x":1,"y":4,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Asteroid","x":4,"y":0,"type":"star","starclass":"Asteroid"}
+]},{"name":"Spica IV",
+"x":7,
+"y":7,
+"explored":true,
+"things":[{"name":"Asteroid","x":5,"y":1,"type":"star","starclass":"Asteroid"}
+,{"name":"Class B star","x":4,"y":1,"type":"star","starclass":"B"}
+,{"name":"Asteroid","x":4,"y":5,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":4,"y":6,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":7,"y":3,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":3,"y":5,"type":"star","starclass":"A"}
+,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"Class A star","x":6,"y":2,"type":"star","starclass":"A"}
+,{"name":"Class B star","x":5,"y":2,"type":"star","starclass":"B"}
+,{"name":"a Federation star base","x":3,"y":7,"type":"starbase"}
+]}],"stardate":2100,"score":123}

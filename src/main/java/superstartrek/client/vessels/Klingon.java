@@ -4,6 +4,8 @@ import static superstartrek.client.eventbus.Events.*;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.messages.MessagesMixin;
 import superstartrek.client.activities.navigation.NavigationHandler;
