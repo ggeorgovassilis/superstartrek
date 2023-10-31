@@ -32,12 +32,13 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	EventBus bus;
 
 	public GwtBrowserAPIImpl(EventBus bus) {
-		Window.addResizeHandler(this);
-		updateMetrics();
-		rootPanel = RootPanel.get();
 		this.bus = bus;
+		Window.addResizeHandler(this);
+		rootPanel = RootPanel.get();
 		rootPanel.addDomHandler(this, KeyDownEvent.getType());
-
+		updateMetrics();
+		//TODO: for unknown reasons, metrics are 0 in chrome direct after loading. after postponing, they read fine.
+		Timer.postpone(()->updateMetrics());
 	}
 
 	void updateMetrics() {

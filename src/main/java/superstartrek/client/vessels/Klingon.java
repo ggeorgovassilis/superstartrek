@@ -270,9 +270,11 @@ public class Klingon extends Vessel
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
 		if (part == partTarget.none) {
 			getImpulse().setBroken((getImpulse().isOperational() && random.nextDouble() < impact));
-			getDisruptor().setBroken((getDisruptor().isOperational() && random.nextDouble() < impact));
-			if (!getCloak().isBroken() && random.nextDouble() < impact)
-				getCloak().damageAndTurnOff(getStarMap().getStarDate());
+			Setting disruptor = getDisruptor();
+			disruptor.setBroken(disruptor.isBroken()||(disruptor.isOperational() && random.nextDouble() < impact));
+			Setting cloak = getCloak();
+			if (!cloak.isBroken() && random.nextDouble() < impact)
+				cloak.damageAndTurnOff(getStarMap().getStarDate());
 		}
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
 		if ((part != partTarget.none) && (random.nextDouble() < Constants.KLINGON_PRECISION_SHOT_CHANCE_DAMAGE)) {
