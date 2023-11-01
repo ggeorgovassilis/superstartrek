@@ -13,6 +13,7 @@ import superstartrek.client.Application;
 import superstartrek.client.activities.appinstallation.AppInstallationEvent;
 import superstartrek.client.activities.pwa.localcache.CacheNOPImpl;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
+import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
 import superstartrek.client.eventbus.Events;
 
 public class PWA {
@@ -132,7 +133,7 @@ public class PWA {
 
 	public void setupCache(Callback<JavaScriptObject> callback) {
 		if (cache == null) {
-			//cache = LocalCacheBrowserImpl.getInstance();
+			cache = LocalCacheBrowserImpl.getInstance();
 			if (cache == null) {
 				GWT.log("Local cache not supported by browser, using NOP cache");
 				cache = new CacheNOPImpl();
