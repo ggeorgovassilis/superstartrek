@@ -135,7 +135,7 @@ public class PWA {
 		if (cache == null) {
 			cache = LocalCacheBrowserImpl.getInstance();
 			if (cache == null) {
-				GWT.log("Local cache not supported by browser, using NOP cache");
+				log.info("Local cache not supported by browser, using NOP cache");
 				cache = new CacheNOPImpl();
 			}
 			setCacheImplementation(cache);

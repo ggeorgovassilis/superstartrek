@@ -3,7 +3,6 @@ package superstartrek.client.activities.computer.sectorcontextmenu;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.KeyCodes;
 import superstartrek.client.activities.ActivityChangedHandler;
@@ -85,10 +84,6 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 				&& (quadrant.getStarBase() == quadrant.findThingAt(sector));
 		view.enableDockWithStarbaseButton(isStarbaseAtTarget);
 
-		GWT.log("screen_width_em "+screen_width_em);
-		GWT.log("horizEmToPx "+horizEmToPx);
-		GWT.log("Target x em "+target_x_em);
-		GWT.log("Location at "+target_x_px+":"+target_y_px);
 		view.setLocation(target_x_px, target_y_px);
 		view.show();
 		addHandler(Events.KEY_PRESSED);
