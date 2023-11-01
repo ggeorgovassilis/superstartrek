@@ -20,7 +20,7 @@ public class PromiseBrowserImpl<T> extends JavaScriptObject implements Promise<T
 	}-*/;
 
 	@Override
-	public final native Promise<JavaScriptObject[]> all(Promise<?>[] promises)/*-{
+	public final native Promise<T>[] all(Promise<T>[] promises)/*-{
 		function reflect(promise){
     		return promise.then(function(v){ return {v:v, status: "resolved" }},
                    function(e){ return {e:e, status: "rejected" }});

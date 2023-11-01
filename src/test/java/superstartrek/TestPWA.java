@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -104,7 +105,7 @@ public class TestPWA extends BaseTest{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void test_setupCache_success() {
-		Callback<Void> callback = mock(Callback.class);
+		Callback<JavaScriptObject> callback = mock(Callback.class);
 		Promise<Boolean> promise = mock(Promise.class);
 		when(cache.queryCacheExistence("sst1")).thenReturn(promise);
 		when(promise.then(any(Callback.class))).thenAnswer((invocation)->{
@@ -120,7 +121,7 @@ public class TestPWA extends BaseTest{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void test_setupCache_failure() {
-		Callback<Void> callback = mock(Callback.class);
+		Callback<JavaScriptObject> callback = mock(Callback.class);
 		Promise<Boolean> promise = mock(Promise.class);
 		when(cache.queryCacheExistence("sst1")).thenReturn(promise);
 		when(promise.then(any(Callback.class))).thenAnswer((invocation)->{

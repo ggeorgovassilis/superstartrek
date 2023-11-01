@@ -44,15 +44,16 @@ public class LocalCacheBrowserImpl extends JavaScriptObject implements LocalCach
 
 	//@formatter:on
 	@Override
-	public final Void cacheFiles(String cacheName, String[] files, Callback<Void> callback) {
+	public final Void cacheFiles(String cacheName, String[] files, Callback<JavaScriptObject> callback) {
 		log.info("Proceeding to cache files");
 		@SuppressWarnings("unchecked")
-		Promise<Void>[] promises = new Promise[files.length];
+		Promise<JavaScriptObject>[] promises = new Promise[files.length];
 		open(cacheName).then((jsCache) -> {
 			int i=0;
 			for (String file:files)
 				promises[i++] = jsCache.add(file);
-			promises[0].all(promises).then((v)->{
+			Promise<JavaScriptObject> p = promises[0];
+			p.all(promises)[0].then((v)->{
 				log.info("Finished caching all files "+v);
 				callback.onSuccess(null);
 			});

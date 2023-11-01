@@ -3,6 +3,7 @@ package superstartrek.client.activities.pwa;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -10,8 +11,8 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import superstartrek.client.Application;
 import superstartrek.client.activities.appinstallation.AppInstallationEvent;
+import superstartrek.client.activities.pwa.localcache.CacheNOPImpl;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
-import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
 import superstartrek.client.eventbus.Events;
 
 public class PWA {
@@ -129,11 +130,13 @@ public class PWA {
 
 	}
 
-	public void setupCache(Callback<Void> callback) {
+	public void setupCache(Callback<JavaScriptObject> callback) {
 		if (cache == null) {
-			cache = LocalCacheBrowserImpl.getInstance();
-			if (cache == null)
-				throw new RuntimeException("No cache implementation found. maybe you are visiting this site over http and it isn't localhost?");
+			//cache = LocalCacheBrowserImpl.getInstance();
+			if (cache == null) {
+				GWT.log("Local cache not supported by browser, using NOP cache");
+				cache = new CacheNOPImpl();
+			}
 			setCacheImplementation(cache);
 		}
 		log.info("Querying cache existence");
@@ -149,7 +152,7 @@ public class PWA {
 		});
 	}
 
-	public void run(Callback<Void> callback) {
+	public void run(Callback<JavaScriptObject> callback) {
 		if (!GWT.isClient()) {
 			log.info("Not running PWA because not running in browser");
 			return;

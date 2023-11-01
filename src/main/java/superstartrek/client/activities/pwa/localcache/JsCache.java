@@ -9,11 +9,11 @@ class JsCache extends JavaScriptObject{
 	protected JsCache() {
 	}
 	
-	public final native Promise<Void> addAll(String[] files)/*-{
+	public final native Promise<JavaScriptObject> addAll(String[] files)/*-{
 		return this.addAll(files);
 	}-*/;
 	
-	public final native Promise<Void> add(String file)/*-{
+	public final native Promise<JavaScriptObject> add(String file)/*-{
 		return this.add(file);
 	}-*/;
 
