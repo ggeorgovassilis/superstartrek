@@ -28,8 +28,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
