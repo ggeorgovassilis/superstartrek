@@ -252,6 +252,12 @@ public class Klingon extends Vessel
 		}
 	}
 
+	void maybeDamage(Setting setting, double impact) {
+		BrowserAPI random = getApplication().browserAPI;
+		if (!setting.isBroken() && random.nextDouble() < impact)
+			getImpulse().damageAndTurnOff(getStarMap().getStarDate());
+	}
+	
 	@Override
 	public void onFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage, boolean wasAutoFire,
 			partTarget part) {
@@ -267,12 +273,9 @@ public class Klingon extends Vessel
 		BrowserAPI random = getApplication().browserAPI;
 		shields.setCurrentUpperBound(shields.getCurrentUpperBound() - damage);
 		if (part == partTarget.none) {
-			getImpulse().setBroken((getImpulse().isOperational() && random.nextDouble() < impact));
-			Setting disruptor = getDisruptor();
-			disruptor.setBroken(disruptor.isBroken()||(disruptor.isOperational() && random.nextDouble() < impact));
-			Setting cloak = getCloak();
-			if (!cloak.isBroken() && random.nextDouble() < impact)
-				cloak.damageAndTurnOff(getStarMap().getStarDate());
+			maybeDamage(impulse, impact);
+			maybeDamage(disruptor, impact);
+			maybeDamage(cloak, impact);
 		}
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
 		if ((part != partTarget.none) && (random.nextDouble() < Constants.KLINGON_PRECISION_SHOT_CHANCE_DAMAGE)) {
