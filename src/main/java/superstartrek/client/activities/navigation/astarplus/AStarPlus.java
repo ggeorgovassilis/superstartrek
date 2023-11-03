@@ -24,6 +24,9 @@ import superstartrek.client.space.Thing;
  * the path in a list. Normally the list must be reversed (since it codes the path
  * from end to start), but by actually switching the initial arguments start <-> end
  * we can compute the path from end to start and skip the list reversal.
+ * 
+ * Note about performance: profiling shows that this implementation is fast, 
+ * self-time spent isn't even in the top 20.
  *
  */
 public class AStarPlus {
