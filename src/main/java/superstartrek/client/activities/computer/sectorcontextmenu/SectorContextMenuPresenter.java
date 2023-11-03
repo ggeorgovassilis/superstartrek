@@ -24,15 +24,13 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 	Location sector;
 	Quadrant quadrant;
 	Map<String, Boolean> buttonsEnabled = new HashMap<>();
-	
+
 	final static String cmd_navigate = "cmd_navigate";
 	final static String cmd_firePhasers = "cmd_firePhasers";
 	final static String cmd_fireTorpedos = "cmd_fireTorpedos";
 	final static String cmd_dockStarbase = "cmd_dockStarbase";
 	final static String cmd_precision_weapons = "cmd_precision_weapons";
 	final static String cmd_precision_propulsion = "cmd_precision_propulsion";
-		
-
 
 	public SectorContextMenuPresenter() {
 		addHandler(Events.SECTOR_SELECTED);
@@ -45,7 +43,7 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 		buttonsEnabled.put(cmd_dockStarbase, true);
 		buttonsEnabled.put(cmd_precision_weapons, false);
 		buttonsEnabled.put(cmd_precision_propulsion, false);
-		
+
 	}
 
 	public void showMenuImmediatelly(int screenX, int screenY, Location sector, Quadrant quadrant) {
@@ -58,7 +56,8 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 		buttonsEnabled.put(cmd_firePhasers, canFirePhaserAt);
 		buttonsEnabled.put(cmd_precision_weapons, canFirePhaserAt);
 		buttonsEnabled.put(cmd_precision_propulsion, canFirePhaserAt);
-		buttonsEnabled.put(cmd_fireTorpedos, enterprise.getTorpedos().isOperational() && enterprise.getTorpedos().getValue()>=1);
+		buttonsEnabled.put(cmd_fireTorpedos,
+				enterprise.getTorpedos().isOperational() && enterprise.getTorpedos().getValue() >= 1);
 		for (String cmd : buttonsEnabled.keySet())
 			view.enableButton(cmd, buttonsEnabled.get(cmd));
 		// if the menu is too close to the screen borders it might be cut off and not
@@ -90,7 +89,8 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 	}
 
 	public void showMenu(int screenX, int screenY, Location sector, Quadrant quadrant) {
-		// in case the menu is visible already, this call will hide it first and then show it again (with animations)
+		// in case the menu is visible already, this call will hide it first and then
+		// show it again (with animations)
 		// at the new location
 		hideMenu(() -> showMenuImmediatelly(screenX, screenY, sector, quadrant));
 	}
@@ -123,29 +123,30 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 
 	public void onCommandClicked(String command) {
 		Enterprise enterprise = getEnterprise();
-		if (buttonsEnabled.get(command))
-			hideMenu(() -> {
-				switch (command) {
-				case cmd_navigate:
-					enterprise.navigateTo(sector);
-					break;
-				case cmd_firePhasers:
-					enterprise.firePhasersAt(sector, false, partTarget.none);
-					break;
-				case cmd_fireTorpedos:
-					enterprise.fireTorpedosAt(sector);
-					break;
-				case cmd_dockStarbase:
-					enterprise.dockInStarbase();
-					break;
-				case cmd_precision_weapons:
-					enterprise.firePhasersAt(sector, false, CombatHandler.partTarget.weapons);
-					break;
-				case cmd_precision_propulsion:
-					enterprise.firePhasersAt(sector, false, CombatHandler.partTarget.propulsion);
-					break;
-				}
-			});
+		if (!buttonsEnabled.get(command))
+			return;
+		hideMenu(() -> {
+			switch (command) {
+			case cmd_navigate:
+				enterprise.navigateTo(sector);
+				break;
+			case cmd_firePhasers:
+				enterprise.firePhasersAt(sector, false, partTarget.none);
+				break;
+			case cmd_fireTorpedos:
+				enterprise.fireTorpedosAt(sector);
+				break;
+			case cmd_dockStarbase:
+				enterprise.dockInStarbase();
+				break;
+			case cmd_precision_weapons:
+				enterprise.firePhasersAt(sector, false, CombatHandler.partTarget.weapons);
+				break;
+			case cmd_precision_propulsion:
+				enterprise.firePhasersAt(sector, false, CombatHandler.partTarget.propulsion);
+				break;
+			}
+		});
 	}
 
 	@Override
