@@ -1,5 +1,6 @@
 package superstartrek.client.activities.settings;
 
+import superstartrek.client.Application;
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
@@ -20,9 +21,10 @@ public class SettingsPresenter extends BasePresenter<SettingsScreen> implements 
 	@Override
 	public void onActivityChanged(String activity) {
 		if ("settings".equals(activity)) {
-			view.selectUIScale(getApplication().getUIScale());
-			view.selectTheme(getApplication().getUITheme());
-			view.selectNavigationAlignment(getApplication().getNavigationElementAlignmentPreference());
+			Application app = getApplication();
+			view.selectUIScale(app.getUIScale());
+			view.selectTheme(app.getUITheme());
+			view.selectNavigationAlignment(app.getNavigationElementAlignmentPreference());
 			view.show();
 		} else
 			view.hide();

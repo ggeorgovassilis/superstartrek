@@ -154,8 +154,7 @@ public class Klingon extends Vessel
 	}
 
 	public void jumpTo(Location dest) {
-		Application app = getApplication();
-		Quadrant quadrant = app.getActiveQuadrant();
+		Quadrant quadrant = getActiveQuadrant();
 		Location currentLocation = getLocation();
 		quadrant.remove(this);
 		setLocation(dest);
