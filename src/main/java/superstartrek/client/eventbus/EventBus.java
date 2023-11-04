@@ -52,8 +52,7 @@ public class EventBus {
 			try {
 				callback.call(h);
 			} catch (Throwable e) {
-				if (errors == null)
-					errors = new HashSet<Throwable>();
+				errors=errors==null?new HashSet<Throwable>():errors;
 				errors.add(e);
 			}
 		if (errors != null)

@@ -52,8 +52,7 @@ public class Setup {
 	}
 
 	void maybeShouldWarn(int currentSectors, int hardcodedSectors) {
-		if (currentSectors != hardcodedSectors)
-			throw new RuntimeException("Names have not beed coded for anything but 8x8 quadrants yet");
+		assert(currentSectors == hardcodedSectors);
 	}
 
 	void deployFormationIntoQuadrant(Quadrant quadrant, BrowserAPI random, StarMap map, Formations f) {

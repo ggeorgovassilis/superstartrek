@@ -2,7 +2,6 @@ package superstartrek.client.space;
 
 public abstract class Thing {
 
-	protected String css; //TODO: the code often concatenates CSS like thing.css+" "+somthingElse. If css already contained the trailing space, we could cut some GC?
 	protected Location location = Location.location(0,0);
 	
 	@SuppressWarnings("unchecked")
@@ -25,8 +24,7 @@ public abstract class Thing {
 	public abstract String getName();
 
 	public void setLocation(Location l) {
-		if (location == null)
-			throw new IllegalArgumentException("location is null");
+		assert(l!=null);
 		this.location = l;
 	}
 	

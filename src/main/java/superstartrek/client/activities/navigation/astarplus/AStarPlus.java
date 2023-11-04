@@ -63,8 +63,7 @@ public class AStarPlus {
 		// only uncover an already broken association
 		// 2. getNextTodo is called _at_most_ as many times as addToDo, usually fewer
 		// times
-		if (todoHead >= todoTail)
-			throw new IndexOutOfBoundsException("Head after tail " + todoHead + " " + todoTail);
+		assert(todoHead<todoTail);
 		return todo[todoHead++];
 	}
 

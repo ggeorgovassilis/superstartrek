@@ -11,8 +11,7 @@ public abstract class HtmlWidget extends Widget {
 	}
 
 	public void replaceElementWithThis(String elementIdToReplace) {
-		if (isAttached())
-			throw new RuntimeException("Widget already attached");
+		assert(!isAttached());
 		Element eToBeReplaced = Document.get().getElementById(elementIdToReplace);
 		Element parent = eToBeReplaced.getParentElement();
 		parent.replaceChild(getElement(), eToBeReplaced);

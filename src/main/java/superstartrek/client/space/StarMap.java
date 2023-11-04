@@ -85,8 +85,7 @@ public class StarMap {
 	}
 
 	public Quadrant getQuadrant(int x, int y) {
-		if (!isOnMap(x, y))
-			throw new IllegalArgumentException(x + ":" + y);
+		assert(isOnMap(x, y));
 		return quadrants[x][y];
 	}
 
