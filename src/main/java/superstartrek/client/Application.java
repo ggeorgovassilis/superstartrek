@@ -67,7 +67,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	public RequestFactory requestFactory;
 	public PWA pwa;
 	public GameSaver gameSaver;
-	public ScoreKeeper scoreKeeper = new ScoreKeeperImpl();
+	public ScoreKeeper scoreKeeper;
 
 	private static Application that;
 	public GameController gameController;
@@ -215,6 +215,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		if (GWT.isClient())
 			browserAPI = new GwtBrowserAPIImpl(eventBus);
 		screenTemplates = GWT.create(ScreenTemplates.class);
+		scoreKeeper = new ScoreKeeperImpl(browserAPI);
 		setupHttp();
 		registerEventHandlers();
 		setupGameSaver();

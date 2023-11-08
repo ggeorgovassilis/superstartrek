@@ -1,5 +1,8 @@
 package superstartrek.client.control;
 
+import java.util.Date;
+import java.util.Map;
+
 public interface ScoreKeeper {
 	
 	final static int POINTS_ENTERPRISE_REPAIR = -20;
@@ -11,4 +14,6 @@ public interface ScoreKeeper {
 	int addScore(int score);
 	int getScore();
 	Void reset();
+	void commitScore(Date date);
+	Map<Date,Integer> getHighScores();
 }

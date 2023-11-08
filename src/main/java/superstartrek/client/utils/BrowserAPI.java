@@ -4,7 +4,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-
 import superstartrek.client.activities.Presenter;
 import superstartrek.client.activities.View;
 import superstartrek.client.activities.pwa.Callback;
@@ -37,7 +36,7 @@ public interface BrowserAPI {
 	<P extends Presenter> void addToPage(View<P> view);
 	
 	String getLocallyStoredValue(String key);
-	void storeValueLocally(String key, String value);
+	Void storeValueLocally(String key, String value);
 	void deleteValueLocally(String key);
 	
 	Element createElementNs(String nameSpace, String tag);
@@ -45,5 +44,7 @@ public interface BrowserAPI {
 	Void removeGlobalCss(String css);
 	HandlerRegistration addWindowResizeHandler(ResizeHandler handler);
 	String getAppBuildNr();
+	String[] parseStringJsonArray(String json);
+	String toJson(String[] array);
 
 }

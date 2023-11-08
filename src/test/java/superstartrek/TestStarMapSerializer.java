@@ -8,7 +8,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-
 import superstartrek.client.activities.Presenter;
 import superstartrek.client.activities.View;
 import superstartrek.client.activities.pwa.Callback;
@@ -40,7 +39,8 @@ public class TestStarMapSerializer extends BaseTest {
 		application.browserAPI = new BrowserAPI() {
 
 			@Override
-			public void storeValueLocally(String key, String value) {
+			public Void storeValueLocally(String key, String value) {
+				return null;
 			}
 
 			@Override
@@ -165,6 +165,19 @@ public class TestStarMapSerializer extends BaseTest {
 				// TODO Auto-generated method stub
 				return null;
 			}
+
+			@Override
+			public String[] parseStringJsonArray(String json) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public String toJson(String[] array) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
 		};
 		application.starMap = starMap = setup.createNewMap();
 		application.gameController = mock(GameController.class);

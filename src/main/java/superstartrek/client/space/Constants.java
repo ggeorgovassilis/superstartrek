@@ -34,6 +34,7 @@ public class Constants {
 	public final static int KLINGON_MAX_SECTOR_SPEED = 1;
 	public final static int KLINGON_DISRUPTOR_RANGE_SECTORS = 2;
 	public final static double KLINGON_PRECISION_SHOT_CHANCE_DAMAGE = 0.5;
+	public final static int MAX_HIGH_SCORE_ENTRIES = 5;
 
 	
 	public static double ENTERPRISE_PHASER_PRECISION(boolean autoAim) {

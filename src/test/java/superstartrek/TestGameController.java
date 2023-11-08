@@ -19,10 +19,11 @@ import superstartrek.client.vessels.Klingon.ShipClass;
 public class TestGameController extends BaseTest {
 
 	GameController controller;
-	ScoreKeeper scoreKeeper = new ScoreKeeperImpl();
+	ScoreKeeper scoreKeeper;
 
 	@Before
 	public void setup() {
+		scoreKeeper = new ScoreKeeperImpl(application.browserAPI);
 		controller = new GameController(application, scoreKeeper);
 	}
 
