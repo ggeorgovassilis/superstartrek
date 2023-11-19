@@ -78,9 +78,6 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 		case "cmd_manual":
 			gotoStateAfterMenuHidden = "manual";
 			break;
-		case "cmd_highscore":
-			gotoStateAfterMenuHidden = "highscore";
-			break;
 		case "cmd_evasive_maneuvers":
 			toggleEvasiveManeuvers();
 			updateCommands();
