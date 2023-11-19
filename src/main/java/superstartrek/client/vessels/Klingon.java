@@ -254,7 +254,7 @@ public class Klingon extends Vessel
 	void maybeDamage(Setting setting, double impact) {
 		BrowserAPI random = getApplication().browserAPI;
 		if (!setting.isBroken() && random.nextDouble() < impact)
-			getImpulse().damageAndTurnOff(getStarMap().getStarDate());
+			setting.damageAndTurnOff(getStarMap().getStarDate());
 	}
 	
 	@Override
