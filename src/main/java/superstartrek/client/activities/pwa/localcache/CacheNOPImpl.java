@@ -70,6 +70,7 @@ public class CacheNOPImpl implements LocalCache{
 
 	@Override
 	public Void clearCache(String cacheNameToDelete, RequestFactory rf, ScheduledCommand callback) {
+		callback.execute();
 		return null;
 	}
 
