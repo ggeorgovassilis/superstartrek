@@ -44,7 +44,5 @@ public interface BrowserAPI {
 	Void removeGlobalCss(String css);
 	HandlerRegistration addWindowResizeHandler(ResizeHandler handler);
 	String getAppBuildNr();
-	String[] parseStringJsonArray(String json);
-	String toJson(String[] array);
 
 }

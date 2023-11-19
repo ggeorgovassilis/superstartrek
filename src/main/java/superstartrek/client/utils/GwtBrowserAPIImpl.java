@@ -10,8 +10,6 @@ import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
@@ -200,18 +198,5 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	public String getAppBuildNr() {
 		return Document.get().getElementById("appBuildNr").getAttribute("content");
 	}
-
-	@Override
-	public String[] parseStringJsonArray(String json) {
-		Object jsarr = (JSONArray)JSONParser.parseStrict(json);
-		return (String[])jsarr;
-	}
-
-	@Override
-	public String toJson(String[] array) {
-		JSONArray jsarr = (JSONArray)((Object)array);
-		return jsarr.toString();
-	}
-
 
 }

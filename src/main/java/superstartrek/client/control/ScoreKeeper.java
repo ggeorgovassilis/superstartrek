@@ -1,7 +1,6 @@
 package superstartrek.client.control;
 
 import java.util.Date;
-import java.util.Map;
 
 public interface ScoreKeeper {
 	
@@ -15,5 +14,5 @@ public interface ScoreKeeper {
 	int getScore();
 	Void reset();
 	void commitScore(Date date);
-	Map<Date,Integer> getHighScores();
+	String[] getHighScores();
 }

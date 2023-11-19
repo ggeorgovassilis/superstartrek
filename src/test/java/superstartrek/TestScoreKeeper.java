@@ -1,18 +1,16 @@
 package superstartrek;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Date;
-import java.util.Map;
-
-import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 
+import superstartrek.client.activities.highscores.HighscoresPresenter;
+import superstartrek.client.activities.highscores.HighscoresScreen;
 import superstartrek.client.control.ScoreKeeperImpl;
 
 public class TestScoreKeeper extends BaseTest {
@@ -22,88 +20,85 @@ public class TestScoreKeeper extends BaseTest {
 	@Before
 	public void setup() {
 		scoreKeeper = new ScoreKeeperImpl(browser);
+		application.scoreKeeper = scoreKeeper;
+	}
+
+	@Test
+	public void testScoreKeeper() {
+		assertEquals(0, scoreKeeper.getScore());
+		scoreKeeper.addScore(10);
+		assertEquals(10, scoreKeeper.getScore());
+		scoreKeeper.addScore(1);
+		assertEquals(11, scoreKeeper.getScore());
+
+		when(browser.getLocallyStoredValue("scores")).thenReturn(null, "11_1000", "11_1000", "11_1000,12_1001",
+				"11_1000,12_1001", "11_1000,12_1001,13_1002", "11_1000,12_1001,13_1002",
+				"11_1000,12_1001,13_1002,14_1003", "11_1000,12_1001,13_1002,14_1003",
+				"11_1000,12_1001,13_1002,14_1003,15_1004", "11_1000,12_1001,13_1002,14_1003,15_1004", "12_1001,13_1002,14_1003,15_1004,16_1005");
+		scoreKeeper.commitScore(new Date(1000));
+		String[] scores = scoreKeeper.getHighScores();
+		assertEquals(1, scores.length);
+		assertEquals("11_1000", scores[0]);
+
+		scoreKeeper.addScore(1);
+		scoreKeeper.commitScore(new Date(1001));
+		scores = scoreKeeper.getHighScores();
+		assertEquals(2, scores.length);
+		assertEquals("11_1000", scores[0]);
+		assertEquals("12_1001", scores[1]);
+
+		scoreKeeper.addScore(1);
+		scoreKeeper.commitScore(new Date(1002));
+		scores = scoreKeeper.getHighScores();
+		assertEquals(3, scores.length);
+		assertEquals("11_1000", scores[0]);
+		assertEquals("12_1001", scores[1]);
+		assertEquals("13_1002", scores[2]);
+
+		scoreKeeper.addScore(1);
+		scoreKeeper.commitScore(new Date(1003));
+		scores = scoreKeeper.getHighScores();
+		assertEquals(4, scores.length);
+		assertEquals("11_1000", scores[0]);
+		assertEquals("12_1001", scores[1]);
+		assertEquals("13_1002", scores[2]);
+		assertEquals("14_1003", scores[3]);
+
+		scoreKeeper.addScore(1);
+		scoreKeeper.commitScore(new Date(1004));
+		scores = scoreKeeper.getHighScores();
+		assertEquals(5, scores.length);
+		assertEquals("11_1000", scores[0]);
+		assertEquals("12_1001", scores[1]);
+		assertEquals("13_1002", scores[2]);
+		assertEquals("14_1003", scores[3]);
+		assertEquals("15_1004", scores[4]);
+
+		scoreKeeper.addScore(1);
+		scoreKeeper.commitScore(new Date(1005));
+		scores = scoreKeeper.getHighScores();
+		assertEquals(5, scores.length);
+		assertEquals("12_1001", scores[0]);
+		assertEquals("13_1002", scores[1]);
+		assertEquals("14_1003", scores[2]);
+		assertEquals("15_1004", scores[3]);
+		assertEquals("16_1005", scores[4]);
 	}
 
 	@Test
 	public void testHighScoreList() {
-		final String[] cache = new String[1];
-		when(browser.getLocallyStoredValue(eq("scores"))).thenAnswer(t -> cache[0]);
-		when(browser.storeValueLocally(eq("scores"), anyString())).thenAnswer(t -> {
-			cache[0] = t.getArgument(1);
-			return null;
-		});
+		HighscoresScreen screen = mock(HighscoresScreen.class);
+		HighscoresPresenter presenter = new HighscoresPresenter();
+		presenter.setView(screen);
 
-		when(browser.parseStringJsonArray(anyString())).thenAnswer((args) -> {
-			String json = args.getArgument(0);
-			JSONArray arr = new JSONArray(json);
-			String s[] = new String[arr.length()];
-			int i = 0;
-			for (Object o : arr.toList()) {
-				s[i++] = o.toString();
-			}
-			return s;
-		});
-		when(browser.toJson(any())).thenAnswer(invocation -> {
-			String[] array = invocation.getArgument(0);
-			JSONArray arr = new JSONArray();
-			for (String s : array)
-				arr.put(s);
-			return arr.toString();
-		});
-		scoreKeeper.addScore(1);
-		assertEquals(1, scoreKeeper.getScore());
-		scoreKeeper.commitScore(new Date(100000l));
-		Map<Date, Integer> highScores = scoreKeeper.getHighScores();
-		assertEquals(1, highScores.size());
-		assertEquals(1, (int) highScores.get(new Date(100000)));
+		when(browser.getLocallyStoredValue("scores")).thenReturn("12_1001000,13_1002000,14_1003000,15_1004000,16_1005000");
 
-		scoreKeeper.addScore(10);
-		assertEquals(11, scoreKeeper.getScore());
-		scoreKeeper.commitScore(new Date(200000l));
-		highScores = scoreKeeper.getHighScores();
-		assertEquals(2, highScores.size());
-		assertEquals(1, (int) highScores.get(new Date(100000)));
-		assertEquals(11, (int) highScores.get(new Date(200000)));
-
-		scoreKeeper.addScore(20);
-		assertEquals(31, scoreKeeper.getScore());
-		scoreKeeper.commitScore(new Date(300000l));
-		highScores = scoreKeeper.getHighScores();
-		assertEquals(3, highScores.size());
-		assertEquals(1, (int) highScores.get(new Date(100000)));
-		assertEquals(11, (int) highScores.get(new Date(200000)));
-		assertEquals(31, (int) highScores.get(new Date(300000)));
-
-		scoreKeeper.addScore(30);
-		assertEquals(61, scoreKeeper.getScore());
-		scoreKeeper.commitScore(new Date(400000l));
-		highScores = scoreKeeper.getHighScores();
-		assertEquals(4, highScores.size());
-		assertEquals(1, (int) highScores.get(new Date(100000)));
-		assertEquals(11, (int) highScores.get(new Date(200000)));
-		assertEquals(31, (int) highScores.get(new Date(300000)));
-		assertEquals(61, (int) highScores.get(new Date(400000)));
-
-		scoreKeeper.addScore(10);
-		assertEquals(71, scoreKeeper.getScore());
-		scoreKeeper.commitScore(new Date(500000l));
-		highScores = scoreKeeper.getHighScores();
-		assertEquals(5, highScores.size());
-		assertEquals(1, (int) highScores.get(new Date(100000)));
-		assertEquals(11, (int) highScores.get(new Date(200000)));
-		assertEquals(31, (int) highScores.get(new Date(300000)));
-		assertEquals(61, (int) highScores.get(new Date(400000)));
-		assertEquals(71, (int) highScores.get(new Date(500000)));
-
-		scoreKeeper.addScore(10);
-		assertEquals(81, scoreKeeper.getScore());
-		scoreKeeper.commitScore(new Date(600000l));
-		highScores = scoreKeeper.getHighScores();
-		assertEquals(5, highScores.size());
-		assertEquals(11, (int) highScores.get(new Date(200000)));
-		assertEquals(31, (int) highScores.get(new Date(300000)));
-		assertEquals(61, (int) highScores.get(new Date(400000)));
-		assertEquals(71, (int) highScores.get(new Date(500000)));
-		assertEquals(81, (int) highScores.get(new Date(600000)));
+		presenter.onActivityChanged("highscore");
+		verify(screen).clearEntries();
+		verify(screen).addEntry("1970/01/01 02:16:41", "12");
+		verify(screen).addEntry("1970/01/01 02:16:42", "13");
+		verify(screen).addEntry("1970/01/01 02:16:43", "14");
+		verify(screen).addEntry("1970/01/01 02:16:44", "15");
+		verify(screen).addEntry("1970/01/01 02:16:45", "16");
 }
 }

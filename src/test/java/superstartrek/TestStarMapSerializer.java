@@ -166,18 +166,6 @@ public class TestStarMapSerializer extends BaseTest {
 				return null;
 			}
 
-			@Override
-			public String[] parseStringJsonArray(String json) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public String toJson(String[] array) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
 		};
 		application.starMap = starMap = setup.createNewMap();
 		application.gameController = mock(GameController.class);

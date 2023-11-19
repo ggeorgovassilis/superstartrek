@@ -41,4 +41,7 @@ public interface ScreenTemplates extends ClientBundle {
 	@Source("credits.html")
 	public HtmlResource creditsScreen();
 
+	@Source("highscores.html")
+	public HtmlResource highscoresScreen();
+
 }

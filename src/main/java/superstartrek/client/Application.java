@@ -16,6 +16,8 @@ import superstartrek.client.activities.computer.ComputerPresenter;
 import superstartrek.client.activities.computer.ComputerScreenImpl;
 import superstartrek.client.activities.credits.CreditsPresenter;
 import superstartrek.client.activities.credits.CreditsScreen;
+import superstartrek.client.activities.highscores.HighscoresPresenter;
+import superstartrek.client.activities.highscores.HighscoresScreenImpl;
 import superstartrek.client.activities.intro.IntroPresenter;
 import superstartrek.client.activities.intro.IntroScreen;
 import superstartrek.client.activities.loading.LoadingPresenter;
@@ -117,6 +119,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		new AppInstallPromptViewImpl(new AppInstallPromptPresenter());
 		new SettingsScreenImpl(new SettingsPresenter());
 		new CreditsScreen(new CreditsPresenter());
+		new HighscoresScreenImpl(new HighscoresPresenter());
 	}
 
 	public void message(String formattedMessage) {

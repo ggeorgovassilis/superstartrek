@@ -2,6 +2,8 @@ package superstartrek.client.control;
 
 import static superstartrek.client.eventbus.Events.*;
 
+import java.util.Date;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.messages.MessageHandler;
@@ -122,14 +124,14 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 
 	@Override
 	public void gameWon() {
-		getScoreKeeper().addScore(ScoreKeeper.POINTS_GAME_WON);
+		scoreKeeper.addScore(ScoreKeeper.POINTS_GAME_WON);
 		message("Congratulations, all Klingons were destroyed.", "gamewon");
 		message("Your score is "+getScoreKeeper().getScore(), "score");
 	}
 
 	@Override
 	public void gameLost() {
-		getScoreKeeper().addScore(ScoreKeeper.POINTS_ENTERPRISE_DESTROYED);
+		scoreKeeper.addScore(ScoreKeeper.POINTS_ENTERPRISE_DESTROYED);
 		message("The Enterprise was destroyed.", "gameover");
 		message("Your score is "+getScoreKeeper().getScore(), "score");
 	}
@@ -144,7 +146,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 	}
 
 	protected void startTurn() {
-		getScoreKeeper().addScore(ScoreKeeper.POINTS_DAY);
+		scoreKeeper.addScore(ScoreKeeper.POINTS_DAY);
 		application.starMap.advanceStarDate(1);
 		fireEvent(TURN_STARTED, (h)->h.onTurnStarted());
 		fireEvent(PLAYER_TURN_STARTED, (h)->h.onPlayerTurnStarted());
@@ -195,6 +197,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 			fireEvent(GAME_WON, (h)->h.gameWon());
 		if (outcome == GameOutcome.lost)
 			fireEvent(GAME_LOST, (h)->h.gameLost());
+		scoreKeeper.commitScore(new Date());
 		fireEvent(GAME_OVER, (h)->h.gameOver());
 	}
 

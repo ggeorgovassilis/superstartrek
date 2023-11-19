@@ -1,12 +1,11 @@
 package superstartrek.client.control;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
+import superstartrek.client.space.Constants;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.utils.Strings;
 
@@ -36,49 +35,38 @@ public class ScoreKeeperImpl implements ScoreKeeper {
 		return null;
 	}
 
-    @Override
-    public void commitScore(Date date) {
-        String newScoreEntry = String.format("%d,%d", date.getTime(), score);
+	String toString(int score, Date when) {
+		return score + "_" + when.getTime();
+	}
 
-        // Fetch existing scores from BrowserAPI
-        String scoresJson = browserAPI.getLocallyStoredValue("scores");
-        if (Strings.isEmpty(scoresJson))
-        	scoresJson="[]";
-        String[] scoresArr = browserAPI.parseStringJsonArray(scoresJson);
-
-        List<String> scores = new ArrayList<String>();
-        for (String entry:scoresArr)
-        	scores.add(entry);
-        scores.add(newScoreEntry);
-        Collections.sort(scores);
-        while (scores.size() > 5) {
-            scores.remove(0); // Removes the lowest score
-        }
-        Collections.reverse(scores);
-        
-        scoresArr = new String[scores.size()];
-        for (int i=0;i<scoresArr.length;i++)
-        	scoresArr[i] = scores.get(i);
-        String json = browserAPI.toJson(scoresArr);
-        browserAPI.storeValueLocally("scores", json);
-    }
+	String[] parseScoresString(String s) {
+		String[] arr = Strings.isEmpty(s)?new String[0]:s.split(",");
+		return arr;
+	}
+	
+	String getStoredScore() {
+		return Strings.denull(browserAPI.getLocallyStoredValue("scores"));
+	}
 
 	@Override
-	public Map<Date, Integer> getHighScores() {
-        Map<Date,Integer> map = new HashMap<Date, Integer>();
-		String jsonScores = browserAPI.getLocallyStoredValue("scores");
-        if (Strings.isEmpty(jsonScores))
-        	jsonScores="[]";
+	public void commitScore(Date date) {
+		String scoresString = getStoredScore();
+		String[] scoresArr = parseScoresString(scoresString);
+		List<String> lScores = new ArrayList<String>(Arrays.asList(scoresArr));
+		String newScoreEntry = toString(score, date);
+		lScores.add(newScoreEntry);
+		Collections.sort(lScores);
+		if (lScores.size() > Constants.MAX_HIGH_SCORE_ENTRIES)
+			lScores.remove(0);
+		scoresArr = lScores.toArray(scoresArr);
+		scoresString = String.join(",", scoresArr);
+		browserAPI.storeValueLocally("scores", scoresString);
+	}
 
-        String[] scoresArr = browserAPI.parseStringJsonArray(jsonScores);
-        for (String entry:scoresArr) {
-        	String[] parts = entry.split(",");
-        	long timestamp = Long.parseLong(parts[0]);
-        	int score = Integer.parseInt(parts[1]);
-        	Date date = new Date(timestamp);
-        	map.put(date, score);
-        }
-        return map;
+	@Override
+	public String[] getHighScores() {
+		String scoresString = getStoredScore();
+		return parseScoresString(scoresString);
 	}
 
 }

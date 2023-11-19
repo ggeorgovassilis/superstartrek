@@ -72,11 +72,14 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 			restart();
 			break;
 		case "cmd_settings":
+			// hideMenu called implicitly through history change event
 			gotoStateAfterMenuHidden = "settings";
 			break;
 		case "cmd_manual":
-			// hideMenu called implicitly through history change event
 			gotoStateAfterMenuHidden = "manual";
+			break;
+		case "cmd_highscore":
+			gotoStateAfterMenuHidden = "highscore";
 			break;
 		case "cmd_evasive_maneuvers":
 			toggleEvasiveManeuvers();
