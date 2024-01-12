@@ -400,17 +400,17 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 		final int fRepairCount = repairCount;
 
 		evasiveManeuvers.setValue(false);
-		fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
-		fireEvent(Events.ENTERPRISE_DOCKED, (h) -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount,
+		fireEvent(Events.ENTERPRISE_REPAIRED, h -> h.onEnterpriseRepaired(Enterprise.this));
+		fireEvent(Events.ENTERPRISE_DOCKED, h -> h.onEnterpriseDocked(Enterprise.this, starBase, fRepairCount,
 				torpedosRestocked, antimatterRefuelled));
 		message("Enterprise docked at " + starBase.getName());
 	}
 
-	protected boolean canBeRepaired(Setting setting) {
+	boolean canBeRepaired(Setting setting) {
 		return setting.isBroken() || setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
 	}
 
-	protected boolean maybeRepairProvisionally(String name, Setting setting) {
+	boolean maybeRepairProvisionally(String name, Setting setting) {
 		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
@@ -573,7 +573,7 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 		return;
 	}
 
-	public void playComputerTurn() {
+	void playComputerTurn() {
 		if (autoAim.getBooleanValue() && autoAim.isOperational())
 			autoAim();
 	}
