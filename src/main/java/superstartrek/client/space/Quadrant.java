@@ -17,6 +17,14 @@ public class Quadrant{
 	private List<Star> stars = new ArrayList<>();
 	private StarBase starBase;
 	private List<Klingon> klingons = new ArrayList<>();
+	/* things[][] is a backing matrix which can be used to get a Thing at a given sector in the quadrant.
+	 * From a functional PoV, we could just iterate over the stars and klingons lists and find any Thing
+	 * that is at a given location, but that is slow. things[][] speeds up those searches. There are 8x8
+	 * quadrants on the map, but only one quadrant is ever active. If things[][] was populated, it'd take
+	 * up "a lot" of memory all the time needlessly for 63 of those quadrants. We're following a 
+	 * hydration/dehydration cycle where a quadrant is hydrated (things[][] is populated) when the Enterprise
+	 * enters the quadrant and dehydrated (things = null) when the Enterprise leaves the quadrant.
+	 */
 	private Thing[][] things;
 	
 	public Quadrant(String name, int x, int y) {
@@ -117,10 +125,8 @@ public class Quadrant{
 	}
 	
 	public void doWithThings(Consumer<Thing> consumer) {
-		for (Thing thing:stars)
-			consumer.accept(thing);
-		for (Thing thing:klingons)
-			consumer.accept(thing);
+		stars.forEach(consumer);
+		klingons.forEach(consumer);
 		if (starBase!=null)
 			consumer.accept(starBase);
 		Enterprise enterprise = Application.get().starMap.enterprise;

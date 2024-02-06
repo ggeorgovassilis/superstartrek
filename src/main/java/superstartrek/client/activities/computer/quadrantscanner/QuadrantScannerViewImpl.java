@@ -131,8 +131,7 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 
 	@Override
 	public void clearBeamMarks() {
-		for (Element e : beamElements)
-			e.removeFromParent();
+		beamElements.forEach(e->e.removeFromParent());
 		beamElements.clear();
 	}
 

@@ -190,7 +190,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	public void updateMapWithReachableSectors() {
 		Enterprise enterprise = getEnterprise();
 		// Sets are, in theory, faster, but Lists are backed by native JS arrays which
-		// is (probably) faster
+		// is (probably) faster in GWT. This doesn't show up in the profiler, so probably not worth optimising
 		List<Location> oldReachableSectors = new ArrayList<Location>(enterprise.getLastReachableSectors());
 		enterprise.updateReachableSectors();
 		List<Location> newReachableSectors = enterprise.getLastReachableSectors();
@@ -198,10 +198,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		oldButNotNewSectors.removeAll(newReachableSectors);
 		List<Location> newButNotOldSectors = new ArrayList<Location>(newReachableSectors);
 		newButNotOldSectors.removeAll(oldReachableSectors);
-		for (Location l : oldButNotNewSectors)
-			view.removeCssFromCell(l.x, l.y, "navigation-target");
-		for (Location l : newButNotOldSectors)
-			markSectorAsNavigationTarget(l.x, l.y);
+		oldButNotNewSectors.forEach(l->view.removeCssFromCell(l.x, l.y, "navigation-target"));
+		newButNotOldSectors.forEach(l->markSectorAsNavigationTarget(l.x, l.y));
 	}
 
 	@Override

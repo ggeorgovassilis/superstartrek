@@ -25,7 +25,8 @@ public class HighscoresScreenImpl extends BaseScreen<HighscoresPresenter> implem
 	@Override
 	public void clearEntries() {
 		NodeList<Element> trs = CSS.querySelectorAll("#highscores tbody tr");
-		for (int i=0;i<trs.getLength();i++) {
+		int length = trs.getLength();
+		for (int i=0;i<length;i++) {
 			trs.getItem(i).removeFromParent();
 		}
 	}

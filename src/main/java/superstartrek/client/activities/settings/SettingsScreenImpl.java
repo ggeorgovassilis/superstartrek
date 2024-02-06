@@ -86,8 +86,7 @@ public class SettingsScreenImpl extends BaseScreen<SettingsPresenter> implements
 	}
 	
 	void selectElementInSet(Set<Element> set, String value) {
-		for (Element e : set)
-			e.setPropertyString("checked", value.equals(e.getAttribute("value")) ? "true" : null);
+			set.forEach(e->e.setPropertyString("checked", value.equals(e.getAttribute("value")) ? "true" : null));
 	}
 
 	@Override

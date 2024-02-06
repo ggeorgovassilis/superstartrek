@@ -28,7 +28,8 @@ public class LRSScreenImpl extends BaseScreen<LRSPresenter> implements LRSScreen
 		element.setId("longrangescan");
 		cells = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 		NodeList<Element> tds = CSS.querySelectorAll("#longrangescan .quadrants td");
-		for (int i=tds.getLength()-1;i>=0;i--) {
+		int length = tds.getLength()-1;
+		for (int i=length;i>=0;i--) {
 			Element eTd = tds.getItem(i);
 			int x = Integer.parseInt(eTd.getAttribute("data-x"));
 			int y = Integer.parseInt(eTd.getAttribute("data-y"));
