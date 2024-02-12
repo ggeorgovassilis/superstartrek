@@ -1,11 +1,24 @@
 package superstartrek.client.space;
 
+/**
+ * Settings model numerical or boolean attributes of vessels such as reactor output or the number of torpedos.
+ */
 public class Setting {
 
+	// Largest value the setting can have
 	double maximum;
+	
+	// Temporary largest value the setting can have. This is used to implement the effect damage has on the setting
+	// eg. reduced reactor output as the result of receiving damage.
 	double currentUpperBound;
+	
+	// current setting value. Has to be in the range of 0 ≤ value ≤ min(currentUpperBound, maximum)
 	double value;
+	
+	// Stardate the damage was applied. Used to timeout/repair damage.
 	int timeOfDamage;
+	
+	// Indicates if the setting is disabled as the result of damage (as opposed to just reduced by currentUpperBound)
 	boolean broken;
 	
 	public Setting(double maximum) {
