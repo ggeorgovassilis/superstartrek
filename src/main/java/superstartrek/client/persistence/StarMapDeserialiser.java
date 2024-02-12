@@ -5,10 +5,8 @@ import java.util.Map;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
-import netscape.javascript.JSObject;
 import superstartrek.client.Application;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.space.Location;
@@ -18,7 +16,6 @@ import superstartrek.client.space.Star;
 import superstartrek.client.space.StarBase;
 import superstartrek.client.space.StarMap;
 import superstartrek.client.space.Thing;
-import superstartrek.client.utils.Strings;
 import superstartrek.client.space.Star.StarClass;
 import superstartrek.client.vessels.Enterprise;
 import superstartrek.client.vessels.Klingon;
