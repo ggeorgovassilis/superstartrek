@@ -124,7 +124,7 @@ public class Klingon extends Vessel
 
 	public boolean hasClearShotAt(Quadrant index, Location target, Enterprise enterprise, StarMap map) {
 		if (StarMap.within_distance(target, getLocation(), Constants.KLINGON_DISRUPTOR_RANGE_SECTORS)) {
-			List<Thing> obstacles = StarMap.findObstaclesInLine(index, getLocation(), target, 2);
+			List<Thing> obstacles = StarMap.findObstaclesInLine(index, getLocation(), target, Constants.KLINGON_DISRUPTOR_RANGE_SECTORS);
 			obstacles.remove(enterprise);
 			obstacles.remove(this);
 			return obstacles.isEmpty();

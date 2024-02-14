@@ -26,10 +26,6 @@ public class Star extends Thing{
 	final StarClass sc;
 
 	public Star(Location location, StarClass sc) {
-		this(location, true, sc);
-	}
-
-	public Star(Location location, boolean registerEvents, StarClass sc) {
 		this.sc = sc;
 		setLocation(location);
 	}
