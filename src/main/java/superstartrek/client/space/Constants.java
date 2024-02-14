@@ -16,7 +16,7 @@ public class Constants {
 	public final static double ENTERPRISE_ANTIMATTER_CONSUMPTION_WARP = 2;
 	public final static double ENTERPRISE_DEVICE_IMPACT_MODIFIER = 0.3;
 	public final static double ENTERPRISE_SHIELD_IMPACT_MODIFIER = 40.0;
-	public final static double ENTERPRISE_CHANCE_OF_AUTOREPAIR = 0.75;
+	public final static double ENTERPRISE_SELF_REPAIR_STRENGTH= 0.75;
 	public final static double ENTERPRISE_SHIELD_BASE_COEFFICIENT = 0.75;
 	public final static int ENTERPRISE_TIME_TO_REPAIR_SETTING = 3;
 	public final static double ENTERPRISE_PRECISION_SHOT_EFFICIENCY = 0.2;
@@ -35,6 +35,8 @@ public class Constants {
 	public final static int KLINGON_DISRUPTOR_RANGE_SECTORS = 2;
 	public final static double KLINGON_PRECISION_SHOT_CHANCE_DAMAGE = 0.5;
 	public final static int MAX_HIGH_SCORE_ENTRIES = 5;
+	public final static double KLINGON_SELF_REPAIR_FACTOR = 0.5;
+	
 
 	
 	public static double ENTERPRISE_PHASER_PRECISION(boolean autoAim) {

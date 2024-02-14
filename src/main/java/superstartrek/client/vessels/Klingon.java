@@ -232,7 +232,7 @@ public class Klingon extends Vessel
 		getCloak().setBroken(false);
 		getCloak().setValue(true);
 		getShields()
-				.setCurrentUpperBound(Math.max(getShields().getMaximum() * 0.5, getShields().getCurrentUpperBound()));
+				.setCurrentUpperBound(Math.max(getShields().getMaximum() * Constants.KLINGON_SELF_REPAIR_FACTOR , getShields().getCurrentUpperBound()));
 		getShields().setValue(getShields().getCurrentUpperBound());
 	}
 

@@ -416,12 +416,7 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 			return false;
 		if (starMap.getStarDate() - setting.getTimeOfDamage() < Constants.ENTERPRISE_TIME_TO_REPAIR_SETTING)
 			return false;
-		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * Constants.ENTERPRISE_CHANCE_OF_AUTOREPAIR)); // boolean
-																														// settings
-																														// can
-																														// be
-																														// repaired
-		// fully
+		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * Constants.ENTERPRISE_SELF_REPAIR_STRENGTH)); 
 		setting.setValue(setting.getCurrentUpperBound());
 		setting.setBroken(false);
 		message("Repaired " + name, "enterprise-repaired");
