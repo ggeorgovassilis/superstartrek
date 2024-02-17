@@ -2,6 +2,7 @@ package superstartrek.client.vessels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.messages.MessagesMixin;
@@ -564,7 +565,7 @@ public class Enterprise extends Vessel
 	public void autoAim() {
 		List<Klingon> potentialTargets = getQuadrant().getKlingons().stream().filter(
 				k -> k.isVisible() && StarMap.within_distance(Enterprise.this, k, Constants.ENTERPRISE_PHASER_RANGE))
-				.toList();
+				.collect(Collectors.toList());
 		if (potentialTargets.isEmpty())
 			return;
 		Klingon target = potentialTargets.get(application.browserAPI.randomInt(potentialTargets.size()));
@@ -655,7 +656,7 @@ public class Enterprise extends Vessel
 								Constants.KLINGON_DISRUPTOR_RANGE_SECTORS))
 				.sorted((k1,
 						k2) -> ((int) Math.signum(k2.getDisruptor().getMaximum() - k1.getDisruptor().getMaximum())))
-				.toList();
+				.collect(Collectors.toList());
 		if (threats.isEmpty())
 			return ShieldDirection.omni;
 		ShieldDirection bestDirection = ShieldDirection.north;
