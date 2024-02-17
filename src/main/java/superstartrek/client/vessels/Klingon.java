@@ -253,7 +253,7 @@ public class Klingon extends Vessel
 
 	void maybeDamage(Setting setting, double impact) {
 		BrowserAPI random = getApplication().browserAPI;
-		if (!setting.isBroken() && random.nextDouble() < impact)
+		if (!setting.isBroken() && random.randomDouble() < impact)
 			setting.damageAndTurnOff(getStarMap().getStarDate());
 	}
 	
@@ -277,7 +277,7 @@ public class Klingon extends Vessel
 			maybeDamage(cloak, impact);
 		}
 		message(weapon + " hit " + target.getName() + " at " + target.getLocation(), "klingon-damaged");
-		if ((part != partTarget.none) && (random.nextDouble() < Constants.KLINGON_PRECISION_SHOT_CHANCE_DAMAGE)) {
+		if ((part != partTarget.none) && (random.randomDouble() < Constants.KLINGON_PRECISION_SHOT_CHANCE_DAMAGE)) {
 			switch (part) {
 			case weapons:
 				disruptor.setBroken(true);

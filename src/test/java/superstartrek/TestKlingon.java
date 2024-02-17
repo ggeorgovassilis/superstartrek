@@ -60,8 +60,8 @@ public class TestKlingon extends BaseTest{
 
 	@Test
 	public void testFireOnEnterprise() {
-		when(browser.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3, 0.4);
-		when(browser.nextInt(any(int.class))).thenReturn(1,2,3,4);
+		when(browser.randomDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3, 0.4);
+		when(browser.randomInt(any(int.class))).thenReturn(1,2,3,4);
 		klingon.jumpTo(Location.location(1, 3));
 		enterprise.setLocation(Location.location(2, 3));
 		bus.addHandler(Events.AFTER_FIRE, new CombatHandler() {
@@ -81,7 +81,7 @@ public class TestKlingon extends BaseTest{
 
 	@Test
 	public void test_flee() {
-		when(browser.nextInt(any(int.class))).thenReturn(1,1);
+		when(browser.randomInt(any(int.class))).thenReturn(1,1);
 		klingon.setLocation(Location.location(3, 2));
 		klingon.uncloak();
 		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
@@ -118,7 +118,7 @@ public class TestKlingon extends BaseTest{
 	
 	@Test
 	public void test_cloaking_after_quadrant_changed() {
-		when(browser.nextInt(any(int.class))).thenReturn(7,7,7,7);
+		when(browser.randomInt(any(int.class))).thenReturn(7,7,7,7);
 		klingon.uncloak();
 		klingon.onActiveQuadrantChanged(quadrant, quadrant);
 		assertFalse(klingon.isVisible());

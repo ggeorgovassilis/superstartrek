@@ -92,7 +92,7 @@ public class PWA {
 
 	public void getLatestVersionFromServer(Callback<String> callback) {
 		//append random string to URL to bypass potential caching
-		getFileContent(CHECKSUM_URL + "?rnd=" + application.browserAPI.nextInt(10000), new Callback<String>() {
+		getFileContent(CHECKSUM_URL + "?rnd=" + application.browserAPI.randomInt(10000), new Callback<String>() {
 
 			@Override
 			public void onSuccess(String result) {

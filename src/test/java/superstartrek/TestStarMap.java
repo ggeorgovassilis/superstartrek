@@ -40,13 +40,13 @@ public class TestStarMap extends BaseTest{
 	@Test
 	public void test_findFreeSpotAround_2() {
 		BrowserAPI browserAPI = application.browserAPI;
-		when(browserAPI.nextInt(2)).thenReturn(1);
-		when(browserAPI.nextInt(2)).thenReturn(0);
-		when(browserAPI.nextInt(2)).thenReturn(0);
-		when(browserAPI.nextInt(2)).thenReturn(1);
-		when(browserAPI.nextInt(1)).thenReturn(1);
-		when(browserAPI.nextInt(1)).thenReturn(1);
-		when(browserAPI.nextInt(1)).thenReturn(0);
+		when(browserAPI.randomInt(2)).thenReturn(1);
+		when(browserAPI.randomInt(2)).thenReturn(0);
+		when(browserAPI.randomInt(2)).thenReturn(0);
+		when(browserAPI.randomInt(2)).thenReturn(1);
+		when(browserAPI.randomInt(1)).thenReturn(1);
+		when(browserAPI.randomInt(1)).thenReturn(1);
+		when(browserAPI.randomInt(1)).thenReturn(0);
 		quadrant.add(new Star(Location.location(1, 1), StarClass.A));
 		Location testLocation = Location.location(1, 1);
 		Location free = starMap.findFreeSpotAround(quadrant, testLocation, 1);

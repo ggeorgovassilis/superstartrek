@@ -115,7 +115,7 @@ public class TestEnterprise extends BaseTest {
 		enterprise.setQuadrant(quadrant);
 		enterprise.setLocation(Location.location(0, 0));
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextInt(any(int.class))).thenReturn(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+		when(application.browserAPI.randomInt(any(int.class))).thenReturn(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 		// path between source and target needs to exist for collision check
 		starMap.setQuadrant(new Quadrant("_", 2, 3));
@@ -144,7 +144,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void test_fire_Phasers() {
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
+		when(application.browserAPI.randomDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
@@ -172,7 +172,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void test_fire_phasers_precision_shot() {
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
+		when(application.browserAPI.randomDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
@@ -201,7 +201,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void test_FirePhasers_negative() {
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
+		when(application.browserAPI.randomDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
 		enterprise.setQuadrant(quadrant);
@@ -236,7 +236,7 @@ public class TestEnterprise extends BaseTest {
 	public void test_fire_torpedos() {
 
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
+		when(application.browserAPI.randomDouble()).thenReturn(0.5, 0.6, 0.1, 0.3, 0.3);
 
 		Quadrant quadrant = new Quadrant("q 1 2", 1, 2);
 		starMap.setQuadrant(quadrant);
@@ -378,8 +378,8 @@ public class TestEnterprise extends BaseTest {
 				assertEquals(Location.location(4, 4), lTo);
 			}
 		});
-		when(browser.nextDouble()).thenReturn(0.0);
-		when(browser.nextInt(any(int.class))).thenReturn(1, 1, 2, 2, 5);
+		when(browser.randomDouble()).thenReturn(0.0);
+		when(browser.randomInt(any(int.class))).thenReturn(1, 1, 2, 2, 5);
 		enterprise.dockInStarbase();
 
 		assertEquals(1, bus.getFiredCount(Events.THING_MOVED));
@@ -393,7 +393,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void test_applyDamage() {
 		assertFalse(enterprise.getEvasiveManeuvers().getBooleanValue());
-		when(browser.nextDouble()).thenReturn(1.0);
+		when(browser.randomDouble()).thenReturn(1.0);
 		assertEquals(60, enterprise.getShields().getValue(), 0.1);
 		enterprise.applyDamage(30);
 		assertEquals(50.1, enterprise.getShields().getValue(), 0.1);
@@ -403,7 +403,7 @@ public class TestEnterprise extends BaseTest {
 	public void test_applyDamage_with_evasive_maneuvers() {
 		enterprise.getEvasiveManeuvers().setValue(true);
 		assertTrue(enterprise.getEvasiveManeuvers().getBooleanValue());
-		when(browser.nextDouble()).thenReturn(1.0);
+		when(browser.randomDouble()).thenReturn(1.0);
 		assertEquals(60, enterprise.getShields().getValue(), 0.1);
 		enterprise.applyDamage(30);
 		assertEquals(53.1, enterprise.getShields().getValue(), 0.1);
@@ -411,7 +411,7 @@ public class TestEnterprise extends BaseTest {
 
 	@Test
 	public void test_onFire_no_directional_shield() {
-		when(browser.nextDouble()).thenReturn(1.0);
+		when(browser.randomDouble()).thenReturn(1.0);
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
 		quadrant.add(klingon);
 		klingon.setLocation(Location.location(1, 1));
@@ -425,7 +425,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void test_onFire_with_directional_shield_side_fire() {
 		assertEquals(enterprise.getLocation(), Location.location(0, 0));
-		when(browser.nextDouble()).thenReturn(1.0);
+		when(browser.randomDouble()).thenReturn(1.0);
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(1, 0));
 		quadrant.add(klingon);
@@ -440,7 +440,7 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void test_onFire_with_directional_shield_rear_fire() {
 		assertEquals(enterprise.getLocation(), Location.location(0, 0));
-		when(browser.nextDouble()).thenReturn(1.0);
+		when(browser.randomDouble()).thenReturn(1.0);
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(0, 1));
 		quadrant.add(klingon);
@@ -456,7 +456,7 @@ public class TestEnterprise extends BaseTest {
 	public void test_onFire_with_directional_shield_front_fire() {
 		enterprise.setLocation(Location.location(0, 2));
 		assertEquals(enterprise.getLocation(), Location.location(0, 2));
-		when(browser.nextDouble()).thenReturn(1.0);
+		when(browser.randomDouble()).thenReturn(1.0);
 		Klingon klingon = new Klingon(ShipClass.BirdOfPrey);
 		klingon.setLocation(Location.location(0, 1));
 		quadrant.add(klingon);

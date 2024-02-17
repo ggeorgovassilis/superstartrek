@@ -75,14 +75,14 @@ public class Setup {
 		Quadrant q = new Quadrant(names[(int) Math.floor((y * 8 + x) / 4)] + " " + roman[(y * 8 + x) % 4], x, y);
 		BrowserAPI random = Application.get().browserAPI;
 		int stars = Constants.MIN_STARS_IN_QUADRANT
-				+ random.nextInt(Constants.MAX_STARS_IN_QUADRANT - Constants.MIN_STARS_IN_QUADRANT);
+				+ random.randomInt(Constants.MAX_STARS_IN_QUADRANT - Constants.MIN_STARS_IN_QUADRANT);
 		while (stars-- > 0) {
 			// TODO: this is potentially slow, as findFreeSpot creates a QuadrantIndex over
 			// and over. on the other hand, quadrants are made only once at the beginning of the game
 			Location loc = map.findFreeSpot(q);
 			StarClass starClassForNewStar = StarClass.Asteroid;
 			for (StarClass sc:StarClass.values())
-				if (sc.probability>=random.nextDouble()) {
+				if (sc.probability>=random.randomDouble()) {
 					starClassForNewStar = sc;
 					break;
 				}
@@ -103,7 +103,7 @@ public class Setup {
 	public void putKlingonsInQuadrant(Quadrant q, StarMap map) {
 		if (q.x + q.y != 0 && !formations.isEmpty()) {
 			BrowserAPI random = Application.get().browserAPI;
-			int index = random.nextInt(formations.size());
+			int index = random.randomInt(formations.size());
 			Formations f = formations.remove(index);
 			deployFormationIntoQuadrant(q, random, map, f);
 		}
@@ -112,8 +112,8 @@ public class Setup {
 	public void putKlingonsOnStarMap(StarMap map) {
 		BrowserAPI random = Application.get().browserAPI;
 		while (!formations.isEmpty()) {
-			int x = random.nextInt(Constants.SECTORS_EDGE);
-			int y = random.nextInt(Constants.SECTORS_EDGE);
+			int x = random.randomInt(Constants.SECTORS_EDGE);
+			int y = random.randomInt(Constants.SECTORS_EDGE);
 			Quadrant q = map.getQuadrant(x, y);
 			putKlingonsInQuadrant(q, map);
 		}

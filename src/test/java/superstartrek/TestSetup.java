@@ -26,8 +26,8 @@ public class TestSetup extends BaseTest{
 	@Test
 	public void test_makeQuadrant() {
 		final int NUMBER_OF_STARS = 5;
-		when(browser.nextDouble()).thenReturn(0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0,0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0,0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0,0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0,0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0);
-		when(browser.nextInt(any(int.class))).thenReturn(
+		when(browser.randomDouble()).thenReturn(0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0,0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0,0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0,0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0,0.1,0.2,0.3,0.4,0.6,0.8,0.9,1.0);
+		when(browser.randomInt(any(int.class))).thenReturn(
 				//@formatter:off
 				// stars
 										NUMBER_OF_STARS-4 /*Constants.MIN_STARS_IN_QUADRANT*/,

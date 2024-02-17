@@ -52,7 +52,7 @@ public class TestPWA extends BaseTest{
 		Request request = mock(Request.class);
 		when(requestFactory.create()).thenReturn(request);
 		application.browserAPI = mock(BrowserAPI.class);
-		when(application.browserAPI.nextInt(any(int.class))).thenReturn(222);
+		when(application.browserAPI.randomInt(any(int.class))).thenReturn(222);
 		when(application.browserAPI.getAppBuildNr()).thenReturn("12345");
 		when(request.request(eq(RequestBuilder.GET), eq("/superstartrek/site/package.txt"), any(RequestCallback.class))).then(new Answer<Void>() {
 

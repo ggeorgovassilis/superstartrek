@@ -63,12 +63,12 @@ public class TestStarMapSerializer extends BaseTest {
 			}
 
 			@Override
-			public int nextInt(int upperBound) {
+			public int randomInt(int upperBound) {
 				return random.nextInt(upperBound);
 			}
 
 			@Override
-			public double nextDouble() {
+			public double randomDouble() {
 				return random.nextDouble();
 			}
 

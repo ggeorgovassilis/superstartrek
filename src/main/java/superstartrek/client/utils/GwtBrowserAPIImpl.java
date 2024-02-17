@@ -58,12 +58,12 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 	}
 
 	@Override
-	public int nextInt(int upperBound) {
+	public int randomInt(int upperBound) {
 		return Random.nextInt(upperBound);
 	}
 
 	@Override
-	public double nextDouble() {
+	public double randomDouble() {
 		return Random.nextDouble();
 	}
 

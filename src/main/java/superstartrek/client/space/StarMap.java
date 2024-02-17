@@ -93,8 +93,8 @@ public class StarMap {
 		BrowserAPI random = Application.get().browserAPI;
 		//This should always terminate; quadrants are rather sparsely populated
 		while (true) {
-			int x = random.nextInt(Constants.SECTORS_EDGE);
-			int y = random.nextInt(Constants.SECTORS_EDGE);
+			int x = random.randomInt(Constants.SECTORS_EDGE);
+			int y = random.randomInt(Constants.SECTORS_EDGE);
 			Thing thing = q.findThingAt(x, y);
 			if (thing == null)
 				return Location.location(x, y);
@@ -168,8 +168,8 @@ public class StarMap {
 			int incrementedRadius = radius + 1;
 			int halfRadius = radius/2;
 			for (int remainingTries = radius*radius ; remainingTries > 0; remainingTries--) {
-				int x = Math.min(SECTORS_EDGE_DEC, Math.max(0, loc.x + (random.nextInt(incrementedRadius)) - halfRadius));
-				int y = Math.min(SECTORS_EDGE_DEC, Math.max(0, loc.y + (random.nextInt(incrementedRadius)) - halfRadius));
+				int x = Math.min(SECTORS_EDGE_DEC, Math.max(0, loc.x + (random.randomInt(incrementedRadius)) - halfRadius));
+				int y = Math.min(SECTORS_EDGE_DEC, Math.max(0, loc.y + (random.randomInt(incrementedRadius)) - halfRadius));
 				if (null == index.findThingAt(x, y))
 					return Location.location(x, y);
 			}

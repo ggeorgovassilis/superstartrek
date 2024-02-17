@@ -21,8 +21,18 @@ public interface BrowserAPI {
 	
 	String getCookie(String name);
 	void setCookie(String name, String value);
-	int nextInt(int upperBound);
-	double nextDouble();
+	
+	/**
+	 * 
+	 * @param upperBound
+	 * @return random integer in [0..upperBound]
+	 */
+	int randomInt(int upperBound);
+	/**
+	 * 
+	 * @return random double in [0,1]
+	 */
+	double randomDouble();
 	
 	HandlerRegistration addHistoryHandler(ValueChangeHandler<String> handler);
 	Void postHistoryChange(String token);

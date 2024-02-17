@@ -11,7 +11,7 @@ public class TestRepairProvisionally extends BaseTest{
 
 	@Before
 	public void setup() {
-		when(browser.nextDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
+		when(browser.randomDouble()).thenReturn(0.5,0.6,0.1,0.3,0.3);
 	}
 	
 	@Test

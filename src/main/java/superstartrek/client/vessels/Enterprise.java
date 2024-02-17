@@ -2,7 +2,6 @@ package superstartrek.client.vessels;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import superstartrek.client.Application;
 import superstartrek.client.activities.messages.MessagesMixin;
@@ -19,7 +18,8 @@ import superstartrek.client.space.Thing;
 import superstartrek.client.utils.BaseMixin;
 import superstartrek.client.utils.BrowserAPI;
 
-public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler, CombatHandler, BaseMixin, MessagesMixin {
+public class Enterprise extends Vessel
+		implements EventsMixin, GamePhaseHandler, CombatHandler, BaseMixin, MessagesMixin {
 
 	public enum ShieldDirection {
 
@@ -86,17 +86,17 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 	public Setting getEvasiveManeuvers() {
 		return evasiveManeuvers;
 	}
-	
+
 	@Override
 	public String getCss() {
 		return "enterprise";
 	}
-	
+
 	@Override
 	public String getName() {
 		return "NCC 1701 USS Enterprise";
 	}
-	
+
 	@Override
 	public String getSymbol() {
 		return "O=Ξ";
@@ -154,7 +154,7 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 		setLocation(freeSpot);
 		setQuadrant(dropQuadrant);
 		dropQuadrant.add(this);
-		
+
 		starMap.markAsExploredAround(dropQuadrant);
 		fireEvent(Events.QUADRANT_ACTIVATED, (h) -> h.onActiveQuadrantChanged(fromQuadrant, dropQuadrant));
 
@@ -288,7 +288,7 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 			if (Klingon.is(thing)) {
 				double distance = StarMap.distance(this, thing);
 				double chance = precision / distance;
-				hit = browser.nextDouble() <= chance;
+				hit = browser.randomDouble() <= chance;
 			} else {
 				hit = true;
 			}
@@ -370,14 +370,15 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 		StarBase starBase = quadrant.getStarBase();
 		if (starBase == null)
 			return;
-		boolean inRange = StarMap.within_distance(this, quadrant.getStarBase(), 1.1);
+		boolean inRange = StarMap.within_distance(this, quadrant.getStarBase(), Constants.ENTERPRISE_DOCKING_RANGE);
 		boolean hasKlingons = quadrant.hasKlingons();
 		if (!inRange && hasKlingons) {
 			message("Navigate manually when enemies are present.");
 			return;
 		}
 		if (!inRange && !hasKlingons) {
-			Location loc = starMap.findFreeSpotAround(quadrant, quadrant.getStarBase().getLocation(), 2);
+			Location loc = starMap.findFreeSpotAround(quadrant, quadrant.getStarBase().getLocation(),
+					Constants.ENTERPRISE_DOCKING_VACANCY_RADIUS);
 			if (loc == null) {
 				message("No space around starbase");
 				return;
@@ -407,7 +408,8 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 	}
 
 	boolean canBeRepaired(Setting setting) {
-		return setting.isBroken() || setting.getCurrentUpperBound() < Constants.ENTERPRISE_SELF_REPAIR_STRENGTH * setting.getMaximum();
+		return setting.isBroken()
+				|| setting.getCurrentUpperBound() < Constants.ENTERPRISE_SELF_REPAIR_STRENGTH * setting.getMaximum();
 	}
 
 	boolean maybeRepairProvisionally(String name, Setting setting) {
@@ -416,7 +418,7 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 			return false;
 		if (starMap.getStarDate() - setting.getTimeOfDamage() < Constants.ENTERPRISE_TIME_TO_REPAIR_SETTING)
 			return false;
-		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * Constants.ENTERPRISE_SELF_REPAIR_STRENGTH)); 
+		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * Constants.ENTERPRISE_SELF_REPAIR_STRENGTH));
 		setting.setValue(setting.getCurrentUpperBound());
 		setting.setBroken(false);
 		message("Repaired " + name, "enterprise-repaired");
@@ -466,19 +468,19 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 
 	public void damageTorpedos() {
 		torpedos.damageAndTurnOff(starMap.getStarDate());
-		torpedos.setValue(Math.floor(torpedos.getValue() * 0.5));
+		torpedos.setValue(Math.floor(torpedos.getValue() * Constants.ENTERPRISE_DAMAGE_TORPEDO_LOSS_RATIO));
 		message("Torpedo bay damaged", "enterprise-damaged");
 	}
 
 	public void damagePhasers() {
-		phasers.damage(phasers.getMaximum() * 0.3, starMap.getStarDate());
+		phasers.damage(phasers.getMaximum() * Constants.ENTERPRISE_DEVICE_IMPACT_MODIFIER, starMap.getStarDate());
 		if (phasers.getCurrentUpperBound() < 1)
 			phasers.damageAndTurnOff(starMap.getStarDate());
 		message("Phaser banks damaged", "enterprise-damaged");
 	}
 
 	public void damageReactor() {
-		reactor.damage(reactor.getMaximum() * 0.3, starMap.getStarDate());
+		reactor.damage(reactor.getMaximum() * Constants.ENTERPRISE_DEVICE_IMPACT_MODIFIER, starMap.getStarDate());
 		if (reactor.getCurrentUpperBound() < 1)
 			reactor.damageAndTurnOff(starMap.getStarDate());
 		message("Reactor damaged", "enterprise-damaged");
@@ -505,11 +507,13 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 		// that's why the damage is reduced in this case.
 		// the in-world justification is that opponents can't get a reliable target lock
 		if (turnsSinceWarp < 2) {
-			damage = damage * 0.5;
+			damage = damage * Constants.ENTERPRISE_DAMAGE_CONSTANT_IN_AFTER_WARP_GRACE_PERIOD;
 		}
 
 		double shieldValue = shields.getValue();
-		double baseModifier = evasiveManeuvers.getBooleanValue() ? 0.7 : 1.0;
+		double baseModifier = evasiveManeuvers.getBooleanValue()
+				? Constants.ENTERPRISE_EVASIVE_MANEUVERS_DAMAGE_MODIFIER
+				: 1.0;
 
 		damage *= baseModifier;
 		double shieldImpact = Constants.ENTERPRISE_APPLY_SHIELD_DAMAGE(damage, shieldValue);
@@ -517,21 +521,22 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 		shields.decrease(shieldImpact);
 		double deviceImpact = Constants.ENTERPRISE_APPLY_DEVICE_DAMAGE(damage, shieldValue);
 		BrowserAPI random = application.browserAPI;
-		if (shields.getCurrentUpperBound() > 0 && 0.7 * random.nextDouble() < deviceImpact)
+		if (shields.getCurrentUpperBound() > 0
+				&& Constants.ENTERPRISE_SHIELD_DAMAGE_CHANCE * random.randomDouble() < deviceImpact)
 			damageShields(damage);
-		if (impulse.getCurrentUpperBound() > 0 && random.nextDouble() < deviceImpact)
+		if (impulse.getCurrentUpperBound() > 0 && random.randomDouble() < deviceImpact)
 			damageImpulse();
-		if (torpedos.isOperational() && random.nextDouble() < deviceImpact)
+		if (torpedos.isOperational() && random.randomDouble() < deviceImpact)
 			damageTorpedos();
-		if (phasers.getCurrentUpperBound() > 0 && random.nextDouble() < deviceImpact)
+		if (phasers.getCurrentUpperBound() > 0 && random.randomDouble() < deviceImpact)
 			damagePhasers();
-		if (!autoAim.isBroken() && random.nextDouble() < deviceImpact)
+		if (!autoAim.isBroken() && random.randomDouble() < deviceImpact)
 			damageAutoaim();
-		if (reactor.isOperational() && random.nextDouble() < deviceImpact)
+		if (reactor.isOperational() && random.randomDouble() < deviceImpact)
 			damageReactor();
-		if (lrs.isOperational() && random.nextDouble() < deviceImpact)
+		if (lrs.isOperational() && random.randomDouble() < deviceImpact)
 			damageLRS();
-		if (warpDrive.isOperational() && random.nextDouble() < deviceImpact) {
+		if (warpDrive.isOperational() && random.randomDouble() < deviceImpact) {
 			damageWarpDrive();
 		}
 		fireEvent(Events.ENTERPRISE_DAMAGED, (h) -> h.onEnterpriseDamaged(Enterprise.this));
@@ -550,20 +555,19 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 
 	public double computeEnergyConsumption() {
 		double consumptionFromEvasiveManeuvers = getEvasiveManeuvers().getBooleanValue() ? 1 : 0;
-		double consumptionFromShields = (getShields().getValue() + 1.0) * 0.08;
+		double consumptionFromShields = (getShields().getValue() + 1.0)
+				* Constants.ENTERPRISE_SHIELD_CONSUMPTION_FACTOR;
 		double consumption = consumptionFromEvasiveManeuvers + consumptionFromShields;
 		return consumption;
 	}
 
 	public void autoAim() {
-		List<Klingon> potentialTargets = new ArrayList<Klingon>();
-		for (Klingon k : getQuadrant().getKlingons())
-			if (k.isVisible() && StarMap.within_distance(this, k, Constants.ENTERPRISE_PHASER_RANGE)) {
-				potentialTargets.add(k);
-			}
+		List<Klingon> potentialTargets = getQuadrant().getKlingons().stream().filter(
+				k -> k.isVisible() && StarMap.within_distance(Enterprise.this, k, Constants.ENTERPRISE_PHASER_RANGE))
+				.toList();
 		if (potentialTargets.isEmpty())
 			return;
-		Klingon target = potentialTargets.get(application.browserAPI.nextInt(potentialTargets.size()));
+		Klingon target = potentialTargets.get(application.browserAPI.randomInt(potentialTargets.size()));
 		firePhasersAt(target.getLocation(), true, partTarget.none);
 		return;
 	}
@@ -611,8 +615,9 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 		if (target != this)
 			return;
 		message(actor.getName() + " at " + actor.getLocation() + " fired on us", "damage");
-		double directionalImpact = 0.5 + Constants.ENTERPRISE_SHIELD_DIRECTIONAL_COEFFICIENT
-				* (1.0 - computeDirectionalShieldEfficiency(shieldDirection, actor.getLocation()));
+		double directionalImpact = Constants.ENTERPRISE_SHIELD_BASE_DIRECTIONAL_IMPACT
+				+ Constants.ENTERPRISE_SHIELD_DIRECTIONAL_COEFFICIENT
+						* (1.0 - computeDirectionalShieldEfficiency(shieldDirection, actor.getLocation()));
 		applyDamage(damage * directionalImpact);
 	}
 
@@ -646,10 +651,11 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 	public ShieldDirection computeOptimalShieldDirection() {
 		List<Klingon> threats = getQuadrant().getKlingons().stream()
 				.filter(k -> k.isVisible() && k.getDisruptor().isOperational()
-						&& StarMap.within_distance(getLocation(), k.getLocation(), Constants.KLINGON_DISRUPTOR_RANGE_SECTORS))
+						&& StarMap.within_distance(getLocation(), k.getLocation(),
+								Constants.KLINGON_DISRUPTOR_RANGE_SECTORS))
 				.sorted((k1,
 						k2) -> ((int) Math.signum(k2.getDisruptor().getMaximum() - k1.getDisruptor().getMaximum())))
-				.collect(Collectors.toList());
+				.toList();
 		if (threats.isEmpty())
 			return ShieldDirection.omni;
 		ShieldDirection bestDirection = ShieldDirection.north;
