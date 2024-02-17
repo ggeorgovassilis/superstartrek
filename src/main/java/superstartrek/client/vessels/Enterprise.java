@@ -407,7 +407,7 @@ public class Enterprise extends Vessel implements EventsMixin, GamePhaseHandler,
 	}
 
 	boolean canBeRepaired(Setting setting) {
-		return setting.isBroken() || setting.getCurrentUpperBound() < 0.75 * setting.getMaximum();
+		return setting.isBroken() || setting.getCurrentUpperBound() < Constants.ENTERPRISE_SELF_REPAIR_STRENGTH * setting.getMaximum();
 	}
 
 	boolean maybeRepairProvisionally(String name, Setting setting) {
