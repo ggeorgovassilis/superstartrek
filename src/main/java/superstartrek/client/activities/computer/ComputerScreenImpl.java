@@ -2,10 +2,8 @@ package superstartrek.client.activities.computer;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
+
+import superstartrek.client.Application;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerViewImpl;
@@ -13,12 +11,12 @@ import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextM
 import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuViewImpl;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSViewImpl;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 
-public class ComputerScreenImpl extends BaseScreen<ComputerPresenter> implements ComputerScreen, ClickHandler {
+public class ComputerScreenImpl extends BaseScreen<ComputerPresenter> implements ComputerScreen{
 
-	Element eSkip;
 	Element eStatusIconImpulse;
 	Element eStatusIconTactical;
 	Element eStatusIconPhasers;
@@ -64,14 +62,18 @@ public class ComputerScreenImpl extends BaseScreen<ComputerPresenter> implements
 		eMaxShields = CSS.querySelectorAll("#cmd_toggleShields .max-indicator").getItem(0);
 		eValueShields = CSS.querySelectorAll("#cmd_toggleShields .progress-indicator").getItem(0);
 		eQuadrantName = getElementById("quadrant_name");
-		eSkip = getElementById("cmd_skip");
 		eStarDate = getElementById("stardate");
 		eScore = getElementById("score");
 		eLrsButton = getElementById("lrs-button");
 		eAboveRadarSlot = getElementById("above-radar-slot");
 		eToggleShields = getElementById("cmd_toggleShields");
-		addHandler(this, ClickEvent.getType());
-		DOM.sinkEvents(getElement(), Event.ONCLICK);
+		Application.get().eventBus.addHandler(Events.INTERACTION, tag->{
+			if ("cmd_skip".equals(tag))
+				presenter.onSkipButtonClicked();
+			if ("cmd_toggleShields".equals(tag))
+				presenter.onToggleShieldsButtonClicked();
+
+		});
 	}
 
 	@Override
@@ -98,16 +100,6 @@ public class ComputerScreenImpl extends BaseScreen<ComputerPresenter> implements
 	@Override
 	public void updateAntimatter(double value, double maximum) {
 		eMaxAntimatter.getStyle().setWidth(100.0 * value / maximum, Unit.PCT);
-	}
-
-	@Override
-	public void onClick(ClickEvent event) {
-		Element target = event.getNativeEvent().getEventTarget().cast();
-		if (eSkip.isOrHasChild(target))
-			presenter.onSkipButtonClicked();
-		else
-		if (eToggleShields.isOrHasChild(target))
-			presenter.onToggleShieldsButtonClicked();
 	}
 
 	@Override

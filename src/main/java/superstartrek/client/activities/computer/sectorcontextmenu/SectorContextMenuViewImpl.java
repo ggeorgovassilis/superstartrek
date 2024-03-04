@@ -12,13 +12,14 @@ import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import superstartrek.client.activities.BaseView;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 import superstartrek.client.utils.Strings;
 import superstartrek.client.utils.Timer;
 
 public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresenter>
-		implements SectorContextMenuView, MouseDownHandler, TouchStartHandler, ClickHandler {
+		implements SectorContextMenuView{
 
 	boolean viewInTransition = false;
 
@@ -37,9 +38,7 @@ public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresent
 		hide();
 		element.setInnerHTML(templates.sectorContextMenu().getText());
 		addStyleName("sector-context-menu");
-		addDomHandler(this, MouseDownEvent.getType());
-		addDomHandler(this, ClickEvent.getType());
-		addDomHandler(this, TouchStartEvent.getType());
+		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->handleButtonInteraction(tag));
 		presenter.getApplication().browserAPI.addToPage(this);
 	}
 
@@ -83,31 +82,11 @@ public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresent
 		Timer.postpone(() -> addStyleName("expanded"), 10);
 	}
 
-	public void handleButtonInteraction(DomEvent<?> event) {
-		Element e = event.getNativeEvent().getEventTarget().cast();
-		//since this isn't really a button but a semi-transparent DIV, clicks might be
-		//propagated to elements under the DIV cell. Cancel them to avoid side effects.
-		event.preventDefault();
-		event.stopPropagation();
-		String command = e.getAttribute("id");
-		if (!Strings.isEmpty(command))
-			presenter.onCommandClicked(command);
+	public void handleButtonInteraction(String tag) {
+		if (!Strings.isEmpty(tag))
+			presenter.onCommandClicked(tag);
 	}
 
-	@Override
-	public void onMouseDown(MouseDownEvent event) {
-		handleButtonInteraction(event);
-	}
-
-	@Override
-	public void onClick(ClickEvent event) {
-		handleButtonInteraction(event);
-	}
-
-	@Override
-	public void onTouchStart(TouchStartEvent event) {
-		handleButtonInteraction(event);
-	}
 
 	@Override
 	public void enableDockWithStarbaseButton(boolean status) {

@@ -3,6 +3,7 @@ package superstartrek.client.activities.lrs;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.BaseScreen;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.space.Constants;
 import superstartrek.client.utils.CSS;
@@ -31,20 +32,19 @@ public class LRSScreenImpl extends BaseScreen<LRSPresenter> implements LRSScreen
 		int length = tds.getLength()-1;
 		for (int i=length;i>=0;i--) {
 			Element eTd = tds.getItem(i);
-			int x = Integer.parseInt(eTd.getAttribute("data-x"));
-			int y = Integer.parseInt(eTd.getAttribute("data-y"));
+			int x = i % Constants.SECTORS_EDGE;
+			int y = i / Constants.SECTORS_EDGE;
+			eTd.setAttribute("data-uih", "q_"+x+"_"+y);
 			eTd.setAttribute("tabindex", ""+i);
 			cells[x][y] = eTd;
 		}
-		Element eLrs = getElementById("longrangescan");
-		DOM.sinkEvents(eLrs, Event.ONCLICK);
-		DOM.setEventListener(eLrs, (Event event)-> {
-				Element eTd = event.getEventTarget().cast();
-				if (!Strings.isEmpty(eTd.getAttribute("data-x"))) {
-					int x = Integer.parseInt(eTd.getAttribute("data-x"));
-					int y = Integer.parseInt(eTd.getAttribute("data-y"));
-					presenter.quadrantWasClicked(x,y);
-				}
+		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->{
+			if (!tag.startsWith("q_"))
+				return;
+			String[] parts = tag.split("_");
+			int x = Integer.parseInt(parts[1]);
+			int y = Integer.parseInt(parts[2]);
+			presenter.quadrantWasClicked(x, y);
 		});
 	}
 	

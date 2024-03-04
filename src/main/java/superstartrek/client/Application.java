@@ -44,6 +44,7 @@ import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.Setup;
 import superstartrek.client.space.StarMap;
+import superstartrek.client.uihandler.UiHandler;
 import superstartrek.client.utils.BrowserAPI;
 import superstartrek.client.utils.GwtBrowserAPIImpl;
 import superstartrek.client.utils.Strings;
@@ -176,6 +177,8 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void setupTheRest() {
+		UiHandler uiHandler = new UiHandler();
+		uiHandler.initialise();
 		setupScreens();
 		setupGameController();
 		startGame();

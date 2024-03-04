@@ -3,6 +3,7 @@ package superstartrek.client.activities.computer.quadrantscanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
@@ -11,7 +12,10 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.user.client.DOM;
+
 import superstartrek.client.activities.BaseView;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.space.Constants;
 import superstartrek.client.utils.Strings;
@@ -59,16 +63,14 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++) {
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Element eSector = Document.get().createDivElement();
-				eSector.setAttribute("data-x", "" + x);
-				eSector.setAttribute("data-y", "" + y);
+				eSector.setAttribute("id", "quads_" + x + "_" + y);
+				eSector.setAttribute("data-uih", "");
 				eSector.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);
 				eSector.getStyle().setTop(RELATIVE_HEIGHT * (double) y, Unit.PCT);
 				buckets[x][y] = eSector;
 				eMatrix.appendChild(eSector);
 			}
 		}
-		addDomHandler((event) -> handleClick(event), MouseDownEvent.getType());
-		addDomHandler((event) -> handleClick(event), TouchStartEvent.getType());
 		bSelectedSector = buckets[0][0];
 		eSvgProto = presenter.getApplication().browserAPI.createElementNs("http://www.w3.org/2000/svg", "svg");
 		eSvgProto.setAttribute("width", "100%");
@@ -77,27 +79,20 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 		eSvgProto.getStyle().setTop(0, Unit.PX);
 		eSvgProto.getStyle().setProperty("pointerEvents", "none");
 		eSvgProto.getStyle().setPosition(Position.ABSOLUTE);
+		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag -> handleClick(tag));
 
 	}
 
-	protected void handleClick(DomEvent<?> event) {
-		NativeEvent ne = event.getNativeEvent();
-		Element e = ne.getEventTarget().cast();
-		// clicks on vessel parts need to bubble up to cell
-		while (Strings.isEmpty(e.getAttribute("data-x")) && !"quadrantscan".equals(e.getId()))
-			e = e.getParentElement();
-		try {
-			int x = Integer.parseInt(e.getAttribute("data-x"));
-			int y = Integer.parseInt(e.getAttribute("data-y"));
-			int dy = getAbsoluteTop();
-			int dx = getAbsoluteLeft();
-			presenter.onSectorSelected(x, y, dx + e.getOffsetLeft(), dy + e.getOffsetTop());
-			event.stopPropagation();
-			event.preventDefault();
-		} catch (Exception ex) {
-			// can happen when user clicks on the borders between cells, which don't have
-			// x/y attributes
-		}
+	protected void handleClick(String tag) {
+		if (!tag.startsWith("quads_"))
+			return;
+		String[] parts = tag.split("_");
+		int x = Integer.parseInt(parts[1]);
+		int y = Integer.parseInt(parts[2]);
+		int dy = getAbsoluteTop();
+		int dx = getAbsoluteLeft();
+		Element e = DOM.getElementById(tag);
+		presenter.onSectorSelected(x, y, dx + e.getOffsetLeft(), dy + e.getOffsetTop());
 
 	}
 
@@ -131,7 +126,7 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 
 	@Override
 	public void clearBeamMarks() {
-		beamElements.forEach(e->e.removeFromParent());
+		beamElements.forEach(e -> e.removeFromParent());
 		beamElements.clear();
 	}
 

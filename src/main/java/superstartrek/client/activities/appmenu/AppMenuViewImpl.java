@@ -6,11 +6,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 
 import superstartrek.client.activities.PopupViewImpl;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 import superstartrek.client.utils.Strings;
 
-public class AppMenuViewImpl extends PopupViewImpl<AppMenuPresenter> implements ClickHandler, AppMenuView{
+public class AppMenuViewImpl extends PopupViewImpl<AppMenuPresenter> implements AppMenuView{
 
 	public AppMenuViewImpl(AppMenuPresenter presenter) {
 		super(presenter);
@@ -19,7 +20,7 @@ public class AppMenuViewImpl extends PopupViewImpl<AppMenuPresenter> implements 
 	@Override
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
 		super.decorateWidget(templates, element);
-		addDomHandler(this, ClickEvent.getType());
+		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->presenter.onMenuItemClicked(tag));
 	}
 
 	@Override
@@ -39,14 +40,5 @@ public class AppMenuViewImpl extends PopupViewImpl<AppMenuPresenter> implements 
 		presenter.onMenuHidden();
 	}
 
-	@Override
-	public void onClick(ClickEvent event) {
-		EventTarget target = event.getNativeEvent().getEventTarget();
-		Element e = target.cast();
-		String id = e.getId();
-		if (Strings.isEmpty(id))
-			return;
-		presenter.onMenuItemClicked(id);
-	}
 
 }

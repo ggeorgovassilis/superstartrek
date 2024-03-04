@@ -12,6 +12,7 @@ import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
+import superstartrek.client.uihandler.InteractionHandler;
 import superstartrek.client.vessels.CombatHandler;
 import superstartrek.client.vessels.KlingonCloakingHandler;
 
@@ -57,4 +58,5 @@ public class Events {
 	public final static Event<ApplicationLifecycleHandler> SHOW_APP_INSTALL_PROMPT = new Event<>("SHOW_APP_INSTALL_PROMPT");
 	public final static Event<ScreenResizeHandler> SCREEN_RESIZES = new Event<>("SCREEN_RESIZES");
 	public final static Event<ActivityChangedHandler> ACTIVITY_CHANGED = new Event<>("ACTIVITY_CHANGED");
+	public final static Event<InteractionHandler> INTERACTION = new Event<>("INTERACTION");
 }

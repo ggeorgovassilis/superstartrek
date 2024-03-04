@@ -1,5 +1,7 @@
 package superstartrek.client.activities.appmenu;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
@@ -7,7 +9,7 @@ import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Setting;
 
 public class AppMenuPresenter extends BasePresenter<AppMenuView>
-		implements PopupViewPresenter<AppMenuView>, ActivityChangedHandler{
+		implements PopupViewPresenter<AppMenuView>, ActivityChangedHandler {
 
 	String gotoStateAfterMenuHidden;
 
@@ -18,7 +20,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	public void updateCommands() {
 		Setting autoAim = getEnterprise().getAutoAim();
 		view.setMenuEntryEnabled("cmd_autoaim", autoAim.isOperational());
-		
+
 		Setting evasiveManeuvers = getEnterprise().getEvasiveManeuvers();
 		view.setMenuEntryEnabled("cmd_evasive_maneuvers", evasiveManeuvers.isOperational());
 	}
@@ -45,7 +47,7 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 		Setting autoaim = getEnterprise().getAutoAim();
 		autoaim.setValue(!autoaim.isBroken() && !autoaim.getBooleanValue());
 	}
-	
+
 	public void toggleEvasiveManeuvers() {
 		Setting evasiveManeuvers = getEnterprise().getEvasiveManeuvers();
 		boolean b1 = !evasiveManeuvers.isBroken();
@@ -65,10 +67,8 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 		case "cmd_autoaim":
 			toggleAutoAim();
 			updateCommands();
-			hideMenu();
 			break;
 		case "cmd_restart":
-			hideMenu();
 			restart();
 			break;
 		case "cmd_settings":
@@ -81,10 +81,9 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 		case "cmd_evasive_maneuvers":
 			toggleEvasiveManeuvers();
 			updateCommands();
-			hideMenu();
 			break;
 		}
-
+		view.hide();
 	}
 
 	@Override
@@ -99,6 +98,5 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	public void cancelButtonClicked() {
 		hideMenu();
 	}
-
 
 }

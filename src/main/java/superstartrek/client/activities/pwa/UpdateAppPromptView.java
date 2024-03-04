@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 
 import superstartrek.client.activities.PopupViewImpl;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 
@@ -27,9 +28,8 @@ public class UpdateAppPromptView extends PopupViewImpl<UpdateAppPromptPresenter>
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
 		super.decorateWidget(templates, element);
 		element.setId("update-app-prompt");
-		addHandler((event) -> {
-			Element target = event.getNativeEvent().getEventTarget().cast();
-			switch (target.getId()) {
+		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag -> {
+			switch (tag) {
 			case "update-yes":
 				presenter.acceptUpdateButtonClicked();
 				break;
@@ -37,7 +37,8 @@ public class UpdateAppPromptView extends PopupViewImpl<UpdateAppPromptPresenter>
 				presenter.cancelButtonClicked();
 				break;
 			}
-		}, ClickEvent.getType());
+
+		});
 	}
 
 	@Override

@@ -20,6 +20,7 @@ public class AppInstallPromptViewImpl extends PopupViewImpl<AppInstallPromptPres
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
 		super.decorateWidget(templates, element);
 		element.setId("app-install-prompt");
+		//TODO: switch to ui handler
 		addDomHandler((event) -> {
 			Element e = event.getNativeEvent().getEventTarget().cast();
 			switch (e.getId()) {

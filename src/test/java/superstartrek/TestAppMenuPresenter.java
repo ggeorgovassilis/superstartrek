@@ -33,8 +33,8 @@ public class TestAppMenuPresenter extends BaseTest {
 		assertTrue(application.starMap.enterprise.getAutoAim().getBooleanValue());
 		presenter.onMenuItemClicked("cmd_autoaim");
 		assertFalse(application.starMap.enterprise.getAutoAim().isOperational());
-		verify(view).hide();
 		verify(view).setMenuEntryEnabled("cmd_autoaim", false);
+		verify(view).hide();
 		
 	}
 

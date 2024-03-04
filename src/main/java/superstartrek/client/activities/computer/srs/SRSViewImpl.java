@@ -5,10 +5,11 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import superstartrek.client.activities.BaseView;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.Strings;
 
-public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView, ClickHandler {
+public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView{
 
 	Element[][] eCells;
 
@@ -25,8 +26,7 @@ public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView, Clic
 			for (int x = 0; x < 3; x++) {
 				Element eTD = d.createTDElement();
 				eCells[x][y] = eTD;
-				eTD.setAttribute("data-dx", "" + (x - 1));
-				eTD.setAttribute("data-dy", "" + (y - 1));
+				eTD.setAttribute("data-uih", "s_"+(x - 1)+"_"+(y - 1));
 				eTR.appendChild(eTD);
 			}
 			e.appendChild(eTR);
@@ -37,7 +37,14 @@ public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView, Clic
 	@Override
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
 		super.decorateWidget(templates, element);
-		addDomHandler(this, ClickEvent.getType());
+		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->{
+			if (!tag.startsWith("s_"))
+				return;
+			String parts[] = tag.split("_");
+			int x = Integer.parseInt(parts[1]);
+			int y = Integer.parseInt(parts[2]);
+			presenter.quadrantWasClicked(x, y);
+		});
 	}
 
 	@Override
@@ -49,16 +56,6 @@ public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView, Clic
 
 	public SRSViewImpl(SRSPresenter presenter) {
 		super(presenter);
-	}
-
-	@Override
-	public void onClick(ClickEvent event) {
-		Element e = event.getNativeEvent().getEventTarget().cast();
-		if (!Strings.isEmpty(e.getAttribute("data-dx"))) {
-			int dx = Integer.parseInt(e.getAttribute("data-dx"));
-			int dy = Integer.parseInt(e.getAttribute("data-dy"));
-			presenter.quadrantWasClicked(dx, dy);
-		}
 	}
 
 }
