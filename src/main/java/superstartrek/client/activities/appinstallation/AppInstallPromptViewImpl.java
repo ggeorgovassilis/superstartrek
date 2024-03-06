@@ -3,6 +3,7 @@ package superstartrek.client.activities.appinstallation;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import superstartrek.client.activities.PopupViewImpl;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class AppInstallPromptViewImpl extends PopupViewImpl<AppInstallPromptPresenter> implements AppInstallPromptView {
@@ -20,10 +21,8 @@ public class AppInstallPromptViewImpl extends PopupViewImpl<AppInstallPromptPres
 	protected void decorateWidget(ScreenTemplates templates, Element element) {
 		super.decorateWidget(templates, element);
 		element.setId("app-install-prompt");
-		//TODO: switch to ui handler
-		addDomHandler((event) -> {
-			Element e = event.getNativeEvent().getEventTarget().cast();
-			switch (e.getId()) {
+		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag -> {
+			switch (tag) {
 			case "install-yes":
 				presenter.userClickedInstallButton();
 				break;
@@ -34,6 +33,6 @@ public class AppInstallPromptViewImpl extends PopupViewImpl<AppInstallPromptPres
 				presenter.userDoesntWantToInstallAppEver();
 				break;
 			}
-		}, ClickEvent.getType());
+		});
 	}
 }

@@ -3,12 +3,14 @@ package superstartrek.client.activities.settings;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.DomEvent;
 import superstartrek.client.activities.BaseScreen;
+import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class SettingsScreenImpl extends BaseScreen<SettingsPresenter> implements SettingsScreen {
@@ -39,7 +41,6 @@ public class SettingsScreenImpl extends BaseScreen<SettingsPresenter> implements
 		eNavDefault = getElementById("nav-default");
 		eNavBottom = getElementById("nav-bottom");
 		addDomHandler((event) -> handleChange(event), ChangeEvent.getType());
-		addDomHandler((event) -> handleClick(event), ClickEvent.getType());
 		uiScales.add(eSmall);
 		uiScales.add(eMedium);
 		uiScales.add(eLarge);
@@ -66,18 +67,13 @@ public class SettingsScreenImpl extends BaseScreen<SettingsPresenter> implements
 		}
 	}
 
-	protected void handleClick(DomEvent<?> event) {
-		NativeEvent ne = event.getNativeEvent();
-		Element e = ne.getEventTarget().cast();
-
-		if (eCheckForUpdates.isOrHasChild(e)) {
-			presenter.onCheckForUpdatesButtonClicked();
-		}
-	}
-
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
 		element.setInnerHTML(templates.settingsScreen().getText());
+		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->{
+			if ("cmd_check_for_updates_2".equals(tag)) 
+				presenter.onCheckForUpdatesButtonClicked();
+		});
 	}
 	
 	@Override
