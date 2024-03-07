@@ -1,13 +1,9 @@
 package superstartrek.client.uihandler;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.user.client.Event.NativePreviewHandler;
-
 import superstartrek.client.Application;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.utils.Strings;

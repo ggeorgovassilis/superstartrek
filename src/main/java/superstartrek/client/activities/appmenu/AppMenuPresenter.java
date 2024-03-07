@@ -1,7 +1,5 @@
 package superstartrek.client.activities.appmenu;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;

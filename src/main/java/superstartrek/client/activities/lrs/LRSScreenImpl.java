@@ -1,14 +1,10 @@
 package superstartrek.client.activities.lrs;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.space.Constants;
 import superstartrek.client.utils.CSS;
-import superstartrek.client.utils.Strings;
-
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;

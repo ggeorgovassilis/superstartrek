@@ -2,12 +2,9 @@ package superstartrek.client.activities.computer.srs;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
-import superstartrek.client.utils.Strings;
 
 public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView{
 

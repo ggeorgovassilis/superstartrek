@@ -1,15 +1,10 @@
 package superstartrek.client.activities.appmenu;
 
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-
 import superstartrek.client.activities.PopupViewImpl;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
-import superstartrek.client.utils.Strings;
 
 public class AppMenuViewImpl extends PopupViewImpl<AppMenuPresenter> implements AppMenuView{
 
