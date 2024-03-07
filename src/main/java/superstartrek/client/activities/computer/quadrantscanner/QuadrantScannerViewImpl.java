@@ -10,7 +10,6 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.space.Constants;
 
@@ -73,21 +72,6 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 		eSvgProto.getStyle().setTop(0, Unit.PX);
 		eSvgProto.getStyle().setProperty("pointerEvents", "none");
 		eSvgProto.getStyle().setPosition(Position.ABSOLUTE);
-		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag -> handleClick(tag));
-
-	}
-
-	protected void handleClick(String tag) {
-		if (!tag.startsWith("quads_"))
-			return;
-		String[] parts = tag.split("_");
-		int x = Integer.parseInt(parts[1]);
-		int y = Integer.parseInt(parts[2]);
-		int dy = getAbsoluteTop();
-		int dx = getAbsoluteLeft();
-		Element e = DOM.getElementById(tag);
-		presenter.onSectorSelected(x, y, dx + e.getOffsetLeft(), dy + e.getOffsetTop());
-
 	}
 
 	@Override
@@ -130,5 +114,13 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 		b.setInnerHTML("");
 		b.setClassName("");
 	}
+
+	@Override
+	public int[] getCoordinatesOfElement(String id) {
+		Element e = DOM.getElementById(id);
+		return new int[]{e.getOffsetLeft(),e.getOffsetTop()};
+	}
+	
+	
 
 }

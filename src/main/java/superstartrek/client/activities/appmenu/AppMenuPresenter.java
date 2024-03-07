@@ -5,14 +5,16 @@ import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.PopupViewPresenter;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Setting;
+import superstartrek.client.uihandler.InteractionHandler;
 
 public class AppMenuPresenter extends BasePresenter<AppMenuView>
-		implements PopupViewPresenter<AppMenuView>, ActivityChangedHandler {
+		implements PopupViewPresenter<AppMenuView>, ActivityChangedHandler, InteractionHandler {
 
 	String gotoStateAfterMenuHidden;
 
 	public AppMenuPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED);
+		addHandler(Events.INTERACTION);
 	}
 
 	public void updateCommands() {
@@ -95,6 +97,11 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	@Override
 	public void cancelButtonClicked() {
 		hideMenu();
+	}
+
+	@Override
+	public void onUiInteraction(String tag) {
+		onMenuItemClicked(tag);
 	}
 
 }

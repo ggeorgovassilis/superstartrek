@@ -9,6 +9,11 @@ import superstartrek.client.eventbus.Events;
 import superstartrek.client.utils.Strings;
 
 public class UiHandler{
+	
+	public static int[] parseCoordinatesFromTag(String tag) {
+		String[] parts = tag.split("_");
+		return new int[] {Integer.parseInt(parts[1]), Integer.parseInt(parts[2])};
+	}
 
 	public void initialise() {
 		Element e = Document.get().getBody();

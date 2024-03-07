@@ -3,7 +3,6 @@ package superstartrek.client.activities.computer;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 
-import superstartrek.client.Application;
 import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerPresenter;
 import superstartrek.client.activities.computer.quadrantscanner.QuadrantScannerViewImpl;
@@ -11,7 +10,6 @@ import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextM
 import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuViewImpl;
 import superstartrek.client.activities.computer.srs.SRSPresenter;
 import superstartrek.client.activities.computer.srs.SRSViewImpl;
-import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 
@@ -67,13 +65,6 @@ public class ComputerScreenImpl extends BaseScreen<ComputerPresenter> implements
 		eLrsButton = getElementById("lrs-button");
 		eAboveRadarSlot = getElementById("above-radar-slot");
 		eToggleShields = getElementById("cmd_toggleShields");
-		Application.get().eventBus.addHandler(Events.INTERACTION, tag->{
-			if ("cmd_skip".equals(tag))
-				presenter.onSkipButtonClicked();
-			if ("cmd_toggleShields".equals(tag))
-				presenter.onToggleShieldsButtonClicked();
-
-		});
 	}
 
 	@Override

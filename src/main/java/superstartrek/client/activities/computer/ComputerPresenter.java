@@ -16,6 +16,7 @@ import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.Setting;
 import superstartrek.client.space.StarMap;
 import superstartrek.client.space.Thing;
+import superstartrek.client.uihandler.InteractionHandler;
 import superstartrek.client.utils.CSS;
 import superstartrek.client.vessels.CombatHandler;
 import superstartrek.client.vessels.Enterprise;
@@ -25,20 +26,22 @@ import superstartrek.client.vessels.Weapon;
 import superstartrek.client.vessels.Enterprise.ShieldDirection;
 
 public class ComputerPresenter extends BasePresenter<ComputerScreen>
-		implements GamePhaseHandler, CombatHandler, ActivityChangedHandler,
-		KeyPressedEventHandler, SectorSelectedHandler, ContextMenuHideHandler {
+		implements GamePhaseHandler, CombatHandler, ActivityChangedHandler, KeyPressedEventHandler,
+		SectorSelectedHandler, ContextMenuHideHandler, InteractionHandler {
 
 	ScoreKeeper scoreKeeper;
 
 	public ComputerPresenter(Application application, ScoreKeeper scoreKeeper) {
 		super();
- 		this.scoreKeeper = scoreKeeper;
- 		addHandler(Events.ACTIVITY_CHANGED);
+		this.scoreKeeper = scoreKeeper;
+		addHandler(Events.ACTIVITY_CHANGED);
 		addHandler(Events.PLAYER_TURN_STARTED);
 		addHandler(Events.KLINGON_DESTROYED);
 		addHandler(Events.KEY_PRESSED);
 		addHandler(Events.SECTOR_SELECTED);
 		addHandler(Events.CONTEXT_MENU_HIDE);
+		addHandler(Events.INTERACTION);
+
 	}
 
 	void showScreen() {
@@ -59,21 +62,20 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	}
 
 	String damageClass(Setting setting, boolean damage) {
-		String css = damage?CSS.damageClass(setting):CSS.getOfflineDamageClass();
-		if (setting.health()<1)
-			css="damaged "+css;
+		String css = damage ? CSS.damageClass(setting) : CSS.getOfflineDamageClass();
+		if (setting.health() < 1)
+			css = "damaged " + css;
 		return css;
 	}
 
-	
 	public void updateStatusButtonView() {
 		Enterprise enterprise = getEnterprise();
 		String cssImpulse = damageClass(enterprise.getImpulse(), true);
 		String cssTactical = damageClass(enterprise.getAutoAim(), true);
 		String cssPhasers = damageClass(enterprise.getPhasers(), true);
-		String cssTorpedos = damageClass(enterprise.getTorpedos(), enterprise.getTorpedos().getValue()>=1);
+		String cssTorpedos = damageClass(enterprise.getTorpedos(), enterprise.getTorpedos().getValue() >= 1);
 		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
-		view.updateTorpedoLabel("Torpedos "+enterprise.getTorpedos().getValue());
+		view.updateTorpedoLabel("Torpedos " + enterprise.getTorpedos().getValue());
 		if (enterprise.getLrs().isOperational())
 			view.enableLlrsButton();
 		else
@@ -83,16 +85,17 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	void updateAntimatterView() {
 		Setting antimatter = getEnterprise().getAntimatter();
 		view.updateAntimatter(antimatter.getValue(), antimatter.getMaximum());
-		if (antimatter.getValue()<antimatter.getMaximum()*Constants.ANTIMATTER_WARNING_THRESHOLD)
+		if (antimatter.getValue() < antimatter.getMaximum() * Constants.ANTIMATTER_WARNING_THRESHOLD)
 			view.addAntimatterCss("antimatter-low");
-		else view.removeAntimatterCss("antimatter-low");
+		else
+			view.removeAntimatterCss("antimatter-low");
 	}
 
 	String getAlertCss() {
 		Quadrant quadrant = getEnterprise().getQuadrant();
 		Location enterprisePosition = getEnterprise().getLocation();
-		String alert="";
-		final double distanceOfRedAlertSquared = Constants.RED_ALERT_DISTANCE*Constants.RED_ALERT_DISTANCE;
+		String alert = "";
+		final double distanceOfRedAlertSquared = Constants.RED_ALERT_DISTANCE * Constants.RED_ALERT_DISTANCE;
 		if (quadrant.hasKlingons()) {
 			double minDistanceSquared = distanceOfRedAlertSquared;
 			for (Klingon k : quadrant.getKlingons()) {
@@ -105,7 +108,7 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		}
 		return alert;
 	}
-	
+
 	public void updateQuadrantHeaderView() {
 		String alert = getAlertCss();
 		view.setQuadrantName(getEnterprise().getQuadrant().getName(), alert);
@@ -114,13 +117,14 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	public void updateShieldsView() {
 		Setting shields = getEnterprise().getShields();
 		view.updateShields(shields.getValue(), shields.getCurrentUpperBound(), shields.getMaximum());
-		//TODO: updateShieldsView is called when player turn starts, but shields directions change only when 
-		//the user toggles them or after a starbase dock. 
+		// TODO: updateShieldsView is called when player turn starts, but shields
+		// directions change only when
+		// the user toggles them or after a starbase dock.
 		updateShieldsDirectionCss(getEnterprise().getShieldDirection());
 	}
 
 	public void onSkipButtonClicked() {
-		getApplication().eventBus.fireEvent(Events.TURN_YIELDED, (h)->h.onTurnYielded());
+		getApplication().eventBus.fireEvent(Events.TURN_YIELDED, (h) -> h.onTurnYielded());
 	}
 
 	@Override
@@ -134,7 +138,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	}
 
 	@Override
-	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage, boolean wasAutoFire) {
+	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
+			boolean wasAutoFire) {
 		if (target == getEnterprise()) {
 			updateShieldsView();
 		}
@@ -158,7 +163,7 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 			hideScreen();
 		}
 	}
-	
+
 	void updateButtonViews() {
 		updateStatusButtonView();
 		view.setCommandBarMode("mode-command");
@@ -166,7 +171,7 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 
 	@Override
 	public void onKeyPressed(int code) {
-		switch(code) {
+		switch (code) {
 		case 'l':
 		case 'L':
 			if (getEnterprise().getLrs().isOperational())
@@ -189,25 +194,33 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		view.setCommandBarMode("mode-scanner");
 		scanSector(sector, quadrant);
 	}
-	
+
 	// prints quick scan info (eg. enemy ship stats) on the command bar
 	public void scanSector(Location location, Quadrant quadrant) {
 		Thing thing = quadrant.findThingAt(location);
-		String name = Thing.isVisible(thing)?thing.getName():"Nothing";
-		view.setScanProperty("scan-report-name", "scan-report-name-value", "", name+" at "+location.toString());
+		String name = Thing.isVisible(thing) ? thing.getName() : "Nothing";
+		view.setScanProperty("scan-report-name", "scan-report-name-value", "", name + " at " + location.toString());
 		if (Thing.isVisible(thing) && Vessel.is(thing)) {
 			Vessel vessel = thing.as();
-			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "", "%"+vessel.getShields().percentage());
+			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "",
+					"%" + vessel.getShields().percentage());
 			if (Klingon.is(thing)) {
 				Klingon k = vessel.as();
-				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", k.getDisruptor().isOperational()?"":"damage-offline", k.getDisruptor().isOperational()?"online":"offline");
-				view.setScanProperty("scan-report-cloak", "scan-report-cloak-value", k.getCloak().isBroken()?"damage-offline":"", k.getCloak().isBroken()?"offline":"online");
-			} else
-			if (Enterprise.is(thing)) {
+				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value",
+						k.getDisruptor().isOperational() ? "" : "damage-offline",
+						k.getDisruptor().isOperational() ? "online" : "offline");
+				view.setScanProperty("scan-report-cloak", "scan-report-cloak-value",
+						k.getCloak().isBroken() ? "damage-offline" : "",
+						k.getCloak().isBroken() ? "offline" : "online");
+			} else if (Enterprise.is(thing)) {
 				Enterprise e = vessel.as();
-				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", e.getPhasers().isOperational()?"":"damage-offline", e.getPhasers().isOperational()?"online":"offline");
+				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value",
+						e.getPhasers().isOperational() ? "" : "damage-offline",
+						e.getPhasers().isOperational() ? "online" : "offline");
 			}
-			view.setScanProperty("scan-report-engines", "scan-report-engines-value", vessel.getImpulse().isOperational()?"":"damage-offline", vessel.getImpulse().isOperational()?"online":"offline");
+			view.setScanProperty("scan-report-engines", "scan-report-engines-value",
+					vessel.getImpulse().isOperational() ? "" : "damage-offline",
+					vessel.getImpulse().isOperational() ? "online" : "offline");
 		} else {
 			view.setScanProperty("scan-report-shields", "scan-report-shields-value", "hidden", "");
 			view.setScanProperty("scan-report-weapons", "scan-report-weapons-value", "hidden", "");
@@ -217,26 +230,33 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		view.show();
 	}
 
-
 	@Override
 	public void onMenuHidden() {
 		view.setCommandBarMode("mode-command");
 	}
-	
+
 	@Override
 	public void onStartToHideMenu() {
 		view.setCommandBarMode("mode-command");
 	}
-	
+
 	void updateShieldsDirectionCss(ShieldDirection direction) {
-		for (ShieldDirection d:ShieldDirection.values())
-			view.removeShieldCss("shield-"+d);
-		view.addShieldCss("shield-"+direction);
+		for (ShieldDirection d : ShieldDirection.values())
+			view.removeShieldCss("shield-" + d);
+		view.addShieldCss("shield-" + direction);
 	}
-	
+
 	public void onToggleShieldsButtonClicked() {
 		getEnterprise().toggleShields();
 		updateShieldsDirectionCss(getEnterprise().getShieldDirection());
+	}
+
+	@Override
+	public void onUiInteraction(String tag) {
+		if ("cmd_skip".equals(tag))
+			onSkipButtonClicked();
+		else if ("cmd_toggleShields".equals(tag))
+			onToggleShieldsButtonClicked();
 	}
 
 }

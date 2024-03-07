@@ -5,10 +5,8 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
-import superstartrek.client.utils.Strings;
 import superstartrek.client.utils.Timer;
 
 public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresenter>
@@ -31,7 +29,6 @@ public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresent
 		hide();
 		element.setInnerHTML(templates.sectorContextMenu().getText());
 		addStyleName("sector-context-menu");
-		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->handleButtonInteraction(tag));
 		presenter.getApplication().browserAPI.addToPage(this);
 	}
 
@@ -74,12 +71,6 @@ public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresent
 		//TODO: document the delay of 10ms
 		Timer.postpone(() -> addStyleName("expanded"), 10);
 	}
-
-	public void handleButtonInteraction(String tag) {
-		if (!Strings.isEmpty(tag))
-			presenter.onCommandClicked(tag);
-	}
-
 
 	@Override
 	public void enableDockWithStarbaseButton(boolean status) {

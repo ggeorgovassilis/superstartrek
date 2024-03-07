@@ -3,8 +3,6 @@ package superstartrek.client.activities.computer.srs;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import superstartrek.client.activities.BaseView;
-import superstartrek.client.eventbus.Events;
-import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView{
 
@@ -29,19 +27,6 @@ public class SRSViewImpl extends BaseView<SRSPresenter> implements SRSView{
 			e.appendChild(eTR);
 		}
 		setElement(eTable);
-	}
-
-	@Override
-	protected void decorateWidget(ScreenTemplates templates, Element element) {
-		super.decorateWidget(templates, element);
-		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->{
-			if (!tag.startsWith("s_"))
-				return;
-			String parts[] = tag.split("_");
-			int x = Integer.parseInt(parts[1]);
-			int y = Integer.parseInt(parts[2]);
-			presenter.quadrantWasClicked(x, y);
-		});
 	}
 
 	@Override

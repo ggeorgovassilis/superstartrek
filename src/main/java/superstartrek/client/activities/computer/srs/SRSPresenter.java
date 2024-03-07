@@ -7,17 +7,20 @@ import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Constants;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.StarMap;
+import superstartrek.client.uihandler.InteractionHandler;
+import superstartrek.client.uihandler.UiHandler;
 import superstartrek.client.utils.Maps;
 import superstartrek.client.vessels.CombatHandler;
 import superstartrek.client.vessels.Vessel;
 
 public class SRSPresenter extends BasePresenter<SRSView>
-		implements GamePhaseHandler, CombatHandler, QuadrantActivationHandler{
+		implements GamePhaseHandler, CombatHandler, QuadrantActivationHandler, InteractionHandler {
 
 	public SRSPresenter() {
 		addHandler(Events.GAME_STARTED);
 		addHandler(Events.QUADRANT_ACTIVATED);
 		addHandler(Events.KLINGON_DESTROYED);
+		addHandler(Events.INTERACTION);
 	}
 
 	public void updateRadar() {
@@ -35,7 +38,7 @@ public class SRSPresenter extends BasePresenter<SRSView>
 			}
 		}
 	}
-	
+
 	public void updateCenterQuadrant() {
 		StarMap map = getStarMap();
 		Quadrant q = getActiveQuadrant();
@@ -55,7 +58,7 @@ public class SRSPresenter extends BasePresenter<SRSView>
 	public void onActiveQuadrantChanged(Quadrant oldQuadrant, Quadrant newQuadrant) {
 		updateRadar();
 	}
-	
+
 	@Override
 	public void onVesselDestroyed(Vessel vessel) {
 		updateCenterQuadrant();
@@ -64,6 +67,14 @@ public class SRSPresenter extends BasePresenter<SRSView>
 	@Override
 	public void onGameStarted(StarMap map) {
 		updateRadar();
+	}
+
+	@Override
+	public void onUiInteraction(String tag) {
+		if (!tag.startsWith("s_"))
+			return;
+		int[] xy = UiHandler.parseCoordinatesFromTag(tag);
+		quadrantWasClicked(xy[0], xy[1]);
 	}
 
 }

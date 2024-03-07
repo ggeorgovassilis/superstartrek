@@ -18,4 +18,10 @@ public interface QuadrantScannerView extends View<QuadrantScannerPresenter>{
 	void drawBeamBetween(int x1, int y1, int x2, int y2, String colour);
 	void clearBeamMarks();
 	
+	int getAbsoluteTop();
+	
+	int getAbsoluteLeft();
+	
+	int[] getCoordinatesOfElement(String id);
+	
 }

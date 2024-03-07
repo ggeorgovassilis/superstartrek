@@ -18,6 +18,8 @@ import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.StarMap;
 import superstartrek.client.space.Thing;
+import superstartrek.client.uihandler.InteractionHandler;
+import superstartrek.client.uihandler.UiHandler;
 import superstartrek.client.utils.CSS;
 import superstartrek.client.utils.Timer;
 import superstartrek.client.vessels.CombatHandler;
@@ -28,8 +30,8 @@ import superstartrek.client.vessels.Vessel;
 import superstartrek.client.vessels.Weapon;
 
 public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
-		implements EventsMixin, SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler, EnterpriseRepairedHandler,
-		KlingonCloakingHandler, QuadrantActivationHandler {
+		implements EventsMixin, SectorSelectedHandler, GamePhaseHandler, NavigationHandler, CombatHandler,
+		EnterpriseRepairedHandler, KlingonCloakingHandler, QuadrantActivationHandler, InteractionHandler {
 
 	SectorContextMenuPresenter sectorMenuPresenter;
 	Location selectedSector = Location.location(0, 0);
@@ -55,6 +57,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		addHandler(KLINGON_UNCLOAKED);
 		addHandler(KLINGON_TURN_STARTED);
 		addHandler(PLAYER_TURN_STARTED);
+		addHandler(INTERACTION);
 	}
 
 	@Override
@@ -87,7 +90,7 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	void clearSector(int x, int y) {
 		view.clearSector(x, y);
 	}
-	
+
 	void clearAndMaybeRepaintSector(Location location) {
 		clearSector(location.x, location.y);
 		if (getEnterprise().getLastReachableSectors().contains(location)) {
@@ -179,10 +182,11 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		case disruptor:
 		case phaser:
 			String colour = (actor == getEnterprise()) ? "yellow" : "red";
-			//postponing because drawBeamBetween reads an element offset which forces a layout and would block
-			//the main thread
-			Timer.postpone(()->view.drawBeamBetween(actor.getLocation().x, actor.getLocation().y, target.getLocation().x,
-					target.getLocation().y, colour));
+			// postponing because drawBeamBetween reads an element offset which forces a
+			// layout and would block
+			// the main thread
+			Timer.postpone(() -> view.drawBeamBetween(actor.getLocation().x, actor.getLocation().y,
+					target.getLocation().x, target.getLocation().y, colour));
 		default:
 		}
 	}
@@ -190,7 +194,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	public void updateMapWithReachableSectors() {
 		Enterprise enterprise = getEnterprise();
 		// Sets are, in theory, faster, but Lists are backed by native JS arrays which
-		// is (probably) faster in GWT. This doesn't show up in the profiler, so probably not worth optimising
+		// is (probably) faster in GWT. This doesn't show up in the profiler, so
+		// probably not worth optimising
 		List<Location> oldReachableSectors = new ArrayList<Location>(enterprise.getLastReachableSectors());
 		enterprise.updateReachableSectors();
 		List<Location> newReachableSectors = enterprise.getLastReachableSectors();
@@ -198,8 +203,8 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 		oldButNotNewSectors.removeAll(newReachableSectors);
 		List<Location> newButNotOldSectors = new ArrayList<Location>(newReachableSectors);
 		newButNotOldSectors.removeAll(oldReachableSectors);
-		oldButNotNewSectors.forEach(l->view.removeCssFromCell(l.x, l.y, "navigation-target"));
-		newButNotOldSectors.forEach(l->markSectorAsNavigationTarget(l.x, l.y));
+		oldButNotNewSectors.forEach(l -> view.removeCssFromCell(l.x, l.y, "navigation-target"));
+		newButNotOldSectors.forEach(l -> markSectorAsNavigationTarget(l.x, l.y));
 	}
 
 	@Override
@@ -210,6 +215,20 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	@Override
 	public void onKlingonTurnStarted() {
 		view.clearBeamMarks();
+	}
+
+	@Override
+	public void onUiInteraction(String tag) {
+		if (!tag.startsWith("quads_"))
+			return;
+		int xy[] = UiHandler.parseCoordinatesFromTag(tag);
+		int x = xy[0];
+		int y = xy[1];
+		int dy = view.getAbsoluteTop();
+		int dx = view.getAbsoluteLeft();
+		int[] pixelCoords = view.getCoordinatesOfElement(tag);
+		onSectorSelected(x, y, dx + pixelCoords[0], dy + pixelCoords[1]);
+
 	}
 
 }

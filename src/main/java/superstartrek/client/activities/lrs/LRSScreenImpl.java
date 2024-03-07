@@ -1,7 +1,6 @@
 package superstartrek.client.activities.lrs;
 
 import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.space.Constants;
 import superstartrek.client.utils.CSS;
@@ -34,14 +33,6 @@ public class LRSScreenImpl extends BaseScreen<LRSPresenter> implements LRSScreen
 			eTd.setAttribute("tabindex", ""+i);
 			cells[x][y] = eTd;
 		}
-		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->{
-			if (!tag.startsWith("q_"))
-				return;
-			String[] parts = tag.split("_");
-			int x = Integer.parseInt(parts[1]);
-			int y = Integer.parseInt(parts[2]);
-			presenter.quadrantWasClicked(x, y);
-		});
 	}
 	
 	public LRSScreenImpl(LRSPresenter p) {

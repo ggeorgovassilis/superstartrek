@@ -6,13 +6,16 @@ import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Constants;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.StarMap;
+import superstartrek.client.uihandler.InteractionHandler;
+import superstartrek.client.uihandler.UiHandler;
 import superstartrek.client.utils.Maps;
 import superstartrek.client.vessels.Enterprise;
 
-public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityChangedHandler {
+public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityChangedHandler, InteractionHandler {
 
 	public LRSPresenter() {
 		addHandler(Events.ACTIVITY_CHANGED);
+		addHandler(Events.INTERACTION);
 	}
 
 	public void quadrantWasClicked(int x, int y) {
@@ -49,7 +52,7 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Quadrant quadrant = starMap.getQuadrant(x, y);
 				double requiredEnergy = enterprise.computeConsumptionForWarp(qEnterprise, quadrant);
-				boolean isReachable =  doesWarpdriveWork && (requiredEnergy <= reactor);
+				boolean isReachable = doesWarpdriveWork && (requiredEnergy <= reactor);
 				updateQuadrant(quadrant, isReachable);
 			}
 		updateEnterpriseLocation();
@@ -67,5 +70,13 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 		else
 			view.hide();
 	}
-	
+
+	@Override
+	public void onUiInteraction(String tag) {
+		if (!tag.startsWith("q_"))
+			return;
+		int[] xy = UiHandler.parseCoordinatesFromTag(tag);
+		quadrantWasClicked(xy[0], xy[1]);
+	}
+
 }

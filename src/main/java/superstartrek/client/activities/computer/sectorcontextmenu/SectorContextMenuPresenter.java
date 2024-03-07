@@ -17,9 +17,10 @@ import superstartrek.client.eventbus.Events;
 import superstartrek.client.eventbus.EventsMixin;
 import superstartrek.client.space.Location;
 import superstartrek.client.space.Quadrant;
+import superstartrek.client.uihandler.InteractionHandler;
 
 public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuView> implements SectorSelectedHandler,
-		GamePhaseHandler, ActivityChangedHandler, ContextMenuHideHandler, KeyPressedEventHandler, EventsMixin {
+		GamePhaseHandler, ActivityChangedHandler, ContextMenuHideHandler, KeyPressedEventHandler, EventsMixin, InteractionHandler {
 
 	Location sector;
 	Quadrant quadrant;
@@ -37,6 +38,7 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 		addHandler(Events.TURN_ENDED);
 		addHandler(Events.CONTEXT_MENU_HIDDEN);
 		addHandler(Events.ACTIVITY_CHANGED);
+		addHandler(Events.INTERACTION);
 		buttonsEnabled.put(cmd_navigate, false);
 		buttonsEnabled.put(cmd_firePhasers, false);
 		buttonsEnabled.put(cmd_fireTorpedos, false);
@@ -184,6 +186,11 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 		case KeyCodes.KEY_ESCAPE:
 			hideMenu(null);
 		}
+	}
+
+	@Override
+	public void onUiInteraction(String tag) {
+		onCommandClicked(tag);
 	}
 
 }

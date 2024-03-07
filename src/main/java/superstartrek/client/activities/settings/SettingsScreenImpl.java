@@ -8,7 +8,6 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.DomEvent;
 import superstartrek.client.activities.BaseScreen;
-import superstartrek.client.eventbus.Events;
 import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class SettingsScreenImpl extends BaseScreen<SettingsPresenter> implements SettingsScreen {
@@ -68,10 +67,6 @@ public class SettingsScreenImpl extends BaseScreen<SettingsPresenter> implements
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
 		element.setInnerHTML(templates.settingsScreen().getText());
-		presenter.getApplication().eventBus.addHandler(Events.INTERACTION, tag->{
-			if ("cmd_check_for_updates_2".equals(tag)) 
-				presenter.onCheckForUpdatesButtonClicked();
-		});
 	}
 	
 	@Override
