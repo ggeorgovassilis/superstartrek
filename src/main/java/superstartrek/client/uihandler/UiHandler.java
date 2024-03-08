@@ -2,6 +2,7 @@ package superstartrek.client.uihandler;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.touch.client.Point;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import superstartrek.client.Application;
@@ -10,9 +11,9 @@ import superstartrek.client.utils.Strings;
 
 public class UiHandler{
 	
-	public static int[] parseCoordinatesFromTag(String tag) {
+	public static Point parseCoordinatesFromTag(String tag) {
 		String[] parts = tag.split("_");
-		return new int[] {Integer.parseInt(parts[1]), Integer.parseInt(parts[2])};
+		return new Point(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
 	}
 
 	public void initialise() {

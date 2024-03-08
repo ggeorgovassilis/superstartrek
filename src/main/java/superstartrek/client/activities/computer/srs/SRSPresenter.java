@@ -1,5 +1,7 @@
 package superstartrek.client.activities.computer.srs;
 
+import com.google.gwt.touch.client.Point;
+
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.QuadrantActivationHandler;
@@ -73,8 +75,8 @@ public class SRSPresenter extends BasePresenter<SRSView>
 	public void onUiInteraction(String tag) {
 		if (!tag.startsWith("s_"))
 			return;
-		int[] xy = UiHandler.parseCoordinatesFromTag(tag);
-		quadrantWasClicked(xy[0], xy[1]);
+		Point xy = UiHandler.parseCoordinatesFromTag(tag);
+		quadrantWasClicked((int)xy.getX(), (int)xy.getY());
 	}
 
 }

@@ -1,5 +1,7 @@
 package superstartrek.client.activities.computer.quadrantscanner;
 
+import com.google.gwt.touch.client.Point;
+
 import superstartrek.client.activities.View;
 
 public interface QuadrantScannerView extends View<QuadrantScannerPresenter>{
@@ -22,6 +24,6 @@ public interface QuadrantScannerView extends View<QuadrantScannerPresenter>{
 	
 	int getAbsoluteLeft();
 	
-	int[] getCoordinatesOfElement(String id);
+	Point getCoordinatesOfElement(String id);
 	
 }

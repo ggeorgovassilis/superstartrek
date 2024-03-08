@@ -1,5 +1,7 @@
 package superstartrek.client.activities.lrs;
 
+import com.google.gwt.touch.client.Point;
+
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.eventbus.Events;
@@ -75,8 +77,8 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 	public void onUiInteraction(String tag) {
 		if (!tag.startsWith("q_"))
 			return;
-		int[] xy = UiHandler.parseCoordinatesFromTag(tag);
-		quadrantWasClicked(xy[0], xy[1]);
+		Point xy = UiHandler.parseCoordinatesFromTag(tag);
+		quadrantWasClicked((int)xy.getX(), (int)xy.getY());
 	}
 
 }

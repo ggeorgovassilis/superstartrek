@@ -7,6 +7,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.touch.client.Point;
 import com.google.gwt.user.client.DOM;
 
 import superstartrek.client.activities.BaseView;
@@ -116,9 +117,9 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 	}
 
 	@Override
-	public int[] getCoordinatesOfElement(String id) {
+	public Point getCoordinatesOfElement(String id) {
 		Element e = DOM.getElementById(id);
-		return new int[]{e.getOffsetLeft(),e.getOffsetTop()};
+		return new Point(e.getOffsetLeft(),e.getOffsetTop());
 	}
 	
 	

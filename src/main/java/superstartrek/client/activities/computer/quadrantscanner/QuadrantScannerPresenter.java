@@ -5,6 +5,8 @@ import static superstartrek.client.eventbus.Events.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.touch.client.Point;
+
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.computer.sectorcontextmenu.SectorContextMenuPresenter;
 import superstartrek.client.activities.computer.sectorcontextmenu.SectorSelectedHandler;
@@ -221,13 +223,11 @@ public class QuadrantScannerPresenter extends BasePresenter<QuadrantScannerView>
 	public void onUiInteraction(String tag) {
 		if (!tag.startsWith("quads_"))
 			return;
-		int xy[] = UiHandler.parseCoordinatesFromTag(tag);
-		int x = xy[0];
-		int y = xy[1];
+		Point xy = UiHandler.parseCoordinatesFromTag(tag);
 		int dy = view.getAbsoluteTop();
 		int dx = view.getAbsoluteLeft();
-		int[] pixelCoords = view.getCoordinatesOfElement(tag);
-		onSectorSelected(x, y, dx + pixelCoords[0], dy + pixelCoords[1]);
+		Point pixelCoords = view.getCoordinatesOfElement(tag);
+		onSectorSelected((int)xy.getX(), (int)xy.getY(), dx + (int)pixelCoords.getX(), dy + (int)pixelCoords.getY());
 
 	}
 
