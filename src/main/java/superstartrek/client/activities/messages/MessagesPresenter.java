@@ -3,7 +3,7 @@ package superstartrek.client.activities.messages;
 import com.google.gwt.event.dom.client.KeyCodes;
 
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.activities.popup.PopupViewPresenter;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.KeyPressedEventHandler;
 import superstartrek.client.eventbus.Events;

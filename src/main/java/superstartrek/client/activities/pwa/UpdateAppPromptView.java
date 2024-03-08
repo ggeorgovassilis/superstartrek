@@ -1,7 +1,8 @@
 package superstartrek.client.activities.pwa;
 
 import com.google.gwt.dom.client.Element;
-import superstartrek.client.activities.PopupViewImpl;
+
+import superstartrek.client.activities.popup.PopupViewImpl;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 

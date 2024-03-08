@@ -1,7 +1,7 @@
 package superstartrek.client.activities.appinstallation;
 
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.activities.popup.PopupViewPresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.uihandler.InteractionHandler;

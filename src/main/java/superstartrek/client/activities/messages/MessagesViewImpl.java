@@ -4,7 +4,8 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import superstartrek.client.activities.PopupViewImpl;
+
+import superstartrek.client.activities.popup.PopupViewImpl;
 import superstartrek.client.screentemplates.ScreenTemplates;
 
 public class MessagesViewImpl extends PopupViewImpl<MessagesPresenter> implements MessagesView {

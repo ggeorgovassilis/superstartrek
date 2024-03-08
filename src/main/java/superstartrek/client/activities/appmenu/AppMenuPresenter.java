@@ -2,7 +2,7 @@ package superstartrek.client.activities.appmenu;
 
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
-import superstartrek.client.activities.PopupViewPresenter;
+import superstartrek.client.activities.popup.PopupViewPresenter;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.Setting;
 import superstartrek.client.uihandler.InteractionHandler;

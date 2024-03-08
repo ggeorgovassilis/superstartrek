@@ -1,4 +1,4 @@
-package superstartrek.client.activities;
+package superstartrek.client.activities.popup;
 
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.Event;
 
+import superstartrek.client.activities.BaseView;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.space.Constants;
 import superstartrek.client.utils.Timer;
