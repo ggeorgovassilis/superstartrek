@@ -15,6 +15,7 @@ public class TestSettingsPresenter extends BaseTest{
 	
 	@Before
 	public void setup() {
+		application = mock(Application.class);
 		view = mock(SettingsScreen.class);
 		presenter = new SettingsPresenter();
 		presenter.setView(view);
