@@ -13,7 +13,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gwt.version>2.10.0</gwt.version>
+		<gwt.version>2.11.0</gwt.version>
 		<skip.tests>false</skip.tests>
 		<skip.deploy>true</skip.deploy>
 		<skip.gwt>false</skip.gwt>
@@ -155,17 +155,17 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.google.gwt</groupId>
+			<groupId>org.gwtproject</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${gwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.georgovassilis</groupId>
 			<artifactId>gwt-htmlresource</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.gwt</groupId>
+			<groupId>org.gwtproject</groupId>
 			<artifactId>gwt-dev</artifactId>
 			<version>${gwt.version}</version>
 			<scope>runtime</scope>
