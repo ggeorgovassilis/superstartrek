@@ -168,7 +168,6 @@
 			<groupId>org.gwtproject</groupId>
 			<artifactId>gwt-dev</artifactId>
 			<version>${gwt.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -234,6 +233,7 @@
 					<skip>${skip.tests}</skip>
 				</configuration>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
@@ -263,7 +263,33 @@
 					<strict>true</strict>
 					<detailedSoyc>true</detailedSoyc>
 				</configuration>
+			</plugin>-->
+			<plugin>
+				<groupId>net.ltgt.gwt.maven</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<moduleName>${gwt.module}</moduleName>
+					<skip>${skip.gwt}</skip>
+					<deploy>${project.build.directory}/deploy</deploy>
+					<outputDirectory>${project.basedir}/site</outputDirectory>
+					<draftCompile>${gwt.draftCompile}</draftCompile>
+					<optimize>${gwt.optimizationLevel}</optimize>
+					<webappDirectory>${project.basedir}/site</webappDirectory>
+					<compilerArgs>
+						<compilerArg>-strict</compilerArg>
+					</compilerArgs>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
