@@ -413,28 +413,29 @@ public class Enterprise extends Vessel
 				|| setting.getCurrentUpperBound() < Constants.ENTERPRISE_SELF_REPAIR_STRENGTH * setting.getMaximum();
 	}
 
-	boolean maybeRepairProvisionally(String name, Setting setting) {
+	boolean maybeRepairProvisionally(String name, Setting setting, boolean resetValue) {
 		boolean needsRepair = canBeRepaired(setting);
 		if (!needsRepair)
 			return false;
 		if (starMap.getStarDate() - setting.getTimeOfDamage() < Constants.ENTERPRISE_TIME_TO_REPAIR_SETTING)
 			return false;
 		setting.setCurrentUpperBound(Math.max(1, setting.getMaximum() * Constants.ENTERPRISE_SELF_REPAIR_STRENGTH));
-		setting.setValue(setting.getCurrentUpperBound());
+		if (resetValue)
+			setting.setValue(setting.getCurrentUpperBound());
 		setting.setBroken(false);
 		message("Repaired " + name, "enterprise-repaired");
 		return true;
 	}
 
 	public void repairProvisionally() {
-		boolean v = maybeRepairProvisionally("impulse drive", impulse);
-		v |= maybeRepairProvisionally("shields", shields);
-		v |= maybeRepairProvisionally("phasers", phasers);
-		v |= maybeRepairProvisionally("torpedo bay", torpedos);
-		v |= maybeRepairProvisionally("tactical computer", autoAim);
-		v |= maybeRepairProvisionally("LRS", lrs);
-		v |= maybeRepairProvisionally("warp drive", warpDrive);
-		v |= maybeRepairProvisionally("reactor", reactor);
+		boolean v = maybeRepairProvisionally("impulse drive", impulse, true);
+		v |= maybeRepairProvisionally("shields", shields, true);
+		v |= maybeRepairProvisionally("phasers", phasers, true);
+		v |= maybeRepairProvisionally("torpedo bay", torpedos, false);
+		v |= maybeRepairProvisionally("tactical computer", autoAim, true);
+		v |= maybeRepairProvisionally("LRS", lrs, true);
+		v |= maybeRepairProvisionally("warp drive", warpDrive, true);
+		v |= maybeRepairProvisionally("reactor", reactor, true);
 		if (v) {
 			fireEvent(Events.ENTERPRISE_REPAIRED, (h) -> h.onEnterpriseRepaired(Enterprise.this));
 			return;
