@@ -233,37 +233,6 @@
 					<skip>${skip.tests}</skip>
 				</configuration>
 			</plugin>
-			<!--
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<compileReport>true</compileReport>
-					<deploy>${project.build.directory}/deploy</deploy>
-					<disableClassMetadata>${gwt.disableClassMetadata}</disableClassMetadata>
-					<disableCastChecking>${gwt.disableCastChecking}</disableCastChecking>
-					<draftCompile>${gwt.draftCompile}</draftCompile>
-					<methodNameDisplayMode>${gwt.methodNameDisplayMode}</methodNameDisplayMode>
-					<module>${gwt.module}</module>
-					<optimizationLevel>${gwt.optimizationLevel}</optimizationLevel>
-					<outputDirectory>${project.basedir}/site</outputDirectory>
-					<persistentunitcache>false</persistentunitcache>
-					<removeDuplicateFunctions>true</removeDuplicateFunctions>
-					<saveSource>${gwt.saveSource}</saveSource>
-					<style>${gwt.style}</style>
-					<skip>${skip.gwt}</skip>
-					<strict>true</strict>
-					<detailedSoyc>true</detailedSoyc>
-				</configuration>
-			</plugin>-->
 			<plugin>
 				<groupId>net.ltgt.gwt.maven</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
@@ -279,6 +248,8 @@
 					<webappDirectory>${project.basedir}/site</webappDirectory>
 					<compilerArgs>
 						<compilerArg>-strict</compilerArg>
+						<compilerArg>-XdisableClassMetadata</compilerArg>
+						<compilerArg>-XdisableCastChecking</compilerArg>
 					</compilerArgs>
 				</configuration>
 				<executions>
