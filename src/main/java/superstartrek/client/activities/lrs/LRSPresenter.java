@@ -43,6 +43,10 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 		Quadrant q = enterprise.getQuadrant();
 		view.addCss(q.x, q.y, "has-enterprise");
 	}
+	
+	double computeConsumptionForWarp(Enterprise enterprise, Quadrant qEnterprise, Quadrant quadrant) {
+		return enterprise.computeConsumptionForWarp(qEnterprise, quadrant);
+	} 
 
 	void updateLrsView() {
 		StarMap starMap = getStarMap();
@@ -53,8 +57,7 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Quadrant quadrant = starMap.getQuadrant(x, y);
-				double requiredEnergy = enterprise.computeConsumptionForWarp(qEnterprise, quadrant);
-				boolean isReachable = doesWarpdriveWork && (requiredEnergy <= reactor);
+				boolean isReachable = doesWarpdriveWork && computeConsumptionForWarp(enterprise, qEnterprise, quadrant) <= reactor;
 				updateQuadrant(quadrant, isReachable);
 			}
 		updateEnterpriseLocation();
