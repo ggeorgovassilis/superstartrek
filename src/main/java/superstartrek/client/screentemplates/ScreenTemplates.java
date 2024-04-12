@@ -1,47 +1,21 @@
 package superstartrek.client.screentemplates;
 
-import com.georgovassilis.gwthtmlresource.client.HtmlResource;
-import com.google.gwt.resources.client.ClientBundle;
+public interface ScreenTemplates {
 
-public interface ScreenTemplates extends ClientBundle {
+	String appMenu = "templates/app-menu.html";
+	String computer = "templates/computer.html";
+	String credits = "templates/credits.html";
+	String highscores = "templates/highscores.html";
+	String installAppPrompt = "templates/install-app-prompt.html";
+	String intro = "templates/intro.html";
+	String lrs = "templates/lrs.html";
+	String manual = "templates/manual.html";
+	String messages = "templates/messages.html";
+	String sectorContextMenu = "templates/sector-context-menu.html";
+	String settings = "templates/settings.html";
+	String statusReport = "templates/status-report.html";
+	String updateAppPrompt = "templates/update-app-prompt.html";
 
-	@Source("install-app-prompt.html")
-	public HtmlResource appInstallPrompt();
-
-	@Source("update-app-prompt.html")
-	public HtmlResource updateAppPrompt();
-
-	@Source("intro.html")
-	public HtmlResource introScreen();
-
-	@Source("computer.html")
-	public HtmlResource computerScreen();
-
-	@Source("manual.html")
-	public HtmlResource manualScreen();
-
-	@Source("sector-context-menu.html")
-	public HtmlResource sectorContextMenu();
-
-	@Source("lrs.html")
-	public HtmlResource lrsScreen();
-
-	@Source("status-report.html")
-	public HtmlResource statusReport();
-
-	@Source("messages.html")
-	public HtmlResource messages();
-
-	@Source("app-menu.html")
-	public HtmlResource appMenu();
-
-	@Source("settings.html")
-	public HtmlResource settingsScreen();
-
-	@Source("credits.html")
-	public HtmlResource creditsScreen();
-
-	@Source("highscores.html")
-	public HtmlResource highscoresScreen();
+	String getTemplateFor(String key);
 
 }

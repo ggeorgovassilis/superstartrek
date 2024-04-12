@@ -62,6 +62,6 @@ public class MessagesViewImpl extends PopupViewImpl<MessagesPresenter> implement
 
 	@Override
 	protected String getContentForHtmlPanel(ScreenTemplates templates) {
-		return templates.messages().getText();
+		return templates.getTemplateFor(ScreenTemplates.messages);
 	}
 }

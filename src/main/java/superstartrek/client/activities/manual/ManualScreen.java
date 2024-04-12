@@ -14,7 +14,7 @@ public class ManualScreen extends BaseScreen<ManualPresenter>{
 	
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
-		String html = templates.manualScreen().getText(); 
+		String html = templates.getTemplateFor(ScreenTemplates.manual); 
 		element.setInnerHTML(html);
 	}
 	

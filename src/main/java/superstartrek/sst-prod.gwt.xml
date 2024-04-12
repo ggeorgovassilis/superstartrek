@@ -4,7 +4,6 @@
 	<inherits name="com.google.gwt.logging.Logging" />
 	<inherits name="com.google.gwt.http.HTTP" />
 	<inherits name="com.google.gwt.storage.Storage" />
-	<inherits name="com.georgovassilis.gwthtmlresource.htmlresource" />
 
 	<public path="public" />
 	<source path="client" />

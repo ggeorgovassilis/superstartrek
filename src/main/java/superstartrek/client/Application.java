@@ -41,6 +41,7 @@ import superstartrek.client.eventbus.EventBus;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.persistence.GameSaver;
 import superstartrek.client.screentemplates.ScreenTemplates;
+import superstartrek.client.screentemplates.ScreenTemplatesFactory;
 import superstartrek.client.space.Quadrant;
 import superstartrek.client.space.Setup;
 import superstartrek.client.space.StarMap;
@@ -177,11 +178,15 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void setupTheRest() {
-		UiHandler uiHandler = new UiHandler();
-		uiHandler.initialise();
-		setupScreens();
-		setupGameController();
-		startGame();
+		ScreenTemplatesFactory sc = new ScreenTemplatesFactory();
+		screenTemplates = sc;
+		sc.initialise((c)->{
+			UiHandler uiHandler = new UiHandler();
+			uiHandler.initialise();
+			setupScreens();
+			setupGameController();
+			startGame();
+		});
 	}
 
 	public void startGame() {
@@ -220,7 +225,6 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		setUncaughtExceptionHandler();
 		if (GWT.isClient())
 			browserAPI = new GwtBrowserAPIImpl(eventBus);
-		screenTemplates = GWT.create(ScreenTemplates.class);
 		scoreKeeper = new ScoreKeeperImpl(browserAPI);
 		setupHttp();
 		registerEventHandlers();

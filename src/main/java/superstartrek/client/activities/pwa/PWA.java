@@ -34,6 +34,10 @@ public class PWA {
 	public void clearCache(ScheduledCommand callback) {
 		cache.clearCache(CACHE_NAME, application.requestFactory, callback);
 	}
+	
+	public LocalCache getCache() {
+		return cache;
+	}
 
 	//@formatter:off
 	public static native boolean supportsServiceWorker() /*-{

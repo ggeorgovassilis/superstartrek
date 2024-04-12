@@ -14,7 +14,7 @@ public class AppMenuViewImpl extends PopupViewImpl<AppMenuPresenter> implements 
 
 	@Override
 	protected String getContentForHtmlPanel(ScreenTemplates templates) {
-		return templates.appMenu().getText();
+		return templates.getTemplateFor(ScreenTemplates.appMenu);
 	}
 	
 	@Override

@@ -14,7 +14,7 @@ public class IntroScreen extends BaseScreen<IntroPresenter>{
 	
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
-		element.setInnerHTML(templates.introScreen().getText());
+		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.intro));
 		addStyleName("intro-screen");
 		sinkEvents(Event.ONCLICK);
 	}

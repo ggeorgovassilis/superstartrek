@@ -66,7 +66,7 @@ public class SettingsScreenImpl extends BaseScreen<SettingsPresenter> implements
 
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
-		element.setInnerHTML(templates.settingsScreen().getText());
+		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.settings));
 	}
 	
 	@Override

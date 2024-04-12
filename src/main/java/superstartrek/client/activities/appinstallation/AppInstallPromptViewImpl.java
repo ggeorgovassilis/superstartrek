@@ -14,7 +14,7 @@ public class AppInstallPromptViewImpl extends PopupViewImpl<AppInstallPromptPres
 
 	@Override
 	protected String getContentForHtmlPanel(ScreenTemplates templates) {
-		return templates.appInstallPrompt().getText();
+		return templates.getTemplateFor(ScreenTemplates.installAppPrompt);
 	}
 
 	@Override

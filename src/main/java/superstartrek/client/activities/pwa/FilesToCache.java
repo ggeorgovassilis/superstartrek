@@ -1,5 +1,7 @@
 package superstartrek.client.activities.pwa;
 
+import superstartrek.client.screentemplates.ScreenTemplates;
+
 class FilesToCache {
 
 	public static final String[] fileNames = new String[] {//@formatter:off
@@ -30,7 +32,20 @@ class FilesToCache {
 			"images/spark.svg",
 			"images/missile.svg",
 			"images/dock.svg",
-			"images/qr-code.svg"
+			"images/qr-code.svg",
+			ScreenTemplates.appMenu,
+			ScreenTemplates.computer,
+			ScreenTemplates.credits,
+			ScreenTemplates.highscores,
+			ScreenTemplates.installAppPrompt,
+			ScreenTemplates.intro,
+			ScreenTemplates.lrs,
+			ScreenTemplates.manual,
+			ScreenTemplates.messages,
+			ScreenTemplates.sectorContextMenu,
+			ScreenTemplates.settings,
+			ScreenTemplates.statusReport,
+			ScreenTemplates.updateAppPrompt
 			//@formatter:on
 };
 
