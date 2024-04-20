@@ -9,9 +9,9 @@ import superstartrek.client.activities.pwa.PWA;
 
 public class ScreenTemplatesFactory implements ScreenTemplates {
 
-	Map<String,String> templates = new HashMap<String, String>();
+	Map<String, String> templates = new HashMap<String, String>();
 	int outstandingLoads = 0;
-	
+
 	void loadTemplate(String key, Callback<Void> callback) {
 		PWA pwa = Application.get().pwa;
 		pwa.getFileContent(key, (content) -> {
@@ -20,24 +20,17 @@ public class ScreenTemplatesFactory implements ScreenTemplates {
 			if (outstandingLoads == 0)
 				callback.onSuccess(null);
 		});
-		
+
 	}
 
 	public void initialise(Callback<Void> callback) {
-		outstandingLoads = 13; //number of loadTemplate invocations below
-		loadTemplate(ScreenTemplates.appMenu, callback);
-		loadTemplate(ScreenTemplates.computer, callback);
-		loadTemplate(ScreenTemplates.credits, callback);
-		loadTemplate(ScreenTemplates.highscores, callback);
-		loadTemplate(ScreenTemplates.installAppPrompt, callback);
-		loadTemplate(ScreenTemplates.intro, callback);
-		loadTemplate(ScreenTemplates.lrs, callback);
-		loadTemplate(ScreenTemplates.manual, callback);
-		loadTemplate(ScreenTemplates.messages, callback);
-		loadTemplate(ScreenTemplates.sectorContextMenu, callback);
-		loadTemplate(ScreenTemplates.settings, callback);
-		loadTemplate(ScreenTemplates.statusReport, callback);
-		loadTemplate(ScreenTemplates.updateAppPrompt, callback);
+		String[] templatesToLoad = { ScreenTemplates.appMenu, ScreenTemplates.computer, ScreenTemplates.credits,
+				ScreenTemplates.highscores, ScreenTemplates.installAppPrompt, ScreenTemplates.intro, ScreenTemplates.lrs,
+				ScreenTemplates.manual, ScreenTemplates.messages, ScreenTemplates.sectorContextMenu,
+				ScreenTemplates.settings, ScreenTemplates.statusReport, ScreenTemplates.updateAppPrompt };
+		outstandingLoads = templatesToLoad.length;
+		for (String template:templatesToLoad)
+			loadTemplate(template, callback);
 	}
 
 	@Override
