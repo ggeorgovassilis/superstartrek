@@ -30,7 +30,7 @@ public class MessagesPresenter extends BasePresenter<MessagesView>
 	public void hideMessages() {
 		if (!view.isVisible())
 			return;
-		removeHandler(Events.KEY_PRESSED, this);
+		removeHandler(Events.KEY_PRESSED);
 		view.hide(() -> {
 			view.clear();
 			fireEvent(Events.MESSAGE_READ, (h)->h.messagesAcknowledged());
@@ -53,13 +53,13 @@ public class MessagesPresenter extends BasePresenter<MessagesView>
 	
 	@Override
 	public void onGameStarted(StarMap map) {
-		removeHandler(Events.MESSAGE_POSTED, this);
+		removeHandler(Events.MESSAGE_POSTED);
 		addHandler(Events.MESSAGE_POSTED);
 	}
 	
 	@Override
 	public void gameOver() {
-		removeHandler(Events.MESSAGE_POSTED, this);
+		removeHandler(Events.MESSAGE_POSTED);
 	}
 
 }

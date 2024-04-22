@@ -65,9 +65,9 @@ public class Klingon extends Vessel
 		cloak = new Setting(1);
 		setCss("klingon");
 		this.disruptor = new Setting(c.disruptor);
-		addHandler(QUADRANT_ACTIVATED, this);
-		addHandler(GAME_RESTART, this);
-		addHandler(GAME_STARTED, this);
+		addHandler(QUADRANT_ACTIVATED);
+		addHandler(GAME_RESTART);
+		addHandler(GAME_STARTED);
 	}
 	
 	@Override
@@ -94,13 +94,13 @@ public class Klingon extends Vessel
 	 * quadrant and unregister them when it leaves.
 	 */
 	public void registerActionHandlers() {
-		addHandler(BEFORE_FIRE, this);
-		addHandler(KLINGON_TURN_STARTED, this);
+		addHandler(BEFORE_FIRE);
+		addHandler(KLINGON_TURN_STARTED);
 	}
 
 	public void unregisterActionHandlers() {
-		removeHandler(BEFORE_FIRE, this);
-		removeHandler(KLINGON_TURN_STARTED, this);
+		removeHandler(BEFORE_FIRE);
+		removeHandler(KLINGON_TURN_STARTED);
 	}
 
 	public boolean canCloak() {

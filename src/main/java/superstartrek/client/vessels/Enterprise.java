@@ -107,10 +107,10 @@ public class Enterprise extends Vessel
 		super(new Setting(Constants.ENTERPRISE_IMPULSE), new Setting(Constants.ENTERPRISE_SHIELDS));
 		this.application = app;
 		this.starMap = map;
-		addHandler(Events.TURN_STARTED, this);
-		addHandler(Events.TURN_ENDED, this);
-		addHandler(Events.GAME_RESTART, this);
-		addHandler(Events.BEFORE_FIRE, this);
+		addHandler(Events.TURN_STARTED);
+		addHandler(Events.TURN_ENDED);
+		addHandler(Events.GAME_RESTART);
+		addHandler(Events.BEFORE_FIRE);
 	}
 
 	public Setting getAntimatter() {

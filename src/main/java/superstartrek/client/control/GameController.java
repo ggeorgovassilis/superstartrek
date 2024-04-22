@@ -52,21 +52,21 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		this.application = application;
 		events = application.eventBus;
 		this.scoreKeeper = scoreKeeper;
-		addHandler(GAME_STARTED, this);
-		addHandler(GAME_OVER, this);
-		addHandler(TURN_STARTED, this);
-		addHandler(TURN_ENDED, this);
-		addHandler(KLINGON_TURN_STARTED, this);
-		addHandler(AFTER_FIRE, this);
-		addHandler(THING_MOVED, this);
-		addHandler(KLINGON_DESTROYED, this);
-		addHandler(MESSAGE_READ, this);
-		addHandler(TURN_YIELDED, this);
-		addHandler(CONSUME_ENERGY, this);
-		addHandler(ENTERPRISE_DOCKED, this);
-		addHandler(GAME_RESTART, this);
-		addHandler(ENTERPRISE_DAMAGED, this);
-		addHandler(QUADRANT_ACTIVATED, this);
+		addHandler(GAME_STARTED);
+		addHandler(GAME_OVER);
+		addHandler(TURN_STARTED);
+		addHandler(TURN_ENDED);
+		addHandler(KLINGON_TURN_STARTED);
+		addHandler(AFTER_FIRE);
+		addHandler(THING_MOVED);
+		addHandler(KLINGON_DESTROYED);
+		addHandler(MESSAGE_READ);
+		addHandler(TURN_YIELDED);
+		addHandler(CONSUME_ENERGY);
+		addHandler(ENTERPRISE_DOCKED);
+		addHandler(GAME_RESTART);
+		addHandler(ENTERPRISE_DAMAGED);
+		addHandler(QUADRANT_ACTIVATED);
 	}
 	
 	@Override

@@ -114,7 +114,7 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 	protected void hideMenu(ScheduledCommand callback) {
 		if (view.isVisible())
 			getEvents().fireEvent(Events.CONTEXT_MENU_HIDE, (h) -> h.onStartToHideMenu());
-		removeHandler(Events.KEY_PRESSED, this);
+		removeHandler(Events.KEY_PRESSED);
 		view.hide(callback);
 	}
 
