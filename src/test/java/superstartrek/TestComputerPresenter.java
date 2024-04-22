@@ -85,7 +85,7 @@ public class TestComputerPresenter extends BaseTest{
 	@Test
 	public void test_updateShieldsView() {
 		enterprise.getShields().damage(10, starMap.getStarDate());
-		presenter.updateShieldsView();
+		presenter.updateShieldsHealthView();
 		verify(view).updateShields(50, 50, 60);
 	}
 

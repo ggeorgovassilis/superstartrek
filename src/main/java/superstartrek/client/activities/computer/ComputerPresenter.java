@@ -114,13 +114,9 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		view.setQuadrantName(getEnterprise().getQuadrant().getName(), alert);
 	}
 
-	public void updateShieldsView() {
+	public void updateShieldsHealthView() {
 		Setting shields = getEnterprise().getShields();
 		view.updateShields(shields.getValue(), shields.getCurrentUpperBound(), shields.getMaximum());
-		// TODO: updateShieldsView is called when player turn starts, but shields
-		// directions change only when
-		// the user toggles them or after a starbase dock.
-		updateShieldsDirectionCss(getEnterprise().getShieldDirection());
 	}
 
 	public void onSkipButtonClicked() {
@@ -130,7 +126,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	@Override
 	public void onPlayerTurnStarted() {
 		updateStarDateView();
-		updateShieldsView();
+		updateShieldsHealthView();
+		updateShieldsDirection();
 		updateQuadrantHeaderView();
 		updateAntimatterView();
 		updateScoreView();
@@ -141,7 +138,7 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	public void afterFire(Quadrant quadrant, Vessel actor, Thing target, Weapon weapon, double damage,
 			boolean wasAutoFire) {
 		if (target == getEnterprise()) {
-			updateShieldsView();
+			updateShieldsHealthView();
 		}
 	}
 
@@ -240,7 +237,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		view.setCommandBarMode("mode-command");
 	}
 
-	void updateShieldsDirectionCss(ShieldDirection direction) {
+	void updateShieldsDirection() {
+		ShieldDirection direction = getEnterprise().getShieldDirection();
 		for (ShieldDirection d : ShieldDirection.values())
 			view.removeShieldCss("shield-" + d);
 		view.addShieldCss("shield-" + direction);
@@ -248,7 +246,7 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 
 	public void onToggleShieldsButtonClicked() {
 		getEnterprise().toggleShields();
-		updateShieldsDirectionCss(getEnterprise().getShieldDirection());
+		updateShieldsDirection();
 	}
 
 	@Override
