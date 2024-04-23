@@ -35,7 +35,7 @@
 		<url>https://github.com/ggeorgovassilis/superstartrek/</url>
 	</scm>
 
-<!--
+	<!--
 	<repositories>
 		<repository>
 			<id>gwt-sl-mvn-repo</id>
@@ -251,6 +251,7 @@
 						<compilerArg>-strict</compilerArg>
 						<compilerArg>-XdisableClassMetadata</compilerArg>
 						<compilerArg>-XdisableCastChecking</compilerArg>
+						<compilerArg>-saveSource</compilerArg>
 					</compilerArgs>
 				</configuration>
 				<executions>
@@ -274,6 +275,11 @@
 						</goals>
 						<configuration>
 							<tasks>
+								<copy
+									todir="${project.basedir}/site/symbolMaps">
+									<fileset
+										dir="${project.build.directory}/deploy/superstartrek.superstartrek/symbolMaps" />
+								</copy>
 								<move todir="${project.basedir}/site">
 									<fileset
 										dir="${project.basedir}/site/superstartrek.superstartrek" />
