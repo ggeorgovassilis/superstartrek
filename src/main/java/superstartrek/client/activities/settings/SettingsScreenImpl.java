@@ -75,6 +75,10 @@ public class SettingsScreenImpl extends BaseScreen<SettingsPresenter> implements
 	}
 	
 	void selectElementInSet(Set<Element> set, String value) {
+			if (set == null)
+				throw new RuntimeException("Set is null");
+			if (value == null)
+				throw new RuntimeException("Vlaue is null");
 			set.forEach(e->e.setPropertyString("checked", value.equals(e.getAttribute("value")) ? "true" : null));
 	}
 
