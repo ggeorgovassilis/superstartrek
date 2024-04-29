@@ -15,7 +15,7 @@ public class Constants {
 	public final static int ENTERPRISE_DOCKING_VACANCY_RADIUS=2;
 	public final static double ENTERPRISE_IMPULSE_CONSUMPTION = 2;
 	public final static double ENTERPRISE_EVASIVE_MANEUVERS_DAMAGE_MODIFIER = 0.7;
-	public final static double ENTERPRISE_DAMAGE_TORPEDO_LOSS_RATIO = 0.5;
+	public final static double ENTERPRISE_DAMAGE_TORPEDO_LOSS_RATIO = 0.8;
 	public final static double ENTERPRISE_DAMAGE_CONSTANT_IN_AFTER_WARP_GRACE_PERIOD = 0.5;
 	public final static double ENTERPRISE_PHASER_RANGE = 3;
 	public final static double ENTERPRISE_ANTIMATTER_CONSUMPTION_WARP = 2;
