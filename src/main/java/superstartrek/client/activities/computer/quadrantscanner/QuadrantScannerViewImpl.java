@@ -16,7 +16,7 @@ import superstartrek.client.space.Constants;
 
 public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> implements QuadrantScannerView {
 
-	Element[][] buckets = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
+	Element[][] sectors = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 	Element bSelectedSector;
 	List<Element> beamElements = new ArrayList<>();
 	Element eSvgProto;
@@ -28,7 +28,7 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 
 	@Override
 	public void selectSector(int x, int y) {
-		bSelectedSector = buckets[x][y];
+		bSelectedSector = sectors[x][y];
 		bSelectedSector.addClassName("selected");
 	}
 
@@ -39,7 +39,7 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 
 	@Override
 	public void updateSector(int x, int y, String content, String css) {
-		Element b = buckets[x][y];
+		Element b = sectors[x][y];
 		b.setInnerHTML(content);
 		b.setClassName(css);
 	}
@@ -61,11 +61,11 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 				eSector.setAttribute("data-uih", "");
 				eSector.getStyle().setLeft(RELATIVE_WIDTH * (double) x, Unit.PCT);
 				eSector.getStyle().setTop(RELATIVE_HEIGHT * (double) y, Unit.PCT);
-				buckets[x][y] = eSector;
+				sectors[x][y] = eSector;
 				eMatrix.appendChild(eSector);
 			}
 		}
-		bSelectedSector = buckets[0][0];
+		bSelectedSector = sectors[0][0];
 		eSvgProto = presenter.getApplication().browserAPI.createElementNs("http://www.w3.org/2000/svg", "svg");
 		eSvgProto.setAttribute("width", "100%");
 		eSvgProto.setAttribute("height", "100%");
@@ -77,18 +77,18 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 
 	@Override
 	public void removeCssFromCell(int x, int y, String css) {
-		buckets[x][y].removeClassName(css);
+		sectors[x][y].removeClassName(css);
 	}
 
 	@Override
 	public void addCssToCell(int x, int y, String css) {
-		buckets[x][y].addClassName(css);
+		sectors[x][y].addClassName(css);
 	}
 
 	@Override
 	public void drawBeamBetween(int x1, int y1, int x2, int y2, String colour) {
-		Element e1 = buckets[x1][y1];
-		Element e2 = buckets[x2][y2];
+		Element e1 = sectors[x1][y1];
+		Element e2 = sectors[x2][y2];
 
 		int x1px = e1.getOffsetLeft() + e1.getClientWidth() / 2;
 		int y1px = e1.getOffsetTop() + e1.getClientHeight() / 2;
@@ -111,7 +111,7 @@ public class QuadrantScannerViewImpl extends BaseView<QuadrantScannerPresenter> 
 
 	@Override
 	public void clearSector(int x, int y) {
-		Element b = buckets[x][y];
+		Element b = sectors[x][y];
 		b.setInnerHTML("");
 		b.setClassName("");
 	}
