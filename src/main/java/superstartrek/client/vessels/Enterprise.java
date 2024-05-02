@@ -169,6 +169,11 @@ public class Enterprise extends Vessel
 		return reachableSectors;
 	}
 
+	/*
+	 * Computes range (on impulse), draws a disk of that range around the Enterprise and tries to
+	 * StarMap.walkLine to each sector on that disk. Obstacles interrupt the walk. Caches reachability
+	 * results in visitLog.
+	 */
 	public void updateReachableSectors() {
 		reachableSectors.clear();
 		double range = computeImpulseNavigationRange();
@@ -196,7 +201,7 @@ public class Enterprise extends Vessel
 				StarMap.walkLine(lx, ly, x, y, (x1, y1) -> {
 					if (visitLog[y1][x1] != UNKNOWN)
 						return visitLog[y1][x1] == REACHABLE;
-					// from here on, visitLog is known to be 0
+					// from here on, visitLog is known to be UNKNOWN
 					if (Thing.isVisible(quadrant.findThingAt(x1, y1))) {
 						visitLog[y1][x1] = NOT_REACHABLE;
 						return false;
