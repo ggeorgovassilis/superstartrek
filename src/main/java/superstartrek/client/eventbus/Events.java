@@ -59,4 +59,6 @@ public class Events {
 	public final static Event<ScreenResizeHandler> SCREEN_RESIZES = new Event<>("SCREEN_RESIZES");
 	public final static Event<ActivityChangedHandler> ACTIVITY_CHANGED = new Event<>("ACTIVITY_CHANGED");
 	public final static Event<InteractionHandler> INTERACTION = new Event<>("INTERACTION");
+	public final static Event<ApplicationLifecycleHandler> RELOAD_APP = new Event<>("RELOAD_APP");
+
 }

@@ -36,7 +36,6 @@ import superstartrek.client.control.GameController;
 import superstartrek.client.control.GamePhaseHandler;
 import superstartrek.client.control.ScoreKeeper;
 import superstartrek.client.control.ScoreKeeperImpl;
-import superstartrek.client.eventbus.Commands;
 import superstartrek.client.eventbus.EventBus;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.persistence.GameSaver;
@@ -207,7 +206,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 
 	public void registerEventHandlers() {
 		eventBus.addHandler(Events.GAME_OVER, this);
-		eventBus.addHandler(Commands.RELOAD_APP, this);
+		eventBus.addHandler(Events.RELOAD_APP, this);
 		browserAPI.addWindowResizeHandler((e)->{
 			eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onScreenResize());
 			eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onAfterScreenResize(e.getWidth(), e.getHeight()));
