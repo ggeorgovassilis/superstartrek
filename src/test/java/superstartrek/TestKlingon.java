@@ -50,7 +50,7 @@ public class TestKlingon extends BaseTest{
 				assertEquals(Location.location(0, 4), lTo);
 			}
 		});
-		klingon.repositionKlingon(quadrant);
+		klingon.repositionKlingon();
 		assertEquals(2, bus.getFiredCount(Events.THING_MOVED));
 
 		// a*+ moves a bit strangely; it can move temporarily away from a target (even
@@ -75,7 +75,7 @@ public class TestKlingon extends BaseTest{
 			}
 		});
 
-		klingon.fireOnEnterprise(quadrant);
+		klingon.fireOnEnterprise();
 		assertEquals(1, bus.getFiredCount(Events.AFTER_FIRE));
 	}
 
@@ -96,7 +96,7 @@ public class TestKlingon extends BaseTest{
 			}
 
 		});
-		klingon.flee(quadrant);
+		klingon.flee();
 		assertEquals(1, bus.getFiredCount(Events.THING_MOVED));
 	}
 	
