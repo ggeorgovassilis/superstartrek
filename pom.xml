@@ -19,12 +19,8 @@
 		<skip.gwt>false</skip.gwt>
 		<skip.ant-copy>false</skip.ant-copy>
 		<pushToGit>false</pushToGit>
-		<gwt.disableClassMetadata>false</gwt.disableClassMetadata>
-		<gwt.disableCastChecking>false</gwt.disableCastChecking>
-		<gwt.optimizationLevel>-1</gwt.optimizationLevel>
+		<gwt.optimizationLevel>9</gwt.optimizationLevel>
 		<gwt-maven-plugin.version>2.10.0</gwt-maven-plugin.version>
-		<gwt.methodNameDisplayMode></gwt.methodNameDisplayMode> <!-- use "full"
-		for diagnostings -->
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 
@@ -90,13 +86,9 @@
 			<properties>
 				<gwt.draftCompile>false</gwt.draftCompile>
 				<gwt.module>superstartrek.sst-prod</gwt.module>
-				<gwt.methodNameDisplayMode>NONE</gwt.methodNameDisplayMode>
 				<gwt.saveSource>false</gwt.saveSource>
-				<gwt.style>OBFUSCATED</gwt.style>
 				<skip.deploy>false</skip.deploy>
 				<pushToGit>true</pushToGit>
-				<gwt.disableClassMetadata>true</gwt.disableClassMetadata>
-				<gwt.disableCastChecking>true</gwt.disableCastChecking>
 				<gwt.optimizationLevel>9</gwt.optimizationLevel>
 			</properties>
 			<build>
@@ -248,10 +240,12 @@
 					<optimize>${gwt.optimizationLevel}</optimize>
 					<webappDirectory>${project.basedir}/site</webappDirectory>
 					<compilerArgs>
+						<compilerArg>-nocheckAssertions</compilerArg>
 						<compilerArg>-strict</compilerArg>
 						<compilerArg>-XdisableClassMetadata</compilerArg>
 						<compilerArg>-XdisableCastChecking</compilerArg>
-						<compilerArg>-saveSource</compilerArg>
+						<compilerArg>-compileReport</compilerArg>
+						<!--<compilerArg>-saveSource</compilerArg>-->
 					</compilerArgs>
 				</configuration>
 				<executions>
