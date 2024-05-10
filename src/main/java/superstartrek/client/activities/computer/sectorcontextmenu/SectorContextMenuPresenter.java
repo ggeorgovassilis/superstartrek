@@ -66,6 +66,7 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 		// this is some heavy heuristics, because the menu has a "fixed" size (in em
 		// units)
 		// that's empirical knowledge from the CSS
+		//TODO: compute
 		int menuWidthEm = 8;
 		int menuHeightEm = 5;
 
