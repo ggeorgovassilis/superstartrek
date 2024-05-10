@@ -46,6 +46,8 @@ public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresent
 		removeStyleName("expanded");
 		if (isVisible()) {
 			viewInTransition = true;
+			//reacting to a CSS animationend event would be cleaner, but there's no guarantee
+			//a browser/OS-level accessibility setting wouldn't disable animations and the event would never be cast.
 			Timer.postpone(() -> {
 				viewInTransition = false;
 				SectorContextMenuViewImpl.super.hide();
