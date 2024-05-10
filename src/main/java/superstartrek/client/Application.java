@@ -179,11 +179,11 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	public void setupTheRest() {
 		ScreenTemplatesFactory sc = new ScreenTemplatesFactory();
 		screenTemplates = sc;
+		UiHandler uiHandler = new UiHandler();
+		uiHandler.initialise();
+		setupGameController();
 		sc.initialise((c)->{
-			UiHandler uiHandler = new UiHandler();
-			uiHandler.initialise();
 			setupScreens();
-			setupGameController();
 			startGame();
 		});
 	}
