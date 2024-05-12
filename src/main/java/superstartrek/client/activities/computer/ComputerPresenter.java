@@ -251,10 +251,15 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 
 	@Override
 	public void onUiInteraction(String tag) {
-		if ("cmd_skip".equals(tag))
+		switch(tag) {
+		case "cmd_skip":
 			onSkipButtonClicked();
-		else if ("cmd_toggleShields".equals(tag))
+			break;
+		case "cmd_toggleShields":
 			onToggleShieldsButtonClicked();
+			break;
+		}
+		// no view.hide() because the computer screen is the default view
 	}
 
 }
