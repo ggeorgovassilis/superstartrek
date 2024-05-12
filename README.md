@@ -59,4 +59,7 @@ Domain events extends the `Event` class and represent events that happen in the 
 has the benefit of decoupling events from actions, so that the component which generates an event isn't concerned with who
 reacts to it. Also event-based code is easier to unit test. The main drawback are unintended side effects when a component modifies, as a reaction to an event, shared data structures - other components accessing those data structures may change behaviour based on the change in the shared data structures which makes the event processing order important.  
 
+### UIHandler
 
+The, ill named, UIHandler implements repeatedly used functionality for user interaction. Currently it simplifies the registration
+and consumption of click events. TThe UIHandler listens for click events on the document level, so no special per-element setup is required. The view registers a data-uih attribute on a DOM element (this can be done directly in the HTML template) with a key (string value). When that element is clicked, the UIHandler fires an Events.INTERACTION event with the data-uih value as a parameter. If the data-uih attribute is empty, the element's ID is used. A useful convention: if the data-uih value is of the form string_number_number then the UIHandler.parseCoordinatesFromTag can be used to convert the number pair into a Point instance.
