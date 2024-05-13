@@ -9,7 +9,6 @@ import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.messages.MessageHandler;
 import superstartrek.client.activities.messages.MessagesMixin;
 import superstartrek.client.activities.navigation.NavigationHandler;
-import superstartrek.client.eventbus.EventBus;
 import superstartrek.client.eventbus.EventsMixin;
 import superstartrek.client.space.Constants;
 import superstartrek.client.space.Location;
@@ -30,7 +29,6 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		MessageHandler, EnergyConsumptionHandler, BaseMixin, QuadrantActivationHandler, MessagesMixin, EventsMixin{
 
 	Application application;
-	EventBus events;
 	boolean gameIsRunning = true;
 	boolean startTurnPending = false;
 	boolean endTurnPending = false;
@@ -43,14 +41,8 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 		return application;
 	}
 	
-	@Override
-	public EventBus getEvents() {
-		return events;
-	}
-	
 	public GameController(Application application, ScoreKeeper scoreKeeper) {
 		this.application = application;
-		events = application.eventBus;
 		this.scoreKeeper = scoreKeeper;
 		addHandler(GAME_STARTED);
 		addHandler(GAME_OVER);

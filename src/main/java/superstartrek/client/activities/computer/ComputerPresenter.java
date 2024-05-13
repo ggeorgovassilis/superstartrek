@@ -120,7 +120,7 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	}
 
 	public void onSkipButtonClicked() {
-		getApplication().eventBus.fireEvent(Events.TURN_YIELDED, (h) -> h.onTurnYielded());
+		getEvents().fireEvent(Events.TURN_YIELDED, (h) -> h.onTurnYielded());
 	}
 
 	@Override

@@ -120,9 +120,8 @@ public class PWA {
 
 	public void checkForNewVersion() {
 		log.info("Checking for new version");
-		Application app = application;
-		EventBus eventBus = app.eventBus;
-		String currentBuildNr = app.browserAPI.getAppBuildNr();
+		EventBus eventBus = application.eventBus;
+		String currentBuildNr = application.browserAPI.getAppBuildNr();
 		log.info("Installed app version " + currentBuildNr);
 		eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
 				(h) -> h.installedAppVersionIs(currentBuildNr));
