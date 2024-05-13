@@ -47,6 +47,10 @@ public class EventBus {
 		//A copy makes sure handlers which add/remove other handlers during their invocation
 		//don't mess with invocation order
 		List<T> copy = new ArrayList<T>(protoList);
+		//why not instantiate errors to an empty set and save the null check in catch()? Because errors are not
+		//part of the game flow but are caused by bugs/unforeseen situations and would probably terminate the game
+		//or leave it in a broken state, so in all normal cases we're saving an object instantiation and are not
+		//doing any null checks.
 		Set<Throwable> errors = null;
 		for (T h : copy)
 			try {
