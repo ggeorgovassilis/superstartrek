@@ -27,6 +27,7 @@ public class StarMapSerialiser {
 		this.app = app;
 	}
 
+	// surprisingly, performance profilers don't flag this method as expensive
 	public void serialise(Thing thing) {
 		sb.append("{\"name\":\"" + thing.getName() + "\",");
 		sb.append("\"x\":" + thing.getLocation().x + ",");

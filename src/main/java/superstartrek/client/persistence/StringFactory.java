@@ -11,8 +11,12 @@ import com.google.gwt.core.client.JsArray;
  */
 public class StringFactory {
 
-	// Since the StarMap is fixed size, there's an upper limit of objects in it
-	String[] arr=new String[8000];
+	// Since the StarMap is fixed size, there's an upper limit of objects in it and the serialized size, which
+	// currently (may 2024) is about 50k. Since arrays aren't bound-checked in compiled JS, the
+	// initial capacity doesn't mean anything.
+	
+	// This is an array of strings. Concatenating them produces the final string.
+	String[] arr=new String[100000];
 	int index = 0;
 	int length;
 	String lastString = "";
@@ -39,6 +43,8 @@ public class StringFactory {
 		return lastString.charAt(lastString.length()-1);
 	}
 	
+	//doesn't check for negative length etc because this method is used only in the StarMapSerializer
+	//where such a condition doesn't occur
 	public StringFactory deleteLastCharacter() {
 		arr[index-1] = lastString = lastString.substring(0, lastString.length()-1);
 		length--;
