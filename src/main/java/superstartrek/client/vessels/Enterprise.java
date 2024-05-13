@@ -475,6 +475,7 @@ public class Enterprise extends Vessel
 
 	public void damageTorpedos() {
 		torpedos.damageAndTurnOff(starMap.getStarDate());
+		//TODO: I observed an x.5 value being displayed, which shouldn't be possible because of the floor. Investigate.
 		torpedos.setValue(Math.floor(torpedos.getValue() * Constants.ENTERPRISE_DAMAGE_TORPEDO_LOSS_RATIO));
 		message("Torpedo bay damaged", "enterprise-damaged");
 	}
