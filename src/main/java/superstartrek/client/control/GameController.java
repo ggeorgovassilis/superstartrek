@@ -4,6 +4,8 @@ import static superstartrek.client.eventbus.Events.*;
 
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
+
 import superstartrek.client.Application;
 import superstartrek.client.activities.computer.EnergyConsumptionHandler;
 import superstartrek.client.activities.messages.MessageHandler;
@@ -71,6 +73,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 	
 	@Override
 	public void onGameStarted(StarMap map) {
+		GWT.log("GameController.onGameStarted");
 		if (!gameIsLoading && application.gameSaver.doesSavedGameExist()) {
 			gameIsLoading = true;
 			boolean success = application.gameSaver.loadGame();
@@ -78,6 +81,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 			if (!success)
 				Timer.postpone(()->application.restart());
 			gameIsLoading = false;
+			getApplication().browserAPI.postHistoryChange("computer");
 		}
 	}
 

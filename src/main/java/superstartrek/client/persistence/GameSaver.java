@@ -27,13 +27,12 @@ public class GameSaver {
 
 	public boolean loadGame() {
 		try {
+			GWT.log("GameSaver.loadGame");
 			StarMapDeserialiser deserialiser = new StarMapDeserialiser(app);
 			String json = app.browserAPI.getLocallyStoredValue("savegame");
 			app.eventBus.fireEvent(Events.GAME_RESTART, (h) -> h.beforeGameRestart());
 			StarMap starMap = deserialiser.readStarMap(json);
 			app.starMap = starMap;
-			app.eventBus.fireEvent(Events.GAME_STARTED, (h) -> h.onGameStarted(starMap));
-			app.browserAPI.postHistoryChange("computer");
 			return true;
 		} catch (Exception e) {
 			GWT.log(e.getMessage(), e);
