@@ -14,6 +14,7 @@ import superstartrek.client.activities.appinstallation.AppInstallationEvent;
 import superstartrek.client.activities.pwa.localcache.CacheNOPImpl;
 import superstartrek.client.activities.pwa.localcache.LocalCache;
 import superstartrek.client.activities.pwa.localcache.LocalCacheBrowserImpl;
+import superstartrek.client.eventbus.EventBus;
 import superstartrek.client.eventbus.Events;
 
 public class PWA {
@@ -120,17 +121,18 @@ public class PWA {
 	public void checkForNewVersion() {
 		log.info("Checking for new version");
 		Application app = application;
+		EventBus eventBus = app.eventBus;
 		String currentBuildNr = app.browserAPI.getAppBuildNr();
 		log.info("Installed app version " + currentBuildNr);
-		application.eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
+		eventBus.fireEvent(Events.INFORMING_OF_INSTALLED_VERSION,
 				(h) -> h.installedAppVersionIs(currentBuildNr));
 		getLatestVersionFromServer((latestBuildVersion) -> {
 			boolean isSame = currentBuildNr.equals(latestBuildVersion);
 			log.info("is same: " + isSame);
 			if (isSame)
-				app.eventBus.fireEvent(Events.VERSION_IS_CURRENT, (h) -> h.versionIsCurrent(currentBuildNr));
+				eventBus.fireEvent(Events.VERSION_IS_CURRENT, (h) -> h.versionIsCurrent(currentBuildNr));
 			else
-				app.eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE, (h) -> h.newVersionAvailable(currentBuildNr, latestBuildVersion));
+				eventBus.fireEvent(Events.NEW_VERSION_AVAILABLE, (h) -> h.newVersionAvailable(currentBuildNr, latestBuildVersion));
 		});
 
 	}
