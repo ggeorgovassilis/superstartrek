@@ -231,11 +231,6 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		setupPwa((v) -> setupTheRest());
 	}
 
-	@Override
-	public void appMustReload() {
-		reload();
-	}
-
 	public void setUIScale(String scale) {
 		browserAPI.removeGlobalCss("ui-scale-small");
 		browserAPI.removeGlobalCss("ui-scale-medium");
