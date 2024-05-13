@@ -2,8 +2,6 @@ package superstartrek.client.activities.intro;
 
 import static superstartrek.client.eventbus.Events.*;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.activities.ActivityChangedHandler;
 import superstartrek.client.activities.BasePresenter;
 import superstartrek.client.activities.pwa.ApplicationLifecycleHandler;
@@ -25,7 +23,6 @@ public class IntroPresenter extends BasePresenter<IntroScreen>
 		//ugly hack, but: if it's after the start date, this is a save game reload and the intro can be skipped
 		if (getStarMap().getStarDate()>Constants.START_DATE)
 			return;
-		GWT.log("IntroPresenter.onGameStarted");
 		view.show();
 		getApplication().browserAPI.postHistoryChange("intro");
 	}

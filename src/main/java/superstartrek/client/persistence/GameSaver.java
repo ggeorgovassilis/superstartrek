@@ -1,7 +1,5 @@
 package superstartrek.client.persistence;
 
-import com.google.gwt.core.client.GWT;
-
 import superstartrek.client.Application;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.StarMap;
@@ -27,7 +25,6 @@ public class GameSaver {
 
 	public boolean loadGame() {
 		try {
-			GWT.log("GameSaver.loadGame");
 			StarMapDeserialiser deserialiser = new StarMapDeserialiser(app);
 			String json = app.browserAPI.getLocallyStoredValue("savegame");
 			app.eventBus.fireEvent(Events.GAME_RESTART, (h) -> h.beforeGameRestart());
@@ -35,7 +32,6 @@ public class GameSaver {
 			app.starMap = starMap;
 			return true;
 		} catch (Exception e) {
-			GWT.log(e.getMessage(), e);
 			app.browserAPI.alert("Error while restoring game state. A new game will be started.");
 			return false;
 		}
