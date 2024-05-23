@@ -105,7 +105,7 @@ public class StarMapSerialiser {
 		sb.append("\"type\":\"starbase\",");
 	}
 
-	public void serialise(StarMap map, Quadrant quadrant) {
+	public void serialise(Quadrant quadrant) {
 		sb.append("{");
 		sb.append("\"name\":\"").append(quadrant.getName()).append("\",\n");
 		sb.append("\"x\":").append(quadrant.x).append(",\n");
@@ -133,7 +133,7 @@ public class StarMapSerialiser {
 		sb.append("[");
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
-				serialise(map, map.getQuadrant(x, y));
+				serialise(map.getQuadrant(x, y));
 				if (!(x == Constants.SECTORS_EDGE - 1 && x == y))
 					sb.append(",");
 			}
