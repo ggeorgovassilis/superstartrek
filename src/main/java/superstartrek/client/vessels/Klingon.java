@@ -177,6 +177,9 @@ public class Klingon extends Vessel implements EventsMixin, CombatHandler, GameP
 			uncloak();
 		fireEvent(BEFORE_FIRE, h -> h.onFire(enterprise.getQuadrant(), this, enterprise, Weapon.disruptor,
 				disruptor.getValue(), true, partTarget.none));
+		//Why is there no code between BEFORE_FIRE and AFTER_FIRE? Because damage is "applied" to the
+		//Enterprise in it's beforeFire() handler - this is where the actual damage happens. The afterFire()
+		//handler is used for other functions like updating the UI after damage is applied etc.
 		fireEvent(AFTER_FIRE, h -> h.afterFire(enterprise.getQuadrant(), this, enterprise, Weapon.disruptor,
 				disruptor.getValue(), true));
 	}
