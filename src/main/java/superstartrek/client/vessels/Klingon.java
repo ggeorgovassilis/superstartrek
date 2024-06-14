@@ -227,7 +227,6 @@ public class Klingon extends Vessel implements EventsMixin, CombatHandler, GameP
 	public void destroy() {
 		removeHandler(this);
 		getActiveQuadrant().remove(this);
-		message(getName() + " was destroyed", "klingon-destroyed");
 		fireEvent(KLINGON_DESTROYED, h -> h.onVesselDestroyed(Klingon.this));
 	}
 

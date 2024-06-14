@@ -104,6 +104,7 @@ public class GameController implements GamePhaseHandler, CombatHandler, Navigati
 			return;
 		Klingon klingon = Klingon.as(vessel);
 		getScoreKeeper().addScore(klingon.getXp());
+		message(vessel.getName() + " was destroyed", "klingon-destroyed");
 		if (!application.starMap.hasKlingons()) {
 			gameOver(GameOutcome.won, "All klingons destroyed");
 		}
