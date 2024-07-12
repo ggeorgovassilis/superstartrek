@@ -30,6 +30,8 @@ public class GameSaver {
 			app.eventBus.fireEvent(Events.GAME_RESTART, (h) -> h.beforeGameRestart());
 			StarMap starMap = deserialiser.readStarMap(json);
 			app.starMap = starMap;
+			app.eventBus.fireEvent(Events.GAME_STARTED, (h) -> h.onGameStarted(starMap));
+			app.browserAPI.postHistoryChange("computer");
 			return true;
 		} catch (Exception e) {
 			app.browserAPI.alert("Error while restoring game state. A new game will be started.");
