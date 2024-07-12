@@ -4,7 +4,7 @@ import superstartrek.client.Application;
 import superstartrek.client.eventbus.Events;
 import superstartrek.client.space.StarMap;
 import superstartrek.client.utils.Strings;
-
+//TODO: unit-test
 public class GameSaver {
 
 	Application app;
