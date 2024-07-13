@@ -12,7 +12,7 @@ import superstartrek.client.vessels.Klingon;
 public class Setup {
 
 	public static enum Formations {
-		f1(1, 0), f2(0, 1), f3(5, 0), f4(3, 1), f5(0, 2), f6(0, 3), f7(3, 3);
+		f1(1, 0), f2(0, 1), f3(5, 0), f4(3, 1), f5(0, 2), f6(2, 3), f7(4, 3);
 
 		Formations(int raiders, int birdsOfPrey) {
 			this.raiders = raiders;

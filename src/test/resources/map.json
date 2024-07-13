@@ -75,6 +75,16 @@
 ,{"name":"Class B star","x":7,"y":6,"type":"star","starclass":"B"}
 ,{"name":"Asteroid","x":1,"y":1,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":2,"y":2,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":5,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":1,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":3,"y":3,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":6,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":1,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
 ]},{"name":"Siruis III",
 "x":6,
 "y":0,
@@ -185,8 +195,10 @@
 ,{"name":"Asteroid","x":2,"y":4,"type":"star","starclass":"Asteroid"}
 ,{"name":"Class A star","x":0,"y":1,"type":"star","starclass":"A"}
 ,{"name":"Asteroid","x":4,"y":3,"type":"star","starclass":"Asteroid"}
-,{"name":"a Klingon raider","x":5,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Bird-of-prey","x":5,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":3,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Deneb IV",
 "x":7,
 "y":1,
@@ -205,16 +217,14 @@
 ,{"name":"Class F star","x":1,"y":7,"type":"star","starclass":"F"}
 ,{"name":"Class O star","x":3,"y":1,"type":"star","starclass":"O"}
 ,{"name":"Class O star","x":3,"y":5,"type":"star","starclass":"O"}
-,{"name":"a Klingon raider","x":7,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+,{"name":"a Klingon raider","x":6,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
 "disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":5,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+,{"name":"a Klingon raider","x":2,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
 "disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":3,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+,{"name":"a Klingon raider","x":7,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
 "disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":6,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":0,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Bird-of-prey","x":1,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Procyon II",
 "x":1,
 "y":2,
@@ -256,6 +266,20 @@
 "disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
 ,{"name":"a Bird-of-prey","x":2,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
 "disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Klingon raider","x":3,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":4,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":4,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":6,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Bird-of-prey","x":3,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":1,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":5,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Capella I",
 "x":4,
 "y":2,
@@ -281,8 +305,6 @@
 ,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":1,"y":3,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":4,"y":4,"type":"star","starclass":"Asteroid"}
-,{"name":"a Klingon raider","x":1,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
 ,{"name":"a Federation star base","x":3,"y":3,"type":"starbase"}
 ]},{"name":"Capella III",
 "x":6,
@@ -310,6 +332,16 @@
 ,{"name":"Asteroid","x":6,"y":5,"type":"star","starclass":"Asteroid"}
 ,{"name":"Class O star","x":4,"y":2,"type":"star","starclass":"O"}
 ,{"name":"Class A star","x":5,"y":4,"type":"star","starclass":"A"}
+,{"name":"a Klingon raider","x":5,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":6,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":1,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":5,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":6,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
 ]},{"name":"Vega I",
 "x":0,
 "y":3,
@@ -358,14 +390,6 @@
 ,{"name":"Class B star","x":3,"y":0,"type":"star","starclass":"B"}
 ,{"name":"Class O star","x":6,"y":1,"type":"star","starclass":"O"}
 ,{"name":"Class A star","x":0,"y":6,"type":"star","starclass":"A"}
-,{"name":"a Klingon raider","x":7,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":0,"y":3,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":2,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Bird-of-prey","x":4,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Betelgeuse I",
 "x":4,
 "y":3,
@@ -392,11 +416,15 @@
 ,{"name":"Class O star","x":2,"y":3,"type":"star","starclass":"O"}
 ,{"name":"Class B star","x":4,"y":7,"type":"star","starclass":"B"}
 ,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
-,{"name":"a Bird-of-prey","x":2,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
-,{"name":"a Bird-of-prey","x":7,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Klingon raider","x":2,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":7,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
 ,{"name":"a Bird-of-prey","x":3,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":0,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":6,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
 "disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Betelgeuse IV",
 "x":7,
@@ -413,6 +441,8 @@
 ,{"name":"Class B star","x":1,"y":0,"type":"star","starclass":"B"}
 ,{"name":"Asteroid","x":3,"y":6,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":2,"y":7,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":6,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
 ]},{"name":"Canopus I",
 "x":0,
 "y":4,
@@ -450,18 +480,6 @@
 ,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":7,"y":7,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":5,"y":4,"type":"star","starclass":"Asteroid"}
-,{"name":"a Klingon raider","x":5,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":4,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":3,"y":6,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Bird-of-prey","x":2,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
-,{"name":"a Bird-of-prey","x":1,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
-,{"name":"a Bird-of-prey","x":1,"y":6,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Aldebaran I",
 "x":4,
 "y":4,
@@ -517,12 +535,6 @@
 ,{"name":"Asteroid","x":3,"y":7,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":4,"y":1,"type":"star","starclass":"Asteroid"}
 ,{"name":"Class F star","x":0,"y":4,"type":"star","starclass":"F"}
-,{"name":"a Bird-of-prey","x":1,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
-,{"name":"a Bird-of-prey","x":5,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
-,{"name":"a Bird-of-prey","x":1,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Altair II",
 "x":1,
 "y":5,
@@ -570,18 +582,6 @@
 ,{"name":"Asteroid","x":0,"y":7,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":0,"y":0,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":4,"y":2,"type":"star","starclass":"Asteroid"}
-,{"name":"a Klingon raider","x":0,"y":6,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":7,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":4,"y":5,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":1,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Klingon raider","x":2,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
-"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
-,{"name":"a Bird-of-prey","x":6,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Regolus II",
 "x":5,
 "y":5,
@@ -593,6 +593,8 @@
 ,{"name":"Class A star","x":7,"y":1,"type":"star","starclass":"A"}
 ,{"name":"Asteroid","x":6,"y":0,"type":"star","starclass":"Asteroid"}
 ,{"name":"Class O star","x":1,"y":3,"type":"star","starclass":"O"}
+,{"name":"a Bird-of-prey","x":7,"y":7,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Regolus III",
 "x":6,
 "y":5,
@@ -641,10 +643,6 @@
 ,{"name":"Asteroid","x":4,"y":5,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":2,"y":7,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":2,"y":4,"type":"star","starclass":"Asteroid"}
-,{"name":"a Bird-of-prey","x":7,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
-,{"name":"a Bird-of-prey","x":1,"y":4,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
-"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Saggitarius IV",
 "x":3,
 "y":6,
@@ -655,6 +653,16 @@
 ,{"name":"Asteroid","x":7,"y":5,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":7,"y":7,"type":"star","starclass":"Asteroid"}
 ,{"name":"Asteroid","x":7,"y":6,"type":"star","starclass":"Asteroid"}
+,{"name":"a Klingon raider","x":7,"y":2,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Klingon raider","x":1,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
+,{"name":"a Bird-of-prey","x":0,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":6,"y":0,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
+,{"name":"a Bird-of-prey","x":2,"y":1,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":100.0,"max":100.0,"upperBound":100.0, "broken":false},"type":"klingon",
+"disruptor":{"value":20.0,"max":20.0,"upperBound":20.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":300,"shipclass":"BirdOfPrey"}
 ]},{"name":"Arcturus I",
 "x":4,
 "y":6,
@@ -806,5 +814,7 @@
 ,{"name":"Asteroid","x":1,"y":6,"type":"star","starclass":"Asteroid"}
 ,{"name":"Class A star","x":6,"y":2,"type":"star","starclass":"A"}
 ,{"name":"Class B star","x":5,"y":2,"type":"star","starclass":"B"}
+,{"name":"a Klingon raider","x":0,"y":3,"impulse":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"shields":{"value":50.0,"max":50.0,"upperBound":50.0, "broken":false},"type":"klingon",
+"disruptor":{"value":10.0,"max":10.0,"upperBound":10.0, "broken":false},"cloak":{"value":1.0,"max":1.0,"upperBound":1.0, "broken":false},"xp":100,"shipclass":"Raider"}
 ,{"name":"a Federation star base","x":3,"y":7,"type":"starbase"}
 ]}],"stardate":2100,"score":123}
