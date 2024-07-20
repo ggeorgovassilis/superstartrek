@@ -1,21 +1,30 @@
 package superstartrek.client.screentemplates;
 
 public interface ScreenTemplates {
+	
+	enum TemplateNames{
+		
+		appMenu("templates/app-menu.html"),
+		computer("templates/computer.html"),
+		credits("templates/credits.html"),
+		highscores("templates/highscores.html"),
+		installAppPrompt("templates/install-app-prompt.html"),
+		intro("templates/intro.html"),
+		lrs("templates/lrs.html"),
+		manual("templates/manual.html"),
+		messages("templates/messages.html"),
+		sectorContextMenu("templates/sector-context-menu.html"),
+		settings("templates/settings.html"),
+		statusReport("templates/status-report.html"),
+		updateAppPrompt("templates/update-app-prompt.html");
+		
+		public final String path;
+		TemplateNames(String path){
+			this.path = path;
+		}
+	}
+	//Important: after adding a new template, handle it in ScreenTemplatesFactory#initialise
 
-	String appMenu = "templates/app-menu.html";
-	String computer = "templates/computer.html";
-	String credits = "templates/credits.html";
-	String highscores = "templates/highscores.html";
-	String installAppPrompt = "templates/install-app-prompt.html";
-	String intro = "templates/intro.html";
-	String lrs = "templates/lrs.html";
-	String manual = "templates/manual.html";
-	String messages = "templates/messages.html";
-	String sectorContextMenu = "templates/sector-context-menu.html";
-	String settings = "templates/settings.html";
-	String statusReport = "templates/status-report.html";
-	String updateAppPrompt = "templates/update-app-prompt.html";
-
-	String getTemplateFor(String key);
+	String getTemplateFor(TemplateNames key);
 
 }

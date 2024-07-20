@@ -41,7 +41,7 @@ public class ComputerScreenImpl extends BaseScreen<ComputerPresenter> implements
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
 		addStyleName("computer-screen");
-		getElement().setInnerHTML(templates.getTemplateFor(ScreenTemplates.computer));
+		getElement().setInnerHTML(templates.getTemplateFor(ScreenTemplates.TemplateNames.computer));
 
 		SectorContextMenuPresenter sectorMenuPresenter = new SectorContextMenuPresenter();
 		sectorMenuPresenter.setView(new SectorContextMenuViewImpl(sectorMenuPresenter));

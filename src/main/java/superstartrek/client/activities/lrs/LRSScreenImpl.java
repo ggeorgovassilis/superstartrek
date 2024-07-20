@@ -20,7 +20,7 @@ public class LRSScreenImpl extends BaseScreen<LRSPresenter> implements LRSScreen
 	
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
-		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.lrs));
+		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.TemplateNames.lrs));
 		element.setId("longrangescan");
 		cells = new Element[Constants.SECTORS_EDGE][Constants.SECTORS_EDGE];
 		NodeList<Element> tds = CSS.querySelectorAll("#longrangescan .quadrants td");

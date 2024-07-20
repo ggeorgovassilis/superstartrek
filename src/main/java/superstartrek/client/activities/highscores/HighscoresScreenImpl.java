@@ -17,7 +17,7 @@ public class HighscoresScreenImpl extends BaseScreen<HighscoresPresenter> implem
 
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
-		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.highscores));
+		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.TemplateNames.highscores));
 		addStyleName("highscores-screen");
 		sinkEvents(Event.ONCLICK);
 	}

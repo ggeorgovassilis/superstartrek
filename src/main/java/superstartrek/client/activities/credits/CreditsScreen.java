@@ -14,7 +14,7 @@ public class CreditsScreen extends BaseScreen<CreditsPresenter>{
 
 	@Override
 	protected void decorateScreen(ScreenTemplates templates, Element element) {
-		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.credits));
+		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.TemplateNames.credits));
 	}
 	
 }

@@ -9,13 +9,13 @@ import superstartrek.client.activities.pwa.PWA;
 
 public class ScreenTemplatesFactory implements ScreenTemplates {
 
-	Map<String, String> templates = new HashMap<String, String>();
+	Map<TemplateNames, String> templates = new HashMap<TemplateNames, String>();
 	int outstandingLoads = 0;
 
-	void loadTemplate(String key, Callback<Void> callback) {
+	void loadTemplate(TemplateNames template, Callback<Void> callback) {
 		PWA pwa = Application.get().pwa;
-		pwa.getFileContent(key, (content) -> {
-			templates.put(key, content);
+		pwa.getFileContent(template.path, (content) -> {
+			templates.put(template, content);
 			outstandingLoads--;
 			if (outstandingLoads == 0)
 				callback.onSuccess(null);
@@ -24,17 +24,14 @@ public class ScreenTemplatesFactory implements ScreenTemplates {
 	}
 
 	public void initialise(Callback<Void> callback) {
-		String[] templatesToLoad = { ScreenTemplates.appMenu, ScreenTemplates.computer, ScreenTemplates.credits,
-				ScreenTemplates.highscores, ScreenTemplates.installAppPrompt, ScreenTemplates.intro, ScreenTemplates.lrs,
-				ScreenTemplates.manual, ScreenTemplates.messages, ScreenTemplates.sectorContextMenu,
-				ScreenTemplates.settings, ScreenTemplates.statusReport, ScreenTemplates.updateAppPrompt };
-		outstandingLoads = templatesToLoad.length;
-		for (String template:templatesToLoad)
+		TemplateNames[] enums = TemplateNames.values();
+		outstandingLoads = enums.length;
+		for (TemplateNames template:enums)
 			loadTemplate(template, callback);
 	}
 
 	@Override
-	public String getTemplateFor(String key) {
+	public String getTemplateFor(TemplateNames key) {
 		return templates.get(key);
 	}
 

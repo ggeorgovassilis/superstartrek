@@ -33,19 +33,19 @@ class FilesToCache {
 			"images/missile.svg",
 			"images/dock.svg",
 			"images/qr-code.svg",
-			ScreenTemplates.appMenu,
-			ScreenTemplates.computer,
-			ScreenTemplates.credits,
-			ScreenTemplates.highscores,
-			ScreenTemplates.installAppPrompt,
-			ScreenTemplates.intro,
-			ScreenTemplates.lrs,
-			ScreenTemplates.manual,
-			ScreenTemplates.messages,
-			ScreenTemplates.sectorContextMenu,
-			ScreenTemplates.settings,
-			ScreenTemplates.statusReport,
-			ScreenTemplates.updateAppPrompt
+			ScreenTemplates.TemplateNames.appMenu.path,
+			ScreenTemplates.TemplateNames.computer.path,
+			ScreenTemplates.TemplateNames.credits.path,
+			ScreenTemplates.TemplateNames.highscores.path,
+			ScreenTemplates.TemplateNames.installAppPrompt.path,
+			ScreenTemplates.TemplateNames.intro.path,
+			ScreenTemplates.TemplateNames.lrs.path,
+			ScreenTemplates.TemplateNames.manual.path,
+			ScreenTemplates.TemplateNames.messages.path,
+			ScreenTemplates.TemplateNames.sectorContextMenu.path,
+			ScreenTemplates.TemplateNames.settings.path,
+			ScreenTemplates.TemplateNames.statusReport.path,
+			ScreenTemplates.TemplateNames.updateAppPrompt.path
 			//@formatter:on
 };
 
