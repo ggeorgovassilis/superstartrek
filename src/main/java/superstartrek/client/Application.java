@@ -157,7 +157,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 	}
 
 	public void reload() {
-		browserAPI.reloadApplication();
+		Timer.postpone(()->browserAPI.reloadApplication());
 	}
 
 	public void restart() {
