@@ -82,11 +82,21 @@ public class SettingsPresenter extends BasePresenter<SettingsScreen>
 	public void newVersionAvailable(String currentVersion, String newVersion) {
 		setUpdateCheckButtonEnabled(true);
 	}
+	
+	void onClearCacheButtonClicked(){
+		getApplication().pwa.clearCache(() -> getApplication().reload());
+	}
 
 	@Override
 	public void onUiInteraction(String tag) {
-		if ("cmd_check_for_updates_2".equals(tag))
+		switch(tag) {
+		case "cmd_check_for_updates_2":
 			onCheckForUpdatesButtonClicked();
+			break;
+		case "cmd_clear_cache":
+			onClearCacheButtonClicked();
+			break;
+		}
 	}
 
 }

@@ -199,4 +199,13 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 		return Document.get().getElementById("appBuildNr").getAttribute("content");
 	}
 
+	private static native Void _log(Object message)/*-{
+	    console.log(message);
+	}-*/;
+	
+	@Override
+	public Void log(Object message) {
+		return _log(message);
+	}
+
 }

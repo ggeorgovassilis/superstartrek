@@ -13,6 +13,7 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import superstartrek.client.activities.pwa.Callback;
 import superstartrek.client.activities.pwa.http.RequestFactory;
+import superstartrek.client.activities.pwa.promise.GatePromiseImpl;
 import superstartrek.client.activities.pwa.promise.Promise;
 
 public class CacheNOPImpl implements LocalCache{
@@ -30,8 +31,9 @@ public class CacheNOPImpl implements LocalCache{
 			}
 			
 			@Override
-			public Promise<Boolean>[] all(Promise<Boolean>[] promises) {
-				return promises;
+			public Promise<Boolean> all(Promise<Boolean>[] promises) {
+				Promise<Boolean> gatePromise = new GatePromiseImpl<Boolean>();
+				return gatePromise.all(promises);
 			}
 		};
 	}
