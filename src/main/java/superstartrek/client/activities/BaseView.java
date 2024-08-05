@@ -1,5 +1,6 @@
 package superstartrek.client.activities;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -55,6 +56,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 			int contentHeight = getOffsetHeight();
 			int windowHeight = application().browserAPI.getWindowHeightPx();
 			int margin = Math.max(0, windowHeight - contentHeight);
+			GWT.log("Layout "+GWT.getTypeName(this)+" "+ windowHeight+" , "+contentHeight);
 			getElement().getStyle().setMarginTop(margin, Unit.PX);
 		}
 	}
