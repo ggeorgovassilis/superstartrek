@@ -193,6 +193,10 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		Timer.postpone(() -> {
 			starMap.enterprise.warpTo(starMap.enterprise.getQuadrant(), null);
 			gameController.startGame();
+			//there's a weird behavior in Chromium 127 (possibly others) where on load, the entire
+			//page is glued to the bottom which requires a full scroll. After a window resize,
+			//the issue is fixed. Probably a bug in the screen orientation feature.
+			fireWindowResizeEvent(browserAPI.getWindowWidthPx(), browserAPI.getWindowHeightPx());
 			// null out so that resources can be garbage collected; by now everyone who
 			// needs them during initialisation has gotten them already
 			screenTemplates = null;
@@ -203,15 +207,19 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		pwa = new PWA(this);
 		pwa.run(callback);
 	}
+	
+	public void fireWindowResizeEvent(int width, int height) {
+		eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onScreenResize());
+		eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onAfterScreenResize(width, height));
+	}
 
 	public void registerEventHandlers() {
 		eventBus.addHandler(Events.GAME_OVER, this);
 		eventBus.addHandler(Events.RELOAD_APP, this);
-		browserAPI.addWindowResizeHandler((e)->{
-			eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onScreenResize());
-			eventBus.fireEvent(Events.SCREEN_RESIZES, h->h.onAfterScreenResize(e.getWidth(), e.getHeight()));
-		});
 		browserAPI.addHistoryHandler(event->eventBus.fireEvent(Events.ACTIVITY_CHANGED, h->h.onActivityChanged(event.getValue())));
+		browserAPI.addWindowResizeHandler((e)->{
+			fireWindowResizeEvent(e.getWidth(), e.getHeight());
+		});
 	}
 
 	public void setupGameSaver() {
