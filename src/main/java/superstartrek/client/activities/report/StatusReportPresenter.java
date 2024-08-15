@@ -19,8 +19,10 @@ public class StatusReportPresenter extends BasePresenter<StatusReportView> imple
 				enterprise.getShields().percentageHealth() < 100);
 		view.setProperty("report_phaser_power", "%" + Math.floor(enterprise.getPhasers().percentageHealth()),
 				enterprise.getPhasers().percentageHealth() < 100);
-		view.setProperty("report_torpedos", "" + (enterprise.getTorpedos().getValue()),
-				enterprise.getTorpedos().getValue() == 0);
+		view.setProperty("report_torpedos",
+				"" + (enterprise.getTorpedos().getValue() + " ("
+						+ (enterprise.getTorpedos().isOperational() ? "online" : "offline") + ")"),
+				!enterprise.getTorpedos().isOperational());
 		view.setProperty("report_energy", "" + Math.floor(enterprise.getAntimatter().getValue()),
 				enterprise.getAntimatter().getValue() < 100);
 		view.setProperty("report_reactor", "%" + (Math.floor(enterprise.getReactor().percentageHealth())),
