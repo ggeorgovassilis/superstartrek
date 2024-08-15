@@ -35,14 +35,14 @@ public class Enterprise extends Vessel
 	}
 
 	ShieldDirection shieldDirection = ShieldDirection.omni;
-	Setting phasers = new Setting(Constants.ENTERPRISE_PHASER_CAPACITY);
-	Setting torpedos = new Setting(Constants.ENTERPRISE_TORPEDO_COUNT);
-	Setting antimatter = new Setting(Constants.ENTERPRISE_ANTIMATTER);
-	Setting reactor = new Setting(Constants.ENTERPRISE_REACTOR_CAPACITY);
-	Setting autoAim = new Setting(1);
-	Setting lrs = new Setting(1);
-	Setting warpDrive = new Setting(1);
-	Setting evasiveManeuvers = new Setting(1, 0);
+	public final Setting phasers = new Setting(Constants.ENTERPRISE_PHASER_CAPACITY);
+	public final Setting torpedos = new Setting(Constants.ENTERPRISE_TORPEDO_COUNT);
+	public final Setting antimatter = new Setting(Constants.ENTERPRISE_ANTIMATTER);
+	public final Setting reactor = new Setting(Constants.ENTERPRISE_REACTOR_CAPACITY);
+	public final Setting autoAim = new Setting(1);
+	public final Setting lrs = new Setting(1);
+	public final Setting warpDrive = new Setting(1);
+	public final Setting evasiveManeuvers = new Setting(1, 0);
 	boolean toggledShieldsThisTurn = false;
 
 	Application application;
@@ -52,40 +52,12 @@ public class Enterprise extends Vessel
 
 	int turnsSinceWarp = 0;
 
-	public Setting getLrs() {
-		return lrs;
-	}
-
 	public Quadrant getQuadrant() {
 		return quadrant;
 	}
 
 	public void setQuadrant(Quadrant quadrant) {
 		this.quadrant = quadrant;
-	}
-
-	public Setting getReactor() {
-		return reactor;
-	}
-
-	public Setting getPhasers() {
-		return phasers;
-	}
-
-	public Setting getTorpedos() {
-		return torpedos;
-	}
-
-	public Setting getAutoAim() {
-		return autoAim;
-	}
-
-	public Setting getWarpDrive() {
-		return warpDrive;
-	}
-
-	public Setting getEvasiveManeuvers() {
-		return evasiveManeuvers;
 	}
 
 	@Override
@@ -265,7 +237,7 @@ public class Enterprise extends Vessel
 		// Also, a game-play-friendly side effect is that a minimum of maneuverability
 		// even with a damaged reactor is possible.
 		double vimp = impulse.isOperational() ? impulse.getValue() : 0;
-		return Math.min(vimp, Math.sqrt(getReactor().getValue() / Constants.ENTERPRISE_IMPULSE_CONSUMPTION));
+		return Math.min(vimp, Math.sqrt(reactor.getValue() / Constants.ENTERPRISE_IMPULSE_CONSUMPTION));
 	}
 
 	public double computeConsumptionForWarp(Quadrant from, Quadrant to) {
@@ -284,7 +256,7 @@ public class Enterprise extends Vessel
 		}
 		List<Thing> things = StarMap.findObstaclesInLine(getQuadrant(), getLocation(), sector, Constants.SECTORS_EDGE);
 		things.remove(this);
-		getTorpedos().decrease(1);
+		torpedos.decrease(1);
 		Thing target = null;
 		double damage = 50;
 		BrowserAPI browser = application.browserAPI;
@@ -548,9 +520,9 @@ public class Enterprise extends Vessel
 	}
 
 	public boolean consume(String what, double value) {
-		if (getReactor().getValue() < value)
+		if (reactor.getValue() < value)
 			return false;
-		getReactor().decrease(value);
+		reactor.decrease(value);
 		// TODO: re-evaluate antimatter consumption for impulse movement. is this
 		// already covered with reactor consumption?
 		getAntimatter().decrease(value);
@@ -559,7 +531,7 @@ public class Enterprise extends Vessel
 	}
 
 	public double computeEnergyConsumption() {
-		double consumptionFromEvasiveManeuvers = getEvasiveManeuvers().getBooleanValue() ? 1 : 0;
+		double consumptionFromEvasiveManeuvers = evasiveManeuvers.getBooleanValue() ? 1 : 0;
 		double consumptionFromShields = (getShields().getValue() + 1.0)
 				* Constants.ENTERPRISE_SHIELD_CONSUMPTION_FACTOR;
 		double consumption = consumptionFromEvasiveManeuvers + consumptionFromShields;
@@ -595,7 +567,7 @@ public class Enterprise extends Vessel
 	}
 
 	public void toggleAutoAim() {
-		autoAim.setValue(!getAutoAim().getBooleanValue() && getAutoAim().isOperational());
+		autoAim.setValue(!autoAim.getBooleanValue() && autoAim.isOperational());
 	}
 
 	public double computeDirectionalShieldEfficiency(ShieldDirection sd, Location location) {

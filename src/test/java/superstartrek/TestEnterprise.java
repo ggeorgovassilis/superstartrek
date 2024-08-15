@@ -38,7 +38,7 @@ public class TestEnterprise extends BaseTest {
 
 		enterprise.damageTorpedos();
 
-		assertFalse(enterprise.getTorpedos().isOperational());
+		assertFalse(enterprise.torpedos.isOperational());
 		verify(handler).messagePosted(eq("Torpedo bay damaged"), eq("enterprise-damaged"));
 	}
 
@@ -48,17 +48,17 @@ public class TestEnterprise extends BaseTest {
 		bus.addHandler(Events.MESSAGE_POSTED, handler);
 
 		enterprise.damagePhasers();
-		assertTrue(enterprise.getPhasers().isOperational());
-		assertEquals(21, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
+		assertTrue(enterprise.phasers.isOperational());
+		assertEquals(21, enterprise.phasers.getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
-		assertTrue(enterprise.getPhasers().isOperational());
-		assertEquals(12, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
+		assertTrue(enterprise.phasers.isOperational());
+		assertEquals(12, enterprise.phasers.getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
-		assertTrue(enterprise.getPhasers().isOperational());
-		assertEquals(3, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
+		assertTrue(enterprise.phasers.isOperational());
+		assertEquals(3, enterprise.phasers.getCurrentUpperBound(), 0.1);
 		enterprise.damagePhasers();
-		assertEquals(0, enterprise.getPhasers().getCurrentUpperBound(), 0.1);
-		assertFalse(enterprise.getPhasers().isOperational());
+		assertEquals(0, enterprise.phasers.getCurrentUpperBound(), 0.1);
+		assertFalse(enterprise.phasers.isOperational());
 		verify(handler, times(4)).messagePosted(eq("Phaser banks damaged"), eq("enterprise-damaged"));
 	}
 
@@ -219,7 +219,7 @@ public class TestEnterprise extends BaseTest {
 		bus.addHandler(Events.BEFORE_FIRE, handler);
 		bus.addHandler(Events.MESSAGE_POSTED, messageHandler);
 
-		enterprise.getReactor().setValue(0);
+		enterprise.reactor.setValue(0);
 
 		assertEquals(100, klingon.getShields().getValue(), 0.1);
 		enterprise.firePhasersAt(klingon.getLocation(), false, partTarget.none);
@@ -360,12 +360,12 @@ public class TestEnterprise extends BaseTest {
 	@Test
 	public void test_dock_with_starbase() {
 		enterprise.setLocation(Location.location(1, 1));
-		enterprise.getPhasers().damage(10, starMap.getStarDate());
+		enterprise.phasers.damage(10, starMap.getStarDate());
 		enterprise.getAntimatter().decrease(10);
-		enterprise.getTorpedos().damage(1, starMap.getStarDate());
+		enterprise.torpedos.damage(1, starMap.getStarDate());
 		enterprise.getImpulse().damage(1, starMap.getStarDate());
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
-		enterprise.getEvasiveManeuvers().setValue(true);
+		enterprise.evasiveManeuvers.setValue(true);
 
 		bus.addHandler(Events.THING_MOVED, new NavigationHandler() {
 
@@ -386,13 +386,13 @@ public class TestEnterprise extends BaseTest {
 		assertEquals(Location.location(4, 4), enterprise.getLocation());
 
 		assertEquals(1, bus.getFiredCount(Events.ENTERPRISE_REPAIRED));
-		assertEquals(enterprise.getTorpedos().getMaximum(), enterprise.getTorpedos().getValue(), 0.1);
-		assertFalse(enterprise.getEvasiveManeuvers().getBooleanValue());
+		assertEquals(enterprise.torpedos.getMaximum(), enterprise.torpedos.getValue(), 0.1);
+		assertFalse(enterprise.evasiveManeuvers.getBooleanValue());
 	}
 
 	@Test
 	public void test_applyDamage() {
-		assertFalse(enterprise.getEvasiveManeuvers().getBooleanValue());
+		assertFalse(enterprise.evasiveManeuvers.getBooleanValue());
 		when(browser.randomDouble()).thenReturn(1.0);
 		assertEquals(60, enterprise.getShields().getValue(), 0.1);
 		enterprise.applyDamage(30);
@@ -401,8 +401,8 @@ public class TestEnterprise extends BaseTest {
 
 	@Test
 	public void test_applyDamage_with_evasive_maneuvers() {
-		enterprise.getEvasiveManeuvers().setValue(true);
-		assertTrue(enterprise.getEvasiveManeuvers().getBooleanValue());
+		enterprise.evasiveManeuvers.setValue(true);
+		assertTrue(enterprise.evasiveManeuvers.getBooleanValue());
 		when(browser.randomDouble()).thenReturn(1.0);
 		assertEquals(60, enterprise.getShields().getValue(), 0.1);
 		enterprise.applyDamage(30);
@@ -544,9 +544,9 @@ public class TestEnterprise extends BaseTest {
 	
 	@Test
 	public void test_energy_consumption() {
-		assertEquals(50.0, enterprise.getReactor().getValue(), 1.0);
+		assertEquals(50.0, enterprise.reactor.getValue(), 1.0);
 		assertEquals(4.88, enterprise.computeEnergyConsumption(), 1.0);
-		enterprise.getEvasiveManeuvers().setValue(true);
+		enterprise.evasiveManeuvers.setValue(true);
 		assertEquals(5.8, enterprise.computeEnergyConsumption(), 1.0);
 	}
 }

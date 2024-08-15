@@ -41,7 +41,7 @@ public class TestComputerPresenter extends BaseTest{
 	@Test
 	public void testOnPlayerTurnStarted_2() {
 		enterprise.setLocation(Location.location(1, 1));
-		enterprise.getPhasers().damage(10, starMap.getStarDate());
+		enterprise.phasers.damage(10, starMap.getStarDate());
 		quadrant.setStarBase(new StarBase(Location.location(3, 3)));
 		presenter.onPlayerTurnStarted();
 		verify(view).showStarDate("2100");
@@ -91,8 +91,8 @@ public class TestComputerPresenter extends BaseTest{
 
 	@Test
 	public void test_statusButtonView() {
-		enterprise.getTorpedos().damageAndTurnOff(starMap.getStarDate());
-		enterprise.getPhasers().damage(10, starMap.getStarDate());
+		enterprise.torpedos.damageAndTurnOff(starMap.getStarDate());
+		enterprise.phasers.damage(10, starMap.getStarDate());
 		presenter.updateStatusButtonView();
 		verify(view).updateShortStatus("", "", "damaged damage-medium", "damage-offline");
 	}

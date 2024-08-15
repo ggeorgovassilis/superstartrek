@@ -30,9 +30,9 @@ public class TestAppMenuPresenter extends BaseTest {
 
 		when(view.isVisible()).thenReturn(true);
 
-		assertTrue(application.starMap.enterprise.getAutoAim().getBooleanValue());
+		assertTrue(application.starMap.enterprise.autoAim.getBooleanValue());
 		presenter.onMenuItemClicked("cmd_autoaim");
-		assertFalse(application.starMap.enterprise.getAutoAim().isOperational());
+		assertFalse(application.starMap.enterprise.autoAim.isOperational());
 		verify(view).setMenuEntryEnabled("cmd_autoaim", false);
 		verify(view).hide();
 		
@@ -54,7 +54,7 @@ public class TestAppMenuPresenter extends BaseTest {
 		when(view.isVisible()).thenReturn(true);
 
 		Enterprise enterprise = application.starMap.enterprise;
-		Setting evasiveManeuvers = enterprise.getEvasiveManeuvers();
+		Setting evasiveManeuvers = enterprise.evasiveManeuvers;
 		assertFalse(evasiveManeuvers.getBooleanValue());
 		presenter.onMenuItemClicked("cmd_evasive_maneuvers");
 		assertTrue(evasiveManeuvers.isOperational());

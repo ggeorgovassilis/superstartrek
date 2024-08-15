@@ -18,10 +18,10 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	}
 
 	public void updateCommands() {
-		Setting autoAim = getEnterprise().getAutoAim();
+		Setting autoAim = getEnterprise().autoAim;
 		view.setMenuEntryEnabled("cmd_autoaim", autoAim.isOperational());
 
-		Setting evasiveManeuvers = getEnterprise().getEvasiveManeuvers();
+		Setting evasiveManeuvers = getEnterprise().evasiveManeuvers;
 		view.setMenuEntryEnabled("cmd_evasive_maneuvers", evasiveManeuvers.isOperational());
 	}
 
@@ -44,12 +44,12 @@ public class AppMenuPresenter extends BasePresenter<AppMenuView>
 	}
 
 	public void toggleAutoAim() {
-		Setting autoaim = getEnterprise().getAutoAim();
+		Setting autoaim = getEnterprise().autoAim;
 		autoaim.setValue(!autoaim.isBroken() && !autoaim.getBooleanValue());
 	}
 
 	public void toggleEvasiveManeuvers() {
-		Setting evasiveManeuvers = getEnterprise().getEvasiveManeuvers();
+		Setting evasiveManeuvers = getEnterprise().evasiveManeuvers;
 		boolean b1 = !evasiveManeuvers.isBroken();
 		boolean b2 = !evasiveManeuvers.getBooleanValue();
 		evasiveManeuvers.setValue(b1 && b2);

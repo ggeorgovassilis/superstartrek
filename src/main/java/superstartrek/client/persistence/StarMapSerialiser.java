@@ -50,22 +50,22 @@ public class StarMapSerialiser {
 	public void subserialise(Enterprise enterprise) {
 		sb.append("\"type\":\"enterprise\",");
 		sb.append("\"phasers\":");
-		subserialise(enterprise.getPhasers());
+		subserialise(enterprise.phasers);
 		sb.append(",");
 		sb.append("\"torpedos\":");
-		subserialise(enterprise.getTorpedos());
+		subserialise(enterprise.torpedos);
 		sb.append(",");
 		sb.append("\"antimatter\":");
 		subserialise(enterprise.getAntimatter());
 		sb.append(",");
 		sb.append("\"autoaim\":");
-		subserialise(enterprise.getAutoAim());
+		subserialise(enterprise.autoAim);
 		sb.append(",");
 		sb.append("\"lrs\":");
-		subserialise(enterprise.getLrs());
+		subserialise(enterprise.lrs);
 		sb.append(",");
 		sb.append("\"reactor\":");
-		subserialise(enterprise.getReactor());
+		subserialise(enterprise.reactor);
 		sb.append(",");
 		sb.append("\"shieldsDirection\":\"").append(enterprise.getShieldDirection().toString()).append("\",");
 	}

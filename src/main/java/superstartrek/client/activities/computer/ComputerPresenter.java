@@ -71,12 +71,12 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 	public void updateStatusButtonView() {
 		Enterprise enterprise = getEnterprise();
 		String cssImpulse = damageClass(enterprise.getImpulse(), true);
-		String cssTactical = damageClass(enterprise.getAutoAim(), true);
-		String cssPhasers = damageClass(enterprise.getPhasers(), true);
-		String cssTorpedos = damageClass(enterprise.getTorpedos(), enterprise.getTorpedos().getValue() >= 1);
+		String cssTactical = damageClass(enterprise.autoAim, true);
+		String cssPhasers = damageClass(enterprise.phasers, true);
+		String cssTorpedos = damageClass(enterprise.torpedos, enterprise.torpedos.getValue() >= 1);
 		view.updateShortStatus(cssImpulse, cssTactical, cssPhasers, cssTorpedos);
-		view.updateTorpedoLabel("Torpedos " + enterprise.getTorpedos().getValue());
-		if (enterprise.getLrs().isOperational())
+		view.updateTorpedoLabel("Torpedos " + enterprise.torpedos.getValue());
+		if (enterprise.lrs.isOperational())
 			view.enableLlrsButton();
 		else
 			view.disableLrsButton();
@@ -171,7 +171,7 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 		switch (code) {
 		case 'l':
 		case 'L':
-			if (getEnterprise().getLrs().isOperational())
+			if (getEnterprise().lrs.isOperational())
 				getApplication().browserAPI.postHistoryChange("longrangescan");
 			break;
 		case 's':
@@ -212,8 +212,8 @@ public class ComputerPresenter extends BasePresenter<ComputerScreen>
 			} else if (Enterprise.is(thing)) {
 				Enterprise e = vessel.as();
 				view.setScanProperty("scan-report-weapons", "scan-report-weapons-value",
-						e.getPhasers().isOperational() ? "" : "damage-offline",
-						e.getPhasers().isOperational() ? "online" : "offline");
+						e.phasers.isOperational() ? "" : "damage-offline",
+						e.phasers.isOperational() ? "online" : "offline");
 			}
 			view.setScanProperty("scan-report-engines", "scan-report-engines-value",
 					vessel.getImpulse().isOperational() ? "" : "damage-offline",

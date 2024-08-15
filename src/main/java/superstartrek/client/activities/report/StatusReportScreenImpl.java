@@ -5,7 +5,7 @@ import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 
-public class StatusReportScreenImpl extends BaseScreen<StatusReportPresenter>{
+public class StatusReportScreenImpl extends BaseScreen<StatusReportPresenter> implements StatusReportScreen{
 
 	
 	@Override
@@ -18,6 +18,7 @@ public class StatusReportScreenImpl extends BaseScreen<StatusReportPresenter>{
 		super(p);
 	}
 	
+	@Override
 	public void setProperty(String property, String value, boolean highlight) {
 		Element e = getElementById(property);
 		e.setInnerText(value);
@@ -26,6 +27,7 @@ public class StatusReportScreenImpl extends BaseScreen<StatusReportPresenter>{
 			e.addClassName("highlight");
 	}
 	
+	@Override
 	public void setOverlay(String overlay, String status) {
 		CSS.querySelectorAll("#enterprise-schematics ."+overlay).getItem(0).setClassName(overlay+" overlay "+status);
 	}

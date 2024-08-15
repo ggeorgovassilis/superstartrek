@@ -52,8 +52,8 @@ public class LRSPresenter extends BasePresenter<LRSScreen> implements ActivityCh
 		StarMap starMap = getStarMap();
 		Enterprise enterprise = getEnterprise();
 		Quadrant qEnterprise = enterprise.getQuadrant();
-		boolean doesWarpdriveWork = enterprise.getWarpDrive().isOperational();
-		double reactor = enterprise.getReactor().getValue();
+		boolean doesWarpdriveWork = enterprise.warpDrive.isOperational();
+		double reactor = enterprise.reactor.getValue();
 		for (int y = 0; y < Constants.SECTORS_EDGE; y++)
 			for (int x = 0; x < Constants.SECTORS_EDGE; x++) {
 				Quadrant quadrant = starMap.getQuadrant(x, y);

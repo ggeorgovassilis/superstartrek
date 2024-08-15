@@ -59,7 +59,7 @@ public class SectorContextMenuPresenter extends BasePresenter<SectorContextMenuV
 		buttonsEnabled.put(cmd_precision_weapons, canFirePhaserAt);
 		buttonsEnabled.put(cmd_precision_propulsion, canFirePhaserAt);
 		buttonsEnabled.put(cmd_fireTorpedos,
-				enterprise.getTorpedos().isOperational() && enterprise.getTorpedos().getValue() >= 1);
+				enterprise.torpedos.isOperational() && enterprise.torpedos.getValue() >= 1);
 		buttonsEnabled.keySet().forEach(cmd->view.enableButton(cmd, buttonsEnabled.get(cmd)));
 		// if the menu is too close to the screen borders it might be cut off and not
 		// all buttons are visible

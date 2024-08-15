@@ -165,11 +165,11 @@ class StarMapDeserialiser {
 		Enterprise e = new Enterprise(app, app.starMap);
 		readVessel(jsThing, e);
 		readSetting(jsThing.get("antimatter"), e.getAntimatter());
-		readSetting(jsThing.get("autoaim"), e.getAutoAim());
-		readSetting(jsThing.get("lrs"), e.getLrs());
-		readSetting(jsThing.get("phasers"), e.getPhasers());
-		readSetting(jsThing.get("reactor"), e.getReactor());
-		readSetting(jsThing.get("torpedos"), e.getTorpedos());
+		readSetting(jsThing.get("autoaim"), e.autoAim);
+		readSetting(jsThing.get("lrs"), e.lrs);
+		readSetting(jsThing.get("phasers"), e.phasers);
+		readSetting(jsThing.get("reactor"), e.reactor);
+		readSetting(jsThing.get("torpedos"), e.torpedos);
 		e.setShieldDirection(ShieldDirection.valueOf(_string(jsThing, "shieldsDirection")));
 		return e;
 	}

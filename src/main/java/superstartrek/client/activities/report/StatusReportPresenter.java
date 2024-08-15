@@ -17,30 +17,30 @@ public class StatusReportPresenter extends BasePresenter<StatusReportScreen> imp
 				enterprise.getImpulse().percentageHealth() < 100);
 		view.setProperty("report_shields", "%" + Math.floor(enterprise.getShields().percentageHealth()),
 				enterprise.getShields().percentageHealth() < 100);
-		view.setProperty("report_phaser_power", "%" + Math.floor(enterprise.getPhasers().percentageHealth()),
-				enterprise.getPhasers().percentageHealth() < 100);
+		view.setProperty("report_phaser_power", "%" + Math.floor(enterprise.phasers.percentageHealth()),
+				enterprise.phasers.percentageHealth() < 100);
 		view.setProperty("report_torpedos",
-				"" + (enterprise.getTorpedos().getValue() + " ("
-						+ (enterprise.getTorpedos().isOperational() ? "online" : "offline") + ")"),
-				!enterprise.getTorpedos().isOperational());
+				"" + (enterprise.torpedos.getValue() + " ("
+						+ (enterprise.torpedos.isOperational() ? "online" : "offline") + ")"),
+				!enterprise.torpedos.isOperational());
 		view.setProperty("report_energy", "" + Math.floor(enterprise.getAntimatter().getValue()),
 				enterprise.getAntimatter().getValue() < 100);
-		view.setProperty("report_reactor", "%" + (Math.floor(enterprise.getReactor().percentageHealth())),
-				enterprise.getReactor().percentageHealth() < 100);
-		view.setProperty("report_reactor_remaining", Math.floor(enterprise.getReactor().getValue()) + " / "
-				+ Math.floor(enterprise.getReactor().getCurrentUpperBound()), false);
-		view.setProperty("report_tactical_computer", enterprise.getAutoAim().isOperational() ? "online" : "offline",
-				!enterprise.getAutoAim().isOperational());
-		view.setProperty("report_LRS", enterprise.getLrs().isOperational() ? "online" : "offline",
-				!enterprise.getLrs().isOperational());
-		view.setProperty("report_warp", enterprise.getWarpDrive().isOperational() ? "online" : "offline",
-				!enterprise.getWarpDrive().isOperational());
+		view.setProperty("report_reactor", "%" + (Math.floor(enterprise.reactor.percentageHealth())),
+				enterprise.reactor.percentageHealth() < 100);
+		view.setProperty("report_reactor_remaining", Math.floor(enterprise.reactor.getValue()) + " / "
+				+ Math.floor(enterprise.reactor.getCurrentUpperBound()), false);
+		view.setProperty("report_tactical_computer", enterprise.autoAim.isOperational() ? "online" : "offline",
+				!enterprise.autoAim.isOperational());
+		view.setProperty("report_LRS", enterprise.lrs.isOperational() ? "online" : "offline",
+				!enterprise.lrs.isOperational());
+		view.setProperty("report_warp", enterprise.warpDrive.isOperational() ? "online" : "offline",
+				!enterprise.warpDrive.isOperational());
 
 		view.setOverlay("impulse", CSS.damageClass(enterprise.getImpulse()));
-		view.setOverlay("phasers", CSS.damageClass(enterprise.getPhasers()));
-		view.setOverlay("torpedobay", CSS.damageClass(enterprise.getTorpedos()));
+		view.setOverlay("phasers", CSS.damageClass(enterprise.phasers));
+		view.setOverlay("torpedobay", CSS.damageClass(enterprise.torpedos));
 		view.setOverlay("shields", CSS.damageClass(enterprise.getShields()));
-		view.setOverlay("warp", CSS.damageClass(enterprise.getWarpDrive()));
+		view.setOverlay("warp", CSS.damageClass(enterprise.warpDrive));
 	}
 
 	public StatusReportPresenter() {

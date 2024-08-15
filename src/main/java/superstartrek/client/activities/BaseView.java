@@ -55,7 +55,6 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 			int contentHeight = getOffsetHeight();
 			int windowHeight = application().browserAPI.getWindowHeightPx();
 			int margin = Math.max(0, windowHeight - contentHeight);
-			application().browserAPI.log("Layout "+this.getClass().getName()+" "+ windowHeight+" , "+contentHeight);
 			getElement().getStyle().setMarginTop(margin, Unit.PX);
 		}
 	}
