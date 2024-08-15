@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import superstartrek.client.activities.report.StatusReportPresenter;
 import superstartrek.client.activities.report.StatusReportScreen;
-import superstartrek.client.activities.report.StatusReportScreenImpl;
 import superstartrek.client.control.ScoreKeeper;
 
 public class TestStatusReportPresenter extends BaseTest{
