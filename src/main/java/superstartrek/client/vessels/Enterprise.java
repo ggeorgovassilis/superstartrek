@@ -515,7 +515,7 @@ public class Enterprise extends Vessel
 		// that's why the damage is reduced in this case.
 		// the in-world justification is that opponents can't get a reliable target lock
 		if (turnsSinceWarp < 2) {
-			damage = damage * Constants.ENTERPRISE_DAMAGE_CONSTANT_IN_AFTER_WARP_GRACE_PERIOD;
+			damage *= Constants.ENTERPRISE_DAMAGE_CONSTANT_IN_AFTER_WARP_GRACE_PERIOD;
 		}
 
 		double shieldValue = shields.getValue();
