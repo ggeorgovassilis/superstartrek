@@ -461,6 +461,12 @@ public class Enterprise extends Vessel
 				|| !autoAim.isOperational() || !lrs.isOperational() || !warpDrive.isOperational();
 	}
 
+	void damage(Setting setting, boolean turnOff, String message) {
+		if (turnOff)
+			setting.damageAndTurnOff(starMap.getStarDate());
+		message(message, "enterprise-damaged");
+	}
+	
 	public void damageShields(double impact) {
 		shields.damage(impact, starMap.getStarDate());
 		message("Shields damaged, dropped to %" + shields.percentageHealth(), "enterprise-damaged");
@@ -468,45 +474,36 @@ public class Enterprise extends Vessel
 
 	public void damageImpulse() {
 		impulse.damage(1, starMap.getStarDate());
-		if (impulse.getValue() < 1)
-			impulse.damageAndTurnOff(starMap.getStarDate());
-		message("Impulse drive damaged", "enterprise-damaged");
+		damage(impulse, impulse.getValue() < 1, "Impulse drive damaged");
 	}
 
 	public void damageTorpedos() {
-		torpedos.damageAndTurnOff(starMap.getStarDate());
+		damage(torpedos, true, "Torpedo bay damaged");
 		//TODO: I observed an x.5 value being displayed, which shouldn't be possible because of the floor. Investigate.
 		torpedos.setValue(Math.floor(torpedos.getValue() * Constants.ENTERPRISE_DAMAGE_TORPEDO_LOSS_RATIO));
-		message("Torpedo bay damaged", "enterprise-damaged");
 	}
 
 	public void damagePhasers() {
+		damage(phasers, phasers.getCurrentUpperBound() < 1, "Phaser banks damaged");
 		phasers.damage(phasers.getMaximum() * Constants.ENTERPRISE_DEVICE_IMPACT_MODIFIER, starMap.getStarDate());
-		if (phasers.getCurrentUpperBound() < 1)
-			phasers.damageAndTurnOff(starMap.getStarDate());
-		message("Phaser banks damaged", "enterprise-damaged");
 	}
 
 	public void damageReactor() {
+		damage(reactor, reactor.getCurrentUpperBound() < 1, "Reactor damaged");
 		reactor.damage(reactor.getMaximum() * Constants.ENTERPRISE_DEVICE_IMPACT_MODIFIER, starMap.getStarDate());
-		if (reactor.getCurrentUpperBound() < 1)
 			reactor.damageAndTurnOff(starMap.getStarDate());
-		message("Reactor damaged", "enterprise-damaged");
 	}
 
 	public void damageAutoaim() {
-		autoAim.damageAndTurnOff(starMap.getStarDate());
-		message("Tactical computer damaged", "enterprise-damaged");
+		damage(autoAim, true, "Tactical computer damaged");
 	}
 
 	public void damageLRS() {
-		lrs.damageAndTurnOff(starMap.getStarDate());
-		message("LRS damaged", "enterprise-damaged");
+		damage(lrs, true, "LRS damaged");
 	}
 
 	public void damageWarpDrive() {
-		warpDrive.damageAndTurnOff(starMap.getStarDate());
-		message("Warp drive damaged", "enterprise-damaged");
+		damage(warpDrive, true, "Warp drive damaged");
 	}
 
 	public void applyDamage(double damage) {
