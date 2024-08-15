@@ -1,6 +1,5 @@
 package superstartrek.client.activities;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -50,7 +49,7 @@ public abstract class BaseView<P extends Presenter> extends HtmlWidget implement
 	// thumb
 	// TODO: there should be a feature detection or setting to determine whether
 	// bottom alignment is required
-	protected void layoutForEasyHandlingOnMobileDevices() {
+	 void layoutForEasyHandlingOnMobileDevices() {
 		String pref = application().getNavigationElementAlignmentPreference();
 		if ("bottom".equals(pref)) {
 			int contentHeight = getOffsetHeight();
