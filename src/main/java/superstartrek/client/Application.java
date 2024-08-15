@@ -28,7 +28,7 @@ import superstartrek.client.activities.manual.ManualPresenter;
 import superstartrek.client.activities.manual.ManualScreen;
 import superstartrek.client.activities.messages.MessagesViewImpl;
 import superstartrek.client.activities.report.StatusReportPresenter;
-import superstartrek.client.activities.report.StatusReportView;
+import superstartrek.client.activities.report.StatusReportScreenImpl;
 import superstartrek.client.activities.settings.SettingsPresenter;
 import superstartrek.client.activities.settings.SettingsScreenImpl;
 import superstartrek.client.activities.messages.MessagesPresenter;
@@ -114,7 +114,7 @@ public class Application implements EntryPoint, GamePhaseHandler, ApplicationLif
 		new ComputerScreenImpl(new ComputerPresenter(this, scoreKeeper));
 		new MessagesViewImpl(new MessagesPresenter());
 		new LRSScreenImpl(new LRSPresenter());
-		new StatusReportView(new StatusReportPresenter());
+		new StatusReportScreenImpl(new StatusReportPresenter());
 		new UpdateAppPromptView(new UpdateAppPromptPresenter());
 		new AppMenuViewImpl(new AppMenuPresenter());
 		new AppInstallPromptViewImpl(new AppInstallPromptPresenter());

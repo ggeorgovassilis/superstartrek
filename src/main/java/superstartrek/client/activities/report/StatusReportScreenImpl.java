@@ -5,7 +5,7 @@ import superstartrek.client.activities.BaseScreen;
 import superstartrek.client.screentemplates.ScreenTemplates;
 import superstartrek.client.utils.CSS;
 
-public class StatusReportView extends BaseScreen<StatusReportPresenter>{
+public class StatusReportScreenImpl extends BaseScreen<StatusReportPresenter>{
 
 	
 	@Override
@@ -14,7 +14,7 @@ public class StatusReportView extends BaseScreen<StatusReportPresenter>{
 		element.setInnerHTML(templates.getTemplateFor(ScreenTemplates.TemplateNames.statusReport));
 	}
 
-	public StatusReportView(StatusReportPresenter p) {
+	public StatusReportScreenImpl(StatusReportPresenter p) {
 		super(p);
 	}
 	

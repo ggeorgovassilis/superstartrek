@@ -6,7 +6,7 @@ import superstartrek.client.eventbus.Events;
 import superstartrek.client.utils.CSS;
 import superstartrek.client.vessels.Enterprise;
 
-public class StatusReportPresenter extends BasePresenter<StatusReportView> implements ActivityChangedHandler {
+public class StatusReportPresenter extends BasePresenter<StatusReportScreen> implements ActivityChangedHandler {
 
 	public void updateView() {
 		Enterprise enterprise = getEnterprise();
