@@ -10,10 +10,10 @@ import superstartrek.client.vessels.Klingon;
 
 public class Quadrant{
 
-	protected final String name;
+	private final String name;
 	public final int x;
 	public final int y;
-	protected boolean explored;
+	private boolean explored;
 	private List<Star> stars = new ArrayList<>();
 	private StarBase starBase;
 	private List<Klingon> klingons = new ArrayList<>();
