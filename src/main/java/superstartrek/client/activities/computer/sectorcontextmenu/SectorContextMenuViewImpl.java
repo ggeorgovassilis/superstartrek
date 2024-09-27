@@ -6,6 +6,7 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import superstartrek.client.activities.BaseView;
 import superstartrek.client.screentemplates.ScreenTemplates;
+import superstartrek.client.space.Constants;
 import superstartrek.client.utils.CSS;
 import superstartrek.client.utils.Timer;
 
@@ -53,7 +54,7 @@ public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresent
 				SectorContextMenuViewImpl.super.hide();
 				if (cmd != null)
 					cmd.execute();
-			}, 250);
+			}, Constants.MENU_HIDE_ANIMATION_DURATION_MS);
 		} else if (cmd != null)
 			cmd.execute();
 	}
@@ -68,8 +69,8 @@ public class SectorContextMenuViewImpl extends BaseView<SectorContextMenuPresent
 	@Override
 	public void show() {
 		super.show();
-		//TODO: document the delay of 10ms
-		Timer.postpone(() -> addStyleName("expanded"), 10);
+		//TODO: document delay
+		Timer.postpone(() -> addStyleName("expanded"), Constants.MENU_SHOW_DELAY_TIMER_MS);
 	}
 
 	@Override

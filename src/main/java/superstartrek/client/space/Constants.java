@@ -3,6 +3,8 @@ package superstartrek.client.space;
 public class Constants {
 
 	public final static int ANIMATION_DURATION_MS=200;
+	public final static int MENU_HIDE_ANIMATION_DURATION_MS=250;
+	public final static int MENU_SHOW_DELAY_TIMER_MS=10;
 	public final static double ANTIMATTER_WARNING_THRESHOLD = 0.18;
 	public final static int POST_ANIMATION_DURATION_MS=ANIMATION_DURATION_MS+16;
 	public final static int SECTORS_EDGE=8;
