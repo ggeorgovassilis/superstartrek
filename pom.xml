@@ -13,14 +13,13 @@
 	<properties>
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gwt.version>2.11.0</gwt.version>
+		<gwt.version>2.12.0</gwt.version>
 		<skip.tests>false</skip.tests>
 		<skip.deploy>true</skip.deploy>
 		<skip.gwt>false</skip.gwt>
 		<skip.ant-copy>false</skip.ant-copy>
 		<pushToGit>false</pushToGit>
 		<gwt.optimizationLevel>9</gwt.optimizationLevel>
-		<gwt-maven-plugin.version>2.10.0</gwt-maven-plugin.version>
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 
