@@ -16,7 +16,8 @@ public interface ScreenTemplates {
 		sectorContextMenu("templates/sector-context-menu.html"),
 		settings("templates/settings.html"),
 		statusReport("templates/status-report.html"),
-		updateAppPrompt("templates/update-app-prompt.html");
+		updateAppPrompt("templates/update-app-prompt.html"),
+		browserDiagnostics("templates/browser-diagnostics.html");
 		
 		public final String path;
 		TemplateNames(String path){

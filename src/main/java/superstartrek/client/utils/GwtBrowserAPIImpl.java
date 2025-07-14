@@ -208,4 +208,96 @@ public class GwtBrowserAPIImpl implements BrowserAPI, ResizeHandler, KeyDownHand
 		return _log(message);
 	}
 
+	@Override
+	public native String getBrowserReport()/*-{
+var info = [];
+
+    // --- General Browser Info ---
+    info.push("--- General Browser Information ---");
+    info.push("User Agent: " + navigator.userAgent);
+    info.push("Platform: " + navigator.platform);
+    info.push("Browser Language: " + (navigator.language || 'N/A'));
+    info.push("Online Status: " + (navigator.onLine ? 'Online' : 'Offline'));
+    info.push("Cookies Enabled: " + (navigator.cookieEnabled ? 'Yes' : 'No'));
+    info.push("Do Not Track: " + (navigator.doNotTrack === '1' ? 'Enabled' : navigator.doNotTrack === '0' ? 'Disabled' : 'Not Specified'));
+    info.push("Hardware Concurrency (CPU Cores): " + (navigator.hardwareConcurrency || 'N/A'));
+    info.push("Max Touch Points: " + (navigator.maxTouchPoints || 'N/A'));
+    info.push("");
+
+    // --- Screen & Viewport Dimensions ---
+    info.push("--- Screen & Viewport Dimensions ---");
+    info.push("Screen Resolution: " + screen.width + "x" + screen.height + " pixels");
+    info.push("Available Screen Area: " + screen.availWidth + "x" + screen.availHeight + " pixels");
+    info.push("Color Depth: " + screen.colorDepth + " bits");
+    info.push("Pixel Depth: " + screen.pixelDepth + " bits");
+    info.push("Window Inner Size: " + window.innerWidth + "x" + window.innerHeight + " pixels (Viewport)");
+    info.push("Window Outer Size: " + window.outerWidth + "x" + window.outerHeight + " pixels (Browser Window)");
+    info.push("Document Body Client Size: " + document.body.clientWidth + "x" + document.body.clientHeight + " pixels");
+    info.push("Device Pixel Ratio: " + window.devicePixelRatio);
+    info.push("");
+
+    // --- Browser Capabilities (Feature Detection) ---
+    info.push("--- Browser Capabilities (Feature Detection) ---");
+    info.push("WebAssembly Support: " + (typeof WebAssembly !== 'undefined' ? 'Yes' : 'No'));
+    info.push("Service Worker Support: " + ('serviceWorker' in navigator ? 'Yes' : 'No'));
+    info.push("LocalStorage Support: " + (typeof localStorage !== 'undefined' ? 'Yes' : 'No'));
+    info.push("SessionStorage Support: " + (typeof sessionStorage !== 'undefined' ? 'Yes' : 'No'));
+    info.push("IndexedDB Support: " + ('indexedDB' in window ? 'Yes' : 'No'));
+    info.push("Geolocation Support: " + ('geolocation' in navigator ? 'Yes' : 'No'));
+    info.push("WebRTC Support: " + ('RTCPeerConnection' in window ? 'Yes' : 'No'));
+    info.push("Canvas Support: " + (function() {
+        try {
+            var canvas = document.createElement('canvas');
+            return !!(canvas.getContext && canvas.getContext('2d'));
+        } catch (e) {
+            return 'No';
+        }
+    })() ? 'Yes' : 'No');
+    info.push("WebGL Support: " + (function() {
+        try {
+            var canvas = document.createElement('canvas');
+            return !!(canvas.getContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+        } catch (e) {
+            return 'No';
+        }
+    })() ? 'Yes' : 'No');
+    info.push("Touch Events Support: " + ('ontouchstart' in window ? 'Yes' : 'No'));
+    info.push("Battery API Support: " + ('getBattery' in navigator ? 'Yes' : 'No'));
+    info.push("Clipboard API Support: " + ('clipboard' in navigator ? 'Yes' : 'No'));
+    info.push("Notifications API Support: " + ('Notification' in window ? 'Yes' : 'No'));
+    info.push("Fetch API Support: " + ('fetch' in window ? 'Yes' : 'No'));
+    info.push("Intersection Observer Support: " + ('IntersectionObserver' in window ? 'Yes' : 'No'));
+    info.push("Resize Observer Support: " + ('ResizeObserver' in window ? 'Yes' : 'No'));
+    info.push("");
+
+    // --- URL and Document Info ---
+    info.push("--- URL and Document Information ---");
+    info.push("Current URL: " + window.location.href);
+    info.push("Document Title: " + document.title);
+    info.push("Referrer: " + (document.referrer || 'N/A'));
+    info.push("Origin: " + window.location.origin);
+    info.push("");
+
+    // --- Time and Date ---
+    info.push("--- Time and Date ---");
+    var now = new Date();
+    info.push("Current Local Time: " + now.toLocaleString());
+    info.push("Timezone Offset: " + now.getTimezoneOffset() + " minutes from UTC");
+    info.push("Timezone: " + (Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'N/A (Intl not supported)')); // Added check for Intl support
+    info.push("");
+
+    // --- Plugins (Legacy, often empty in modern browsers) ---
+    info.push("--- Plugins (Legacy) ---");
+    if (navigator.plugins && navigator.plugins.length > 0) {
+        for (var i = 0; i < navigator.plugins.length; i++) {
+            info.push("- " + navigator.plugins[i].name + " (" + navigator.plugins[i].description + ")");
+        }
+    } else {
+        info.push("No plugins detected or API deprecated.");
+    }
+    info.push("");
+
+    return info.join('\n');
+   	}-*/;
+
 }

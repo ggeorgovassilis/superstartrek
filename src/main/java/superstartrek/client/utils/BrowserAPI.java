@@ -56,5 +56,7 @@ public interface BrowserAPI {
 	String getAppBuildNr();
 	
 	Void log(Object message);
+	
+	String getBrowserReport();
 
 }

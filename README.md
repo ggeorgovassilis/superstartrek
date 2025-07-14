@@ -18,6 +18,8 @@ A mobile friendly web remake of [Super Star Trek](https://en.wikipedia.org/wiki/
 
 GWT devmode configuration for Eclipse: `-startupUrl index.html -war target/sst -noserver -style PRETTY -XmethodNameDisplayMode ONLY_METHOD_NAME superstartrek.sst-dev`
 
+Then browse to http://127.0.0.1:9876/superstartrek.superstartrek/index.html
+
 Build locally:
 `mvn install`
 
