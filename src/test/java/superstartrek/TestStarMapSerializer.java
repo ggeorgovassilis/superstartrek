@@ -172,6 +172,12 @@ public class TestStarMapSerializer extends BaseTest {
 				return null;
 			}
 
+			@Override
+			public String getBrowserReport() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
 		};
 		application.starMap = starMap = setup.createNewMap();
 		application.gameController = mock(GameController.class);
